@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:kawanime/providers/anilist/types/page_info.dart';
+import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
 
-import 'package:kawanime/services/externals/anilist/types/page_info.dart';
-import 'package:kawanime/services/externals/anilist/types/schedule_entry.dart';
 
 class ScheduleEntryPage {
   final PageInfo pageInfo;

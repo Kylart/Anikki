@@ -1,25 +1,22 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-//
-// Ripped from https://docs.flutter.dev/cookbook/effects/expandable-fab
-//
+import 'package:flutter/material.dart';
 
 @immutable
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
-    Key? key,
+    super.key,
     this.initialOpen,
     required this.distance,
     required this.children,
-  }) : super(key: key);
+  });
 
   final bool? initialOpen;
   final double distance;
   final List<Widget> children;
 
   @override
-  _ExpandableFabState createState() => _ExpandableFabState();
+  State<ExpandableFab> createState() => _ExpandableFabState();
 }
 
 class _ExpandableFabState extends State<ExpandableFab>
@@ -78,8 +75,8 @@ class _ExpandableFabState extends State<ExpandableFab>
 
   Widget _buildTapToCloseFab() {
     return SizedBox(
-      width: 56.0,
-      height: 56.0,
+      width: 42.0,
+      height: 42.0,
       child: Center(
         child: Material(
           shape: const CircleBorder(),
@@ -92,6 +89,48 @@ class _ExpandableFabState extends State<ExpandableFab>
               child: Icon(
                 Icons.close,
                 color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTapToOpenFab() {
+    return IgnorePointer(
+      ignoring: _open,
+      child: AnimatedContainer(
+        transformAlignment: Alignment.center,
+        transform: Matrix4.diagonal3Values(
+          _open ? 0.7 : 1.0,
+          _open ? 0.7 : 1.0,
+          1.0,
+        ),
+        duration: const Duration(milliseconds: 250),
+        curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
+        child: AnimatedOpacity(
+          opacity: _open ? 0.0 : 1.0,
+          curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
+          duration: const Duration(milliseconds: 250),
+          child: SizedBox(
+            width: 42.0,
+            height: 42.0,
+            child: Center(
+              child: Material(
+                color: Theme.of(context).dialogBackgroundColor,
+                shape: const CircleBorder(),
+                clipBehavior: Clip.antiAlias,
+                elevation: 4.0,
+                child: InkWell(
+                  onTap: _toggle,
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.more_vert,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -118,42 +157,16 @@ class _ExpandableFabState extends State<ExpandableFab>
     }
     return children;
   }
-
-  Widget _buildTapToOpenFab() {
-    return IgnorePointer(
-      ignoring: _open,
-      child: AnimatedContainer(
-        transformAlignment: Alignment.center,
-        transform: Matrix4.diagonal3Values(
-          _open ? 0.7 : 1.0,
-          _open ? 0.7 : 1.0,
-          1.0,
-        ),
-        duration: const Duration(milliseconds: 250),
-        curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
-        child: AnimatedOpacity(
-          opacity: _open ? 0.0 : 1.0,
-          curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
-          duration: const Duration(milliseconds: 250),
-          child: FloatingActionButton(
-            onPressed: _toggle,
-            child: const Icon(Icons.more_horiz),
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 @immutable
 class _ExpandingActionButton extends StatelessWidget {
   const _ExpandingActionButton({
-    Key? key,
     required this.directionInDegrees,
     required this.maxDistance,
     required this.progress,
     required this.child,
-  }) : super(key: key);
+  });
 
   final double directionInDegrees;
   final double maxDistance;
@@ -189,10 +202,10 @@ class _ExpandingActionButton extends StatelessWidget {
 @immutable
 class ActionButton extends StatelessWidget {
   const ActionButton({
-    Key? key,
+    super.key,
     this.onPressed,
     required this.icon,
-  }) : super(key: key);
+  });
 
   final VoidCallback? onPressed;
   final Widget icon;
@@ -208,7 +221,7 @@ class ActionButton extends StatelessWidget {
       child: IconButton(
         onPressed: onPressed,
         icon: icon,
-        color: theme.colorScheme.secondary,
+        color: theme.colorScheme.onSecondary,
       ),
     );
   }

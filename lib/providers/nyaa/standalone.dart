@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import './types/main.dart';
 import './utils.dart' as utils;
 
-class Nyaa {
+class NyaaStandalone {
   String baseUrl = 'nyaa.si';
   var client = http.Client();
 

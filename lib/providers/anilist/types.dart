@@ -84,13 +84,13 @@ class Studio {
   }
 }
 
-enum Season { WINTER, SPRING, SUMMER, FALL, UNKNOWN }
+enum Season { winter, spring, summer, fall, unknown }
 
-enum Type { ANIME, MANGA, UNKNOWN }
+enum Type { anime, manga, unknown }
 
-enum Format { TV, ONA, OVA, MOVIE, UNKNOWN }
+enum Format { tv, ona, ova, movie, unknown }
 
-enum Status { RELEASING, NOT_YET_RELEASED, FINISHED, UNKNOWN }
+enum Status { releasing, notYetReleased, finished, unknown }
 
 String getBestImage(image) {
   if (image['extraLarge'] != null) return image['extraLarge'];
@@ -125,13 +125,13 @@ class Media {
 
   int id;
   Title? title;
-  Type? type = Type.UNKNOWN;
-  Format? format = Format.UNKNOWN;
+  Type? type = Type.unknown;
+  Format? format = Format.unknown;
   int? episodes = 0;
   int? duration = 0;
   List<Object?>? genres = [];
   bool? isAdult = false;
-  Status? status = Status.UNKNOWN;
+  Status? status = Status.unknown;
 
   int? averageScore = -1;
   int? popularity = -1;
@@ -140,7 +140,7 @@ class Media {
 
   List<Studio>? studios = [];
 
-  Season? season = Season.UNKNOWN;
+  Season? season = Season.unknown;
 
   String? description = 'No description supplied.';
 
@@ -155,11 +155,11 @@ class Media {
       id: json['id'],
       title: Title.fromJson(json['title']),
       type: Type.values.firstWhere(
-          (e) => e.toString() == 'Type.' + json['type'],
-          orElse: () => Type.UNKNOWN),
+          (e) => e.toString() == 'Type. ${json['type']}',
+          orElse: () => Type.unknown),
       format: Format.values.firstWhere(
-          (e) => e.toString() == 'Format.' + json['format'],
-          orElse: () => Format.UNKNOWN),
+          (e) => e.toString() == 'Format. ${json['format']}',
+          orElse: () => Format.unknown),
       episodes: json['episodes'],
       duration: json['duration'],
       genres: (json['genres'] as List<dynamic>)
@@ -167,8 +167,8 @@ class Media {
           .toList(),
       isAdult: json['isAdult'],
       status: Status.values.firstWhere(
-          (e) => e.toString() == 'Status.' + json['status'],
-          orElse: () => Status.UNKNOWN),
+          (e) => e.toString() == 'Status. ${json['status']}',
+          orElse: () => Status.unknown),
       averageScore: json['averageScore'],
       popularity: json['popularity'],
       nextAiringEpisode: NextAiringEpisode.fromJson(json['nextAiringEpisode']),
@@ -178,10 +178,10 @@ class Media {
               .map((studio) => Studio.fromJson(studio))
               .toList(),
       season: json['season'] == null
-          ? Season.UNKNOWN
+          ? Season.unknown
           : Season.values.firstWhere(
-              (e) => e.toString() == 'Season.' + json['season'],
-              orElse: () => Season.UNKNOWN),
+              (e) => e.toString() == 'Season. ${json['season']}',
+              orElse: () => Season.unknown),
       description: json['description'],
       endDate: json['endDate'] == null
           ? Date(year: 0, month: 0, day: 0)

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:kawanime/services/externals/anilist/types.dart';
+import 'package:kawanime/providers/anilist/types.dart';
 
 class Torrent {
   String id;

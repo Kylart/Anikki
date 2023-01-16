@@ -1,17 +1,17 @@
 import 'package:graphql/client.dart';
-import 'package:kawanime/services/externals/anilist/schedule.dart';
+import 'package:kawanime/providers/anilist/schedule.dart';
 
 import './trendings.dart';
 import './info.dart';
 
-class Anilist {
+class AnilistStandalone {
   final String baseUrl = 'https://graphql.anilist.co';
   late GraphQLClient client;
   late AnilistTrendings trendings;
   late AnilistAiringSchedule airingSchedule;
   late AnilistInfo info;
 
-  Anilist() {
+  AnilistStandalone() {
     final httpLink = HttpLink(baseUrl);
 
     client = GraphQLClient(

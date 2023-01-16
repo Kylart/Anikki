@@ -57,7 +57,7 @@ class AnilistInfo {
     List<String> tempNames = [];
 
     Future<QueryResult> makeQuery(List<String> names) async {
-      names.forEach((name) {
+      for (final name in names) {
         final String id = getId(name: name);
 
         query += '''
@@ -67,7 +67,7 @@ class AnilistInfo {
           }
         }
       ''';
-      });
+      }
 
       query = '''
       query {
@@ -92,7 +92,7 @@ class AnilistInfo {
 
       final QueryResult result = await makeQuery(tempNames);
 
-      if (result.data == null) throw new ErrorSummary('No results.');
+      if (result.data == null) throw ErrorSummary('No results.');
 
       result.data?.forEach((key, value) {
         if (results.containsKey(key)) return;
@@ -105,10 +105,11 @@ class AnilistInfo {
         results.putIfAbsent(key, () => Media.fromJson(data[0]));
       });
 
-      if (interval != -1)
+      if (interval != -1) {
         currentIndex += interval;
-      else
+      } else {
         break;
+      }
       query = '';
     }
 

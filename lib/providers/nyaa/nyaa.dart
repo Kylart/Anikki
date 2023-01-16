@@ -2,20 +2,18 @@ import 'package:flutter/foundation.dart';
 
 import 'package:kawanime/helpers/hash.dart';
 import 'package:kawanime/helpers/parse.dart';
-
-import 'package:kawanime/services/externals/anilist/main.dart';
-import 'package:kawanime/services/externals/anilist/types.dart';
-
-import 'package:kawanime/services/externals/nyaa/main.dart';
-import 'package:kawanime/services/externals/nyaa/types/main.dart';
+import 'package:kawanime/providers/anilist/standalone.dart';
+import 'package:kawanime/providers/anilist/types.dart';
+import 'package:kawanime/providers/nyaa/standalone.dart';
+import 'package:kawanime/providers/nyaa/types/main.dart';
 
 class NyaaStore with ChangeNotifier, DiagnosticableTreeMixin {
   NyaaStore() {
     search();
   }
 
-  Nyaa nyaa = Nyaa();
-  final Anilist _anilist = Anilist();
+  NyaaStandalone nyaa = NyaaStandalone();
+  final AnilistStandalone anilist = AnilistStandalone();
 
   String fansub = 'SubsPlease';
   String quality = '720p';
@@ -39,7 +37,7 @@ class NyaaStore with ChangeNotifier, DiagnosticableTreeMixin {
         .toSet()
         .toList();
 
-    Map<String, Media> info = await _anilist.info.fromMultiple(names);
+    Map<String, Media> info = await anilist.info.fromMultiple(names);
 
     latestReleases = latestReleases.map((release) {
       final String id = getId(name: getShortName(name: release.name));

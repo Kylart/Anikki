@@ -1,8 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:kawanime/components/animeCard.dart';
-import 'package:kawanime/providers/anilist.dart';
-import 'package:kawanime/services/externals/anilist/types/schedule_entry.dart';
+import 'package:kawanime/components/shared/anime_card.dart';
+import 'package:kawanime/providers/anilist/anilist.dart';
 
 import 'package:provider/provider.dart';
 
@@ -16,88 +16,240 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    bool hasEntries = !context.watch<AnilistStore>().anilist.airingSchedule.hasEntries;
-    List<ScheduleEntry> latestEntries = context
-      .watch<AnilistStore>()
-      .anilist.airingSchedule
-      .latestEntries;
-
-    return SafeArea(
-      child: GestureDetector(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'What\'s new today?',
-                          style: GoogleFonts.poppins(
-                            textStyle: Theme.of(context).textTheme.headline4
+    return Row(
+      children: [
+        Flexible(
+          flex: 7,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flexible(
+                flex: 6,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Text(
+                              'What you missed',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text('Today'),
+                          ),
+                          const Expanded(
+                            child: SizedBox(),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.search),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.tune),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: GridView(
+                            scrollDirection: Axis.vertical,
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              crossAxisSpacing: 0,
+                              mainAxisSpacing: 8,
+                              childAspectRatio: 0.75,
+                            ),
+                            children: const [
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                    const Divider(),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-
-            hasEntries
-              ? const EntriesLoader()
-              : EntriesView(entries: latestEntries),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class EntriesLoader extends StatelessWidget {
-  const EntriesLoader({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const SliverFillRemaining(
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
-}
-
-class EntriesView extends StatelessWidget {
-  const EntriesView({
-    Key? key,
-    required this.entries,
-  }) : super(key: key);
-
-  final List<ScheduleEntry> entries;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverGrid(
-        delegate: SliverChildListDelegate(
-          entries
-              .map(
-                (entry) => AnimeCard(entry: entry),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: const SizedBox(
+                  height: 1,
+                  width: 150,
+                  child: Divider(),
+                ),
+              ),
+              Flexible(
+                flex: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Text(
+                              'Check out more',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                          ),
+                          const Expanded(
+                            child: SizedBox(),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.search),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.tune),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: GridView(
+                            scrollDirection: Axis.vertical,
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              crossAxisSpacing: 0,
+                              mainAxisSpacing: 0,
+                              childAspectRatio: 0.75,
+                            ),
+                            children: const [
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                              AnimeCard(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               )
-              .toList(),
+            ],
+          ),
         ),
-        gridDelegate:
-            const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 400,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.6,
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 80.0),
+          child: VerticalDivider(
+            thickness: 1,
+            width: 1,
+          ),
         ),
-      );
+        Flexible(
+          flex: 3,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'Animes in library',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: Theme.of(context).cardColor,
+                    backgroundBlendMode: BlendMode.softLight,
+                  ),
+                  child: SizedBox(
+                    height: 75,
+                    width: 100,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text('1.689'),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                  width: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'Animes watched',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: Theme.of(context).cardColor,
+                    backgroundBlendMode: BlendMode.softLight,
+                  ),
+                  child: SizedBox(
+                    height: 75,
+                    width: 100,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text('2.908.237'),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                  width: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'Wasted time (today)',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: Theme.of(context).cardColor,
+                    backgroundBlendMode: BlendMode.softLight,
+                  ),
+                  child: SizedBox(
+                    height: 75,
+                    width: 100,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text('2h34m'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
   }
 }

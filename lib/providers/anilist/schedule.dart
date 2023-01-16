@@ -1,12 +1,9 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:graphql/client.dart';
-import 'package:kawanime/services/externals/anilist/queries/airing_schedule.dart';
-import 'package:kawanime/services/externals/anilist/types/page_info.dart';
-import 'package:kawanime/services/externals/anilist/types/scheduleEntryPage.dart';
-
-import 'package:kawanime/services/externals/anilist/types/schedule_entry.dart';
+import 'package:kawanime/providers/anilist/queries/airing_schedule.dart';
+import 'package:kawanime/providers/anilist/types/page_info.dart';
+import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
+import 'package:kawanime/providers/anilist/types/schedule_entry_page.dart';
 
 class AnilistAiringSchedule with ChangeNotifier {
   AnilistAiringSchedule({required this.client});
