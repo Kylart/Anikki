@@ -37,6 +37,7 @@ const String mediaFragment = r'''
     isAdult
     averageScore
     popularity
+    countryOfOrigin
     mediaListEntry {
       id
       status

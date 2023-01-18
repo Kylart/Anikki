@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:kawanime/components/settings/settings.dart';
-import 'package:kawanime/layouts/landscape/navigation_rail.dart';
-import 'package:kawanime/providers/navigation.dart';
-import 'package:kawanime/views/home.dart';
+import 'package:kawanime/layouts/landscape/custom_app_bar.dart';
+import 'package:kawanime/layouts/landscape/library_list.dart';
+import 'package:kawanime/layouts/landscape/news.dart';
 
 class LandscapeLayout extends StatelessWidget {
   const LandscapeLayout({
@@ -15,24 +12,18 @@ class LandscapeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Row(
+        body: Column(
           children: [
-            const CustomNavigationRail(),
-            const VerticalDivider(thickness: 1, width: 1),
+            const CustomAppBar(),
             Expanded(
-              child: PageView(
-                allowImplicitScrolling: true,
-                scrollDirection: Axis.vertical,
-                controller: context.watch<Navigation>().pageController,
-                onPageChanged: (index) {
-                  context.read<Navigation>().index = index;
-                },
-                children: const [
-                  Home(),
-                  SizedBox(),
-                  SizedBox(),
-                  SettingsPage(),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: const [
+                    LibraryList(),
+                    News(),
+                  ],
+                ),
               ),
             ),
           ],

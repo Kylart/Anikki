@@ -10,43 +10,78 @@ class AnilistAiringSchedule with ChangeNotifier {
 
   GraphQLClient client;
   int currentPage = 1;
+  bool isLoading = false;
+  String? error;
 
   Map<DateTime, List<ScheduleEntry>> schedule = {};
   DateTime latestDate = DateTime.now();
 
   bool get hasEntries => schedule.isNotEmpty;
-  List<ScheduleEntry> get latestEntries => schedule[latestDate] ?? []; 
+  List<ScheduleEntry> get latestEntries => schedule[latestDate] ?? [];
 
   Future<void> getEntriesForDate(DateTime date) async {
     try {
-      int nextWeek = date.millisecondsSinceEpoch + (1000 * 60 * 60 * 24 * 7);
+      isLoading = true;
+      notifyListeners();
 
-      final QueryOptions<ScheduleEntryPage> options = QueryOptions<ScheduleEntryPage>(
-        document: gql(airingScheduleQuery),
-        variables: <String, dynamic>{
-          'weekStart': (date.millisecondsSinceEpoch / 1000).round(),
-          'weekEnd': (nextWeek / 1000).round(),
-          'page': currentPage
-        },
-      );
+      while (true) {
+        final page = await _getScheduleAtPage(currentPage, date);
 
-      final QueryResult<ScheduleEntryPage> result = await client.query<ScheduleEntryPage>(options);
+        if (page == null) break;
 
-      final List<dynamic> rawEntries = result.data?['Page']['airingSchedules'];
-      final List<ScheduleEntry> airingSchedules = rawEntries.map((e) => ScheduleEntry.fromMap(e)).toList();
+        currentPage++;
 
-      final PageInfo pageInfo = PageInfo.fromMap(result.data?['Page']['pageInfo']);
+        if (schedule[date] == null) {
+          schedule[date] = page.airingSchedules;
+        } else {
+          schedule[date]!.addAll(page.airingSchedules);
+        }
+      }
 
-      final ScheduleEntryPage page = ScheduleEntryPage(pageInfo: pageInfo, airingSchedules: airingSchedules);
-      
-      schedule[date] = page.airingSchedules;
       latestDate = date;
+      isLoading = false;
+      error = null;
 
       notifyListeners();
 
       debugPrint('Retrieved page $currentPage for $latestDate');
     } catch (e) {
-      debugPrint(e.toString());
+      error = e.toString();
+      notifyListeners();
     }
+  }
+
+  Future<ScheduleEntryPage?> _getScheduleAtPage(int pageIndex, DateTime date) async {
+    int nextWeek = date.millisecondsSinceEpoch + (1000 * 60 * 60 * 24);
+
+    final QueryOptions<ScheduleEntryPage> options =
+        QueryOptions<ScheduleEntryPage>(
+      document: gql(airingScheduleQuery),
+      variables: <String, dynamic>{
+        'weekStart': (date.millisecondsSinceEpoch / 1000).round(),
+        'weekEnd': (nextWeek / 1000).round(),
+        'page': pageIndex
+      },
+    );
+
+    final QueryResult<ScheduleEntryPage> result =
+        await client.query<ScheduleEntryPage>(options);
+
+    final List<dynamic> rawEntries = result.data?['Page']['airingSchedules'];
+
+    if (rawEntries.isEmpty) return null;
+
+    final List<ScheduleEntry> airingSchedules = rawEntries
+        .map((e) => ScheduleEntry.fromMap(e))
+        .where((element) => element.media?.countryOfOrigin == 'JP')
+        .toList();
+
+    final PageInfo pageInfo =
+        PageInfo.fromMap(result.data?['Page']['pageInfo']);
+
+    final ScheduleEntryPage page =
+        ScheduleEntryPage(pageInfo: pageInfo, airingSchedules: airingSchedules);
+
+    return page;
   }
 }

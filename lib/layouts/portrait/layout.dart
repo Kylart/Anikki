@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:kawanime/components/settings/settings.dart';
 import 'package:kawanime/layouts/portrait/bottom_navigation_bar.dart';
 import 'package:kawanime/providers/navigation.dart';
-import 'package:kawanime/views/home.dart';
 
 class PortraitLayout extends StatelessWidget {
   const PortraitLayout({
@@ -22,7 +21,6 @@ class PortraitLayout extends StatelessWidget {
             context.read<Navigation>().index = index;
           },
           children: const [
-            Home(),
             SizedBox(),
             SizedBox(),
             SettingsPage(),

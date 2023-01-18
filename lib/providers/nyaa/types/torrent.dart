@@ -70,8 +70,6 @@ class Torrent {
       'leechers': leechers,
       'completed': completed,
       'status': status,
-      // TODO: later
-      // 'anilistInfo': anilistInfo?.toMap(),
     };
   }
 

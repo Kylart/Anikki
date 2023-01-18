@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 import 'cover_image.dart';
@@ -23,6 +22,7 @@ class Media {
   final String? description;
   final String? type;
   final String? format;
+  final String? countryOfOrigin;
   final String? status;
   final dynamic episodes;
   final int? duration;
@@ -48,6 +48,7 @@ class Media {
     this.description,
     this.type,
     this.format,
+    this.countryOfOrigin,
     this.status,
     this.episodes,
     this.duration,
@@ -65,7 +66,7 @@ class Media {
 
   @override
   String toString() {
-    return 'Media(id: $id, title: $title, coverImage: $coverImage, startDate: $startDate, endDate: $endDate, bannerImage: $bannerImage, season: $season, description: $description, type: $type, format: $format, status: $status, episodes: $episodes, duration: $duration, chapters: $chapters, volumes: $volumes, genres: $genres, isAdult: $isAdult, averageScore: $averageScore, popularity: $popularity, mediaListEntry: $mediaListEntry, nextAiringEpisode: $nextAiringEpisode, studios: $studios, relations: $relations)';
+    return 'Media(id: $id, title: $title, coverImage: $coverImage, startDate: $startDate, endDate: $endDate, bannerImage: $bannerImage, season: $season, description: $description, type: $type, format: $format, countryOfOrigin: $countryOfOrigin, status: $status, episodes: $episodes, duration: $duration, chapters: $chapters, volumes: $volumes, genres: $genres, isAdult: $isAdult, averageScore: $averageScore, popularity: $popularity, mediaListEntry: $mediaListEntry, nextAiringEpisode: $nextAiringEpisode, studios: $studios, relations: $relations)';
   }
 
   factory Media.fromMap(Map<String, dynamic> data) => Media(
@@ -88,6 +89,7 @@ class Media {
         type: data['type'] as String?,
         format: data['format'] as String?,
         status: data['status'] as String?,
+        countryOfOrigin: data['countryOfOrigin'] as String?,
         episodes: data['episodes'] as dynamic,
         duration: data['duration'] as int?,
         chapters: data['chapters'] as dynamic,
@@ -109,31 +111,34 @@ class Media {
             : Relations.fromMap(data['relations'] as Map<String, dynamic>),
       );
 
-  Map<String, dynamic> toMap() => {
-        'id': id,
-        'title': title?.toMap(),
-        'coverImage': coverImage?.toMap(),
-        'startDate': startDate?.toMap(),
-        'endDate': endDate?.toMap(),
-        'bannerImage': bannerImage,
-        'season': season,
-        'description': description,
-        'type': type,
-        'format': format,
-        'status': status,
-        'episodes': episodes,
-        'duration': duration,
-        'chapters': chapters,
-        'volumes': volumes,
-        'genres': genres,
-        'isAdult': isAdult,
-        'averageScore': averageScore,
-        'popularity': popularity,
-        'mediaListEntry': mediaListEntry,
-        'nextAiringEpisode': nextAiringEpisode?.toMap(),
-        'studios': studios?.toMap(),
-        'relations': relations?.toMap(),
-      };
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title?.toMap(),
+      'coverImage': coverImage?.toMap(),
+      'startDate': startDate?.toMap(),
+      'endDate': endDate?.toMap(),
+      'bannerImage': bannerImage,
+      'season': season,
+      'description': description,
+      'type': type,
+      'format': format,
+      'countryOfOrigin': countryOfOrigin,
+      'status': status,
+      'episodes': episodes,
+      'duration': duration,
+      'chapters': chapters,
+      'volumes': volumes,
+      'genres': genres,
+      'isAdult': isAdult,
+      'averageScore': averageScore,
+      'popularity': popularity,
+      'mediaListEntry': mediaListEntry,
+      'nextAiringEpisode': nextAiringEpisode?.toMap(),
+      'studios': studios?.toMap(),
+      'relations': relations?.toMap(),
+    };
+  }
 
   /// `dart:convert`
   ///
@@ -158,6 +163,7 @@ class Media {
     String? description,
     String? type,
     String? format,
+    String? countryOfOrigin,
     String? status,
     dynamic episodes,
     int? duration,
@@ -183,6 +189,7 @@ class Media {
       description: description ?? this.description,
       type: type ?? this.type,
       format: format ?? this.format,
+      countryOfOrigin: countryOfOrigin ?? this.countryOfOrigin,
       status: status ?? this.status,
       episodes: episodes ?? this.episodes,
       duration: duration ?? this.duration,
@@ -201,15 +208,38 @@ class Media {
 
   @override
   bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    if (other is! Media) return false;
-    final mapEquals = const DeepCollectionEquality().equals;
-    return mapEquals(other.toMap(), toMap());
+    if (identical(this, other)) return true;
+  
+    return other is Media &&
+      other.id == id &&
+      other.title == title &&
+      other.coverImage == coverImage &&
+      other.startDate == startDate &&
+      other.endDate == endDate &&
+      other.bannerImage == bannerImage &&
+      other.season == season &&
+      other.description == description &&
+      other.type == type &&
+      other.format == format &&
+      other.countryOfOrigin == countryOfOrigin &&
+      other.status == status &&
+      other.episodes == episodes &&
+      other.duration == duration &&
+      other.chapters == chapters &&
+      other.volumes == volumes &&
+      listEquals(other.genres, genres) &&
+      other.isAdult == isAdult &&
+      other.averageScore == averageScore &&
+      other.popularity == popularity &&
+      other.mediaListEntry == mediaListEntry &&
+      other.nextAiringEpisode == nextAiringEpisode &&
+      other.studios == studios &&
+      other.relations == relations;
   }
 
   @override
-  int get hashCode =>
-      id.hashCode ^
+  int get hashCode {
+    return id.hashCode ^
       title.hashCode ^
       coverImage.hashCode ^
       startDate.hashCode ^
@@ -219,6 +249,7 @@ class Media {
       description.hashCode ^
       type.hashCode ^
       format.hashCode ^
+      countryOfOrigin.hashCode ^
       status.hashCode ^
       episodes.hashCode ^
       duration.hashCode ^
@@ -232,4 +263,5 @@ class Media {
       nextAiringEpisode.hashCode ^
       studios.hashCode ^
       relations.hashCode;
+  }
 }
