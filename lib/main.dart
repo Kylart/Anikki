@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:kawanime/providers/local/local.dart';
 import 'package:kawanime/helpers/desktop_hooks.dart';
 import 'package:kawanime/layouts/landscape/layout.dart';
 import 'package:kawanime/layouts/portrait/layout.dart';
@@ -19,6 +20,7 @@ void main() {
     /// can use [KawAnime] while mocking the providers
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => LocalStore()),
         ChangeNotifierProvider(create: (_) => AnilistStore()),
         ChangeNotifierProvider(create: (_) => NyaaStore()),
         ChangeNotifierProvider(create: (_) => Navigation()),

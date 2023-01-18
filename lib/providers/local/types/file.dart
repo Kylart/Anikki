@@ -4,60 +4,83 @@ import 'package:kawanime/providers/anilist/types/media/media.dart';
 
 class LocalFile {
   final String path;
-  final Media? media;
+  final String? title;
   final String? episode;
+  final String? releaseGroup;
+  Media? media;
 
   LocalFile({
     required this.path,
-    this.media,
+    this.title,
     this.episode,
+    this.releaseGroup,
+    this.media,
   });
 
   LocalFile copyWith({
     String? path,
-    Media? media,
+    String? title,
     String? episode,
+    String? releaseGroup,
+    Media? media,
   }) {
     return LocalFile(
       path: path ?? this.path,
-      media: media ?? this.media,
+      title: title ?? this.title,
       episode: episode ?? this.episode,
+      releaseGroup: releaseGroup ?? this.releaseGroup,
+      media: media ?? this.media,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'path': path,
-      'media': media?.toMap(),
+      'title': title,
       'episode': episode,
+      'releaseGroup': releaseGroup,
+      'media': media?.toMap(),
     };
   }
 
   factory LocalFile.fromMap(Map<String, dynamic> map) {
     return LocalFile(
       path: map['path'] ?? '',
-      media: map['media'] != null ? Media.fromMap(map['media']) : null,
+      title: map['title'],
       episode: map['episode'],
+      releaseGroup: map['releaseGroup'],
+      media: map['media'] != null ? Media.fromMap(map['media']) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory LocalFile.fromJson(String source) => LocalFile.fromMap(json.decode(source));
+  factory LocalFile.fromJson(String source) =>
+      LocalFile.fromMap(json.decode(source));
 
   @override
-  String toString() => 'LocalFile(path: $path, media: $media, episode: $episode)';
+  String toString() {
+    return 'LocalFile(path: $path, title: $title, episode: $episode, releaseGroup: $releaseGroup, media: $media)';
+  }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is LocalFile &&
-      other.path == path &&
-      other.media == media &&
-      other.episode == episode;
+        other.path == path &&
+        other.title == title &&
+        other.episode == episode &&
+        other.releaseGroup == releaseGroup &&
+        other.media == media;
   }
 
   @override
-  int get hashCode => path.hashCode ^ media.hashCode ^ episode.hashCode;
+  int get hashCode {
+    return path.hashCode ^
+        title.hashCode ^
+        episode.hashCode ^
+        releaseGroup.hashCode ^
+        media.hashCode;
+  }
 }

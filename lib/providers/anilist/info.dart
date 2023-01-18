@@ -1,45 +1,10 @@
 import 'package:flutter/cupertino.dart';
+
 import 'package:graphql/client.dart';
+
 import 'package:kawanime/helpers/hash.dart';
-
-import './types.dart';
-
-const String fragment = r'''
-  fragment media on Media {
-    id
-    title {
-      userPreferred
-      romaji
-      english
-      native
-    }
-    coverImage {
-      extraLarge
-      large
-      medium
-      color
-    }
-    bannerImage
-    season
-    description
-    type
-    format
-    status(version: 2)
-    episodes
-    duration
-    chapters
-    volumes
-    genres
-    isAdult
-    averageScore
-    popularity
-    nextAiringEpisode {
-      airingAt
-      timeUntilAiring
-      episode
-    }
-  }
-''';
+import 'package:kawanime/providers/anilist/queries/media.dart';
+import 'package:kawanime/providers/anilist/types/media/media.dart';
 
 class AnilistInfo {
   AnilistInfo({required GraphQLClient client}) {
@@ -74,7 +39,7 @@ class AnilistInfo {
         $query
       }
 
-      $fragment
+      $mediaFragment
     ''';
 
       final QueryOptions options = QueryOptions(document: gql(query));
@@ -102,7 +67,7 @@ class AnilistInfo {
 
         if (data.length == 0) return;
 
-        results.putIfAbsent(key, () => Media.fromJson(data[0]));
+        results.putIfAbsent(key, () => Media.fromMap(data[0]));
       });
 
       if (interval != -1) {

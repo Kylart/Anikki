@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kawanime/providers/local/local.dart';
+import 'package:provider/provider.dart';
 
 class LibraryList extends StatefulWidget {
   const LibraryList({
@@ -87,6 +89,12 @@ class _LibraryListState extends State<LibraryList> {
               color: outlineColor,
               height: 1,
             ),
+            if (context.watch<LocalStore>().hasEntries)
+              Expanded(
+                child: Text(
+                  context.watch<LocalStore>().currentFiles[0].path,
+                ),
+              )
           ],
         ),
       ),

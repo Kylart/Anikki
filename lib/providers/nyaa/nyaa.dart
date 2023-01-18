@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:kawanime/helpers/hash.dart';
 import 'package:kawanime/helpers/parse.dart';
 import 'package:kawanime/providers/anilist/standalone.dart';
-import 'package:kawanime/providers/anilist/types.dart';
+import 'package:kawanime/providers/anilist/types/media/media.dart';
 import 'package:kawanime/providers/nyaa/standalone.dart';
 import 'package:kawanime/providers/nyaa/types/main.dart';
 
