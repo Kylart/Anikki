@@ -22,8 +22,9 @@ class _UserListLibraryGridCardState extends State<UserListLibraryGridCard> {
     final coverImage = entry.media?.coverImage?.extraLarge ??
         entry.media?.coverImage?.large ??
         entry.media?.coverImage?.medium;
-    final title =
-        entry.media?.title?.romaji ?? entry.media?.title?.english ?? '';
+    final title = entry.media?.title?.romaji ??
+        entry.media?.title?.english ??
+        entry.title;
 
     return InkWell(
       onTap: () {},
@@ -39,7 +40,12 @@ class _UserListLibraryGridCardState extends State<UserListLibraryGridCard> {
                   fit: BoxFit.cover,
                   image: NetworkImage(coverImage),
                 )
-              : null,
+              : const DecorationImage(
+                  opacity: 0.7,
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.cover,
+                  image: AssetImage('lib/assets/images/placeholder.png'),
+                ),
         ),
         child: Stack(
           children: [

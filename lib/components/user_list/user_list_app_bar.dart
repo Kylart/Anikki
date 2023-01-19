@@ -10,7 +10,7 @@ class UserListAppBar extends StatefulWidget {
 }
 
 class _UserListAppBarState extends State<UserListAppBar> {
-  final List<bool> isSelected = <bool>[true, false];
+  final List<bool> isSelected = <bool>[false, true];
 
   @override
   Widget build(BuildContext context) {

@@ -17,6 +17,8 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
 
   bool get hasEntries => currentFiles.isNotEmpty;
 
+  bool isLoading = false;
+
   LocalStore() {
     init();
   }
@@ -31,57 +33,69 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<void> setCurrentPath (String path) async {
     currentFiles = [];
+    notifyListeners();
+
     currentPath = path;
     await retrieveFilesFromCurrentPath();
   }
 
   Future<void> retrieveFilesFromCurrentPath() async {
-    if (currentPath == null) return;
+    try {
 
-    final directory = Directory(currentPath!);
-    final exists = await directory.exists();
+      isLoading = true;
+      notifyListeners();
 
-    if (!exists) throw Error();
+      if (currentPath == null) return;
 
-    final fileStream = directory.list(recursive: false, followLinks: false);
-    final files = await fileStream.toList();
+      final directory = Directory(currentPath!);
+      final exists = await directory.exists();
 
-    for (final file in files) {
-      final path = file.path;
-      final isAllowed = ['.mkv', '.mp4'].contains(extension(path));
+      if (!exists) throw Error();
 
-      if (!isAllowed) continue;
+      final fileStream = directory.list(recursive: false, followLinks: false);
+      final files = await fileStream.toList();
 
-      final parser = AnitomyParser(inputString: basename(path));
-      final entry = LocalFile(
-        path: path,
-        episode: parser.episode,
-        releaseGroup: parser.releaseGroup,
-        title: parser.title,
-      );
+      for (final file in files) {
+        final path = file.path;
+        final isAllowed = ['.mkv', '.mp4'].contains(extension(path));
 
-      parser.dispose();
+        if (!isAllowed) continue;
 
-      currentFiles.add(entry);
-    }
+        final parser = AnitomyParser(inputString: basename(path));
+        final entry = LocalFile(
+          path: path,
+          episode: parser.episode,
+          releaseGroup: parser.releaseGroup,
+          title: parser.title,
+        );
 
-    final List<String> entryNames = [];
+        parser.dispose();
 
-    for (final entry in currentFiles) {
-      final title = entry.title;
-
-      if (title != null && !entryNames.contains(title)) {
-        entryNames.add(title);
+        currentFiles.add(entry);
       }
+
+      final List<String> entryNames = [];
+
+      for (final entry in currentFiles) {
+        final title = entry.title;
+
+        if (title != null && !entryNames.contains(title)) {
+          entryNames.add(title);
+        }
+      }
+
+      final info = await anilist.info.fromMultiple(entryNames);
+
+      // Feeding medias to entries
+      for (final file in currentFiles) {
+        file.media = info[file.title != null ? getId(name: file.title!) : ''];
+      }
+
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      rethrow;
     }
-
-    final info = await anilist.info.fromMultiple(entryNames);
-
-    // Feeding medias to entries
-    for (final file in currentFiles) {
-      file.media = info[file.title != null ? getId(name: file.title!) : ''];
-    }
-
-    notifyListeners();
   }
 }

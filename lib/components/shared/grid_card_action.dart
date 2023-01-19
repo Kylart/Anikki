@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 class GridCardAction extends StatefulWidget {
-  const GridCardAction(
-      {super.key,
-      required this.icon,
-      this.hoverColor = Colors.white54,
-      this.iconColor});
+  const GridCardAction({
+    super.key,
+    required this.icon,
+    this.hoverColor = Colors.white54,
+    this.iconColor,
+    this.iconSize = 36.0,
+  });
 
   final IconData icon;
   final Color? hoverColor;
   final Color? iconColor;
+  final double? iconSize;
 
   @override
   State<GridCardAction> createState() => _GridCardActionState();
@@ -33,6 +36,7 @@ class _GridCardActionState extends State<GridCardAction> {
         child: Icon(
           widget.icon,
           color: widget.iconColor,
+          size: widget.iconSize,
         ),
       ),
     );

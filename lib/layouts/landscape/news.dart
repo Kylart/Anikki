@@ -19,7 +19,7 @@ class News extends StatefulWidget {
 }
 
 class _NewsState extends State<News> {
-  String layout = 'list';
+  String layout = 'grid';
 
   @override
   Widget build(BuildContext context) {

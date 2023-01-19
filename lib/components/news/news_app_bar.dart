@@ -10,7 +10,7 @@ class NewsAppBar extends StatefulWidget {
 }
 
 class _NewsAppBarState extends State<NewsAppBar> {
-  final List<bool> isSelected = <bool>[true, false];
+  final List<bool> isSelected = <bool>[false, true];
 
   @override
   Widget build(BuildContext context) {

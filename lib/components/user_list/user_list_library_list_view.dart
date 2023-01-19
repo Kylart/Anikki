@@ -15,6 +15,9 @@ class UserListLibraryListView extends StatelessWidget {
       separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) {
         final entry = entries[index];
+        final coverImage = entry.media?.coverImage?.extraLarge ??
+            entry.media?.coverImage?.large ??
+            entry.media?.coverImage?.medium;
 
         return Container(
           decoration: BoxDecoration(
@@ -27,24 +30,27 @@ class UserListLibraryListView extends StatelessWidget {
                 : null,
           ),
           child: ListTile(
-            isThreeLine: true,
+            isThreeLine: entry.episode != null,
             contentPadding: const EdgeInsets.all(8.0),
-            title:
-                Text(entry.media?.title?.romaji ?? entry.media?.title?.english ?? entry.title),
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  entry.media?.coverImage?.extraLarge ??
-                      entry.media?.coverImage?.large ??
-                      entry.media?.coverImage?.medium ??
-                      ''),
-            ),
+            title: Text(entry.media?.title?.romaji ??
+                entry.media?.title?.english ??
+                entry.title),
+            leading: coverImage != null
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(coverImage),
+                  )
+                : const CircleAvatar(
+                    backgroundImage:
+                        AssetImage('lib/assets/images/placeholder.png'),
+                  ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text('Episode ${entry.episode}'),
-                ),
+                if (entry.episode != null)
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text('Episode ${entry.episode}'),
+                  ),
                 if (entry.media?.genres != null)
                   Row(
                     children: (entry.media!.genres!.length > 1
