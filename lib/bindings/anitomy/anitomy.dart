@@ -6,16 +6,13 @@ import 'package:path/path.dart' as path;
 
 typedef NativeGetAnitomy = Pointer<Void> Function(Pointer<Utf8> str);
 
+typedef NativeDestroyAnitomy = Pointer<Void> Function(Pointer<Void> str);
+
 typedef NativeGetTitle = Pointer<Utf8> Function(Pointer<Void> str);
 
 typedef NativeGetEpisode = Pointer<Utf8> Function(Pointer<Void> str);
 
 typedef NativeGetReleaseGroup = Pointer<Utf8> Function(Pointer<Void> str);
-
-// void main() {
-//   final parser = AnitomyParser(inputString: '[Ouroboros]_Fullmetal_Alchemist_Brotherhood.mkv');
-//   print(parser.episode);
-// }
 
 class AnitomyParser {
   final String inputString;
@@ -31,6 +28,14 @@ class AnitomyParser {
       .asFunction();
 
     anitomyPtr = getAnitomy(inputString.toNativeUtf8());
+  }
+
+  void dispose () {
+    final NativeDestroyAnitomy destroyAnitomy = library
+      .lookup<NativeFunction<NativeDestroyAnitomy>>('destroy_anitomy')
+      .asFunction();
+
+    destroyAnitomy(anitomyPtr);
   }
 
   void _getLibrary () {

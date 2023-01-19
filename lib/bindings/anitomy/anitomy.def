@@ -1,6 +1,7 @@
 LIBRARY   anitomy
 EXPORTS
    get_anitomy
+   destroy_anitomy
    get_title
    get_episode
    get_release_group

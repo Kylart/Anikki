@@ -24,6 +24,11 @@ extern "C" void *get_anitomy(char *str)
   return anitomy;
 }
 
+extern "C" void destroy_anitomy (void *ptr) {
+  auto typed_ptr = static_cast<anitomy::Anitomy *>(ptr);
+  delete typed_ptr;
+}
+
 extern "C" char *get_title (void *ptr) {
   auto typed_ptr = static_cast<anitomy::Anitomy *>(ptr);
 
