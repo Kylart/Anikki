@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
+import 'package:kawanime/providers/local/types/file.dart';
 
-class NewsListView extends StatelessWidget {
-  final List<ScheduleEntry> entries;
+class UserListLibraryListView extends StatelessWidget {
+  final List<LocalFile> entries;
 
-  const NewsListView({super.key, required this.entries});
+  const UserListLibraryListView({super.key, required this.entries});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class NewsListView extends StatelessWidget {
             isThreeLine: true,
             contentPadding: const EdgeInsets.all(8.0),
             title:
-                Text(entry.media?.title?.romaji ?? entry.media?.title?.english),
+                Text(entry.media?.title?.romaji ?? entry.media?.title?.english ?? entry.title),
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
                   entry.media?.coverImage?.extraLarge ??
@@ -73,8 +73,17 @@ class NewsListView extends StatelessWidget {
                   height: 40,
                   child: IconButton(
                     onPressed: () {},
-                    icon: const Icon(Icons.file_download),
+                    icon: const Icon(Icons.play_arrow),
                     color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.delete),
+                    color: Theme.of(context).colorScheme.error,
                   ),
                 ),
                 SizedBox(

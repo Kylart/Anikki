@@ -52,6 +52,7 @@ dependencies:
   flex_color_scheme: ^6.1.2
   ffi: ^2.0.1
   path: ^1.8.2
+  file_picker: ^5.2.5
 
 dev_dependencies:
   flutter_test:

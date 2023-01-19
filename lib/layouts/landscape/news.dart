@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kawanime/components/news/news_app_bar.dart';
-import 'package:kawanime/components/news/news_grid_view.dart';
+import 'package:kawanime/components/shared/custom_grid_view.dart';
 import 'package:kawanime/components/news/news_list_view.dart';
 
 import 'package:shimmer/shimmer.dart';
@@ -77,8 +77,9 @@ class _NewsState extends State<News> {
                 ),
             if (layout == 'grid')
               Expanded(
-                child: NewsGridView(
+                child: CustomGridView(
                   entries: store.latestEntries,
+                  type: GridViewType.news,
                 ),
               ),
           ],

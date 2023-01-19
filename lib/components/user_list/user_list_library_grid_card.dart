@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:kawanime/components/shared/grid_card_action.dart';
-import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
+import 'package:kawanime/providers/local/types/file.dart';
 
-class NewsGridCard extends StatefulWidget {
-  const NewsGridCard({super.key, required this.entry});
+class UserListLibraryGridCard extends StatefulWidget {
+  const UserListLibraryGridCard({super.key, required this.entry});
 
-  final ScheduleEntry entry;
+  final LocalFile entry;
 
   @override
-  State<NewsGridCard> createState() => _NewsGridCardState();
+  State<UserListLibraryGridCard> createState() =>
+      _UserListLibraryGridCardState();
 }
 
-class _NewsGridCardState extends State<NewsGridCard> {
+class _UserListLibraryGridCardState extends State<UserListLibraryGridCard> {
   bool isHovered = false;
   final transitionDuration = const Duration(milliseconds: 200);
 
@@ -89,17 +90,19 @@ class _NewsGridCardState extends State<NewsGridCard> {
                 opacity: isHovered ? 1 : 0,
                 child: Container(
                   color: Colors.black87,
-                  child: Column(
-                    children: const [
-                      Expanded(
-                        child: GridCardAction(icon: Icons.file_download),
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.75,
+                    children: [
+                      const GridCardAction(icon: Icons.play_arrow),
+                      const GridCardAction(icon: Icons.edit),
+                      GridCardAction(
+                        icon: Icons.delete,
+                        iconColor: Theme.of(context).colorScheme.error,
+                        hoverColor:
+                            Theme.of(context).colorScheme.errorContainer,
                       ),
-                      Expanded(
-                        child: GridCardAction(icon: Icons.edit),
-                      ),
-                      Expanded(
-                        child: GridCardAction(icon: Icons.more_horiz),
-                      ),
+                      const GridCardAction(icon: Icons.more_horiz),
                     ],
                   ),
                 ),

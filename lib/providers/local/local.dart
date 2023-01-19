@@ -22,10 +22,17 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<void> init() async {
-    // currentPath = "F:\\Anime\\[Despair-Paradise] Etotama";
-    await retrieveFilesFromCurrentPath();
+    if (currentPath != null) {
+      await retrieveFilesFromCurrentPath();
 
-    notifyListeners();
+      notifyListeners();
+    }
+  }
+
+  Future<void> setCurrentPath (String path) async {
+    currentFiles = [];
+    currentPath = path;
+    await retrieveFilesFromCurrentPath();
   }
 
   Future<void> retrieveFilesFromCurrentPath() async {
@@ -36,10 +43,14 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
 
     if (!exists) throw Error();
 
-    final files = directory.list(recursive: false, followLinks: false);
+    final fileStream = directory.list(recursive: false, followLinks: false);
+    final files = await fileStream.toList();
 
-    await for (final file in files) {
+    for (final file in files) {
       final path = file.path;
+      final isAllowed = ['.mkv', '.mp4'].contains(extension(path));
+
+      if (!isAllowed) continue;
 
       final parser = AnitomyParser(inputString: basename(path));
       final entry = LocalFile(
@@ -49,14 +60,18 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
         title: parser.title,
       );
 
+      parser.dispose();
+
       currentFiles.add(entry);
     }
 
     final List<String> entryNames = [];
 
     for (final entry in currentFiles) {
-      if (entry.title != null && !entryNames.contains(entry.title)) {
-        entryNames.add(entry.title!);
+      final title = entry.title;
+
+      if (title != null && !entryNames.contains(title)) {
+        entryNames.add(title);
       }
     }
 
@@ -66,5 +81,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
     for (final file in currentFiles) {
       file.media = info[file.title != null ? getId(name: file.title!) : ''];
     }
+
+    notifyListeners();
   }
 }
