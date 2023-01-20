@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kawanime/components/shared/grid_card_action.dart';
+import 'package:kawanime/providers/local/local.dart';
 import 'package:kawanime/providers/local/types/file.dart';
+import 'package:provider/provider.dart';
 
 class UserListLibraryGridCard extends StatefulWidget {
   const UserListLibraryGridCard({super.key, required this.entry});
@@ -44,7 +46,7 @@ class _UserListLibraryGridCardState extends State<UserListLibraryGridCard> {
                   opacity: 0.7,
                   alignment: Alignment.topCenter,
                   fit: BoxFit.cover,
-                  image: AssetImage('lib/assets/images/placeholder.png'),
+                  image: AssetImage('assets/images/placeholder.png'),
                 ),
         ),
         child: Stack(
@@ -100,13 +102,23 @@ class _UserListLibraryGridCardState extends State<UserListLibraryGridCard> {
                     crossAxisCount: 2,
                     childAspectRatio: 0.75,
                     children: [
-                      const GridCardAction(icon: Icons.play_arrow),
+                      GridCardAction(
+                        icon: Icons.play_arrow,
+                        onTap: () async {
+                          final store = context.read<LocalStore>();
+                          await store.playFile(entry);
+                        },
+                      ),
                       const GridCardAction(icon: Icons.edit),
                       GridCardAction(
                         icon: Icons.delete,
                         iconColor: Theme.of(context).colorScheme.error,
                         hoverColor:
                             Theme.of(context).colorScheme.errorContainer,
+                        onTap: () async {
+                          final store = context.read<LocalStore>();
+                          await store.deleteFile(entry);
+                        },
                       ),
                       const GridCardAction(icon: Icons.more_horiz),
                     ],

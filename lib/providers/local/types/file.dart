@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:kawanime/providers/anilist/types/media/media.dart';
 
 class LocalFile {
   final String path;
+  final File file;
   final String? title;
   final String? episode;
   final String? releaseGroup;
@@ -11,6 +13,7 @@ class LocalFile {
 
   LocalFile({
     required this.path,
+    required this.file,
     this.title,
     this.episode,
     this.releaseGroup,
@@ -19,6 +22,7 @@ class LocalFile {
 
   LocalFile copyWith({
     String? path,
+    File? file,
     String? title,
     String? episode,
     String? releaseGroup,
@@ -26,6 +30,7 @@ class LocalFile {
   }) {
     return LocalFile(
       path: path ?? this.path,
+      file: file ?? this.file,
       title: title ?? this.title,
       episode: episode ?? this.episode,
       releaseGroup: releaseGroup ?? this.releaseGroup,
@@ -36,6 +41,7 @@ class LocalFile {
   Map<String, dynamic> toMap() {
     return {
       'path': path,
+      'file': file,
       'title': title,
       'episode': episode,
       'releaseGroup': releaseGroup,
@@ -46,6 +52,7 @@ class LocalFile {
   factory LocalFile.fromMap(Map<String, dynamic> map) {
     return LocalFile(
       path: map['path'] ?? '',
+      file: File(map['path']),
       title: map['title'],
       episode: map['episode'],
       releaseGroup: map['releaseGroup'],
@@ -60,7 +67,7 @@ class LocalFile {
 
   @override
   String toString() {
-    return 'LocalFile(path: $path, title: $title, episode: $episode, releaseGroup: $releaseGroup, media: $media)';
+    return 'LocalFile(path: $path, file: $file, title: $title, episode: $episode, releaseGroup: $releaseGroup, media: $media)';
   }
 
   @override
@@ -69,6 +76,7 @@ class LocalFile {
 
     return other is LocalFile &&
         other.path == path &&
+        other.file == file &&
         other.title == title &&
         other.episode == episode &&
         other.releaseGroup == releaseGroup &&
@@ -78,6 +86,7 @@ class LocalFile {
   @override
   int get hashCode {
     return path.hashCode ^
+        file.hashCode ^
         title.hashCode ^
         episode.hashCode ^
         releaseGroup.hashCode ^

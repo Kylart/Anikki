@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:kawanime/helpers/hash.dart';
+import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 
 import 'package:kawanime/bindings/anitomy/anitomy.dart';
@@ -31,7 +32,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  Future<void> setCurrentPath (String path) async {
+  Future<void> setCurrentPath(String path) async {
     currentFiles = [];
     notifyListeners();
 
@@ -39,9 +40,18 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
     await retrieveFilesFromCurrentPath();
   }
 
+  Future<void> deleteFile(LocalFile file) async {
+    await file.file.delete();
+    currentFiles.removeWhere((element) => element == file);
+    notifyListeners();
+  }
+
+  Future<void> playFile(LocalFile file) async {
+    await OpenAppFile.open(file.path);
+  }
+
   Future<void> retrieveFilesFromCurrentPath() async {
     try {
-
       isLoading = true;
       notifyListeners();
 
@@ -64,6 +74,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
         final parser = AnitomyParser(inputString: basename(path));
         final entry = LocalFile(
           path: path,
+          file: File(path),
           episode: parser.episode,
           releaseGroup: parser.releaseGroup,
           title: parser.title,

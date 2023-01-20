@@ -415,6 +415,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  open_app_file:
+    dependency: "direct main"
+    description:
+      name: open_app_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.1"
   package_config:
     dependency: transitive
     description:

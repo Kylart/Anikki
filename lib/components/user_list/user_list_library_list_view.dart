@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kawanime/providers/local/local.dart';
 
 import 'package:kawanime/providers/local/types/file.dart';
+import 'package:provider/provider.dart';
 
 class UserListLibraryListView extends StatelessWidget {
   final List<LocalFile> entries;
@@ -27,7 +29,12 @@ class UserListLibraryListView extends StatelessWidget {
                     fit: BoxFit.cover,
                     image: NetworkImage(entry.media?.bannerImage!),
                   )
-                : null,
+                : const DecorationImage(
+                    alignment: Alignment.topCenter,
+                    opacity: 0.25,
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/images/cover_placeholder.jpg'),
+                  ),
           ),
           child: ListTile(
             isThreeLine: entry.episode != null,
@@ -41,7 +48,7 @@ class UserListLibraryListView extends StatelessWidget {
                   )
                 : const CircleAvatar(
                     backgroundImage:
-                        AssetImage('lib/assets/images/placeholder.png'),
+                        AssetImage('assets/images/placeholder.png'),
                   ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +85,10 @@ class UserListLibraryListView extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final store = context.read<LocalStore>();
+                      await store.playFile(entry);
+                    },
                     icon: const Icon(Icons.play_arrow),
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -87,7 +97,10 @@ class UserListLibraryListView extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final store = context.read<LocalStore>();
+                      await store.deleteFile(entry);
+                    },
                     icon: const Icon(Icons.delete),
                     color: Theme.of(context).colorScheme.error,
                   ),

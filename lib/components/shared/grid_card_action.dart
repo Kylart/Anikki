@@ -7,12 +7,14 @@ class GridCardAction extends StatefulWidget {
     this.hoverColor = Colors.white54,
     this.iconColor,
     this.iconSize = 36.0,
+    this.onTap,
   });
 
   final IconData icon;
   final Color? hoverColor;
   final Color? iconColor;
   final double? iconSize;
+  final void Function()? onTap;
 
   @override
   State<GridCardAction> createState() => _GridCardActionState();
@@ -24,7 +26,7 @@ class _GridCardActionState extends State<GridCardAction> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: widget.onTap ?? () {},
       onHover: (value) {
         setState(() {
           isHovered = value;
