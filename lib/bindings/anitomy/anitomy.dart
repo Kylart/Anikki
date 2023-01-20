@@ -40,8 +40,7 @@ class AnitomyParser {
 
   void _getLibrary () {
     // Open the dynamic library
-    String libraryPath =
-        path.join(Directory.current.path, 'libanitomy.so');
+    String libraryPath = 'libanitomy.so';
 
     if (Platform.isMacOS) {
       libraryPath =
