@@ -18,12 +18,12 @@ class CustomAppBar extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Row(
-                children: const [
-                  FlutterLogo(
-                    size: 52,
-                  ),
-                  Text('App Name'),
-                ],
+                // children: const [
+                //   FlutterLogo(
+                //     size: 52,
+                //   ),
+                //   Text('App Name'),
+                // ],
               ),
             ),
             const Flexible(
@@ -38,9 +38,7 @@ class CustomAppBar extends StatelessWidget {
             ),
             const Flexible(
               flex: 1,
-              child: CircleAvatar(
-                child: Text('Ky'),
-              ),
+              child: SizedBox(),
             )
           ],
         ),
