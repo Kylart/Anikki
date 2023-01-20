@@ -47,14 +47,10 @@ class _LibraryState extends State<Library> {
       );
     }
 
-    return Center(
-      child: Expanded(
-        child: ListTile(
-          tileColor: Theme.of(context).colorScheme.error,
-          title: const Text('Error'),
-          subtitle: const Text('Something wrong just happened...'),
-        ),
-      ),
+    return ListTile(
+      tileColor: Theme.of(context).colorScheme.error,
+      title: const Text('Error'),
+      subtitle: const Text('Something wrong just happened...'),
     );
   }
 }
