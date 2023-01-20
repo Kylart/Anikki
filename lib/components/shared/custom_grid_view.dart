@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/components/news/news_grid_card.dart';
-import 'package:kawanime/components/user_list/user_list_library_grid_card.dart';
+import 'package:kawanime/components/shared/entry_card/entry_card.dart';
+import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
+import 'package:kawanime/providers/local/types/file.dart';
 
 enum GridViewType { local, watchList, news }
 
@@ -29,8 +30,19 @@ class _CustomGridViewState extends State<CustomGridView> {
         itemBuilder: (context, index) {
           final entry = widget.entries[index];
 
-          if (widget.type == GridViewType.news) return NewsGridCard(entry: entry);
-          if (widget.type == GridViewType.local) return UserListLibraryGridCard(entry: entry);
+          if (widget.type == GridViewType.news) {
+            return EntryCard<ScheduleEntry>(
+              entry: entry,
+              type: CardType.news,
+            );
+          }
+
+          if (widget.type == GridViewType.local) {
+            return EntryCard<LocalFile>(
+              entry: entry,
+              type: CardType.local,
+            );
+          }
 
           return const SizedBox();
         });

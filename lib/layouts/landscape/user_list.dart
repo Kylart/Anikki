@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/components/shared/custom_grid_view.dart';
 import 'package:kawanime/components/user_list/user_list_app_bar.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:kawanime/components/user_list/user_list_library_list_view.dart';
 import 'package:kawanime/layouts/landscape/library.dart';
 import 'package:kawanime/providers/local/local.dart';
 import 'package:provider/provider.dart';
