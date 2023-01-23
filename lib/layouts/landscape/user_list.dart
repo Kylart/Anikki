@@ -3,6 +3,7 @@ import 'package:kawanime/components/user_list/user_list_app_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:kawanime/layouts/landscape/library.dart';
 import 'package:kawanime/providers/local/local.dart';
+import 'package:kawanime/providers/user_preferences.dart';
 import 'package:provider/provider.dart';
 
 class UserList extends StatefulWidget {
@@ -84,12 +85,14 @@ class _UserListState extends State<UserList>
                     child: ElevatedButton(
                       onPressed: () async {
                         final store = context.read<LocalStore>();
+                        final preferences = context.read<UserPreferences>();
                         String? path =
                             await FilePicker.platform.getDirectoryPath();
 
                         if (path == null) return;
 
                         await store.setCurrentPath(path);
+                        preferences.localDirecotry = path;
                       },
                       child: const Text('Choose Folder'),
                     ),

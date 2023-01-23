@@ -6,6 +6,15 @@ class UserPreferences with ChangeNotifier, DiagnosticableTreeMixin {
     _loadPrefs();
   }
 
+  late SharedPreferences prefs;
+
+  Future<void> _loadPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+
+    darkTheme = prefs.getBool('user_preferences_darkTheme') ?? true;
+    localDirecotry = prefs.getString('user_preferences_localDirectory') ?? '';
+  }
+
   /// Whether dark theme is enabled or not
   bool _darkTheme = true;
 
@@ -18,12 +27,16 @@ class UserPreferences with ChangeNotifier, DiagnosticableTreeMixin {
     prefs.setBool('user_preferences_darkTheme', _darkTheme);
   }
 
-  late SharedPreferences prefs;
+  /// Directory where local files should be looked for on application startup
+  String _localDirectory = '';
 
-  Future<void> _loadPrefs() async {
-    prefs = await SharedPreferences.getInstance();
+  String get localDirecotry => _localDirectory;
 
-    darkTheme = prefs.getBool('user_preferences_darkTheme') ?? true;
+  set localDirecotry(String localDirecotry) {
+    _localDirectory = localDirecotry;
+    notifyListeners();
+
+    prefs.setString('user_preferences_localDirectory', _localDirectory);
   }
 
   @override
@@ -31,6 +44,7 @@ class UserPreferences with ChangeNotifier, DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
 
     properties.add(DiagnosticsProperty<bool>('_darkTheme', _darkTheme));
+    properties.add(DiagnosticsProperty<bool>('_localDirectory', _darkTheme));
     properties.add(DiagnosticsProperty<SharedPreferences>('prefs', prefs));
   }
 }

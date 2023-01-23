@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:kawanime/bindings/anitomy/anitomy.dart';
 import 'package:kawanime/providers/anilist/standalone.dart';
 import 'package:kawanime/providers/local/types/file.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 // ignore: prefer_mixin
@@ -25,7 +26,11 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<void> init() async {
-    if (currentPath != null) {
+    final prefs = await SharedPreferences.getInstance();
+
+    currentPath = prefs.getString('user_preferences_localDirectory');
+
+    if (currentPath != null || currentPath != '') {
       await retrieveFilesFromCurrentPath();
 
       notifyListeners();
@@ -34,7 +39,6 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<void> setCurrentPath(String path) async {
     currentFiles = [];
-    notifyListeners();
 
     currentPath = path;
     await retrieveFilesFromCurrentPath();
