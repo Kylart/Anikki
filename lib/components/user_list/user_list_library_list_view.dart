@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/providers/local/local.dart';
 
+import 'package:kawanime/components/user_list/user_list_actions.dart';
 import 'package:kawanime/providers/local/types/file.dart';
-import 'package:provider/provider.dart';
 
 class UserListLibraryListView extends StatelessWidget {
   final List<LocalFile> entries;
@@ -85,10 +84,7 @@ class UserListLibraryListView extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () async {
-                      final store = context.read<LocalStore>();
-                      await store.playFile(entry);
-                    },
+                    onPressed: () async => await deleteFile(entry, context),
                     icon: const Icon(Icons.play_arrow),
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -97,10 +93,7 @@ class UserListLibraryListView extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () async {
-                      final store = context.read<LocalStore>();
-                      await store.deleteFile(entry);
-                    },
+                    onPressed: () async => await deleteFile(entry, context),
                     icon: const Icon(Icons.delete),
                     color: Theme.of(context).colorScheme.error,
                   ),

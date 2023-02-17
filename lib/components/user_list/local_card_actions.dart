@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
+import 'package:kawanime/components/user_list/user_list_actions.dart';
 import 'package:kawanime/components/shared/grid_card_action.dart';
 import 'package:kawanime/helpers/desktop_hooks.dart';
-import 'package:kawanime/providers/local/local.dart';
 import 'package:kawanime/providers/local/types/file.dart';
 
 class LocalCardActions extends StatelessWidget {
@@ -22,10 +20,7 @@ class LocalCardActions extends StatelessWidget {
       children: [
         GridCardAction(
           icon: Icons.play_arrow,
-          onTap: () async {
-            final store = context.read<LocalStore>();
-            await store.playFile(entry);
-          },
+          onTap: () async => await playFile(entry, context),
         ),
         if (isDesktop()) const GridCardAction(icon: Icons.edit),
         if (!isDesktop())
@@ -37,10 +32,7 @@ class LocalCardActions extends StatelessWidget {
           icon: Icons.delete,
           iconColor: Theme.of(context).colorScheme.error,
           hoverColor: Theme.of(context).colorScheme.errorContainer,
-          onTap: () async {
-            final store = context.read<LocalStore>();
-            await store.deleteFile(entry);
-          },
+          onTap: () async => await deleteFile(entry, context),
         ),
         const GridCardAction(icon: Icons.more_horiz),
       ],
