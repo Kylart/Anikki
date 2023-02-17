@@ -69,16 +69,3 @@ class KawAnimePage extends StatelessWidget {
     );
   }
 }
-
-// ThemeData _buildTheme(Brightness brightness) {
-//   final baseTheme = ThemeData(
-//     brightness: brightness,
-//     useMaterial3: true,
-//     primarySwatch: Colors.teal,
-//   );
-
-//   return baseTheme.copyWith(
-//     textTheme: GoogleFonts.josefinSansTextTheme(baseTheme.textTheme),
-//     // textTheme: GoogleFonts.patrickHandTextTheme(baseTheme.textTheme),
-//   );
-// }
