@@ -24,7 +24,7 @@ class _NewsState extends State<News> {
   @override
   Widget build(BuildContext context) {
     final outlineColor = Theme.of(context).colorScheme.outline;
-    final store = context.watch<AnilistStore>().airingSchedule;
+    final store = context.watch<AnilistStore>();
 
     return Flexible(
       flex: 1,
@@ -49,7 +49,7 @@ class _NewsState extends State<News> {
               color: outlineColor,
               height: 1,
             ),
-            if (store.error != null) Text('Error ${store.error}'),
+            if (store.newsError != null) Text('Error ${store.newsError}'),
             if (store.isLoading)
               Expanded(
                 child: Padding(
@@ -68,17 +68,17 @@ class _NewsState extends State<News> {
                   ),
                 ),
               ),
-            if (store.hasEntries)
+            if (store.currentNews.isNotEmpty)
               if (layout == 'list')
                 Expanded(
                   child: NewsListView(
-                    entries: store.latestEntries,
+                    entries: store.currentNews,
                   ),
                 ),
             if (layout == 'grid')
               Expanded(
                 child: CustomGridView(
-                  entries: store.latestEntries,
+                  entries: store.currentNews,
                   type: GridViewType.news,
                 ),
               ),
