@@ -10,7 +10,7 @@ void showAvailableTorrents(BuildContext context, ScheduleEntry entry) {
     context: context,
     builder: (BuildContext context) {
       return DownloadResultsDialog(
-        term: '${entry.media!.title!.toNyaaTerm()} + ${entry.episode}',
+        term: '${entry.media!.title!.toNyaaTerm()} ${entry.episode}',
       );
     },
   );
