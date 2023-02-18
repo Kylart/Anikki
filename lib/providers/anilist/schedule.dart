@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:graphql/client.dart';
+import 'package:kawanime/helpers/mixins/loading.dart';
 import 'package:kawanime/providers/anilist/queries/airing_schedule.dart';
 import 'package:kawanime/providers/anilist/types/page_info.dart';
 import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
 import 'package:kawanime/providers/anilist/types/schedule_entry_page.dart';
 
-class AnilistAiringSchedule with ChangeNotifier {
+class AnilistAiringSchedule with ChangeNotifier, LoadingMixin {
   AnilistAiringSchedule({required this.client});
 
   GraphQLClient client;
   int currentPage = 1;
-  bool isLoading = false;
   String? error;
 
   Map<DateTime, List<ScheduleEntry>> schedule = {};
@@ -22,7 +22,6 @@ class AnilistAiringSchedule with ChangeNotifier {
   Future<void> getEntriesForDate(DateTime date) async {
     try {
       isLoading = true;
-      notifyListeners();
 
       while (true) {
         final page = await _getScheduleAtPage(currentPage, date);
@@ -39,12 +38,8 @@ class AnilistAiringSchedule with ChangeNotifier {
       }
 
       latestDate = date;
-      isLoading = false;
       error = null;
-
-      notifyListeners();
-
-      debugPrint('Retrieved page $currentPage for $latestDate');
+      isLoading = false;
     } catch (e) {
       error = e.toString();
       notifyListeners();
