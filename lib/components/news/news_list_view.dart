@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kawanime/components/news/news_actions.dart';
 
 import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
 
@@ -72,7 +73,9 @@ class NewsListView extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showAvailableTorrents(context, entry);
+                    },
                     icon: const Icon(Icons.file_download),
                     color: Theme.of(context).colorScheme.primary,
                   ),
