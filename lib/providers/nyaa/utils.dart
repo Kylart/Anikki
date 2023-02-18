@@ -7,7 +7,10 @@ extractFromHtml({required String data, required String baseUrl}) {
   List<Torrent> results = [];
   Document document = parse(data);
 
-  var rawTorrents = document.querySelectorAll('tr');
+  final rawTorrents = document.querySelectorAll('tr');
+
+  // TODO: Add custom error
+  if (rawTorrents.isEmpty) throw 'No result...';
 
   rawTorrents.sublist(1).forEach((element) {
     final Element nameElement = element.children[1].children.length == 2

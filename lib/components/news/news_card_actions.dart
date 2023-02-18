@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kawanime/components/shared/download_results_dialog/download_results_dialog.dart';
 
 import 'package:kawanime/components/shared/grid_card_action.dart';
 import 'package:kawanime/helpers/desktop_hooks.dart';
@@ -17,7 +18,18 @@ class NewsCardActions extends StatelessWidget {
         Expanded(
           child: GridCardAction(
             icon: Icons.file_download,
-            onTap: () {},
+            onTap: () async {
+              if (entry.media?.title == null) return;
+
+              showDialog<Dialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return DownloadResultsDialog(
+                    term: '${entry.media!.title!.toNyaaTerm()} + ${entry.episode}',
+                  );
+                },
+              );
+            },
           ),
         ),
         if (isDesktop())

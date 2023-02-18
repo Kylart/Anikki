@@ -1,11 +1,11 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import './types/main.dart';
 import './utils.dart' as utils;
 
 class NyaaStandalone {
   String baseUrl = 'nyaa.si';
-  var client = http.Client();
+  final Client client = Client();
 
   Future<Map<String, dynamic>> _searchPage({String? term, int? page}) async {
     final options = {
@@ -18,10 +18,12 @@ class NyaaStandalone {
     };
 
     final uri = Uri.https(baseUrl, '/', options);
-    final response = await http.get(uri);
+    final response = await get(uri);
 
     return utils.extractFromHtml(
-        data: response.body, baseUrl: 'https://$baseUrl');
+      data: response.body,
+      baseUrl: baseUrl,
+    );
   }
 
   Future<List<Torrent>> search({String? term}) async {

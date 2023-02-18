@@ -14,7 +14,6 @@ class Torrent {
   String completed;
   String status;
 
-  Media? anilistInfo;
 
   Torrent({
     required this.id,
@@ -27,7 +26,6 @@ class Torrent {
     required this.leechers,
     required this.completed,
     required this.status,
-    this.anilistInfo,
   });
 
   Torrent copyWith({
@@ -41,7 +39,6 @@ class Torrent {
     String? leechers,
     String? completed,
     String? status,
-    Media? anilistInfo,
   }) {
     return Torrent(
       id: id ?? this.id,
@@ -54,7 +51,6 @@ class Torrent {
       leechers: leechers ?? this.leechers,
       completed: completed ?? this.completed,
       status: status ?? this.status,
-      anilistInfo: anilistInfo ?? this.anilistInfo,
     );
   }
 
@@ -96,7 +92,7 @@ class Torrent {
 
   @override
   String toString() {
-    return 'Torrent(id: $id, name: $name, date: $date, filesize: $filesize, magnet: $magnet, torrent: $torrent, seeders: $seeders, leechers: $leechers, completed: $completed, status: $status, anilistInfo: $anilistInfo)';
+    return 'Torrent(id: $id, name: $name, date: $date, filesize: $filesize, magnet: $magnet, torrent: $torrent, seeders: $seeders, leechers: $leechers, completed: $completed, status: $status)';
   }
 
   @override
@@ -113,8 +109,7 @@ class Torrent {
         other.seeders == seeders &&
         other.leechers == leechers &&
         other.completed == completed &&
-        other.status == status &&
-        other.anilistInfo == anilistInfo;
+        other.status == status;
   }
 
   @override
@@ -128,7 +123,6 @@ class Torrent {
         seeders.hashCode ^
         leechers.hashCode ^
         completed.hashCode ^
-        status.hashCode ^
-        anilistInfo.hashCode;
+        status.hashCode;
   }
 }

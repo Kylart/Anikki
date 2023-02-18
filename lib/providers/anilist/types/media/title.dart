@@ -12,6 +12,14 @@ class Title {
 
   const Title({this.userPreferred, this.romaji, this.english, this.native});
 
+  String toNyaaTerm() {
+    return [
+      if (romaji != null) romaji,
+      if (english != null) english,
+      if (native != null) native,
+    ].join('|');
+  }
+
   @override
   String toString() {
     return 'Title(userPreferred: $userPreferred, romaji: $romaji, english: $english, native: $native)';
