@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kawanime/components/shared/video_player/desktop_player.dart';
 import 'package:kawanime/components/shared/video_player/mobile_player.dart';
 import 'package:kawanime/components/shared/video_player/video_player.dart';
+import 'package:kawanime/components/user_list/player_overlay.dart';
 import 'package:kawanime/helpers/desktop_hooks.dart';
 import 'package:kawanime/providers/local/local.dart';
 import 'package:kawanime/providers/local/types/file.dart';
@@ -44,20 +45,14 @@ Future<void> playFile(LocalFile entry, BuildContext context) async {
     await store.playFile(entry);
   } else {
     VideoPlayer player = isDesktop()
-      ? DesktopPlayer<File>(input: entry.file)
-      : MobilePlayer(input: entry.file);
+        ? DesktopPlayer<File>(input: entry.file)
+        : MobilePlayer(input: entry.file);
 
-    showDialog<Dialog>(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          child: SizedBox(
-            width: 1280,
-            height: 720,
-            child: player.widget(),
-          ),
-        );
-      },
-    ).then((value) => player.stop());
+    Navigator.of(context).push(
+      PlayerOverlay(
+        child: player.widget(),
+        onClose: player.stop,
+      ),
+    );
   }
 }

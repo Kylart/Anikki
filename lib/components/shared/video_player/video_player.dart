@@ -10,7 +10,7 @@ abstract class VideoPlayer {
   void play();
   void pause();
   void togglePlay();
-  void stop();
+  Future<void> stop();
   void seek(Duration duration);
 
   void setVolume(double value);

@@ -34,7 +34,7 @@ packages:
     source: hosted
     version: "2.10.0"
   audio_video_progress_bar:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: audio_video_progress_bar
       sha256: "7be62917604e19e3873e12c8025bbc6dbee5876e1fa4cd7772ea1d0eb0e88d99"

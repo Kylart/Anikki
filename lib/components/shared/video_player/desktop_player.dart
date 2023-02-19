@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
+import 'package:kawanime/components/shared/video_player/desktop_player_controls.dart';
 
 import 'package:kawanime/components/shared/video_player/video_player.dart';
 
@@ -30,9 +31,22 @@ class DesktopPlayer<T> implements VideoPlayer {
 
   @override
   Widget widget() {
-    return Video(
+    final controls = DesktopPlayerControls(
+      player: this,
+    );
+
+    final video = Video(
       player: player,
-      showControls: true,
+      showControls: false,
+    );
+
+    return Stack(
+      children: [
+        Positioned.fill(child: video),
+        Positioned.fill(
+          child: controls,
+        ),
+      ],
     );
   }
 
@@ -51,6 +65,22 @@ class DesktopPlayer<T> implements VideoPlayer {
     player.seek(duration);
   }
 
+  void forward(Duration time) {
+    final Duration? duration = player.position.position;
+
+    if (duration == null) return;
+
+    player.seek(duration + time);
+  }
+
+  void rewind(Duration time) {
+    final Duration? duration = player.position.position;
+
+    if (duration == null) return;
+
+    player.seek(duration - time);
+  }
+
   @override
   void setRate(double rate) {
     player.setRate(rate);
@@ -62,7 +92,7 @@ class DesktopPlayer<T> implements VideoPlayer {
   }
 
   @override
-  void stop() {
+  Future<void> stop() async {
     player.stop();
   }
 

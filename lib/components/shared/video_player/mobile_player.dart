@@ -45,9 +45,9 @@ class MobilePlayer<T> implements VideoPlayer {
   }
 
   @override
-  void stop() {
-    videoPlayerController.stopRendererScanning();
-    videoPlayerController.dispose();
+  Future<void> stop() async {
+    await videoPlayerController.stopRendererScanning();
+    await videoPlayerController.dispose();
   }
 
   @override
