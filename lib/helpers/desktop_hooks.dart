@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -7,11 +8,13 @@ Future<void> setUpDesktop() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Must add this line.
   await windowManager.ensureInitialized();
+  
+  DartVLC.initialize();
 
   WindowOptions windowOptions = const WindowOptions(
     minimumSize: Size(300, 400),
-    size: Size(1200, 720),
-    center: true,
+    // size: Size(1200, 720),
+    // center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
     titleBarStyle: TitleBarStyle.normal,

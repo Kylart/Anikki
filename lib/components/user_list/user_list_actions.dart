@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:kawanime/components/shared/video_player/desktop_player.dart';
+import 'package:kawanime/components/shared/video_player/video_player.dart';
+import 'package:kawanime/helpers/desktop_hooks.dart';
 import 'package:kawanime/providers/local/local.dart';
 import 'package:kawanime/providers/local/types/file.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +38,23 @@ deleteFile(LocalFile entry, BuildContext context) {
 }
 
 Future<void> playFile(LocalFile entry, BuildContext context) async {
-  final store = context.read<LocalStore>();
+  if (!isDesktop() || Platform.isMacOS) {
+    final store = context.read<LocalStore>();
+    await store.playFile(entry);
+  } else {
+    VideoPlayer player = DesktopPlayer<File>(input: entry.file);
 
-  await store.playFile(entry);
+    showDialog<Dialog>(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: SizedBox(
+            width: 1280,
+            height: 720,
+            child: player.widget(),
+          ),
+        );
+      },
+    ).then((value) => player.stop());
+  }
 }
