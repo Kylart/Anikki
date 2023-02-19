@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 
-import 'package:kawanime/helpers/mixins/loading.dart';
 import 'package:kawanime/providers/anilist/queries/airing_schedule.dart';
 import 'package:kawanime/providers/anilist/types/page_info.dart';
 import 'package:kawanime/providers/anilist/types/schedule_entry.dart';

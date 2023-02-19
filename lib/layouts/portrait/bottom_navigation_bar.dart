@@ -31,7 +31,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       ],
       currentIndex: context.watch<Navigation>().index,
         selectedItemColor: Colors.tealAccent,
-        unselectedItemColor: Theme.of(context).backgroundColor,
+        unselectedItemColor: Theme.of(context).colorScheme.background,
       onTap: (index) {
         context.read<Navigation>().changeToPage(index);
       },

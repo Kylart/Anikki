@@ -17,7 +17,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      surfaceTintColor: Theme.of(context).backgroundColor,
+      surfaceTintColor: Theme.of(context).colorScheme.background,
       title: const Text('News'),
       actions: [
         Padding(

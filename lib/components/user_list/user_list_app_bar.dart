@@ -15,7 +15,7 @@ class _UserListAppBarState extends State<UserListAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      surfaceTintColor: Theme.of(context).backgroundColor,
+      surfaceTintColor: Theme.of(context).colorScheme.background,
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
