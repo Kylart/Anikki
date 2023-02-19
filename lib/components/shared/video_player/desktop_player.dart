@@ -29,10 +29,6 @@ class DesktopPlayer<T> implements VideoPlayer {
   Platform platform = Platform();
 
   @override
-  bool get isDesktop =>
-      Platform.isLinux || Platform.isMacOS || Platform.isWindows;
-
-  @override
   Widget widget() {
     return Video(
       player: player,
@@ -73,10 +69,5 @@ class DesktopPlayer<T> implements VideoPlayer {
   @override
   void togglePlay() {
     player.playOrPause();
-  }
-
-  @override
-  void show() {
-    // TODO: implement show
   }
 }

@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 abstract class VideoPlayer {
   Platform platform = Platform();
 
-  bool get isDesktop;
-
   Widget widget();
 
   void play();
@@ -14,8 +12,6 @@ abstract class VideoPlayer {
   void togglePlay();
   void stop();
   void seek(Duration duration);
-
-  void show();
 
   void setVolume(double value);
   void setRate(double rate);
