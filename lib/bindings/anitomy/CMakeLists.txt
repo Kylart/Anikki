@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 
 project(anitomy_library VERSION 1.0.0 LANGUAGES CXX)
 
+set (CMAKE_CXX_STANDARD 14)
+
 file(
   GLOB
   ANITOMY_FILES
@@ -10,7 +12,7 @@ file(
 )
 
 add_library(anitomy_library SHARED anitomy.cpp anitomy.def helpers.cpp helpers.h ${ANITOMY_FILES})
-add_executable(anitomy_test anitomy.cpp helpers.cpp ${ANITOMY_FILES})
+add_executable(anitomy anitomy.cpp helpers.cpp ${ANITOMY_FILES})
 
 set_target_properties(anitomy_library PROPERTIES
     PUBLIC_HEADER anitomy.h
