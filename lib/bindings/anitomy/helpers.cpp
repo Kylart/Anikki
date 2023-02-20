@@ -2,7 +2,7 @@
 
 std::wstring transform_string (char * str) {
   std::wstring to_parse;
-  size_t length = strlen(str);
+  size_t length = std::strlen(str);
   to_parse.reserve(length);
 
   for (size_t i = 0; i < length; i++) {
