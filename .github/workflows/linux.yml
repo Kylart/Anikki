@@ -21,7 +21,7 @@ jobs:
         run: flutter config --enable-linux-desktop
 
       - name: 'Debug build'
-        run: flutter build linux --debug --verbose
+        run: flutter build linux --debug
 
       - name: 'Test'
         run: flutter test
@@ -52,7 +52,7 @@ jobs:
         run: flutter pub get
 
       - name: 'Debug build'
-        run: flutter build apk --debug --verbose
+        run: flutter build apk --debug
 
       - name: 'Test'
         run: flutter test

@@ -17,7 +17,7 @@ jobs:
         run: flutter config --enable-windows-desktop
 
       - name: 'Debug build'
-        run: flutter build windows --debug --verbose
+        run: flutter build windows --debug
 
       - name: 'Test'
         run: flutter test
