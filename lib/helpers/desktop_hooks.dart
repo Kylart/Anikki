@@ -8,8 +8,10 @@ Future<void> setUpDesktop() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Must add this line.
   await windowManager.ensureInitialized();
-  
-  DartVLC.initialize();
+
+  if (Platform.isWindows || Platform.isLinux) {
+    DartVLC.initialize();
+  }
 
   WindowOptions windowOptions = const WindowOptions(
     minimumSize: Size(300, 400),
