@@ -49,6 +49,10 @@ class AnitomyParser {
 
     if (Platform.isWindows) {
       libraryPath = 'anitomy.dll';
+
+      if (Platform.environment.containsKey('FLUTTER_TEST')) {
+        libraryPath = path.join(Directory.current.path, 'build', 'windows', 'anitomy', 'Debug', 'anitomy.dll');
+      }
     }
 
     library = DynamicLibrary.open(libraryPath);
