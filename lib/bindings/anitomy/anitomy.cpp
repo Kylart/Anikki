@@ -7,7 +7,7 @@
 
 #include "helpers.h"
 
-#include "src/anitomy/anitomy.h"
+#include "lib/anitomy/anitomy.h"
 
 int main()
 {
