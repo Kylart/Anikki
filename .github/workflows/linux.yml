@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: 'Config'
+        run: flutter config --enable-linux-desktop
+
+      - name: 'Debug build'
+        run: flutter build linux --debug
+
+      - name: 'Test'
+        run: flutter test
+
+      - name: 'Release build'
+        run: flutter build linux

@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: 'Config'
+        run: flutter config --enable-windows-desktop
+
+      - name: 'Debug build'
+        run: flutter build windows --debug
+
+      - name: 'Test'
+        run: flutter test
+
+      - name: 'Release build'
+        run: flutter build windows
