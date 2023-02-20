@@ -136,3 +136,16 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
   install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
     COMPONENT Runtime)
 endif()
+
+
+add_subdirectory("anitomy")
+
+install(FILES "${anitomy_library_BINARY_DIR}/Release/libanitomy.so" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+  CONFIGURATIONS Profile;Release
+  COMPONENT Runtime)
+install(FILES "${anitomy_library_BINARY_DIR}/Profile/libanitomy.so" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+  CONFIGURATIONS Profile
+  COMPONENT Runtime)
+install(FILES "${anitomy_library_BINARY_DIR}/Debug/libanitomy.so" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
+  CONFIGURATIONS Debug
+  COMPONENT Runtime)
