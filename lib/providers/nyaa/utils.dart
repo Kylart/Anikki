@@ -1,7 +1,7 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
-import './types/main.dart';
+import 'package:kawanime/providers/nyaa/types/torrent.dart';
 
 extractFromHtml({required String data, required String baseUrl}) {
   List<Torrent> results = [];
