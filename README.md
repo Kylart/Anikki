@@ -1,16 +1,66 @@
-# kawanime
+# Name
+Name is to be determined. For now it is using KawAnime but this is highly subject to change in the future.
 
-A new Flutter project.
+## Features
 
-## Getting Started
+#### Done
+* Browse local anime files with Anilist information
+* Check what animes came out for a range of days
+* Download (almost) any anime on the fly
+* Embedded VLC player
 
-This project is a starting point for a Flutter application.
+#### To be done
+* Search for any torrent
+* Search for any anime information
+* Embedded Torrent client
+* Automatic anime watch list tracking
 
-A few resources to get you started if this is your first Flutter project:
+## Building
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Install [Flutter](https://flutter.dev) for you platform
+2. Clone this repo 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+git clone --recursive https://github.com/Kylart/kawanime-flutter
+```
+
+### For Desktop
+
+On your platform of choice
+```bash
+flutter build <macos / windows / linux>
+```
+
+### For Android
+```bash
+flutter build apk
+```
+
+### For iOS
+
+TO DO
+
+## Develop
+
+Run
+```bash
+flutter pub get
+```
+
+```bash
+flutter run
+```
+
+## Contributing
+Any contribution is appreciated.
+
+1. Fork it!
+2. Create your feature branch: git checkout -b my-new-feature
+3. Commit your changes: git commit -am 'Add some feature'
+4. Push to the branch: git push origin my-new-feature
+5. Submit a pull request.
+
+## License
+MIT License
+
+Copyright (c) Kylart
