@@ -48,8 +48,7 @@ class AnitomyParser {
     }
 
     if (Platform.isWindows) {
-      libraryPath = path.join(
-          Directory.current.path, 'lib', 'bindings', 'anitomy', 'build', 'Debug', 'anitomy.dll');
+      libraryPath = 'anitomy.dll';
     }
 
     library = DynamicLibrary.open(libraryPath);
