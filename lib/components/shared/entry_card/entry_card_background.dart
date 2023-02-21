@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class EntryCardBackground extends StatelessWidget {
@@ -35,9 +37,25 @@ class EntryCardBackground extends StatelessWidget {
                 ),
               ),
               if (episode != null)
-                CircleAvatar(
-                  child: Text(
-                    episode!,
+                ClipRect(
+                  child: ClipOval(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                      child: Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.3),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(episode!),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
             ],
