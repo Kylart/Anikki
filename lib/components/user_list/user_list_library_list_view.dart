@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:kawanime/components/shared/list_view_divider.dart';
 import 'package:kawanime/components/user_list/user_list_actions.dart';
 import 'package:kawanime/providers/local/types/file.dart';
 
@@ -13,9 +14,7 @@ class UserListLibraryListView extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemCount: entries.length,
-      separatorBuilder: (context, index) => const Divider(
-        height: 3.0,
-      ),
+      separatorBuilder: (context, index) => const ListViewDivider(),
       itemBuilder: (context, index) {
         final entry = entries[index];
         final coverImage = entry.media?.coverImage?.extraLarge ??
