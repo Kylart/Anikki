@@ -47,4 +47,4 @@ app.*.map.json
 /android/app/release
 
 lib/bindings/anitomy/build
-lib/bindings/anitomy/src
+.env
