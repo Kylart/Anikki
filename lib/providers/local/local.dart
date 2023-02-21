@@ -5,6 +5,7 @@ import 'package:anikki/helpers/hash.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 
+import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:anikki/bindings/anitomy/anitomy.dart';
 import 'package:anikki/providers/anilist/standalone.dart';
 import 'package:anikki/providers/local/types/file.dart';
@@ -12,14 +13,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 // ignore: prefer_mixin
-class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
+class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
   String? currentPath;
   List<LocalFile> currentFiles = [];
   final anilist = AnilistStandalone();
 
   bool get hasEntries => currentFiles.isNotEmpty;
-
-  bool isLoading = false;
 
   LocalStore() {
     init();
@@ -60,7 +59,6 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
   Future<void> retrieveFilesFromCurrentPath() async {
     try {
       isLoading = true;
-      notifyListeners();
 
       if (currentPath == null) return;
 
@@ -115,7 +113,6 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
       _sortLocalEntries();
 
       isLoading = false;
-      notifyListeners();
     } catch (e) {
       isLoading = false;
       rethrow;
