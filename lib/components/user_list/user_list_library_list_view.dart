@@ -11,9 +11,11 @@ class UserListLibraryListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
       itemCount: entries.length,
-      separatorBuilder: (context, index) => const Divider(),
+      separatorBuilder: (context, index) => const Divider(
+        height: 3.0,
+      ),
       itemBuilder: (context, index) {
         final entry = entries[index];
         final coverImage = entry.media?.coverImage?.extraLarge ??
@@ -84,7 +86,7 @@ class UserListLibraryListView extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () async => await deleteFile(entry, context),
+                    onPressed: () async => await playFile(entry, context),
                     icon: const Icon(Icons.play_arrow),
                     color: Theme.of(context).colorScheme.primary,
                   ),
