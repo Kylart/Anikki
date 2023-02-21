@@ -106,11 +106,31 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
         file.media = info[file.title != null ? getId(name: file.title!) : ''];
       }
 
+      // Ordering files using name and episode
+      _sortLocalEntries();
+
       isLoading = false;
       notifyListeners();
     } catch (e) {
       isLoading = false;
       rethrow;
     }
+  }
+
+  void _sortLocalEntries() {
+    currentFiles.sort((a, b) {
+      final aTitle = a.title ?? '';
+      final bTitle = b.title ?? '';
+      final aEp = int.parse(a.episode ?? '0');
+      final bEp = int.parse(b.episode ?? '0');
+
+      final comparisonResult = aTitle.compareTo(bTitle);
+
+      if (comparisonResult != 0) {
+        return comparisonResult;
+      }
+
+      return bEp.compareTo(aEp);
+    });
   }
 }
