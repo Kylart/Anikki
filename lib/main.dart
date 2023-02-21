@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:anikki/providers/local/local.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
@@ -18,6 +19,9 @@ void main() async {
 
   // Register a custom protocol
   await protocolHandler.register('anikki');
+
+  // Register env variables
+  await dotenv.load();
 
   runApp(
     /// Providers are above [Anikki] instead of inside it, so that tests
