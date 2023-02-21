@@ -51,7 +51,10 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<void> playFile(LocalFile file) async {
-    await OpenAppFile.open(file.path);
+    /// We need to escape the brackets because they are not escaped properly
+    /// by OpenAppFile.
+    await OpenAppFile.open(
+        file.path.replaceAll('(', '\\(').replaceAll(')', '\\)'));
   }
 
   Future<void> retrieveFilesFromCurrentPath() async {
@@ -88,6 +91,8 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin {
 
         currentFiles.add(entry);
       }
+
+      notifyListeners();
 
       final List<String> entryNames = [];
 
