@@ -10,6 +10,8 @@ cd build
 cmake ..
 cmake --build .
 
-cd ../..
+cd ../../
 
 export KAWANIME_BINDINGS_DIRECTORY="$(pwd)"
+
+cd ../../
