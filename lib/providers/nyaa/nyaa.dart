@@ -15,7 +15,9 @@ class NyaaStore with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<List<Torrent>> search(String term) async {
     try {
-      if (results.containsKey(term) && results[term]!.isNotEmpty) return results[term]!;
+      if (results.containsKey(term) && results[term]!.isNotEmpty) {
+        return results[term]!;
+      }
 
       final result = await nyaa.search(term: term);
 
