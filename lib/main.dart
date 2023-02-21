@@ -1,4 +1,3 @@
-import 'package:anikki/components/user_list/player_overlay.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
