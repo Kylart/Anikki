@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -10,37 +9,20 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 72,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              flex: 1,
-              child: Row(
-                // children: const [
-                //   FlutterLogo(
-                //     size: 52,
-                //   ),
-                //   Text('App Name'),
-                // ],
-              ),
+      width: MediaQuery.of(context).size.width * 0.4,
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(
+            minWidth: 400,
+            maxWidth: 700,
+          ),
+          child: const TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Search anything',
+              suffixIcon: Icon(Icons.search),
             ),
-            const Flexible(
-              flex: 2,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Search anything',
-                  suffixIcon: Icon(Icons.search)
-                ),
-              ),
-            ),
-            const Flexible(
-              flex: 1,
-              child: SizedBox(),
-            )
-          ],
+          ),
         ),
       ),
     );
