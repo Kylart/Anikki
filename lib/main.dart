@@ -1,6 +1,7 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/providers/local/local.dart';
@@ -12,8 +13,11 @@ import 'package:anikki/providers/user_preferences.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/nyaa/nyaa.dart';
 
-void main() {
+void main() async {
   if (isDesktop()) setUpDesktop();
+
+  // Register a custom protocol
+  await protocolHandler.register('anikki');
 
   runApp(
     /// Providers are above [Anikki] instead of inside it, so that tests
@@ -31,8 +35,35 @@ void main() {
   );
 }
 
-class Anikki extends StatelessWidget {
+class Anikki extends StatefulWidget {
   const Anikki({super.key});
+
+  @override
+  State<Anikki> createState() => _AnikkiState();
+}
+
+class _AnikkiState extends State<Anikki> with ProtocolListener {
+  String protocolUrl = 'Anikki';
+
+  @override
+  void initState() {
+    protocolHandler.addListener(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    protocolHandler.removeListener(this);
+    super.dispose();
+  }
+
+  @override
+  void onProtocolUrlReceived(String url) {
+    String log = 'Url received: $url)';
+    setState(() {
+      protocolUrl = log;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,22 +81,13 @@ class Anikki extends StatelessWidget {
       themeMode: context.watch<UserPreferences>().darkTheme
           ? ThemeMode.dark
           : ThemeMode.light,
-      home: const AnikkiPage(),
-    );
-  }
-}
-
-class AnikkiPage extends StatelessWidget {
-  const AnikkiPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: ((BuildContext context, BoxConstraints constraints) {
-        return constraints.maxWidth > 600
-            ? const LandscapeLayout()
-            : const PortraitLayout();
-      }),
+      home: LayoutBuilder(
+        builder: ((BuildContext context, BoxConstraints constraints) {
+          return constraints.maxWidth > 600
+              ? const LandscapeLayout()
+              : const PortraitLayout();
+        }),
+      ),
     );
   }
 }
