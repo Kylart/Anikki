@@ -1,3 +1,4 @@
+import 'package:anikki/components/user_list/player_overlay.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -39,35 +40,8 @@ void main() async {
   );
 }
 
-class Anikki extends StatefulWidget {
+class Anikki extends StatelessWidget {
   const Anikki({super.key});
-
-  @override
-  State<Anikki> createState() => _AnikkiState();
-}
-
-class _AnikkiState extends State<Anikki> with ProtocolListener {
-  String protocolUrl = 'Anikki';
-
-  @override
-  void initState() {
-    protocolHandler.addListener(this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    protocolHandler.removeListener(this);
-    super.dispose();
-  }
-
-  @override
-  void onProtocolUrlReceived(String url) {
-    String log = 'Url received: $url)';
-    setState(() {
-      protocolUrl = log;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

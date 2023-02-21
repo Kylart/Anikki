@@ -1,20 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:graphql/client.dart';
-import 'package:anikki/helpers/mixins/loading.dart';
+import 'package:protocol_handler/protocol_handler.dart';
 
+import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:anikki/providers/anilist/info.dart';
 import 'package:anikki/providers/anilist/schedule.dart';
 import 'package:anikki/providers/anilist/standalone.dart';
-import 'package:anikki/providers/anilist/trendings.dart';
 import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 // ignore: prefer_mixin
-class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
-  late GraphQLClient client;
-  late AnilistTrendings trendings;
+class AnilistStore
+    with
+        ChangeNotifier,
+        DiagnosticableTreeMixin,
+        LoadingMixin,
+        ProtocolListener {
   late AnilistAiringSchedule airingSchedule;
   late AnilistInfo info;
 
@@ -31,14 +33,58 @@ class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
   }
 
   Future<void> init() async {
-    final AnilistStandalone anilist = AnilistStandalone();
+    protocolHandler.addListener(this);
 
-    airingSchedule = anilist.airingSchedule;
-    trendings = anilist.trendings;
-    info = anilist.info;
+    // Retrieve previous token if any
+    setupClient();
 
     await getNews(currentRange);
     notifyListeners();
+  }
+
+  void setupClient({Map<String, String>? headers}) {
+    final AnilistStandalone anilist = AnilistStandalone(headers: headers);
+
+    airingSchedule = anilist.airingSchedule;
+    info = anilist.info;
+  }
+
+  final availableHosts = [
+    'anilist-auth',
+  ];
+
+  @override
+  void onProtocolUrlReceived(String url) {
+    final uri = Uri.parse(url);
+
+    /**
+     * On `anikki://anilist-auth?blabla=hello`
+     * 
+     * final scheme = uri.scheme; // anikki
+     * final host = uri.host; // anilist-auth
+     * final query = uri.query; // blabla=hello
+     * final params = uri.queryParameters; // {blabla: hello}
+     */
+
+    if (!availableHosts.contains(uri.host)) return;
+
+    handleAuth(uri);
+  }
+
+  void handleAuth(Uri uri) {
+    if (uri.host != 'anilist-auth') return;
+
+    final token = uri.queryParameters['access_token'];
+
+    if (token == null) return;
+
+    final headers = {
+      'Access-Token': 'Bearer $token',
+    };
+
+    setupClient(headers: headers);
+
+    // TODO: Store access token somehow
   }
 
   Future<void> getNews(DateTimeRange dateRange) async {

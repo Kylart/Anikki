@@ -1,18 +1,19 @@
 import 'package:graphql/client.dart';
-import 'package:anikki/providers/anilist/schedule.dart';
 
-import './trendings.dart';
-import './info.dart';
+import 'package:anikki/providers/anilist/info.dart';
+import 'package:anikki/providers/anilist/schedule.dart';
 
 class AnilistStandalone {
   final String baseUrl = 'https://graphql.anilist.co';
   late GraphQLClient client;
-  late AnilistTrendings trendings;
   late AnilistAiringSchedule airingSchedule;
   late AnilistInfo info;
 
-  AnilistStandalone() {
-    final httpLink = HttpLink(baseUrl);
+  AnilistStandalone({Map<String, String>? headers}) {
+    final httpLink = HttpLink(
+      baseUrl,
+      defaultHeaders: headers ?? {},
+    );
 
     client = GraphQLClient(
       /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
@@ -21,7 +22,6 @@ class AnilistStandalone {
     );
 
     airingSchedule = AnilistAiringSchedule(client: client);
-    trendings = AnilistTrendings(client: client);
     info = AnilistInfo(client: client);
   }
 }
