@@ -24,6 +24,15 @@ Name is to be determined. For now it is using KawAnime but this is highly subjec
 git clone --recursive https://github.com/Kylart/kawanime-flutter
 ```
 
+If you are on MacOS, run
+
+```bash
+cd kawanime-flutter
+source ./scripts/build_bindings_macos.sh
+```
+
+This is for the building process to be able to find native dependencies and link them properly.
+
 ### For Desktop
 
 On your platform of choice

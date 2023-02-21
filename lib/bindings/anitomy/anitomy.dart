@@ -43,8 +43,7 @@ class AnitomyParser {
     String libraryPath = 'libanitomy.so';
 
     if (Platform.isMacOS) {
-      libraryPath =
-          path.join(Directory.current.path, 'libanitomy.dylib');
+      libraryPath ='libanitomy.1.0.0.dylib';
     }
 
     if (Platform.isWindows) {
