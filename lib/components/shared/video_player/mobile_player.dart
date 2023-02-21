@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
-import 'package:kawanime/components/shared/video_player/video_player.dart';
+import 'package:anikki/components/shared/video_player/video_player.dart';
 
 class MobilePlayer<T> implements VideoPlayer {
   MobilePlayer({required this.input}) {

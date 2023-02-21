@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 
-import 'package:kawanime/components/shared/video_player/desktop_player.dart';
+import 'package:anikki/components/shared/video_player/desktop_player.dart';
 import 'package:window_manager/window_manager.dart';
-
 
 // Inspired by https://github.com/alexmercerind/dart_vlc/blob/master/lib/src/widgets/controls.dart
 class DesktopPlayerControls extends StatefulWidget {
@@ -64,8 +63,7 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           child: Column(
             children: [
               StreamBuilder<PositionState>(

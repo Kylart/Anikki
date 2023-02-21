@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:kawanime/components/news/news_actions.dart';
-import 'package:kawanime/components/shared/grid_card_action.dart';
-import 'package:kawanime/helpers/desktop_hooks.dart';
-import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
+import 'package:anikki/components/news/news_actions.dart';
+import 'package:anikki/components/shared/grid_card_action.dart';
+import 'package:anikki/helpers/desktop_hooks.dart';
+import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 
 class NewsCardActions extends StatelessWidget {
   const NewsCardActions({super.key, required this.onBack, required this.entry});

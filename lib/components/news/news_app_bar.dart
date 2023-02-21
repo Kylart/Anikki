@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/providers/anilist/anilist.dart';
+import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:provider/provider.dart';
 
 class NewsAppBar extends StatefulWidget {

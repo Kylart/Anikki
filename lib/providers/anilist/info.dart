@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:graphql/client.dart';
 
-import 'package:kawanime/helpers/hash.dart';
-import 'package:kawanime/providers/anilist/queries/media.dart';
-import 'package:kawanime/providers/anilist/types/media/media.dart';
+import 'package:anikki/helpers/hash.dart';
+import 'package:anikki/providers/anilist/queries/media.dart';
+import 'package:anikki/providers/anilist/types/media/media.dart';
 
 class AnilistInfo {
   AnilistInfo({required this.client});
@@ -40,7 +40,6 @@ class AnilistInfo {
           results.putIfAbsent(key, () => Media.fromMap(data[0]));
         });
       }
-
 
       if (interval != -1) {
         currentIndex += interval;

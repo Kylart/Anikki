@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:kawanime/helpers/hash.dart';
+import 'package:anikki/helpers/hash.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 
-import 'package:kawanime/bindings/anitomy/anitomy.dart';
-import 'package:kawanime/providers/anilist/standalone.dart';
-import 'package:kawanime/providers/local/types/file.dart';
+import 'package:anikki/bindings/anitomy/anitomy.dart';
+import 'package:anikki/providers/anilist/standalone.dart';
+import 'package:anikki/providers/local/types/file.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool

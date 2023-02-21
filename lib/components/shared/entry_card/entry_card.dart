@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:kawanime/components/news/news_card_actions.dart';
-import 'package:kawanime/components/shared/entry_card/entry_card_background.dart';
-import 'package:kawanime/components/user_list/local_card_actions.dart';
-import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
-import 'package:kawanime/providers/local/types/file.dart';
+import 'package:anikki/components/news/news_card_actions.dart';
+import 'package:anikki/components/shared/entry_card/entry_card_background.dart';
+import 'package:anikki/components/user_list/local_card_actions.dart';
+import 'package:anikki/providers/anilist/types/schedule_entry.dart';
+import 'package:anikki/providers/local/types/file.dart';
 
 enum CardType { local, news, watchList }
 

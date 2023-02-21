@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/components/shared/download_results_dialog/download_results_dialog_list_view.dart';
-import 'package:kawanime/providers/nyaa/nyaa.dart';
+import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_list_view.dart';
+import 'package:anikki/providers/nyaa/nyaa.dart';
 import 'package:provider/provider.dart';
 
 class DownloadResultsDialog extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:graphql/client.dart';
-import 'package:kawanime/helpers/season.dart';
-import 'package:kawanime/providers/anilist/types/media/media.dart';
+import 'package:anikki/helpers/season.dart';
+import 'package:anikki/providers/anilist/types/media/media.dart';
 
 import './queries/trends.dart';
 

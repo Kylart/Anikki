@@ -1,5 +1,4 @@
-# Name
-Name is to be determined. For now it is using KawAnime but this is highly subject to change in the future.
+# Anikki
 
 ## Features
 
@@ -21,13 +20,13 @@ Name is to be determined. For now it is using KawAnime but this is highly subjec
 2. Clone this repo 
 
 ```bash
-git clone --recursive https://github.com/Kylart/kawanime-flutter
+git clone --recursive https://github.com/Kylart/anikki-flutter
 ```
 
 If you are on MacOS, run
 
 ```bash
-cd kawanime-flutter
+cd anikki-flutter
 source ./scripts/build_bindings_macos.sh
 ```
 

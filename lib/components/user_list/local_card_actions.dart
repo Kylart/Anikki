@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:kawanime/components/user_list/user_list_actions.dart';
-import 'package:kawanime/components/shared/grid_card_action.dart';
-import 'package:kawanime/helpers/desktop_hooks.dart';
-import 'package:kawanime/providers/local/types/file.dart';
+import 'package:anikki/components/user_list/user_list_actions.dart';
+import 'package:anikki/components/shared/grid_card_action.dart';
+import 'package:anikki/helpers/desktop_hooks.dart';
+import 'package:anikki/providers/local/types/file.dart';
 
 class LocalCardActions extends StatelessWidget {
   const LocalCardActions(

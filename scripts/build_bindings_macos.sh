@@ -2,7 +2,6 @@
 
 # build anitomy dylib
 cd lib/bindings/anitomy/
-ls
 [ ! -d "build" ] && mkdir build
 
 cd build
@@ -12,6 +11,6 @@ cmake --build .
 
 cd ../../
 
-export KAWANIME_BINDINGS_DIRECTORY="$(pwd)"
+export ANIKKI_BINDINGS_DIRECTORY="$(pwd)"
 
 cd ../../

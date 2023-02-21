@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/components/user_list/user_list_app_bar.dart';
+import 'package:anikki/components/user_list/user_list_app_bar.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:kawanime/layouts/landscape/library.dart';
-import 'package:kawanime/providers/local/local.dart';
-import 'package:kawanime/providers/user_preferences.dart';
+import 'package:anikki/layouts/landscape/library.dart';
+import 'package:anikki/providers/local/local.dart';
+import 'package:anikki/providers/user_preferences.dart';
 import 'package:provider/provider.dart';
 
 class UserList extends StatefulWidget {

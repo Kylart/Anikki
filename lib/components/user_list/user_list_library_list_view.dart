@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:kawanime/components/shared/list_view_divider.dart';
-import 'package:kawanime/components/user_list/user_list_actions.dart';
-import 'package:kawanime/providers/local/types/file.dart';
+import 'package:anikki/components/shared/list_view_divider.dart';
+import 'package:anikki/components/user_list/user_list_actions.dart';
+import 'package:anikki/providers/local/types/file.dart';
 
 class UserListLibraryListView extends StatelessWidget {
   final List<LocalFile> entries;

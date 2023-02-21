@@ -1,6 +1,6 @@
 import 'package:http/http.dart';
 
-import 'package:kawanime/providers/nyaa/types/torrent.dart';
+import 'package:anikki/providers/nyaa/types/torrent.dart';
 
 import './utils.dart' as utils;
 

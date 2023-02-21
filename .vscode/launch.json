@@ -5,29 +5,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "kawanime",
+      "name": "anikki",
       "request": "launch",
       "type": "dart",
       "env": {
-        "KAWANIME_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
+        "ANIKKI_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
       }
     },
     {
-      "name": "kawanime (profile mode)",
+      "name": "anikki (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
       "env": {
-        "KAWANIME_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
+        "ANIKKI_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
       }
     },
     {
-      "name": "kawanime (release mode)",
+      "name": "anikki (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release",
       "env": {
-        "KAWANIME_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
+        "ANIKKI_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
       }
     }
   ]

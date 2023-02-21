@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:kawanime/components/shared/download_results_dialog/download_results_dialog.dart';
-import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
+import 'package:anikki/components/shared/download_results_dialog/download_results_dialog.dart';
+import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 
 void showAvailableTorrents(BuildContext context, ScheduleEntry entry) {
   if (entry.media?.title == null) return;

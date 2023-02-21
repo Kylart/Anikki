@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/components/shared/custom_grid_view.dart';
-import 'package:kawanime/components/user_list/user_list_library_list_view.dart';
-import 'package:kawanime/providers/local/local.dart';
+import 'package:anikki/components/shared/custom_grid_view.dart';
+import 'package:anikki/components/user_list/user_list_library_list_view.dart';
+import 'package:anikki/providers/local/local.dart';
 import 'package:provider/provider.dart';
 
 class Library extends StatefulWidget {

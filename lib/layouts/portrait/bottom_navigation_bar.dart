@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:kawanime/providers/navigation.dart';
+import 'package:anikki/providers/navigation.dart';
 import 'package:provider/provider.dart';
-
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key});
@@ -30,8 +29,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
       ],
       currentIndex: context.watch<Navigation>().index,
-        selectedItemColor: Colors.tealAccent,
-        unselectedItemColor: Theme.of(context).colorScheme.background,
+      selectedItemColor: Colors.tealAccent,
+      unselectedItemColor: Theme.of(context).colorScheme.background,
       onTap: (index) {
         context.read<Navigation>().changeToPage(index);
       },

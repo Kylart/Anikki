@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:kawanime/components/shared/video_player/desktop_player.dart';
-import 'package:kawanime/components/shared/video_player/mobile_player.dart';
-import 'package:kawanime/components/shared/video_player/video_player.dart';
-import 'package:kawanime/components/user_list/player_overlay.dart';
-import 'package:kawanime/helpers/desktop_hooks.dart';
-import 'package:kawanime/providers/local/local.dart';
-import 'package:kawanime/providers/local/types/file.dart';
+import 'package:anikki/components/shared/video_player/desktop_player.dart';
+import 'package:anikki/components/shared/video_player/mobile_player.dart';
+import 'package:anikki/components/shared/video_player/video_player.dart';
+import 'package:anikki/components/user_list/player_overlay.dart';
+import 'package:anikki/helpers/desktop_hooks.dart';
+import 'package:anikki/providers/local/local.dart';
+import 'package:anikki/providers/local/types/file.dart';
 import 'package:provider/provider.dart';
 
 deleteFile(LocalFile entry, BuildContext context) {

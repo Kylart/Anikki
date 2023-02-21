@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 
-import 'package:kawanime/providers/anilist/queries/airing_schedule.dart';
-import 'package:kawanime/providers/anilist/types/page_info.dart';
-import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
-import 'package:kawanime/providers/anilist/types/schedule_entry_page.dart';
+import 'package:anikki/providers/anilist/queries/airing_schedule.dart';
+import 'package:anikki/providers/anilist/types/page_info.dart';
+import 'package:anikki/providers/anilist/types/schedule_entry.dart';
+import 'package:anikki/providers/anilist/types/schedule_entry_page.dart';
 
 class AnilistAiringSchedule with ChangeNotifier {
   AnilistAiringSchedule({required this.client});

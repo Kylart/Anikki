@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/providers/navigation.dart';
+import 'package:anikki/providers/navigation.dart';
 import 'package:provider/provider.dart';
-
 
 class CustomNavigationRail extends StatelessWidget {
   const CustomNavigationRail({

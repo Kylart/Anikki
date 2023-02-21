@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/components/shared/entry_card/entry_card.dart';
-import 'package:kawanime/providers/anilist/types/schedule_entry.dart';
-import 'package:kawanime/providers/local/types/file.dart';
+import 'package:anikki/components/shared/entry_card/entry_card.dart';
+import 'package:anikki/providers/anilist/types/schedule_entry.dart';
+import 'package:anikki/providers/local/types/file.dart';
 
 enum GridViewType { local, watchList, news }
 

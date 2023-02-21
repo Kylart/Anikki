@@ -1,4 +1,4 @@
-import 'package:kawanime/bindings/anitomy/anitomy.dart';
+import 'package:anikki/bindings/anitomy/anitomy.dart';
 import 'package:test/test.dart';
 
 const name1 = '[Ouroboros]_Fullmetal_Alchemist_Brotherhood_01.mkv';
@@ -8,13 +8,13 @@ const name3 = '[Ouroboros]_Fullmetal_Alchemist_Brotherhood.mkv';
 void main() {
   group('Can parse successfully', () {
     late AnitomyParser parser;
-    
+
     setUp(() {
       parser = AnitomyParser(inputString: name1);
     });
 
     test('Gets the right title', () {
-    final parser = AnitomyParser(inputString: name1);
+      final parser = AnitomyParser(inputString: name1);
       expect(parser.title, equals('Fullmetal Alchemist Brotherhood'));
     });
     test('Gets the right episode', () {
@@ -31,7 +31,7 @@ void main() {
 
   group('Give null if cannot parse a value', () {
     late AnitomyParser parser;
-    
+
     setUp(() {
       parser = AnitomyParser(inputString: name3);
     });
@@ -48,7 +48,7 @@ void main() {
   group('Can have multiple parser at the same time', () {
     late AnitomyParser parser1;
     late AnitomyParser parser2;
-    
+
     setUp(() {
       parser1 = AnitomyParser(inputString: name1);
       parser2 = AnitomyParser(inputString: name2);
@@ -77,11 +77,10 @@ void main() {
         expect(parser2.releaseGroup, equals('Nyaa'));
       });
     });
-    
+
     tearDown(() {
       parser1.dispose();
       parser2.dispose();
     });
-
   });
 }

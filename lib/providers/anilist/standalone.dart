@@ -1,5 +1,5 @@
 import 'package:graphql/client.dart';
-import 'package:kawanime/providers/anilist/schedule.dart';
+import 'package:anikki/providers/anilist/schedule.dart';
 
 import './trendings.dart';
 import './info.dart';

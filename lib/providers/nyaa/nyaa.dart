@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:kawanime/providers/nyaa/standalone.dart';
-import 'package:kawanime/providers/nyaa/types/torrent.dart';
+import 'package:anikki/providers/nyaa/standalone.dart';
+import 'package:anikki/providers/nyaa/types/torrent.dart';
 import 'package:quiver/collection.dart';
 
 class NyaaStore with ChangeNotifier, DiagnosticableTreeMixin {

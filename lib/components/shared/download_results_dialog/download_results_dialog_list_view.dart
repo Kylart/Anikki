@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kawanime/providers/nyaa/types/torrent.dart';
+import 'package:anikki/providers/nyaa/types/torrent.dart';
 import 'package:open_app_file/open_app_file.dart';
 
 class DownloadResultsDialogListView extends StatelessWidget {
