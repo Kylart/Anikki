@@ -1,5 +1,6 @@
 import 'package:graphql/client.dart';
 
+import 'package:anikki/providers/anilist/auth.dart';
 import 'package:anikki/providers/anilist/info.dart';
 import 'package:anikki/providers/anilist/schedule.dart';
 
@@ -8,6 +9,7 @@ class AnilistStandalone {
   late GraphQLClient client;
   late AnilistAiringSchedule airingSchedule;
   late AnilistInfo info;
+  late AnilistAuth auth;
 
   AnilistStandalone({Map<String, String>? headers}) {
     final httpLink = HttpLink(
@@ -23,5 +25,6 @@ class AnilistStandalone {
 
     airingSchedule = AnilistAiringSchedule(client: client);
     info = AnilistInfo(client: client);
+    auth = AnilistAuth(client: client);
   }
 }
