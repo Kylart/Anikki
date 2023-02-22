@@ -4,7 +4,9 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   dart_vlc
+  protocol_handler
   screen_retriever
+  url_launcher_windows
   window_manager
 )
 

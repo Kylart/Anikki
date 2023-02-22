@@ -13,6 +13,7 @@ class UserPreferences with ChangeNotifier, DiagnosticableTreeMixin {
 
     darkTheme = prefs.getBool('user_preferences_darkTheme') ?? true;
     localDirecotry = prefs.getString('user_preferences_localDirectory') ?? '';
+    anilistAccessToken = prefs.getString('user_preferences_anilistAccessToken');
   }
 
   /// Whether dark theme is enabled or not
@@ -39,12 +40,30 @@ class UserPreferences with ChangeNotifier, DiagnosticableTreeMixin {
     prefs.setString('user_preferences_localDirectory', _localDirectory);
   }
 
+  /// Access token used by the anilist client if any
+  String? _anilistAccessToken = '';
+
+  String? get anilistAccessToken => _anilistAccessToken;
+
+  set anilistAccessToken(String? anilistAccessToken) {
+    _anilistAccessToken = anilistAccessToken;
+    notifyListeners();
+
+    if (anilistAccessToken == null) {
+      prefs.remove('user_preferences_anilistAccessToken');
+    } else {
+      prefs.setString(
+          'user_preferences_anilistAccessToken', anilistAccessToken);
+    }
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
 
     properties.add(DiagnosticsProperty<bool>('_darkTheme', _darkTheme));
-    properties.add(DiagnosticsProperty<bool>('_localDirectory', _darkTheme));
+    properties.add(StringProperty('_localDirectory', _localDirectory));
+    properties.add(StringProperty('_anilistAccessToken', _anilistAccessToken));
     properties.add(DiagnosticsProperty<SharedPreferences>('prefs', prefs));
   }
 }
