@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PlayerOverlay extends ModalRoute<void> {
+class FadeOverlay extends ModalRoute<void> {
   final Widget child;
   final Future<void> Function() onClose;
 
-  PlayerOverlay({required this.child, required this.onClose});
+  FadeOverlay({required this.child, required this.onClose});
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 500);

@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:anikki/components/shared/video_player/desktop_player.dart';
 import 'package:anikki/components/shared/video_player/mobile_player.dart';
 import 'package:anikki/components/shared/video_player/video_player.dart';
-import 'package:anikki/components/user_list/player_overlay.dart';
+import 'package:anikki/components/shared/fade_overlay.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/providers/local/local.dart';
 import 'package:anikki/providers/local/types/file.dart';
@@ -49,7 +50,7 @@ Future<void> playFile(LocalFile entry, BuildContext context) async {
         : MobilePlayer(input: entry.file);
 
     Navigator.of(context).push(
-      PlayerOverlay(
+      FadeOverlay(
         child: player.widget(),
         onClose: player.stop,
       ),
