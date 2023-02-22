@@ -1,22 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:protocol_handler/protocol_handler.dart';
-
 import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:anikki/providers/anilist/info.dart';
 import 'package:anikki/providers/anilist/schedule.dart';
 import 'package:anikki/providers/anilist/standalone.dart';
 import 'package:anikki/providers/anilist/types/schedule_entry.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 // ignore: prefer_mixin
-class AnilistStore
-    with
-        ChangeNotifier,
-        DiagnosticableTreeMixin,
-        LoadingMixin,
-        ProtocolListener {
+class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
   late AnilistAiringSchedule airingSchedule;
   late AnilistInfo info;
 
@@ -33,10 +27,16 @@ class AnilistStore
   }
 
   Future<void> init() async {
-    protocolHandler.addListener(this);
-
     // Retrieve previous token if any
-    setupClient();
+    final prefs = await SharedPreferences.getInstance();
+    final anilistAccessToken =
+        prefs.getString('user_preferences_anilistAccessToken');
+
+    setupClient(
+      headers: anilistAccessToken != null
+          ? getDefaultHeaders(accessToken: anilistAccessToken)
+          : null,
+    );
 
     await getNews(currentRange);
     notifyListeners();
@@ -49,42 +49,12 @@ class AnilistStore
     info = anilist.info;
   }
 
-  final availableHosts = [
-    'anilist-auth',
-  ];
-
-  @override
-  void onProtocolUrlReceived(String url) {
-    final uri = Uri.parse(url);
-
-    /**
-     * On `anikki://anilist-auth?blabla=hello`
-     * 
-     * final scheme = uri.scheme; // anikki
-     * final host = uri.host; // anilist-auth
-     * final query = uri.query; // blabla=hello
-     * final params = uri.queryParameters; // {blabla: hello}
-     */
-
-    if (!availableHosts.contains(uri.host)) return;
-
-    handleAuth(uri);
-  }
-
-  void handleAuth(Uri uri) {
-    if (uri.host != 'anilist-auth') return;
-
-    final token = uri.queryParameters['access_token'];
-
-    if (token == null) return;
-
-    final headers = {
-      'Access-Token': 'Bearer $token',
+  Map<String, String> getDefaultHeaders({required String accessToken}) {
+    return {
+      'Access-Token': 'Bearer $accessToken',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     };
-
-    setupClient(headers: headers);
-
-    // TODO: Store access token somehow
   }
 
   Future<void> getNews(DateTimeRange dateRange) async {
