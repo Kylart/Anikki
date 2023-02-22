@@ -12,7 +12,6 @@ class Torrent {
   String completed;
   String status;
 
-
   Torrent({
     required this.id,
     required this.name,

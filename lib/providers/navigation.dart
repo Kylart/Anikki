@@ -11,7 +11,7 @@ class Navigation with ChangeNotifier, DiagnosticableTreeMixin {
 
   int get index => _selectedIndex;
 
-  set index (value) {
+  set index(value) {
     _selectedIndex = value;
     notifyListeners();
   }
@@ -24,7 +24,7 @@ class Navigation with ChangeNotifier, DiagnosticableTreeMixin {
     );
 
     /// This helps keep the page controller on the same page
-    /// when changing layouts. 
+    /// when changing layouts.
     pageController = PageController(initialPage: index);
   }
 
@@ -32,6 +32,7 @@ class Navigation with ChangeNotifier, DiagnosticableTreeMixin {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(IntProperty('_selectedIndex', _selectedIndex));
-    properties.add(DiagnosticsProperty<PageController>('pageController', pageController));
+    properties.add(
+        DiagnosticsProperty<PageController>('pageController', pageController));
   }
 }
