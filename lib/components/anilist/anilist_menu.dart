@@ -1,30 +1,34 @@
 import 'package:anikki/components/anilist/anilist_auth.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
+import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_icons/simple_icons.dart';
 
 enum AnilistMenuItem {
   auth,
-  me,
   logout,
 }
 
-class AnilistMenu extends StatefulWidget {
+class AnilistMenu extends StatefulWidget with ProtocolListener {
   const AnilistMenu({super.key});
 
   @override
   State<AnilistMenu> createState() => _AnilistMenuState();
 }
 
-class _AnilistMenuState extends State<AnilistMenu> {
+class _AnilistMenuState extends State<AnilistMenu>
+    with ProtocolListener, AnilistAuth {
   @override
   Widget build(BuildContext context) {
     final store = context.watch<AnilistStore>();
 
     return PopupMenuButton<AnilistMenuItem>(
-      tooltip: 
-        store.isConnected
+      onSelected: (value) async {
+        if (value == AnilistMenuItem.auth) login(context);
+        if (value == AnilistMenuItem.logout) logout(context);
+      },
+      tooltip: store.isConnected
           ? 'Connected to Anilist as ${store.me!.name}'
           : 'Anilist',
       icon: store.isConnected && store.me?.avatar?.medium != null
@@ -37,12 +41,24 @@ class _AnilistMenuState extends State<AnilistMenu> {
             ),
       itemBuilder: (BuildContext context) => [
         if (!store.isConnected)
-          const PopupMenuItem<AnilistMenuItem>(
-            child: AnilistAuth(),
+          PopupMenuItem<AnilistMenuItem>(
+            value: AnilistMenuItem.auth,
+            // onTap: () async => await login(context),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: Text('Log in'),
+                ),
+                Icon(Icons.open_in_new),
+              ],
+            ),
           ),
         if (store.isConnected)
           PopupMenuItem<AnilistMenuItem>(
-            onTap: store.logout,
+            // onTap: () async => await logout(context),
+            value: AnilistMenuItem.logout,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [

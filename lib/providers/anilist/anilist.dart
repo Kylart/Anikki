@@ -60,6 +60,7 @@ class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
 
     try {
       me = await auth.getMe();
+      notifyListeners();
     } on AnilistNotConnectedException {
       /// User is not logged in anymore and needs to log in again
       await logout();

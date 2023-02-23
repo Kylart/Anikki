@@ -1,5 +1,3 @@
-import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/user_preferences.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,14 +5,11 @@ import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AnilistAuth extends StatefulWidget {
-  const AnilistAuth({super.key});
+import 'package:anikki/components/anilist/anilist_menu.dart';
+import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/providers/user_preferences.dart';
 
-  @override
-  State<AnilistAuth> createState() => _AnilistAuthState();
-}
-
-class _AnilistAuthState extends State<AnilistAuth> with ProtocolListener {
+mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
   final availableHosts = [
     'anilist-auth',
   ];
@@ -67,68 +62,63 @@ class _AnilistAuthState extends State<AnilistAuth> with ProtocolListener {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        final anilistStore = context.read<AnilistStore>();
-        final prefsStore = context.read<UserPreferences>();
-
-        launchUrl(oauthUrl);
-        await showConnectionDialog(context, false);
-
-        if (accessToken == null) return;
-
-        final headers =
-            anilistStore.getDefaultHeaders(accessToken: accessToken!);
-
-        anilistStore.setupClient(headers: headers);
-        prefsStore.anilistAccessToken = accessToken;
-
-        if (mounted) await showConnectionDialog(context, true);
+  Future<void> showConnectionDialog(
+      BuildContext context, bool connected) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        if (connected) {
+          return AlertDialog(
+            title: const Text('Connected to Anilist'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        } else {
+          return AlertDialog(
+            title: const Text('Connecting to Anilist'),
+            content: const Text(
+                'Please press Next once you have authorized Anikki on Anilsit'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Next'),
+              ),
+            ],
+          );
+        }
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Text('Log in'),
-          Icon(Icons.open_in_new),
-        ],
-      ),
     );
   }
-}
 
-Future<void> showConnectionDialog(BuildContext context, bool connected) async {
-  await showDialog(
-    context: context,
-    builder: (context) {
-      if (connected) {
-        return AlertDialog(
-          title: const Text('Connected to Anilist'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      } else {
-        return AlertDialog(
-          title: const Text('Connecting to Anilist'),
-          content: const Text(
-              'Please press Next once you have authorized Anikki on Anilsit'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Next'),
-            ),
-          ],
-        );
-      }
-    },
-  );
+  Future<void> login(BuildContext context) async {
+    final anilistStore = context.read<AnilistStore>();
+    final prefsStore = context.read<UserPreferences>();
+
+    launchUrl(oauthUrl);
+    await showConnectionDialog(context, false);
+
+    if (accessToken == null) return;
+
+    final headers = anilistStore.getDefaultHeaders(accessToken: accessToken!);
+
+    anilistStore.setupClient(headers: headers);
+    prefsStore.anilistAccessToken = accessToken;
+
+    if (mounted) await showConnectionDialog(context, true);
+  }
+
+  Future<void> logout(BuildContext context) async {
+    context.read<AnilistStore>().logout();
+    setState(() {
+      accessToken = null;
+    });
+  }
 }
