@@ -43,7 +43,6 @@ class _AnilistMenuState extends State<AnilistMenu>
         if (!store.isConnected)
           PopupMenuItem<AnilistMenuItem>(
             value: AnilistMenuItem.auth,
-            // onTap: () async => await login(context),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
@@ -57,7 +56,6 @@ class _AnilistMenuState extends State<AnilistMenu>
           ),
         if (store.isConnected)
           PopupMenuItem<AnilistMenuItem>(
-            // onTap: () async => await logout(context),
             value: AnilistMenuItem.logout,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
