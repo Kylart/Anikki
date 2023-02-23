@@ -1,11 +1,17 @@
-import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_filter.dart';
 import 'package:flutter/material.dart';
-import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_list_view.dart';
-import 'package:anikki/providers/nyaa/nyaa.dart';
+
 import 'package:provider/provider.dart';
 
+import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_filter.dart';
+import 'package:anikki/providers/nyaa/types/torrent.dart';
+import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_list_view.dart';
+import 'package:anikki/providers/nyaa/nyaa.dart';
+
 class DownloadResultsDialog extends StatelessWidget {
-  const DownloadResultsDialog({super.key, required this.term});
+  const DownloadResultsDialog(
+      {super.key, required this.term, required this.episode});
+
+  final int? episode;
 
   final String term;
 
@@ -32,38 +38,52 @@ class DownloadResultsDialog extends StatelessWidget {
             final entries = snapshot.data!;
             final screenSize = MediaQuery.of(context).size;
 
-            return SizedBox(
-              width: screenSize.width * 0.80,
-              height: screenSize.height * 0.80,
-              child: Card(
-                child: Column(
-                  children: [
-                    AppBar(
-                      title: Text('Results for "$term"'),
-                      centerTitle: true,
+            List<Torrent>? filteredEntries;
+
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return SizedBox(
+                  width: screenSize.width * 0.80,
+                  height: screenSize.height * 0.80,
+                  child: Card(
+                    child: Column(
+                      children: [
+                        AppBar(
+                          title: Text('Results for "$term"'),
+                          centerTitle: true,
+                        ),
+                        Divider(
+                          color: outlineColor,
+                          height: 1,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              DownloadResultsDialogFilter(
+                                entries: entries,
+                                episode: episode,
+                                onChange: (entries) {
+                                  setState(() {
+                                    filteredEntries = entries;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: DownloadResultsDialogListView(
+                            entries: filteredEntries ?? entries,
+                            outlineColor: outlineColor,
+                          ),
+                        )
+                      ],
                     ),
-                    Divider(
-                      color: outlineColor,
-                      height: 1,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          DownloadResultsDialogFilter(entries: entries),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: DownloadResultsDialogListView(
-                        entries: entries,
-                        outlineColor: outlineColor,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             );
           }
         },

@@ -23,9 +23,16 @@ extension QualityValue on Quality {
 }
 
 class DownloadResultsDialogFilter extends StatefulWidget {
-  const DownloadResultsDialogFilter({super.key, required this.entries});
+  const DownloadResultsDialogFilter({
+    super.key,
+    required this.entries,
+    required this.onChange,
+    required this.episode,
+  });
 
   final List<Torrent> entries;
+  final int? episode;
+  final void Function(List<Torrent>? filteredEntries) onChange;
 
   @override
   State<DownloadResultsDialogFilter> createState() =>
@@ -34,16 +41,77 @@ class DownloadResultsDialogFilter extends StatefulWidget {
 
 class _DownloadResultsDialogFilterState
     extends State<DownloadResultsDialogFilter> {
+  /// Enable custom filter that will filter the results using Anitomy
   bool smartFilter = false;
+
+  /// Ignore everything and show all the entries
   bool showAll = false;
-  String? releaseGroup;
-  String? additionalTerm;
+
+  /// Release group to use
+  TextEditingController releaseGroupController = TextEditingController();
+  String? get releaseGroup => releaseGroupController.value.text;
+
+  /// Anything the user might want to add to the query
+  TextEditingController additionalTermController = TextEditingController();
+  String? get additionalTerm => additionalTermController.value.text;
+
+  /// Qualities to filter in / out of the results
+  List<String> get qualitiesValues => qualities.map((q) => q.value).toList();
   List<Quality> qualities = [
     Quality.medium,
     Quality.high,
   ];
 
-  double tileWidth = 200.0;
+  List<Torrent> get filteredEntries {
+    List<Torrent> result = widget.entries;
+
+    /// If the showAll switch is true, we just return everything
+    if (showAll) return result;
+
+    /// Filtering relesae group if any
+    if (releaseGroup != null) {
+      result = result.where((element) {
+        if (element.parsed.releaseGroup == null) return false;
+
+        return element.parsed.releaseGroup!
+            .toLowerCase()
+            .contains(releaseGroup!.toLowerCase());
+      }).toList();
+    }
+
+    /// Filtering addintional term if any
+    if (additionalTerm != null) {
+      result = result.where((element) {
+        return element.name
+            .toLowerCase()
+            .contains(additionalTerm!.toLowerCase());
+      }).toList();
+    }
+
+    /// Filtering over the qualities
+    if (qualities.isNotEmpty) {
+      final qualityRegex = RegExp('(${qualitiesValues.join('|')})');
+      result = result
+          .where((element) => qualityRegex.hasMatch(element.name))
+          .toList();
+    }
+
+    if (smartFilter) {
+      if (widget.episode != null) {
+        result = result.where((element) {
+          if (element.parsed.episode == null) return false;
+
+          return int.tryParse(element.parsed.episode!) == widget.episode;
+        }).toList();
+      }
+    }
+
+    return result;
+  }
+
+  void update() {
+    widget.onChange(filteredEntries);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +144,8 @@ class _DownloadResultsDialogFilterState
                                     smartFilter = false;
                                   }
                                 });
+
+                                update();
                               },
                             ),
                             switchTile(
@@ -87,6 +157,8 @@ class _DownloadResultsDialogFilterState
 
                                   if (value && showAll) showAll = false;
                                 });
+
+                                update();
                               },
                             ),
                             qualityChoiceTile(
@@ -96,26 +168,22 @@ class _DownloadResultsDialogFilterState
                                         ? qualities.remove(quality)
                                         : qualities.add(quality);
                                   });
+
+                                  update();
                                 },
                                 qualities: qualities,
                                 selectedColor:
                                     Theme.of(context).colorScheme.primary),
                             textFieldTile(
                               label: 'Release Group',
-                              onChanged: (value) {
-                                setState(() {
-                                  releaseGroup = value;
-                                });
-                              },
+                              controller: releaseGroupController,
+                              onChanged: (_) => update(),
                               hintText: 'Enter a Release group',
                             ),
                             textFieldTile(
                               label: 'Additional term',
-                              onChanged: (value) {
-                                setState(() {
-                                  additionalTerm = value;
-                                });
-                              },
+                              controller: additionalTermController,
+                              onChanged: (_) => update(),
                               hintText: 'Anything can go here',
                             ),
                             ListTile(
@@ -187,6 +255,7 @@ ListTile qualityChoiceTile({
 Widget textFieldTile({
   required String label,
   required void Function(String value) onChanged,
+  required TextEditingController controller,
   required String hintText,
 }) {
   return ListTile(
@@ -199,11 +268,16 @@ Widget textFieldTile({
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              controller: controller,
               autocorrect: false,
               onChanged: onChanged,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 hintText: hintText,
+                suffixIcon: IconButton(
+                  onPressed: controller.clear,
+                  icon: const Icon(Icons.clear),
+                ),
               ),
             ),
           ),

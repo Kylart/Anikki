@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:anikki/bindings/anitomy/anitomy.dart';
+
 class Torrent {
   String id;
   String name;
@@ -11,6 +13,7 @@ class Torrent {
   String leechers;
   String completed;
   String status;
+  AnitomyParser parsed;
 
   Torrent({
     required this.id,
@@ -23,6 +26,7 @@ class Torrent {
     required this.leechers,
     required this.completed,
     required this.status,
+    required this.parsed,
   });
 
   Torrent copyWith({
@@ -36,6 +40,7 @@ class Torrent {
     String? leechers,
     String? completed,
     String? status,
+    AnitomyParser? parsed,
   }) {
     return Torrent(
       id: id ?? this.id,
@@ -48,11 +53,12 @@ class Torrent {
       leechers: leechers ?? this.leechers,
       completed: completed ?? this.completed,
       status: status ?? this.status,
+      parsed: parsed ?? this.parsed,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'id': id,
       'name': name,
       'date': date,
@@ -63,41 +69,41 @@ class Torrent {
       'leechers': leechers,
       'completed': completed,
       'status': status,
+      'parsed': parsed.toMap(),
     };
   }
 
   factory Torrent.fromMap(Map<String, dynamic> map) {
     return Torrent(
-      id: map['id'],
-      name: map['name'],
-      date: map['date'],
-      filesize: map['filesize'],
-      magnet: map['magnet'],
-      torrent: map['torrent'],
-      seeders: map['seeders'],
-      leechers: map['leechers'],
-      completed: map['completed'],
-      status: map['status'],
-      // anilistInfo: Media.fromMap(map['anilistInfo']),
+      id: map['id'] as String,
+      name: map['name'] as String,
+      date: map['date'] as String,
+      filesize: map['filesize'] as String,
+      magnet: map['magnet'] as String,
+      torrent: map['torrent'] as String,
+      seeders: map['seeders'] as String,
+      leechers: map['leechers'] as String,
+      completed: map['completed'] as String,
+      status: map['status'] as String,
+      parsed: AnitomyParser(inputString: map['name'] as String),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Torrent.fromJson(String source) =>
-      Torrent.fromMap(json.decode(source));
+      Torrent.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'Torrent(id: $id, name: $name, date: $date, filesize: $filesize, magnet: $magnet, torrent: $torrent, seeders: $seeders, leechers: $leechers, completed: $completed, status: $status)';
+    return 'Torrent(id: $id, name: $name, date: $date, filesize: $filesize, magnet: $magnet, torrent: $torrent, seeders: $seeders, leechers: $leechers, completed: $completed, status: $status, parsed: $parsed)';
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant Torrent other) {
     if (identical(this, other)) return true;
 
-    return other is Torrent &&
-        other.id == id &&
+    return other.id == id &&
         other.name == name &&
         other.date == date &&
         other.filesize == filesize &&
@@ -106,7 +112,8 @@ class Torrent {
         other.seeders == seeders &&
         other.leechers == leechers &&
         other.completed == completed &&
-        other.status == status;
+        other.status == status &&
+        other.parsed == parsed;
   }
 
   @override
@@ -120,6 +127,7 @@ class Torrent {
         seeders.hashCode ^
         leechers.hashCode ^
         completed.hashCode ^
-        status.hashCode;
+        status.hashCode ^
+        parsed.hashCode;
   }
 }

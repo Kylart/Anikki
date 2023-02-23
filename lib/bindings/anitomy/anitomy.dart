@@ -107,4 +107,12 @@ class AnitomyParser {
 
     return releaseGroup.isEmpty ? null : releaseGroup;
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'releaseGroup': releaseGroup,
+      'title': title,
+      'episode': episode,
+    };
+  }
 }

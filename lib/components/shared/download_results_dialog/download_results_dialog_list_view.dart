@@ -12,6 +12,7 @@ class DownloadResultsDialogListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      shrinkWrap: true,
       itemBuilder: (context, index) {
         final entry = entries[index];
 
@@ -30,7 +31,7 @@ class DownloadResultsDialogListView extends StatelessWidget {
           title: Text(entry.name),
           subtitle: Text(entry.filesize),
           trailing: SizedBox(
-            width: 100,
+            width: 120,
             child: Row(
               children: [
                 SizedBox(

@@ -1,6 +1,7 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
+import 'package:anikki/bindings/anitomy/anitomy.dart';
 import 'package:anikki/helpers/errors/nyaa_no_result_exception.dart';
 import 'package:anikki/providers/nyaa/types/torrent.dart';
 
@@ -16,25 +17,29 @@ extractFromHtml({required String data, required String baseUrl}) {
     final Element nameElement = element.children[1].children.length == 2
         ? element.children[1].children[1]
         : element.children[1].children[0];
+    final name = nameElement.attributes['title'].toString();
 
-    results.add(Torrent(
-      id: element.children[1].children[0].attributes['href']
-              ?.replaceAll('/view/', '') ??
-          '000',
-      name: nameElement.attributes['title'].toString(),
-      date: (int.parse(
-                  (element.children[4].attributes['data-timestamp'] ?? '0')) *
-              1000)
-          .toString(),
-      filesize: element.children[3].text,
-      magnet: element.children[2].children[1].attributes['href'] ?? '',
-      torrent:
-          baseUrl + (element.children[2].children[0].attributes['href'] ?? ''),
-      seeders: element.children[5].text,
-      leechers: element.children[6].text,
-      completed: element.children[7].text,
-      status: element.attributes['class'].toString(),
-    ));
+    results.add(
+      Torrent(
+        id: element.children[1].children[0].attributes['href']
+                ?.replaceAll('/view/', '') ??
+            '000',
+        name: name,
+        date: (int.parse(
+                    (element.children[4].attributes['data-timestamp'] ?? '0')) *
+                1000)
+            .toString(),
+        filesize: element.children[3].text,
+        magnet: element.children[2].children[1].attributes['href'] ?? '',
+        torrent: baseUrl +
+            (element.children[2].children[0].attributes['href'] ?? ''),
+        seeders: element.children[5].text,
+        leechers: element.children[6].text,
+        completed: element.children[7].text,
+        status: element.attributes['class'].toString(),
+        parsed: AnitomyParser(inputString: name),
+      ),
+    );
   });
 
   final Element? pagination = document.querySelector('ul.pagination');
