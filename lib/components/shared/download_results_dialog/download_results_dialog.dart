@@ -1,3 +1,4 @@
+import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_list_view.dart';
 import 'package:anikki/providers/nyaa/nyaa.dart';
@@ -44,6 +45,15 @@ class DownloadResultsDialog extends StatelessWidget {
                     Divider(
                       color: outlineColor,
                       height: 1,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          DownloadResultsDialogFilter(entries: entries),
+                        ],
+                      ),
                     ),
                     Expanded(
                       child: DownloadResultsDialogListView(entries: entries),
