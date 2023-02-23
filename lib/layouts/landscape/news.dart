@@ -68,14 +68,13 @@ class _NewsState extends State<News> {
                   ),
                 ),
               ),
-            if (store.currentNews.isNotEmpty)
-              if (layout == 'list')
-                Expanded(
-                  child: NewsListView(
-                    entries: store.currentNews,
-                  ),
+            if (store.currentNews.isNotEmpty && layout == 'list')
+              Expanded(
+                child: NewsListView(
+                  entries: store.currentNews,
                 ),
-            if (layout == 'grid')
+              ),
+            if (store.currentNews.isNotEmpty && layout == 'grid')
               Expanded(
                 child: CustomGridView(
                   entries: store.currentNews,
