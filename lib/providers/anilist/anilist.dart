@@ -25,8 +25,8 @@ class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
   bool get isConnected => me != null;
 
   DateTimeRange currentRange = DateTimeRange(
-    start: DateTime.now().subtract(const Duration(days: 3)),
-    end: DateTime.now().add(const Duration(days: 2)),
+    start: DateTime.now().subtract(const Duration(days: 1)),
+    end: DateTime.now().add(const Duration(days: 1)),
   );
 
   AnilistStore() {
