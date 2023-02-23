@@ -1,4 +1,9 @@
 # Anikki
+<p align="center">
+  <img src="assets/anikki.png" />
+</p>
+
+> Anikki is currently being developped and many things are subject to change.
 
 ## Features
 
