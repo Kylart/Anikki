@@ -28,10 +28,15 @@
 git clone --recursive https://github.com/Kylart/anikki-flutter
 ```
 
+```bash
+cd path/to/anikki
+cp .env.example .env
+```
+
 If you are on MacOS, run
 
 ```bash
-cd anikki-flutter
+cd path/to/anikki
 source ./scripts/build_bindings_macos.sh
 ```
 
