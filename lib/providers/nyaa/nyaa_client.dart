@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
+
 import 'package:http/http.dart';
 
 import 'package:anikki/providers/nyaa/types/torrent.dart';
 
 import './utils.dart' as utils;
 
-class NyaaStandalone {
+mixin NyaaClient on ChangeNotifier {
   String baseUrl = 'nyaa.si';
   final Client client = Client();
 
@@ -27,7 +29,7 @@ class NyaaStandalone {
     );
   }
 
-  Future<List<Torrent>> search({String? term}) async {
+  Future<List<Torrent>> getAll({String? term}) async {
     final Map<String, dynamic> firstPage = await _searchPage(term: term);
 
     List<Torrent> results = firstPage['results'];

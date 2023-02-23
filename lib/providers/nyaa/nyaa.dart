@@ -1,12 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:anikki/providers/nyaa/standalone.dart';
+import 'package:anikki/providers/nyaa/nyaa_client.dart';
 import 'package:anikki/providers/nyaa/types/torrent.dart';
 import 'package:quiver/collection.dart';
 
-class NyaaStore with ChangeNotifier, DiagnosticableTreeMixin {
-  NyaaStandalone nyaa = NyaaStandalone();
-
+class NyaaStore with ChangeNotifier, DiagnosticableTreeMixin, NyaaClient {
   String fansub = 'SubsPlease';
   String quality = '720p';
   String term = '';
@@ -19,7 +17,7 @@ class NyaaStore with ChangeNotifier, DiagnosticableTreeMixin {
         return results[term]!;
       }
 
-      final result = await nyaa.search(term: term);
+      final result = await getAll(term: term);
 
       results[term] = result;
       notifyListeners();
