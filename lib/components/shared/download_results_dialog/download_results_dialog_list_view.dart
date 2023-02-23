@@ -3,9 +3,11 @@ import 'package:anikki/providers/nyaa/types/torrent.dart';
 import 'package:open_app_file/open_app_file.dart';
 
 class DownloadResultsDialogListView extends StatelessWidget {
-  const DownloadResultsDialogListView({super.key, required this.entries});
+  const DownloadResultsDialogListView(
+      {super.key, required this.entries, required this.outlineColor});
 
   final List<Torrent> entries;
+  final Color outlineColor;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,10 @@ class DownloadResultsDialogListView extends StatelessWidget {
           ),
         );
       },
-      separatorBuilder: (context, index) => const Divider(),
+      separatorBuilder: (context, index) => Divider(
+        color: outlineColor,
+        height: 3,
+      ),
       itemCount: entries.length,
     );
   }

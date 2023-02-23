@@ -11,7 +11,7 @@ class DownloadResultsDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final outlineColor = Theme.of(context).colorScheme.outline;
+    final outlineColor = Theme.of(context).colorScheme.outline.withOpacity(0.5);
     final store = context.read<NyaaStore>();
 
     return Dialog(
@@ -56,7 +56,10 @@ class DownloadResultsDialog extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: DownloadResultsDialogListView(entries: entries),
+                      child: DownloadResultsDialogListView(
+                        entries: entries,
+                        outlineColor: outlineColor,
+                      ),
                     )
                   ],
                 ),
