@@ -1,23 +1,22 @@
-import 'package:anikki/helpers/errors/anilist_not_connected_exception.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/providers/anilist/anilist_client.dart';
+import 'package:anikki/helpers/errors/anilist_not_connected_exception.dart';
 import 'package:anikki/providers/anilist/types/anilist_user/anilist_user.dart';
 import 'package:anikki/providers/anilist/auth.dart';
 import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:anikki/providers/anilist/info.dart';
 import 'package:anikki/providers/anilist/schedule.dart';
-import 'package:anikki/providers/anilist/standalone.dart';
 import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
-// ignore: prefer_mixin
-class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
-  late AnilistAiringSchedule airingSchedule;
-  late AnilistInfo info;
-  late AnilistAuth auth;
-
+class AnilistStore extends AnilistClient
+    with
+        ChangeNotifier,
+        LoadingMixin,
+        AnilistAuth,
+        AnilistAiringSchedule,
+        AnilistInfo {
   List<ScheduleEntry> currentNews = [];
   String? newsError;
   AnilistUser? me;
@@ -50,16 +49,12 @@ class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
   }
 
   Future<void> setupClient({Map<String, String>? headers}) async {
-    final AnilistStandalone anilist = AnilistStandalone(headers: headers);
-
-    airingSchedule = anilist.airingSchedule;
-    info = anilist.info;
-    auth = anilist.auth;
+    initClient(headers: headers);
 
     if (headers?['Authorization'] == null) return;
 
     try {
-      me = await auth.getMe();
+      me = await getMe();
       notifyListeners();
     } on AnilistNotConnectedException {
       /// User is not logged in anymore and needs to log in again
@@ -76,14 +71,6 @@ class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
     me = null;
   }
 
-  Map<String, String> getDefaultHeaders({required String accessToken}) {
-    return {
-      'Authorization': 'Bearer $accessToken',
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-  }
-
   Future<void> getNews(DateTimeRange dateRange) async {
     try {
       int currentPage = 1;
@@ -91,8 +78,7 @@ class AnilistStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
       currentNews = [];
 
       while (true) {
-        final page =
-            await airingSchedule.getScheduleAtPage(currentPage, dateRange);
+        final page = await getScheduleAtPage(currentPage, dateRange);
 
         if (page == null) break;
 

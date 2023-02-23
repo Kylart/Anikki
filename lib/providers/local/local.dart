@@ -1,22 +1,22 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:anikki/helpers/hash.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:anikki/helpers/hash.dart';
+import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:anikki/bindings/anitomy/anitomy.dart';
-import 'package:anikki/providers/anilist/standalone.dart';
 import 'package:anikki/providers/local/types/file.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 // ignore: prefer_mixin
 class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
   String? currentPath;
   List<LocalFile> currentFiles = [];
-  final anilist = AnilistStandalone();
+  final anilist = AnilistStore();
 
   bool get hasEntries => currentFiles.isNotEmpty;
 
@@ -102,7 +102,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
         }
       }
 
-      final info = await anilist.info.fromMultiple(entryNames);
+      final info = await anilist.fromMultiple(entryNames);
 
       // Feeding medias to entries
       for (final file in currentFiles) {

@@ -1,3 +1,4 @@
+import 'package:anikki/providers/anilist/anilist_client.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 
@@ -6,11 +7,7 @@ import 'package:anikki/providers/anilist/types/page_info.dart';
 import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 import 'package:anikki/providers/anilist/types/schedule_entry_page.dart';
 
-class AnilistAiringSchedule with ChangeNotifier {
-  AnilistAiringSchedule({required this.client});
-
-  GraphQLClient client;
-
+mixin AnilistAiringSchedule on AnilistClient {
   Future<ScheduleEntryPage?> getScheduleAtPage(
       int pageIndex, DateTimeRange dateRange) async {
     final QueryOptions<ScheduleEntryPage> options =

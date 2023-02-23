@@ -2,15 +2,12 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:graphql/client.dart';
 
+import 'package:anikki/providers/anilist/anilist_client.dart';
 import 'package:anikki/helpers/hash.dart';
 import 'package:anikki/providers/anilist/queries/media.dart';
 import 'package:anikki/providers/anilist/types/media/media.dart';
 
-class AnilistInfo {
-  AnilistInfo({required this.client});
-
-  final GraphQLClient client;
-
+mixin AnilistInfo on AnilistClient {
   Future<Map<String, Media>> fromMultiple(List<String> names) async {
     Map<String, Media> results = {};
 
