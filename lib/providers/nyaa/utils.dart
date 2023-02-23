@@ -1,6 +1,7 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
+import 'package:anikki/helpers/errors/nyaa_no_result_exception.dart';
 import 'package:anikki/providers/nyaa/types/torrent.dart';
 
 extractFromHtml({required String data, required String baseUrl}) {
@@ -9,8 +10,7 @@ extractFromHtml({required String data, required String baseUrl}) {
 
   final rawTorrents = document.querySelectorAll('tr');
 
-  // TODO: Add custom error
-  if (rawTorrents.isEmpty) throw 'No result...';
+  if (rawTorrents.isEmpty) throw NyaaNoResultException;
 
   rawTorrents.sublist(1).forEach((element) {
     final Element nameElement = element.children[1].children.length == 2
