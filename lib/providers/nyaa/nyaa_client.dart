@@ -39,7 +39,7 @@ mixin NyaaClient on ChangeNotifier {
     int currentPage = 2;
 
     // Should be enough for a few weeks of content.
-    const int maxResults = 150;
+    const int maxResults = 750;
 
     while (results.length < maxResults && currentPage < maxPage) {
       final Map<String, dynamic> current =
