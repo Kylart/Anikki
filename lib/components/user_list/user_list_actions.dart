@@ -73,6 +73,8 @@ Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
   final scaffold = ScaffoldMessenger.of(context);
   final theme = Theme.of(context);
 
+  if (!store.isConnected) return;
+
   if (entry.media != null && entry.media!.id != null) {
     final episode = int.tryParse(entry.episode ?? '1') ?? 1;
 
