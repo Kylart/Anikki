@@ -1,3 +1,4 @@
+import 'package:anikki/providers/anilist/list.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/providers/anilist/anilist_client.dart';
@@ -16,7 +17,8 @@ class AnilistStore extends AnilistClient
         LoadingMixin,
         AnilistAuth,
         AnilistAiringSchedule,
-        AnilistInfo {
+        AnilistInfo,
+        AnilistList {
   List<ScheduleEntry> currentNews = [];
   String? newsError;
   AnilistUser? me;
