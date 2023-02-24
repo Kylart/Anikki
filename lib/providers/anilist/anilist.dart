@@ -1,6 +1,9 @@
-import 'package:anikki/providers/anilist/list.dart';
 import 'package:flutter/material.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:anikki/helpers/errors/anilist_get_list_exception.dart';
+import 'package:anikki/providers/anilist/list.dart';
 import 'package:anikki/providers/anilist/anilist_client.dart';
 import 'package:anikki/helpers/errors/anilist_not_connected_exception.dart';
 import 'package:anikki/providers/anilist/types/anilist_user/anilist_user.dart';
@@ -9,7 +12,6 @@ import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:anikki/providers/anilist/info.dart';
 import 'package:anikki/providers/anilist/schedule.dart';
 import 'package:anikki/providers/anilist/types/schedule_entry.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AnilistStore extends AnilistClient
     with
@@ -58,9 +60,15 @@ class AnilistStore extends AnilistClient
     try {
       me = await getMe();
       notifyListeners();
+
+      if (me?.name != null) {
+        await getWatchLists(username: me?.name);
+      }
     } on AnilistNotConnectedException {
       /// User is not logged in anymore and needs to log in again
       await logout();
+    } on AnilistGetListException catch (e) {
+      watchListLoadError = e;
     }
   }
 

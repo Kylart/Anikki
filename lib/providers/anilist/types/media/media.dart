@@ -3,10 +3,9 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'cover_image.dart';
-import 'end_date.dart';
 import 'next_airing_episode.dart';
 import 'relations.dart';
-import 'start_date.dart';
+import '../date.dart';
 import 'studios.dart';
 import 'title.dart';
 
@@ -15,8 +14,8 @@ class Media {
   final int? id;
   final Title? title;
   final CoverImage? coverImage;
-  final StartDate? startDate;
-  final EndDate? endDate;
+  final AnilistDate? startDate;
+  final AnilistDate? endDate;
   final dynamic bannerImage;
   final String? season;
   final String? description;
@@ -79,10 +78,10 @@ class Media {
             : CoverImage.fromMap(data['coverImage'] as Map<String, dynamic>),
         startDate: data['startDate'] == null
             ? null
-            : StartDate.fromMap(data['startDate'] as Map<String, dynamic>),
+            : AnilistDate.fromMap(data['startDate'] as Map<String, dynamic>),
         endDate: data['endDate'] == null
             ? null
-            : EndDate.fromMap(data['endDate'] as Map<String, dynamic>),
+            : AnilistDate.fromMap(data['endDate'] as Map<String, dynamic>),
         bannerImage: data['bannerImage'] as dynamic,
         season: data['season'] as String?,
         description: data['description'] as String?,
@@ -156,8 +155,8 @@ class Media {
     int? id,
     Title? title,
     CoverImage? coverImage,
-    StartDate? startDate,
-    EndDate? endDate,
+    AnilistDate? startDate,
+    AnilistDate? endDate,
     dynamic bannerImage,
     String? season,
     String? description,

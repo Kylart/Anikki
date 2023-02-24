@@ -4,17 +4,17 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
-class StartDate {
+class AnilistDate {
   final int? year;
   final int? month;
   final int? day;
 
-  const StartDate({this.year, this.month, this.day});
+  const AnilistDate({this.year, this.month, this.day});
 
   @override
   String toString() => 'StartDate(year: $year, month: $month, day: $day)';
 
-  factory StartDate.fromMap(Map<String, dynamic> data) => StartDate(
+  factory AnilistDate.fromMap(Map<String, dynamic> data) => AnilistDate(
         year: data['year'] as int?,
         month: data['month'] as int?,
         day: data['day'] as int?,
@@ -28,22 +28,22 @@ class StartDate {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [StartDate].
-  factory StartDate.fromJson(String data) {
-    return StartDate.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [AnilistDate].
+  factory AnilistDate.fromJson(String data) {
+    return AnilistDate.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [StartDate] to a JSON string.
+  /// Converts [AnilistDate] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  StartDate copyWith({
+  AnilistDate copyWith({
     int? year,
     int? month,
     int? day,
   }) {
-    return StartDate(
+    return AnilistDate(
       year: year ?? this.year,
       month: month ?? this.month,
       day: day ?? this.day,
@@ -53,7 +53,7 @@ class StartDate {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! StartDate) return false;
+    if (other is! AnilistDate) return false;
     final mapEquals = const DeepCollectionEquality().equals;
     return mapEquals(other.toMap(), toMap());
   }
