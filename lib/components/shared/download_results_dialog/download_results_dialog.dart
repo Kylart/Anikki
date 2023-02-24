@@ -1,4 +1,4 @@
-import 'package:anikki/components/shared/download_results_dialog/download_results_list_view.dart';
+import 'package:anikki/components/shared/download_results_dialog/download_results_container.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -32,7 +32,7 @@ class DownloadResultsDialog extends StatelessWidget {
           } else {
             if (snapshot.hasError) return Text(snapshot.error.toString());
 
-            return DownloadResultsListView(
+            return DownloadResultsContainer(
               entries: snapshot.data!,
               outlineColor: outlineColor,
               episode: episode,

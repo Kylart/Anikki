@@ -5,8 +5,8 @@ import 'package:anikki/components/shared/download_results_dialog/download_result
 import 'package:anikki/components/shared/download_results_dialog/results_filter_mixin.dart';
 import 'package:anikki/providers/nyaa/types/torrent.dart';
 
-class DownloadResultsListView extends StatefulWidget {
-  const DownloadResultsListView({
+class DownloadResultsContainer extends StatefulWidget {
+  const DownloadResultsContainer({
     super.key,
     required this.entries,
     required this.outlineColor,
@@ -18,11 +18,11 @@ class DownloadResultsListView extends StatefulWidget {
   final int? episode;
 
   @override
-  State<DownloadResultsListView> createState() =>
-      _DownloadResultsListViewState();
+  State<DownloadResultsContainer> createState() =>
+      _DownloadResultsContainerState();
 }
 
-class _DownloadResultsListViewState extends State<DownloadResultsListView>
+class _DownloadResultsContainerState extends State<DownloadResultsContainer>
     with ResultsFilterMixin {
   @override
   Widget build(BuildContext context) {

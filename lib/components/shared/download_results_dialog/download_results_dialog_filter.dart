@@ -29,8 +29,11 @@ class DownloadResultsFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Wrap(
+      direction: Axis.horizontal,
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      runSpacing: 10.0,
       children: [
         switchTile(
           label: 'Show all',
@@ -42,15 +45,22 @@ class DownloadResultsFilter extends StatelessWidget {
           value: smartFilter.value,
           onChanged: smartFilter.onChange,
         ),
-        textFieldTile(
-          controller: releaseGroup.value,
-          onChanged: releaseGroup.onChange,
-          hintText: 'Enter a Release group',
-        ),
-        textFieldTile(
-          controller: additionalTerm.value,
-          onChanged: additionalTerm.onChange,
-          hintText: 'Anything else?',
+        SizedBox(
+          width: 500,
+          child: Row(
+            children: [
+              textFieldTile(
+                controller: releaseGroup.value,
+                onChanged: releaseGroup.onChange,
+                hintText: 'Enter a Release group',
+              ),
+              textFieldTile(
+                controller: additionalTerm.value,
+                onChanged: additionalTerm.onChange,
+                hintText: 'Anything else?',
+              ),
+            ],
+          ),
         ),
         qualityChoiceTile(
           onTap: qualities.onChange,
@@ -67,20 +77,17 @@ Widget switchTile({
   required String label,
   required bool value,
 }) {
-  return Flexible(
-    flex: 1,
-    child: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(label),
-        ),
-        Switch(
-          value: value,
-          onChanged: onChanged,
-        ),
-      ],
-    ),
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(label),
+      ),
+      Switch(
+        value: value,
+        onChanged: onChanged,
+      ),
+    ],
   );
 }
 
@@ -89,10 +96,10 @@ Widget qualityChoiceTile({
   required List<Quality> qualities,
   required Color selectedColor,
 }) {
-  return Flexible(
-    flex: 3,
+  return SizedBox(
+    width: 300,
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: Quality.values.map<Widget>((quality) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -116,7 +123,7 @@ Widget textFieldTile({
   required String hintText,
 }) {
   return SizedBox(
-    width: 300,
+    width: 250,
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
