@@ -1,18 +1,15 @@
+import 'package:anikki/components/news/news_card_actions.dart';
+import 'package:anikki/components/user_list/local_card_actions.dart';
+import 'package:anikki/components/user_list/watch_list_card_actions.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/news/news_card_actions.dart';
-import 'package:anikki/components/shared/entry_card/entry_card_background.dart';
-import 'package:anikki/components/user_list/local_card_actions.dart';
-import 'package:anikki/providers/anilist/types/schedule_entry.dart';
-import 'package:anikki/providers/local/types/file.dart';
+class EntryCard extends StatefulWidget {
+  const EntryCard(
+      {super.key, required this.actions, required this.title, this.coverImage});
 
-enum CardType { local, news, watchList }
-
-class EntryCard<T> extends StatefulWidget {
-  const EntryCard({super.key, required this.entry, required this.type});
-
-  final T entry;
-  final CardType type;
+  final Widget actions;
+  final Widget title;
+  final String? coverImage;
 
   @override
   State<EntryCard> createState() => _EntryCardState();
@@ -28,42 +25,41 @@ class _EntryCardState extends State<EntryCard> {
 
   @override
   Widget build(BuildContext context) {
-    final entry = widget.entry;
-    final coverImage = entry.media?.coverImage?.extraLarge ??
-        entry.media?.coverImage?.large ??
-        entry.media?.coverImage?.medium;
-    final title = entry.media?.title?.romaji ??
-        entry.media?.title?.english ??
-        entry.title;
+    Widget actions = widget.actions;
 
-    Widget actions = const SizedBox();
-
-    switch (widget.type) {
-      case CardType.local:
-        actions = LocalCardActions(
-          entry: entry as LocalFile,
-          onBack: () {
-            setState(() {
-              isClicked = false;
-            });
-          },
-        );
-        break;
-
-      case CardType.news:
-        actions = NewsCardActions(
-          entry: entry as ScheduleEntry,
-          onBack: () {
-            setState(() {
-              isClicked = false;
-            });
-          },
-        );
-        break;
-
-      case CardType.watchList:
-        actions = const SizedBox();
-        break;
+    if (widget.actions is NewsCardActions) {
+      final initActions = widget.actions as NewsCardActions;
+      actions = NewsCardActions(
+        entry: initActions.entry,
+        onBack: () {
+          initActions.onBack();
+          setState(() {
+            isClicked = false;
+          });
+        },
+      );
+    } else if (widget.actions is LocalCardActions) {
+      final initActions = widget.actions as LocalCardActions;
+      actions = LocalCardActions(
+        entry: initActions.entry,
+        onBack: () {
+          initActions.onBack();
+          setState(() {
+            isClicked = false;
+          });
+        },
+      );
+    } else if (widget.actions is WatchListCardActions) {
+      final initActions = widget.actions as WatchListCardActions;
+      actions = WatchListCardActions(
+        entry: initActions.entry,
+        onBack: () {
+          initActions.onBack();
+          setState(() {
+            isClicked = false;
+          });
+        },
+      );
     }
 
     return InkWell(
@@ -79,10 +75,10 @@ class _EntryCardState extends State<EntryCard> {
       },
       child: Container(
         decoration: BoxDecoration(
-          image: coverImage != null
+          image: widget.coverImage != null
               ? DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(coverImage),
+                  image: NetworkImage(widget.coverImage!),
                 )
               : const DecorationImage(
                   opacity: 0.7,
@@ -94,12 +90,10 @@ class _EntryCardState extends State<EntryCard> {
         child: Stack(
           children: [
             AnimatedOpacity(
-                duration: transitionDuration,
-                opacity: isHovered ? 0 : 1,
-                child: EntryCardBackground(
-                  title: title,
-                  episode: entry.episode?.toString(),
-                )),
+              duration: transitionDuration,
+              opacity: isHovered ? 0 : 1,
+              child: widget.title,
+            ),
             Positioned.fill(
               child: IgnorePointer(
                 ignoring: !showOverlay,

@@ -42,7 +42,14 @@ mixin AnilistList on AnilistClient, ChangeNotifier {
     notifyListeners();
   }
 
-  AnilistGetListException? watchListLoadError;
+  AnilistGetListException? _watchListLoadError;
+
+  AnilistGetListException? get watchListLoadError => _watchListLoadError;
+
+  set watchListLoadError(AnilistGetListException? value) {
+    _watchListLoadError = value;
+    notifyListeners();
+  }
 
   Map<AnilistMediaListStatus, List<AnilistListEntry>?> watchList = {
     AnilistMediaListStatus.completed: null,
@@ -53,7 +60,7 @@ mixin AnilistList on AnilistClient, ChangeNotifier {
     AnilistMediaListStatus.repeating: null,
   };
 
-  Future<void> getWatchLists({required username}) async {
+  Future<void> getWatchLists(username) async {
     try {
       isWatchListLoading = true;
 

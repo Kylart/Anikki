@@ -103,6 +103,14 @@ class UserListLibraryListView extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: IconButton(
+                    onPressed: () => download<LocalFile>(context, entry),
+                    icon: const Icon(Icons.download),
+                  ),
+                ),
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.more_vert),
                   ),

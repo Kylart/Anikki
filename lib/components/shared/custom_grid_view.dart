@@ -1,50 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:anikki/components/shared/entry_card/entry_card.dart';
+
+import 'package:anikki/components/news/news_card.dart';
+import 'package:anikki/components/user_list/local_card.dart';
+import 'package:anikki/components/user_list/watch_list_card.dart';
+import 'package:anikki/providers/anilist/types/list_entry.dart';
 import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 import 'package:anikki/providers/local/types/file.dart';
 
-enum GridViewType { local, watchList, news }
+class CustomGridView<T> extends StatelessWidget {
+  final List<T> entries;
 
-class CustomGridView extends StatefulWidget {
-  final List<dynamic> entries;
-  final GridViewType type;
+  const CustomGridView({super.key, required this.entries});
 
-  const CustomGridView({super.key, required this.entries, required this.type});
-
-  @override
-  State<CustomGridView> createState() => _CustomGridViewState();
-}
-
-class _CustomGridViewState extends State<CustomGridView> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        padding: const EdgeInsets.all(8.0),
-        itemCount: widget.entries.length,
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 300,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.75,
-        ),
-        itemBuilder: (context, index) {
-          final entry = widget.entries[index];
+      padding: const EdgeInsets.all(8.0),
+      itemCount: entries.length,
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 300,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: 0.75,
+      ),
+      itemBuilder: (context, index) {
+        final entry = entries[index];
 
-          if (widget.type == GridViewType.news) {
-            return EntryCard<ScheduleEntry>(
-              entry: entry,
-              type: CardType.news,
-            );
-          }
+        if (T == ScheduleEntry) {
+          return NewsCard(entry: entry as ScheduleEntry);
+        }
 
-          if (widget.type == GridViewType.local) {
-            return EntryCard<LocalFile>(
-              entry: entry,
-              type: CardType.local,
-            );
-          }
+        if (T == LocalFile) {
+          return LocalCard(entry: entry as LocalFile);
+        }
 
-          return const SizedBox();
-        });
+        if (T == AnilistListEntry) {
+          return WatchListCard(entry: entry as AnilistListEntry);
+        }
+
+        return const SizedBox();
+      },
+    );
   }
 }

@@ -62,13 +62,15 @@ class AnilistStore extends AnilistClient
       notifyListeners();
 
       if (me?.name != null) {
-        await getWatchLists(username: me?.name);
+        getWatchLists(me?.name)
+          .catchError((e) {
+            if (e is AnilistGetListException) watchListLoadError = e;
+            throw e;
+          });
       }
     } on AnilistNotConnectedException {
       /// User is not logged in anymore and needs to log in again
       await logout();
-    } on AnilistGetListException catch (e) {
-      watchListLoadError = e;
     }
   }
 

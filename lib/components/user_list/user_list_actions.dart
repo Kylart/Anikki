@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:anikki/helpers/errors/anilist_update_list_exception.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
+import 'package:anikki/components/news/news_actions.dart';
+import 'package:anikki/components/shared/fade_overlay.dart';
 import 'package:anikki/components/shared/video_player/desktop_player.dart';
 import 'package:anikki/components/shared/video_player/mobile_player.dart';
 import 'package:anikki/components/shared/video_player/video_player.dart';
-import 'package:anikki/components/shared/fade_overlay.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
+import 'package:anikki/helpers/errors/anilist_update_list_exception.dart';
+import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/local/local.dart';
 import 'package:anikki/providers/local/types/file.dart';
 
@@ -111,4 +111,8 @@ void _handleAnilistUpdateException(
       ),
     ),
   );
+}
+
+void download<T> (BuildContext context, T entry) {
+  showAvailableTorrents<T>(context, entry);
 }

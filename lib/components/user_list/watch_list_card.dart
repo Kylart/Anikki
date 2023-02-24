@@ -1,0 +1,36 @@
+import 'package:anikki/components/user_list/watch_list_card_actions.dart';
+import 'package:anikki/providers/anilist/types/media_list_status.dart';
+import 'package:flutter/material.dart';
+
+import 'package:anikki/providers/anilist/types/list_entry.dart';
+import 'package:anikki/components/shared/entry_card/entry_card.dart';
+import 'package:anikki/components/shared/entry_card/entry_card_background.dart';
+
+class WatchListCard extends StatelessWidget {
+  const WatchListCard({super.key, required this.entry});
+
+  final AnilistListEntry entry;
+
+  @override
+  Widget build(BuildContext context) {
+    final coverImage = entry.media.coverImage?.extraLarge ??
+        entry.media.coverImage?.large ??
+        entry.media.coverImage?.medium;
+    final title = entry.media.title?.title() ?? 'N/A';
+
+    return EntryCard(
+      coverImage: coverImage,
+      title: EntryCardBackground(
+        title: title,
+        episode: entry.status != null &&
+                entry.status == AnilistMediaListStatus.current
+            ? entry.progress?.toString() ?? '?'
+            : entry.score?.toString() ?? '~',
+      ),
+      actions: WatchListCardActions(
+        entry: entry,
+        onBack: () {},
+      ),
+    );
+  }
+}

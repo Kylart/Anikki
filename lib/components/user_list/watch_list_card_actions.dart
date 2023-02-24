@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:anikki/components/news/news_actions.dart';
 import 'package:anikki/components/shared/grid_card_action.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/providers/anilist/types/schedule_entry.dart';
+import 'package:anikki/providers/anilist/types/list_entry.dart';
 
-class NewsCardActions extends StatelessWidget {
-  const NewsCardActions({super.key, required this.onBack, required this.entry});
+class WatchListCardActions extends StatelessWidget {
+  const WatchListCardActions({super.key, required this.onBack, required this.entry});
 
   final void Function() onBack;
-  final ScheduleEntry entry;
+  final AnilistListEntry entry;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class NewsCardActions extends StatelessWidget {
           child: GridCardAction(
             icon: Icons.file_download,
             onTap: () {
-              showAvailableTorrents<ScheduleEntry>(context, entry);
+              showAvailableTorrents<AnilistListEntry>(context, entry);
             },
           ),
         ),
@@ -35,12 +35,6 @@ class NewsCardActions extends StatelessWidget {
             icon: Icons.chevron_left,
             onTap: onBack,
           ),
-        Expanded(
-          child: GridCardAction(
-            icon: Icons.more_horiz,
-            onTap: () {},
-          ),
-        ),
       ],
     );
   }

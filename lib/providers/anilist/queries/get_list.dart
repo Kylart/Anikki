@@ -21,10 +21,12 @@ query (\$username: String) {
 				}
 				media {
 					id
+          genres
 					coverImage {
 						extraLarge
 						large
 					}
+          bannerImage
 					title {
 						userPreferred
 						native

@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:anikki/components/user_list/user_list_app_bar.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:anikki/components/user_list/user_list_app_bar.dart';
 import 'package:anikki/layouts/landscape/library.dart';
+import 'package:anikki/layouts/landscape/watch_list.dart';
 import 'package:anikki/providers/local/local.dart';
 import 'package:anikki/providers/user_preferences.dart';
-import 'package:provider/provider.dart';
 
 class UserList extends StatefulWidget {
   const UserList({
@@ -80,23 +82,26 @@ class _UserListState extends State<UserList>
                 ),
                 Flexible(
                   flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final store = context.read<LocalStore>();
-                        final preferences = context.read<UserPreferences>();
-                        String? path =
-                            await FilePicker.platform.getDirectoryPath();
+                  child: tabIndex == 0
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              final store = context.read<LocalStore>();
+                              final preferences =
+                                  context.read<UserPreferences>();
+                              String? path =
+                                  await FilePicker.platform.getDirectoryPath();
 
-                        if (path == null) return;
+                              if (path == null) return;
 
-                        await store.setCurrentPath(path);
-                        preferences.localDirecotry = path;
-                      },
-                      child: const Text('Choose Folder'),
-                    ),
-                  ),
+                              await store.setCurrentPath(path);
+                              preferences.localDirecotry = path;
+                            },
+                            child: const Text('Choose Folder'),
+                          ),
+                        )
+                      : const SizedBox(),
                 )
               ],
             ),
@@ -105,6 +110,7 @@ class _UserListState extends State<UserList>
               height: 1,
             ),
             if (tabIndex == 0) Library(layout: layout),
+            if (tabIndex == 1) WatchList(layout: layout)
           ],
         ),
       ),
