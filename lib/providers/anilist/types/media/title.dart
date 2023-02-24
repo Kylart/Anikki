@@ -12,7 +12,7 @@ class Title {
 
   const Title({this.userPreferred, this.romaji, this.english, this.native});
 
-  String toNyaaTerm() {
+  String title() {
     return romaji ?? english ?? native;
   }
 
