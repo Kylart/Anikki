@@ -13,6 +13,7 @@ class NewsAppBar extends StatefulWidget {
 
 class _NewsAppBarState extends State<NewsAppBar> {
   final List<bool> isSelected = <bool>[false, true];
+  bool active = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +62,6 @@ class _NewsAppBarState extends State<NewsAppBar> {
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-          ),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.settings),
-          ),
-        )
       ],
     );
   }

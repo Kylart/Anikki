@@ -37,16 +37,6 @@ class _UserListAppBarState extends State<UserListAppBar> {
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-          ),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.settings),
-          ),
-        )
       ],
     );
   }
