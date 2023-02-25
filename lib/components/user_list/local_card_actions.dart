@@ -23,7 +23,11 @@ class LocalCardActions extends StatelessWidget {
           icon: Icons.play_arrow,
           onTap: () async => await playFile(entry, context),
         ),
-        if (isDesktop()) const GridCardAction(icon: Icons.edit),
+        if (isDesktop())
+          GridCardAction(
+            icon: Icons.download,
+            onTap: () => download<LocalFile>(context, entry),
+          ),
         if (!isDesktop())
           GridCardAction(
             icon: Icons.chevron_left,
