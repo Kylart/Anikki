@@ -25,6 +25,12 @@ class FadeOverlay extends ModalRoute<void> {
   bool get maintainState => true;
 
   @override
+  void dispose() async {
+    super.dispose();
+    await onClose();
+  }
+
+  @override
   Widget buildPage(
     BuildContext context,
     Animation<double> animation,
@@ -40,20 +46,7 @@ class FadeOverlay extends ModalRoute<void> {
 
   Widget _buildOverlayContent(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          TextButton(
-            onPressed: () {
-              onClose().then((value) => Navigator.pop(context));
-            },
-            child: const Text('Dismiss'),
-          ),
-          Expanded(
-            child: child,
-          ),
-        ],
-      ),
+      child: child,
     );
   }
 
