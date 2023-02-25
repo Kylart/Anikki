@@ -1,6 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+
+import 'package:anikki/components/shared/frosted_circle.dart';
 
 class EntryCardBackground extends StatelessWidget {
   const EntryCardBackground({super.key, this.episode, required this.title});
@@ -37,24 +37,19 @@ class EntryCardBackground extends StatelessWidget {
                 ),
               ),
               if (episode != null)
-                ClipRect(
-                  child: ClipOval(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                      child: Container(
-                        width: 35,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.3),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(episode!),
-                        ),
-                      ),
+                FrostedCircle(
+                  child: Container(
+                    width: 35,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.3),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(episode!),
                     ),
                   ),
                 ),

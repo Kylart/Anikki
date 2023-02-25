@@ -1,15 +1,26 @@
-import 'package:anikki/components/news/news_card_actions.dart';
-import 'package:anikki/components/user_list/library/library_card_actions.dart';
-import 'package:anikki/components/user_list/watch_list/watch_list_card_actions.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/components/news/news_card_actions.dart';
+import 'package:anikki/components/shared/entry_card/entry_card_bookmark.dart';
+import 'package:anikki/components/shared/entry_card/entry_card_completed.dart';
+import 'package:anikki/components/user_list/library/library_card_actions.dart';
+import 'package:anikki/components/user_list/watch_list/watch_list_card_actions.dart';
+
 class EntryCard extends StatefulWidget {
-  const EntryCard(
-      {super.key, required this.actions, required this.title, this.coverImage});
+  const EntryCard({
+    super.key,
+    required this.actions,
+    required this.title,
+    this.coverImage,
+    this.showBookmark = false,
+    this.showDone = false,
+  });
 
   final Widget actions;
   final Widget title;
   final String? coverImage;
+  final bool showBookmark;
+  final bool showDone;
 
   @override
   State<EntryCard> createState() => _EntryCardState();
@@ -89,6 +100,26 @@ class _EntryCardState extends State<EntryCard> {
         ),
         child: Stack(
           children: [
+            if (widget.showBookmark)
+              Positioned(
+                right: 10,
+                top: 10,
+                child: AnimatedOpacity(
+                  duration: transitionDuration,
+                  opacity: isHovered ? 0 : 1,
+                  child: const EntryCardBookmark(),
+                ),
+              ),
+            if (widget.showDone)
+              Positioned(
+                right: 10,
+                top: 10,
+                child: AnimatedOpacity(
+                  duration: transitionDuration,
+                  opacity: isHovered ? 0 : 1,
+                  child: const EntryCardCompleted(),
+                ),
+              ),
             AnimatedOpacity(
               duration: transitionDuration,
               opacity: isHovered ? 0 : 1,

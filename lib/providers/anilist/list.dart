@@ -51,14 +51,17 @@ mixin AnilistList on AnilistClient, ChangeNotifier {
     notifyListeners();
   }
 
-  Map<AnilistMediaListStatus, List<AnilistListEntry>?> watchList = {
-    AnilistMediaListStatus.completed: null,
-    AnilistMediaListStatus.current: null,
-    AnilistMediaListStatus.dropped: null,
-    AnilistMediaListStatus.paused: null,
-    AnilistMediaListStatus.planning: null,
-    AnilistMediaListStatus.repeating: null,
+  Map<AnilistMediaListStatus, List<AnilistListEntry>> watchList = {
+    AnilistMediaListStatus.completed: [],
+    AnilistMediaListStatus.current: [],
+    AnilistMediaListStatus.dropped: [],
+    AnilistMediaListStatus.paused: [],
+    AnilistMediaListStatus.planning: [],
+    AnilistMediaListStatus.repeating: [],
   };
+
+  List<AnilistListEntry> get currentList => watchList[AnilistMediaListStatus.current]!;
+  List<AnilistListEntry> get completedList => watchList[AnilistMediaListStatus.completed]!;
 
   Future<void> getWatchLists(username) async {
     try {
