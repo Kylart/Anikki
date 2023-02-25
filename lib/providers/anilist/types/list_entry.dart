@@ -5,9 +5,9 @@ import 'media/media.dart';
 import 'media_list_status.dart';
 
 class AnilistListEntry {
-  int? score;
+  int score;
   int? progress;
-  AnilistMediaListStatus? status;
+  AnilistMediaListStatus status;
   String? notes;
   int? repeat;
   bool private;
@@ -16,11 +16,11 @@ class AnilistListEntry {
   Media media;
 
   AnilistListEntry({
-    this.score,
     this.progress,
-    this.status,
+    required this.status,
     this.notes,
     this.repeat,
+    required this.score,
     required this.private,
     required this.startedAt,
     required this.completedAt,
@@ -28,9 +28,9 @@ class AnilistListEntry {
   });
 
   AnilistListEntry copyWith({
-    int? score,
+    required int score,
     int? progress,
-    AnilistMediaListStatus? status,
+    required AnilistMediaListStatus status,
     String? notes,
     int? repeat,
     bool? private,
@@ -39,9 +39,9 @@ class AnilistListEntry {
     Media? media,
   }) {
     return AnilistListEntry(
-      score: score ?? this.score,
+      score: score,
       progress: progress ?? this.progress,
-      status: status ?? this.status,
+      status: status,
       notes: notes ?? this.notes,
       repeat: repeat ?? this.repeat,
       private: private ?? this.private,
@@ -55,7 +55,7 @@ class AnilistListEntry {
     return {
       'score': score,
       'progress': progress,
-      'status': status?.toString(),
+      'status': status.toString(),
       'notes': notes,
       'repeat': repeat,
       'private': private,
@@ -69,9 +69,8 @@ class AnilistListEntry {
     return AnilistListEntry(
       score: map['score']?.toInt(),
       progress: map['progress']?.toInt(),
-      status: map['status'] != null
-          ? AnilistMediaListStatus.values.byName(map['status'].toString().toLowerCase())
-          : null,
+      status: AnilistMediaListStatus.values
+          .byName(map['status'].toString().toLowerCase()),
       notes: map['notes'],
       repeat: map['repeat']?.toInt(),
       private: map['private'] ?? false,

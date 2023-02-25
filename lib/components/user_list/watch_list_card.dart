@@ -22,10 +22,16 @@ class WatchListCard extends StatelessWidget {
       coverImage: coverImage,
       title: EntryCardBackground(
         title: title,
-        episode: entry.status != null &&
-                entry.status == AnilistMediaListStatus.current
+        episode: [
+          AnilistMediaListStatus.current,
+          AnilistMediaListStatus.dropped,
+          AnilistMediaListStatus.paused,
+          AnilistMediaListStatus.repeating,
+        ].contains(entry.status)
             ? entry.progress?.toString() ?? '?'
-            : entry.score?.toString() ?? '~',
+            : entry.score == 0
+                ? '-'
+                : entry.score.toString(),
       ),
       actions: WatchListCardActions(
         entry: entry,
