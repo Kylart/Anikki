@@ -1,10 +1,10 @@
-import 'package:anikki/components/user_list/watch_list_card_actions.dart';
-import 'package:anikki/providers/anilist/types/media_list_status.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/providers/anilist/types/list_entry.dart';
 import 'package:anikki/components/shared/entry_card/entry_card.dart';
 import 'package:anikki/components/shared/entry_card/entry_card_background.dart';
+import 'package:anikki/components/user_list/watch_list/watch_list_card_actions.dart';
+import 'package:anikki/providers/anilist/types/list_entry.dart';
+import 'package:anikki/providers/anilist/types/media_list_status.dart';
 
 class WatchListCard extends StatelessWidget {
   const WatchListCard({super.key, required this.entry});

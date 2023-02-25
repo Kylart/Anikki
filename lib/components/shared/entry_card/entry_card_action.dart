@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class GridCardAction extends StatefulWidget {
-  const GridCardAction({
+class EntryCardAction extends StatefulWidget {
+  const EntryCardAction({
     super.key,
     required this.icon,
     this.hoverColor = Colors.white54,
@@ -17,10 +17,10 @@ class GridCardAction extends StatefulWidget {
   final void Function()? onTap;
 
   @override
-  State<GridCardAction> createState() => _GridCardActionState();
+  State<EntryCardAction> createState() => _EntryCardActionState();
 }
 
-class _GridCardActionState extends State<GridCardAction> {
+class _EntryCardActionState extends State<EntryCardAction> {
   bool isHovered = false;
 
   @override

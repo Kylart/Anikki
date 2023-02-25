@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/user_list/user_list_actions.dart';
-import 'package:anikki/components/shared/grid_card_action.dart';
+import 'package:anikki/components/shared/entry_card/entry_card_action.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/providers/local/types/file.dart';
 
@@ -19,27 +19,27 @@ class LocalCardActions extends StatelessWidget {
       crossAxisCount: 2,
       childAspectRatio: 0.75,
       children: [
-        GridCardAction(
+        EntryCardAction(
           icon: Icons.play_arrow,
           onTap: () async => await playFile(entry, context),
         ),
         if (isDesktop())
-          GridCardAction(
+          EntryCardAction(
             icon: Icons.download,
             onTap: () => download<LocalFile>(context, entry),
           ),
         if (!isDesktop())
-          GridCardAction(
+          EntryCardAction(
             icon: Icons.chevron_left,
             onTap: onBack,
           ),
-        GridCardAction(
+        EntryCardAction(
           icon: Icons.delete,
           iconColor: Theme.of(context).colorScheme.error,
           hoverColor: Theme.of(context).colorScheme.errorContainer,
           onTap: () async => await deleteFile(entry, context),
         ),
-        const GridCardAction(icon: Icons.more_horiz),
+        const EntryCardAction(icon: Icons.more_horiz),
       ],
     );
   }

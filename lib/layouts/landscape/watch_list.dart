@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/shared/custom_grid_view.dart';
-import 'package:anikki/components/user_list/watch_list_list_view.dart';
+import 'package:anikki/components/user_list/watch_list/watch_list_list_view.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/anilist/types/list_entry.dart';
 import 'package:anikki/providers/anilist/types/media_list_status.dart';

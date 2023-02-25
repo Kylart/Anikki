@@ -1,6 +1,6 @@
 import 'package:anikki/components/news/news_card_actions.dart';
-import 'package:anikki/components/user_list/local_card_actions.dart';
-import 'package:anikki/components/user_list/watch_list_card_actions.dart';
+import 'package:anikki/components/user_list/library/library_card_actions.dart';
+import 'package:anikki/components/user_list/watch_list/watch_list_card_actions.dart';
 import 'package:flutter/material.dart';
 
 class EntryCard extends StatefulWidget {

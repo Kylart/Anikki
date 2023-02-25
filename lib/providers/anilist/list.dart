@@ -91,8 +91,6 @@ mixin AnilistList on AnilistClient, ChangeNotifier {
 
         final listStatus = mediaList[0].status;
 
-        if (listStatus == null) continue;
-
         watchList[listStatus] = mediaList;
       }
     } on GraphQLError catch (e) {
