@@ -94,6 +94,8 @@ Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
           ),
         ),
       );
+
+      store.getWatchLists(store.me!.name);
     } on AnilistUpdateListException catch (e) {
       _handleAnilistUpdateException(e, context);
     }
