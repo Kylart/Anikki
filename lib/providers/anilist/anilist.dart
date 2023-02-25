@@ -62,7 +62,7 @@ class AnilistStore extends AnilistClient
       notifyListeners();
 
       if (me?.name != null) {
-        getWatchLists(me?.name)
+        getWatchLists(me!.name)
           .catchError((e) {
             if (e is AnilistGetListException) watchListLoadError = e;
             throw e;

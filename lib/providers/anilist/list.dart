@@ -63,12 +63,13 @@ mixin AnilistList on AnilistClient, ChangeNotifier {
   List<AnilistListEntry> get currentList => watchList[AnilistMediaListStatus.current]!;
   List<AnilistListEntry> get completedList => watchList[AnilistMediaListStatus.completed]!;
 
-  Future<void> getWatchLists(username) async {
+  Future<void> getWatchLists(String username) async {
     try {
       isWatchListLoading = true;
 
       final QueryOptions options = QueryOptions(
         document: gql(getListQuery),
+        fetchPolicy: FetchPolicy.noCache,
         variables: <String, dynamic>{
           'username': username,
         },

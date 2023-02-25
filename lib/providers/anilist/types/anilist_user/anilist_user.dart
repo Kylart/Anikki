@@ -7,14 +7,14 @@ import 'options.dart';
 
 @immutable
 class AnilistUser {
-  final String? name;
+  final String name;
   final Avatar? avatar;
   final String? bannerImage;
   final bool? isBlocked;
   final Options? options;
 
   const AnilistUser({
-    this.name,
+    required this.name,
     this.avatar,
     this.bannerImage,
     this.isBlocked,
@@ -27,7 +27,7 @@ class AnilistUser {
   }
 
   factory AnilistUser.fromMap(Map<String, dynamic> data) => AnilistUser(
-        name: data['name'] as String?,
+        name: data['name'] as String,
         avatar: data['avatar'] == null
             ? null
             : Avatar.fromMap(data['avatar'] as Map<String, dynamic>),

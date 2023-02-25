@@ -1,4 +1,7 @@
+import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/providers/local/local.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserListAppBar extends StatefulWidget {
   const UserListAppBar({super.key, required this.onLayoutChange});
@@ -37,6 +40,29 @@ class _UserListAppBarState extends State<UserListAppBar> {
             ],
           ),
         ),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          child: IconButton(
+            onPressed: () {
+              final anilistStore = context.read<AnilistStore>();
+              final localStore = context.read<LocalStore>();
+
+              if (isSelected[0]) {
+                if (localStore.currentPath != null) {
+                  localStore.retrieveFilesFromCurrentPath();
+                }
+              } else {
+                if (anilistStore.isConnected) {
+                  anilistStore.getWatchLists(anilistStore.me!.name);
+                }
+              }
+            },
+            icon: const Icon(Icons.refresh),
+          ),
+        )
       ],
     );
   }
