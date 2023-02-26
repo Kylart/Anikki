@@ -3,7 +3,7 @@ import 'package:html/parser.dart';
 
 import 'package:anikki/bindings/anitomy/anitomy.dart';
 import 'package:anikki/helpers/errors/nyaa_no_result_exception.dart';
-import 'package:anikki/providers/nyaa/types/torrent.dart';
+import 'package:anikki/helpers/nyaa/types/torrent.dart';
 
 extractFromHtml({required String data, required String baseUrl}) {
   List<Torrent> results = [];

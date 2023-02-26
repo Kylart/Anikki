@@ -12,7 +12,6 @@ import 'package:anikki/layouts/portrait/layout.dart';
 import 'package:anikki/providers/navigation.dart';
 import 'package:anikki/providers/user_preferences.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/nyaa/nyaa.dart';
 
 void main() async {
   if (isDesktop()) setUpDesktop();
@@ -30,7 +29,6 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => LocalStore()),
         ChangeNotifierProvider(create: (_) => AnilistStore()),
-        ChangeNotifierProvider(create: (_) => NyaaStore()),
         ChangeNotifierProvider(create: (_) => Navigation()),
         ChangeNotifierProvider(create: (_) => UserPreferences()),
       ],

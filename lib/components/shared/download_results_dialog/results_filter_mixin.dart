@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/shared/download_results_dialog/download_results_container.dart';
-import 'package:anikki/providers/nyaa/types/quality.dart';
-import 'package:anikki/providers/nyaa/types/torrent.dart';
+import 'package:anikki/helpers/nyaa/types/quality.dart';
+import 'package:anikki/helpers/nyaa/types/torrent.dart';
 
 mixin ResultsFilterMixin on State<DownloadResultsContainer> {
   /// Enable custom filter that will filter the results using Anitomy

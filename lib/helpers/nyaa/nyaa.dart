@@ -1,14 +1,32 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
+import 'package:anikki/helpers/nyaa/types/torrent.dart';
 import 'package:http/http.dart';
+import 'package:quiver/collection.dart';
 
-import 'package:anikki/providers/nyaa/types/torrent.dart';
+import 'utils.dart';
 
-import './utils.dart' as utils;
-
-mixin NyaaClient on ChangeNotifier {
-  String baseUrl = 'nyaa.si';
+class Nyaa with DiagnosticableTreeMixin {
+  final String baseUrl = 'nyaa.si';
   final Client client = Client();
+
+  Map<String, List<Torrent>> results = LruMap(maximumSize: 10);
+
+  Future<List<Torrent>> search(String term) async {
+    try {
+      if (results.containsKey(term) && results[term]!.isNotEmpty) {
+        return results[term]!;
+      }
+
+      final result = await _getAll(term: term);
+
+      results[term] = result;
+
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   Future<Map<String, dynamic>> _searchPage({String? term, int? page}) async {
     final options = {
@@ -23,13 +41,13 @@ mixin NyaaClient on ChangeNotifier {
     final uri = Uri.https(baseUrl, '/', options);
     final response = await get(uri);
 
-    return utils.extractFromHtml(
+    return extractFromHtml(
       data: response.body,
       baseUrl: baseUrl,
     );
   }
 
-  Future<List<Torrent>> getAll({String? term}) async {
+  Future<List<Torrent>> _getAll({String? term}) async {
     final Map<String, dynamic> firstPage = await _searchPage(term: term);
 
     List<Torrent> results = firstPage['results'];
@@ -51,5 +69,13 @@ mixin NyaaClient on ChangeNotifier {
     }
 
     return results;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    properties.add(
+        DiagnosticsProperty<Map<String, List<Torrent>>>('results', results));
   }
 }

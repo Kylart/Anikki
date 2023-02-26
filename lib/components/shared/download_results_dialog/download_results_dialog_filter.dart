@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 
-import 'package:anikki/providers/nyaa/types/quality.dart';
+import 'package:anikki/helpers/nyaa/types/quality.dart';
 
 class FilterValueHandler<T, U> {
   FilterValueHandler(this.value, this.onChange);
