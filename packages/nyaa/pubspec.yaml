@@ -1,0 +1,18 @@
+name: nyaa
+description: Package to scrap nyaa.si
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=2.19.0 <3.0.0"
+
+dependencies:
+  html: ^0.15.1
+  http: ^0.13.5
+  quiver: ^3.2.1
+  anitomy:
+    path: ../anitomy
+
+dev_dependencies:
+  test: ^1.21.4
+
