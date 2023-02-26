@@ -26,8 +26,17 @@ class NewsCardActions extends StatelessWidget {
         if (isDesktop())
           Expanded(
             child: EntryCardAction(
-              icon: Icons.edit,
-              onTap: () {},
+              icon: Icons.cloud_download,
+              onTap: () {
+                showAvailableTorrents<ScheduleEntry>(
+                  context,
+                  ScheduleEntry(
+                    id: entry.id,
+                    airingAt: entry.airingAt,
+                    media: entry.media,
+                  ),
+                );
+              },
             ),
           ),
         if (!isDesktop())

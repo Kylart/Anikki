@@ -14,7 +14,7 @@ void showAvailableTorrents<T>(BuildContext context, T entry) {
         final typedEntry = entry as ScheduleEntry;
         return DownloadResultsDialog(
           episode: typedEntry.episode,
-          term: '${typedEntry.media!.title!.title()} ${typedEntry.episode}',
+          term: '${typedEntry.media!.title!.title()} ${typedEntry.episode ?? ''}',
         );
       }
 
