@@ -57,6 +57,7 @@ class _UserListState extends State<UserList>
         child: Column(
           children: [
             UserListAppBar(
+              tab: _tabController.index,
               onLayoutChange: (String l) {
                 setState(() {
                   layout = l;

@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserListAppBar extends StatefulWidget {
-  const UserListAppBar({super.key, required this.onLayoutChange});
+  const UserListAppBar({
+    super.key,
+    required this.onLayoutChange,
+    required this.tab,
+  });
 
   final void Function(String layout) onLayoutChange;
+  final int tab;
 
   @override
   State<UserListAppBar> createState() => _UserListAppBarState();
@@ -50,7 +55,7 @@ class _UserListAppBarState extends State<UserListAppBar> {
               final anilistStore = context.read<AnilistStore>();
               final localStore = context.read<LocalStore>();
 
-              if (isSelected[0]) {
+              if (widget.tab == 0) {
                 if (localStore.currentPath != null) {
                   localStore.retrieveFilesFromCurrentPath();
                 }
