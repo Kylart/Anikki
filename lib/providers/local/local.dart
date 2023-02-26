@@ -7,7 +7,6 @@ import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:anikki/helpers/errors/library_empty_directory_exception.dart';
-import 'package:anikki/helpers/hash.dart';
 import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/local/types/file.dart';
@@ -108,7 +107,9 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
 
       // Feeding medias to entries
       for (final file in currentFiles) {
-        file.media = info[file.title != null ? getId(name: file.title!) : ''];
+        file.media = info[file.title != null
+            ? anilist.provider.getInfoFromInfo(file.title!, info)
+            : ''];
       }
 
       // Ordering files using name and episode

@@ -7,6 +7,10 @@ import 'package:anilist/src/utils/hash.dart';
 import 'package:graphql/client.dart';
 
 mixin AnilistInfo on AnilistClient {
+  Media? getInfoFromInfo (String name, Map<String, Media> info) {
+    return info[getId(name: name)];
+  }
+
   Future<Map<String, Media>> infoFromMultiple(List<String> names) async {
     Map<String, Media> results = {};
 
