@@ -23,6 +23,14 @@ class _LibraryState extends State<Library> {
     final isLoading = store.isLoading;
     final layout = widget.layout;
 
+    if (isLoading) {
+      return const Expanded(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     if (entries.isNotEmpty) {
       if (layout == 'list') {
         return Expanded(
@@ -39,14 +47,6 @@ class _LibraryState extends State<Library> {
           ),
         );
       }
-    }
-
-    if (isLoading) {
-      return const Expanded(
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
     }
 
     return ListTile(
