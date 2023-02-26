@@ -58,6 +58,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
 
   Future<void> retrieveFilesFromCurrentPath() async {
     try {
+      currentFiles = [];
       isLoading = true;
 
       if (currentPath == null) return;
