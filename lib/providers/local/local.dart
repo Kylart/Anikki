@@ -123,8 +123,8 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
     currentFiles.sort((a, b) {
       final aTitle = a.title ?? '';
       final bTitle = b.title ?? '';
-      final aEp = int.parse(a.episode ?? '0');
-      final bEp = int.parse(b.episode ?? '0');
+      final aEp = int.tryParse(a.episode ?? '0') ?? 0;
+      final bEp = int.tryParse(b.episode ?? '0') ?? 0;
 
       final comparisonResult = aTitle.compareTo(bTitle);
 
