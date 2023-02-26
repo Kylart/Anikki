@@ -13,7 +13,7 @@ class Torrent {
   String leechers;
   String completed;
   String status;
-  AnitomyParser parsed;
+  Anitomy parsed;
 
   Torrent({
     required this.id,
@@ -40,7 +40,7 @@ class Torrent {
     String? leechers,
     String? completed,
     String? status,
-    AnitomyParser? parsed,
+    Anitomy? parsed,
   }) {
     return Torrent(
       id: id ?? this.id,
@@ -85,7 +85,7 @@ class Torrent {
       leechers: map['leechers'] as String,
       completed: map['completed'] as String,
       status: map['status'] as String,
-      parsed: AnitomyParser(inputString: map['name'] as String),
+      parsed: Anitomy(inputString: map['name'] as String),
     );
   }
 

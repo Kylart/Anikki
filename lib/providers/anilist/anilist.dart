@@ -1,28 +1,17 @@
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:anikki/helpers/errors/anilist_get_list_exception.dart';
-import 'package:anikki/providers/anilist/list.dart';
-import 'package:anikki/providers/anilist/anilist_client.dart';
-import 'package:anikki/helpers/errors/anilist_not_connected_exception.dart';
-import 'package:anikki/providers/anilist/types/anilist_user/anilist_user.dart';
-import 'package:anikki/providers/anilist/auth.dart';
-import 'package:anikki/helpers/mixins/loading.dart';
-import 'package:anikki/providers/anilist/info.dart';
-import 'package:anikki/providers/anilist/schedule.dart';
-import 'package:anikki/providers/anilist/types/schedule_entry.dart';
+class AnilistStore with ChangeNotifier, LoadingMixin {
+  AnilistStore() {
+    init();
+  }
 
-class AnilistStore extends AnilistClient
-    with
-        ChangeNotifier,
-        LoadingMixin,
-        AnilistAuth,
-        AnilistAiringSchedule,
-        AnilistInfo,
-        AnilistList {
+  Anilist provider = Anilist();
   List<ScheduleEntry> currentNews = [];
-  String? newsError;
+  AnilistGetScheduleException? newsError;
   AnilistUser? me;
 
   bool get isConnected => me != null;
@@ -32,9 +21,37 @@ class AnilistStore extends AnilistClient
     end: DateTime.now().add(const Duration(days: 1)),
   );
 
-  AnilistStore() {
-    init();
+  bool _isWatchListLoading = false;
+
+  bool get isWatchListLoading => _isWatchListLoading;
+
+  set isWatchListLoading(bool value) {
+    _isWatchListLoading = value;
+    notifyListeners();
   }
+
+  AnilistGetListException? _watchListLoadError;
+
+  AnilistGetListException? get watchListLoadError => _watchListLoadError;
+
+  set watchListLoadError(AnilistGetListException? value) {
+    _watchListLoadError = value;
+    notifyListeners();
+  }
+
+  Map<AnilistMediaListStatus, List<AnilistListEntry>> watchList = {
+    AnilistMediaListStatus.completed: [],
+    AnilistMediaListStatus.current: [],
+    AnilistMediaListStatus.dropped: [],
+    AnilistMediaListStatus.paused: [],
+    AnilistMediaListStatus.planning: [],
+    AnilistMediaListStatus.repeating: [],
+  };
+
+  List<AnilistListEntry> get currentList =>
+      watchList[AnilistMediaListStatus.current]!;
+  List<AnilistListEntry> get completedList =>
+      watchList[AnilistMediaListStatus.completed]!;
 
   Future<void> init() async {
     // Retrieve previous token if any
@@ -42,36 +59,23 @@ class AnilistStore extends AnilistClient
     final anilistAccessToken =
         prefs.getString('user_preferences_anilistAccessToken');
 
-    await setupClient(
-      headers: anilistAccessToken != null
-          ? getDefaultHeaders(accessToken: anilistAccessToken)
-          : null,
-    );
+    provider = Anilist(accessToken: anilistAccessToken);
 
     await getNews(currentRange);
-    notifyListeners();
-  }
 
-  Future<void> setupClient({Map<String, String>? headers}) async {
-    initClient(headers: headers);
-
-    if (headers?['Authorization'] == null) return;
-
-    try {
-      me = await getMe();
+    if (anilistAccessToken != null) {
+      me = await provider.getMe();
       notifyListeners();
 
       if (me?.name != null) {
-        getWatchLists(me!.name)
-          .catchError((e) {
-            if (e is AnilistGetListException) watchListLoadError = e;
-            throw e;
-          });
+        watchList = await provider.getWatchLists(me!.name);
+        notifyListeners();
       }
-    } on AnilistNotConnectedException {
-      /// User is not logged in anymore and needs to log in again
-      await logout();
     }
+  }
+
+  void setupClient (String? token) {
+    provider = Anilist(accessToken: token);
   }
 
   Future<void> logout() async {
@@ -83,27 +87,29 @@ class AnilistStore extends AnilistClient
     me = null;
   }
 
-  Future<void> getNews(DateTimeRange dateRange) async {
+  Future<void> getNews(DateTimeRange range) async {
     try {
-      int currentPage = 1;
       isLoading = true;
-      currentNews = [];
 
-      while (true) {
-        final page = await getScheduleAtPage(currentPage, dateRange);
-
-        if (page == null) break;
-
-        currentPage++;
-
-        currentNews.addAll(page.airingSchedules);
-      }
-
-      newsError = null;
+      currentNews = await provider.getSchedule(range);
+    } on AnilistGetScheduleException catch (e) {
+      newsError = e;
+    } finally {
       isLoading = false;
-    } catch (e) {
-      newsError = e.toString();
-      notifyListeners();
+    }
+  }
+
+  Future<void> getWatchLists() async {
+    if (!isConnected) return;
+
+    try {
+      isWatchListLoading = true;
+
+      watchList = await provider.getWatchLists(me!.name);
+    } on AnilistGetListException catch (e) {
+      watchListLoadError = e;
+    } finally {
+      isWatchListLoading = false;
     }
   }
 }

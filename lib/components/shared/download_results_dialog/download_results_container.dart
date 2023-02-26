@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_filter.dart';
 import 'package:anikki/components/shared/download_results_dialog/download_results_dialog_list_view.dart';
 import 'package:anikki/components/shared/download_results_dialog/results_filter_mixin.dart';
-import 'package:anikki/helpers/nyaa/types/torrent.dart';
+import 'package:nyaa/nyaa.dart';
 
 class DownloadResultsContainer extends StatefulWidget {
   const DownloadResultsContainer({

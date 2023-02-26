@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:anitomy/anitomy.dart';
 import 'package:flutter/foundation.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:anikki/bindings/anitomy/anitomy.dart';
 import 'package:anikki/helpers/errors/library_empty_directory_exception.dart';
 import 'package:anikki/helpers/hash.dart';
 import 'package:anikki/helpers/mixins/loading.dart';
@@ -78,7 +78,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
 
         if (!isAllowed) continue;
 
-        final parser = AnitomyParser(inputString: basename(path));
+        final parser = Anitomy(inputString: basename(path));
         final entry = LocalFile(
           path: path,
           file: File(path),
@@ -104,7 +104,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
         }
       }
 
-      final info = await anilist.fromMultiple(entryNames);
+      final info = await anilist.provider.infoFromMultiple(entryNames);
 
       // Feeding medias to entries
       for (final file in currentFiles) {

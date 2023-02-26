@@ -1,10 +1,9 @@
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/news/news_card.dart';
 import 'package:anikki/components/user_list/library/library_card.dart';
 import 'package:anikki/components/user_list/watch_list/watch_list_card.dart';
-import 'package:anikki/providers/anilist/types/list_entry.dart';
-import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 import 'package:anikki/providers/local/types/file.dart';
 
 class CustomGridView<T> extends StatelessWidget {

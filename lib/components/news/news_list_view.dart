@@ -1,8 +1,8 @@
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/news/news_actions.dart';
 import 'package:anikki/components/shared/list_view_divider.dart';
-import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 
 class NewsListView extends StatelessWidget {
   final List<ScheduleEntry> entries;

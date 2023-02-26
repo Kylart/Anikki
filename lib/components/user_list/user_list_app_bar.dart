@@ -61,7 +61,7 @@ class _UserListAppBarState extends State<UserListAppBar> {
                 }
               } else {
                 if (anilistStore.isConnected) {
-                  anilistStore.getWatchLists(anilistStore.me!.name);
+                  anilistStore.getWatchLists();
                 }
               }
             },

@@ -1,3 +1,4 @@
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -7,7 +8,6 @@ import 'package:anikki/components/news/news_app_bar.dart';
 import 'package:anikki/components/news/news_list_view.dart';
 import 'package:anikki/components/shared/custom_grid_view.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/anilist/types/schedule_entry.dart';
 
 class News extends StatefulWidget {
   const News({

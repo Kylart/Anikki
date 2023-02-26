@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:anikki/providers/anilist/types/media/media.dart';
+import 'package:anilist/anilist.dart';
 
 class LocalFile {
   final String path;

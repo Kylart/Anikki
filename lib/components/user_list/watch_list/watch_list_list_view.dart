@@ -1,9 +1,8 @@
-import 'package:anikki/providers/anilist/types/media_list_status.dart';
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/shared/list_view_divider.dart';
 import 'package:anikki/components/user_list/user_list_actions.dart';
-import 'package:anikki/providers/anilist/types/list_entry.dart';
 
 class WatchListListView extends StatelessWidget {
   final List<AnilistListEntry> entries;

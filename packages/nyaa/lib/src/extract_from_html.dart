@@ -37,7 +37,7 @@ extractFromHtml({required String data, required String baseUrl}) {
         leechers: element.children[6].text,
         completed: element.children[7].text,
         status: element.attributes['class'].toString(),
-        parsed: AnitomyParser(inputString: name),
+        parsed: Anitomy(inputString: name),
       ),
     );
   });

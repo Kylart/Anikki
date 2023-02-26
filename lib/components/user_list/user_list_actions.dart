@@ -79,7 +79,7 @@ Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
     final episode = int.tryParse(entry.episode ?? '1') ?? 1;
 
     try {
-      await store.watchedEntry(
+      await store.provider.watchedEntry(
         episode: episode,
         mediaId: entry.media!.id!,
       );
@@ -95,7 +95,7 @@ Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
         ),
       );
 
-      store.getWatchLists(store.me!.name);
+      store.getWatchLists();
     } on AnilistUpdateListException catch (e) {
       _handleAnilistUpdateException(e, context);
     }
