@@ -5,10 +5,11 @@ import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:anikki/helpers/hash.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/helpers/mixins/loading.dart';
 import 'package:anikki/bindings/anitomy/anitomy.dart';
+import 'package:anikki/helpers/errors/library_empty_directory_exception.dart';
+import 'package:anikki/helpers/hash.dart';
+import 'package:anikki/helpers/mixins/loading.dart';
+import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/local/types/file.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
@@ -66,7 +67,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
       final directory = Directory(currentPath!);
       final exists = await directory.exists();
 
-      if (!exists) throw Error();
+      if (!exists) throw LibraryEmptyDirectoryException();
 
       final fileStream = directory.list(recursive: false, followLinks: false);
       final files = await fileStream.toList();
