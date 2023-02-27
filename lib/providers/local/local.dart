@@ -107,9 +107,7 @@ class LocalStore with ChangeNotifier, DiagnosticableTreeMixin, LoadingMixin {
 
       // Feeding medias to entries
       for (final file in currentFiles) {
-        file.media = info[file.title != null
-            ? anilist.provider.getInfoFromInfo(file.title!, info)
-            : ''];
+        file.media = anilist.provider.getInfoFromInfo(file.title!, info);
       }
 
       // Ordering files using name and episode
