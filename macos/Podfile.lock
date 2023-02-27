@@ -1,4 +1,6 @@
 PODS:
+  - anitomy (0.0.1):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - protocol_handler (0.0.1):
     - FlutterMacOS
@@ -13,6 +15,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - anitomy (from `Flutter/ephemeral/.symlinks/plugins/anitomy/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - protocol_handler (from `Flutter/ephemeral/.symlinks/plugins/protocol_handler/macos`)
   - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
@@ -21,6 +24,8 @@ DEPENDENCIES:
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
 
 EXTERNAL SOURCES:
+  anitomy:
+    :path: Flutter/ephemeral/.symlinks/plugins/anitomy/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   protocol_handler:
@@ -35,6 +40,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
 SPEC CHECKSUMS:
+  anitomy: 3f37138231da5856622e17575902a1156771bf3d
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   protocol_handler: 587e1caf6c0b92ce351ab14081968dae49cb8cc6
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
