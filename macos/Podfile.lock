@@ -40,7 +40,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
 SPEC CHECKSUMS:
-  anitomy: 3f37138231da5856622e17575902a1156771bf3d
+  anitomy: 90836e048aeb699d56094545e5a5fe9adf84550b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   protocol_handler: 587e1caf6c0b92ce351ab14081968dae49cb8cc6
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
