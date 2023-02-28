@@ -2,14 +2,11 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:anikki/components/shared/custom_grid_view.dart';
-import 'package:anikki/watch_list/watch_list_list_view.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/watch_list/watch_list_layout.dart';
 
 class WatchList extends StatefulWidget {
-  const WatchList({super.key, required this.layout});
-
-  final String layout;
+  const WatchList({super.key});
 
   @override
   State<WatchList> createState() => _WatchListState();
@@ -93,17 +90,7 @@ class _WatchListState extends State<WatchList>
                 children: AnilistMediaListStatus.values.map((status) {
                   final entries = watchList[status] ?? [];
 
-                  if (widget.layout == 'grid') {
-                    return CustomGridView<AnilistListEntry>(
-                      entries: entries,
-                    );
-                  }
-
-                  if (widget.layout == 'list') {
-                    return WatchListListView(entries: entries);
-                  }
-
-                  return const SizedBox();
+                  return WatchListLayout(entries: entries);
                 }).toList(),
               )),
             ],

@@ -18,7 +18,6 @@ class UserList extends StatefulWidget {
 
 class _UserListState extends State<UserList>
     with SingleTickerProviderStateMixin {
-  String layout = 'grid';
   String currentPath = '';
 
   int tabIndex = 0;
@@ -61,11 +60,6 @@ class _UserListState extends State<UserList>
           children: [
             UserListAppBar(
               tab: _tabController.index,
-              onLayoutChange: (String l) {
-                setState(() {
-                  layout = l;
-                });
-              },
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,12 +109,8 @@ class _UserListState extends State<UserList>
               color: outlineColor,
               height: 1,
             ),
-            if (tabIndex == 0)
-              Library(
-                layout: layout,
-                path: currentPath,
-              ),
-            if (tabIndex == 1) WatchList(layout: layout)
+            if (tabIndex == 0) Library(path: currentPath),
+            if (tabIndex == 1) const WatchList()
           ],
         ),
       ),

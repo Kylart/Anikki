@@ -1,15 +1,14 @@
 import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/providers/user_list_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserListAppBar extends StatefulWidget {
   const UserListAppBar({
     super.key,
-    required this.onLayoutChange,
     required this.tab,
   });
 
-  final void Function(String layout) onLayoutChange;
   final int tab;
 
   @override
@@ -36,7 +35,8 @@ class _UserListAppBarState extends State<UserListAppBar> {
                 }
               });
 
-              widget.onLayoutChange(isSelected[0] == true ? 'list' : 'grid');
+              context.read<UserListLayoutStore>().layout =
+                  isSelected[0] ? UserListLayouts.list : UserListLayouts.grid;
             },
             children: const [
               Icon(Icons.list),

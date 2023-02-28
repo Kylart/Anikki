@@ -7,11 +7,9 @@ import 'package:provider/provider.dart';
 class Library extends StatelessWidget {
   const Library({
     super.key,
-    required this.layout,
     required this.path,
   });
 
-  final String layout;
   final String path;
 
   @override
@@ -45,7 +43,6 @@ class Library extends StatelessWidget {
         } else {
           return Expanded(
             child: LibraryLayout(
-              layout: layout,
               entries: entries,
             ),
           );

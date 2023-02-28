@@ -1,3 +1,4 @@
+import 'package:anikki/providers/user_list_layout.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -32,6 +33,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AnilistStore()),
         ChangeNotifierProvider(create: (_) => Navigation()),
         ChangeNotifierProvider(create: (_) => UserPreferences()),
+        ChangeNotifierProvider(create: (_) => UserListLayoutStore()),
       ],
       child: const Anikki(),
     ),
