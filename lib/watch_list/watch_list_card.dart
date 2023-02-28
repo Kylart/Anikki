@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/components/shared/entry_card/entry_card.dart';
 import 'package:anikki/components/shared/entry_card/entry_card_background.dart';
-import 'package:anikki/components/user_list/watch_list/watch_list_card_actions.dart';
+import 'package:anikki/watch_list/watch_list_card_actions.dart';
 
 class WatchListCard extends StatelessWidget {
   const WatchListCard({super.key, required this.entry});

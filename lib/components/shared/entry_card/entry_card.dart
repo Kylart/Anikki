@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/news/news_card_actions.dart';
+import 'package:anikki/news/news_card_actions.dart';
 import 'package:anikki/components/shared/entry_card/entry_card_bookmark.dart';
 import 'package:anikki/components/shared/entry_card/entry_card_completed.dart';
-import 'package:anikki/components/user_list/library/library_card_actions.dart';
-import 'package:anikki/components/user_list/watch_list/watch_list_card_actions.dart';
+import 'package:anikki/library/library_card_actions.dart';
+import 'package:anikki/watch_list/watch_list_card_actions.dart';
 
 class EntryCard extends StatefulWidget {
   const EntryCard({

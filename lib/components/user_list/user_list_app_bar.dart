@@ -1,16 +1,15 @@
-import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/local/local.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/providers/user_preferences/user_list_layout.dart';
 
 class UserListAppBar extends StatefulWidget {
   const UserListAppBar({
     super.key,
-    required this.onLayoutChange,
     required this.tab,
   });
 
-  final void Function(String layout) onLayoutChange;
   final int tab;
 
   @override
@@ -18,8 +17,6 @@ class UserListAppBar extends StatefulWidget {
 }
 
 class _UserListAppBarState extends State<UserListAppBar> {
-  final List<bool> isSelected = <bool>[false, true];
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -28,16 +25,13 @@ class _UserListAppBarState extends State<UserListAppBar> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ToggleButtons(
-            isSelected: isSelected,
+            isSelected:
+                context.watch<UserListLayout>().layout == UserListLayouts.grid
+                    ? [false, true]
+                    : [true, false],
             onPressed: (int index) {
-              setState(() {
-                // The button that is tapped is set to true, and the others to false.
-                for (int i = 0; i < isSelected.length; i++) {
-                  isSelected[i] = i == index;
-                }
-              });
-
-              widget.onLayoutChange(isSelected[0] == true ? 'list' : 'grid');
+              context.read<UserListLayout>().layout =
+                  index == 0 ? UserListLayouts.list : UserListLayouts.grid;
             },
             children: const [
               Icon(Icons.list),
@@ -53,13 +47,8 @@ class _UserListAppBarState extends State<UserListAppBar> {
           child: IconButton(
             onPressed: () {
               final anilistStore = context.read<AnilistStore>();
-              final localStore = context.read<LocalStore>();
 
-              if (widget.tab == 0) {
-                if (localStore.currentPath != null) {
-                  localStore.retrieveFilesFromCurrentPath();
-                }
-              } else {
+              if (widget.tab != 0) {
                 if (anilistStore.isConnected) {
                   anilistStore.getWatchLists();
                 }

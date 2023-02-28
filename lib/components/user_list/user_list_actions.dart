@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:anikki/library/store.dart';
 import 'package:flutter/material.dart';
+import 'package:open_app_file/open_app_file.dart';
 import 'package:provider/provider.dart';
 
-import 'package:anikki/components/news/news_actions.dart';
+import 'package:anikki/news/news_actions.dart';
 import 'package:anikki/components/shared/fade_overlay.dart';
 import 'package:anikki/components/shared/video_player/desktop_player.dart';
 import 'package:anikki/components/shared/video_player/mobile_player.dart';
@@ -11,12 +13,9 @@ import 'package:anikki/components/shared/video_player/video_player.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/helpers/errors/anilist_update_list_exception.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/local/local.dart';
-import 'package:anikki/providers/local/types/file.dart';
+import 'package:anikki/models/local_file.dart';
 
 deleteFile(LocalFile entry, BuildContext context) {
-  final store = context.read<LocalStore>();
-
   showDialog<Dialog>(
     context: context,
     builder: (BuildContext context) {
@@ -27,9 +26,11 @@ deleteFile(LocalFile entry, BuildContext context) {
         content: Text('Do you really want to delete ${entry.path}?'),
         actions: [
           TextButton(
-            onPressed: () async {
-              await store.deleteFile(entry);
-              navigator.pop();
+            onPressed: () {
+              entry.file.delete().then((value) {
+                context.read<LocalStore>().removeFile(entry);
+                navigator.pop();
+              });
             },
             child: const Text("Yes!"),
           ),
@@ -45,10 +46,11 @@ deleteFile(LocalFile entry, BuildContext context) {
 
 Future<void> playFile(LocalFile entry, BuildContext context) async {
   if (Platform.isMacOS) {
-    final localStore = context.read<LocalStore>();
-
     await Future.wait([
-      localStore.playFile(entry),
+      /// We need to escape the brackets because they are not escaped properly
+      /// by OpenAppFile.
+      OpenAppFile.open(
+          entry.file.path.replaceAll('(', '\\(').replaceAll(')', '\\)')),
       _updateEntry(context, entry),
     ]);
   } else {
@@ -115,6 +117,6 @@ void _handleAnilistUpdateException(
   );
 }
 
-void download<T> (BuildContext context, T entry) {
+void download<T>(BuildContext context, T entry) {
   showAvailableTorrents<T>(context, entry);
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:anikki/components/user_list/user_list_actions.dart';
 import 'package:anikki/components/shared/entry_card/entry_card_action.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/providers/local/types/file.dart';
+import 'package:anikki/models/local_file.dart';
 
 class LocalCardActions extends StatelessWidget {
   const LocalCardActions(

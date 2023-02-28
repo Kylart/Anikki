@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/user_list/user_list_app_bar.dart';
-import 'package:anikki/layouts/landscape/library.dart';
-import 'package:anikki/layouts/landscape/watch_list.dart';
-import 'package:anikki/providers/local/local.dart';
-import 'package:anikki/providers/user_preferences.dart';
+import 'package:anikki/library/library.dart';
+import 'package:anikki/providers/user_preferences/local_directory.dart';
+import 'package:anikki/watch_list/watch_list.dart';
 
 class UserList extends StatefulWidget {
   const UserList({
@@ -19,8 +18,6 @@ class UserList extends StatefulWidget {
 
 class _UserListState extends State<UserList>
     with SingleTickerProviderStateMixin {
-  String layout = 'grid';
-
   int tabIndex = 0;
   static const List<Tab> tabs = <Tab>[
     Tab(text: 'Library'),
@@ -58,11 +55,6 @@ class _UserListState extends State<UserList>
           children: [
             UserListAppBar(
               tab: _tabController.index,
-              onLayoutChange: (String l) {
-                setState(() {
-                  layout = l;
-                });
-              },
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,16 +80,14 @@ class _UserListState extends State<UserList>
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: ElevatedButton(
                             onPressed: () async {
-                              final store = context.read<LocalStore>();
                               final preferences =
-                                  context.read<UserPreferences>();
+                                  context.read<LocalDirectory>();
                               String? path =
                                   await FilePicker.platform.getDirectoryPath();
 
                               if (path == null) return;
 
-                              await store.setCurrentPath(path);
-                              preferences.localDirecotry = path;
+                              preferences.path = path;
                             },
                             child: const Text('Choose Folder'),
                           ),
@@ -110,8 +100,8 @@ class _UserListState extends State<UserList>
               color: outlineColor,
               height: 1,
             ),
-            if (tabIndex == 0) Library(layout: layout),
-            if (tabIndex == 1) WatchList(layout: layout)
+            if (tabIndex == 0) Library(path: context.watch<LocalDirectory>().path),
+            if (tabIndex == 1) const WatchList()
           ],
         ),
       ),

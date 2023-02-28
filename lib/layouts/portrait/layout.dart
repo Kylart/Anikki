@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:anikki/components/settings/settings.dart';
-import 'package:anikki/layouts/portrait/bottom_navigation_bar.dart';
-import 'package:anikki/providers/navigation.dart';
 
 class PortraitLayout extends StatelessWidget {
   const PortraitLayout({
@@ -12,22 +7,12 @@ class PortraitLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SafeArea(
-        child: PageView(
-          allowImplicitScrolling: true,
-          controller: context.watch<Navigation>().pageController,
-          onPageChanged: (index) {
-            context.read<Navigation>().index = index;
-          },
-          children: const [
-            SizedBox(),
-            SizedBox(),
-            SettingsPage(),
-          ],
+        child: Center(
+          child: Text('Not yet implemented'),
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigationBar(),
     );
   }
 }

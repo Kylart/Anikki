@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:anikki/layouts/landscape/custom_app_bar.dart';
 import 'package:anikki/layouts/landscape/user_list.dart';
-import 'package:anikki/layouts/landscape/news.dart';
+import 'package:anikki/news/news.dart';
 
 class LandscapeLayout extends StatelessWidget {
   const LandscapeLayout({

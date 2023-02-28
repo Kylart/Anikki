@@ -1,25 +1,22 @@
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/news/news_actions.dart';
 import 'package:anikki/components/shared/list_view_divider.dart';
-import 'package:anikki/components/user_list/user_list_actions.dart';
-import 'package:anikki/providers/local/types/file.dart';
 
-class UserListLibraryListView extends StatelessWidget {
-  final List<LocalFile> entries;
+class NewsListView extends StatelessWidget {
+  final List<ScheduleEntry> entries;
 
-  const UserListLibraryListView({super.key, required this.entries});
+  const NewsListView({super.key, required this.entries});
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      padding: const EdgeInsets.all(4.0),
       itemCount: entries.length,
       separatorBuilder: (context, index) => const ListViewDivider(),
       itemBuilder: (context, index) {
         final entry = entries[index];
-        final coverImage = entry.media?.coverImage?.extraLarge ??
-            entry.media?.coverImage?.large ??
-            entry.media?.coverImage?.medium;
 
         return Container(
           decoration: BoxDecoration(
@@ -29,35 +26,27 @@ class UserListLibraryListView extends StatelessWidget {
                     fit: BoxFit.cover,
                     image: NetworkImage(entry.media?.bannerImage!),
                   )
-                : const DecorationImage(
-                    alignment: Alignment.topCenter,
-                    opacity: 0.25,
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/images/cover_placeholder.jpg'),
-                  ),
+                : null,
           ),
           child: ListTile(
-            isThreeLine: entry.episode != null,
+            isThreeLine: true,
             contentPadding: const EdgeInsets.all(8.0),
-            title: Text(entry.media?.title?.romaji ??
-                entry.media?.title?.english ??
-                entry.title),
-            leading: coverImage != null
-                ? CircleAvatar(
-                    backgroundImage: NetworkImage(coverImage),
-                  )
-                : const CircleAvatar(
-                    backgroundImage:
-                        AssetImage('assets/images/placeholder.png'),
-                  ),
+            title:
+                Text(entry.media?.title?.romaji ?? entry.media?.title?.english),
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(
+                  entry.media?.coverImage?.extraLarge ??
+                      entry.media?.coverImage?.large ??
+                      entry.media?.coverImage?.medium ??
+                      ''),
+            ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (entry.episode != null)
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text('Episode ${entry.episode}'),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text('Episode ${entry.episode}'),
+                ),
                 if (entry.media?.genres != null)
                   Row(
                     children: (entry.media!.genres!.length > 1
@@ -85,26 +74,11 @@ class UserListLibraryListView extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: IconButton(
-                    onPressed: () async => await playFile(entry, context),
-                    icon: const Icon(Icons.play_arrow),
+                    onPressed: () {
+                      showAvailableTorrents(context, entry);
+                    },
+                    icon: const Icon(Icons.file_download),
                     color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: IconButton(
-                    onPressed: () async => await deleteFile(entry, context),
-                    icon: const Icon(Icons.delete),
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-                ),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: IconButton(
-                    onPressed: () => download<LocalFile>(context, entry),
-                    icon: const Icon(Icons.download),
                   ),
                 ),
                 SizedBox(
