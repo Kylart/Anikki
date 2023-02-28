@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:anilist/src/models/page_info.dart';
 import 'package:anilist/src/models/schedule_entry.dart';
+import 'package:flutter/foundation.dart';
 
 class ScheduleEntryPage {
   final PageInfo pageInfo;
@@ -48,4 +50,12 @@ class ScheduleEntryPage {
 
   @override
   int get hashCode => pageInfo.hashCode ^ airingSchedules.hashCode;
+
+  @override
+  bool operator ==(covariant ScheduleEntryPage other) {
+    if (identical(this, other)) return true;
+
+    return other.pageInfo == pageInfo &&
+        listEquals(other.airingSchedules, airingSchedules);
+  }
 }
