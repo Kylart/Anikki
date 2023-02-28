@@ -1,7 +1,7 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/news/news_card.dart';
+import 'package:anikki/news/news_card.dart';
 import 'package:anikki/library/library_card.dart';
 import 'package:anikki/models/local_file.dart';
 import 'package:anikki/watch_list/watch_list_card.dart';

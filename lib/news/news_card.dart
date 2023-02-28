@@ -2,7 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:anikki/components/news/news_card_actions.dart';
+import 'package:anikki/news/news_card_actions.dart';
 import 'package:anikki/components/shared/entry_card/entry_card.dart';
 import 'package:anikki/components/shared/entry_card/entry_card_background.dart';
 import 'package:anikki/providers/anilist/anilist.dart';

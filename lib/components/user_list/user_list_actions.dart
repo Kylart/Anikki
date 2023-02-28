@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:provider/provider.dart';
 
-import 'package:anikki/components/news/news_actions.dart';
+import 'package:anikki/news/news_actions.dart';
 import 'package:anikki/components/shared/fade_overlay.dart';
 import 'package:anikki/components/shared/video_player/desktop_player.dart';
 import 'package:anikki/components/shared/video_player/mobile_player.dart';

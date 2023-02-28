@@ -60,6 +60,7 @@ dependencies:
     path: packages/anilist
   anitomy:
     path: packages/anitomy
+  quiver: ^3.2.1
 
 dev_dependencies:
   flutter_test:

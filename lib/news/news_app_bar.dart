@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:provider/provider.dart';
 
 class NewsAppBar extends StatefulWidget {
-  const NewsAppBar({super.key, required this.onLayoutChange});
+  const NewsAppBar({
+    super.key,
+    required this.onLayoutChange,
+    required this.onDateChange,
+    required this.initialRange,
+  });
 
   final void Function(String layout) onLayoutChange;
+  final void Function(DateTimeRange layout) onDateChange;
+  final DateTimeRange initialRange;
 
   @override
   State<NewsAppBar> createState() => _NewsAppBarState();
@@ -26,19 +31,16 @@ class _NewsAppBarState extends State<NewsAppBar> {
           child: IconButton(
             icon: const Icon(Icons.calendar_today),
             onPressed: () async {
-              final store = context.read<AnilistStore>();
-
               final dateRange = await showDateRangePicker(
                 context: context,
-                initialDateRange: store.currentRange,
+                initialDateRange: widget.initialRange,
                 firstDate: DateTime.now().subtract(const Duration(days: 365)),
                 lastDate: DateTime.now().add(const Duration(days: 7)),
               );
 
               if (dateRange == null) return;
 
-              await store.getNews(dateRange);
-              store.currentRange = dateRange;
+              widget.onDateChange(dateRange);
             },
           ),
         ),

@@ -3,22 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:anikki/helpers/mixins/loading.dart';
+import 'package:anikki/news/store.dart';
 import 'package:anikki/providers/anilist/anilist_client.dart';
 import 'package:anikki/watch_list/store.dart';
 
 class AnilistStore extends AnilistClient
-    with ChangeNotifier, LoadingMixin, WatchListStore {
+    with ChangeNotifier, LoadingMixin, WatchListStore, NewsStore {
   AnilistStore() {
     init();
   }
-
-  List<ScheduleEntry> currentNews = [];
-  AnilistGetScheduleException? newsError;
-
-  DateTimeRange currentRange = DateTimeRange(
-    start: DateTime.now().subtract(const Duration(days: 1)),
-    end: DateTime.now().add(const Duration(days: 1)),
-  );
 
   Future<void> init() async {
     // Retrieve previous token if any
@@ -26,15 +19,13 @@ class AnilistStore extends AnilistClient
     final anilistAccessToken =
         prefs.getString('user_preferences_anilistAccessToken');
 
-    provider = Anilist(accessToken: anilistAccessToken);
-
-    await getNews(currentRange);
+    setupClient(anilistAccessToken);
 
     if (anilistAccessToken != null) {
       me = await provider.getMe();
       notifyListeners();
 
-      // await getWatchLists();
+      await getWatchLists();
       notifyListeners();
     }
   }
@@ -50,17 +41,5 @@ class AnilistStore extends AnilistClient
 
     /// Remove the current user. Will set isConnected to false
     me = null;
-  }
-
-  Future<void> getNews(DateTimeRange range) async {
-    try {
-      isLoading = true;
-
-      currentNews = await provider.getSchedule(range);
-    } on AnilistGetScheduleException catch (e) {
-      newsError = e;
-    } finally {
-      isLoading = false;
-    }
   }
 }
