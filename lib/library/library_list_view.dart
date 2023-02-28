@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/components/shared/list_view_divider.dart';
 import 'package:anikki/components/user_list/user_list_actions.dart';
-import 'package:anikki/providers/local/types/file.dart';
+import 'package:anikki/models/local_file.dart';
 
 class UserListLibraryListView extends StatelessWidget {
   final List<LocalFile> entries;

@@ -5,7 +5,6 @@ import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'package:anikki/providers/local/local.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/layouts/landscape/layout.dart';
 import 'package:anikki/layouts/portrait/layout.dart';
@@ -29,7 +28,6 @@ void main() async {
     /// can use [Anikki] while mocking the providers
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LocalStore()),
         ChangeNotifierProvider(create: (_) => AnilistStore()),
         ChangeNotifierProvider(create: (_) => Navigation()),
         ChangeNotifierProvider(create: (_) => UserPreferences()),

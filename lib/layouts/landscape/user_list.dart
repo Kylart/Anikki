@@ -1,11 +1,10 @@
+import 'package:anikki/library/library.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/user_list/user_list_app_bar.dart';
-import 'package:anikki/layouts/landscape/library.dart';
 import 'package:anikki/layouts/landscape/watch_list.dart';
-import 'package:anikki/providers/local/local.dart';
 import 'package:anikki/providers/user_preferences.dart';
 
 class UserList extends StatefulWidget {
@@ -20,6 +19,7 @@ class UserList extends StatefulWidget {
 class _UserListState extends State<UserList>
     with SingleTickerProviderStateMixin {
   String layout = 'grid';
+  String currentPath = '';
 
   int tabIndex = 0;
   static const List<Tab> tabs = <Tab>[
@@ -88,7 +88,6 @@ class _UserListState extends State<UserList>
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: ElevatedButton(
                             onPressed: () async {
-                              final store = context.read<LocalStore>();
                               final preferences =
                                   context.read<UserPreferences>();
                               String? path =
@@ -96,8 +95,11 @@ class _UserListState extends State<UserList>
 
                               if (path == null) return;
 
-                              await store.setCurrentPath(path);
                               preferences.localDirecotry = path;
+
+                              setState(() {
+                                currentPath = path;
+                              });
                             },
                             child: const Text('Choose Folder'),
                           ),
@@ -110,7 +112,11 @@ class _UserListState extends State<UserList>
               color: outlineColor,
               height: 1,
             ),
-            if (tabIndex == 0) Library(layout: layout),
+            if (tabIndex == 0)
+              Library(
+                layout: layout,
+                path: currentPath,
+              ),
             if (tabIndex == 1) WatchList(layout: layout)
           ],
         ),

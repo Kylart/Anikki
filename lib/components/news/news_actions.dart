@@ -2,7 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/shared/download_results_dialog/download_results_dialog.dart';
-import 'package:anikki/providers/local/types/file.dart';
+import 'package:anikki/models/local_file.dart';
 
 void showAvailableTorrents<T>(BuildContext context, T entry) {
   showDialog<Dialog>(
@@ -12,7 +12,8 @@ void showAvailableTorrents<T>(BuildContext context, T entry) {
         final typedEntry = entry as ScheduleEntry;
         return DownloadResultsDialog(
           episode: typedEntry.episode,
-          term: '${typedEntry.media!.title!.title()} ${typedEntry.episode ?? ''}',
+          term:
+              '${typedEntry.media!.title!.title()} ${typedEntry.episode ?? ''}',
         );
       }
 
