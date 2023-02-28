@@ -1,8 +1,9 @@
-import 'package:anikki/library/repository.dart';
 import 'package:flutter/foundation.dart';
+
+import 'package:anikki/library/repository.dart';
 import 'package:anikki/models/local_file.dart';
 
-class LocalStore extends ChangeNotifier {
+class LocalStore with ChangeNotifier {
   List<LocalFile> files = [];
 
   Future<List<LocalFile>> getFiles(String path) async {
@@ -15,7 +16,7 @@ class LocalStore extends ChangeNotifier {
     return files;
   }
 
-  void removeFile (LocalFile file) {
+  void removeFile(LocalFile file) {
     files.removeWhere((element) => element == file);
     notifyListeners();
   }
