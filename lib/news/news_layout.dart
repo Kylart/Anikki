@@ -16,7 +16,7 @@ class NewsLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final layout = context.watch<AnilistStore>().newsLayout;
 
-    return NewsLayouts.list == layout
+    return NewsLayouts.grid == layout
         ? CustomGridView<ScheduleEntry>(
             entries: entries,
           )

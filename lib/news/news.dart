@@ -6,8 +6,6 @@ import 'package:shimmer/shimmer.dart';
 
 import 'package:anikki/components/box_skeleton.dart';
 import 'package:anikki/news/news_app_bar.dart';
-import 'package:anikki/news/news_list_view.dart';
-import 'package:anikki/components/shared/custom_grid_view.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 
 class News extends StatefulWidget {
