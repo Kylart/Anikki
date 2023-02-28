@@ -14,6 +14,8 @@ import 'package:anikki/providers/user_preferences.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   if (isDesktop()) setUpDesktop();
 
   // Register a custom protocol

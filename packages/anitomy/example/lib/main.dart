@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 import 'package:anitomy/anitomy.dart' as anitomy;
 
@@ -20,7 +19,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    sumResult = anitomy.Anitomy(inputString: '[PuyaSubs!] High Card - 08 [ESP-ENG][1080p][A2EF09BC].mkv');
+    sumResult = anitomy.Anitomy(
+        inputString:
+            '[PuyaSubs!] High Card - 08 [ESP-ENG][1080p][A2EF09BC].mkv');
   }
 
   @override
