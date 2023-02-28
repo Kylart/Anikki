@@ -4,7 +4,12 @@ import 'package:quiver/collection.dart';
 
 import 'package:anikki/providers/anilist/anilist_client.dart';
 
-mixin NewsStore on AnilistClient {
+enum NewsLayouts {
+  list,
+  grid,
+}
+
+mixin NewsStore on AnilistClient, ChangeNotifier {
   List<ScheduleEntry> currentNews = [];
   Map<DateTimeRange, List<ScheduleEntry>> memoizedNews =
       LruMap(maximumSize: 10);
@@ -16,5 +21,14 @@ mixin NewsStore on AnilistClient {
     }
 
     return memoizedNews[range]!;
+  }
+
+  NewsLayouts _newsLayout = NewsLayouts.grid;
+
+  NewsLayouts get newsLayout => _newsLayout;
+
+  set newsLayout(NewsLayouts value) {
+    _newsLayout = value;
+    notifyListeners();
   }
 }

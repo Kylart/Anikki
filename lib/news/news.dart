@@ -1,3 +1,4 @@
+import 'package:anikki/news/news_layout.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,6 @@ class News extends StatefulWidget {
 }
 
 class _NewsState extends State<News> {
-  String layout = 'grid';
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime.now().subtract(const Duration(days: 1)),
     end: DateTime.now().add(const Duration(days: 1)),
@@ -44,11 +44,6 @@ class _NewsState extends State<News> {
           children: [
             NewsAppBar(
               initialRange: dateRange,
-              onLayoutChange: (String l) {
-                setState(() {
-                  layout = l;
-                });
-              },
               onDateChange: (DateTimeRange range) {
                 setState(() {
                   dateRange = range;
@@ -116,13 +111,7 @@ class _NewsState extends State<News> {
                 }
 
                 return Expanded(
-                  child: layout == 'list'
-                      ? CustomGridView<ScheduleEntry>(
-                          entries: snapshot.data!,
-                        )
-                      : NewsListView(
-                          entries: snapshot.data!,
-                        ),
+                  child: NewsLayout(entries: snapshot.data!),
                 );
               },
             ),

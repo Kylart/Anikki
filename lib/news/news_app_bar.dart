@@ -1,14 +1,15 @@
+import 'package:anikki/news/store.dart';
+import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewsAppBar extends StatefulWidget {
   const NewsAppBar({
     super.key,
-    required this.onLayoutChange,
     required this.onDateChange,
     required this.initialRange,
   });
 
-  final void Function(String layout) onLayoutChange;
   final void Function(DateTimeRange layout) onDateChange;
   final DateTimeRange initialRange;
 
@@ -56,7 +57,8 @@ class _NewsAppBarState extends State<NewsAppBar> {
                 }
               });
 
-              widget.onLayoutChange(isSelected[0] == true ? 'list' : 'grid');
+              context.read<AnilistStore>().newsLayout =
+                  isSelected[0] == true ? NewsLayouts.list : NewsLayouts.grid;
             },
             children: const [
               Icon(Icons.list),
