@@ -1,4 +1,3 @@
-import 'package:anikki/providers/user_list_layout.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,7 +9,7 @@ import 'package:anikki/layouts/landscape/layout.dart';
 import 'package:anikki/layouts/portrait/layout.dart';
 import 'package:anikki/library/store.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/navigation.dart';
+import 'package:anikki/providers/user_list_layout.dart';
 import 'package:anikki/providers/user_preferences.dart';
 
 void main() async {
@@ -31,7 +30,6 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => LocalStore()),
         ChangeNotifierProvider(create: (_) => AnilistStore()),
-        ChangeNotifierProvider(create: (_) => Navigation()),
         ChangeNotifierProvider(create: (_) => UserPreferences()),
         ChangeNotifierProvider(create: (_) => UserListLayoutStore()),
       ],
