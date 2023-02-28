@@ -12,7 +12,7 @@ class UserPreferences with ChangeNotifier, DiagnosticableTreeMixin {
     prefs = await SharedPreferences.getInstance();
 
     darkTheme = prefs.getBool('user_preferences_darkTheme') ?? true;
-    localDirecotry = prefs.getString('user_preferences_localDirectory') ?? '';
+    localDirectory = prefs.getString('user_preferences_localDirectory') ?? '';
     anilistAccessToken = prefs.getString('user_preferences_anilistAccessToken');
   }
 
@@ -29,15 +29,17 @@ class UserPreferences with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   /// Directory where local files should be looked for on application startup
-  String _localDirectory = '';
+  String? _localDirectory = '';
 
-  String get localDirecotry => _localDirectory;
+  String? get localDirectory => _localDirectory;
 
-  set localDirecotry(String localDirecotry) {
-    _localDirectory = localDirecotry;
+  set localDirectory(String? localDirectory) {
+    _localDirectory = localDirectory;
     notifyListeners();
 
-    prefs.setString('user_preferences_localDirectory', _localDirectory);
+    if (_localDirectory != null) {
+      prefs.setString('user_preferences_localDirectory', _localDirectory!);
+    }
   }
 
   /// Access token used by the anilist client if any

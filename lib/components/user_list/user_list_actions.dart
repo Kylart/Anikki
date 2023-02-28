@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anikki/library/store.dart';
 import 'package:flutter/material.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:provider/provider.dart';
@@ -25,9 +26,11 @@ deleteFile(LocalFile entry, BuildContext context) {
         content: Text('Do you really want to delete ${entry.path}?'),
         actions: [
           TextButton(
-            onPressed: () async {
-              await entry.file.delete();
-              navigator.pop();
+            onPressed: () {
+              entry.file.delete().then((value) {
+                context.read<LocalStore>().removeFile(entry);
+                navigator.pop();
+              });
             },
             child: const Text("Yes!"),
           ),

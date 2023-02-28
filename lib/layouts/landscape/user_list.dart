@@ -32,6 +32,9 @@ class _UserListState extends State<UserList>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: tabs.length);
+
+    final preferences = context.read<UserPreferences>();
+    currentPath = preferences.localDirectory ?? '';
   }
 
   @override
@@ -95,7 +98,7 @@ class _UserListState extends State<UserList>
 
                               if (path == null) return;
 
-                              preferences.localDirecotry = path;
+                              preferences.localDirectory = path;
 
                               setState(() {
                                 currentPath = path;

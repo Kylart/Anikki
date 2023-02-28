@@ -76,12 +76,7 @@ class LocalFile {
     if (identical(this, other)) return true;
 
     return other is LocalFile &&
-        other.path == path &&
-        other.file == file &&
-        other.title == title &&
-        other.episode == episode &&
-        other.releaseGroup == releaseGroup &&
-        other.media == media;
+        other.path == path;
   }
 
   @override

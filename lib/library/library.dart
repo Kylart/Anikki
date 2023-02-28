@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/library/library_layout.dart';
 import 'package:anikki/library/store.dart';
+import 'package:provider/provider.dart';
 
 class Library extends StatelessWidget {
   const Library({
@@ -16,7 +17,7 @@ class Library extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: retrieveFilesFromCurrentPath(path: path),
+      future: context.read<LocalStore>().getFiles(path),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Expanded(
