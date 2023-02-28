@@ -18,9 +18,6 @@ class NewsAppBar extends StatefulWidget {
 }
 
 class _NewsAppBarState extends State<NewsAppBar> {
-  final List<bool> isSelected = <bool>[false, true];
-  bool active = false;
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -48,17 +45,12 @@ class _NewsAppBarState extends State<NewsAppBar> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ToggleButtons(
-            isSelected: isSelected,
+            isSelected: context.watch<NewsLayout>().layout == NewsLayouts.grid
+                ? [false, true]
+                : [true, false],
             onPressed: (int index) {
-              setState(() {
-                // The button that is tapped is set to true, and the others to false.
-                for (int i = 0; i < isSelected.length; i++) {
-                  isSelected[i] = i == index;
-                }
-              });
-
               context.read<NewsLayout>().layout =
-                  isSelected[0] == true ? NewsLayouts.list : NewsLayouts.grid;
+                  index == 0 ? NewsLayouts.list : NewsLayouts.grid;
             },
             children: const [
               Icon(Icons.list),

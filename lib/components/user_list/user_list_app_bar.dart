@@ -17,8 +17,6 @@ class UserListAppBar extends StatefulWidget {
 }
 
 class _UserListAppBarState extends State<UserListAppBar> {
-  final List<bool> isSelected = <bool>[false, true];
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -27,17 +25,13 @@ class _UserListAppBarState extends State<UserListAppBar> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ToggleButtons(
-            isSelected: isSelected,
+            isSelected:
+                context.watch<UserListLayout>().layout == UserListLayouts.grid
+                    ? [false, true]
+                    : [true, false],
             onPressed: (int index) {
-              setState(() {
-                // The button that is tapped is set to true, and the others to false.
-                for (int i = 0; i < isSelected.length; i++) {
-                  isSelected[i] = i == index;
-                }
-              });
-
               context.read<UserListLayout>().layout =
-                  isSelected[0] ? UserListLayouts.list : UserListLayouts.grid;
+                  index == 0 ? UserListLayouts.list : UserListLayouts.grid;
             },
             children: const [
               Icon(Icons.list),
