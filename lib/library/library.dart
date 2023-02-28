@@ -41,10 +41,8 @@ class Library extends StatelessWidget {
             subtitle: Text('Saddge'),
           );
         } else {
-          return Expanded(
-            child: LibraryLayout(
-              entries: entries,
-            ),
+          return const Expanded(
+            child: LibraryLayout(),
           );
         }
       },
