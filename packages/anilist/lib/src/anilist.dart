@@ -6,7 +6,7 @@ import 'package:anilist/src/schedule.dart';
 
 class Anilist extends AnilistClient
     with AnilistAuth, AnilistAiringSchedule, AnilistInfo, AnilistList {
-  Anilist({String? accessToken = null}) {
+  Anilist({String? accessToken}) {
     initClient(headers: getDefaultHeaders(accessToken: accessToken));
     _accessToken = accessToken;
   }
