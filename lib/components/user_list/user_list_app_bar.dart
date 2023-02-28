@@ -1,7 +1,8 @@
-import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/user_list_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/providers/user_preferences/user_list_layout.dart';
 
 class UserListAppBar extends StatefulWidget {
   const UserListAppBar({
@@ -35,7 +36,7 @@ class _UserListAppBarState extends State<UserListAppBar> {
                 }
               });
 
-              context.read<UserListLayoutStore>().layout =
+              context.read<UserListLayout>().layout =
                   isSelected[0] ? UserListLayouts.list : UserListLayouts.grid;
             },
             children: const [

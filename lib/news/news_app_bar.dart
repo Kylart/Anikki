@@ -1,7 +1,7 @@
-import 'package:anikki/news/store.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:anikki/providers/user_preferences/news_layout.dart';
 
 class NewsAppBar extends StatefulWidget {
   const NewsAppBar({
@@ -57,7 +57,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
                 }
               });
 
-              context.read<AnilistStore>().newsLayout =
+              context.read<NewsLayout>().layout =
                   isSelected[0] == true ? NewsLayouts.list : NewsLayouts.grid;
             },
             children: const [

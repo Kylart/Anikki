@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:anikki/components/anilist/anilist_menu.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/user_preferences.dart';
+import 'package:anikki/providers/user_preferences/anilist_token.dart';
 
 mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
   final availableHosts = [
@@ -100,7 +99,7 @@ mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
 
   Future<void> login(BuildContext context) async {
     final anilistStore = context.read<AnilistStore>();
-    final prefsStore = context.read<UserPreferences>();
+    final prefsStore = context.read<AnilistToken>();
 
     launchUrl(oauthUrl);
     await showConnectionDialog(context, false);
@@ -109,7 +108,7 @@ mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
 
     anilistStore.setupClient(accessToken);
 
-    prefsStore.anilistAccessToken = accessToken;
+    prefsStore.token = accessToken;
 
     if (mounted) await showConnectionDialog(context, true);
   }

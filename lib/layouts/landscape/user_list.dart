@@ -1,11 +1,11 @@
-import 'package:anikki/library/library.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/user_list/user_list_app_bar.dart';
+import 'package:anikki/library/library.dart';
+import 'package:anikki/providers/user_preferences/local_directory.dart';
 import 'package:anikki/watch_list/watch_list.dart';
-import 'package:anikki/providers/user_preferences.dart';
 
 class UserList extends StatefulWidget {
   const UserList({
@@ -18,8 +18,6 @@ class UserList extends StatefulWidget {
 
 class _UserListState extends State<UserList>
     with SingleTickerProviderStateMixin {
-  String currentPath = '';
-
   int tabIndex = 0;
   static const List<Tab> tabs = <Tab>[
     Tab(text: 'Library'),
@@ -31,9 +29,6 @@ class _UserListState extends State<UserList>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: tabs.length);
-
-    final preferences = context.read<UserPreferences>();
-    currentPath = preferences.localDirectory ?? '';
   }
 
   @override
@@ -86,17 +81,13 @@ class _UserListState extends State<UserList>
                           child: ElevatedButton(
                             onPressed: () async {
                               final preferences =
-                                  context.read<UserPreferences>();
+                                  context.read<LocalDirectory>();
                               String? path =
                                   await FilePicker.platform.getDirectoryPath();
 
                               if (path == null) return;
 
-                              preferences.localDirectory = path;
-
-                              setState(() {
-                                currentPath = path;
-                              });
+                              preferences.path = path;
                             },
                             child: const Text('Choose Folder'),
                           ),
@@ -109,7 +100,7 @@ class _UserListState extends State<UserList>
               color: outlineColor,
               height: 1,
             ),
-            if (tabIndex == 0) Library(path: currentPath),
+            if (tabIndex == 0) Library(path: context.watch<LocalDirectory>().path),
             if (tabIndex == 1) const WatchList()
           ],
         ),

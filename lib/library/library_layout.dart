@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:anikki/components/shared/custom_grid_view.dart';
 import 'package:anikki/library/library_list_view.dart';
 import 'package:anikki/models/local_file.dart';
-import 'package:anikki/providers/user_list_layout.dart';
+import 'package:anikki/providers/user_preferences/user_list_layout.dart';
 
 class LibraryLayout extends StatelessWidget {
   const LibraryLayout({super.key, required this.entries});
@@ -13,7 +13,7 @@ class LibraryLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final layout = context.watch<UserListLayoutStore>().layout;
+    final layout = context.watch<UserListLayout>().layout;
 
     return layout == UserListLayouts.grid
         ? CustomGridView<LocalFile>(entries: entries)
