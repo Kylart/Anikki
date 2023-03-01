@@ -10,6 +10,7 @@ import 'package:anikki/layouts/portrait/layout.dart';
 import 'package:anikki/library/store.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/user_preferences/user_preferences.dart';
+import 'package:anikki/components/anilist_auth/anilist_token.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

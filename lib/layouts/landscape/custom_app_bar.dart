@@ -1,4 +1,4 @@
-import 'package:anikki/components/anilist/anilist_menu.dart';
+import 'package:anikki/components/anilist_auth/anilist_menu.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {

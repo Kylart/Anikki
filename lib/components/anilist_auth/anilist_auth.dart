@@ -4,9 +4,9 @@ import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:anikki/components/anilist/anilist_menu.dart';
+import 'package:anikki/components/anilist_auth/anilist_menu.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/providers/user_preferences/anilist_token.dart';
+import 'package:anikki/components/anilist_auth/anilist_token.dart';
 
 mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
   final availableHosts = [

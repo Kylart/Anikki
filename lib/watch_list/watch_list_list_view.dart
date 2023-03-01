@@ -2,7 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/shared/list_view_divider.dart';
-import 'package:anikki/components/user_list/user_list_actions.dart';
+import 'package:anikki/user_list/user_list_actions.dart';
 
 class WatchListListView extends StatelessWidget {
   final List<AnilistListEntry> entries;

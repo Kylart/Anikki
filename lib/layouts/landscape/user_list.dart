@@ -2,7 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:anikki/components/user_list/user_list_app_bar.dart';
+import 'package:anikki/user_list/user_list_app_bar.dart';
 import 'package:anikki/library/library.dart';
 import 'package:anikki/providers/user_preferences/local_directory.dart';
 import 'package:anikki/watch_list/watch_list.dart';

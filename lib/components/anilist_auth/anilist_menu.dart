@@ -1,9 +1,10 @@
-import 'package:anikki/components/anilist/anilist_auth.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_icons/simple_icons.dart';
+
+import 'package:anikki/components/anilist_auth/anilist_auth.dart';
+import 'package:anikki/providers/anilist/anilist.dart';
 
 enum AnilistMenuItem {
   auth,
