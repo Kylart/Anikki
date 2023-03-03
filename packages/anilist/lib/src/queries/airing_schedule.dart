@@ -18,5 +18,5 @@ query (\$weekStart: Int, \$weekEnd: Int, \$page: Int) {
   }
 }
 
-$mediaFragment
+$shortMediaFragment
 ''';

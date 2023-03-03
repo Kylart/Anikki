@@ -7,7 +7,7 @@ import 'package:anilist/src/utils/hash.dart';
 import 'package:graphql/client.dart';
 
 mixin AnilistInfo on AnilistClient {
-  Media? getInfoFromInfo (String name, Map<String, Media> info) {
+  Media? getInfoFromInfo(String name, Map<String, Media> info) {
     return info[getId(name: name)];
   }
 
@@ -52,7 +52,8 @@ mixin AnilistInfo on AnilistClient {
     return results;
   }
 
-  Future<QueryResult> _makeInfoQuery(List<String> names) async {
+  Future<QueryResult> _makeInfoQuery(List<String> names,
+      {bool useShortQuery = true}) async {
     String query = '';
 
     for (final name in names) {
@@ -72,7 +73,7 @@ mixin AnilistInfo on AnilistClient {
         $query
       }
 
-      $mediaFragment
+      ${useShortQuery ? shortMediaFragment : mediaFragment}
     ''';
 
     final QueryOptions options = QueryOptions(document: gql(query));

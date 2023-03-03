@@ -72,3 +72,25 @@ const String mediaFragment = r'''
     }
   }
 ''';
+
+const String shortMediaFragment = r'''
+  fragment media on Media {
+    title {
+      userPreferred
+      romaji
+      english
+      native
+    }
+    coverImage {
+      extraLarge
+      large
+      medium
+      color
+    }
+    bannerImage
+    genres
+    isAdult
+    popularity
+    countryOfOrigin
+  }
+''';
