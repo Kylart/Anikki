@@ -1,8 +1,8 @@
 import 'package:anikki/library/library_card_actions.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/shared/entry_card/entry_card.dart';
-import 'package:anikki/components/shared/entry_card/entry_card_background.dart';
+import 'package:anikki/components/entry_card/entry_card.dart';
+import 'package:anikki/components/entry_card/entry_card_background.dart';
 import 'package:anikki/models/local_file.dart';
 
 class LocalCard extends StatelessWidget {

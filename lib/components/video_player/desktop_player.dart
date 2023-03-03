@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/material.dart';
-import 'package:anikki/components/shared/video_player/desktop_player_controls.dart';
+import 'package:anikki/components/video_player/desktop_player_controls.dart';
 
-import 'package:anikki/components/shared/video_player/video_player.dart';
+import 'package:anikki/components/video_player/video_player.dart';
 
 class DesktopPlayer<T> implements VideoPlayer {
   DesktopPlayer({required this.input}) {

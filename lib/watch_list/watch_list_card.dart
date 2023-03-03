@@ -1,8 +1,8 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/shared/entry_card/entry_card.dart';
-import 'package:anikki/components/shared/entry_card/entry_card_background.dart';
+import 'package:anikki/components/entry_card/entry_card.dart';
+import 'package:anikki/components/entry_card/entry_card_background.dart';
 import 'package:anikki/watch_list/watch_list_card_actions.dart';
 
 class WatchListCard extends StatelessWidget {

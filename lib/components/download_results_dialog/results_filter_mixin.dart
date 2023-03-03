@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/shared/download_results_dialog/download_results_container.dart';
+import 'package:anikki/components/download_results_dialog/download_results_container.dart';
 import 'package:nyaa/nyaa.dart';
 
 mixin ResultsFilterMixin on State<DownloadResultsContainer> {

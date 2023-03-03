@@ -6,10 +6,10 @@ import 'package:open_app_file/open_app_file.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/news/news_actions.dart';
-import 'package:anikki/components/shared/fade_overlay.dart';
-import 'package:anikki/components/shared/video_player/desktop_player.dart';
-import 'package:anikki/components/shared/video_player/mobile_player.dart';
-import 'package:anikki/components/shared/video_player/video_player.dart';
+import 'package:anikki/components/fade_overlay.dart';
+import 'package:anikki/components/video_player/desktop_player.dart';
+import 'package:anikki/components/video_player/mobile_player.dart';
+import 'package:anikki/components/video_player/video_player.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/helpers/errors/anilist_update_list_exception.dart';
 import 'package:anikki/providers/anilist/anilist.dart';

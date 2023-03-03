@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 
-import 'package:anikki/components/shared/video_player/desktop_player.dart';
+import 'package:anikki/components/video_player/desktop_player.dart';
 import 'package:window_manager/window_manager.dart';
 
 // Inspired by https://github.com/alexmercerind/dart_vlc/blob/master/lib/src/widgets/controls.dart

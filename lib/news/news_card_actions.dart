@@ -2,7 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/news/news_actions.dart';
-import 'package:anikki/components/shared/entry_card/entry_card_action.dart';
+import 'package:anikki/components/entry_card/entry_card_action.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 
 class NewsCardActions extends StatelessWidget {

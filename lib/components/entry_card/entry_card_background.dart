@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/shared/frosted_circle.dart';
+import 'package:anikki/components/frosted_circle.dart';
 
 class EntryCardBackground extends StatelessWidget {
   const EntryCardBackground({super.key, this.episode, required this.title});

@@ -2,11 +2,12 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/news/news_actions.dart';
-import 'package:anikki/components/shared/entry_card/entry_card_action.dart';
+import 'package:anikki/components/entry_card/entry_card_action.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 
 class WatchListCardActions extends StatelessWidget {
-  const WatchListCardActions({super.key, required this.onBack, required this.entry});
+  const WatchListCardActions(
+      {super.key, required this.onBack, required this.entry});
 
   final void Function() onBack;
   final AnilistListEntry entry;
@@ -35,6 +36,12 @@ class WatchListCardActions extends StatelessWidget {
             icon: Icons.chevron_left,
             onTap: onBack,
           ),
+        Expanded(
+          child: EntryCardAction(
+            icon: Icons.more_horiz,
+            onTap: () {},
+          ),
+        ),
       ],
     );
   }

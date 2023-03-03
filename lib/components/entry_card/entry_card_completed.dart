@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/shared/frosted_circle.dart';
+import 'package:anikki/components/frosted_circle.dart';
 
 class EntryCardCompleted extends StatelessWidget {
   const EntryCardCompleted({super.key});
