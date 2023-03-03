@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import '../date.dart';
 import 'cover_image.dart';
 import 'next_airing_episode.dart';
 import 'relations.dart';
-import '../date.dart';
 import 'studios.dart';
 import 'title.dart';
 
@@ -13,6 +13,7 @@ import 'title.dart';
 class Media {
   final int? id;
   final Title? title;
+  final String? siteUrl;
   final CoverImage? coverImage;
   final AnilistDate? startDate;
   final AnilistDate? endDate;
@@ -39,6 +40,7 @@ class Media {
   const Media({
     this.id,
     this.title,
+    this.siteUrl,
     this.coverImage,
     this.startDate,
     this.endDate,
@@ -65,7 +67,7 @@ class Media {
 
   @override
   String toString() {
-    return 'Media(id: $id, title: $title, coverImage: $coverImage, startDate: $startDate, endDate: $endDate, bannerImage: $bannerImage, season: $season, description: $description, type: $type, format: $format, countryOfOrigin: $countryOfOrigin, status: $status, episodes: $episodes, duration: $duration, chapters: $chapters, volumes: $volumes, genres: $genres, isAdult: $isAdult, averageScore: $averageScore, popularity: $popularity, mediaListEntry: $mediaListEntry, nextAiringEpisode: $nextAiringEpisode, studios: $studios, relations: $relations)';
+    return 'Media(id: $id, title: $title, siteUrl: $siteUrl, coverImage: $coverImage, startDate: $startDate, endDate: $endDate, bannerImage: $bannerImage, season: $season, description: $description, type: $type, format: $format, countryOfOrigin: $countryOfOrigin, status: $status, episodes: $episodes, duration: $duration, chapters: $chapters, volumes: $volumes, genres: $genres, isAdult: $isAdult, averageScore: $averageScore, popularity: $popularity, mediaListEntry: $mediaListEntry, nextAiringEpisode: $nextAiringEpisode, studios: $studios, relations: $relations)';
   }
 
   factory Media.fromMap(Map<String, dynamic> data) => Media(
@@ -84,6 +86,7 @@ class Media {
             : AnilistDate.fromMap(data['endDate'] as Map<String, dynamic>),
         bannerImage: data['bannerImage'] as dynamic,
         season: data['season'] as String?,
+        siteUrl: data['siteUrl'] as String?,
         description: data['description'] as String?,
         type: data['type'] as String?,
         format: data['format'] as String?,
@@ -114,6 +117,7 @@ class Media {
     return {
       'id': id,
       'title': title?.toMap(),
+      'siteUrl': siteUrl,
       'coverImage': coverImage?.toMap(),
       'startDate': startDate?.toMap(),
       'endDate': endDate?.toMap(),
@@ -154,6 +158,7 @@ class Media {
   Media copyWith({
     int? id,
     Title? title,
+    String? siteUrl,
     CoverImage? coverImage,
     AnilistDate? startDate,
     AnilistDate? endDate,
@@ -180,6 +185,7 @@ class Media {
     return Media(
       id: id ?? this.id,
       title: title ?? this.title,
+      siteUrl: siteUrl ?? this.siteUrl,
       coverImage: coverImage ?? this.coverImage,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
@@ -210,57 +216,59 @@ class Media {
     if (identical(this, other)) return true;
 
     return other is Media &&
-        other.id == id &&
-        other.title == title &&
-        other.coverImage == coverImage &&
-        other.startDate == startDate &&
-        other.endDate == endDate &&
-        other.bannerImage == bannerImage &&
-        other.season == season &&
-        other.description == description &&
-        other.type == type &&
-        other.format == format &&
-        other.countryOfOrigin == countryOfOrigin &&
-        other.status == status &&
-        other.episodes == episodes &&
-        other.duration == duration &&
-        other.chapters == chapters &&
-        other.volumes == volumes &&
-        listEquals(other.genres, genres) &&
-        other.isAdult == isAdult &&
-        other.averageScore == averageScore &&
-        other.popularity == popularity &&
-        other.mediaListEntry == mediaListEntry &&
-        other.nextAiringEpisode == nextAiringEpisode &&
-        other.studios == studios &&
-        other.relations == relations;
+      other.id == id &&
+      other.title == title &&
+      other.siteUrl == siteUrl &&
+      other.coverImage == coverImage &&
+      other.startDate == startDate &&
+      other.endDate == endDate &&
+      other.bannerImage == bannerImage &&
+      other.season == season &&
+      other.description == description &&
+      other.type == type &&
+      other.format == format &&
+      other.countryOfOrigin == countryOfOrigin &&
+      other.status == status &&
+      other.episodes == episodes &&
+      other.duration == duration &&
+      other.chapters == chapters &&
+      other.volumes == volumes &&
+      listEquals(other.genres, genres) &&
+      other.isAdult == isAdult &&
+      other.averageScore == averageScore &&
+      other.popularity == popularity &&
+      other.mediaListEntry == mediaListEntry &&
+      other.nextAiringEpisode == nextAiringEpisode &&
+      other.studios == studios &&
+      other.relations == relations;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        title.hashCode ^
-        coverImage.hashCode ^
-        startDate.hashCode ^
-        endDate.hashCode ^
-        bannerImage.hashCode ^
-        season.hashCode ^
-        description.hashCode ^
-        type.hashCode ^
-        format.hashCode ^
-        countryOfOrigin.hashCode ^
-        status.hashCode ^
-        episodes.hashCode ^
-        duration.hashCode ^
-        chapters.hashCode ^
-        volumes.hashCode ^
-        genres.hashCode ^
-        isAdult.hashCode ^
-        averageScore.hashCode ^
-        popularity.hashCode ^
-        mediaListEntry.hashCode ^
-        nextAiringEpisode.hashCode ^
-        studios.hashCode ^
-        relations.hashCode;
+      title.hashCode ^
+      siteUrl.hashCode ^
+      coverImage.hashCode ^
+      startDate.hashCode ^
+      endDate.hashCode ^
+      bannerImage.hashCode ^
+      season.hashCode ^
+      description.hashCode ^
+      type.hashCode ^
+      format.hashCode ^
+      countryOfOrigin.hashCode ^
+      status.hashCode ^
+      episodes.hashCode ^
+      duration.hashCode ^
+      chapters.hashCode ^
+      volumes.hashCode ^
+      genres.hashCode ^
+      isAdult.hashCode ^
+      averageScore.hashCode ^
+      popularity.hashCode ^
+      mediaListEntry.hashCode ^
+      nextAiringEpisode.hashCode ^
+      studios.hashCode ^
+      relations.hashCode;
   }
 }

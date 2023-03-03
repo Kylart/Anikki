@@ -39,7 +39,10 @@ class LocalCardActions extends StatelessWidget {
           hoverColor: Theme.of(context).colorScheme.errorContainer,
           onTap: () async => await deleteFile(entry, context),
         ),
-        const EntryCardAction(icon: Icons.more_horiz),
+        EntryCardAction(
+          icon: Icons.open_in_new,
+          onTap: () => openMediaInBrowser(entry.media?.siteUrl),
+        ),
       ],
     );
   }

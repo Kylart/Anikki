@@ -1,3 +1,4 @@
+import 'package:anikki/user_list/user_list_actions.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
@@ -38,8 +39,10 @@ class WatchListCardActions extends StatelessWidget {
           ),
         Expanded(
           child: EntryCardAction(
-            icon: Icons.more_horiz,
-            onTap: () {},
+            icon: Icons.open_in_new,
+            onTap: () {
+              openMediaInBrowser(entry.media.siteUrl);
+            },
           ),
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
@@ -46,8 +47,10 @@ class NewsCardActions extends StatelessWidget {
           ),
         Expanded(
           child: EntryCardAction(
-            icon: Icons.more_horiz,
-            onTap: () {},
+            icon: Icons.open_in_new,
+            onTap: () {
+              openInBrowser(entry.media?.siteUrl);
+            },
           ),
         ),
       ],

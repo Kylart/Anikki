@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/library/store.dart';
 import 'package:flutter/material.dart';
 import 'package:open_app_file/open_app_file.dart';
@@ -119,4 +120,8 @@ void _handleAnilistUpdateException(
 
 void download<T>(BuildContext context, T entry) {
   showAvailableTorrents<T>(context, entry);
+}
+
+void openMediaInBrowser(String? url) {
+  openInBrowser(url);
 }

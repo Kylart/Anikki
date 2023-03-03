@@ -1,5 +1,6 @@
 const String mediaFragment = r'''
   fragment media on Media {
+    siteUrl
     id
     title {
       userPreferred
@@ -75,6 +76,7 @@ const String mediaFragment = r'''
 
 const String shortMediaFragment = r'''
   fragment media on Media {
+    siteUrl
     title {
       userPreferred
       romaji
