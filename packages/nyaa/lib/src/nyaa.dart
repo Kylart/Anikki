@@ -20,6 +20,9 @@ class Nyaa {
 
       results[term] = result;
 
+      result
+          .sort((a, b) => int.parse(b.seeders).compareTo(int.parse(a.seeders)));
+
       return result;
     } catch (e) {
       rethrow;
