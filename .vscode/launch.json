@@ -7,28 +7,19 @@
     {
       "name": "anikki",
       "request": "launch",
-      "type": "dart",
-      "env": {
-        "ANIKKI_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
-      }
+      "type": "dart"
     },
     {
       "name": "anikki (profile mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile",
-      "env": {
-        "ANIKKI_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
-      }
+      "flutterMode": "profile"
     },
     {
       "name": "anikki (release mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release",
-      "env": {
-        "ANIKKI_BINDINGS_DIRECTORY": "${workspaceFolder}/lib/bindings"
-      }
+      "flutterMode": "release"
     }
   ]
 }
