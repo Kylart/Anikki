@@ -35,7 +35,7 @@ class DownloadResultsDialogListView extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width: 50,
+                  width: 60,
                   child: RichText(
                     text: TextSpan(
                       children: [
