@@ -52,8 +52,7 @@ mixin AnilistInfo on AnilistClient {
     return results;
   }
 
-  Future<QueryResult> _makeInfoQuery(List<String> names,
-      {bool useShortQuery = true}) async {
+  Future<QueryResult> _makeInfoQuery(List<String> names) async {
     String query = '';
 
     for (final name in names) {
@@ -73,7 +72,7 @@ mixin AnilistInfo on AnilistClient {
         $query
       }
 
-      ${useShortQuery ? shortMediaFragment : mediaFragment}
+      $shortMediaFragment
     ''';
 
     final QueryOptions options = QueryOptions(document: gql(query));
