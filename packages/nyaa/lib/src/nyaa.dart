@@ -11,22 +11,17 @@ class Nyaa {
   Map<String, List<Torrent>> results = LruMap(maximumSize: 10);
 
   Future<List<Torrent>> search(String term) async {
-    try {
-      if (results.containsKey(term) && results[term]!.isNotEmpty) {
-        return results[term]!;
-      }
-
-      final result = await _getAll(term: term);
-
-      results[term] = result;
-
-      result
-          .sort((a, b) => int.parse(b.seeders).compareTo(int.parse(a.seeders)));
-
-      return result;
-    } catch (e) {
-      rethrow;
+    if (results.containsKey(term) && results[term]!.isNotEmpty) {
+      return results[term]!;
     }
+
+    final result = await _getAll(term: term);
+
+    results[term] = result;
+
+    result.sort((a, b) => int.parse(b.seeders).compareTo(int.parse(a.seeders)));
+
+    return result;
   }
 
   Future<Map<String, dynamic>> _searchPage({String? term, int? page}) async {
