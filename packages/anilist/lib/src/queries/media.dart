@@ -92,7 +92,13 @@ const String shortMediaFragment = r'''
     bannerImage
     genres
     isAdult
+    format
     popularity
     countryOfOrigin
+    startDate {
+      year
+      month
+      day
+    }
   }
 ''';
