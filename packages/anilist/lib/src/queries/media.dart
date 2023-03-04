@@ -76,6 +76,7 @@ const String mediaFragment = r'''
 
 const String shortMediaFragment = r'''
   fragment media on Media {
+    id
     siteUrl
     title {
       userPreferred
