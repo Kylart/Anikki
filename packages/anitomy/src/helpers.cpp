@@ -35,5 +35,5 @@ char * to_string (anitomy::string_t str) {
   /* Use the string stored in "buffer" variable */
   return buffer;
 
-  delete buffer;
+  delete[] buffer;
 }
