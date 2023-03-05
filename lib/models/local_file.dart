@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -75,8 +74,7 @@ class LocalFile {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is LocalFile &&
-        other.path == path;
+    return other is LocalFile && other.path == path;
   }
 
   @override

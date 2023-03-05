@@ -33,6 +33,7 @@ class _SearchState extends State<Search> {
             TextField(
               onChanged: (value) {
                 if (_debounce?.isActive ?? false) _debounce?.cancel();
+
                 _debounce = Timer(const Duration(milliseconds: 500), () {
                   setState(() => term = value);
                 });

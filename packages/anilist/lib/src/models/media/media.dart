@@ -216,59 +216,59 @@ class Media {
     if (identical(this, other)) return true;
 
     return other is Media &&
-      other.id == id &&
-      other.title == title &&
-      other.siteUrl == siteUrl &&
-      other.coverImage == coverImage &&
-      other.startDate == startDate &&
-      other.endDate == endDate &&
-      other.bannerImage == bannerImage &&
-      other.season == season &&
-      other.description == description &&
-      other.type == type &&
-      other.format == format &&
-      other.countryOfOrigin == countryOfOrigin &&
-      other.status == status &&
-      other.episodes == episodes &&
-      other.duration == duration &&
-      other.chapters == chapters &&
-      other.volumes == volumes &&
-      listEquals(other.genres, genres) &&
-      other.isAdult == isAdult &&
-      other.averageScore == averageScore &&
-      other.popularity == popularity &&
-      other.mediaListEntry == mediaListEntry &&
-      other.nextAiringEpisode == nextAiringEpisode &&
-      other.studios == studios &&
-      other.relations == relations;
+        other.id == id &&
+        other.title == title &&
+        other.siteUrl == siteUrl &&
+        other.coverImage == coverImage &&
+        other.startDate == startDate &&
+        other.endDate == endDate &&
+        other.bannerImage == bannerImage &&
+        other.season == season &&
+        other.description == description &&
+        other.type == type &&
+        other.format == format &&
+        other.countryOfOrigin == countryOfOrigin &&
+        other.status == status &&
+        other.episodes == episodes &&
+        other.duration == duration &&
+        other.chapters == chapters &&
+        other.volumes == volumes &&
+        listEquals(other.genres, genres) &&
+        other.isAdult == isAdult &&
+        other.averageScore == averageScore &&
+        other.popularity == popularity &&
+        other.mediaListEntry == mediaListEntry &&
+        other.nextAiringEpisode == nextAiringEpisode &&
+        other.studios == studios &&
+        other.relations == relations;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      title.hashCode ^
-      siteUrl.hashCode ^
-      coverImage.hashCode ^
-      startDate.hashCode ^
-      endDate.hashCode ^
-      bannerImage.hashCode ^
-      season.hashCode ^
-      description.hashCode ^
-      type.hashCode ^
-      format.hashCode ^
-      countryOfOrigin.hashCode ^
-      status.hashCode ^
-      episodes.hashCode ^
-      duration.hashCode ^
-      chapters.hashCode ^
-      volumes.hashCode ^
-      genres.hashCode ^
-      isAdult.hashCode ^
-      averageScore.hashCode ^
-      popularity.hashCode ^
-      mediaListEntry.hashCode ^
-      nextAiringEpisode.hashCode ^
-      studios.hashCode ^
-      relations.hashCode;
+        title.hashCode ^
+        siteUrl.hashCode ^
+        coverImage.hashCode ^
+        startDate.hashCode ^
+        endDate.hashCode ^
+        bannerImage.hashCode ^
+        season.hashCode ^
+        description.hashCode ^
+        type.hashCode ^
+        format.hashCode ^
+        countryOfOrigin.hashCode ^
+        status.hashCode ^
+        episodes.hashCode ^
+        duration.hashCode ^
+        chapters.hashCode ^
+        volumes.hashCode ^
+        genres.hashCode ^
+        isAdult.hashCode ^
+        averageScore.hashCode ^
+        popularity.hashCode ^
+        mediaListEntry.hashCode ^
+        nextAiringEpisode.hashCode ^
+        studios.hashCode ^
+        relations.hashCode;
   }
 }

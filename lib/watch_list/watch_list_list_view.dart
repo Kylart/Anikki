@@ -43,12 +43,15 @@ class WatchListListView extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (entry.status == AnilistMediaListStatus.current && entry.progress != null) 
+                if (entry.status == AnilistMediaListStatus.current &&
+                    entry.progress != null)
                   Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: Text('Currently at episode ${entry.progress!.toString()}'),
+                    child: Text(
+                        'Currently at episode ${entry.progress!.toString()}'),
                   ),
-                if (entry.status != AnilistMediaListStatus.current && entry.notes != null)
+                if (entry.status != AnilistMediaListStatus.current &&
+                    entry.notes != null)
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(entry.notes!),

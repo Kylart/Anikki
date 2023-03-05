@@ -100,7 +100,8 @@ class _UserListState extends State<UserList>
               color: outlineColor,
               height: 1,
             ),
-            if (tabIndex == 0) Library(path: context.watch<LocalDirectory>().path),
+            if (tabIndex == 0)
+              Library(path: context.watch<LocalDirectory>().path),
             if (tabIndex == 1) const WatchList()
           ],
         ),

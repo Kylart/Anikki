@@ -9,13 +9,13 @@ class FrostedCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ClipRect(
-    child: ClipOval(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: child,
+    return ClipRect(
+      child: ClipOval(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: child,
+        ),
       ),
-    ),
-  );
+    );
   }
 }
