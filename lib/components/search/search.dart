@@ -44,7 +44,7 @@ class _SearchState extends State<Search> {
           if (term != null && term!.isNotEmpty)
             Container(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.50,
+                maxHeight: MediaQuery.of(context).size.height * 0.40,
               ),
               child: SearchPart(
                 future: Nyaa().search(term!),
