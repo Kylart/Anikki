@@ -3,9 +3,15 @@ import 'package:anilist/src/auth.dart';
 import 'package:anilist/src/info.dart';
 import 'package:anilist/src/list.dart';
 import 'package:anilist/src/schedule.dart';
+import 'package:anilist/src/search.dart';
 
 class Anilist extends AnilistClient
-    with AnilistAuth, AnilistAiringSchedule, AnilistInfo, AnilistList {
+    with
+        AnilistAuth,
+        AnilistAiringSchedule,
+        AnilistInfo,
+        AnilistList,
+        AnilistSearch {
   Anilist({String? accessToken}) {
     initClient(headers: getDefaultHeaders(accessToken: accessToken));
     _accessToken = accessToken;
