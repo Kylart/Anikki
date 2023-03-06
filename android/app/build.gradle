@@ -71,14 +71,6 @@ android {
             //         'proguard-rules.pro'
         }
     }
-
-    externalNativeBuild {
-    // Encapsulates your CMake build configurations.
-        cmake {
-        // Provides a relative path to your CMake build script.
-            path "../../lib/bindings/anitomy/CMakeLists.txt"
-        }
-    }
 }
 
 flutter {
