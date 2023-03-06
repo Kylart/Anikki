@@ -1,7 +1,9 @@
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
 
 import 'package:anikki/components/download_results_dialog/download_results_dialog_list_view.dart';
+import 'package:anikki/components/search/anilist_search_view.dart';
 
 class SearchPart<T> extends StatefulWidget {
   const SearchPart({
@@ -38,10 +40,12 @@ class _SearchPartState<T> extends State<SearchPart<T>> {
           future: widget.future,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(
-                  child: CircularProgressIndicator(),
+              return const Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               );
             }
@@ -56,18 +60,25 @@ class _SearchPartState<T> extends State<SearchPart<T>> {
               if (isNyaa) {
                 final entries = data as List<Torrent>;
 
-                return DownloadResultsDialogListView(
-                  entries: entries.length > numberOfResults
-                      ? entries.sublist(0, numberOfResults)
-                      : entries,
-                  outlineColor: outline,
+                return Flexible(
+                  child: DownloadResultsDialogListView(
+                    entries: entries.length > numberOfResults
+                        ? entries.sublist(0, numberOfResults)
+                        : entries,
+                    outlineColor: outline,
+                  ),
+                );
+              } else {
+                final entries = data as Map<AnilistSearchPart, List<Object>>;
+
+                return Flexible(
+                  child: AnilistSearchView(
+                    entries: entries,
+                    outline: outline,
+                  ),
                 );
               }
             }
-
-            return const ListTile(
-              title: Text('Something went wrong'),
-            );
           },
         ),
       ],
