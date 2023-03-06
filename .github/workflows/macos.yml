@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   build:
@@ -10,17 +10,24 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: "true"
+
+      - name: Env setup
+        run: |
+          echo "ANILIST_ID=${{secrets.ANILIST_ID}} > .env"
+          echo "ANILIST_SECRET=${{secrets.ANILIST_SECRET}} >> .env"
+
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      - name: 'Config'
+
+      - name: "Config"
         run: flutter config --enable-macos-desktop
 
-      - name: 'Debug build'
+      - name: "Debug build"
         run: flutter build macos --debug
 
-      - name: 'Test'
+      - name: "Test"
         run: flutter test
 
-      - name: 'Release build'
+      - name: "Release build"
         run: flutter build macos
