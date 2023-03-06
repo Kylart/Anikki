@@ -29,6 +29,7 @@ mixin WatchListStore on AnilistClient {
       [useCache = true]) async {
     if (isConnected) {
       watchList = await provider.getWatchLists(me!.name, useCache: useCache);
+      notifyListeners();
     }
 
     return watchList;

@@ -1,5 +1,4 @@
 import 'package:anilist/anilist.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:anikki/helpers/mixins/loading.dart';
@@ -7,8 +6,7 @@ import 'package:anikki/news/store.dart';
 import 'package:anikki/providers/anilist/anilist_client.dart';
 import 'package:anikki/watch_list/store.dart';
 
-class AnilistStore extends AnilistClient
-    with ChangeNotifier, LoadingMixin, WatchListStore, NewsStore {
+class AnilistStore extends AnilistClient with LoadingMixin, WatchListStore, NewsStore {
   AnilistStore() {
     init();
   }
