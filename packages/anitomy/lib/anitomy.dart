@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'package:ffi/ffi.dart';
+import 'package:path/path.dart' as p;
 
 typedef NativeGetAnitomy = Pointer<Void> Function(Pointer<Utf8> str);
 
@@ -58,13 +59,30 @@ class Anitomy {
   }
 
   DynamicLibrary _getLibrary() {
+    final isTest = Platform.environment.containsKey('FLUTTER_TEST');
+
     if (Platform.isMacOS || Platform.isIOS) {
+      if (isTest) {
+        return DynamicLibrary.open('build/macos/Build/Products/Debug'
+            '/$_libName/$_libName.framework/$_libName');
+      }
+
       return DynamicLibrary.open('$_libName.framework/$_libName');
     }
     if (Platform.isAndroid || Platform.isLinux) {
+      if (isTest) {
+        return DynamicLibrary.open(
+            'build/linux/x64/debug/bundle/lib/lib$_libName.so');
+      }
+
       return DynamicLibrary.open('lib$_libName.so');
     }
     if (Platform.isWindows) {
+      if (isTest) {
+        return DynamicLibrary.open(p.canonicalize(
+            p.join(r'build\windows\runner\Debug', '$_libName.dll')));
+      }
+
       return DynamicLibrary.open('$_libName.dll');
     }
     throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
