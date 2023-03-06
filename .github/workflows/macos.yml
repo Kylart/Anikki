@@ -13,8 +13,10 @@ jobs:
 
       - name: Env setup
         run: |
-          echo "ANILIST_ID=${{secrets.ANILIST_ID}} > .env"
-          echo "ANILIST_SECRET=${{secrets.ANILIST_SECRET}} >> .env"
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_SECRET=${{ secrets.ANILIST_SECRET }} >> .env"
+          cat .env
 
       - uses: subosito/flutter-action@v2
         with:
