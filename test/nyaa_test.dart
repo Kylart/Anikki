@@ -23,10 +23,10 @@ void main() async {
       for (final torrent in result) {
         expect(
             torrent,
-            allOf(
+            allOf([
               anything,
               isA<Torrent>(),
-            ));
+            ]));
       }
     });
 
