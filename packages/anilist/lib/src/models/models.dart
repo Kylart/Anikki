@@ -6,3 +6,6 @@ export 'schedule_entry_page.dart';
 export 'schedule_entry.dart';
 export 'page_info.dart';
 export 'anilist_user/anilist_user.dart';
+export 'search_part.dart';
+export 'staff/staff.dart';
+export 'character/character.dart';
