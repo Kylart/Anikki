@@ -56,6 +56,7 @@ class Character {
   Character copyWith({
     int? id,
     String? siteUrl,
+    String? description,
     Name? name,
     Image? image,
   }) {
