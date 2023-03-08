@@ -12,12 +12,12 @@
 * Check what animes came out for a range of days
 * Download (almost) any anime on the fly
 * Embedded VLC player
-
-#### To be done
 * Search for any torrent
 * Search for any anime information
-* Embedded Torrent client
 * Automatic anime watch list tracking
+
+#### To be done
+* Embedded Torrent client
 
 ## Building
 
@@ -25,7 +25,7 @@
 2. Clone this repo 
 
 ```bash
-git clone --recursive https://github.com/Kylart/anikki-flutter
+git clone --recursive https://github.com/Kylart/Anikki
 ```
 
 ```bash
