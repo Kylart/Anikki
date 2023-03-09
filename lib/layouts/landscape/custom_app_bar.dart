@@ -25,7 +25,10 @@ class CustomAppBar extends StatelessWidget {
               },
             );
           },
-          icon: const Icon(Icons.search),
+          icon: const Icon(
+            Icons.search,
+            size: 30.0,
+          ),
         ),
         const AnilistMenu(),
       ],
