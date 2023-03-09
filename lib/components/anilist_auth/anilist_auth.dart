@@ -101,7 +101,7 @@ mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
     final anilistStore = context.read<AnilistStore>();
     final prefsStore = context.read<AnilistToken>();
 
-    launchUrl(oauthUrl);
+    launchUrl(oauthUrl, mode: LaunchMode.externalApplication);
     await showConnectionDialog(context, false);
 
     if (accessToken == null) return;
