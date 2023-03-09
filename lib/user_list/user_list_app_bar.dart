@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/library/store.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/user_preferences/user_list_layout.dart';
 
@@ -47,10 +48,14 @@ class _UserListAppBarState extends State<UserListAppBar> {
           child: IconButton(
             onPressed: () {
               final anilistStore = context.read<AnilistStore>();
+              final localStore = context.read<LocalStore>();
 
               if (widget.tab != 0) {
-                if (anilistStore.isConnected) {
-                  anilistStore.getWatchLists();
+                anilistStore.refreshWatchLists();
+              } else {
+                if (localStore.lastPath != null) {
+                  localStore.files = [];
+                  localStore.getFiles(localStore.lastPath!);
                 }
               }
             },

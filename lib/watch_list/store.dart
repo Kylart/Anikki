@@ -3,6 +3,7 @@ import 'package:anilist/anilist.dart';
 import 'package:anikki/providers/anilist/anilist_client.dart';
 
 mixin WatchListStore on AnilistClient {
+  bool shouldFetch = true;
   Map<AnilistMediaListStatus, List<AnilistListEntry>> watchList = {
     AnilistMediaListStatus.completed: [],
     AnilistMediaListStatus.current: [],
@@ -25,13 +26,18 @@ mixin WatchListStore on AnilistClient {
   List<AnilistListEntry> get repeatingList =>
       watchList[AnilistMediaListStatus.repeating]!;
 
-  Future<Map<AnilistMediaListStatus, List<AnilistListEntry>>> getWatchLists(
-      [useCache = true]) async {
-    if (isConnected) {
-      watchList = await provider.getWatchLists(me!.name, useCache: useCache);
+  Future<Map<AnilistMediaListStatus, List<AnilistListEntry>>> getWatchLists() async {
+    if (isConnected && shouldFetch) {
+      watchList = await provider.getWatchLists(me!.name);
+      shouldFetch = false;
       notifyListeners();
     }
 
     return watchList;
+  }
+  
+  Future<void> refreshWatchLists () async {
+    shouldFetch = true;
+    await getWatchLists();
   }
 }

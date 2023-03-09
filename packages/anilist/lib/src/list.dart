@@ -29,8 +29,7 @@ mixin AnilistList on AnilistClient {
   }
 
   Future<Map<AnilistMediaListStatus, List<AnilistListEntry>>> getWatchLists(
-      String username,
-      {bool useCache = true}) async {
+      String username) async {
     try {
       Map<AnilistMediaListStatus, List<AnilistListEntry>> watchList = {
         AnilistMediaListStatus.completed: [],
@@ -43,8 +42,6 @@ mixin AnilistList on AnilistClient {
 
       final QueryOptions options = QueryOptions(
         document: gql(getListQuery),
-        fetchPolicy:
-            useCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
         variables: <String, dynamic>{
           'username': username,
         },
