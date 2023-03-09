@@ -26,8 +26,8 @@ class FadeOverlay extends ModalRoute<void> {
 
   @override
   void dispose() async {
-    super.dispose();
     await onClose();
+    super.dispose();
   }
 
   @override
