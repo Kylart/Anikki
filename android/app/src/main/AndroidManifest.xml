@@ -25,6 +25,7 @@
               android:name="android.allow_multiple_resumed_activities"
               android:value="true"
               />
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
