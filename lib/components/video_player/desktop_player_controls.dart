@@ -103,6 +103,8 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
         }
       },
       child: MouseRegion(
+        cursor:
+            _hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
         onHover: (_) => _cancelAndRestartTimer(),
         child: AbsorbPointer(
           absorbing: _hideControls,
@@ -112,134 +114,144 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 24.0, vertical: 8.0),
-                  child: Column(
-                    children: [
-                      StreamBuilder<PositionState>(
-                        stream: widget.vlcPlayer.positionStream,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<PositionState> snapshot) {
-                          final durationState = snapshot.data;
-                          final progress =
-                              durationState?.position ?? Duration.zero;
-                          final total =
-                              durationState?.duration ?? Duration.zero;
+                Container(
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                    end: Alignment.topCenter,
+                    begin: Alignment.bottomCenter,
+                    colors: [Colors.black87, Colors.black54],
+                  )),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0, vertical: 8.0),
+                    child: Column(
+                      children: [
+                        StreamBuilder<PositionState>(
+                          stream: widget.vlcPlayer.positionStream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<PositionState> snapshot) {
+                            final durationState = snapshot.data;
+                            final progress =
+                                durationState?.position ?? Duration.zero;
+                            final total =
+                                durationState?.duration ?? Duration.zero;
 
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: ProgressBar(
-                              progress: progress,
-                              total: total,
-                              barHeight: 3,
-                              timeLabelLocation: TimeLabelLocation.sides,
-                              timeLabelType: TimeLabelType.totalTime,
-                              onSeek: (duration) {
-                                player.seek(duration);
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                      StreamBuilder<CurrentState>(
-                        stream: widget.vlcPlayer.currentStream,
-                        builder: (context, snapshot) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(Icons.volume_up),
-                                  SizedBox(
-                                    width: 150,
-                                    child: Slider(
-                                      value: volume,
-                                      label: (volume * 100).round().toString(),
-                                      divisions: 100,
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          volume = newValue;
-                                          player.setVolume(volume);
-                                        });
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: ProgressBar(
+                                progress: progress,
+                                total: total,
+                                barHeight: 3,
+                                timeLabelLocation: TimeLabelLocation.sides,
+                                timeLabelType: TimeLabelType.totalTime,
+                                onSeek: (duration) {
+                                  player.seek(duration);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                        StreamBuilder<CurrentState>(
+                          stream: widget.vlcPlayer.currentStream,
+                          builder: (context, snapshot) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(Icons.volume_up),
+                                    SizedBox(
+                                      width: 150,
+                                      child: Slider(
+                                        value: volume,
+                                        label:
+                                            (volume * 100).round().toString(),
+                                        divisions: 100,
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            volume = newValue;
+                                            player.setVolume(volume);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        player.rewind(
+                                            const Duration(seconds: 10));
+                                      },
+                                      icon: const Icon(Icons.replay_10),
+                                    ),
+                                    IconButton(
+                                      color: Colors.white,
+                                      iconSize: 40,
+                                      icon: AnimatedIcon(
+                                          icon: AnimatedIcons.play_pause,
+                                          progress: playPauseController),
+                                      onPressed: () {
+                                        if (vlcPlayer.playback.isPlaying) {
+                                          player.pause();
+                                          playPauseController.reverse();
+                                        } else {
+                                          player.play();
+                                          playPauseController.forward();
+                                        }
                                       },
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      player
-                                          .rewind(const Duration(seconds: 10));
-                                    },
-                                    icon: const Icon(Icons.replay_10),
-                                  ),
-                                  IconButton(
-                                    color: Colors.white,
-                                    iconSize: 40,
-                                    icon: AnimatedIcon(
-                                        icon: AnimatedIcons.play_pause,
-                                        progress: playPauseController),
-                                    onPressed: () {
-                                      if (vlcPlayer.playback.isPlaying) {
-                                        player.pause();
-                                        playPauseController.reverse();
-                                      } else {
-                                        player.play();
-                                        playPauseController.forward();
-                                      }
-                                    },
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      player.forward(
-                                        const Duration(seconds: 10),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.forward_10),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      player.forward(
-                                        const Duration(minutes: 1, seconds: 25),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.fast_forward),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () async {
-                                      final nav = Navigator.of(context);
-                                      await player.stop();
-                                      nav.pop();
-                                    },
-                                    icon: const Icon(Icons.stop),
-                                  ),
-                                  IconButton(
-                                    onPressed: () async {
-                                      await windowManager
-                                          .setFullScreen(!isFullscreen);
-                                      setState(() {
-                                        isFullscreen = !isFullscreen;
-                                      });
-                                    },
-                                    icon: Icon(isFullscreen
-                                        ? Icons.fullscreen_exit
-                                        : Icons.fullscreen),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
+                                    IconButton(
+                                      onPressed: () {
+                                        player.forward(
+                                          const Duration(seconds: 10),
+                                        );
+                                      },
+                                      icon: const Icon(Icons.forward_10),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        player.forward(
+                                          const Duration(
+                                              minutes: 1, seconds: 25),
+                                        );
+                                      },
+                                      icon: const Icon(Icons.fast_forward),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () async {
+                                        final nav = Navigator.of(context);
+                                        await player.stop();
+                                        nav.pop();
+                                      },
+                                      icon: const Icon(Icons.stop),
+                                    ),
+                                    IconButton(
+                                      onPressed: () async {
+                                        await windowManager
+                                            .setFullScreen(!isFullscreen);
+                                        setState(() {
+                                          isFullscreen = !isFullscreen;
+                                        });
+                                      },
+                                      icon: Icon(isFullscreen
+                                          ? Icons.fullscreen_exit
+                                          : Icons.fullscreen),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
