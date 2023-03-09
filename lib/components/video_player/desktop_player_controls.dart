@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:anikki/components/video_player/controls_mixin.dart';
 import 'package:flutter/material.dart';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
@@ -20,14 +21,10 @@ class DesktopPlayerControls extends StatefulWidget {
 }
 
 class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, ControlsMixin {
   bool isPlaying = true;
   bool isFullscreen = false;
   double volume = 1.0;
-
-  Timer? _hideTimer;
-  bool _hideControls = true;
-  bool _displayTapped = false;
 
   DesktopPlayer get player => widget.player;
   Player get vlcPlayer => player.player;
@@ -61,66 +58,43 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
     setState(() {});
   }
 
-  void _cancelAndRestartTimer() {
-    _hideTimer?.cancel();
-
-    if (mounted) {
-      _startHideTimer();
-
-      setState(() {
-        _hideControls = false;
-        _displayTapped = true;
-      });
-    }
-  }
-
-  void _startHideTimer() {
-    _hideTimer = Timer(const Duration(seconds: 3), () {
-      if (mounted) {
-        setState(() {
-          _hideControls = true;
-          _displayTapped = false;
-        });
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         if (vlcPlayer.playback.isPlaying) {
-          if (_displayTapped) {
+          if (displayTapped) {
             setState(() {
-              _hideControls = true;
-              _displayTapped = false;
+              hideControls = true;
+              displayTapped = false;
             });
           } else {
-            _cancelAndRestartTimer();
+            cancelAndRestartTimer();
           }
         } else {
-          setState(() => _hideControls = true);
+          setState(() => hideControls = true);
         }
       },
       child: MouseRegion(
         cursor:
-            _hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
-        onHover: (_) => _cancelAndRestartTimer(),
+            hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
+        onHover: (_) => cancelAndRestartTimer(),
         child: AbsorbPointer(
-          absorbing: _hideControls,
+          absorbing: hideControls,
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
-            opacity: _hideControls ? 0.0 : 1.0,
+            opacity: hideControls ? 0.0 : 1.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                    end: Alignment.topCenter,
-                    begin: Alignment.bottomCenter,
-                    colors: [Colors.black87, Colors.black54],
-                  )),
+                    gradient: LinearGradient(
+                      end: Alignment.topCenter,
+                      begin: Alignment.bottomCenter,
+                      colors: [Colors.black87, Colors.black54],
+                    ),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24.0, vertical: 8.0),
