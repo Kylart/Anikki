@@ -15,6 +15,7 @@ import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/helpers/errors/anilist_update_list_exception.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/models/local_file.dart';
+import 'package:wakelock/wakelock.dart';
 
 deleteFile(LocalFile entry, BuildContext context) {
   showDialog<Dialog>(
@@ -46,6 +47,8 @@ deleteFile(LocalFile entry, BuildContext context) {
 }
 
 Future<void> playFile(LocalFile entry, BuildContext context) async {
+  Wakelock.enable();
+
   if (Platform.isMacOS) {
     await Future.wait([
       /// We need to escape the brackets because they are not escaped properly
@@ -65,6 +68,7 @@ Future<void> playFile(LocalFile entry, BuildContext context) async {
         onClose: () async => Future.wait([
           player.stop(),
           _updateEntry(context, entry),
+          Wakelock.disable(),
         ]),
       ),
     );
