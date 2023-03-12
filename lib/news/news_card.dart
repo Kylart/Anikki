@@ -1,3 +1,5 @@
+import 'package:anikki/helpers/anilist/filters/is_followed.dart';
+import 'package:anikki/helpers/anilist/filters/is_seen.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,28 +21,16 @@ class NewsCard extends StatelessWidget {
         entry.media?.coverImage?.medium;
     final title = entry.media?.title?.title() ?? 'N/A';
 
+    final store = context.watch<AnilistStore>();
     bool showBookmark = false;
     bool showDone = false;
-    final store = context.watch<AnilistStore>();
 
-    if (store.isConnected && store.currentList.isNotEmpty) {
-      final matchingEntries = store.currentList
-          .where((e) => e.media.title?.title() == title)
-          .toList();
-      final currentListEntry =
-          matchingEntries.isNotEmpty ? matchingEntries.first : null;
+    if (store.isConnected) {
+      showBookmark = isFollowed(store, entry);
 
-      if (currentListEntry != null) {
-        if (currentListEntry.progress == null) {
-          showBookmark = true;
-        } else {
-          if (entry.episode != null) {
-            showDone = currentListEntry.progress! >= entry.episode!;
-            showBookmark = !showDone;
-          } else {
-            showBookmark = true;
-          }
-        }
+      if (isSeen(store, entry)) {
+        showBookmark = false;
+        showDone = true;
       }
     }
 
