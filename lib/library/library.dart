@@ -18,10 +18,8 @@ class Library extends StatelessWidget {
       future: context.read<LocalStore>().getFiles(path),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Expanded(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         }
 
@@ -41,9 +39,7 @@ class Library extends StatelessWidget {
             subtitle: Text('Saddge'),
           );
         } else {
-          return const Expanded(
-            child: LibraryLayout(),
-          );
+          return const LibraryLayout();
         }
       },
     );

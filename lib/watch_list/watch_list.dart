@@ -47,10 +47,8 @@ class _WatchListState extends State<WatchList>
       future: store.getWatchLists(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Expanded(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         }
 
@@ -70,31 +68,30 @@ class _WatchListState extends State<WatchList>
           );
         }
 
-        final watchList = snapshot.data!;
+        final watchList = context.watch<AnilistStore>().watchList;
         final tabs = AnilistMediaListStatus.values.map((status) {
           return Tab(
             text: status.label,
           );
         }).toList();
 
-        return Expanded(
-          child: Column(
-            children: [
-              TabBar(
-                tabs: tabs,
-                controller: controller,
-              ),
-              Expanded(
-                  child: TabBarView(
+        return Column(
+          children: [
+            TabBar(
+              tabs: tabs,
+              controller: controller,
+            ),
+            Expanded(
+              child: TabBarView(
                 controller: controller,
                 children: AnilistMediaListStatus.values.map((status) {
                   final entries = watchList[status] ?? [];
 
                   return WatchListLayout(entries: entries);
                 }).toList(),
-              )),
-            ],
-          ),
+              ),
+            ),
+          ],
         );
       },
     );
