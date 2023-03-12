@@ -2,9 +2,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:anikki/user_list/user_list_app_bar.dart';
 import 'package:anikki/library/library.dart';
+import 'package:anikki/library/store.dart';
 import 'package:anikki/providers/user_preferences/local_directory.dart';
+import 'package:anikki/user_list/user_list_app_bar.dart';
 import 'package:anikki/watch_list/watch_list.dart';
 
 class UserList extends StatefulWidget {
@@ -80,6 +81,7 @@ class _UserListState extends State<UserList>
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: ElevatedButton(
                             onPressed: () async {
+                              final localStore = context.read<LocalStore>();
                               final preferences =
                                   context.read<LocalDirectory>();
                               String? path =
@@ -88,6 +90,8 @@ class _UserListState extends State<UserList>
                               if (path == null) return;
 
                               preferences.path = path;
+                              localStore.files = [];
+                              localStore.getFiles(path);
                             },
                             child: const Text('Choose Folder'),
                           ),
