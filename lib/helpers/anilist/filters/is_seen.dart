@@ -6,14 +6,6 @@ bool isSeen(AnilistStore store, ScheduleEntry entry) {
   final listEntry =
       store.currentList.where((element) => element.media.id == entry.media?.id);
 
-  if (listEntry.isEmpty) {
-    return false;
-  } else {
-    if (listEntry.first.progress != null &&
-        listEntry.first.progress! > entry.episode!) {
-      return true;
-    }
-  }
-
-  return false;
+  return listEntry.isNotEmpty &&
+      (listEntry.first.progress ?? -1) >= entry.episode!;
 }
