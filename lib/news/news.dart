@@ -1,11 +1,12 @@
-import 'package:anikki/news/news_layout.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:anikki/components/box_skeleton.dart';
+import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/news/news_app_bar.dart';
+import 'package:anikki/news/news_layout.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 
 class News extends StatefulWidget {
@@ -22,6 +23,10 @@ class _NewsState extends State<News> {
     start: DateTime.now().subtract(const Duration(days: 1)),
     end: DateTime.now().add(const Duration(days: 1)),
   );
+
+  /// Filters
+  bool onlyFollowed = false;
+  bool onlyUnseen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +52,12 @@ class _NewsState extends State<News> {
                   dateRange = range;
                 });
               },
+              onOnlyFollowedChanged: (value) => setState(() {
+                onlyFollowed = value;
+              }),
+              onOnlySeenChanged: (value) => setState(() {
+                onlyUnseen = value;
+              }),
             ),
             Divider(
               color: outlineColor,
@@ -99,7 +110,25 @@ class _NewsState extends State<News> {
                   );
                 }
 
-                if (snapshot.data!.isEmpty) {
+                /// Fitlering over entries according to existing filters
+                final anilistStore = context.watch<AnilistStore>();
+                final data = snapshot.data!.where((entry) {
+                  bool included = true;
+
+                  if (anilistStore.isConnected && onlyFollowed) {
+                    included = isFollowed(store, entry);
+                  }
+
+                  if (anilistStore.isConnected &&
+                      onlyUnseen &&
+                      entry.episode != null) {
+                    included = isSeen(store, entry);
+                  }
+
+                  return included;
+                }).toList();
+
+                if (data.isEmpty) {
                   return const Expanded(
                     child: ListTile(
                       title: Text('No result'),
@@ -109,7 +138,7 @@ class _NewsState extends State<News> {
                 }
 
                 return Expanded(
-                  child: NewsLayout(entries: snapshot.data!),
+                  child: NewsLayout(entries: data),
                 );
               },
             ),
