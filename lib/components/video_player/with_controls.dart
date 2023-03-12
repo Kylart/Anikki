@@ -359,15 +359,15 @@ class VlcPlayerWithControlsState extends State<VlcPlayerWithControls>
   }
 
   void _getSubtitleTracks() async {
-    var subtitleTracks = await _controller.getSpuTracks();
+    final subtitleTracks = await _controller.getSpuTracks();
     //
-    if (subtitleTracks != null && subtitleTracks.isNotEmpty) {
-      var selectedSubId = await showDialog(
+    if (mounted && subtitleTracks.isNotEmpty) {
+      final selectedSubId = await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Select Subtitle'),
-            content: Container(
+            content: SizedBox(
               width: double.maxFinite,
               height: 250,
               child: ListView.builder(
@@ -394,6 +394,7 @@ class VlcPlayerWithControlsState extends State<VlcPlayerWithControls>
           );
         },
       );
+
       if (selectedSubId != null) await _controller.setSpuTrack(selectedSubId);
     }
   }
@@ -401,13 +402,13 @@ class VlcPlayerWithControlsState extends State<VlcPlayerWithControls>
   void _getAudioTracks() async {
     var audioTracks = await _controller.getAudioTracks();
     //
-    if (audioTracks != null && audioTracks.isNotEmpty) {
+    if (mounted && audioTracks.isNotEmpty) {
       var selectedAudioTrackId = await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Select Audio'),
-            content: Container(
+            content: SizedBox(
               width: double.maxFinite,
               height: 250,
               child: ListView.builder(
@@ -443,13 +444,13 @@ class VlcPlayerWithControlsState extends State<VlcPlayerWithControls>
   void _getRendererDevices() async {
     var castDevices = await _controller.getRendererDevices();
     //
-    if (castDevices != null && castDevices.isNotEmpty) {
+    if (mounted && castDevices.isNotEmpty) {
       var selectedCastDeviceName = await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Display Devices'),
-            content: Container(
+            content: SizedBox(
               width: double.maxFinite,
               height: 250,
               child: ListView.builder(
