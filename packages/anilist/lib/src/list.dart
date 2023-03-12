@@ -42,6 +42,7 @@ mixin AnilistList on AnilistClient {
 
       final QueryOptions options = QueryOptions(
         document: gql(getListQuery),
+        fetchPolicy: FetchPolicy.noCache,
         variables: <String, dynamic>{
           'username': username,
         },
