@@ -122,7 +122,7 @@ class _NewsState extends State<News> {
                   if (anilistStore.isConnected &&
                       onlyUnseen &&
                       entry.episode != null) {
-                    included = isSeen(store, entry);
+                    included = isFollowed(store, entry) && !isSeen(store, entry);
                   }
 
                   return included;

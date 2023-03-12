@@ -11,9 +11,9 @@ bool isSeen(AnilistStore store, ScheduleEntry entry) {
   } else {
     if (listEntry.first.progress != null &&
         listEntry.first.progress! > entry.episode!) {
-      return false;
+      return true;
     }
   }
 
-  return true;
+  return false;
 }
