@@ -11,6 +11,8 @@ PODS:
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
+  - wakelock_macos (0.0.1):
+    - FlutterMacOS
   - window_manager (0.2.0):
     - FlutterMacOS
 
@@ -21,6 +23,7 @@ DEPENDENCIES:
   - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
   - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
+  - wakelock_macos (from `Flutter/ephemeral/.symlinks/plugins/wakelock_macos/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
 
 EXTERNAL SOURCES:
@@ -36,6 +39,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
+  wakelock_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/wakelock_macos/macos
   window_manager:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
@@ -46,6 +51,7 @@ SPEC CHECKSUMS:
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   url_launcher_macos: 5335912b679c073563f29d89d33d10d459f95451
+  wakelock_macos: bc3f2a9bd8d2e6c89fee1e1822e7ddac3bd004a9
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
 
 PODFILE CHECKSUM: c67a90e1792db128566accc673186a5ac66083c3
