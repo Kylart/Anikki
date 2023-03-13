@@ -1,8 +1,9 @@
 import 'dart:io';
-import 'package:anikki/components/video_player/with_controls.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+
+import 'package:anikki/components/video_player/mobile_vlc_player_with_controls.dart';
 import 'package:anikki/components/video_player/video_player.dart';
 
 class MobilePlayer<T> implements VideoPlayer {
@@ -60,7 +61,7 @@ class MobilePlayer<T> implements VideoPlayer {
 
   @override
   Widget widget() {
-    return VlcPlayerWithControls(
+    return MobileVlcPlayerWithControls(
       controller: videoPlayerController,
     );
   }

@@ -2,16 +2,16 @@ import 'package:anikki/components/video_player/controls_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
-class VlcPlayerWithControls extends StatefulWidget {
+class MobileVlcPlayerWithControls extends StatefulWidget {
   final VlcPlayerController controller;
 
-  const VlcPlayerWithControls({super.key, required this.controller});
+  const MobileVlcPlayerWithControls({super.key, required this.controller});
 
   @override
-  VlcPlayerWithControlsState createState() => VlcPlayerWithControlsState();
+  MobileVlcPlayerWithControlsState createState() => MobileVlcPlayerWithControlsState();
 }
 
-class VlcPlayerWithControlsState extends State<VlcPlayerWithControls>
+class MobileVlcPlayerWithControlsState extends State<MobileVlcPlayerWithControls>
     with AutomaticKeepAliveClientMixin, ControlsMixin {
   late VlcPlayerController _controller;
 
