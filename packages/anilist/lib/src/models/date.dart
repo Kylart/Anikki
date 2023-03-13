@@ -11,6 +11,16 @@ class AnilistDate {
 
   const AnilistDate({this.year, this.month, this.day});
 
+  DateTime? toDateTime() => year != null && month != null && day != null
+      ? DateTime(year!, month!, day!)
+      : null;
+
+  factory AnilistDate.fromDateTime(DateTime dateTime) => AnilistDate(
+        year: dateTime.year,
+        month: dateTime.month,
+        day: dateTime.day,
+      );
+
   @override
   String toString() => 'StartDate(year: $year, month: $month, day: $day)';
 
