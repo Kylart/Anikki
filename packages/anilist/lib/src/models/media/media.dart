@@ -24,7 +24,7 @@ class Media {
   final String? format;
   final String? countryOfOrigin;
   final String? status;
-  final dynamic episodes;
+  final int? episodes;
   final int? duration;
   final dynamic chapters;
   final dynamic volumes;
@@ -92,7 +92,7 @@ class Media {
         format: data['format'] as String?,
         status: data['status'] as String?,
         countryOfOrigin: data['countryOfOrigin'] as String?,
-        episodes: data['episodes'] as dynamic,
+        episodes: data['episodes'] as int?,
         duration: data['duration'] as int?,
         chapters: data['chapters'] as dynamic,
         volumes: data['volumes'] as dynamic,
