@@ -29,7 +29,9 @@ class WatchListCardActions extends StatelessWidget {
           Expanded(
             child: EntryCardAction(
               icon: Icons.edit,
-              onTap: () {},
+              onTap: () {
+                showAnilistEdit(context, entry);
+              },
             ),
           ),
         if (!isDesktop())

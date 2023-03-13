@@ -1,21 +1,22 @@
 import 'dart:io';
 
-import 'package:anikki/helpers/open_in_browser.dart';
-import 'package:anikki/library/store.dart';
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:provider/provider.dart';
+import 'package:wakelock/wakelock.dart';
 
-import 'package:anikki/news/news_actions.dart';
 import 'package:anikki/components/fade_overlay.dart';
 import 'package:anikki/components/video_player/desktop_player.dart';
 import 'package:anikki/components/video_player/mobile_player.dart';
 import 'package:anikki/components/video_player/video_player.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/helpers/errors/anilist_update_list_exception.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/helpers/open_in_browser.dart';
+import 'package:anikki/library/store.dart';
 import 'package:anikki/models/local_file.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:anikki/news/news_actions.dart';
+import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/watch_list/watch_list_edit.dart';
 
 deleteFile(LocalFile entry, BuildContext context) {
   showDialog<Dialog>(
@@ -128,4 +129,15 @@ void download<T>(BuildContext context, T entry) {
 
 void openMediaInBrowser(String? url) {
   openInBrowser(url);
+}
+
+void showAnilistEdit(BuildContext context, AnilistListEntry entry) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return Dialog(
+        child: WatchListEdit(entry: entry),
+      );
+    },
+  );
 }
