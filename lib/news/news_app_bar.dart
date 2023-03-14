@@ -1,7 +1,8 @@
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/user_preferences/news_layout.dart';
 
 class NewsAppBar extends StatefulWidget {
@@ -89,7 +90,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
-            icon: const Icon(Icons.calendar_today),
+            icon: const Icon(Icons.calendar_month),
             onPressed: () async {
               final dateRange = await showDateRangePicker(
                 context: context,
