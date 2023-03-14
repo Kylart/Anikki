@@ -21,8 +21,14 @@ class LandscapeLayout extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: const [
-                    UserList(),
-                    News(),
+                    Flexible(
+                      flex: 2,
+                      child: UserList(),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: News(),
+                    ),
                   ],
                 ),
               ),
