@@ -31,7 +31,10 @@ class EntryCardBackground extends StatelessWidget {
               Flexible(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Theme.of(context).textTheme.titleMedium?.fontSize
+                  ),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                 ),
