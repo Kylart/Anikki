@@ -36,6 +36,7 @@ class SettingsButton extends StatelessWidget {
                             leading: Icon(e.icon),
                             title: Text(e.label),
                             onTap: () => e.callback(),
+                            trailing: e.trailing,
                           ),
                         )
                         .toList(),
@@ -55,10 +56,10 @@ class SettingsButton extends StatelessWidget {
                   actions: actions
                       .map((action) => CupertinoActionSheetAction(
                             child: Row(children: [
-                              const Spacer(),
+                              Icon(action.icon),
                               Text(action.label),
                               const Spacer(),
-                              Icon(action.icon),
+                              action.trailing,
                             ]),
                             onPressed: () => action.callback(),
                           ))
