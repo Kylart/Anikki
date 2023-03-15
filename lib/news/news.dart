@@ -63,10 +63,6 @@ class _NewsState extends State<News> {
               onlyUnseen = value;
             }),
           ),
-          Divider(
-            color: outlineColor,
-            height: 1,
-          ),
           FutureBuilder(
             future: store.getNews(dateRange),
             builder: (context, snapshot) {

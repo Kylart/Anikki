@@ -1,4 +1,3 @@
-import 'package:anikki/library/librrary_choose_folder.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/library/library.dart';
@@ -16,12 +15,11 @@ class UserList extends StatefulWidget {
 
 class _UserListState extends State<UserList>
     with SingleTickerProviderStateMixin {
-  int tabIndex = 0;
+  late TabController _tabController;
   static const List<Tab> tabs = <Tab>[
     Tab(text: 'Library'),
     Tab(text: 'Watch Lists'),
   ];
-  late TabController _tabController;
 
   @override
   void initState() {
@@ -45,44 +43,13 @@ class _UserListState extends State<UserList>
         side: BorderSide(
           color: outlineColor,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
       child: Column(
         children: [
           UserListAppBar(
-            tab: _tabController.index,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 1,
-                child: TabBar(
-                  indicatorColor: Theme.of(context).primaryColor,
-                  labelColor: Theme.of(context).primaryColor,
-                  onTap: (value) {
-                    setState(() {
-                      tabIndex = value;
-                    });
-                  },
-                  tabs: tabs,
-                  controller: _tabController,
-                ),
-              ),
-              Flexible(
-                flex: 2,
-                child: tabIndex == 0
-                    ? const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: LibraryChooseFolder(),
-                      )
-                    : const SizedBox(),
-              )
-            ],
-          ),
-          Divider(
-            color: outlineColor,
-            height: 1,
+            tabController: _tabController,
+            tabs: tabs,
           ),
           Expanded(
             child: TabBarView(
