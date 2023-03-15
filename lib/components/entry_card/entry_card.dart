@@ -28,8 +28,16 @@ class EntryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => actions[0].callback(context),
+      onSecondaryTapUp: (details) {
+        showContextMenu(
+          details: details,
+          context: context,
+          actions: actions,
+          title: title,
+        );
+      },
       child: Column(
         children: [
           Expanded(
@@ -123,86 +131,12 @@ class EntryCard extends StatelessWidget {
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
                           onTapUp: (details) {
-                            if (Platform.isIOS) {
-                              showCupertinoModalPopup(
-                                  context: context,
-                                  builder: (context) {
-                                    return CupertinoActionSheet(
-                                      title: Text(
-                                        title +
-                                            (episode != null
-                                                ? ' - Episode $episode'
-                                                : ''),
-                                      ),
-                                      actions: actions
-                                          .map((action) =>
-                                              CupertinoActionSheetAction(
-                                                child: Row(children: [
-                                                  const Spacer(),
-                                                  Text(action.label),
-                                                  const Spacer(),
-                                                  Icon(action.icon),
-                                                ]),
-                                                onPressed: () =>
-                                                    action.callback(context),
-                                              ))
-                                          .toList(),
-                                    );
-                                  });
-                            } else if (Platform.isAndroid) {
-                              showModalBottomSheet(
-                                  enableDrag: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListView(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        children: actions
-                                            .map(
-                                              (e) => ListTile(
-                                                leading: Icon(e.icon),
-                                                title: Text(e.label),
-                                                onTap: () =>
-                                                    e.callback(context),
-                                              ),
-                                            )
-                                            .toList(),
-                                      ),
-                                    );
-                                  });
-                            } else {
-                              showMenu(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(12),
-                                  ),
-                                ),
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                context: context,
-                                position: RelativeRect.fromLTRB(
-                                  details.globalPosition.dx,
-                                  details.globalPosition.dy,
-                                  MediaQuery.of(context).size.width -
-                                      details.globalPosition.dx,
-                                  0,
-                                ),
-                                items: actions
-                                    .map(
-                                      (e) => PopupMenuItem(
-                                        child: ListTile(
-                                          hoverColor: Colors.transparent,
-                                          onTap: () => e.callback(context),
-                                          title: Text(e.label),
-                                          leading: Icon(e.icon),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                              );
-                            }
+                            showContextMenu(
+                              details: details,
+                              context: context,
+                              actions: actions,
+                              title: title,
+                            );
                           },
                           child: const Icon(
                             Icons.more_vert,
@@ -218,6 +152,87 @@ class EntryCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+void showContextMenu({
+  required TapUpDetails details,
+  required BuildContext context,
+  required List<EntryCardAction> actions,
+  required String title,
+  String? episode,
+}) {
+  if (Platform.isIOS) {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (context) {
+          return CupertinoActionSheet(
+            title: Text(
+              title + (episode != null ? ' - Episode $episode' : ''),
+            ),
+            actions: actions
+                .map((action) => CupertinoActionSheetAction(
+                      child: Row(children: [
+                        const Spacer(),
+                        Text(action.label),
+                        const Spacer(),
+                        Icon(action.icon),
+                      ]),
+                      onPressed: () => action.callback(context),
+                    ))
+                .toList(),
+          );
+        });
+  } else if (Platform.isAndroid) {
+    showModalBottomSheet(
+        enableDrag: false,
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              children: actions
+                  .map(
+                    (e) => ListTile(
+                      leading: Icon(e.icon),
+                      title: Text(e.label),
+                      onTap: () => e.callback(context),
+                    ),
+                  )
+                  .toList(),
+            ),
+          );
+        });
+  } else {
+    showMenu(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(12),
+        ),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      context: context,
+      position: RelativeRect.fromLTRB(
+        details.globalPosition.dx,
+        details.globalPosition.dy,
+        MediaQuery.of(context).size.width - details.globalPosition.dx,
+        0,
+      ),
+      items: actions
+          .map(
+            (e) => PopupMenuItem(
+              child: ListTile(
+                hoverColor: Colors.transparent,
+                onTap: () => e.callback(context),
+                title: Text(e.label),
+                leading: Icon(e.icon),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
