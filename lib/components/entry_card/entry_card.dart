@@ -140,18 +140,24 @@ class EntryCard extends StatelessWidget {
                           });
                     } else if (Platform.isAndroid) {
                       showModalBottomSheet(
+                          enableDrag: false,
                           context: context,
                           builder: (context) {
-                            return ListView(
-                              children: actions
-                                  .map(
-                                    (e) => ListTile(
-                                      leading: Icon(e.icon),
-                                      title: Text(e.label),
-                                      onTap: () => e.callback(context),
-                                    ),
-                                  )
-                                  .toList(),
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListView(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: actions
+                                    .map(
+                                      (e) => ListTile(
+                                        leading: Icon(e.icon),
+                                        title: Text(e.label),
+                                        onTap: () => e.callback(context),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
                             );
                           });
                     } else {
