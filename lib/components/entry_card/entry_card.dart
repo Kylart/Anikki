@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:anikki/components/entry_card/entry_card_action.dart';
 import 'package:anikki/components/entry_card/entry_card_bookmark.dart';
 import 'package:anikki/components/entry_card/entry_card_completed.dart';
-import 'package:anikki/components/expandable_fab.dart';
 import 'package:anikki/components/frosted_circle.dart';
 
 class EntryCard extends StatelessWidget {
@@ -29,30 +28,8 @@ class EntryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (Platform.isIOS) {
-          showCupertinoModalPopup(
-              context: context,
-              builder: (context) {
-                return CupertinoActionSheet(
-                  title: Text(
-                      title + (episode != null ? ' - Episode $episode' : '')),
-                  actions: actions
-                      .map((action) => CupertinoActionSheetAction(
-                            child: Row(children: [
-                              const Spacer(),
-                              Text(action.label),
-                              const Spacer(),
-                              Icon(action.icon),
-                            ]),
-                            onPressed: () => action.callback(context),
-                          ))
-                      .toList(),
-                );
-              });
-        }
-      },
+    return InkWell(
+      onTap: () => actions[0].callback(context),
       child: Column(
         children: [
           Expanded(
@@ -64,90 +41,156 @@ class EntryCard extends StatelessWidget {
                 ),
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
-              child: Scaffold(
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.miniEndFloat,
-                floatingActionButton: !Platform.isIOS
-                    ? ExpandableFab(
-                        distance: 80,
-                        children: actions
-                            .map((e) => ActionButton(
-                                  icon: e.icon,
-                                  onPressed: () => e.callback(context),
-                                  tooltipText: e.label,
-                                ))
-                            .toList(),
-                      )
-                    : null,
-                body: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    /// Cover image or placeholder image
-                    if (coverImage != null)
-                      Image.network(
-                        coverImage!,
-                        fit: BoxFit.fill,
-                      )
-                    else
-                      Opacity(
-                        opacity: 0.7,
-                        child: Image.asset(
-                          'assets/images/placeholder.png',
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topCenter,
-                        ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  /// Cover image or placeholder image
+                  if (coverImage != null)
+                    Image.network(
+                      coverImage!,
+                      fit: BoxFit.fill,
+                    )
+                  else
+                    Opacity(
+                      opacity: 0.7,
+                      child: Image.asset(
+                        'assets/images/placeholder.png',
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
                       ),
+                    ),
 
-                    /// Show only if followed
-                    if (showBookmark)
-                      const Positioned(
-                        right: 10,
-                        top: 10,
-                        child: EntryCardBookmark(),
-                      ),
+                  /// Show only if followed
+                  if (showBookmark)
+                    const Positioned(
+                      right: 10,
+                      top: 10,
+                      child: EntryCardBookmark(),
+                    ),
 
-                    /// Show if entry has been seen
-                    if (showDone)
-                      const Positioned(
-                        right: 10,
-                        top: 10,
-                        child: EntryCardCompleted(),
-                      ),
+                  /// Show if entry has been seen
+                  if (showDone)
+                    const Positioned(
+                      right: 10,
+                      top: 10,
+                      child: EntryCardCompleted(),
+                    ),
 
-                    /// Show episode
-                    if (episode != null)
-                      Positioned(
-                        left: 10,
-                        bottom: 10,
-                        child: FrostedCircle(
-                          child: Container(
-                            width: 35,
-                            height: 35,
-                            decoration: const BoxDecoration(
-                              color: Colors.black54,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Text(
-                                episode!,
-                                style: const TextStyle(color: Colors.white),
-                              ),
+                  /// Show episode
+                  if (episode != null)
+                    Positioned(
+                      right: 10,
+                      bottom: 10,
+                      child: FrostedCircle(
+                        child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: const BoxDecoration(
+                            color: Colors.black54,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              episode!,
+                              style: const TextStyle(color: Colors.white),
                             ),
                           ),
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ),
           ),
           ListTile(
             title: Text(
-              title,
+              '$title\n',
               style: Theme.of(context).textTheme.titleMedium,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               maxLines: 2,
+            ),
+            trailing: Material(
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTapUp: (details) {
+                    if (Platform.isIOS) {
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) {
+                            return CupertinoActionSheet(
+                              title: Text(title +
+                                  (episode != null
+                                      ? ' - Episode $episode'
+                                      : '')),
+                              actions: actions
+                                  .map((action) => CupertinoActionSheetAction(
+                                        child: Row(children: [
+                                          const Spacer(),
+                                          Text(action.label),
+                                          const Spacer(),
+                                          Icon(action.icon),
+                                        ]),
+                                        onPressed: () =>
+                                            action.callback(context),
+                                      ))
+                                  .toList(),
+                            );
+                          });
+                    } else if (Platform.isAndroid) {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return ListView(
+                              children: actions
+                                  .map(
+                                    (e) => ListTile(
+                                      leading: Icon(e.icon),
+                                      title: Text(e.label),
+                                      onTap: () => e.callback(context),
+                                    ),
+                                  )
+                                  .toList(),
+                            );
+                          });
+                    } else {
+                      showMenu(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(12),
+                          ),
+                        ),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        context: context,
+                        position: RelativeRect.fromLTRB(
+                          details.globalPosition.dx,
+                          details.globalPosition.dy,
+                          MediaQuery.of(context).size.width -
+                              details.globalPosition.dx,
+                          0,
+                        ),
+                        items: actions
+                            .map(
+                              (e) => PopupMenuItem(
+                                child: ListTile(
+                                  hoverColor: Colors.transparent,
+                                  onTap: () => e.callback(context),
+                                  title: Text(e.label),
+                                  leading: Icon(e.icon),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      );
+                    }
+                  },
+                  child: const Icon(
+                    Icons.more_vert,
+                    size: 18,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
