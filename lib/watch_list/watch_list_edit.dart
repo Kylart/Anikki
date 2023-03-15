@@ -138,7 +138,7 @@ class _WatchListEditState extends State<WatchListEdit> {
                       decoration: const InputDecoration(
                         labelText: 'Start Date',
                       ),
-                      initialValue: entry.startedAt
+                      initialValue: startedAt
                           .toDateTime()
                           ?.toString()
                           .substring(0, 11),
@@ -147,9 +147,7 @@ class _WatchListEditState extends State<WatchListEdit> {
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1970),
-                          lastDate: DateTime.now().add(
-                            const Duration(days: 365),
-                          ),
+                          lastDate: DateTime.now(),
                         );
 
                         if (date == null) return;
@@ -165,7 +163,7 @@ class _WatchListEditState extends State<WatchListEdit> {
                       decoration: const InputDecoration(
                         labelText: 'Finish Date',
                       ),
-                      initialValue: entry.completedAt
+                      initialValue: completedAt
                           .toDateTime()
                           ?.toString()
                           .substring(0, 11),
