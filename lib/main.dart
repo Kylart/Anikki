@@ -52,7 +52,7 @@ class Anikki extends StatelessWidget {
       title: 'Anikki',
       theme: FlexThemeData.light(
         scheme: FlexScheme.aquaBlue,
-        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        surfaceMode: FlexSurfaceMode.highBackgroundLowScaffold,
         blendLevel: 30,
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
@@ -60,7 +60,7 @@ class Anikki extends StatelessWidget {
       ),
       darkTheme: FlexThemeData.dark(
         scheme: FlexScheme.aquaBlue,
-        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        surfaceMode: FlexSurfaceMode.highBackgroundLowScaffold,
         blendLevel: 30,
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
