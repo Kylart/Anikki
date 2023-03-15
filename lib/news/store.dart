@@ -9,12 +9,14 @@ mixin NewsStore on AnilistClient, ChangeNotifier {
   Map<String, List<ScheduleEntry>> memoizedNews = LruMap(maximumSize: 10);
 
   Future<List<ScheduleEntry>> getNews(DateTimeRange range) async {
-    if (memoizedNews[getKeyFromRange(range)] == null) {
+    final key = getKeyFromRange(range);
+
+    if (memoizedNews[key] == null) {
       final news = await provider.getSchedule(range);
-      memoizedNews[getKeyFromRange(range)] = news;
+      memoizedNews[key] = news;
     }
 
-    return memoizedNews[getKeyFromRange(range)]!;
+    return memoizedNews[key]!;
   }
 }
 
