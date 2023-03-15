@@ -33,23 +33,26 @@ class WatchListCard extends StatelessWidget {
               : entry.score.toString(),
       actions: [
         EntryCardAction(
-            callback: (context) {
-              showAvailableTorrents<AnilistListEntry>(context, entry);
-            },
-            icon: Icons.file_download_outlined,
-            label: 'Show torrents'),
+          callback: (context) {
+            showAnilistEdit(context, entry);
+          },
+          icon: Icons.edit_outlined,
+          label: 'Edit Watch list entry',
+        ),
         EntryCardAction(
-            callback: (context) {
-              showAnilistEdit(context, entry);
-            },
-            icon: Icons.edit_outlined,
-            label: 'Edit Watch list entry'),
+          callback: (context) {
+            showAvailableTorrents<AnilistListEntry>(context, entry);
+          },
+          icon: Icons.file_download_outlined,
+          label: 'Show torrents',
+        ),
         EntryCardAction(
-            callback: (context) {
-              openMediaInBrowser(entry.media.siteUrl);
-            },
-            icon: Icons.open_in_new_outlined,
-            label: 'See on Anilist'),
+          callback: (context) {
+            openMediaInBrowser(entry.media.siteUrl);
+          },
+          icon: Icons.open_in_new_outlined,
+          label: 'See on Anilist',
+        ),
       ],
     );
   }
