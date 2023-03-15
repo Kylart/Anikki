@@ -55,14 +55,14 @@ class NewsCard extends StatelessWidget {
       actions: [
         EntryCardAction(
           label: 'Show torrents',
-          icon: Icons.file_download,
+          icon: Icons.file_download_outlined,
           callback: (context) {
             showAvailableTorrents<ScheduleEntry>(context, entry);
           },
         ),
         EntryCardAction(
           label: 'Show all torrents',
-          icon: Icons.cloud_download,
+          icon: Icons.cloud_download_outlined,
           callback: (context) {
             showAvailableTorrents<ScheduleEntry>(
               context,

@@ -36,19 +36,19 @@ class WatchListCard extends StatelessWidget {
             callback: (context) {
               showAvailableTorrents<AnilistListEntry>(context, entry);
             },
-            icon: Icons.file_download,
+            icon: Icons.file_download_outlined,
             label: 'Show torrents'),
         EntryCardAction(
             callback: (context) {
               showAnilistEdit(context, entry);
             },
-            icon: Icons.edit,
+            icon: Icons.edit_outlined,
             label: 'Edit Watch list entry'),
         EntryCardAction(
             callback: (context) {
               openMediaInBrowser(entry.media.siteUrl);
             },
-            icon: Icons.open_in_new,
+            icon: Icons.open_in_new_outlined,
             label: 'See on Anilist'),
       ],
     );
