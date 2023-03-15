@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/components/anilist_auth/anilist_menu.dart';
 import 'package:anikki/components/search/search.dart';
 import 'package:anikki/components/settings/settings.dart';
 import 'package:anikki/library/library.dart';
@@ -59,7 +60,10 @@ class _PortraitLayoutState extends State<PortraitLayout> {
             child: const Icon(Icons.folder_open_outlined),
           ),
           null,
-          null,
+          FloatingActionButton(
+            onPressed: () {},
+            child: const AnilistMenu(),
+          ),
           null,
         ][currentIndex],
         bottomNavigationBar: BottomNavigationBar(
@@ -68,10 +72,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
           showUnselectedLabels: false,
           currentIndex: currentIndex,
           onTap: (value) {
-            setState(() {
-              currentIndex = value;
-              pageController.jumpToPage(value);
-            });
+            pageController.jumpToPage(value);
           },
           items: const [
             BottomNavigationBarItem(
