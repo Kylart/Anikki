@@ -5,16 +5,18 @@ import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/user_preferences/news_layout.dart';
 
 class NewsAppBar extends StatefulWidget {
-  const NewsAppBar({
-    super.key,
-    required this.onDateChange,
-    required this.initialRange,
-    this.onOnlyFollowedChanged,
-    this.onOnlySeenChanged,
-  });
+  const NewsAppBar(
+      {super.key,
+      required this.onDateChange,
+      required this.initialRange,
+      this.onOnlyFollowedChanged,
+      this.onOnlySeenChanged,
+      this.showTitle = true});
 
   final void Function(DateTimeRange layout) onDateChange;
   final DateTimeRange initialRange;
+
+  final bool showTitle;
 
   final void Function(bool value)? onOnlySeenChanged;
   final void Function(bool value)? onOnlyFollowedChanged;
@@ -84,7 +86,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
 
     return AppBar(
       surfaceTintColor: Theme.of(context).colorScheme.background,
-      title: const Text('News'),
+      title: widget.showTitle ? const Text('News') : const SizedBox(),
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),

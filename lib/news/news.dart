@@ -12,7 +12,10 @@ import 'package:anikki/providers/anilist/anilist.dart';
 class News extends StatefulWidget {
   const News({
     Key? key,
+    this.showOutline = true,
   }) : super(key: key);
+
+  final bool showOutline;
 
   @override
   State<News> createState() => _NewsState();
@@ -30,7 +33,9 @@ class _NewsState extends State<News> {
 
   @override
   Widget build(BuildContext context) {
-    final outlineColor = Theme.of(context).colorScheme.outline.withOpacity(0.5);
+    final outlineColor = widget.showOutline
+        ? Theme.of(context).colorScheme.outline.withOpacity(0.5)
+        : Colors.transparent;
     final store = context.read<AnilistStore>();
 
     return Card(
@@ -44,6 +49,7 @@ class _NewsState extends State<News> {
       child: Column(
         children: [
           NewsAppBar(
+            showTitle: widget.showOutline,
             initialRange: dateRange,
             onDateChange: (DateTimeRange range) {
               setState(() {
@@ -85,16 +91,14 @@ class _NewsState extends State<News> {
               }
 
               if (snapshot.hasError) {
-                if (snapshot.error.runtimeType ==
-                    AnilistGetScheduleException) {
+                if (snapshot.error.runtimeType == AnilistGetScheduleException) {
                   final error = snapshot.error as AnilistGetScheduleException;
 
                   return Expanded(
                     child: ListTile(
                       tileColor: Theme.of(context).colorScheme.error,
                       title: Text(error.cause),
-                      subtitle:
-                          Text(error.error ?? 'Something went wrong...'),
+                      subtitle: Text(error.error ?? 'Something went wrong...'),
                     ),
                   );
                 }
