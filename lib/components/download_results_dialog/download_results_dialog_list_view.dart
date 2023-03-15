@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
 import 'package:open_app_file/open_app_file.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DownloadResultsDialogListView extends StatelessWidget {
   const DownloadResultsDialogListView(
@@ -18,7 +19,7 @@ class DownloadResultsDialogListView extends StatelessWidget {
 
         return ListTile(
           onTap: () async {
-            await OpenAppFile.open(entry.magnet);
+            await OpenAppFile.open(entry.magnet, mimeType: 'magnet');
           },
           leading: CircleAvatar(
             radius: 8.0,
