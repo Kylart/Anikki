@@ -1,6 +1,8 @@
-import 'package:anikki/components/video_player/controls_mixin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+
+import 'package:anikki/components/video_player/controls_mixin.dart';
 
 class MobileVlcPlayerWithControls extends StatefulWidget {
   final VlcPlayerController controller;
@@ -8,13 +10,16 @@ class MobileVlcPlayerWithControls extends StatefulWidget {
   const MobileVlcPlayerWithControls({super.key, required this.controller});
 
   @override
-  MobileVlcPlayerWithControlsState createState() => MobileVlcPlayerWithControlsState();
+  MobileVlcPlayerWithControlsState createState() =>
+      MobileVlcPlayerWithControlsState();
 }
 
-class MobileVlcPlayerWithControlsState extends State<MobileVlcPlayerWithControls>
+class MobileVlcPlayerWithControlsState
+    extends State<MobileVlcPlayerWithControls>
     with AutomaticKeepAliveClientMixin, ControlsMixin {
   late VlcPlayerController _controller;
 
+  bool fullscreen = false;
   double sliderValue = 0.0;
   String position = '';
   String duration = '';
@@ -128,200 +133,200 @@ class MobileVlcPlayerWithControlsState extends State<MobileVlcPlayerWithControls
                   ),
                 ),
               ),
-              Positioned.fill(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AnimatedOpacity(
-                      opacity: hideControls ? 0.0 : 1.0,
-                      duration: const Duration(milliseconds: 300),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            end: Alignment.topCenter,
-                            begin: Alignment.bottomCenter,
-                            colors: [Colors.black87, Colors.black54],
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: AnimatedOpacity(
+                  opacity: hideControls ? 0.0 : 1.0,
+                  duration: const Duration(milliseconds: 300),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        end: Alignment.topCenter,
+                        begin: Alignment.bottomCenter,
+                        colors: [Colors.black87, Colors.black54],
+                      ),
+                    ),
+                    child: SizedBox(
+                      height: 100,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              color: Colors.white,
-                              icon: _controller.value.isPlaying
-                                  ? const Icon(Icons.pause_circle_outline)
-                                  : const Icon(Icons.play_circle_outline),
-                              onPressed: _togglePlaying,
-                            ),
-                            IconButton(
-                              color: Colors.white,
-                              icon: const Icon(Icons.fast_forward),
-                              onPressed: () {
-                                _seekRelative(const Duration(seconds: 85));
-                                cancelAndRestartTimer();
-                              },
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    position,
-                                    style: const TextStyle(color: Colors.white),
+                            Row(
+                              children: [
+                                Text(
+                                  position,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                Expanded(
+                                  child: Slider(
+                                    activeColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    inactiveColor: Colors.white70,
+                                    value: sliderValue,
+                                    min: 0.0,
+                                    max: (!validPosition)
+                                        ? 1.0
+                                        : _controller.value.duration.inSeconds
+                                            .toDouble(),
+                                    onChanged: validPosition
+                                        ? _onSliderPositionChanged
+                                        : null,
                                   ),
-                                  Expanded(
-                                    child: Slider(
-                                      activeColor: Colors.redAccent,
-                                      inactiveColor: Colors.white70,
-                                      value: sliderValue,
-                                      min: 0.0,
-                                      max: (!validPosition)
-                                          ? 1.0
-                                          : _controller.value.duration.inSeconds
-                                              .toDouble(),
-                                      onChanged: validPosition
-                                          ? _onSliderPositionChanged
-                                          : null,
+                                ),
+                                Text(
+                                  duration,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  color: Colors.white,
+                                  icon: _controller.value.isPlaying
+                                      ? const Icon(Icons.pause_circle_outline)
+                                      : const Icon(Icons.play_circle_outline),
+                                  onPressed: _togglePlaying,
+                                ),
+                                IconButton(
+                                  color: Colors.white,
+                                  icon: const Icon(Icons.fast_forward),
+                                  onPressed: () {
+                                    _seekRelative(const Duration(seconds: 85));
+                                    cancelAndRestartTimer();
+                                  },
+                                ),
+                                const Spacer(),
+                                Stack(
+                                  children: [
+                                    IconButton(
+                                      tooltip: 'Get Subtitle Tracks',
+                                      icon: const Icon(Icons.closed_caption),
+                                      color: Colors.white,
+                                      onPressed: _getSubtitleTracks,
                                     ),
-                                  ),
-                                  Text(
-                                    duration,
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                  Wrap(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          IconButton(
-                                            tooltip: 'Get Subtitle Tracks',
-                                            icon: const Icon(
-                                                Icons.closed_caption),
-                                            color: Colors.white,
-                                            onPressed: _getSubtitleTracks,
+                                    Positioned(
+                                      top: 8,
+                                      right: 8,
+                                      child: IgnorePointer(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.orange,
+                                            borderRadius:
+                                                BorderRadius.circular(1),
                                           ),
-                                          Positioned(
-                                            top: 8,
-                                            right: 8,
-                                            child: IgnorePointer(
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.orange,
-                                                  borderRadius:
-                                                      BorderRadius.circular(1),
-                                                ),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 1,
-                                                  horizontal: 2,
-                                                ),
-                                                child: Text(
-                                                  '$numberOfCaptions',
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 1,
+                                            horizontal: 2,
+                                          ),
+                                          child: Text(
+                                            '$numberOfCaptions',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                      Stack(
-                                        children: [
-                                          IconButton(
-                                            tooltip: 'Get Audio Tracks',
-                                            icon: const Icon(Icons.audiotrack),
-                                            color: Colors.white,
-                                            onPressed: _getAudioTracks,
+                                    ),
+                                  ],
+                                ),
+                                Stack(
+                                  children: [
+                                    IconButton(
+                                      tooltip: 'Get Audio Tracks',
+                                      icon: const Icon(Icons.audiotrack),
+                                      color: Colors.white,
+                                      onPressed: _getAudioTracks,
+                                    ),
+                                    Positioned(
+                                      top: 8,
+                                      right: 8,
+                                      child: IgnorePointer(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.orange,
+                                            borderRadius:
+                                                BorderRadius.circular(1),
                                           ),
-                                          Positioned(
-                                            top: 8,
-                                            right: 8,
-                                            child: IgnorePointer(
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.orange,
-                                                  borderRadius:
-                                                      BorderRadius.circular(1),
-                                                ),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 1,
-                                                  horizontal: 2,
-                                                ),
-                                                child: Text(
-                                                  '$numberOfAudioTracks',
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 1,
+                                            horizontal: 2,
+                                          ),
+                                          child: Text(
+                                            '$numberOfAudioTracks',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                      Stack(
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(Icons.timer),
-                                            color: Colors.white,
-                                            onPressed: _cyclePlaybackSpeed,
+                                    ),
+                                  ],
+                                ),
+                                Stack(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.timer),
+                                      color: Colors.white,
+                                      onPressed: _cyclePlaybackSpeed,
+                                    ),
+                                    Positioned(
+                                      bottom: 7,
+                                      right: 3,
+                                      child: IgnorePointer(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.orange,
+                                            borderRadius:
+                                                BorderRadius.circular(1),
                                           ),
-                                          Positioned(
-                                            bottom: 7,
-                                            right: 3,
-                                            child: IgnorePointer(
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.orange,
-                                                  borderRadius:
-                                                      BorderRadius.circular(1),
-                                                ),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 1,
-                                                  horizontal: 2,
-                                                ),
-                                                child: Text(
-                                                  '${playbackSpeeds.elementAt(playbackSpeedIndex)}x',
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 8,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 1,
+                                            horizontal: 2,
+                                          ),
+                                          child: Text(
+                                            '${playbackSpeeds.elementAt(playbackSpeedIndex)}x',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                      IconButton(
-                                        icon: const Icon(Icons.cast),
-                                        color: Colors.white,
-                                        onPressed: _getRendererDevices,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.fullscreen),
-                              color: Colors.white,
-                              onPressed: () {},
+                                    ),
+                                  ],
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.cast),
+                                  color: Colors.white,
+                                  onPressed: _getRendererDevices,
+                                ),
+                                IconButton(
+                                  icon: fullscreen
+                                      ? const Icon(Icons.fullscreen_exit)
+                                      : const Icon(Icons.fullscreen),
+                                  color: Colors.white,
+                                  onPressed: _toggleFullscreen,
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],
@@ -348,6 +353,22 @@ class MobileVlcPlayerWithControlsState extends State<MobileVlcPlayerWithControls
     _controller.value.isPlaying
         ? await _controller.pause()
         : await _controller.play();
+  }
+
+  void _toggleFullscreen() async {
+    if (!fullscreen) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+      ]);
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      SystemChrome.setPreferredOrientations([]);
+    }
+
+    setState(() {
+      fullscreen = !fullscreen;
+    });
   }
 
   void _onSliderPositionChanged(double progress) {
