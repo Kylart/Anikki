@@ -27,28 +27,28 @@ class LocalCard extends StatelessWidget {
             playFile(entry, context);
           },
           icon: Icons.play_arrow,
-          label: 'Play file'
+          label: 'Play file',
         ),
         EntryCardAction(
           callback: (context) {
             download<LocalFile>(context, entry);
           },
           icon: Icons.download,
-          label: 'Show available downloads'
-        ),
-        EntryCardAction(
-          callback: (context) {
-            deleteFile(entry, context);
-          },
-          icon: Icons.delete,
-          label: 'Delete file'
+          label: 'Show torrents',
         ),
         EntryCardAction(
           callback: (context) {
             openMediaInBrowser(entry.media?.siteUrl);
           },
           icon: Icons.open_in_new,
-          label: 'See on Anilist'
+          label: 'See on Anilist',
+        ),
+        EntryCardAction(
+          callback: (context) {
+            deleteFile(entry, context);
+          },
+          icon: Icons.delete,
+          label: 'Delete file',
         ),
       ],
     );

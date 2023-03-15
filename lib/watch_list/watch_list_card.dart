@@ -37,7 +37,7 @@ class WatchListCard extends StatelessWidget {
               showAvailableTorrents<AnilistListEntry>(context, entry);
             },
             icon: Icons.file_download,
-            label: 'Show available downloads'),
+            label: 'Show torrents'),
         EntryCardAction(
             callback: (context) {
               showAnilistEdit(context, entry);
