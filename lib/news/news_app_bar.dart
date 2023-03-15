@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/components/settings_button.dart';
+import 'package:anikki/models/settings_action.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/user_preferences/news_layout.dart';
 
@@ -33,51 +35,43 @@ class _NewsAppBarState extends State<NewsAppBar> {
   Widget build(BuildContext context) {
     final anilistStore = context.watch<AnilistStore>();
 
-    List<PopupMenuItem> settings = [
+    List<SettingsAction> settings = [
       if (anilistStore.isConnected)
-        PopupMenuItem(
-          child: StatefulBuilder(
+        SettingsAction(
+          callback: () {},
+          label: 'Only followed entries',
+          trailing: StatefulBuilder(
             builder: (context, setState) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Only followed entries'),
-                  Switch(
-                    value: showFollowed,
-                    onChanged: (bool value) {
-                      setState(() {
-                        showFollowed = value;
-                      });
-                      if (widget.onOnlyFollowedChanged != null) {
-                        widget.onOnlyFollowedChanged!(value);
-                      }
-                    },
-                  ),
-                ],
+              return Switch(
+                value: showFollowed,
+                onChanged: (bool value) {
+                  setState(() {
+                    showFollowed = value;
+                  });
+                  if (widget.onOnlyFollowedChanged != null) {
+                    widget.onOnlyFollowedChanged!(value);
+                  }
+                },
               );
             },
           ),
         ),
       if (anilistStore.isConnected)
-        PopupMenuItem(
-          child: StatefulBuilder(
+        SettingsAction(
+          callback: () {},
+          label: 'Only unseen entries',
+          trailing: StatefulBuilder(
             builder: (context, setState) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Only unseen entries'),
-                  Switch(
-                    value: showUnseen,
-                    onChanged: (bool value) {
-                      setState(() {
-                        showUnseen = value;
-                      });
-                      if (widget.onOnlySeenChanged != null) {
-                        widget.onOnlySeenChanged!(value);
-                      }
-                    },
-                  ),
-                ],
+              return Switch(
+                value: showUnseen,
+                onChanged: (bool value) {
+                  setState(() {
+                    showUnseen = value;
+                  });
+                  if (widget.onOnlySeenChanged != null) {
+                    widget.onOnlySeenChanged!(value);
+                  }
+                },
               );
             },
           ),
@@ -122,13 +116,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
             ],
           ),
         ),
-        if (settings.isNotEmpty)
-          PopupMenuButton(
-            icon: const Icon(Icons.settings),
-            itemBuilder: (context) {
-              return settings;
-            },
-          ),
+        if (settings.isNotEmpty) SettingsButton(actions: settings),
       ],
     );
   }
