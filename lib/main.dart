@@ -23,13 +23,15 @@ void main() async {
   // Register env variables
   await dotenv.load();
 
+  final anilistStore = await AnilistStore.create();
+
   runApp(
     /// Providers are above [Anikki] instead of inside it, so that tests
     /// can use [Anikki] while mocking the providers
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LocalStore()),
-        ChangeNotifierProvider(create: (_) => AnilistStore()),
+        ChangeNotifierProvider(create: (_) => anilistStore),
 
         /// User Preferences
         ChangeNotifierProvider(create: (_) => AnilistToken()),

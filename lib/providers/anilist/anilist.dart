@@ -6,9 +6,14 @@ import 'package:anikki/news/store.dart';
 import 'package:anikki/providers/anilist/anilist_client.dart';
 import 'package:anikki/watch_list/store.dart';
 
-class AnilistStore extends AnilistClient with LoadingMixin, WatchListStore, NewsStore {
-  AnilistStore() {
-    init();
+class AnilistStore extends AnilistClient
+    with LoadingMixin, WatchListStore, NewsStore {
+  static Future<AnilistStore> create() async {
+    final component = AnilistStore();
+
+    await component.init();
+
+    return component;
   }
 
   Future<void> init() async {
