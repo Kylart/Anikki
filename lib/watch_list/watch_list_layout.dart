@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:anikki/components/custom_grid_view.dart';
 import 'package:anikki/providers/user_preferences/user_list_layout.dart';
+import 'package:anikki/user_list/user_list_grid_delegate.dart';
 import 'package:anikki/watch_list/watch_list_list_view.dart';
 
 class WatchListLayout extends StatelessWidget {
@@ -18,6 +19,7 @@ class WatchListLayout extends StatelessWidget {
     return layout == UserListLayouts.grid
         ? CustomGridView<AnilistListEntry>(
             entries: entries,
+            gridDelegate: userListGridDelegate,
           )
         : WatchListListView(entries: entries);
   }

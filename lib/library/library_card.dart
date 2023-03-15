@@ -1,9 +1,9 @@
-import 'package:anikki/library/library_card_actions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/entry_card/entry_card.dart';
-import 'package:anikki/components/entry_card/entry_card_background.dart';
+import 'package:anikki/components/entry_card/entry_card_action.dart';
 import 'package:anikki/models/local_file.dart';
+import 'package:anikki/user_list/user_list_actions.dart';
 
 class LocalCard extends StatelessWidget {
   const LocalCard({super.key, required this.entry});
@@ -19,14 +19,38 @@ class LocalCard extends StatelessWidget {
 
     return EntryCard(
       coverImage: coverImage,
-      title: EntryCardBackground(
-        title: title,
-        episode: entry.episode?.toString(),
-      ),
-      actions: LocalCardActions(
-        entry: entry,
-        onBack: () {},
-      ),
+      title: title,
+      episode: entry.episode?.toString(),
+      actions: [
+        EntryCardAction(
+          callback: (context) {
+            playFile(entry, context);
+          },
+          icon: Icons.play_arrow,
+          label: 'Play file'
+        ),
+        EntryCardAction(
+          callback: (context) {
+            download<LocalFile>(context, entry);
+          },
+          icon: Icons.download,
+          label: 'Show available downloads'
+        ),
+        EntryCardAction(
+          callback: (context) {
+            deleteFile(entry, context);
+          },
+          icon: Icons.delete,
+          label: 'Delete file'
+        ),
+        EntryCardAction(
+          callback: (context) {
+            openMediaInBrowser(entry.media?.siteUrl);
+          },
+          icon: Icons.open_in_new,
+          label: 'See on Anilist'
+        ),
+      ],
     );
   }
 }

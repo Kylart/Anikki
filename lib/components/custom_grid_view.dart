@@ -9,19 +9,25 @@ import 'package:anikki/watch_list/watch_list_card.dart';
 class CustomGridView<T> extends StatelessWidget {
   final List<T> entries;
 
-  const CustomGridView({super.key, required this.entries});
+  const CustomGridView({
+    super.key,
+    required this.entries,
+    this.gridDelegate = const SliverGridDelegateWithMaxCrossAxisExtent(
+      maxCrossAxisExtent: 300,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+      childAspectRatio: 0.65,
+    ),
+  });
+
+  final SliverGridDelegate gridDelegate;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.all(8.0),
       itemCount: entries.length,
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 300,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        childAspectRatio: 0.75,
-      ),
+      gridDelegate: gridDelegate,
       itemBuilder: (context, index) {
         final entry = entries[index];
 
