@@ -103,100 +103,117 @@ class EntryCard extends StatelessWidget {
             ),
           ),
           ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
             title: Text(
               '$title\n',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleSmall,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               maxLines: 2,
             ),
-            trailing: Material(
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTapUp: (details) {
-                    if (Platform.isIOS) {
-                      showCupertinoModalPopup(
-                          context: context,
-                          builder: (context) {
-                            return CupertinoActionSheet(
-                              title: Text(title +
-                                  (episode != null
-                                      ? ' - Episode $episode'
-                                      : '')),
-                              actions: actions
-                                  .map((action) => CupertinoActionSheetAction(
-                                        child: Row(children: [
-                                          const Spacer(),
-                                          Text(action.label),
-                                          const Spacer(),
-                                          Icon(action.icon),
-                                        ]),
-                                        onPressed: () =>
-                                            action.callback(context),
-                                      ))
-                                  .toList(),
-                            );
-                          });
-                    } else if (Platform.isAndroid) {
-                      showModalBottomSheet(
-                          enableDrag: false,
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListView(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: actions
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                FrostedCircle(
+                  child: SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: Material(
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTapUp: (details) {
+                            if (Platform.isIOS) {
+                              showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (context) {
+                                    return CupertinoActionSheet(
+                                      title: Text(
+                                        title +
+                                            (episode != null
+                                                ? ' - Episode $episode'
+                                                : ''),
+                                      ),
+                                      actions: actions
+                                          .map((action) =>
+                                              CupertinoActionSheetAction(
+                                                child: Row(children: [
+                                                  const Spacer(),
+                                                  Text(action.label),
+                                                  const Spacer(),
+                                                  Icon(action.icon),
+                                                ]),
+                                                onPressed: () =>
+                                                    action.callback(context),
+                                              ))
+                                          .toList(),
+                                    );
+                                  });
+                            } else if (Platform.isAndroid) {
+                              showModalBottomSheet(
+                                  enableDrag: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ListView(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        children: actions
+                                            .map(
+                                              (e) => ListTile(
+                                                leading: Icon(e.icon),
+                                                title: Text(e.label),
+                                                onTap: () =>
+                                                    e.callback(context),
+                                              ),
+                                            )
+                                            .toList(),
+                                      ),
+                                    );
+                                  });
+                            } else {
+                              showMenu(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                context: context,
+                                position: RelativeRect.fromLTRB(
+                                  details.globalPosition.dx,
+                                  details.globalPosition.dy,
+                                  MediaQuery.of(context).size.width -
+                                      details.globalPosition.dx,
+                                  0,
+                                ),
+                                items: actions
                                     .map(
-                                      (e) => ListTile(
-                                        leading: Icon(e.icon),
-                                        title: Text(e.label),
-                                        onTap: () => e.callback(context),
+                                      (e) => PopupMenuItem(
+                                        child: ListTile(
+                                          hoverColor: Colors.transparent,
+                                          onTap: () => e.callback(context),
+                                          title: Text(e.label),
+                                          leading: Icon(e.icon),
+                                        ),
                                       ),
                                     )
                                     .toList(),
-                              ),
-                            );
-                          });
-                    } else {
-                      showMenu(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
+                              );
+                            }
+                          },
+                          child: const Icon(
+                            Icons.more_vert,
+                            size: 18,
                           ),
                         ),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        context: context,
-                        position: RelativeRect.fromLTRB(
-                          details.globalPosition.dx,
-                          details.globalPosition.dy,
-                          MediaQuery.of(context).size.width -
-                              details.globalPosition.dx,
-                          0,
-                        ),
-                        items: actions
-                            .map(
-                              (e) => PopupMenuItem(
-                                child: ListTile(
-                                  hoverColor: Colors.transparent,
-                                  onTap: () => e.callback(context),
-                                  title: Text(e.label),
-                                  leading: Icon(e.icon),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      );
-                    }
-                  },
-                  child: const Icon(
-                    Icons.more_vert,
-                    size: 18,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ],
