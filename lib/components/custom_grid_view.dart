@@ -16,7 +16,7 @@ class CustomGridView<T> extends StatelessWidget {
       maxCrossAxisExtent: 300,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
-      childAspectRatio: 0.65,
+      childAspectRatio: 0.6,
     ),
   });
 
