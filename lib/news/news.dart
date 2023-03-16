@@ -33,115 +33,103 @@ class _NewsState extends State<News> {
 
   @override
   Widget build(BuildContext context) {
-    final outlineColor = widget.showOutline
-        ? Theme.of(context).colorScheme.outline.withOpacity(0.5)
-        : Colors.transparent;
     final store = context.read<AnilistStore>();
 
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: outlineColor,
+    return Column(
+      children: [
+        NewsAppBar(
+          showTitle: widget.showOutline,
+          initialRange: dateRange,
+          onDateChange: (DateTimeRange range) {
+            setState(() {
+              dateRange = range;
+            });
+          },
+          onOnlyFollowedChanged: (value) => setState(() {
+            onlyFollowed = value;
+          }),
+          onOnlySeenChanged: (value) => setState(() {
+            onlyUnseen = value;
+          }),
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-      ),
-      child: Column(
-        children: [
-          NewsAppBar(
-            showTitle: widget.showOutline,
-            initialRange: dateRange,
-            onDateChange: (DateTimeRange range) {
-              setState(() {
-                dateRange = range;
-              });
-            },
-            onOnlyFollowedChanged: (value) => setState(() {
-              onlyFollowed = value;
-            }),
-            onOnlySeenChanged: (value) => setState(() {
-              onlyUnseen = value;
-            }),
-          ),
-          FutureBuilder(
-            future: store.getNews(dateRange),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        int timer = 1000;
+        FutureBuilder(
+          future: store.getNews(dateRange),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      int timer = 1000;
 
-                        return Shimmer.fromColors(
-                          baseColor: Colors.grey.shade500,
-                          highlightColor: Colors.white38,
-                          period: Duration(milliseconds: timer),
-                          child: skeletonBox(),
-                        );
-                      },
-                    ),
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey.shade500,
+                        highlightColor: Colors.white38,
+                        period: Duration(milliseconds: timer),
+                        child: skeletonBox(),
+                      );
+                    },
                   ),
-                );
-              }
+                ),
+              );
+            }
 
-              if (snapshot.hasError) {
-                if (snapshot.error.runtimeType == AnilistGetScheduleException) {
-                  final error = snapshot.error as AnilistGetScheduleException;
-
-                  return Expanded(
-                    child: ListTile(
-                      tileColor: Theme.of(context).colorScheme.error,
-                      title: Text(error.cause),
-                      subtitle: Text(error.error ?? 'Something went wrong...'),
-                    ),
-                  );
-                }
+            if (snapshot.hasError) {
+              if (snapshot.error.runtimeType == AnilistGetScheduleException) {
+                final error = snapshot.error as AnilistGetScheduleException;
 
                 return Expanded(
                   child: ListTile(
                     tileColor: Theme.of(context).colorScheme.error,
-                    title: const Text('Error'),
-                    subtitle: const Text('Something went wrong...'),
-                  ),
-                );
-              }
-
-              /// Fitlering over entries according to existing filters
-              final anilistStore = context.watch<AnilistStore>();
-              final data = snapshot.data!.where((entry) {
-                bool included = true;
-
-                if (anilistStore.isConnected && onlyFollowed) {
-                  included = isFollowed(store, entry);
-                }
-
-                if (anilistStore.isConnected &&
-                    onlyUnseen &&
-                    entry.episode != null) {
-                  included = isFollowed(store, entry) && !isSeen(store, entry);
-                }
-
-                return included;
-              }).toList();
-
-              if (data.isEmpty) {
-                return const Expanded(
-                  child: ListTile(
-                    title: Text('No result'),
-                    subtitle: Text('Sadge'),
+                    title: Text(error.cause),
+                    subtitle: Text(error.error ?? 'Something went wrong...'),
                   ),
                 );
               }
 
               return Expanded(
-                child: NewsLayout(entries: data),
+                child: ListTile(
+                  tileColor: Theme.of(context).colorScheme.error,
+                  title: const Text('Error'),
+                  subtitle: const Text('Something went wrong...'),
+                ),
               );
-            },
-          ),
-        ],
-      ),
+            }
+
+            /// Fitlering over entries according to existing filters
+            final anilistStore = context.watch<AnilistStore>();
+            final data = snapshot.data!.where((entry) {
+              bool included = true;
+
+              if (anilistStore.isConnected && onlyFollowed) {
+                included = isFollowed(store, entry);
+              }
+
+              if (anilistStore.isConnected &&
+                  onlyUnseen &&
+                  entry.episode != null) {
+                included = isFollowed(store, entry) && !isSeen(store, entry);
+              }
+
+              return included;
+            }).toList();
+
+            if (data.isEmpty) {
+              return const Expanded(
+                child: ListTile(
+                  title: Text('No result'),
+                  subtitle: Text('Sadge'),
+                ),
+              );
+            }
+
+            return Expanded(
+              child: NewsLayout(entries: data),
+            );
+          },
+        ),
+      ],
     );
   }
 }
