@@ -1,0 +1,4 @@
+enum UserListEnum {
+  local,
+  watchList,
+}

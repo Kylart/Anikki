@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:anilist/anilist.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:open_app_file/open_app_file.dart';
@@ -18,6 +19,8 @@ import 'package:anikki/models/local_file.dart';
 import 'package:anikki/news/news_actions.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/watch_list/watch_list_edit.dart';
+
+import '../providers/user_preferences/local_directory.dart';
 
 deleteFile(LocalFile entry, BuildContext context) {
   showPlatformDialog<Dialog>(
@@ -141,4 +144,16 @@ void showAnilistEdit(BuildContext context, AnilistListEntry entry) {
       );
     },
   );
+}
+
+Future<void> updateFolderPath(BuildContext context) async {
+  final localStore = context.read<LocalStore>();
+  final preferences = context.read<LocalDirectory>();
+  String? path = await FilePicker.platform.getDirectoryPath();
+
+  if (path == null) return;
+
+  preferences.path = path;
+  localStore.files = [];
+  localStore.getFiles(path);
 }

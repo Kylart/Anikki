@@ -1,14 +1,13 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:anikki/components/anilist_auth/anilist_menu.dart';
 import 'package:anikki/components/search/search.dart';
 import 'package:anikki/components/settings/settings.dart';
 import 'package:anikki/library/library.dart';
-import 'package:anikki/library/store.dart';
+import 'package:anikki/models/user_list_enum.dart';
 import 'package:anikki/news/news.dart';
-import 'package:anikki/providers/user_preferences/local_directory.dart';
+import 'package:anikki/user_list/user_list_actions.dart';
+import 'package:anikki/user_list/user_list_app_bar.dart';
 import 'package:anikki/watch_list/watch_list.dart';
 
 class PortraitLayout extends StatefulWidget {
@@ -35,37 +34,41 @@ class _PortraitLayoutState extends State<PortraitLayout> {
               currentIndex = value;
             });
           },
-          children: const [
-            News(
+          children: [
+            const News(
               showOutline: false,
             ),
-            Library(),
-            Search(),
-            WatchList(),
-            SettingsPage(),
+            Column(
+              children: const [
+                UserListAppBar(
+                  userListType: UserListEnum.local,
+                ),
+                Expanded(child: Library()),
+              ],
+            ),
+            Column(
+              children: const [
+                UserListAppBar(
+                  userListType: UserListEnum.local,
+                ),
+                Expanded(child: WatchList()),
+              ],
+            ),
+            const Search(),
+            const SettingsPage(),
           ],
         ),
         floatingActionButton: [
           null,
           FloatingActionButton(
-            onPressed: () async {
-              final localStore = context.read<LocalStore>();
-              final preferences = context.read<LocalDirectory>();
-              String? path = await FilePicker.platform.getDirectoryPath();
-
-              if (path == null) return;
-
-              preferences.path = path;
-              localStore.files = [];
-              localStore.getFiles(path);
-            },
+            onPressed: () async => updateFolderPath(context),
             child: const Icon(Icons.folder_open_outlined),
           ),
-          null,
           FloatingActionButton(
             onPressed: () {},
             child: const AnilistMenu(),
           ),
+          null,
           null,
         ][currentIndex],
         bottomNavigationBar: BottomNavigationBar(
@@ -85,12 +88,12 @@ class _PortraitLayoutState extends State<PortraitLayout> {
               label: 'Local',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.library_books_outlined),
               label: 'Watch List',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search_outlined),
+              label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),

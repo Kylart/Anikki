@@ -1,3 +1,6 @@
+import 'package:anikki/models/user_list_enum.dart';
+import 'package:anikki/user_list/user_list_actions.dart';
+import 'package:anikki/user_list/user_list_refresh.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,19 +8,20 @@ import 'package:provider/provider.dart';
 import 'package:anikki/components/settings_button.dart';
 import 'package:anikki/library/store.dart';
 import 'package:anikki/models/settings_action.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/user_preferences/local_directory.dart';
-import 'package:anikki/providers/user_preferences/user_list_layout.dart';
+import 'package:anikki/user_list/user_list_layout_toggle.dart';
 
 class UserListAppBar extends StatefulWidget {
   const UserListAppBar({
     super.key,
-    required this.tabController,
-    required this.tabs,
+    this.tabController,
+    this.tabs,
+    this.userListType,
   });
 
-  final TabController tabController;
-  final List<Tab> tabs;
+  final TabController? tabController;
+  final List<Tab>? tabs;
+  final UserListEnum? userListType;
 
   @override
   State<UserListAppBar> createState() => _UserListAppBarState();
@@ -30,58 +34,35 @@ class _UserListAppBarState extends State<UserListAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       surfaceTintColor: Theme.of(context).colorScheme.background,
-      title: Container(
-        constraints: const BoxConstraints(
-          maxWidth: 400,
-        ),
-        child: TabBar(
-          indicatorColor: Theme.of(context).primaryColor,
-          labelColor: Theme.of(context).primaryColor,
-          tabs: widget.tabs,
-          controller: widget.tabController,
-          onTap: (value) => setState(() {
-            currentIndex = value;
-          }),
-        ),
-      ),
+      title: widget.tabController != null && widget.tabs != null
+          ? Container(
+              constraints: const BoxConstraints(
+                maxWidth: 400,
+              ),
+              child: TabBar(
+                indicatorColor: Theme.of(context).primaryColor,
+                labelColor: Theme.of(context).primaryColor,
+                tabs: widget.tabs!,
+                controller: widget.tabController,
+                onTap: (value) => setState(() {
+                  currentIndex = value;
+                }),
+              ),
+            )
+          : null,
       actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ToggleButtons(
-            isSelected:
-                context.watch<UserListLayout>().layout == UserListLayouts.grid
-                    ? [false, true]
-                    : [true, false],
-            onPressed: (int index) {
-              context.read<UserListLayout>().layout =
-                  index == 0 ? UserListLayouts.list : UserListLayouts.grid;
-            },
-            children: const [
-              Icon(Icons.list),
-              Icon(Icons.grid_view),
-            ],
+        const UserListLayoutToggle(),
+        if (widget.tabController != null)
+          UserListRefresh(
+            type: widget.tabController?.index == 0
+                ? UserListEnum.local
+                : UserListEnum.watchList,
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: IconButton(
-            onPressed: () {
-              final anilistStore = context.read<AnilistStore>();
-              final localStore = context.read<LocalStore>();
-
-              if (widget.tabController.index != 0) {
-                anilistStore.refreshWatchLists();
-              } else {
-                if (localStore.lastPath != null) {
-                  localStore.files = [];
-                  localStore.getFiles(localStore.lastPath!);
-                }
-              }
-            },
-            icon: const Icon(Icons.refresh),
+        if (widget.userListType != null)
+          UserListRefresh(
+            type: widget.userListType!,
           ),
-        ),
-        if (currentIndex == 0)
+        if (currentIndex == 0 && widget.tabController != null)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SettingsButton(
@@ -90,17 +71,7 @@ class _UserListAppBarState extends State<UserListAppBar> {
                   icon: Icons.folder_open_outlined,
                   label: 'Change folder',
                   trailing: const SizedBox(),
-                  callback: () async {
-                    final localStore = context.read<LocalStore>();
-                    final preferences = context.read<LocalDirectory>();
-                    String? path = await FilePicker.platform.getDirectoryPath();
-
-                    if (path == null) return;
-
-                    preferences.path = path;
-                    localStore.files = [];
-                    localStore.getFiles(path);
-                  },
+                  callback: () async => updateFolderPath(context),
                 ),
               ],
             ),
