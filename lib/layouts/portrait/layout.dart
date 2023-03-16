@@ -70,7 +70,6 @@ class _PortraitLayoutState extends State<PortraitLayout> {
         ][currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           unselectedItemColor: Theme.of(context).indicatorColor,
-          // showSelectedLabels: true,
           showUnselectedLabels: false,
           currentIndex: currentIndex,
           onTap: (value) {
@@ -94,7 +93,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
               label: 'Watch List',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
+              icon: Icon(Icons.settings),
               label: 'Settings',
             ),
           ],
