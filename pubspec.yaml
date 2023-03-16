@@ -62,6 +62,7 @@ dependencies:
   quiver: ^3.2.1
   wakelock: ^0.6.2
   flutter_platform_widgets: ^3.0.0
+  empty_widget: ^0.0.5
 
 dev_dependencies:
   flutter_test:

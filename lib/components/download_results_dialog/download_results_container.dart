@@ -26,81 +26,88 @@ class _DownloadResultsContainerState extends State<DownloadResultsContainer>
     with ResultsFilterMixin {
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
-    return SizedBox(
-      width: screenSize.width * 0.80,
-      height: screenSize.height * 0.80,
-      child: Card(
-        child: Column(
-          children: [
-            AppBar(
-              title: const Text('Available on nyaa.si'),
-              centerTitle: true,
-            ),
-            Divider(
-              color: widget.outlineColor,
-              height: 1,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: DownloadResultsFilter(
-                showAll: FilterValueHandler(
-                  showAll,
-                  (value) {
-                    setState(() {
-                      showAll = !showAll;
-
-                      if (value && smartFilter) {
-                        smartFilter = false;
-                      }
-                    });
-                  },
-                ),
-                smartFilter: FilterValueHandler(
-                  smartFilter,
-                  (value) {
-                    setState(() {
-                      smartFilter = !smartFilter;
-
-                      if (value && showAll) {
-                        showAll = false;
-                      }
-                    });
-                  },
-                ),
-                qualities: FilterValueHandler(
-                  qualities,
-                  (quality) {
-                    setState(() {
-                      qualities.contains(quality)
-                          ? qualities.remove(quality)
-                          : qualities.add(quality);
-                    });
-                  },
-                ),
-                releaseGroup: FilterValueHandler(
-                  releaseGroupController,
-                  (_) {},
-                ),
-                additionalTerm: FilterValueHandler(
-                  additionalTermController,
-                  (_) {},
-                ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.close),
               ),
-            ),
-            Divider(
-              color: widget.outlineColor,
-            ),
-            Expanded(
-              child: DownloadResultsDialogListView(
-                entries: filteredEntries,
-                outlineColor: widget.outlineColor,
+              const Spacer(),
+              Text(
+                'Available on nyaa.si',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-            ),
-          ],
+              const Spacer(),
+            ],
+          ),
         ),
-      ),
+        Divider(
+          color: widget.outlineColor,
+          height: 1,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: DownloadResultsFilter(
+            showAll: FilterValueHandler(
+              showAll,
+              (value) {
+                setState(() {
+                  showAll = !showAll;
+
+                  if (value && smartFilter) {
+                    smartFilter = false;
+                  }
+                });
+              },
+            ),
+            smartFilter: FilterValueHandler(
+              smartFilter,
+              (value) {
+                setState(() {
+                  smartFilter = !smartFilter;
+
+                  if (value && showAll) {
+                    showAll = false;
+                  }
+                });
+              },
+            ),
+            qualities: FilterValueHandler(
+              qualities,
+              (quality) {
+                setState(() {
+                  qualities.contains(quality)
+                      ? qualities.remove(quality)
+                      : qualities.add(quality);
+                });
+              },
+            ),
+            releaseGroup: FilterValueHandler(
+              releaseGroupController,
+              (_) {},
+            ),
+            additionalTerm: FilterValueHandler(
+              additionalTermController,
+              (_) {},
+            ),
+          ),
+        ),
+        Divider(
+          color: widget.outlineColor,
+        ),
+        Expanded(
+          child: DownloadResultsDialogListView(
+            entries: filteredEntries,
+            outlineColor: widget.outlineColor,
+          ),
+        ),
+      ],
     );
   }
 }

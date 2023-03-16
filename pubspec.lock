@@ -143,6 +143,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0+1"
+  empty_widget:
+    dependency: "direct main"
+    description:
+      name: empty_widget
+      sha256: aad8073e5fb43eadde7007db1e2fea7acd33d0d33cff031e31a6675ca0a3e7fb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   fake_async:
     dependency: transitive
     description:

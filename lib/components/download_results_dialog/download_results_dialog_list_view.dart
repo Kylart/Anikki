@@ -17,6 +17,7 @@ class DownloadResultsDialogListView extends StatelessWidget {
         final entry = entries[index];
 
         return ListTile(
+          dense: true,
           onTap: () async {
             await OpenAppFile.open(entry.magnet, mimeType: 'magnet');
           },
