@@ -226,7 +226,10 @@ void showContextMenu({
             (e) => PopupMenuItem(
               child: ListTile(
                 hoverColor: Colors.transparent,
-                onTap: () => e.callback(context),
+                onTap: () {
+                  Navigator.pop(context);
+                  e.callback(context);
+                },
                 title: Text(e.label),
                 leading: Icon(e.icon),
               ),
