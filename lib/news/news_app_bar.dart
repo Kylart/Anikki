@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/settings_button.dart';
@@ -42,7 +43,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
           label: 'Only followed entries',
           trailing: StatefulBuilder(
             builder: (context, setState) {
-              return Switch(
+              return PlatformSwitch(
                 value: showFollowed,
                 onChanged: (bool value) {
                   setState(() {
@@ -62,7 +63,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
           label: 'Only unseen entries',
           trailing: StatefulBuilder(
             builder: (context, setState) {
-              return Switch(
+              return PlatformSwitch(
                 value: showUnseen,
                 onChanged: (bool value) {
                   setState(() {

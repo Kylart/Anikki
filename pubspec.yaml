@@ -61,6 +61,7 @@ dependencies:
     path: packages/anitomy
   quiver: ^3.2.1
   wakelock: ^0.6.2
+  flutter_platform_widgets: ^3.0.0
 
 dev_dependencies:
   flutter_test:
