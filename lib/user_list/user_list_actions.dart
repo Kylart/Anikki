@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
@@ -19,16 +20,16 @@ import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/watch_list/watch_list_edit.dart';
 
 deleteFile(LocalFile entry, BuildContext context) {
-  showDialog<Dialog>(
+  showPlatformDialog<Dialog>(
     context: context,
     builder: (BuildContext context) {
       final navigator = Navigator.of(context);
 
-      return AlertDialog(
+      return PlatformAlertDialog(
         title: const Text('Delete file'),
         content: Text('Do you really want to delete ${entry.path}?'),
         actions: [
-          TextButton(
+          PlatformTextButton(
             onPressed: () {
               entry.file.delete().then((value) {
                 context.read<LocalStore>().removeFile(entry);
@@ -37,7 +38,7 @@ deleteFile(LocalFile entry, BuildContext context) {
             },
             child: const Text("Yes!"),
           ),
-          TextButton(
+          PlatformTextButton(
             onPressed: navigator.pop,
             child: const Text("Nevermind"),
           ),
@@ -48,8 +49,6 @@ deleteFile(LocalFile entry, BuildContext context) {
 }
 
 Future<void> playFile(LocalFile entry, BuildContext context) async {
-  Wakelock.enable();
-
   if (Platform.isMacOS) {
     await Future.wait([
       /// We need to escape the brackets because they are not escaped properly
@@ -59,6 +58,8 @@ Future<void> playFile(LocalFile entry, BuildContext context) async {
       _updateEntry(context, entry),
     ]);
   } else {
+    Wakelock.enable();
+
     VideoPlayer player = isDesktop()
         ? DesktopPlayer<File>(input: entry.file)
         : MobilePlayer(input: entry.file);
