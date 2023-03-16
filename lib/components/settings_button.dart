@@ -47,7 +47,7 @@ class SettingsButton extends StatelessWidget {
       );
     } else if (Platform.isIOS) {
       return IconButton(
-        icon: const Icon(CupertinoIcons.settings),
+        icon: icon,
         onPressed: () {
           showCupertinoModalPopup(
               context: context,
