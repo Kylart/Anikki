@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:anilist/anilist.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,9 @@ Future<void> playFile(LocalFile entry, BuildContext context) async {
     Navigator.of(context).push(
       FadeOverlay(
         child: player.widget(),
-        onClose: () async => Future.wait([
+        onClose: () async => await Future.wait([
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge),
+          SystemChrome.setPreferredOrientations([]),
           player.stop(),
           _updateEntry(context, entry),
           Wakelock.disable(),
