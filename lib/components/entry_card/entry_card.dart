@@ -32,7 +32,15 @@ class EntryCard extends StatelessWidget {
       onTap: () => actions[0].callback(context),
       onSecondaryTapUp: (details) {
         showContextMenu(
-          details: details,
+          offset: details.globalPosition,
+          context: context,
+          actions: actions,
+          title: title,
+        );
+      },
+      onLongPressEnd: (details) {
+        showContextMenu(
+          offset: details.globalPosition,
           context: context,
           actions: actions,
           title: title,
@@ -132,7 +140,7 @@ class EntryCard extends StatelessWidget {
                         child: GestureDetector(
                           onTapUp: (details) {
                             showContextMenu(
-                              details: details,
+                              offset: details.globalPosition,
                               context: context,
                               actions: actions,
                               title: title,
@@ -157,7 +165,7 @@ class EntryCard extends StatelessWidget {
 }
 
 void showContextMenu({
-  required TapUpDetails details,
+  required Offset offset,
   required BuildContext context,
   required List<EntryCardAction> actions,
   required String title,
@@ -216,9 +224,9 @@ void showContextMenu({
       clipBehavior: Clip.antiAliasWithSaveLayer,
       context: context,
       position: RelativeRect.fromLTRB(
-        details.globalPosition.dx,
-        details.globalPosition.dy,
-        MediaQuery.of(context).size.width - details.globalPosition.dx,
+        offset.dx,
+        offset.dy,
+        MediaQuery.of(context).size.width - offset.dx,
         0,
       ),
       items: actions
