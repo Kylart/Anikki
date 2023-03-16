@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
 import 'package:open_app_file/open_app_file.dart';
 
+import 'package:anikki/helpers/desktop_hooks.dart';
+import 'package:anikki/user_list/user_list_actions.dart';
+
 class DownloadResultsDialogListView extends StatelessWidget {
   const DownloadResultsDialogListView(
       {super.key, required this.entries, required this.outlineColor});
@@ -19,7 +22,11 @@ class DownloadResultsDialogListView extends StatelessWidget {
         return ListTile(
           dense: true,
           onTap: () async {
-            await OpenAppFile.open(entry.magnet, mimeType: 'magnet');
+            if (isDesktop()) {
+              await OpenAppFile.open(entry.magnet);
+            } else {
+              openMediaInBrowser(entry.magnet);
+            }
           },
           leading: CircleAvatar(
             radius: 8.0,
