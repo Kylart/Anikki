@@ -22,19 +22,19 @@ class AnilistStore extends AnilistClient
     final anilistAccessToken =
         prefs.getString('user_preferences_anilistAccessToken');
 
-    setupClient(anilistAccessToken);
+    await setupClient(anilistAccessToken);
+  }
 
-    if (anilistAccessToken != null) {
+  Future<void> setupClient(String? token) async {
+    provider = Anilist(accessToken: token);
+
+    if (token != null) {
       me = await provider.getMe();
       notifyListeners();
 
       await getWatchLists();
       notifyListeners();
     }
-  }
-
-  void setupClient(String? token) {
-    provider = Anilist(accessToken: token);
   }
 
   Future<void> logout() async {
