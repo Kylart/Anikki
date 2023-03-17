@@ -20,12 +20,16 @@ class LandscapeLayout extends StatelessWidget {
           const CustomAppBar(),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
               child: Row(
                 children: const [
                   Flexible(
                     flex: 2,
                     child: UserList(),
+                  ),
+                  SizedBox(
+                    width: 12,
                   ),
                   Flexible(
                     flex: 1,

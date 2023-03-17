@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -27,6 +24,8 @@ void main() async {
   await dotenv.load();
 
   final anilistStore = await AnilistStore.create();
+
+  Paint.enableDithering = true;
 
   runApp(
     /// Providers are above [Anikki] instead of inside it, so that tests
@@ -62,17 +61,16 @@ class _AnikkiState extends State<Anikki> {
     return MaterialApp(
       title: 'Anikki',
       theme: ThemeData(
-        dividerTheme: const DividerThemeData(
-          color: Colors.black54,
-        ),
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.purple,
-          brightness: Brightness.light,
-          cardColor: Colors.white.withOpacity(0.3),
-          backgroundColor: Colors.white.withOpacity(0.55),
-        ),
-        useMaterial3: true
-      ),
+          dividerTheme: const DividerThemeData(
+            color: Colors.black54,
+          ),
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.blue,
+            brightness: Brightness.light,
+            cardColor: Colors.white.withOpacity(0.3),
+            backgroundColor: Colors.white.withOpacity(0.55),
+          ),
+          useMaterial3: true),
       darkTheme: ThemeData(
         dividerTheme: const DividerThemeData(
           color: Colors.white54,
@@ -80,35 +78,33 @@ class _AnikkiState extends State<Anikki> {
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.teal,
           brightness: Brightness.dark,
-          cardColor: Colors.black.withOpacity(0.5),
-          backgroundColor: Colors.black.withOpacity(0.95),
+          cardColor: Colors.black.withOpacity(0.4),
+          backgroundColor: Colors.black.withOpacity(0.7),
         ),
         useMaterial3: true,
       ),
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       home: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: isDark
-                ? const AssetImage(
-                    'assets/images/glassmorphism_background_dark.jpeg',
-                  )
-                : const AssetImage(
-                    'assets/images/glassmorphism_background_light.jpeg',
-                  ),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(0.8, 1),
+            colors: <Color>[
+              Color(0XFF202d47),
+              Color(0XFF232a39),
+              Color(0XFF242933),
+            ], // Gradient from https://learnui.design/tools/gradient-generator.html
+            tileMode: TileMode.mirror,
           ),
         ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: TitlebarSafeArea(
-            child: LayoutBuilder(
-              builder: ((BuildContext context, BoxConstraints constraints) {
-                return constraints.maxWidth > 600
-                    ? const LandscapeLayout()
-                    : const PortraitLayout();
-              }),
-            ),
+        child: TitlebarSafeArea(
+          child: LayoutBuilder(
+            builder: ((BuildContext context, BoxConstraints constraints) {
+              // return SizedBox();
+              return constraints.maxWidth > 600
+                  ? const LandscapeLayout()
+                  : const PortraitLayout();
+            }),
           ),
         ),
       ),
