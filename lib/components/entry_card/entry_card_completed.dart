@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/frosted_circle.dart';
+import 'package:anikki/components/glass_circle.dart';
 
 class EntryCardCompleted extends StatelessWidget {
   const EntryCardCompleted({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FrostedCircle(
+    return GlassCircle(
       child: Container(
         width: 35,
         height: 35,

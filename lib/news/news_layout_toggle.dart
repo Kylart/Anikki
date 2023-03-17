@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/anikki_glass_icon.dart';
-import 'package:anikki/providers/user_preferences/user_list_layout.dart';
+import 'package:anikki/providers/user_preferences/user_preferences.dart';
 
-class UserListLayoutToggle extends StatelessWidget {
-  const UserListLayoutToggle({super.key});
+class NewsLayoutToggle extends StatelessWidget {
+  const NewsLayoutToggle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +13,12 @@ class UserListLayoutToggle extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ToggleButtons(
         borderRadius: const BorderRadius.all(Radius.circular(50)),
-        isSelected:
-            context.watch<UserListLayout>().layout == UserListLayouts.grid
-                ? [false, true]
-                : [true, false],
+        isSelected: context.watch<NewsLayout>().layout == NewsLayouts.grid
+            ? [false, true]
+            : [true, false],
         onPressed: (int index) {
-          context.read<UserListLayout>().layout =
-              index == 0 ? UserListLayouts.list : UserListLayouts.grid;
+          context.read<NewsLayout>().layout =
+              index == 0 ? NewsLayouts.list : NewsLayouts.grid;
         },
         children: const [
           AnikkiGlassIcon(icon: Icons.list),

@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:anikki/models/user_list_enum.dart';
 import 'package:anikki/user_list/user_list_actions.dart';
 import 'package:anikki/user_list/user_list_refresh.dart';
-import 'package:flutter/material.dart';
-
 import 'package:anikki/components/settings_button.dart';
 import 'package:anikki/models/settings_action.dart';
 import 'package:anikki/user_list/user_list_layout_toggle.dart';
@@ -28,51 +28,63 @@ class _UserListAppBarState extends State<UserListAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      surfaceTintColor: Theme.of(context).colorScheme.background,
-      title: widget.tabController != null && widget.tabs != null
-          ? Container(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4.0),
+      child: Row(
+        children: [
+          if (widget.tabController != null && widget.tabs != null)
+            Container(
               constraints: const BoxConstraints(
-                maxWidth: 400,
+                maxWidth: 250,
               ),
               child: TabBar(
-                indicatorColor: Theme.of(context).primaryColor,
-                labelColor: Theme.of(context).primaryColor,
+                dividerColor: Colors.transparent,
                 tabs: widget.tabs!,
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorWeight: 1.0,
+                overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.hovered)) {
+                      return Colors.black.withOpacity(0.04);
+                    }
+                    return null;
+                  },
+                ),
+                splashBorderRadius: const BorderRadius.all(Radius.circular(50)),
                 controller: widget.tabController,
                 onTap: (value) => setState(() {
                   currentIndex = value;
                 }),
               ),
-            )
-          : null,
-      actions: [
-        const UserListLayoutToggle(),
-        if (widget.tabController != null)
-          UserListRefresh(
-            type: widget.tabController?.index == 0
-                ? UserListEnum.local
-                : UserListEnum.watchList,
-          ),
-        if (widget.userListType != null)
-          UserListRefresh(
-            type: widget.userListType!,
-          ),
-        if (currentIndex == 0 && widget.tabController != null)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: SettingsButton(
-              actions: [
-                SettingsAction(
-                  icon: Icons.folder_open_outlined,
-                  label: 'Change folder',
-                  trailing: const SizedBox(),
-                  callback: () async => updateFolderPath(context),
-                ),
-              ],
             ),
-          ),
-      ],
+          const Spacer(),
+          const UserListLayoutToggle(),
+          if (widget.tabController != null)
+            UserListRefresh(
+              type: widget.tabController?.index == 0
+                  ? UserListEnum.local
+                  : UserListEnum.watchList,
+            ),
+          if (widget.userListType != null)
+            UserListRefresh(
+              type: widget.userListType!,
+            ),
+          if (currentIndex == 0 && widget.tabController != null)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: SettingsButton(
+                actions: [
+                  SettingsAction(
+                    icon: Icons.folder_open_outlined,
+                    label: 'Change folder',
+                    trailing: const SizedBox(),
+                    callback: () async => updateFolderPath(context),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

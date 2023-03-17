@@ -1,5 +1,8 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
@@ -45,38 +48,69 @@ void main() async {
   );
 }
 
-class Anikki extends StatelessWidget {
+class Anikki extends StatefulWidget {
   const Anikki({super.key});
 
   @override
+  State<Anikki> createState() => _AnikkiState();
+}
+
+class _AnikkiState extends State<Anikki> {
+  @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<DarkTheme>().active;
     return MaterialApp(
       title: 'Anikki',
-      theme: FlexThemeData.light(
-        scheme: FlexScheme.aquaBlue,
-        surfaceMode: FlexSurfaceMode.highBackgroundLowScaffold,
-        blendLevel: 30,
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
-        useMaterial3: true,
-        swapLegacyOnMaterial3: true,
+      theme: ThemeData(
+        dividerTheme: const DividerThemeData(
+          color: Colors.black54,
+        ),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.purple,
+          brightness: Brightness.light,
+          cardColor: Colors.white.withOpacity(0.3),
+          backgroundColor: Colors.white.withOpacity(0.55),
+        ),
+        useMaterial3: true
       ),
-      darkTheme: FlexThemeData.dark(
-        scheme: FlexScheme.aquaBlue,
-        surfaceMode: FlexSurfaceMode.highBackgroundLowScaffold,
-        blendLevel: 30,
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      darkTheme: ThemeData(
+        dividerTheme: const DividerThemeData(
+          color: Colors.white54,
+        ),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.teal,
+          brightness: Brightness.dark,
+          cardColor: Colors.black.withOpacity(0.5),
+          backgroundColor: Colors.black.withOpacity(0.95),
+        ),
         useMaterial3: true,
-        swapLegacyOnMaterial3: true,
-        darkIsTrueBlack: true,
       ),
-      themeMode:
-          context.watch<DarkTheme>().active ? ThemeMode.dark : ThemeMode.light,
-      home: LayoutBuilder(
-        builder: ((BuildContext context, BoxConstraints constraints) {
-          return constraints.maxWidth > 600
-              ? const LandscapeLayout()
-              : const PortraitLayout();
-        }),
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      home: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: isDark
+                ? const AssetImage(
+                    'assets/images/glassmorphism_background_dark.jpeg',
+                  )
+                : const AssetImage(
+                    'assets/images/glassmorphism_background_light.jpeg',
+                  ),
+          ),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: TitlebarSafeArea(
+            child: LayoutBuilder(
+              builder: ((BuildContext context, BoxConstraints constraints) {
+                return constraints.maxWidth > 600
+                    ? const LandscapeLayout()
+                    : const PortraitLayout();
+              }),
+            ),
+          ),
+        ),
       ),
     );
   }

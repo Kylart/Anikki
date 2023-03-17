@@ -1,8 +1,8 @@
-import 'package:anikki/components/fade_overlay.dart';
-import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/components/fade_overlay.dart';
+import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/components/download_results_dialog/download_results.dart';
 import 'package:anikki/models/local_file.dart';
 
@@ -26,9 +26,13 @@ void _fromNews(BuildContext context, ScheduleEntry entry) {
       context: context,
       builder: (context) {
         return Dialog(
-          child: DownloadResults(
-            episode: entry.episode,
-            term: '${entry.media!.title!.title()} ${entry.episode ?? ''}',
+          backgroundColor: Colors.transparent,
+          child: Card(
+            color: Theme.of(context).cardColor.withOpacity(0.85),
+            child: DownloadResults(
+              episode: entry.episode,
+              term: '${entry.media!.title!.title()} ${entry.episode ?? ''}',
+            ),
           ),
         );
       },
@@ -36,9 +40,11 @@ void _fromNews(BuildContext context, ScheduleEntry entry) {
   } else {
     Navigator.of(context).push(
       FadeOverlay(
-        child: DownloadResults(
-          episode: entry.episode,
-          term: '${entry.media!.title!.title()} ${entry.episode ?? ''}',
+        child: Card(
+          child: DownloadResults(
+            episode: entry.episode,
+            term: '${entry.media!.title!.title()} ${entry.episode ?? ''}',
+          ),
         ),
         onClose: () async {},
       ),

@@ -43,7 +43,6 @@ dependencies:
   window_manager: ^0.3.1
   settings_ui: ^2.0.2
   shimmer: ^2.0.0
-  flex_color_scheme: ^6.1.2
   path: ^1.8.2
   file_picker: ^5.2.5
   open_app_file: ^4.0.1
@@ -63,6 +62,7 @@ dependencies:
   wakelock: ^0.6.2
   flutter_platform_widgets: ^3.0.0
   empty_widget: ^0.0.5
+  flutter_acrylic: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +92,8 @@ flutter:
     - .env
     - assets/images/placeholder.png
     - assets/images/cover_placeholder.jpg
+    - assets/images/glassmorphism_background_dark.jpeg
+    - assets/images/glassmorphism_background_light.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

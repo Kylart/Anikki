@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/layouts/landscape/layout_card.dart';
+import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/components/anilist_auth/anilist_menu.dart';
 import 'package:anikki/components/search/search.dart';
 import 'package:anikki/components/settings/settings.dart';
@@ -27,81 +29,57 @@ class _PortraitLayoutState extends State<PortraitLayout> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: PageView(
-          controller: pageController,
-          onPageChanged: (value) {
-            setState(() {
-              currentIndex = value;
-            });
-          },
-          children: [
-            const News(
-              showOutline: false,
-            ),
-            Column(
-              children: const [
-                UserListAppBar(
-                  userListType: UserListEnum.local,
+          backgroundColor: Colors.transparent,
+          body: LayoutCard(
+            child: PageView(
+              controller: pageController,
+              onPageChanged: (value) {
+                setState(() {
+                  currentIndex = value;
+                });
+              },
+              children: [
+                const News(
+                  showOutline: false,
                 ),
-                Expanded(child: Library()),
+                Column(
+                  children: const [
+                    UserListAppBar(
+                      userListType: UserListEnum.local,
+                    ),
+                    Expanded(child: Library()),
+                  ],
+                ),
+                Column(
+                  children: const [
+                    UserListAppBar(
+                      userListType: UserListEnum.local,
+                    ),
+                    Expanded(child: WatchList()),
+                  ],
+                ),
+                const Search(),
+                const SettingsPage(),
               ],
             ),
-            Column(
-              children: const [
-                UserListAppBar(
-                  userListType: UserListEnum.local,
-                ),
-                Expanded(child: WatchList()),
-              ],
-            ),
-            const Search(),
-            const SettingsPage(),
-          ],
-        ),
-        floatingActionButton: [
-          null,
-          FloatingActionButton(
-            onPressed: () async => updateFolderPath(context),
-            child: const Icon(Icons.folder_open_outlined),
           ),
-          FloatingActionButton(
-            onPressed: () {},
-            child: const AnilistMenu(),
-          ),
-          null,
-          null,
-        ][currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: Theme.of(context).indicatorColor,
-          showUnselectedLabels: false,
-          currentIndex: currentIndex,
-          onTap: (value) {
-            pageController.jumpToPage(value);
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.new_releases_outlined),
-              label: 'News',
+          floatingActionButton: [
+            null,
+            FloatingActionButton(
+              onPressed: () async => updateFolderPath(context),
+              child: const Icon(Icons.folder_open_outlined),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.folder_outlined),
-              label: 'Local',
+            FloatingActionButton(
+              onPressed: () {},
+              child: const AnilistMenu(),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.library_books_outlined),
-              label: 'Watch List',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-          ],
-        ),
-      ),
+            null,
+            null,
+          ][currentIndex],
+          bottomNavigationBar: AnikkiNavigationBar(
+            index: currentIndex,
+            pageController: pageController,
+          )),
     );
   }
 }

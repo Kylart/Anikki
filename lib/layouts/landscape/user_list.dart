@@ -1,3 +1,4 @@
+import 'package:anikki/layouts/landscape/layout_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/library/library.dart';
@@ -16,10 +17,12 @@ class UserList extends StatefulWidget {
 class _UserListState extends State<UserList>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  static const List<Tab> tabs = <Tab>[
+  final List<Tab> tabs = const <Tab>[
     Tab(text: 'Library'),
     Tab(text: 'Watch Lists'),
   ];
+
+  final borderRadius = const BorderRadius.all(Radius.circular(20));
 
   @override
   void initState() {
@@ -35,16 +38,7 @@ class _UserListState extends State<UserList>
 
   @override
   Widget build(BuildContext context) {
-    final outlineColor = Theme.of(context).colorScheme.outline.withOpacity(0.5);
-
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: outlineColor,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(4)),
-      ),
+    return LayoutCard(
       child: Column(
         children: [
           UserListAppBar(

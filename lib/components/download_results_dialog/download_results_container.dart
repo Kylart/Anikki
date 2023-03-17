@@ -40,10 +40,21 @@ class _DownloadResultsContainerState extends State<DownloadResultsContainer>
               ),
               const Spacer(),
               Text(
-                'Available on nyaa.si',
+                'Torrent on nyaa.si',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const Spacer(),
+
+              /// Here to help center the text
+              IgnorePointer(
+                child: Opacity(
+                  opacity: 0,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.close),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class SettingsButton extends StatelessWidget {
 
   final List<SettingsAction> actions;
 
-  static const icon = Icon(Icons.settings);
+  static const icon = AnikkiGlassIcon(icon: Icons.settings);
 
   @override
   Widget build(BuildContext context) {
@@ -69,29 +70,43 @@ class SettingsButton extends StatelessWidget {
         },
       );
     } else {
-      return PopupMenuButton(
-        icon: icon,
-        itemBuilder: (context) {
-          return actions
-              .map(
-                (e) => PopupMenuItem(
-                  onTap: e.callback,
-                  child: Row(
-                    children: [
-                      if (e.icon != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Icon(e.icon),
-                        ),
-                      Text(e.label),
-                      const Spacer(),
-                      e.trailing,
-                    ],
+      final currentTheme = Theme.of(context);
+
+      return Theme(
+        data: currentTheme.copyWith(
+          colorScheme: ColorScheme.fromSwatch(
+            brightness: currentTheme.brightness,
+            cardColor: currentTheme.brightness == Brightness.dark
+                ? Colors.black.withOpacity(0.95)
+                : Colors.white.withOpacity(0.9),
+          ),
+        ),
+        child: PopupMenuButton(
+          tooltip: '',
+          icon: icon,
+          itemBuilder: (context) {
+            return actions
+                .map(
+                  (e) => PopupMenuItem(
+                    onTap: e.callback,
+                    child: Row(
+                      children: [
+                        if (e.icon != null)
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Icon(e.icon),
+                          ),
+                        Text(e.label),
+                        const Spacer(),
+                        e.trailing,
+                      ],
+                    ),
                   ),
-                ),
-              )
-              .toList();
-        },
+                )
+                .toList();
+          },
+        ),
       );
     }
   }

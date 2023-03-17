@@ -10,7 +10,7 @@ import 'package:anikki/components/entry_card/entry_card_action.dart';
 import 'package:anikki/helpers/anilist/filters/is_followed.dart';
 import 'package:anikki/helpers/anilist/filters/is_seen.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
-import 'package:anikki/news/news_actions.dart';
+import 'package:anikki/helpers/show_available_torrents.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/user_list/user_list_actions.dart';
 
@@ -74,6 +74,7 @@ class NewsCard extends StatelessWidget {
             );
           },
         ),
+        entryCardDivider,
         if (store.isConnected && isFollowed(store, entry))
           EntryCardAction(
             label: 'Edit watch list entry',

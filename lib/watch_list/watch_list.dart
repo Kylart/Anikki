@@ -78,6 +78,19 @@ class _WatchListState extends State<WatchList>
         return Column(
           children: [
             TabBar(
+              isScrollable: MediaQuery.of(context).size.width < 600,
+              dividerColor: Colors.transparent,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorWeight: 1.0,
+              overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.hovered)) {
+                    return Colors.black.withOpacity(0.04);
+                  }
+                  return null;
+                },
+              ),
+              splashBorderRadius: const BorderRadius.all(Radius.circular(50)),
               tabs: tabs,
               controller: controller,
             ),

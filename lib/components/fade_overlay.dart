@@ -7,7 +7,7 @@ class FadeOverlay extends ModalRoute<void> {
   FadeOverlay({required this.child, required this.onClose});
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 500);
+  Duration get transitionDuration => const Duration(milliseconds: 300);
 
   @override
   bool get opaque => true;
@@ -16,7 +16,7 @@ class FadeOverlay extends ModalRoute<void> {
   bool get barrierDismissible => false;
 
   @override
-  Color get barrierColor => Colors.black;
+  Color get barrierColor => Colors.white;
 
   @override
   String get barrierLabel => '';
@@ -37,16 +37,12 @@ class FadeOverlay extends ModalRoute<void> {
     Animation<double> secondaryAnimation,
   ) {
     return Material(
-      type: MaterialType.transparency,
+      type: MaterialType.canvas,
       child: SafeArea(
-        child: _buildOverlayContent(context),
+        child: Center(
+          child: child,
+        ),
       ),
-    );
-  }
-
-  Widget _buildOverlayContent(BuildContext context) {
-    return Center(
-      child: child,
     );
   }
 

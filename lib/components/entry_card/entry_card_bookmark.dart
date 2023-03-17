@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/frosted_circle.dart';
+import 'package:anikki/components/glass_circle.dart';
 
 class EntryCardBookmark extends StatelessWidget {
   const EntryCardBookmark({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FrostedCircle(
+    return GlassCircle(
       child: Container(
         width: 35,
         height: 35,

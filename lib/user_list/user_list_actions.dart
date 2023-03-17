@@ -17,7 +17,7 @@ import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/library/store.dart';
 import 'package:anikki/models/local_file.dart';
-import 'package:anikki/news/news_actions.dart';
+import 'package:anikki/helpers/show_available_torrents.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/watch_list/watch_list_edit.dart';
 

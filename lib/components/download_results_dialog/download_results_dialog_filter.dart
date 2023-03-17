@@ -1,6 +1,7 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
+
+import 'package:anikki/helpers/capitalize.dart';
 
 class FilterValueHandler<T, U> {
   FilterValueHandler(this.value, this.onChange);
@@ -43,22 +44,15 @@ class DownloadResultsFilter extends StatelessWidget {
           value: smartFilter.value,
           onChanged: smartFilter.onChange,
         ),
-        SizedBox(
-          width: 500,
-          child: Row(
-            children: [
-              textFieldTile(
-                controller: releaseGroup.value,
-                onChanged: releaseGroup.onChange,
-                hintText: 'Enter a Release group',
-              ),
-              textFieldTile(
-                controller: additionalTerm.value,
-                onChanged: additionalTerm.onChange,
-                hintText: 'Anything else?',
-              ),
-            ],
-          ),
+        textFieldTile(
+          controller: releaseGroup.value,
+          onChanged: releaseGroup.onChange,
+          hintText: 'Enter a Release group',
+        ),
+        textFieldTile(
+          controller: additionalTerm.value,
+          onChanged: additionalTerm.onChange,
+          hintText: 'Anything else?',
         ),
         qualityChoiceTile(
           onTap: qualities.onChange,
@@ -106,7 +100,7 @@ Widget qualityChoiceTile({
             child: Chip(
               backgroundColor:
                   qualities.contains(quality) ? selectedColor : null,
-              label: Text(quality.name.capitalize),
+              label: Text(quality.name.capitalize()),
             ),
           ),
         );

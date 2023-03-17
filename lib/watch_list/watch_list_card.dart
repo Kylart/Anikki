@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/components/entry_card/entry_card.dart';
 import 'package:anikki/components/entry_card/entry_card_action.dart';
-import 'package:anikki/news/news_actions.dart';
+import 'package:anikki/helpers/show_available_torrents.dart';
 import 'package:anikki/user_list/user_list_actions.dart';
 
 class WatchListCard extends StatelessWidget {

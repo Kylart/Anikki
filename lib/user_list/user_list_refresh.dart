@@ -1,3 +1,4 @@
+import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,7 @@ class UserListRefresh extends StatelessWidget {
             }
           }
         },
-        icon: const Icon(Icons.refresh),
+        icon: const AnikkiGlassIcon(icon: Icons.refresh),
       ),
     );
   }

@@ -24,58 +24,61 @@ class _AnilistMenuState extends State<AnilistMenu>
   Widget build(BuildContext context) {
     final store = context.watch<AnilistStore>();
 
-    return PopupMenuButton<AnilistMenuItem>(
-      onSelected: (value) async {
-        if (value == AnilistMenuItem.auth) login(context);
-        if (value == AnilistMenuItem.logout) logout(context);
-      },
-      tooltip: store.isConnected
-          ? 'Connected to Anilist as ${store.me!.name}'
-          : 'Anilist',
-      icon: store.isConnected && store.me?.avatar?.medium != null
-          ? CircleAvatar(
-              backgroundImage: NetworkImage(store.me!.avatar!.medium!),
-            )
-          : const Icon(
-              SimpleIcons.anilist,
-              color: Color(0xFF02A9FF),
-            ),
-      itemBuilder: (BuildContext context) => [
-        if (!store.isConnected)
-          PopupMenuItem<AnilistMenuItem>(
-            value: AnilistMenuItem.auth,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Padding(
-                  padding: EdgeInsets.only(right: 10.0),
-                  child: Text('Log in'),
-                ),
-                Icon(Icons.open_in_new),
-              ],
-            ),
-          ),
-        if (store.isConnected)
-          PopupMenuItem<AnilistMenuItem>(
-            value: AnilistMenuItem.logout,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Padding(
-                  padding: EdgeInsets.only(right: 10.0),
-                  child: Text(
-                    'Logout',
-                    style: TextStyle(color: Colors.red),
+    return Material(
+      color: Colors.transparent,
+      child: PopupMenuButton<AnilistMenuItem>(
+        onSelected: (value) async {
+          if (value == AnilistMenuItem.auth) login(context);
+          if (value == AnilistMenuItem.logout) logout(context);
+        },
+        tooltip: store.isConnected
+            ? 'Connected to Anilist as ${store.me!.name}'
+            : 'Anilist',
+        icon: store.isConnected && store.me?.avatar?.medium != null
+            ? CircleAvatar(
+                backgroundImage: NetworkImage(store.me!.avatar!.medium!),
+              )
+            : const Icon(
+                SimpleIcons.anilist,
+                color: Color(0xFF02A9FF),
+              ),
+        itemBuilder: (BuildContext context) => [
+          if (!store.isConnected)
+            PopupMenuItem<AnilistMenuItem>(
+              value: AnilistMenuItem.auth,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: Text('Log in'),
                   ),
-                ),
-                Icon(
-                  Icons.logout,
-                  color: Colors.red,
-                ),
-              ],
+                  Icon(Icons.open_in_new),
+                ],
+              ),
             ),
-          ),
-      ],
+          if (store.isConnected)
+            PopupMenuItem<AnilistMenuItem>(
+              value: AnilistMenuItem.logout,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                  Icon(
+                    Icons.logout,
+                    color: Colors.red,
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

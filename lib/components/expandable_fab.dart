@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:anikki/components/frosted_circle.dart';
+import 'package:anikki/components/glass_circle.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -93,7 +93,7 @@ class _ExpandableFabState extends State<ExpandableFab>
   }
 
   Widget _buildTapToOpenFab() {
-    return FrostedCircle(
+    return GlassCircle(
       child: Container(
         width: 35,
         height: 35,
@@ -176,7 +176,7 @@ class ActionButton extends StatelessWidget {
     return Tooltip(
       message: tooltipText,
       waitDuration: const Duration(milliseconds: 300),
-      child: FrostedCircle(
+      child: GlassCircle(
         child: Container(
           width: 35,
           height: 35,

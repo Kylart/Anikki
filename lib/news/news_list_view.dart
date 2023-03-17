@@ -1,7 +1,7 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/news/news_actions.dart';
+import 'package:anikki/helpers/show_available_torrents.dart';
 import 'package:anikki/components/list_view_divider.dart';
 
 class NewsListView extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/frosted_circle.dart';
+import 'package:anikki/components/glass_circle.dart';
 
 class EntryCardBackground extends StatelessWidget {
   const EntryCardBackground({super.key, this.episode, required this.title});
@@ -20,7 +20,7 @@ class EntryCardBackground extends StatelessWidget {
         maxLines: 3,
       ),
       trailing: episode != null
-          ? FrostedCircle(
+          ? GlassCircle(
               child: Container(
                 width: 35,
                 height: 35,

@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/entry_card/entry_card_action.dart';
 import 'package:anikki/components/entry_card/entry_card_bookmark.dart';
 import 'package:anikki/components/entry_card/entry_card_completed.dart';
-import 'package:anikki/components/frosted_circle.dart';
+import 'package:anikki/components/glass_circle.dart';
 
 class EntryCard extends StatelessWidget {
   const EntryCard({
@@ -38,7 +39,7 @@ class EntryCard extends StatelessWidget {
           title: title,
         );
       },
-      onLongPressEnd: (details) {
+      onLongPressStart: (details) {
         showContextMenu(
           offset: details.globalPosition,
           context: context,
@@ -97,12 +98,12 @@ class EntryCard extends StatelessWidget {
                     Positioned(
                       right: 10,
                       bottom: 10,
-                      child: FrostedCircle(
+                      child: GlassCircle(
                         child: Container(
                           width: 35,
                           height: 35,
                           decoration: const BoxDecoration(
-                            color: Colors.black54,
+                            color: Colors.black26,
                             shape: BoxShape.circle,
                           ),
                           child: Center(
@@ -120,37 +121,35 @@ class EntryCard extends StatelessWidget {
           ),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            title: Text(
-              '$title\n',
-              style: Theme.of(context).textTheme.titleSmall,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              maxLines: 2,
+            title: Opacity(
+              opacity: 0.7,
+              child: Text(
+                '$title\n',
+                style: Theme.of(context).textTheme.titleSmall,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+              ),
             ),
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                FrostedCircle(
-                  child: SizedBox(
-                    width: 30,
-                    height: 30,
-                    child: Material(
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTapUp: (details) {
-                            showContextMenu(
-                              offset: details.globalPosition,
-                              context: context,
-                              actions: actions,
-                              title: title,
-                            );
-                          },
-                          child: const Icon(
-                            Icons.more_vert,
-                            size: 18,
-                          ),
-                        ),
+                SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTapUp: (details) {
+                        showContextMenu(
+                          offset: details.globalPosition,
+                          context: context,
+                          actions: actions,
+                          title: title,
+                        );
+                      },
+                      child: const AnikkiGlassIcon(
+                        icon: Icons.more_vert,
                       ),
                     ),
                   ),
@@ -180,13 +179,16 @@ void showContextMenu({
               title + (episode != null ? ' - Episode $episode' : ''),
             ),
             actions: actions
+                .where((action) => action.type == EntryCardActionType.action)
                 .map((action) => CupertinoActionSheetAction(
-                      child: Row(children: [
-                        const Spacer(),
-                        Text(action.label),
-                        const Spacer(),
-                        Icon(action.icon),
-                      ]),
+                      child: Row(
+                        children: [
+                          const Spacer(),
+                          Text(action.label),
+                          const Spacer(),
+                          Icon(action.icon),
+                        ],
+                      ),
                       onPressed: () => action.callback(context),
                     ))
                 .toList(),
@@ -204,11 +206,15 @@ void showContextMenu({
               physics: const NeverScrollableScrollPhysics(),
               children: actions
                   .map(
-                    (e) => ListTile(
-                      leading: Icon(e.icon),
-                      title: Text(e.label),
-                      onTap: () => e.callback(context),
-                    ),
+                    (e) => e.type == EntryCardActionType.action
+                        ? ListTile(
+                            leading: Icon(e.icon),
+                            title: Text(e.label),
+                            onTap: () => e.callback(context),
+                          )
+                        : const Divider(
+                            height: 1,
+                          ),
                   )
                   .toList(),
             ),
@@ -221,6 +227,7 @@ void showContextMenu({
           Radius.circular(12),
         ),
       ),
+      color: Colors.black87,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       context: context,
       position: RelativeRect.fromLTRB(
@@ -230,18 +237,22 @@ void showContextMenu({
         0,
       ),
       items: actions
-          .map(
-            (e) => PopupMenuItem(
-              child: ListTile(
-                hoverColor: Colors.transparent,
-                onTap: () {
-                  Navigator.pop(context);
-                  e.callback(context);
-                },
-                title: Text(e.label),
-                leading: Icon(e.icon),
-              ),
-            ),
+          .map<PopupMenuEntry>(
+            (e) => (e.type == EntryCardActionType.action
+                ? PopupMenuItem(
+                    child: ListTile(
+                      hoverColor: Colors.transparent,
+                      onTap: () {
+                        Navigator.pop(context);
+                        e.callback(context);
+                      },
+                      title: Opacity(opacity: 0.7, child: Text(e.label)),
+                      leading: AnikkiGlassIcon(icon: e.icon),
+                    ),
+                  )
+                : const PopupMenuDivider(
+                    height: 1,
+                  )) as PopupMenuEntry,
           )
           .toList(),
     );

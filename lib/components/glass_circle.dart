@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class FrostedCircle extends StatelessWidget {
-  const FrostedCircle({super.key, required this.child});
+class GlassCircle extends StatelessWidget {
+  const GlassCircle({super.key, required this.child});
 
   final Widget child;
 

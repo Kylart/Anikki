@@ -1,30 +1,19 @@
 import 'dart:io';
 
 import 'package:dart_vlc/dart_vlc.dart';
-import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 Future<void> setUpDesktop() async {
-  // Must add this line.
-  await windowManager.ensureInitialized();
+  await Window.initialize();
 
   if (Platform.isWindows || Platform.isLinux) {
     DartVLC.initialize();
   }
 
-  WindowOptions windowOptions = const WindowOptions(
-    minimumSize: Size(300, 400),
-    // size: Size(1200, 720),
-    // center: true,
-    backgroundColor: Colors.transparent,
-    skipTaskbar: false,
-    titleBarStyle: TitleBarStyle.normal,
-  );
-
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    await windowManager.focus();
-  });
+  if (Platform.isMacOS) {
+    Window.makeTitlebarTransparent();
+    Window.enableFullSizeContentView();
+  }
 }
 
 bool isDesktop() {

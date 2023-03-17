@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   dart_vlc
+  flutter_acrylic
   protocol_handler
   screen_retriever
   url_launcher_windows
