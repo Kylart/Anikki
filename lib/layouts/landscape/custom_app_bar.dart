@@ -43,7 +43,7 @@ class CustomAppBar extends StatelessWidget {
             child: Material(
               color: Colors.black.withOpacity(0.04),
               child: SizedBox(
-                width: 350,
+                width: 500,
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: TextField(
