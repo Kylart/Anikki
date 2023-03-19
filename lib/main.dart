@@ -1,5 +1,5 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +17,10 @@ void main() async {
 
   if (isDesktop()) setUpDesktop();
 
-  // Register a custom protocol
+  /// Register a custom protocol
   await protocolHandler.register('anikki');
 
-  // Register env variables
+  /// Register env variables
   await dotenv.load();
 
   final anilistStore = await AnilistStore.create();
@@ -28,17 +28,17 @@ void main() async {
   Paint.enableDithering = true;
 
   runApp(
-    /// Providers are above [Anikki] instead of inside it, so that tests
-    /// can use [Anikki] while mocking the providers
+    //// Providers are above [Anikki] instead of inside it, so that tests
+    //// can use [Anikki] while mocking the providers
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LocalStore()),
         ChangeNotifierProvider(create: (_) => anilistStore),
 
-        /// User Preferences
+        //// User Preferences
         ChangeNotifierProvider(create: (_) => AnilistToken()),
         ChangeNotifierProvider(create: (_) => LocalDirectory()),
-        ChangeNotifierProvider(create: (_) => DarkTheme()),
+        ChangeNotifierProvider(create: (_) => AnikkiTheme()),
         ChangeNotifierProvider(create: (_) => NewsLayout()),
         ChangeNotifierProvider(create: (_) => UserListLayout()),
       ],
@@ -57,50 +57,78 @@ class Anikki extends StatefulWidget {
 class _AnikkiState extends State<Anikki> {
   @override
   Widget build(BuildContext context) {
-    final isDark = context.watch<DarkTheme>().active;
     return MaterialApp(
       title: 'Anikki',
-      theme: ThemeData(
-          dividerTheme: const DividerThemeData(
-            color: Colors.black54,
-          ),
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.blue,
-            brightness: Brightness.light,
-            cardColor: Colors.white.withOpacity(0.3),
-            backgroundColor: Colors.white.withOpacity(0.55),
-          ),
-          useMaterial3: true),
-      darkTheme: ThemeData(
-        dividerTheme: const DividerThemeData(
-          color: Colors.white54,
+
+      /// This theme was made for FlexColorScheme version 6.1.1. Make sure
+      /// you use same or higher version, but still same major version. If
+      /// you use a lower version, some properties may not be supported. In
+      /// that case you can also remove them after copying the theme to your app.
+      theme: FlexThemeData.light(
+        scheme: FlexScheme.deepBlue,
+        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        blendLevel: 9,
+        tooltipsMatchBackground: true,
+        subThemesData: const FlexSubThemesData(
+          blendOnLevel: 10,
+          blendOnColors: false,
+          sliderValueTinted: true,
+          sliderTrackHeight: 1,
+          inputDecoratorRadius: 40.0,
+          fabUseShape: true,
+          fabAlwaysCircular: true,
+          chipSchemeColor: SchemeColor.primaryContainer,
+          chipRadius: 40.0,
+          cardRadius: 40.0,
+          popupMenuRadius: 12.0,
+          dialogRadius: 50.0,
+          timePickerDialogRadius: 50.0,
+          bottomSheetRadius: 50.0,
         ),
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.teal,
-          brightness: Brightness.dark,
-          cardColor: Colors.black.withOpacity(0.4),
-          backgroundColor: Colors.black.withOpacity(0.7),
-        ),
+        useMaterial3ErrorColors: true,
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
         useMaterial3: true,
+        swapLegacyOnMaterial3: true,
+
+        /// To use the playground font, add GoogleFonts package and uncomment
+        /// fontFamily: GoogleFonts.notoSans().fontFamily,
       ),
-      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      home: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(0.8, 1),
-            colors: <Color>[
-              Color(0XFF202d47),
-              Color(0XFF232a39),
-              Color(0XFF242933),
-            ], // Gradient from https://learnui.design/tools/gradient-generator.html
-            tileMode: TileMode.mirror,
-          ),
+      darkTheme: FlexThemeData.dark(
+        scheme: FlexScheme.deepBlue,
+        surfaceMode: FlexSurfaceMode.highBackgroundLowScaffold,
+        blendLevel: 15,
+        darkIsTrueBlack: true,
+        swapColors: true,
+        tooltipsMatchBackground: true,
+        subThemesData: const FlexSubThemesData(
+          blendOnLevel: 20,
+          sliderValueTinted: true,
+          sliderTrackHeight: 1,
+          inputDecoratorRadius: 40.0,
+          fabUseShape: true,
+          fabAlwaysCircular: true,
+          chipSchemeColor: SchemeColor.primaryContainer,
+          chipRadius: 40.0,
+          cardRadius: 40.0,
+          popupMenuRadius: 12.0,
+          dialogRadius: 50.0,
+          timePickerDialogRadius: 50.0,
+          bottomSheetRadius: 50.0,
         ),
-        child: TitlebarSafeArea(
+        useMaterial3ErrorColors: true,
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+        useMaterial3: true,
+        swapLegacyOnMaterial3: true,
+
+        /// To use the Playground font, add GoogleFonts package and uncomment
+        /// fontFamily: GoogleFonts.notoSans().fontFamily,
+      ),
+
+      themeMode: context.watch<AnikkiTheme>().theme,
+      home: Scaffold(
+        body: SafeArea(
           child: LayoutBuilder(
             builder: ((BuildContext context, BoxConstraints constraints) {
-              // return SizedBox();
               return constraints.maxWidth > 600
                   ? const LandscapeLayout()
                   : const PortraitLayout();

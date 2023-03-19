@@ -10,8 +10,6 @@ class CustomAppBar extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final borderRadius = const BorderRadius.all(Radius.circular(50));
-
   @override
   Widget build(BuildContext context) {
     void onTap() {
@@ -38,36 +36,24 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ClipRRect(
-            borderRadius: borderRadius,
-            child: Material(
-              color: Colors.black.withOpacity(0.04),
-              child: SizedBox(
-                width: 500,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: TextField(
-                    mouseCursor: SystemMouseCursors.click,
-                    onTap: onTap,
-                    showCursor: false,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search_outlined),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 24.0, vertical: 12.0),
-                      filled: false,
-                      fillColor: Colors.transparent,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.white, width: 1),
-                        borderRadius: borderRadius,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: borderRadius,
-                      ),
-                      hintText: 'Search anything',
-                    ),
-                  ),
+          SizedBox(
+            width: 500,
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: TextField(
+                mouseCursor: SystemMouseCursors.click,
+                onTap: onTap,
+                showCursor: false,
+                textAlign: TextAlign.center,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.search_outlined),
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 12.0),
+                  filled: false,
+                  fillColor: Colors.transparent,
+                  focusedBorder: OutlineInputBorder(),
+                  border: OutlineInputBorder(),
+                  hintText: 'Search anything',
                 ),
               ),
             ),

@@ -14,35 +14,33 @@ class LandscapeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          const CustomAppBar(),
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-              child: Row(
-                children: const [
-                  Flexible(
-                    flex: 2,
-                    child: UserList(),
+    return Column(
+      children: [
+        const CustomAppBar(),
+        Expanded(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+            child: Row(
+              children: const [
+                Flexible(
+                  flex: 2,
+                  child: UserList(),
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Flexible(
+                  flex: 1,
+                  child: LayoutCard(
+                    child: News(),
                   ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: LayoutCard(
-                      child: News(),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -37,7 +37,7 @@ deleteFile(LocalFile entry, BuildContext context) {
             onPressed: () {
               entry.file.delete().then((value) {
                 context.read<LocalStore>().removeFile(entry);
-                navigator.pop();
+                navigator.pop(context);
               });
             },
             child: const Text("Yes!"),

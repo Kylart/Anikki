@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/layouts/landscape/layout_card.dart';
 import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/components/anilist_auth/anilist_menu.dart';
 import 'package:anikki/components/search/search.dart';
@@ -30,38 +29,36 @@ class _PortraitLayoutState extends State<PortraitLayout> {
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: LayoutCard(
-            child: PageView(
-              controller: pageController,
-              onPageChanged: (value) {
-                setState(() {
-                  currentIndex = value;
-                });
-              },
-              children: [
-                const News(
-                  showOutline: false,
-                ),
-                Column(
-                  children: const [
-                    UserListAppBar(
-                      userListType: UserListEnum.local,
-                    ),
-                    Expanded(child: Library()),
-                  ],
-                ),
-                Column(
-                  children: const [
-                    UserListAppBar(
-                      userListType: UserListEnum.local,
-                    ),
-                    Expanded(child: WatchList()),
-                  ],
-                ),
-                const Search(),
-                const SettingsPage(),
-              ],
-            ),
+          body: PageView(
+            controller: pageController,
+            onPageChanged: (value) {
+              setState(() {
+                currentIndex = value;
+              });
+            },
+            children: [
+              const News(
+                showOutline: false,
+              ),
+              Column(
+                children: const [
+                  UserListAppBar(
+                    userListType: UserListEnum.local,
+                  ),
+                  Expanded(child: Library()),
+                ],
+              ),
+              Column(
+                children: const [
+                  UserListAppBar(
+                    userListType: UserListEnum.local,
+                  ),
+                  Expanded(child: WatchList()),
+                ],
+              ),
+              const Search(),
+              const SettingsPage(),
+            ],
           ),
           floatingActionButton: [
             null,
