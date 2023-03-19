@@ -15,7 +15,6 @@ jobs:
         run: |
           touch .env
           echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
-          echo "ANILIST_SECRET=${{ secrets.ANILIST_SECRET }} >> .env"
           cat .env
 
       - uses: subosito/flutter-action@v2
@@ -45,7 +44,6 @@ jobs:
         run: |
           touch .env
           echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
-          echo "ANILIST_SECRET=${{ secrets.ANILIST_SECRET }} >> .env"
           cat .env
 
       - uses: actions/setup-java@v3
