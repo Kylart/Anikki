@@ -9,11 +9,6 @@ Future<void> setUpDesktop() async {
   if (Platform.isWindows || Platform.isLinux) {
     DartVLC.initialize();
   }
-
-  if (Platform.isMacOS) {
-    Window.makeTitlebarTransparent();
-    Window.enableFullSizeContentView();
-  }
 }
 
 bool isDesktop() {
