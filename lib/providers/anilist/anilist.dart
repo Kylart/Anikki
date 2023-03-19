@@ -29,11 +29,15 @@ class AnilistStore extends AnilistClient
     provider = Anilist(accessToken: token);
 
     if (token != null) {
-      me = await provider.getMe();
-      notifyListeners();
+      try {
+        me = await provider.getMe();
+        notifyListeners();
 
-      await getWatchLists();
-      notifyListeners();
+        await getWatchLists();
+        notifyListeners();
+      } on AnilistNotConnectedException {
+        /// TODO: Handle if not connected
+      }
     }
   }
 

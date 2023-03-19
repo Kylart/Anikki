@@ -13,7 +13,7 @@ mixin AnilistAuth on AnilistClient {
 
     final QueryResult result = await client.query(options);
 
-    if (result.data?['Viewer'] == null) throw AnilistNotConnectedException;
+    if (result.data?['Viewer'] == null) throw AnilistNotConnectedException();
 
     return AnilistUser.fromMap(result.data?['Viewer']);
   }

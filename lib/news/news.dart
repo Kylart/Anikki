@@ -79,21 +79,17 @@ class _NewsState extends State<News> {
               if (snapshot.error.runtimeType == AnilistGetScheduleException) {
                 final error = snapshot.error as AnilistGetScheduleException;
 
-                return Expanded(
-                  child: ListTile(
-                    tileColor: Theme.of(context).colorScheme.error,
-                    title: Text(error.cause),
-                    subtitle: Text(error.error ?? 'Something went wrong...'),
-                  ),
+                return ListTile(
+                  tileColor: Theme.of(context).colorScheme.errorContainer,
+                  title: Text(error.cause),
+                  subtitle: Text(error.error ?? 'Something went wrong...'),
                 );
               }
 
-              return Expanded(
-                child: ListTile(
-                  tileColor: Theme.of(context).colorScheme.error,
-                  title: const Text('Error'),
-                  subtitle: const Text('Something went wrong...'),
-                ),
+              return ListTile(
+                tileColor: Theme.of(context).colorScheme.errorContainer,
+                title: const Text('Error'),
+                subtitle: const Text('Something went wrong...'),
               );
             }
 

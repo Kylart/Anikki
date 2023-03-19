@@ -26,9 +26,11 @@ mixin AnilistInfo on AnilistClient {
 
       final QueryResult result = await _makeInfoQuery(tempNames);
 
-      if (result.data == null) {
+      if (result.exception != null || result.data == null) {
         throw AnilistGetInfoException(
-            error: result.exception?.graphqlErrors.first.message);
+            error: result.exception!.graphqlErrors.isEmpty
+              ? result.exception!.linkException.toString()
+              : result.exception!.graphqlErrors.first.message);
       } else {
         result.data?.forEach((key, value) {
           if (results.containsKey(key)) return;

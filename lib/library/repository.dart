@@ -39,21 +39,26 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   }
 
   final List<String> entryNames = [];
-  final Anilist anilist = Anilist();
 
-  for (final entry in results) {
-    final title = entry.title;
+  try {
+    final Anilist anilist = Anilist();
 
-    if (title != null && !entryNames.contains(title)) {
-      entryNames.add(title);
+    for (final entry in results) {
+      final title = entry.title;
+
+      if (title != null && !entryNames.contains(title)) {
+        entryNames.add(title);
+      }
     }
-  }
 
-  final info = await anilist.infoFromMultiple(entryNames);
+    final info = await anilist.infoFromMultiple(entryNames);
 
-  // Feeding medias to entries
-  for (final file in results) {
-    file.media = anilist.getInfoFromInfo(file.title!, info);
+    // Feeding medias to entries
+    for (final file in results) {
+      file.media = anilist.getInfoFromInfo(file.title!, info);
+    }
+  } on AnilistGetInfoException {
+    /// TODO: Handle if not information on not connected
   }
 
   // Ordering files using name and episode

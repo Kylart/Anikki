@@ -15,7 +15,7 @@ class LocalCard extends StatelessWidget {
     final coverImage = entry.media?.coverImage?.extraLarge ??
         entry.media?.coverImage?.large ??
         entry.media?.coverImage?.medium;
-    final title = entry.media?.title?.title() ?? 'N/A';
+    final title = entry.media?.title?.title() ?? entry.title ?? 'N/A';
 
     return EntryCard(
       coverImage: coverImage,
