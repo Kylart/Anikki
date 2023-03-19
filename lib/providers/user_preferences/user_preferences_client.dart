@@ -2,6 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class UserPreference with ChangeNotifier, DiagnosticableTreeMixin {
+  UserPreference () {
+    getPrefs();
+  }
+  
   late SharedPreferences prefs;
 
   abstract String key;

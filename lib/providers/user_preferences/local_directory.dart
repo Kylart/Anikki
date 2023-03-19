@@ -3,10 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:anikki/providers/user_preferences/user_preferences_client.dart';
 
 class LocalDirectory extends UserPreference {
-  LocalDirectory() {
-    getPrefs();
-  }
-
   @override
   void load() {
     path = prefs.getString(key) ?? '';

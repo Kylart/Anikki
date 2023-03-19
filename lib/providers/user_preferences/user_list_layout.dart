@@ -8,10 +8,6 @@ enum UserListLayouts {
 }
 
 class UserListLayout extends UserPreference {
-  UserListLayout() {
-    getPrefs();
-  }
-
   @override
   void load() {
     layout = prefs.getString(key) == 'list'

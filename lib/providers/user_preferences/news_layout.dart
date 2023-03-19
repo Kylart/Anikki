@@ -8,10 +8,6 @@ enum NewsLayouts {
 }
 
 class NewsLayout extends UserPreference {
-  NewsLayout() {
-    getPrefs();
-  }
-
   @override
   void load() {
     layout =
