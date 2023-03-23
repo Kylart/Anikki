@@ -26,7 +26,7 @@ mixin AnilistInfo on AnilistClient {
 
       final QueryResult result = await _makeInfoQuery(tempNames);
 
-      if (result.exception != null || result.data == null) {
+      if (result.data == null && result.exception != null) {
         throw AnilistGetInfoException(
             error: result.exception!.graphqlErrors.isEmpty
               ? result.exception!.linkException.toString()
