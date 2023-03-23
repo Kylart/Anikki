@@ -22,8 +22,8 @@ class UserListLayoutToggle extends StatelessWidget {
               index == 0 ? UserListLayouts.list : UserListLayouts.grid;
         },
         children: const [
-          AnikkiGlassIcon(icon: Icons.list),
-          AnikkiGlassIcon(icon: Icons.grid_view),
+          AnikkiIcon(icon: Icons.list),
+          AnikkiIcon(icon: Icons.grid_view),
         ],
       ),
     );

@@ -32,7 +32,7 @@ class UserListRefresh extends StatelessWidget {
             }
           }
         },
-        icon: const AnikkiGlassIcon(icon: Icons.refresh),
+        icon: const AnikkiIcon(icon: Icons.refresh),
       ),
     );
   }

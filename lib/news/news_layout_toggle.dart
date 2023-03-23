@@ -21,8 +21,8 @@ class NewsLayoutToggle extends StatelessWidget {
               index == 0 ? NewsLayouts.list : NewsLayouts.grid;
         },
         children: const [
-          AnikkiGlassIcon(icon: Icons.list),
-          AnikkiGlassIcon(icon: Icons.grid_view),
+          AnikkiIcon(icon: Icons.list),
+          AnikkiIcon(icon: Icons.grid_view),
         ],
       ),
     );

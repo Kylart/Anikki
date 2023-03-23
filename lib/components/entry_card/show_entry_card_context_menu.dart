@@ -88,8 +88,8 @@ void showEntryCardContextMenu({
                         Navigator.pop(context);
                         e.callback(context);
                       },
-                      title: Opacity(opacity: 0.7, child: Text(e.label)),
-                      leading: AnikkiGlassIcon(icon: e.icon),
+                      title: Text(e.label),
+                      leading: AnikkiIcon(icon: e.icon),
                     ),
                   )
                 : const PopupMenuDivider(

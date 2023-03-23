@@ -14,7 +14,7 @@ class SettingsButton extends StatelessWidget {
 
   final List<SettingsAction> actions;
 
-  static const icon = AnikkiGlassIcon(icon: Icons.settings);
+  static const icon = AnikkiIcon(icon: Icons.settings);
 
   @override
   Widget build(BuildContext context) {

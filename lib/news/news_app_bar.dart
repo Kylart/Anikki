@@ -94,7 +94,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
-              icon: const AnikkiGlassIcon(icon: Icons.calendar_month),
+              icon: const AnikkiIcon(icon: Icons.calendar_month),
               onPressed: () async {
                 final dateRange = await showDateRangePicker(
                   context: context,

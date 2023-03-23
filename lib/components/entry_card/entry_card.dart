@@ -146,7 +146,7 @@ class EntryCard extends StatelessWidget {
                           title: title,
                         );
                       },
-                      child: const AnikkiGlassIcon(
+                      child: const AnikkiIcon(
                         icon: Icons.more_vert,
                       ),
                     ),

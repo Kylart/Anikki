@@ -28,23 +28,23 @@ class AnikkiNavigationBar extends StatelessWidget {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: AnikkiGlassIcon(icon: Icons.new_releases_outlined),
+            icon: AnikkiIcon(icon: Icons.new_releases_outlined),
             label: 'News',
           ),
           BottomNavigationBarItem(
-            icon: AnikkiGlassIcon(icon: Icons.folder_outlined),
+            icon: AnikkiIcon(icon: Icons.folder_outlined),
             label: 'Local',
           ),
           BottomNavigationBarItem(
-            icon: AnikkiGlassIcon(icon: Icons.library_books_outlined),
+            icon: AnikkiIcon(icon: Icons.library_books_outlined),
             label: 'Watch List',
           ),
           BottomNavigationBarItem(
-            icon: AnikkiGlassIcon(icon: Icons.search_outlined),
+            icon: AnikkiIcon(icon: Icons.search_outlined),
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: AnikkiGlassIcon(icon: Icons.settings),
+            icon: AnikkiIcon(icon: Icons.settings),
             label: 'Settings',
           ),
         ],
