@@ -37,14 +37,14 @@ deleteFile(LocalFile entry, BuildContext context) {
             onPressed: () {
               entry.file.delete().then((value) {
                 context.read<LocalStore>().removeFile(entry);
-                navigator.pop(context);
+                navigator.pop();
               });
             },
-            child: const Text("Yes!"),
+            child: const Text('Yes!'),
           ),
           PlatformTextButton(
             onPressed: navigator.pop,
-            child: const Text("Nevermind"),
+            child: const Text('Nevermind'),
           ),
         ],
       );
