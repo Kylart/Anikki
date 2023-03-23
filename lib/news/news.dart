@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:anikki/components/error_tile.dart';
 import 'package:anikki/components/box_skeleton.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/news/news_app_bar.dart';
@@ -79,18 +80,13 @@ class _NewsState extends State<News> {
               if (snapshot.error.runtimeType == AnilistGetScheduleException) {
                 final error = snapshot.error as AnilistGetScheduleException;
 
-                return ListTile(
-                  tileColor: Theme.of(context).colorScheme.errorContainer,
-                  title: Text(error.cause),
-                  subtitle: Text(error.error ?? 'Something went wrong...'),
+                return ErrorTile(
+                  title: error.cause,
+                  description: error.error,
                 );
               }
 
-              return ListTile(
-                tileColor: Theme.of(context).colorScheme.errorContainer,
-                title: const Text('Error'),
-                subtitle: const Text('Something went wrong...'),
-              );
+              return const ErrorTile();
             }
 
             /// Fitlering over entries according to existing filters

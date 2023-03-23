@@ -4,7 +4,7 @@ import 'package:anilist/anilist.dart';
 import 'package:anitomy/anitomy.dart';
 import 'package:path/path.dart';
 
-import 'package:anikki/helpers/errors/library_empty_directory_exception.dart';
+import 'package:anikki/helpers/errors/library_directory_does_not_exist_exception.dart';
 import 'package:anikki/models/local_file.dart';
 
 Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
@@ -13,7 +13,7 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   final directory = Directory(path);
   final exists = await directory.exists();
 
-  if (!exists) throw LibraryEmptyDirectoryException();
+  if (!exists) throw LibraryDoesNotExistException();
 
   final fileStream = directory.list(recursive: false, followLinks: false);
   final files = await fileStream.toList();

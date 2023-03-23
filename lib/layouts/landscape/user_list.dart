@@ -40,12 +40,13 @@ class _UserListState extends State<UserList>
   Widget build(BuildContext context) {
     return LayoutCard(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           UserListAppBar(
             tabController: _tabController,
             tabs: tabs,
           ),
-          Expanded(
+          Flexible(
             child: TabBarView(
               controller: _tabController,
               children: const [

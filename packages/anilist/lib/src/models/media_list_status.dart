@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum AnilistMediaListStatus {
   current,
   planning,
@@ -44,3 +46,11 @@ extension AnilistMediaListStatusLDescription on AnilistMediaListStatus {
     }
   }
 }
+
+final List<Tab> anilistMediaListStatusTabs = AnilistMediaListStatus.values
+    .map(
+      (status) => Tab(
+        text: status.label,
+      ),
+    )
+    .toList();

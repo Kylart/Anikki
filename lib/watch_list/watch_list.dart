@@ -2,6 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/components/error_tile.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/watch_list/watch_list_layout.dart';
 
@@ -55,25 +56,15 @@ class _WatchListState extends State<WatchList>
         if (snapshot.hasError) {
           if (snapshot.error.runtimeType == AnilistGetListException) {
             final error = snapshot.error as AnilistGetListException;
-            return ListTile(
-              tileColor: Theme.of(context).colorScheme.error,
-              title: Text(error.cause),
-              subtitle: Text(error.error ?? 'Something went wrong...'),
+
+            return ErrorTile(
+              title: error.cause,
+              description: error.error,
             );
           }
-          return ListTile(
-            tileColor: Theme.of(context).colorScheme.error,
-            title: const Text('Error'),
-            subtitle: const Text('Something went wrong...'),
-          );
-        }
 
-        final watchList = context.watch<AnilistStore>().watchList;
-        final tabs = AnilistMediaListStatus.values.map((status) {
-          return Tab(
-            text: status.label,
-          );
-        }).toList();
+          return const ErrorTile();
+        }
 
         return Column(
           children: [
@@ -82,17 +73,21 @@ class _WatchListState extends State<WatchList>
               dividerColor: Colors.transparent,
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 1.0,
-              tabs: tabs,
+              tabs: anilistMediaListStatusTabs,
               controller: controller,
             ),
             Expanded(
               child: TabBarView(
                 controller: controller,
-                children: AnilistMediaListStatus.values.map((status) {
-                  final entries = watchList[status] ?? [];
-
-                  return WatchListLayout(entries: entries);
-                }).toList(),
+                children: AnilistMediaListStatus.values
+                    .map(
+                      (status) => WatchListLayout(
+                        entries:
+                            context.watch<AnilistStore>().watchList[status] ??
+                                [],
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ],

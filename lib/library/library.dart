@@ -1,10 +1,12 @@
-import 'package:anikki/helpers/errors/library_empty_directory_exception.dart';
-import 'package:anikki/providers/user_preferences/user_preferences.dart';
+import 'package:empty_widget/empty_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/providers/user_preferences/user_preferences.dart';
+import 'package:anikki/components/error_tile.dart';
+import 'package:anikki/helpers/errors/library_directory_does_not_exist_exception.dart';
 import 'package:anikki/library/library_layout.dart';
 import 'package:anikki/library/store.dart';
-import 'package:provider/provider.dart';
 
 class Library extends StatelessWidget {
   const Library({
@@ -25,27 +27,24 @@ class Library extends StatelessWidget {
         }
 
         if (snapshot.hasError) {
-          if (snapshot.error!.runtimeType == LibraryEmptyDirectoryException) {
-            final error = snapshot.error! as LibraryEmptyDirectoryException;
+          if (snapshot.error!.runtimeType == LibraryDoesNotExistException) {
+            final error = snapshot.error! as LibraryDoesNotExistException;
 
-            return ListTile(
-              tileColor: Theme.of(context).colorScheme.error,
-              title: Text(error.cause),
+            return ErrorTile(
+              title: error.cause,
             );
           }
-          return ListTile(
-            tileColor: Theme.of(context).colorScheme.error,
-            title: const Text('Error'),
-            subtitle: Text(snapshot.error!.toString()),
-          );
+
+          return const ErrorTile();
         }
 
-        final entries = snapshot.data;
-
-        if (entries!.isEmpty) {
-          return const ListTile(
-            title: Text('No File'),
-            subtitle: Text('Saddge'),
+        if (snapshot.data!.isEmpty) {
+          return Center(
+            child: EmptyWidget(
+              packageImage: PackageImage.Image_2,
+              title: 'No File',
+              subTitle: 'Could not find any video.',
+            ),
           );
         } else {
           return const LibraryLayout();
