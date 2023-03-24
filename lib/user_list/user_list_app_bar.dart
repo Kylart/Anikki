@@ -42,7 +42,7 @@ class _UserListAppBarState extends State<UserListAppBar> {
                 tabs: widget.tabs!,
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorWeight: 1.0,
-                splashBorderRadius: const BorderRadius.all(Radius.circular(50)),
+                splashBorderRadius: const BorderRadius.all(Radius.circular(40)),
                 controller: widget.tabController,
                 onTap: (value) => setState(() {
                   currentIndex = value;

@@ -73,6 +73,7 @@ class _WatchListState extends State<WatchList>
               dividerColor: Colors.transparent,
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 1.0,
+              splashBorderRadius: const BorderRadius.all(Radius.circular(40)),
               tabs: anilistMediaListStatusTabs,
               controller: controller,
             ),
