@@ -95,9 +95,8 @@ class _AnikkiState extends State<Anikki> {
       ),
       darkTheme: FlexThemeData.dark(
         scheme: FlexScheme.deepBlue,
-        surfaceMode: FlexSurfaceMode.highBackgroundLowScaffold,
+        surfaceMode: FlexSurfaceMode.highSurfaceLowScaffold,
         blendLevel: 15,
-        darkIsTrueBlack: true,
         swapColors: true,
         tooltipsMatchBackground: true,
         subThemesData: const FlexSubThemesData(
