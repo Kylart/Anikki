@@ -90,13 +90,13 @@ Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
 
   if (!store.isConnected) return;
 
-  if (entry.media != null && entry.media!.id != null) {
+  if (entry.media.id != null) {
     final episode = int.tryParse(entry.episode ?? '1') ?? 1;
 
     try {
       await store.provider.watchedEntry(
         episode: episode,
-        mediaId: entry.media!.id!,
+        mediaId: entry.media.id!,
       );
 
       scaffold.showSnackBar(
@@ -105,7 +105,7 @@ Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
           content: ListTile(
             title: const Text('Anilist list updated!'),
             subtitle: Text(
-                'Updated ${entry.media!.title?.title()} with episode $episode.'),
+                'Updated ${entry.media.title?.title()} with episode $episode.'),
           ),
         ),
       );

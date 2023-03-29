@@ -7,5 +7,5 @@ bool isFollowed(AnilistStore store, ScheduleEntry entry) {
       .map(
         (e) => e.media.id,
       )
-      .contains(entry.media?.id);
+      .contains(entry.media.id);
 }

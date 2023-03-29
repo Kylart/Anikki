@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:anilist/src/models/has_media.dart';
+import 'package:anilist/src/models/media/no_media.dart';
+
 import 'date.dart';
 import 'media/media.dart';
 import 'media_list_status.dart';
 
-class AnilistListEntry {
+class AnilistListEntry with HasAnilistMedia {
   int score;
   int? progress;
   AnilistMediaListStatus status;
@@ -13,7 +16,6 @@ class AnilistListEntry {
   bool private;
   AnilistDate startedAt;
   AnilistDate completedAt;
-  Media media;
 
   AnilistListEntry({
     this.progress,
@@ -24,8 +26,10 @@ class AnilistListEntry {
     required this.private,
     required this.startedAt,
     required this.completedAt,
-    required this.media,
-  });
+    Media media = noMedia,
+  }) {
+    this.media = media;
+  }
 
   AnilistListEntry copyWith({
     required int score,

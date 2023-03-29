@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import '../date.dart';
+import 'no_media.dart';
 import 'cover_image.dart';
 import 'next_airing_episode.dart';
 import 'relations.dart';
@@ -64,6 +65,8 @@ class Media {
     this.studios,
     this.relations,
   });
+
+  bool get isNoMedia => this == noMedia;
 
   @override
   String toString() {

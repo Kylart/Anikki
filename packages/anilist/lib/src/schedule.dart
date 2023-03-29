@@ -49,8 +49,8 @@ mixin AnilistAiringSchedule on AnilistClient {
     final List<ScheduleEntry> airingSchedules = rawEntries
         .map((e) => ScheduleEntry.fromMap(e))
         .where((element) =>
-            element.media?.countryOfOrigin == 'JP' &&
-            !(element.media?.isAdult ?? false))
+            element.media.countryOfOrigin == 'JP' &&
+            !(element.media.isAdult ?? false))
         .toList();
 
     final PageInfo pageInfo =

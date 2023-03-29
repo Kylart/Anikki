@@ -3,16 +3,24 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
+import 'has_media.dart';
 import 'media/media.dart';
+import 'media/no_media.dart';
 
 @immutable
-class ScheduleEntry {
+class ScheduleEntry with HasAnilistMedia {
   final int? id;
   final int? episode;
   final int? airingAt;
-  final Media? media;
 
-  const ScheduleEntry({this.id, this.episode, this.airingAt, this.media});
+  ScheduleEntry({
+    this.id,
+    this.episode,
+    this.airingAt,
+    Media media = noMedia,
+  }) {
+    this.media = media;
+  }
 
   @override
   String toString() {
@@ -23,16 +31,14 @@ class ScheduleEntry {
         id: data['id'] as int?,
         episode: data['episode'] as int?,
         airingAt: data['airingAt'] as int?,
-        media: data['media'] == null
-            ? null
-            : Media.fromMap(data['media'] as Map<String, dynamic>),
+        media: Media.fromMap(data['media'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toMap() => {
         'id': id,
         'episode': episode,
         'airingAt': airingAt,
-        'media': media?.toMap(),
+        'media': media.toMap(),
       };
 
   /// `dart:convert`

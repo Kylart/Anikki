@@ -8,7 +8,7 @@ import 'package:anikki/helpers/errors/library_directory_does_not_exist_exception
 import 'package:anikki/models/local_file.dart';
 
 Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
-  final List<LocalFile> results = [];
+  List<LocalFile> results = [];
 
   final directory = Directory(path);
   final exists = await directory.exists();
@@ -54,9 +54,13 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
     final info = await anilist.infoFromMultiple(entryNames);
 
     // Feeding medias to entries
-    for (final file in results) {
-      file.media = anilist.getInfoFromInfo(file.title!, info);
-    }
+    results = results
+        .map(
+          (e) => e.copyWith(
+            media: anilist.getInfoFromInfo(e.title!, info) ?? noMedia,
+          ),
+        )
+        .toList();
   } on AnilistGetInfoException {
     /// TODO: Handle if not information on not connected
   }

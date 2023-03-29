@@ -31,7 +31,7 @@ void _fromNews(BuildContext context, ScheduleEntry entry) {
             color: Theme.of(context).cardColor.withOpacity(0.85),
             child: DownloadResults(
               episode: entry.episode,
-              term: '${entry.media!.title!.title()} ${entry.episode ?? ''}',
+              term: '${entry.media.title!.title()} ${entry.episode ?? ''}',
             ),
           ),
         );
@@ -43,7 +43,7 @@ void _fromNews(BuildContext context, ScheduleEntry entry) {
         child: Card(
           child: DownloadResults(
             episode: entry.episode,
-            term: '${entry.media!.title!.title()} ${entry.episode ?? ''}',
+            term: '${entry.media.title!.title()} ${entry.episode ?? ''}',
           ),
         ),
         onClose: () async {},

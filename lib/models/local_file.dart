@@ -3,13 +3,12 @@ import 'dart:io';
 
 import 'package:anilist/anilist.dart';
 
-class LocalFile {
+class LocalFile with HasAnilistMedia {
   final String path;
   final File file;
   final String? title;
   final String? episode;
   final String? releaseGroup;
-  Media? media;
 
   LocalFile({
     required this.path,
@@ -17,8 +16,10 @@ class LocalFile {
     this.title,
     this.episode,
     this.releaseGroup,
-    this.media,
-  });
+    Media media = noMedia,
+  }) {
+    this.media = media;
+  }
 
   LocalFile copyWith({
     String? path,
@@ -45,7 +46,7 @@ class LocalFile {
       'title': title,
       'episode': episode,
       'releaseGroup': releaseGroup,
-      'media': media?.toMap(),
+      'media': media.toMap(),
     };
   }
 
@@ -56,7 +57,7 @@ class LocalFile {
       title: map['title'],
       episode: map['episode'],
       releaseGroup: map['releaseGroup'],
-      media: map['media'] != null ? Media.fromMap(map['media']) : null,
+      media: Media.fromMap(map['media']),
     );
   }
 
