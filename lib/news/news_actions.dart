@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anikki/watch_list/watch_list_actions.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/user_list/user_list_actions.dart';
 import 'package:anikki/components/entry_action.dart';
 
 List<EntryAction> getNewsActions({

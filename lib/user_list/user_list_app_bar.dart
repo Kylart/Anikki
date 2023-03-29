@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/models/user_list_enum.dart';
-import 'package:anikki/user_list/user_list_actions.dart';
+import 'package:anikki/library/repository.dart';
 import 'package:anikki/user_list/user_list_refresh.dart';
 import 'package:anikki/components/settings_button.dart';
 import 'package:anikki/models/settings_action.dart';

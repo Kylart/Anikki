@@ -1,9 +1,10 @@
+import 'package:anikki/watch_list/watch_list_edit.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/components/entry_action.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';
-import 'package:anikki/user_list/user_list_actions.dart';
 
 List<EntryAction> getWatchListActions(
     BuildContext context, AnilistListEntry entry) {
@@ -24,10 +25,21 @@ List<EntryAction> getWatchListActions(
     ),
     EntryAction(
       callback: (context) {
-        openMediaInBrowser(entry.media.siteUrl);
+        openInBrowser(entry.media.siteUrl);
       },
       icon: Icons.open_in_new_outlined,
       label: 'See on Anilist',
     ),
   ];
+}
+
+void showAnilistEdit(BuildContext context, AnilistListEntry entry) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return Dialog(
+        child: WatchListEdit(entry: entry),
+      );
+    },
+  );
 }

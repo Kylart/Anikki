@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
 import 'package:open_app_file/open_app_file.dart';
 
+import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/user_list/user_list_actions.dart';
 
 class DownloadResultsDialogListView extends StatelessWidget {
   const DownloadResultsDialogListView(
@@ -25,7 +25,7 @@ class DownloadResultsDialogListView extends StatelessWidget {
             if (isDesktop()) {
               await OpenAppFile.open(entry.magnet);
             } else {
-              openMediaInBrowser(entry.magnet);
+              openInBrowser(entry.magnet);
             }
           },
           leading: CircleAvatar(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/entry_action.dart';
+import 'package:anikki/helpers/open_in_browser.dart';
+import 'package:anikki/helpers/show_available_torrents.dart';
+import 'package:anikki/library/repository.dart';
 import 'package:anikki/models/local_file.dart';
-import 'package:anikki/user_list/user_list_actions.dart';
 
 List<EntryAction> getLibraryActions(BuildContext context, LocalFile entry) {
   return [
@@ -15,14 +17,14 @@ List<EntryAction> getLibraryActions(BuildContext context, LocalFile entry) {
     ),
     EntryAction(
       callback: (context) {
-        download<LocalFile>(context, entry);
+        showAvailableTorrents(context, entry);
       },
       icon: Icons.download_outlined,
       label: 'Show torrents',
     ),
     EntryAction(
       callback: (context) {
-        openMediaInBrowser(entry.media.siteUrl);
+        openInBrowser(entry.media.siteUrl);
       },
       icon: Icons.open_in_new_outlined,
       label: 'See on Anilist',
