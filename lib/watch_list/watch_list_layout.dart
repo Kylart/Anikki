@@ -2,10 +2,10 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
 import 'package:anikki/providers/user_preferences/user_list_layout.dart';
 import 'package:anikki/user_list/user_list_grid_delegate.dart';
-import 'package:anikki/watch_list/watch_list_list_view.dart';
 
 class WatchListLayout extends StatelessWidget {
   const WatchListLayout({super.key, required this.entries});
@@ -21,6 +21,17 @@ class WatchListLayout extends StatelessWidget {
             entries: entries,
             gridDelegate: userListGridDelegate,
           )
-        : WatchListListView(entries: entries);
+        : CustomListView(
+            entries: entries,
+            getSubtitle: (entry) {
+              return entry.status == AnilistMediaListStatus.current &&
+                      entry.progress != null
+                  ? Text('Currently at episode ${entry.progress!.toString()}')
+                  : (entry.status != AnilistMediaListStatus.current &&
+                          entry.notes != null)
+                      ? Text(entry.notes!)
+                      : const SizedBox();
+            },
+          );
   }
 }

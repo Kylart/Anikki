@@ -2,8 +2,8 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
-import 'package:anikki/news/news_list_view.dart';
 import 'package:anikki/providers/user_preferences/news_layout.dart' as prefs;
 import 'package:anikki/providers/user_preferences/news_layout.dart';
 
@@ -20,8 +20,13 @@ class NewsLayout extends StatelessWidget {
         ? CustomGridView<ScheduleEntry>(
             entries: entries,
           )
-        : NewsListView(
+        : CustomListView(
             entries: entries,
+            getSubtitle: (entry) {
+              return Text(
+                'Episode ${entry.episode}',
+              );
+            },
           );
   }
 }
