@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/anikki_glass_icon.dart';
-import 'package:anikki/components/entry_card/entry_card_action.dart';
+import 'package:anikki/components/entry_action.dart';
 
 void showEntryCardContextMenu({
   required Offset offset,
   required BuildContext context,
-  required List<EntryCardAction> actions,
+  required List<EntryAction> actions,
   required String title,
   String? episode,
 }) {
@@ -22,7 +22,7 @@ void showEntryCardContextMenu({
               title + (episode != null ? ' - Episode $episode' : ''),
             ),
             actions: actions
-                .where((action) => action.type == EntryCardActionType.action)
+                .where((action) => action.type == EntryActionType.action)
                 .map((action) => CupertinoActionSheetAction(
                       child: Row(
                         children: [
@@ -49,7 +49,7 @@ void showEntryCardContextMenu({
               physics: const NeverScrollableScrollPhysics(),
               children: actions
                   .map(
-                    (e) => e.type == EntryCardActionType.action
+                    (e) => e.type == EntryActionType.action
                         ? ListTile(
                             leading: Icon(e.icon),
                             title: Text(e.label),
@@ -80,7 +80,7 @@ void showEntryCardContextMenu({
       ),
       items: actions
           .map<PopupMenuEntry>(
-            (e) => (e.type == EntryCardActionType.action
+            (e) => (e.type == EntryActionType.action
                 ? PopupMenuItem(
                     child: ListTile(
                       hoverColor: Colors.transparent,

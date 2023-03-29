@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
-enum EntryCardActionType {
+enum EntryActionType {
   action,
   divider,
 }
 
-class EntryCardAction {
+class EntryAction {
   final void Function(BuildContext context) callback;
   final String label;
   final IconData icon;
-  final EntryCardActionType type;
+  final EntryActionType type;
 
-  EntryCardAction({
+  EntryAction({
     required this.callback,
     this.label = '',
-    this.type = EntryCardActionType.action,
+    this.type = EntryActionType.action,
     required this.icon,
   });
 }
 
-final entryCardDivider = EntryCardAction(
+final entryCardDivider = EntryAction(
   callback: (_) {},
   icon: Icons.question_mark,
-  type: EntryCardActionType.divider,
+  type: EntryActionType.divider,
 );
