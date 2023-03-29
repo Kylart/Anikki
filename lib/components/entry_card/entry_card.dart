@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/anikki_glass_icon.dart';
-import 'package:anikki/components/entry_card/show_entry_card_context_menu.dart';
+import 'package:anikki/helpers/show_entry_context_menu.dart';
 import 'package:anikki/components/entry_action.dart';
 import 'package:anikki/components/entry_card/entry_card_bookmark.dart';
 import 'package:anikki/components/entry_card/entry_card_completed.dart';
@@ -30,7 +30,7 @@ class EntryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => actions[0].callback(context),
       onSecondaryTapUp: (details) {
-        showEntryCardContextMenu(
+        showEntryContextMenu(
           offset: details.globalPosition,
           context: context,
           actions: actions,
@@ -38,7 +38,7 @@ class EntryCard extends StatelessWidget {
         );
       },
       onLongPressStart: (details) {
-        showEntryCardContextMenu(
+        showEntryContextMenu(
           offset: details.globalPosition,
           context: context,
           actions: actions,
@@ -139,7 +139,7 @@ class EntryCard extends StatelessWidget {
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
                       onTapUp: (details) {
-                        showEntryCardContextMenu(
+                        showEntryContextMenu(
                           offset: details.globalPosition,
                           context: context,
                           actions: actions,

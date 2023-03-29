@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:anikki/components/entry_action.dart';
 
-void showEntryCardContextMenu({
+void showEntryContextMenu({
   required Offset offset,
   required BuildContext context,
   required List<EntryAction> actions,

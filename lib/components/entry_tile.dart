@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/glass_circle.dart';
-import 'package:anikki/components/entry_card/show_entry_card_context_menu.dart';
+import 'package:anikki/helpers/show_entry_context_menu.dart';
 import 'package:anikki/library/library_actions.dart';
 import 'package:anikki/models/local_file.dart';
 import 'package:anikki/watch_list/watch_list_actions.dart';
@@ -26,6 +26,7 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? episode;
     List<EntryAction> actions = [];
 
     if (T == ScheduleEntry) {
@@ -34,11 +35,15 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
         entry: entry as ScheduleEntry,
         store: context.watch<AnilistStore>(),
       );
+
+      episode = (entry as ScheduleEntry).episode?.toString();
     } else if (T == LocalFile) {
       actions = getLibraryActions(
         context,
         entry as LocalFile,
       );
+
+      episode = (entry as LocalFile).episode?.toString();
     } else if (T == AnilistListEntry) {
       actions = getWatchListActions(
         context,
@@ -49,19 +54,21 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       onSecondaryTapUp: (details) {
-        showEntryCardContextMenu(
+        showEntryContextMenu(
           offset: details.globalPosition,
           context: context,
           actions: actions,
           title: entry.media.title?.title() ?? '',
+          episode: episode,
         );
       },
       onLongPressStart: (details) {
-        showEntryCardContextMenu(
+        showEntryContextMenu(
           offset: details.globalPosition,
           context: context,
           actions: actions,
           title: entry.media.title?.title() ?? '',
+          episode: episode,
         );
       },
       child: Container(
@@ -180,11 +187,12 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
                             onPressed: () {},
                             icon: GestureDetector(
                               onTapUp: (details) {
-                                showEntryCardContextMenu(
+                                showEntryContextMenu(
                                   offset: details.globalPosition,
                                   context: context,
                                   actions: actions,
                                   title: entry.media.title?.title() ?? '',
+                                  episode: episode,
                                 );
                               },
                               child: const AnikkiIcon(icon: Icons.more_horiz),
