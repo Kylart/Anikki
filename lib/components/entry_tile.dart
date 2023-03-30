@@ -89,7 +89,13 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
         child: ListTile(
           isThreeLine: true,
           contentPadding: const EdgeInsets.all(8.0),
-          title: Text(entry.media.title?.romaji ?? entry.media.title?.english),
+          title: T == LocalFile
+              ? Text((entry as LocalFile).title ??
+                  entry.media.title?.title() ??
+                  'N/A')
+              : Text(entry.media.title?.romaji ??
+                  entry.media.title?.english ??
+                  'N/A'),
           leading: CircleAvatar(
             backgroundImage: NetworkImage(
               entry.media.coverImage?.extraLarge ??
