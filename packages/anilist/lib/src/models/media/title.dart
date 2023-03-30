@@ -7,13 +7,13 @@ import 'package:flutter/foundation.dart';
 class Title {
   final String? userPreferred;
   final String? romaji;
-  final dynamic english;
+  final String? english;
   final String? native;
 
   const Title({this.userPreferred, this.romaji, this.english, this.native});
 
   String title() {
-    return romaji ?? english ?? native;
+    return romaji ?? english ?? native ?? 'N/A';
   }
 
   @override
@@ -24,7 +24,7 @@ class Title {
   factory Title.fromMap(Map<String, dynamic> data) => Title(
         userPreferred: data['userPreferred'] as String?,
         romaji: data['romaji'] as String?,
-        english: data['english'] as dynamic,
+        english: data['english'] as String?,
         native: data['native'] as String?,
       );
 
@@ -50,7 +50,7 @@ class Title {
   Title copyWith({
     String? userPreferred,
     String? romaji,
-    dynamic english,
+    String? english,
     String? native,
   }) {
     return Title(
