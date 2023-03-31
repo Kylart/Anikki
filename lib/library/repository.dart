@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:anilist/anilist.dart';
 import 'package:anitomy/anitomy.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -209,7 +209,7 @@ void _handleAnilistUpdateException(
 Future<void> updateFolderPath(BuildContext context) async {
   final localStore = context.read<LocalStore>();
   final preferences = context.read<LocalDirectory>();
-  String? path = await FilePicker.platform.getDirectoryPath();
+  String? path = await getDirectoryPath();
 
   if (path == null) return;
 

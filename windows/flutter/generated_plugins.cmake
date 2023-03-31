@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   dart_vlc
+  file_selector_windows
   flutter_acrylic
   protocol_handler
   screen_retriever
