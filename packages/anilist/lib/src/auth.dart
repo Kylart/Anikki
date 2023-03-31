@@ -1,20 +1,14 @@
 import 'package:anilist/src/anilist_client.dart';
 import 'package:anilist/src/exceptions/exceptions.dart';
-import 'package:anilist/src/models/anilist_user/anilist_user.dart';
-import 'package:anilist/src/queries/viewer.dart';
-
-import 'package:graphql/client.dart';
+import 'package:anilist/src/models/models.dart';
 
 mixin AnilistAuth on AnilistClient {
-  Future<AnilistUser> getMe() async {
-    final QueryOptions options = QueryOptions(
-      document: gql(viewerQuery),
-    );
+  Future<Query$Viewer$Viewer> getMe() async {
+    final result = await client.query$Viewer(Options$Query$Viewer());
 
-    final QueryResult result = await client.query(options);
+    if (result.hasException || result.parsedData?.Viewer == null)
+      throw AnilistNotConnectedException();
 
-    if (result.data?['Viewer'] == null) throw AnilistNotConnectedException();
-
-    return AnilistUser.fromMap(result.data?['Viewer']);
+    return result.parsedData!.Viewer!;
   }
 }

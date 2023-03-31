@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/components/entry_tile.dart';
+import 'package:anikki/library/library_actions.dart';
+import 'package:anikki/library/library_card.dart';
 import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
 import 'package:anikki/library/store.dart';
@@ -19,14 +22,25 @@ class LibraryLayout extends StatelessWidget {
         ? CustomGridView(
             entries: entries,
             gridDelegate: userListGridDelegate,
+            builder: (entry) => LibraryCard(entry: entry),
           )
         : CustomListView(
             entries: entries,
-            getSubtitle: (entry) {
-              return Text(
+            builder: (context, entry) => EntryTile(
+              entry: entry,
+              subtitle: Text(
                 'Episode ${entry.episode}',
-              );
-            },
+              ),
+              actions: getLibraryActions(context, entry),
+              title: entry.title ?? entry.media?.title?.userPreferred ?? 'N/A',
+              coverImage: entry.media?.coverImage?.extraLarge ??
+                  entry.media?.coverImage?.large ??
+                  entry.media?.coverImage?.medium,
+              bannerImage: entry.media?.bannerImage,
+              tags: entry.media?.genres
+                  ?.whereType<String>()
+                  .toList(),
+            ),
           );
   }
 }

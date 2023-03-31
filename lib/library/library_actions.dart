@@ -24,7 +24,7 @@ List<EntryAction> getLibraryActions(BuildContext context, LocalFile entry) {
     ),
     EntryAction(
       callback: (context) {
-        openInBrowser(entry.media.siteUrl);
+        openInBrowser(entry.media?.siteUrl);
       },
       icon: Icons.open_in_new_outlined,
       label: 'See on Anilist',

@@ -1,10 +1,4 @@
-import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
-
-import 'package:anikki/news/news_card.dart';
-import 'package:anikki/library/library_card.dart';
-import 'package:anikki/models/local_file.dart';
-import 'package:anikki/watch_list/watch_list_card.dart';
 
 class CustomGridView<T> extends StatelessWidget {
   final List<T> entries;
@@ -12,6 +6,7 @@ class CustomGridView<T> extends StatelessWidget {
   const CustomGridView({
     super.key,
     required this.entries,
+    required this.builder,
     this.gridDelegate = const SliverGridDelegateWithMaxCrossAxisExtent(
       maxCrossAxisExtent: 300,
       crossAxisSpacing: 8,
@@ -21,6 +16,7 @@ class CustomGridView<T> extends StatelessWidget {
   });
 
   final SliverGridDelegate gridDelegate;
+  final Widget Function(T entry) builder;
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +25,7 @@ class CustomGridView<T> extends StatelessWidget {
       itemCount: entries.length,
       gridDelegate: gridDelegate,
       itemBuilder: (context, index) {
-        final entry = entries[index];
-
-        if (T == ScheduleEntry) {
-          return NewsCard(entry: entry as ScheduleEntry);
-        }
-
-        if (T == LocalFile) {
-          return LocalCard(entry: entry as LocalFile);
-        }
-
-        if (T == AnilistListEntry) {
-          return WatchListCard(entry: entry as AnilistListEntry);
-        }
-
-        return const SizedBox();
+        return builder(entries[index]);
       },
     );
   }

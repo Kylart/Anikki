@@ -10,7 +10,7 @@ class StaffListView extends StatelessWidget {
     required this.outline,
   });
 
-  final List<Staff> data;
+  final List<Query$Search$staff$results> data;
   final Color outline;
 
   @override
@@ -37,7 +37,7 @@ class StaffListView extends StatelessWidget {
                     title: Text(item.name?.full ?? 'N/A'),
                     subtitle: item.primaryOccupations != null &&
                             item.primaryOccupations!.isNotEmpty
-                        ? Text(item.primaryOccupations![0])
+                        ? Text(item.primaryOccupations!.first ?? '')
                         : const Text(''),
                     onTap: () => openInBrowser(item.siteUrl),
                     leading: CircleAvatar(

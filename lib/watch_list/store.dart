@@ -4,39 +4,43 @@ import 'package:anikki/providers/anilist/anilist_client.dart';
 
 mixin WatchListStore on AnilistClient {
   bool shouldFetch = true;
-  Map<AnilistMediaListStatus, List<AnilistListEntry>> watchList = {
-    AnilistMediaListStatus.completed: [],
-    AnilistMediaListStatus.current: [],
-    AnilistMediaListStatus.dropped: [],
-    AnilistMediaListStatus.paused: [],
-    AnilistMediaListStatus.planning: [],
-    AnilistMediaListStatus.repeating: [],
+  Map<Enum$MediaListStatus,
+      List<Query$GetLists$MediaListCollection$lists$entries>> watchList = {
+    Enum$MediaListStatus.COMPLETED: [],
+    Enum$MediaListStatus.CURRENT: [],
+    Enum$MediaListStatus.DROPPED: [],
+    Enum$MediaListStatus.PAUSED: [],
+    Enum$MediaListStatus.PLANNING: [],
+    Enum$MediaListStatus.REPEATING: [],
   };
 
-  List<AnilistListEntry> get currentList =>
-      watchList[AnilistMediaListStatus.current]!;
-  List<AnilistListEntry> get completedList =>
-      watchList[AnilistMediaListStatus.completed]!;
-  List<AnilistListEntry> get droppedList =>
-      watchList[AnilistMediaListStatus.dropped]!;
-  List<AnilistListEntry> get pausedList =>
-      watchList[AnilistMediaListStatus.paused]!;
-  List<AnilistListEntry> get planningList =>
-      watchList[AnilistMediaListStatus.planning]!;
-  List<AnilistListEntry> get repeatingList =>
-      watchList[AnilistMediaListStatus.repeating]!;
+  List<Query$GetLists$MediaListCollection$lists$entries> get currentList =>
+      watchList[Enum$MediaListStatus.CURRENT]!;
+  List<Query$GetLists$MediaListCollection$lists$entries> get completedList =>
+      watchList[Enum$MediaListStatus.COMPLETED]!;
+  List<Query$GetLists$MediaListCollection$lists$entries> get droppedList =>
+      watchList[Enum$MediaListStatus.DROPPED]!;
+  List<Query$GetLists$MediaListCollection$lists$entries> get pausedList =>
+      watchList[Enum$MediaListStatus.PAUSED]!;
+  List<Query$GetLists$MediaListCollection$lists$entries> get planningList =>
+      watchList[Enum$MediaListStatus.PLANNING]!;
+  List<Query$GetLists$MediaListCollection$lists$entries> get repeatingList =>
+      watchList[Enum$MediaListStatus.REPEATING]!;
 
-  Future<Map<AnilistMediaListStatus, List<AnilistListEntry>>> getWatchLists() async {
+  Future<
+          Map<Enum$MediaListStatus,
+              List<Query$GetLists$MediaListCollection$lists$entries>>>
+      getWatchLists() async {
     if (isConnected && shouldFetch) {
-      watchList = await provider.getWatchLists(me!.name);
+      watchList = await provider.getWatchLists(me!.name, useCache: false);
       shouldFetch = false;
       notifyListeners();
     }
 
     return watchList;
   }
-  
-  Future<void> refreshWatchLists () async {
+
+  Future<void> refreshWatchLists() async {
     shouldFetch = true;
     await getWatchLists();
   }

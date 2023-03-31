@@ -9,6 +9,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 
+import 'package:anikki/providers/anilist/client.dart';
 import 'package:anikki/providers/user_preferences/local_directory.dart';
 import 'package:anikki/components/fade_overlay.dart';
 import 'package:anikki/components/video_player/desktop_player.dart';
@@ -23,7 +24,7 @@ import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 
 Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
-  List<LocalFile> results = [];
+  final List<LocalFile> results = [];
 
   final directory = Directory(path);
   final exists = await directory.exists();
@@ -56,7 +57,7 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   final List<String> entryNames = [];
 
   try {
-    final Anilist anilist = Anilist();
+    final Anilist anilist = Anilist(client: getAnilistClient());
 
     for (final entry in results) {
       final title = entry.title;
@@ -69,13 +70,9 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
     final info = await anilist.infoFromMultiple(entryNames);
 
     // Feeding medias to entries
-    results = results
-        .map(
-          (e) => e.copyWith(
-            media: anilist.getInfoFromInfo(e.title!, info) ?? noMedia,
-          ),
-        )
-        .toList();
+    for (final file in results) {
+      file.media = anilist.getInfoFromInfo(file.title!, info);
+    }
   } on AnilistGetInfoException {
     /// TODO: Handle if not information on not connected
   }
@@ -169,13 +166,13 @@ Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
 
   if (!store.isConnected) return;
 
-  if (entry.media.id != null) {
+  if (entry.media?.id != null) {
     final episode = int.tryParse(entry.episode ?? '1') ?? 1;
 
     try {
       await store.provider.watchedEntry(
         episode: episode,
-        mediaId: entry.media.id!,
+        mediaId: entry.media!.id,
       );
 
       scaffold.showSnackBar(
@@ -184,7 +181,7 @@ Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
           content: ListTile(
             title: const Text('Anilist list updated!'),
             subtitle: Text(
-                'Updated ${entry.media.title?.title()} with episode $episode.'),
+                'Updated ${entry.media?.title?.userPreferred} with episode $episode.'),
           ),
         ),
       );

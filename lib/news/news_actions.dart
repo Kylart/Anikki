@@ -13,7 +13,7 @@ import 'package:anikki/components/entry_action.dart';
 
 List<EntryAction> getNewsActions({
   required BuildContext context,
-  required ScheduleEntry entry,
+  required Query$AiringSchedule$Page$airingSchedules entry,
   required AnilistStore store,
 }) {
   return [
@@ -21,20 +21,16 @@ List<EntryAction> getNewsActions({
       label: 'Show torrents',
       icon: Icons.file_download_outlined,
       callback: (context) {
-        showAvailableTorrents<ScheduleEntry>(context, entry);
+        showAvailableTorrents(context, entry);
       },
     ),
     EntryAction(
       label: 'Show all torrents',
       icon: Icons.cloud_download_outlined,
       callback: (context) {
-        showAvailableTorrents<ScheduleEntry>(
+        showAvailableTorrents(
           context,
-          ScheduleEntry(
-            id: entry.id,
-            airingAt: entry.airingAt,
-            media: entry.media,
-          ),
+          entry.copyWith(episode: -1),
         );
       },
     ),
@@ -46,7 +42,7 @@ List<EntryAction> getNewsActions({
         callback: (context) {
           final anilistEntry = [...store.planningList, ...store.currentList]
               .where(
-                (element) => element.media.id == entry.media.id,
+                (element) => element.media?.id == entry.media?.id,
               )
               .first;
 
@@ -57,7 +53,7 @@ List<EntryAction> getNewsActions({
       label: 'See on Anilist',
       icon: Platform.isIOS ? CupertinoIcons.arrow_up_right : Icons.open_in_new,
       callback: (context) {
-        openInBrowser(entry.media.siteUrl);
+        openInBrowser(entry.media?.siteUrl);
       },
     ),
   ];

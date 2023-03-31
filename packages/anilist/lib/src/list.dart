@@ -1,9 +1,8 @@
+import 'package:graphql/client.dart';
+
 import 'package:anilist/src/anilist_client.dart';
 import 'package:anilist/src/exceptions/exceptions.dart';
 import 'package:anilist/src/models/models.dart';
-import 'package:anilist/src/queries/get_list.dart';
-import 'package:anilist/src/queries/update_list_entry.dart';
-import 'package:graphql/client.dart';
 
 mixin AnilistList on AnilistClient {
   /// This method only notifies Anilist that the entry with `mediaId` was watched
@@ -14,61 +13,53 @@ mixin AnilistList on AnilistClient {
   Future<void> watchedEntry(
       {required int episode, required int mediaId}) async {
     try {
-      final QueryOptions options = QueryOptions(
-        document: gql(updateListEntryQuery),
-        variables: <String, dynamic>{
-          'mediaId': mediaId,
-          'progress': episode,
-        },
+      await client.mutate$UpdateEntry(
+        Options$Mutation$UpdateEntry(
+          variables: Variables$Mutation$UpdateEntry(
+            mediaId: mediaId,
+            progress: episode,
+          ),
+        ),
       );
-
-      await client.query(options);
     } on GraphQLError catch (e) {
       throw AnilistUpdateListException(error: e.message);
     }
   }
 
-  Future<Map<AnilistMediaListStatus, List<AnilistListEntry>>> getWatchLists(
-      String username) async {
+  Future<
+          Map<Enum$MediaListStatus,
+              List<Query$GetLists$MediaListCollection$lists$entries>>>
+      getWatchLists(String username, {bool useCache = true}) async {
     try {
-      Map<AnilistMediaListStatus, List<AnilistListEntry>> watchList = {
-        AnilistMediaListStatus.completed: [],
-        AnilistMediaListStatus.current: [],
-        AnilistMediaListStatus.dropped: [],
-        AnilistMediaListStatus.paused: [],
-        AnilistMediaListStatus.planning: [],
-        AnilistMediaListStatus.repeating: [],
+      Map<Enum$MediaListStatus,
+          List<Query$GetLists$MediaListCollection$lists$entries>> watchList = {
+        Enum$MediaListStatus.COMPLETED: [],
+        Enum$MediaListStatus.CURRENT: [],
+        Enum$MediaListStatus.DROPPED: [],
+        Enum$MediaListStatus.PAUSED: [],
+        Enum$MediaListStatus.PLANNING: [],
+        Enum$MediaListStatus.REPEATING: [],
       };
 
-      final QueryOptions options = QueryOptions(
-        document: gql(getListQuery),
-        fetchPolicy: FetchPolicy.noCache,
-        variables: <String, dynamic>{
-          'username': username,
-        },
+      final result = await client.query$GetLists(
+        Options$Query$GetLists(
+            variables: Variables$Query$GetLists(username: username),
+            fetchPolicy: useCache ? null : FetchPolicy.noCache),
       );
 
-      final result = await client.query(options);
-
-      if (result.data == null) {
+      if (result.parsedData?.MediaListCollection?.lists == null) {
         throw result.exception?.graphqlErrors[0].message ??
             'Could not retrieve list';
       }
 
-      final List<dynamic> rawLists =
-          result.data?['MediaListCollection']['lists'];
+      for (final list in result.parsedData!.MediaListCollection!.lists!) {
+        final status = list?.entries?.first?.status;
+        if (status == null) continue;
 
-      for (final list in rawLists) {
-        final List<dynamic>? rawList = list['entries'];
-
-        if (rawList == null) continue;
-
-        final List<AnilistListEntry> mediaList =
-            rawList.map((entry) => AnilistListEntry.fromMap(entry)).toList();
-
-        final listStatus = mediaList[0].status;
-
-        watchList[listStatus] = mediaList;
+        watchList[status] = list?.entries
+                ?.whereType<Query$GetLists$MediaListCollection$lists$entries>()
+                .toList() ??
+            [];
       }
 
       return watchList;

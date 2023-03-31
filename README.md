@@ -31,13 +31,14 @@ git clone --recursive https://github.com/Kylart/Anikki
 ```bash
 cd path/to/anikki
 cp .env.example .env
-```
 
-If you are on MacOS, run
+# Generate Anilist types
+cd packages/anilist
+npm install && npm run gen:schema
+dart run build_runner build
 
-```bash
-cd path/to/anikki
-source ./scripts/build_bindings_macos.sh
+# (Optional) If you want to work on the Anilist types
+dart run build_runner watch
 ```
 
 This is for the building process to be able to find native dependencies and link them properly.

@@ -1,5 +1,6 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -32,6 +33,15 @@ class _NewsState extends State<News> {
   bool onlyFollowed = false;
   bool onlyUnseen = false;
 
+  int page = 1;
+
+  Variables$Query$AiringSchedule get variables =>
+      Variables$Query$AiringSchedule(
+        start: (dateRange.start.millisecondsSinceEpoch / 1000).round(),
+        end: (dateRange.end.millisecondsSinceEpoch / 1000).round(),
+        page: page,
+      );
+
   @override
   Widget build(BuildContext context) {
     final store = context.read<AnilistStore>();
@@ -53,10 +63,60 @@ class _NewsState extends State<News> {
             onlyUnseen = value;
           }),
         ),
-        FutureBuilder(
-          future: store.getNews(dateRange),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+        Query$AiringSchedule$Widget(
+          options: Options$Query$AiringSchedule(
+            variables: variables,
+          ),
+          builder: (result, {fetchMore, refetch}) {
+            final hasMore =
+                result.parsedData?.Page?.pageInfo?.hasNextPage ?? false;
+
+            if (!hasMore) {
+              page = 1;
+            }
+
+            if (hasMore && fetchMore != null) {
+              page++;
+              fetchMore(
+                FetchMoreOptions(
+                  variables: variables.toJson(),
+                  updateQuery: (previousResultData, fetchMoreResultData) {
+                    fetchMoreResultData?['Page']['airingSchedules'] = [
+                      ...previousResultData?['Page']['airingSchedules']
+                          as List<dynamic>,
+                      ...fetchMoreResultData['Page']['airingSchedules']
+                          as List<dynamic>,
+                    ];
+
+                    return fetchMoreResultData;
+                  },
+                ),
+              );
+            }
+
+            if (result.hasException) {
+              if (result.exception.runtimeType == AnilistGetScheduleException) {
+                final error = result.exception as AnilistGetScheduleException;
+
+                return ErrorTile(
+                  title: error.cause,
+                  description: error.error,
+                );
+              }
+
+              return const ErrorTile();
+            }
+
+            final entries = result.parsedData?.Page?.airingSchedules
+                    ?.whereType<Query$AiringSchedule$Page$airingSchedules>()
+                    .where((element) =>
+                        (element.media?.isAdult != null &&
+                            !element.media!.isAdult!) &&
+                        element.media?.countryOfOrigin == 'JP')
+                    .toList() ??
+                [];
+
+            if (result.isLoading && entries.isEmpty) {
               return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -76,38 +136,23 @@ class _NewsState extends State<News> {
               );
             }
 
-            if (snapshot.hasError) {
-              if (snapshot.error.runtimeType == AnilistGetScheduleException) {
-                final error = snapshot.error as AnilistGetScheduleException;
-
-                return ErrorTile(
-                  title: error.cause,
-                  description: error.error,
-                );
-              }
-
-              return const ErrorTile();
-            }
-
             /// Fitlering over entries according to existing filters
             final anilistStore = context.watch<AnilistStore>();
-            final data = snapshot.data!.where((entry) {
+            final filteredEnries = entries.where((entry) {
               bool included = true;
 
               if (anilistStore.isConnected && onlyFollowed) {
                 included = isFollowed(store, entry);
               }
 
-              if (anilistStore.isConnected &&
-                  onlyUnseen &&
-                  entry.episode != null) {
+              if (anilistStore.isConnected && onlyUnseen) {
                 included = isFollowed(store, entry) && !isSeen(store, entry);
               }
 
               return included;
             }).toList();
 
-            if (data.isEmpty) {
+            if (filteredEnries.isEmpty) {
               return const Expanded(
                 child: ListTile(
                   title: Text('No result'),
@@ -117,7 +162,7 @@ class _NewsState extends State<News> {
             }
 
             return Expanded(
-              child: NewsLayout(entries: data),
+              child: NewsLayout(entries: filteredEnries),
             );
           },
         ),

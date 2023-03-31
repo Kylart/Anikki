@@ -1,0 +1,7 @@
+node_modules/
+
+# Generated files
+schema.graphql
+**.graphql.dart
+**.graphql.dart
+**.graphql.dart

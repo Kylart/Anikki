@@ -1,3 +1,4 @@
+import 'package:anikki/helpers/capitalize.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class MediaListView extends StatelessWidget {
     required this.outline,
   });
 
-  final List<Media> data;
+  final List<Fragment$shortMedia> data;
   final Color outline;
 
   @override
@@ -34,9 +35,9 @@ class MediaListView extends StatelessWidget {
                   final item = data[index];
 
                   return ListTile(
-                    title: Text(item.title?.title() ?? 'N/A'),
+                    title: Text(item.title?.userPreferred ?? 'N/A'),
                     subtitle: item.format != null
-                        ? Text(item.format!)
+                        ? Text(item.format!.name.capitalize())
                         : const Text(''),
                     onTap: () => openInBrowser(item.siteUrl),
                     leading: CircleAvatar(

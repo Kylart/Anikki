@@ -24,18 +24,20 @@ class AnilistSearchView extends StatelessWidget {
 
         switch (part) {
           case AnilistSearchPart.staffs:
-            final List<Staff> data =
-                entries[part]!.map((e) => e as Staff).toList();
+            final List<Query$Search$staff$results> data = entries[part]!
+                .map((e) => e as Query$Search$staff$results)
+                .toList();
             return StaffListView(data: data, outline: outline);
 
           case AnilistSearchPart.characters:
-            final List<Character> data =
-                entries[part]!.map((e) => e as Character).toList();
+            final List<Query$Search$characters$results> data = entries[part]!
+                .map((e) => e as Query$Search$characters$results)
+                .toList();
             return CharacterListView(data: data, outline: outline);
 
           case AnilistSearchPart.animes:
-            final List<Media> data =
-                entries[part]!.map((e) => e as Media).toList();
+            final List<Fragment$shortMedia> data =
+                entries[part]!.map((e) => e as Fragment$shortMedia).toList();
             return MediaListView(data: data, outline: outline);
         }
       }).toList(),

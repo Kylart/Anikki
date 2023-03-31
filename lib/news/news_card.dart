@@ -13,14 +13,14 @@ import 'package:anikki/providers/anilist/anilist.dart';
 class NewsCard extends StatelessWidget {
   const NewsCard({super.key, required this.entry});
 
-  final ScheduleEntry entry;
+  final Query$AiringSchedule$Page$airingSchedules entry;
 
   @override
   Widget build(BuildContext context) {
-    final coverImage = entry.media.coverImage?.extraLarge ??
-        entry.media.coverImage?.large ??
-        entry.media.coverImage?.medium;
-    final title = entry.media.title?.title() ?? 'N/A';
+    final coverImage = entry.media?.coverImage?.extraLarge ??
+        entry.media?.coverImage?.large ??
+        entry.media?.coverImage?.medium;
+    final title = entry.media?.title?.userPreferred ?? 'N/A';
 
     final store = context.watch<AnilistStore>();
     bool showBookmark = false;
@@ -37,7 +37,7 @@ class NewsCard extends StatelessWidget {
 
     if (store.isConnected && store.completedList.isNotEmpty && !showDone) {
       showDone = store.completedList
-          .where((e) => e.media.title?.title() == title)
+          .where((e) => e.media?.title?.userPreferred == title)
           .toList()
           .isNotEmpty;
     }
@@ -47,7 +47,7 @@ class NewsCard extends StatelessWidget {
       showBookmark: showBookmark,
       showDone: showDone,
       title: title,
-      episode: entry.episode?.toString(),
+      episode: entry.episode.toString(),
       actions: getNewsActions(
         context: context,
         entry: entry,

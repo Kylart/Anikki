@@ -1,18 +1,16 @@
-import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/components/list_view_divider.dart';
-import 'package:anikki/components/entry_tile.dart';
 
-class CustomListView<T extends HasAnilistMedia> extends StatelessWidget {
+class CustomListView<T> extends StatelessWidget {
   const CustomListView({
     super.key,
     required this.entries,
-    required this.getSubtitle,
+    required this.builder,
   });
 
   final List<T> entries;
-  final Widget Function(T entry) getSubtitle;
+  final Widget Function(BuildContext context, T entry) builder;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +19,7 @@ class CustomListView<T extends HasAnilistMedia> extends StatelessWidget {
       itemCount: entries.length,
       separatorBuilder: (context, index) => const ListViewDivider(),
       itemBuilder: (context, index) {
-        final entry = entries[index];
-
-        return EntryTile(
-          entry: entry,
-          subtitle: getSubtitle(entry),
-        );
+        return builder(context, entries[index]);
       },
     );
   }

@@ -1,8 +1,8 @@
+import 'package:graphql/client.dart';
+
 import 'package:anilist/src/anilist_client.dart';
 import 'package:anilist/src/exceptions/exceptions.dart';
 import 'package:anilist/src/models/models.dart';
-import 'package:anilist/src/queries/search.dart';
-import 'package:graphql/client.dart';
 
 mixin AnilistSearch on AnilistClient {
   Future<Map<AnilistSearchPart, List<Object>>> search(String term) async {
@@ -13,50 +13,34 @@ mixin AnilistSearch on AnilistClient {
         AnilistSearchPart.animes: [],
       };
 
-      final QueryOptions options = QueryOptions(
-        document: gql(searchQuery),
-        variables: <String, dynamic>{
-          'search': term,
-        },
+      final query = await client.query$Search(
+        Options$Query$Search(
+          variables: Variables$Query$Search(
+            search: term,
+          ),
+        ),
       );
 
-      final query = await client.query(options);
-
-      if (query.data == null) {
+      if (query.parsedData == null) {
         throw query.exception?.graphqlErrors[0].message ??
             'Could not retrieve list';
       }
 
-      for (final part in AnilistSearchPart.values) {
-        switch (part) {
-          case AnilistSearchPart.animes:
-            if (query.data!['anime'] != null &&
-                (query.data!['anime']['results'] as List).isNotEmpty) {
-              for (final media in (query.data!['anime']['results'] as List)) {
-                result[AnilistSearchPart.animes]!.add(Media.fromMap(media));
-              }
-            }
-            break;
-          case AnilistSearchPart.staffs:
-            if (query.data!['staff'] != null &&
-                (query.data!['staff']['results'] as List).isNotEmpty) {
-              for (final staff in (query.data!['staff']['results'] as List)) {
-                result[AnilistSearchPart.staffs]!.add(Staff.fromMap(staff));
-              }
-            }
-            break;
-          case AnilistSearchPart.characters:
-            if (query.data!['characters'] != null &&
-                (query.data!['characters']['results'] as List).isNotEmpty) {
-              for (final character
-                  in (query.data!['characters']['results'] as List)) {
-                result[AnilistSearchPart.characters]!
-                    .add(Character.fromMap(character));
-              }
-            }
-            break;
-        }
-      }
+      result[AnilistSearchPart.animes] = query.parsedData?.anime?.results
+              ?.whereType<Fragment$shortMedia>()
+              .toList() ??
+          [];
+
+      result[AnilistSearchPart.characters] = query
+              .parsedData?.characters?.results
+              ?.whereType<Query$Search$characters$results>()
+              .toList() ??
+          [];
+
+      result[AnilistSearchPart.staffs] = query.parsedData?.staff?.results
+              ?.whereType<Query$Search$staff$results>()
+              .toList() ??
+          [];
 
       return result;
     } on GraphQLError catch (e) {

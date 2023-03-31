@@ -1,28 +1,12 @@
+import 'package:graphql/client.dart';
+
 import 'package:anilist/src/anilist_client.dart';
 import 'package:anilist/src/auth.dart';
 import 'package:anilist/src/info.dart';
 import 'package:anilist/src/list.dart';
-import 'package:anilist/src/schedule.dart';
 import 'package:anilist/src/search.dart';
 
 class Anilist extends AnilistClient
-    with
-        AnilistAuth,
-        AnilistAiringSchedule,
-        AnilistInfo,
-        AnilistList,
-        AnilistSearch {
-  Anilist({String? accessToken}) {
-    initClient(headers: getDefaultHeaders(accessToken: accessToken));
-    _accessToken = accessToken;
-  }
-
-  String? _accessToken;
-
-  String? get accessToken => _accessToken;
-
-  set accessToken(String? value) {
-    _accessToken = value;
-    initClient(headers: getDefaultHeaders(accessToken: value));
-  }
+    with AnilistAuth, AnilistInfo, AnilistList, AnilistSearch {
+  Anilist({required GraphQLClient client}) : super(client: client);
 }

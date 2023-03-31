@@ -106,9 +106,8 @@ mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
 
     if (accessToken == null) return;
 
-    anilistStore.setupClient(accessToken);
-
     prefsStore.token = accessToken;
+    anilistStore.login();
 
     if (mounted) await showConnectionDialog(context, true);
   }

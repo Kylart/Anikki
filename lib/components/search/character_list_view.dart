@@ -10,7 +10,7 @@ class CharacterListView extends StatelessWidget {
     required this.outline,
   });
 
-  final List<Character> data;
+  final List<Query$Search$characters$results> data;
   final Color outline;
 
   @override

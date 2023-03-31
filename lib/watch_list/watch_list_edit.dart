@@ -2,10 +2,12 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:anikki/helpers/capitalize.dart';
+
 class WatchListEdit extends StatefulWidget {
   const WatchListEdit({super.key, required this.entry});
 
-  final AnilistListEntry entry;
+  final Query$GetLists$MediaListCollection$lists$entries entry;
 
   @override
   State<WatchListEdit> createState() => _WatchListEditState();
@@ -16,17 +18,19 @@ class _WatchListEditState extends State<WatchListEdit> {
   Widget build(BuildContext context) {
     final entry = widget.entry;
 
-    AnilistMediaListStatus status = entry.status;
-    int score = entry.score;
-    int progress = entry.progress ?? 0;
-    int repeat = entry.repeat ?? 0;
-    AnilistDate startedAt = entry.startedAt;
-    AnilistDate completedAt = entry.completedAt;
-    String? notes = entry.notes;
+    var status = entry.status ?? Enum$MediaListStatus.CURRENT;
+    var score = entry.score;
+    var progress = entry.progress ?? 0;
+    var repeat = entry.repeat ?? 0;
+
+    final startedAtController = TextEditingController();
+    var startedAt = entry.startedAt;
+    var completedAt = entry.completedAt;
+    var notes = entry.notes;
 
     return Stack(
       children: [
-        if (entry.media.bannerImage != null)
+        if (entry.media?.bannerImage != null)
           ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(24),
@@ -34,7 +38,7 @@ class _WatchListEditState extends State<WatchListEdit> {
             ),
             child: Opacity(
               opacity: 0.7,
-              child: Image.network(entry.media.bannerImage),
+              child: Image.network(entry.media?.bannerImage ?? ''),
             ),
           ),
         Padding(
@@ -48,17 +52,18 @@ class _WatchListEditState extends State<WatchListEdit> {
                 crossAxisAlignment: WrapCrossAlignment.end,
                 alignment: WrapAlignment.start,
                 children: [
-                  if (entry.media.coverImage?.extraLarge != null ||
-                      entry.media.coverImage?.large != null)
+                  if (entry.media?.coverImage?.extraLarge != null ||
+                      entry.media?.coverImage?.large != null)
                     Image.network(
-                      entry.media.coverImage?.extraLarge ??
-                          entry.media.coverImage!.large!,
+                      entry.media?.coverImage?.extraLarge ??
+                          entry.media?.coverImage!.large ??
+                          '',
                       height: 300,
                     ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     child: Text(
-                      entry.media.title?.title() ?? 'N/A',
+                      entry.media?.title?.userPreferred ?? 'N/A',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
@@ -75,7 +80,7 @@ class _WatchListEditState extends State<WatchListEdit> {
                 ),
                 children: [
                   ListTile(
-                    title: DropdownButton<AnilistMediaListStatus>(
+                    title: DropdownButton<Enum$MediaListStatus>(
                       value: status,
                       isExpanded: true,
                       onChanged: (value) {
@@ -85,10 +90,12 @@ class _WatchListEditState extends State<WatchListEdit> {
                           status = value;
                         });
                       },
-                      items: AnilistMediaListStatus.values.map((status) {
+                      items: Enum$MediaListStatus.values
+                          .where((element) => element.name != '\$unknown')
+                          .map((status) {
                         return DropdownMenuItem(
                           value: status,
-                          child: Text(status.label),
+                          child: Text(status.name.toString().capitalize()),
                         );
                       }).toList(),
                     ),
@@ -106,7 +113,7 @@ class _WatchListEditState extends State<WatchListEdit> {
                         NumericalRangeFormatter(min: 0, max: 100),
                       ],
                       onChanged: (value) => setState(() {
-                        score = int.tryParse(value) ?? 0;
+                        score = double.tryParse(value) ?? 0;
                       }),
                     ),
                   ),
@@ -114,18 +121,18 @@ class _WatchListEditState extends State<WatchListEdit> {
                     title: TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Progress',
-                        hintText: entry.media.episodes != null
-                            ? 'Up to ${entry.media.episodes}'
+                        hintText: entry.media?.episodes != null
+                            ? 'Up to ${entry.media?.episodes}'
                             : null,
                       ),
                       initialValue: progress.toString(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
-                        if (entry.media.episodes != null)
+                        if (entry.media?.episodes != null)
                           NumericalRangeFormatter(
                             min: 0,
-                            max: entry.media.episodes!.toDouble(),
+                            max: entry.media!.episodes!.toDouble(),
                           ),
                       ],
                       onChanged: (value) => setState(() {
@@ -135,14 +142,18 @@ class _WatchListEditState extends State<WatchListEdit> {
                   ),
                   ListTile(
                     title: TextFormField(
+                      showCursor: false,
                       decoration: const InputDecoration(
                         labelText: 'Start Date',
                       ),
-                      initialValue: startedAt
-                          .toDateTime()
-                          ?.toString()
-                          .substring(0, 11),
+                      initialValue: startedAt == null
+                          ? 'No date set'
+                          : DateTime(startedAt.year!, startedAt.month!,
+                                  startedAt.day!)
+                              .toString()
+                              .substring(0, 10),
                       onTap: () async {
+                        FocusScope.of(context).requestFocus(FocusNode());
                         final date = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
@@ -153,7 +164,14 @@ class _WatchListEditState extends State<WatchListEdit> {
                         if (date == null) return;
 
                         setState(() {
-                          startedAt = AnilistDate.fromDateTime(date);
+                          startedAt =
+                              Query$GetLists$MediaListCollection$lists$entries$startedAt(
+                            day: date.day,
+                            month: date.month,
+                            year: date.month,
+                          );
+                          startedAtController.text =
+                              date.toString().substring(0, 10);
                         });
                       },
                     ),
@@ -163,10 +181,7 @@ class _WatchListEditState extends State<WatchListEdit> {
                       decoration: const InputDecoration(
                         labelText: 'Finish Date',
                       ),
-                      initialValue: completedAt
-                          .toDateTime()
-                          ?.toString()
-                          .substring(0, 11),
+                      initialValue: completedAt.toString(),
                       onTap: () async {
                         final date = await showDatePicker(
                           context: context,
@@ -180,7 +195,12 @@ class _WatchListEditState extends State<WatchListEdit> {
                         if (date == null) return;
 
                         setState(() {
-                          completedAt = AnilistDate.fromDateTime(date);
+                          completedAt =
+                              Query$GetLists$MediaListCollection$lists$entries$completedAt(
+                            day: date.day,
+                            month: date.month,
+                            year: date.month,
+                          );
                         });
                       },
                     ),

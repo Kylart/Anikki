@@ -7,12 +7,13 @@ import 'package:anikki/components/download_results_dialog/download_results.dart'
 import 'package:anikki/models/local_file.dart';
 
 void showAvailableTorrents<T>(BuildContext context, T entry) {
-  switch(T) {
-    case ScheduleEntry:
-      _fromNews(context, entry as ScheduleEntry);
+  switch (T) {
+    case Query$AiringSchedule$Page$airingSchedules:
+      _fromNews(context, entry as Query$AiringSchedule$Page$airingSchedules);
       break;
-    case AnilistListEntry:
-      _fromListEntry(context, entry as AnilistListEntry);
+    case Query$GetLists$MediaListCollection$lists$entries:
+      _fromListEntry(
+          context, entry as Query$GetLists$MediaListCollection$lists$entries);
       break;
     case LocalFile:
       _fromLibrary(context, entry as LocalFile);
@@ -20,7 +21,8 @@ void showAvailableTorrents<T>(BuildContext context, T entry) {
   }
 }
 
-void _fromNews(BuildContext context, ScheduleEntry entry) {
+void _fromNews(
+    BuildContext context, Query$AiringSchedule$Page$airingSchedules entry) {
   if (isDesktop()) {
     showDialog(
       context: context,
@@ -30,8 +32,9 @@ void _fromNews(BuildContext context, ScheduleEntry entry) {
           child: Card(
             color: Theme.of(context).cardColor.withOpacity(0.85),
             child: DownloadResults(
-              episode: entry.episode,
-              term: '${entry.media.title!.title()} ${entry.episode ?? ''}',
+              episode: entry.episode >= 0 ? entry.episode : null,
+              term:
+                  '${entry.media?.title?.userPreferred} ${entry.episode >= 0 ? entry.episode : ''}',
             ),
           ),
         );
@@ -42,8 +45,9 @@ void _fromNews(BuildContext context, ScheduleEntry entry) {
       FadeOverlay(
         child: Card(
           child: DownloadResults(
-            episode: entry.episode,
-            term: '${entry.media.title!.title()} ${entry.episode ?? ''}',
+            episode: entry.episode >= 0 ? entry.episode : null,
+            term:
+                '${entry.media?.title?.userPreferred} ${entry.episode >= 0 ? entry.episode : ''}',
           ),
         ),
         onClose: () async {},
@@ -52,19 +56,20 @@ void _fromNews(BuildContext context, ScheduleEntry entry) {
   }
 }
 
-void _fromListEntry(BuildContext context, AnilistListEntry entry) {
+void _fromListEntry(BuildContext context,
+    Query$GetLists$MediaListCollection$lists$entries entry) {
   if (isDesktop()) {
     showDialog(
       context: context,
       builder: (context) {
         return Dialog(
           child: DownloadResults(
-            episode: entry.status == AnilistMediaListStatus.current
+            episode: entry.status == Enum$MediaListStatus.CURRENT
                 ? entry.progress == null
                     ? null
                     : entry.progress! + 1
                 : null,
-            term: entry.media.title!.title(),
+            term: entry.media?.title?.userPreferred ?? '',
           ),
         );
       },
@@ -73,12 +78,12 @@ void _fromListEntry(BuildContext context, AnilistListEntry entry) {
     Navigator.of(context).push(
       FadeOverlay(
         child: DownloadResults(
-          episode: entry.status == AnilistMediaListStatus.current
+          episode: entry.status == Enum$MediaListStatus.CURRENT
               ? entry.progress == null
                   ? null
                   : entry.progress! + 1
               : null,
-          term: entry.media.title!.title(),
+          term: entry.media?.title?.userPreferred ?? '',
         ),
         onClose: () async {},
       ),

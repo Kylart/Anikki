@@ -2,6 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/helpers/capitalize.dart';
 import 'package:anikki/components/error_tile.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/watch_list/watch_list_layout.dart';
@@ -22,7 +23,7 @@ class _WatchListState extends State<WatchList>
     super.initState();
     controller = TabController(
       vsync: this,
-      length: AnilistMediaListStatus.values.length,
+      length: Enum$MediaListStatus.values.length - 1,
     );
   }
 
@@ -74,13 +75,21 @@ class _WatchListState extends State<WatchList>
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 1.0,
               splashBorderRadius: const BorderRadius.all(Radius.circular(40)),
-              tabs: anilistMediaListStatusTabs,
+              tabs: Enum$MediaListStatus.values
+                  .where((element) => element.name != '\$unknown')
+                  .map(
+                    (e) => Tab(
+                      text: e.name.capitalize(),
+                    ),
+                  )
+                  .toList(),
               controller: controller,
             ),
             Expanded(
               child: TabBarView(
                 controller: controller,
-                children: AnilistMediaListStatus.values
+                children: Enum$MediaListStatus.values
+                    .where((element) => element.name != '\$unknown')
                     .map(
                       (status) => WatchListLayout(
                         entries:

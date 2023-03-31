@@ -1,55 +1,35 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:anikki/components/glass_circle.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
-import 'package:anikki/library/library_actions.dart';
-import 'package:anikki/models/local_file.dart';
-import 'package:anikki/watch_list/watch_list_actions.dart';
 import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:anikki/components/entry_action.dart';
-import 'package:anikki/news/news_actions.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anilist/anilist.dart';
 
-class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
+class EntryTile<T> extends StatelessWidget {
   const EntryTile({
     super.key,
     required this.entry,
     required this.subtitle,
+    required this.actions,
+    this.title,
+    this.bannerImage,
+    this.coverImage,
+    this.tags,
   });
 
   final T entry;
   final Widget subtitle;
+  final List<EntryAction> actions;
+  final String? title;
+  final String? bannerImage;
+  final String? coverImage;
+  final List<String>? tags;
 
   @override
   Widget build(BuildContext context) {
     String? episode;
-    List<EntryAction> actions = [];
-
-    if (T == ScheduleEntry) {
-      actions = getNewsActions(
-        context: context,
-        entry: entry as ScheduleEntry,
-        store: context.watch<AnilistStore>(),
-      );
-
-      episode = (entry as ScheduleEntry).episode?.toString();
-    } else if (T == LocalFile) {
-      actions = getLibraryActions(
-        context,
-        entry as LocalFile,
-      );
-
-      episode = (entry as LocalFile).episode?.toString();
-    } else if (T == AnilistListEntry) {
-      actions = getWatchListActions(
-        context,
-        entry as AnilistListEntry,
-      );
-    }
 
     return GestureDetector(
       onTap: () {},
@@ -58,7 +38,7 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
           offset: details.globalPosition,
           context: context,
           actions: actions,
-          title: entry.media.title?.title() ?? '',
+          title: title ?? '',
           episode: episode,
         );
       },
@@ -67,17 +47,17 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
           offset: details.globalPosition,
           context: context,
           actions: actions,
-          title: entry.media.title?.title() ?? '',
+          title: title ?? '',
           episode: episode,
         );
       },
       child: Container(
         decoration: BoxDecoration(
-          image: entry.media.bannerImage != null
+          image: bannerImage != null
               ? DecorationImage(
                   opacity: 0.25,
                   fit: BoxFit.cover,
-                  image: NetworkImage(entry.media.bannerImage!),
+                  image: NetworkImage(bannerImage!),
                 )
               : const DecorationImage(
                   alignment: Alignment.topCenter,
@@ -89,21 +69,12 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
         child: ListTile(
           isThreeLine: true,
           contentPadding: const EdgeInsets.all(8.0),
-          title: T == LocalFile
-              ? Text((entry as LocalFile).title ??
-                  entry.media.title?.title() ??
-                  'N/A')
-              : Text(entry.media.title?.romaji ??
-                  entry.media.title?.english ??
-                  'N/A'),
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(
-              entry.media.coverImage?.extraLarge ??
-                  entry.media.coverImage?.large ??
-                  entry.media.coverImage?.medium ??
-                  '',
-            ),
-          ),
+          title: Text(title ?? 'N/A'),
+          leading: coverImage != null
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(coverImage!),
+                )
+              : const SizedBox(),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -111,12 +82,10 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: subtitle,
               ),
-              if (entry.media.genres != null)
+              if (tags != null)
                 Row(
-                  children: (entry.media.genres!.length > 1
-                          ? entry.media.genres!.sublist(0, 2)
-                          : entry.media.genres!)
-                      .map(
+                  children:
+                      (tags!.length > 1 ? tags!.sublist(0, 2) : tags!).map(
                     (genre) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
@@ -197,7 +166,7 @@ class EntryTile<T extends HasAnilistMedia> extends StatelessWidget {
                                   offset: details.globalPosition,
                                   context: context,
                                   actions: actions,
-                                  title: entry.media.title?.title() ?? '',
+                                  title: title ?? '',
                                   episode: episode,
                                 );
                               },
