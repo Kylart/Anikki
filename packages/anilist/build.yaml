@@ -5,5 +5,4 @@ targets:
         options:
           clients:
             - graphql
-            - graphql_flutter
           outputDirectory: ../models

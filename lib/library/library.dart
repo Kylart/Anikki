@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:empty_widget/empty_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,11 @@ class Library extends StatelessWidget {
               title: error.cause,
             );
           }
+
+          if ((Platform.isIOS || Platform.isMacOS) &&
+              snapshot.error!.runtimeType == FileSystemException) {
+                print('No access');
+              }
 
           return const ErrorTile();
         }

@@ -1,5 +1,5 @@
 import 'package:anilist/anilist.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:graphql/client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:anikki/helpers/mixins/loading.dart';

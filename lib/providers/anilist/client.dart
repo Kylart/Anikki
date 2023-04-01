@@ -1,4 +1,4 @@
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:graphql/client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 GraphQLClient getAnilistClient() {
@@ -11,9 +11,7 @@ GraphQLClient getAnilistClient() {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('user_preferences_anilistAccessToken');
 
-      return token == null
-        ? null
-        : 'Bearer $token';
+      return token == null ? null : 'Bearer $token';
     },
   );
 
@@ -22,6 +20,6 @@ GraphQLClient getAnilistClient() {
   return GraphQLClient(
     link: link,
     // The default store is the InMemoryStore, which does NOT persist to disk
-    cache: GraphQLCache(store: HiveStore()),
+    cache: GraphQLCache(),
   );
 }
