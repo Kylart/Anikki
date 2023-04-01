@@ -1,10 +1,12 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/bloc_observer.dart';
 import 'package:anikki/providers/anilist/client.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/layouts/landscape/layout.dart';
@@ -26,6 +28,8 @@ void main() async {
   await dotenv.load();
 
   Paint.enableDithering = true;
+
+  Bloc.observer = const Observer();
 
   await initHiveForFlutter();
   final anilistClient = getAnilistClient();

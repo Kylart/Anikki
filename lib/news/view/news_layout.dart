@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/entry_tile.dart';
-import 'package:anikki/news/news_actions.dart';
-import 'package:anikki/news/news_card.dart';
+import 'package:anikki/news/helpers/news_actions.dart';
+import 'package:anikki/news/widgets/news_card.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';

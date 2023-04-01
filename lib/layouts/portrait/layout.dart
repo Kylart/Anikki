@@ -37,7 +37,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
               });
             },
             children: [
-              const News(
+              const NewsPage(
                 showOutline: false,
               ),
               Column(

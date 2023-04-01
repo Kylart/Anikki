@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:anikki/watch_list/watch_list_actions.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/watch_list/watch_list_actions.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';

@@ -33,7 +33,9 @@ class LandscapeLayout extends StatelessWidget {
                 Flexible(
                   flex: 1,
                   child: LayoutCard(
-                    child: News(),
+                    child: NewsPage(
+                      showOutline: true,
+                    ),
                   ),
                 ),
               ],

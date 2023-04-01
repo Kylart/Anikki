@@ -1,10 +1,9 @@
-
 import 'package:anilist/anilist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:anikki/news/news_actions.dart';
+import 'package:anikki/news/helpers/news_actions.dart';
 import 'package:anikki/components/entry_card/entry_card.dart';
 import 'package:anikki/helpers/anilist/filters/is_followed.dart';
 import 'package:anikki/helpers/anilist/filters/is_seen.dart';

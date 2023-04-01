@@ -3,7 +3,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/anikki_glass_icon.dart';
-import 'package:anikki/news/news_layout_toggle.dart';
+import 'package:anikki/news/widgets/news_layout_toggle.dart';
 import 'package:anikki/components/settings_button.dart';
 import 'package:anikki/models/settings_action.dart';
 import 'package:anikki/providers/anilist/anilist.dart';
