@@ -1,3 +1,4 @@
+import 'package:anikki/helpers/capitalize.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -22,36 +23,20 @@ class _SettingsPageState extends State<SettingsPage> {
             /// Theme
             SettingsTile(
               leading: const Icon(Icons.format_paint),
-              title: const Text('Dark Theme'),
-              trailing: DropdownButton<ThemeMode>(
+              title: const Text('Theme'),
+              trailing: DropdownButton(
+                value: context.watch<AnikkiTheme>().theme,
+                items: ThemeMode.values
+                    .map((mode) => DropdownMenuItem(
+                          value: mode,
+                          child: Text(mode.name.capitalize()),
+                        ))
+                    .toList(),
                 onChanged: (value) {
-                  if (value != null) {
-                    context.read<AnikkiTheme>().theme = value;
-                  }
+                  if (value == null) return;
+
+                  context.read<AnikkiTheme>().theme = value;
                 },
-                items: const [
-                  DropdownMenuItem(
-                    value: ThemeMode.system,
-                    child: ListTile(
-                      leading: Icon(Icons.device_hub),
-                      title: Text('System'),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: ThemeMode.dark,
-                    child: ListTile(
-                      leading: Icon(Icons.dark_mode_outlined),
-                      title: Text('Dark'),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: ThemeMode.light,
-                    child: ListTile(
-                      leading: Icon(Icons.light_mode_outlined),
-                      title: Text('Light'),
-                    ),
-                  ),
-                ],
               ),
             ),
           ],
