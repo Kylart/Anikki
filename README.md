@@ -1,7 +1,12 @@
 # Anikki
 <p align="center">
-  <img src="assets/anikki.png" />
+  <img src="assets/anikki_desktop.png" />
 </p>
+<p align="center">
+  <img height="400" src="assets/anikki_ios.png" />
+  <img height="400" src="assets/anikki_android.png" />
+</p>
+
 
 > Anikki is currently being developped and many things are subject to change.
 
