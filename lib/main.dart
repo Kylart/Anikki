@@ -6,6 +6,7 @@ import 'package:graphql/client.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/bloc_observer.dart';
 import 'package:anikki/providers/anilist/client.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
@@ -139,14 +140,18 @@ class _AnikkiState extends State<Anikki> {
       ),
 
       themeMode: context.watch<AnikkiTheme>().theme,
-      home: Scaffold(
-        body: SafeArea(
-          child: LayoutBuilder(
-            builder: ((BuildContext context, BoxConstraints constraints) {
-              return constraints.maxWidth > 600
-                  ? const LandscapeLayout()
-                  : const PortraitLayout();
-            }),
+      home: BlocProvider(
+        create: (context) =>
+            AnilistAuthBloc()..add(AnilistAuthLoginRequested()),
+        child: Scaffold(
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: ((BuildContext context, BoxConstraints constraints) {
+                return constraints.maxWidth > 600
+                    ? const LandscapeLayout()
+                    : const PortraitLayout();
+              }),
+            ),
           ),
         ),
       ),

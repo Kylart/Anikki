@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget {
           const IgnorePointer(
             child: Opacity(
               opacity: 0.0,
-              child: AnilistAuthPage(),
+              child: AnilistAuthView(),
             ),
           ),
           const Spacer(),
@@ -59,7 +59,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          const AnilistAuthPage(),
+          const AnilistAuthView(),
         ],
       ),
     );
