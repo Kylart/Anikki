@@ -1,0 +1,1 @@
+export 'view/anilist_auth_page.dart';

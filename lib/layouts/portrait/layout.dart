@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/anilist_auth/view/anilist_auth_view.dart';
 import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/library/repository.dart';
-import 'package:anikki/components/anilist_auth/anilist_menu.dart';
 import 'package:anikki/components/search/search.dart';
 import 'package:anikki/components/settings/settings.dart';
 import 'package:anikki/library/library.dart';
@@ -68,7 +68,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
             ),
             FloatingActionButton(
               onPressed: () {},
-              child: const AnilistMenu(),
+              child: const AnilistAuthView(),
             ),
             null,
             null,

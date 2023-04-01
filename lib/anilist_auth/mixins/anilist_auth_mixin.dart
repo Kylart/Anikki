@@ -4,11 +4,10 @@ import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:anikki/components/anilist_auth/anilist_menu.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
-import 'package:anikki/components/anilist_auth/anilist_token.dart';
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/anilist_auth/view/anilist_auth_view.dart';
 
-mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
+mixin AnilistAuthMixin on State<AnilistAuthView>, ProtocolListener {
   final availableHosts = [
     'anilist-auth',
   ];
@@ -98,22 +97,20 @@ mixin AnilistAuth on State<AnilistMenu>, ProtocolListener {
   }
 
   Future<void> login(BuildContext context) async {
-    final anilistStore = context.read<AnilistStore>();
-    final prefsStore = context.read<AnilistToken>();
+    final authBloc = context.read<AnilistAuthBloc>();
 
     launchUrl(oauthUrl, mode: LaunchMode.externalApplication);
     await showConnectionDialog(context, false);
 
     if (accessToken == null) return;
 
-    prefsStore.token = accessToken;
-    anilistStore.login();
+    authBloc.add(AnilistAuthLoginRequested(token: accessToken));
 
     if (mounted) await showConnectionDialog(context, true);
   }
 
   Future<void> logout(BuildContext context) async {
-    context.read<AnilistStore>().logout();
+    context.read<AnilistAuthBloc>().add(AnilistAuthLogoutRequested());
     setState(() {
       accessToken = null;
     });

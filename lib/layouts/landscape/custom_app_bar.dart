@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/anilist_auth/anilist_menu.dart';
+import 'package:anikki/anilist_auth/anilist_auth.dart';
 import 'package:anikki/components/search/search.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget {
           const IgnorePointer(
             child: Opacity(
               opacity: 0.0,
-              child: AnilistMenu(),
+              child: AnilistAuthPage(),
             ),
           ),
           const Spacer(),
@@ -59,7 +59,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          const AnilistMenu(),
+          const AnilistAuthPage(),
         ],
       ),
     );
