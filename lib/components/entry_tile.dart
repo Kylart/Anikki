@@ -67,8 +67,9 @@ class EntryTile<T> extends StatelessWidget {
                 ),
         ),
         child: ListTile(
+          dense: true,
           isThreeLine: true,
-          contentPadding: const EdgeInsets.all(8.0),
+          contentPadding: const EdgeInsets.all(4.0),
           title: Text(title ?? 'N/A'),
           leading: coverImage != null
               ? CircleAvatar(
@@ -105,10 +106,13 @@ class EntryTile<T> extends StatelessWidget {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  vertical: 7.0,
-                                  horizontal: 14.0,
+                                  vertical: 4.0,
+                                  horizontal: 10.0,
                                 ),
-                                child: Text(genre.toString()),
+                                child: Text(
+                                  genre.toString(),
+                                  style: const TextStyle(fontSize: 12.0),
+                                ),
                               ),
                             ),
                           ),
@@ -121,62 +125,59 @@ class EntryTile<T> extends StatelessWidget {
           ),
           trailing: actions.isEmpty
               ? const SizedBox()
-              : SizedBox(
-                  width: 80,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Tooltip(
-                          message: actions.first.label,
-                          child: GlassCircle(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Theme.of(context).colorScheme.outline,
-                                ),
-                                shape: BoxShape.circle,
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Tooltip(
+                        message: actions.first.label,
+                        child: GlassCircle(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.outline,
                               ),
-                              child: IconButton(
-                                padding: const EdgeInsets.all(6.0),
-                                constraints: const BoxConstraints(),
-                                onPressed: () =>
-                                    actions.first.callback(context),
-                                icon: AnikkiIcon(icon: actions.first.icon),
-                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: IconButton(
+                              padding: const EdgeInsets.all(4.0),
+                              constraints: const BoxConstraints(),
+                              onPressed: () => actions.first.callback(context),
+                              icon: AnikkiIcon(icon: actions.first.icon),
                             ),
                           ),
                         ),
                       ),
-                      GlassCircle(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                            shape: BoxShape.circle,
+                    ),
+                    GlassCircle(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.outline,
                           ),
-                          child: IconButton(
-                            padding: const EdgeInsets.all(6.0),
-                            constraints: const BoxConstraints(),
-                            onPressed: () {},
-                            icon: GestureDetector(
-                              onTapUp: (details) {
-                                showEntryContextMenu(
-                                  offset: details.globalPosition,
-                                  context: context,
-                                  actions: actions,
-                                  title: title ?? '',
-                                  episode: episode,
-                                );
-                              },
-                              child: const AnikkiIcon(icon: Icons.more_horiz),
-                            ),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          padding: const EdgeInsets.all(4.0),
+                          constraints: const BoxConstraints(),
+                          onPressed: () {},
+                          icon: GestureDetector(
+                            onTapUp: (details) {
+                              showEntryContextMenu(
+                                offset: details.globalPosition,
+                                context: context,
+                                actions: actions,
+                                title: title ?? '',
+                                episode: episode,
+                              );
+                            },
+                            child: const AnikkiIcon(icon: Icons.more_horiz),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
         ),
       ),
