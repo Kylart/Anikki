@@ -11,7 +11,9 @@ GraphQLClient getAnilistClient() {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('user_preferences_anilistAccessToken');
 
-      return 'Bearer $token';
+      return token == null
+        ? null
+        : 'Bearer $token';
     },
   );
 
