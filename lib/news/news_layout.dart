@@ -43,6 +43,7 @@ class NewsLayout extends StatelessWidget {
                   entry.media?.coverImage?.medium,
               bannerImage: entry.media?.bannerImage,
               tags: entry.media?.genres?.whereType<String>().toList(),
+              episode: entry.episode.toString(),
             ),
           );
   }

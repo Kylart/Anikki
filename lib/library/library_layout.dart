@@ -40,6 +40,7 @@ class LibraryLayout extends StatelessWidget {
               tags: entry.media?.genres
                   ?.whereType<String>()
                   .toList(),
+              episode: entry.episode,
             ),
           );
   }

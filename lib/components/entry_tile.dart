@@ -17,6 +17,7 @@ class EntryTile<T> extends StatelessWidget {
     this.bannerImage,
     this.coverImage,
     this.tags,
+    this.episode,
   });
 
   final T entry;
@@ -26,11 +27,10 @@ class EntryTile<T> extends StatelessWidget {
   final String? bannerImage;
   final String? coverImage;
   final List<String>? tags;
+  final String? episode;
 
   @override
   Widget build(BuildContext context) {
-    String? episode;
-
     return GestureDetector(
       onTap: () {},
       onSecondaryTapUp: (details) {
@@ -133,46 +133,55 @@ class EntryTile<T> extends StatelessWidget {
                       child: Tooltip(
                         message: actions.first.label,
                         child: GlassCircle(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(context).colorScheme.outline,
+                          child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                                shape: BoxShape.circle,
                               ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: IconButton(
-                              padding: const EdgeInsets.all(4.0),
-                              constraints: const BoxConstraints(),
-                              onPressed: () => actions.first.callback(context),
-                              icon: AnikkiIcon(icon: actions.first.icon),
+                              child: IconButton(
+                                padding: const EdgeInsets.all(4.0),
+                                constraints: const BoxConstraints(),
+                                onPressed: () =>
+                                    actions.first.callback(context),
+                                icon: AnikkiIcon(icon: actions.first.icon),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
                     GlassCircle(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.outline,
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            shape: BoxShape.circle,
                           ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: IconButton(
-                          padding: const EdgeInsets.all(4.0),
-                          constraints: const BoxConstraints(),
-                          onPressed: () {},
-                          icon: GestureDetector(
-                            onTapUp: (details) {
-                              showEntryContextMenu(
-                                offset: details.globalPosition,
-                                context: context,
-                                actions: actions,
-                                title: title ?? '',
-                                episode: episode,
-                              );
-                            },
-                            child: const AnikkiIcon(icon: Icons.more_horiz),
+                          child: IconButton(
+                            // padding: const EdgeInsets.all(4.0),
+                            constraints: const BoxConstraints(),
+                            onPressed: () {},
+                            icon: GestureDetector(
+                              onTapUp: (details) {
+                                showEntryContextMenu(
+                                  offset: details.globalPosition,
+                                  context: context,
+                                  actions: actions,
+                                  title: title ?? '',
+                                  episode: episode,
+                                );
+                              },
+                              child: const AnikkiIcon(icon: Icons.more_horiz),
+                            ),
                           ),
                         ),
                       ),
