@@ -80,8 +80,7 @@ class _NewsViewState extends State<NewsView> {
                 final filteredEnries = entries.where((entry) {
                   bool included = true;
 
-                  if (isConnected &&
-                      lists.state.runtimeType == WatchListComplete) {
+                  if (isConnected && lists.state is WatchListComplete) {
                     final state = lists.state as WatchListComplete;
                     if (onlyFollowed) {
                       included = isFollowed(state, entry);

@@ -15,3 +15,5 @@ class WatchListRequested extends WatchListEvent {
   @override
   List<Object> get props => [username];
 }
+
+class WatchListReset extends WatchListEvent {}

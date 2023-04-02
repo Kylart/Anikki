@@ -140,17 +140,8 @@ class _AnikkiState extends State<Anikki> {
             AnilistAuthBloc()..add(AnilistAuthLoginRequested()),
         child: BlocProvider(
           create: (context) {
-            final auth = context.read<AnilistAuthBloc>();
-
-            if (auth.isConnected) {
-              return WatchListBloc()
-                ..add(
-                  WatchListRequested(
-                      username: (auth.state as AnilistAuthSuccess).me.name),
-                );
-            } else {
-              return WatchListBloc();
-            }
+            final authBloc = BlocProvider.of<AnilistAuthBloc>(context);
+            return WatchListBloc(authBloc);
           },
           child: Scaffold(
             body: SafeArea(

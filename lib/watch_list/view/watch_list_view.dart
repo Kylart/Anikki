@@ -2,7 +2,7 @@ import 'package:anikki/helpers/loader.dart';
 import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/helpers/capitalize.dart';
 import 'package:anikki/components/error_tile.dart';
@@ -36,7 +36,7 @@ class _WatchListViewState extends State<WatchListView>
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<WatchListBloc>().state;
+    final state = BlocProvider.of<WatchListBloc>(context).state;
 
     switch (state.runtimeType) {
       case WatchListInitial:

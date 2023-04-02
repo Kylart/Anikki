@@ -24,4 +24,7 @@ class AnilistAuthError extends AnilistAuthState {
   const AnilistAuthError(this.message);
 
   final String message;
+
+  @override
+  List<Object> get props => [message];
 }
