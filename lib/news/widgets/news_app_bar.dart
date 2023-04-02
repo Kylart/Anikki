@@ -1,8 +1,7 @@
+import 'package:anikki/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:anikki/news/widgets/news_layout_toggle.dart';
 import 'package:anikki/components/settings_button.dart';
@@ -29,14 +28,12 @@ class NewsAppBar extends StatefulWidget {
   State<NewsAppBar> createState() => _NewsAppBarState();
 }
 
-class _NewsAppBarState extends State<NewsAppBar> {
+class _NewsAppBarState extends State<NewsAppBar> with AnilistAuthIsConnectedMixin {
   bool showFollowed = false;
   bool showUnseen = false;
 
   @override
   Widget build(BuildContext context) {
-    final isConnected = BlocProvider.of<AnilistAuthBloc>(context).isConnected;
-
     List<SettingsAction> settings = [
       if (isConnected)
         SettingsAction(

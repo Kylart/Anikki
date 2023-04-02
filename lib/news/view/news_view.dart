@@ -1,10 +1,10 @@
-import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/helpers/loader.dart';
-import 'package:anikki/news/bloc/news_bloc.dart';
-import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/helpers/loader.dart';
+import 'package:anikki/news/bloc/news_bloc.dart';
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart';
 import 'package:anikki/components/error_tile.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/news/widgets/news_app_bar.dart';
@@ -22,7 +22,7 @@ class NewsView extends StatefulWidget {
   State<NewsView> createState() => _NewsViewState();
 }
 
-class _NewsViewState extends State<NewsView> {
+class _NewsViewState extends State<NewsView> with AnilistAuthIsConnectedMixin {
   DateTimeRange dateRange = NewsBloc.initalDateRange;
 
   /// Filters
@@ -73,9 +73,6 @@ class _NewsViewState extends State<NewsView> {
                     .toList();
 
                 /// Fitlering over entries according to existing filters
-                final auth = BlocProvider.of<AnilistAuthBloc>(context);
-                final isConnected = auth.isConnected;
-
                 final lists = BlocProvider.of<WatchListBloc>(context);
                 final filteredEnries = entries.where((entry) {
                   bool included = true;
