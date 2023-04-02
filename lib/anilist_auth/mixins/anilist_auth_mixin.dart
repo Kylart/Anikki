@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:protocol_handler/protocol_handler.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
@@ -97,7 +97,7 @@ mixin AnilistAuthMixin on State<AnilistAuthView>, ProtocolListener {
   }
 
   Future<void> login(BuildContext context) async {
-    final authBloc = context.read<AnilistAuthBloc>();
+    final authBloc = BlocProvider.of<AnilistAuthBloc>(context);
 
     launchUrl(oauthUrl, mode: LaunchMode.externalApplication);
     await showConnectionDialog(context, false);
@@ -110,7 +110,7 @@ mixin AnilistAuthMixin on State<AnilistAuthView>, ProtocolListener {
   }
 
   Future<void> logout(BuildContext context) async {
-    context.read<AnilistAuthBloc>().add(AnilistAuthLogoutRequested());
+    BlocProvider.of<AnilistAuthBloc>(context).add(AnilistAuthLogoutRequested());
     setState(() {
       accessToken = null;
     });
