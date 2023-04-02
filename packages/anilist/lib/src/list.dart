@@ -18,6 +18,7 @@ mixin AnilistList on AnilistClient {
           variables: Variables$Mutation$UpdateEntry(
             mediaId: mediaId,
             progress: episode,
+            status: Enum$MediaListStatus.CURRENT,
           ),
         ),
       );
