@@ -51,20 +51,12 @@ class _NewsCardState extends State<NewsCard> {
     final title = widget.entry.media?.title?.userPreferred ?? 'N/A';
 
     if (listsState != null) {
+      final followed = isFollowed(listsState!, widget.entry);
+      final seen = isSeen(listsState!, widget.entry);
+
       setState(() {
-        showBookmark = isFollowed(listsState!, widget.entry);
-
-        if (isSeen(listsState!, widget.entry)) {
-          showBookmark = false;
-          showDone = true;
-        }
-
-        if (listsState!.completed.isNotEmpty && !showDone) {
-          showDone = listsState!.completed
-              .where((e) => e.media?.title?.userPreferred == title)
-              .toList()
-              .isNotEmpty;
-        }
+        showBookmark = followed && !seen;
+        showDone = seen;
       });
     }
 
