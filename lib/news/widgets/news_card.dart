@@ -22,25 +22,16 @@ class _NewsCardState extends State<NewsCard> {
   bool showBookmark = false;
   bool showDone = false;
 
-  WatchListComplete? listsState;
+  void onWatchListComplete(WatchListState state) {
+    if (state is WatchListComplete) {
+      final followed = isFollowed(state, widget.entry);
+      final seen = isSeen(state, widget.entry);
 
-  @override
-  void initState() {
-    super.initState();
-
-    final watchListBloc = BlocProvider.of<WatchListBloc>(context);
-
-    watchListBloc.stream.listen((event) {
-      if (event is WatchListComplete) {
-        setState(() {
-          listsState = event;
-        });
-      } else {
-        setState(() {
-          listsState = null;
-        });
-      }
-    });
+      setState(() {
+        showBookmark = followed && !seen;
+        showDone = seen;
+      });
+    }
   }
 
   @override
@@ -50,15 +41,10 @@ class _NewsCardState extends State<NewsCard> {
         widget.entry.media?.coverImage?.medium;
     final title = widget.entry.media?.title?.userPreferred ?? 'N/A';
 
-    if (listsState != null) {
-      final followed = isFollowed(listsState!, widget.entry);
-      final seen = isSeen(listsState!, widget.entry);
+    final watchListBloc = BlocProvider.of<WatchListBloc>(context);
 
-      setState(() {
-        showBookmark = followed && !seen;
-        showDone = seen;
-      });
-    }
+    onWatchListComplete(watchListBloc.state);
+    watchListBloc.stream.listen(onWatchListComplete);
 
     return EntryCard(
       coverImage: coverImage,
