@@ -2,7 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/helpers/open_in_browser.dart';
-import 'package:anikki/watch_list/watch_list_edit.dart';
+import 'package:anikki/watch_list/widgets/watch_list_edit.dart';
 import 'package:anikki/components/entry_action.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';
 

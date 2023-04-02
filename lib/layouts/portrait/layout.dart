@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/watch_list/watch_list.dart';
 import 'package:anikki/anilist_auth/view/anilist_auth_view.dart';
 import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/library/repository.dart';
@@ -9,7 +10,6 @@ import 'package:anikki/library/library.dart';
 import 'package:anikki/models/user_list_enum.dart';
 import 'package:anikki/news/news.dart';
 import 'package:anikki/user_list/user_list_app_bar.dart';
-import 'package:anikki/watch_list/watch_list.dart';
 
 class PortraitLayout extends StatefulWidget {
   const PortraitLayout({
@@ -51,9 +51,9 @@ class _PortraitLayoutState extends State<PortraitLayout> {
               Column(
                 children: const [
                   UserListAppBar(
-                    userListType: UserListEnum.local,
+                    userListType: UserListEnum.watchList,
                   ),
-                  Expanded(child: WatchList()),
+                  Expanded(child: WatchListView()),
                 ],
               ),
               const Search(),

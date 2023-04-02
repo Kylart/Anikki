@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:anikki/helpers/logger.dart';
-import 'package:anikki/providers/anilist/client.dart';
+import 'package:anikki/helpers/anilist_client.dart';
 
 part 'anilist_auth_event.dart';
 part 'anilist_auth_state.dart';
@@ -13,6 +13,8 @@ class AnilistAuthBloc extends Bloc<AnilistAuthEvent, AnilistAuthState> {
   static const tokenKey = 'user_preferences_anilistAccessToken';
 
   final repository = Anilist(client: getAnilistClient());
+
+  bool get isConnected => state.runtimeType == AnilistAuthSuccess;
 
   AnilistAuthBloc() : super(AnilistAuthLoggedOut()) {
     on<AnilistAuthEvent>((event, emit) {

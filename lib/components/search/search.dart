@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
-import 'package:provider/provider.dart';
 
+import 'package:anikki/helpers/anilist_client.dart';
 import 'package:anikki/components/search/search_part.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -26,6 +26,8 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    final anilist = Anilist(client: getAnilistClient());
+
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.80,
       child: Column(
@@ -55,7 +57,7 @@ class _SearchState extends State<Search> {
             ),
           if (term != null && term!.isNotEmpty)
             SearchPart(
-              future: context.read<AnilistStore>().provider.search(term!),
+              future: anilist.search(term!),
               title: const ListTile(
                 title: Text('Anilist.co'),
               ),

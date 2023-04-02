@@ -1,11 +1,11 @@
 import 'package:anilist/anilist.dart';
 
-import 'package:anikki/providers/anilist/anilist.dart';
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 
 bool isSeen(
-    AnilistStore store, Query$AiringSchedule$Page$airingSchedules entry) {
-  final listEntry = store.currentList
-      .where((element) => element.media?.id == entry.media?.id);
+    WatchListComplete lists, Query$AiringSchedule$Page$airingSchedules entry) {
+  final listEntry =
+      lists.current.where((element) => element.media?.id == entry.media?.id);
 
   return listEntry.isNotEmpty &&
       (listEntry.first.progress ?? -1) >= entry.episode;

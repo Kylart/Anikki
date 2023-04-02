@@ -1,13 +1,14 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/news/helpers/news_actions.dart';
 import 'package:anikki/components/entry_card/entry_card.dart';
 import 'package:anikki/helpers/anilist/filters/is_followed.dart';
 import 'package:anikki/helpers/anilist/filters/is_seen.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({super.key, required this.entry});
@@ -21,24 +22,28 @@ class NewsCard extends StatelessWidget {
         entry.media?.coverImage?.medium;
     final title = entry.media?.title?.userPreferred ?? 'N/A';
 
-    final store = context.watch<AnilistStore>();
+    final isConnected = context.watch<AnilistAuthBloc>().isConnected;
+    final listsState = context.watch<WatchListBloc>().state;
+
     bool showBookmark = false;
     bool showDone = false;
 
-    if (store.isConnected) {
-      showBookmark = isFollowed(store, entry);
+    if (isConnected && listsState.runtimeType == WatchListComplete) {
+      final lists = listsState as WatchListComplete;
 
-      if (isSeen(store, entry)) {
+      showBookmark = isFollowed(lists, entry);
+
+      if (isSeen(lists, entry)) {
         showBookmark = false;
         showDone = true;
       }
-    }
 
-    if (store.isConnected && store.completedList.isNotEmpty && !showDone) {
-      showDone = store.completedList
-          .where((e) => e.media?.title?.userPreferred == title)
-          .toList()
-          .isNotEmpty;
+      if (lists.completed.isNotEmpty && !showDone) {
+        showDone = lists.completed
+            .where((e) => e.media?.title?.userPreferred == title)
+            .toList()
+            .isNotEmpty;
+      }
     }
 
     return EntryCard(
@@ -50,7 +55,6 @@ class NewsCard extends StatelessWidget {
       actions: getNewsActions(
         context: context,
         entry: entry,
-        store: store,
       ),
     );
   }

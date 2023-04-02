@@ -1,10 +1,11 @@
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/components/anikki_glass_icon.dart';
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/library/store.dart';
 import 'package:anikki/models/user_list_enum.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 
 class UserListRefresh extends StatelessWidget {
   const UserListRefresh({
@@ -20,11 +21,16 @@ class UserListRefresh extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: IconButton(
         onPressed: () {
-          final anilistStore = context.read<AnilistStore>();
+          final auth = BlocProvider.of<AnilistAuthBloc>(context);
           final localStore = context.read<LocalStore>();
 
           if (type == UserListEnum.watchList) {
-            anilistStore.refreshWatchLists();
+            if (auth.isConnected) {
+              context.read<WatchListBloc>().add(
+                    WatchListRequested(
+                        username: (auth.state as AnilistAuthSuccess).me.name),
+                  );
+            }
           } else {
             if (localStore.lastPath != null) {
               localStore.files = [];

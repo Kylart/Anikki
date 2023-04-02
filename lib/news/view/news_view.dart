@@ -1,14 +1,14 @@
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/helpers/loader.dart';
 import 'package:anikki/news/bloc/news_bloc.dart';
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 import 'package:anikki/components/error_tile.dart';
-import 'package:anikki/components/box_skeleton.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/news/widgets/news_app_bar.dart';
 import 'package:anikki/news/view/news_layout.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 
 class NewsView extends StatefulWidget {
   const NewsView({
@@ -39,7 +39,8 @@ class _NewsViewState extends State<NewsView> {
           onDateChange: (DateTimeRange range) {
             setState(() {
               dateRange = range;
-              context.read<NewsBloc>().add(NewsRequested(range: range));
+              BlocProvider.of<NewsBloc>(context)
+                  .add(NewsRequested(range: range));
             });
           },
           onOnlyFollowedChanged: (value) => setState(() {
@@ -53,23 +54,7 @@ class _NewsViewState extends State<NewsView> {
           builder: (context, state) {
             switch (state.runtimeType) {
               case NewsLoading:
-                return Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        int timer = 1000;
-
-                        return Shimmer.fromColors(
-                          baseColor: Colors.grey.shade500,
-                          highlightColor: Colors.white38,
-                          period: Duration(milliseconds: timer),
-                          child: skeletonBox(),
-                        );
-                      },
-                    ),
-                  ),
-                );
+                return const Expanded(child: Loader());
 
               case NewsError:
                 final message = (state as NewsError).message;
@@ -88,17 +73,24 @@ class _NewsViewState extends State<NewsView> {
                     .toList();
 
                 /// Fitlering over entries according to existing filters
-                final anilistStore = context.watch<AnilistStore>();
+                final auth = BlocProvider.of<AnilistAuthBloc>(context);
+                final isConnected = auth.isConnected;
+
+                final lists = BlocProvider.of<WatchListBloc>(context);
                 final filteredEnries = entries.where((entry) {
                   bool included = true;
 
-                  if (anilistStore.isConnected && onlyFollowed) {
-                    included = isFollowed(anilistStore, entry);
-                  }
+                  if (isConnected &&
+                      lists.state.runtimeType == WatchListComplete) {
+                    final state = lists.state as WatchListComplete;
+                    if (onlyFollowed) {
+                      included = isFollowed(state, entry);
+                    }
 
-                  if (anilistStore.isConnected && onlyUnseen) {
-                    included = isFollowed(anilistStore, entry) &&
-                        !isSeen(anilistStore, entry);
+                    if (onlyUnseen) {
+                      included =
+                          isFollowed(state, entry) && !isSeen(state, entry);
+                    }
                   }
 
                   return included;

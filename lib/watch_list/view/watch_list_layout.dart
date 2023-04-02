@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:anikki/components/entry_tile.dart';
-import 'package:anikki/watch_list/watch_list_actions.dart';
-import 'package:anikki/watch_list/watch_list_card.dart';
+import 'package:anikki/watch_list/helpers/watch_list_actions.dart';
+import 'package:anikki/watch_list/widgets/watch_list_card.dart';
 import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
 import 'package:anikki/providers/user_preferences/user_list_layout.dart';

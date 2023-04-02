@@ -1,9 +1,9 @@
-import 'package:anikki/layouts/landscape/layout_card.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/library/library.dart';
-import 'package:anikki/user_list/user_list_app_bar.dart';
 import 'package:anikki/watch_list/watch_list.dart';
+import 'package:anikki/library/library.dart';
+import 'package:anikki/layouts/landscape/layout_card.dart';
+import 'package:anikki/user_list/user_list_app_bar.dart';
 
 class UserList extends StatefulWidget {
   const UserList({
@@ -51,7 +51,7 @@ class _UserListState extends State<UserList>
               controller: _tabController,
               children: const [
                 Library(),
-                WatchList(),
+                WatchListView(),
               ],
             ),
           ),

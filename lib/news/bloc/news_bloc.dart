@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/helpers/logger.dart';
-import 'package:anikki/providers/anilist/client.dart';
+import 'package:anikki/helpers/anilist_client.dart';
 
 part 'news_event.dart';
 part 'news_state.dart';

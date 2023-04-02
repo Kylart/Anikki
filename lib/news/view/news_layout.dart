@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:anikki/components/entry_tile.dart';
 import 'package:anikki/news/helpers/news_actions.dart';
 import 'package:anikki/news/widgets/news_card.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
 import 'package:anikki/providers/user_preferences/news_layout.dart' as prefs;
@@ -35,7 +34,6 @@ class NewsLayout extends StatelessWidget {
               actions: getNewsActions(
                 context: context,
                 entry: entry,
-                store: context.watch<AnilistStore>(),
               ),
               title: entry.media?.title?.userPreferred,
               coverImage: entry.media?.coverImage?.extraLarge ??

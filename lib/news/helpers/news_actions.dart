@@ -1,21 +1,25 @@
 import 'dart:io';
 
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/watch_list/watch_list_actions.dart';
+import 'package:anikki/watch_list/helpers/watch_list_actions.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/components/entry_action.dart';
 
 List<EntryAction> getNewsActions({
   required BuildContext context,
   required Query$AiringSchedule$Page$airingSchedules entry,
-  required AnilistStore store,
 }) {
+  final isConnected = BlocProvider.of<AnilistAuthBloc>(context).isConnected;
+  final listsState = BlocProvider.of<WatchListBloc>(context).state;
+
   return [
     EntryAction(
       label: 'Show torrents',
@@ -35,12 +39,15 @@ List<EntryAction> getNewsActions({
       },
     ),
     entryCardDivider,
-    if (store.isConnected && isFollowed(store, entry))
+    if (isConnected &&
+        listsState.runtimeType == WatchListComplete &&
+        isFollowed(listsState as WatchListComplete, entry))
       EntryAction(
         label: 'Edit watch list entry',
         icon: CupertinoIcons.pencil,
         callback: (context) {
-          final anilistEntry = [...store.planningList, ...store.currentList]
+          final lists = listsState;
+          final anilistEntry = [...lists.planning, ...lists.current]
               .where(
                 (element) => element.media?.id == entry.media?.id,
               )

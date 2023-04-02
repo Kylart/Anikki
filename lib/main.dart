@@ -6,14 +6,14 @@ import 'package:graphql/client.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/bloc_observer.dart';
-import 'package:anikki/providers/anilist/client.dart';
+import 'package:anikki/helpers/anilist_client.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/layouts/landscape/layout.dart';
 import 'package:anikki/layouts/portrait/layout.dart';
 import 'package:anikki/library/store.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:anikki/providers/user_preferences/user_preferences.dart';
 
 void main() async {
@@ -39,11 +39,6 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LocalStore()),
-        ChangeNotifierProvider(
-          create: (_) => AnilistStore(
-            client: anilistClient,
-          ),
-        ),
 
         //// User Preferences
         ChangeNotifierProvider(create: (_) => LocalDirectory()),
@@ -143,14 +138,29 @@ class _AnikkiState extends State<Anikki> {
       home: BlocProvider(
         create: (context) =>
             AnilistAuthBloc()..add(AnilistAuthLoginRequested()),
-        child: Scaffold(
-          body: SafeArea(
-            child: LayoutBuilder(
-              builder: ((BuildContext context, BoxConstraints constraints) {
-                return constraints.maxWidth > 600
-                    ? const LandscapeLayout()
-                    : const PortraitLayout();
-              }),
+        child: BlocProvider(
+          create: (context) {
+            final auth = context.read<AnilistAuthBloc>();
+
+            if (auth.isConnected) {
+              return WatchListBloc()
+                ..add(
+                  WatchListRequested(
+                      username: (auth.state as AnilistAuthSuccess).me.name),
+                );
+            } else {
+              return WatchListBloc();
+            }
+          },
+          child: Scaffold(
+            body: SafeArea(
+              child: LayoutBuilder(
+                builder: ((BuildContext context, BoxConstraints constraints) {
+                  return constraints.maxWidth > 600
+                      ? const LandscapeLayout()
+                      : const PortraitLayout();
+                }),
+              ),
             ),
           ),
         ),

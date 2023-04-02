@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:provider/provider.dart';
 
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:anikki/news/widgets/news_layout_toggle.dart';
 import 'package:anikki/components/settings_button.dart';
 import 'package:anikki/models/settings_action.dart';
-import 'package:anikki/providers/anilist/anilist.dart';
 
 class NewsAppBar extends StatefulWidget {
   const NewsAppBar(
@@ -35,10 +35,10 @@ class _NewsAppBarState extends State<NewsAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    final anilistStore = context.watch<AnilistStore>();
+    final isConnected = BlocProvider.of<AnilistAuthBloc>(context).isConnected;
 
     List<SettingsAction> settings = [
-      if (anilistStore.isConnected)
+      if (isConnected)
         SettingsAction(
           callback: () {},
           label: 'Only followed entries',
@@ -58,7 +58,7 @@ class _NewsAppBarState extends State<NewsAppBar> {
             },
           ),
         ),
-      if (anilistStore.isConnected)
+      if (isConnected)
         SettingsAction(
           callback: () {},
           label: 'Only unseen entries',
@@ -100,7 +100,9 @@ class _NewsAppBarState extends State<NewsAppBar> {
                   context: context,
                   initialDateRange: widget.initialRange,
                   firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                  lastDate: DateTime.now().add(const Duration(days: 7)),
+                  lastDate: DateTime.now()
+                      .add(const Duration(days: 7))
+                      .copyWith(hour: 23, minute: 59, second: 59),
                 );
 
                 if (dateRange == null) return;

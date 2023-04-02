@@ -1,11 +1,11 @@
 import 'package:anilist/anilist.dart';
-
-import 'package:anikki/providers/anilist/anilist.dart';
 import 'package:collection/collection.dart';
 
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
+
 bool isFollowed(
-    AnilistStore store, Query$AiringSchedule$Page$airingSchedules entry) {
-  return [...store.planningList, ...store.currentList]
+    WatchListComplete lists, Query$AiringSchedule$Page$airingSchedules entry) {
+  return [...lists.planning, ...lists.current]
       .whereNot((e) => e.media == null)
       .map(
         (e) => e.media!.id,
