@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/library/bloc/library_bloc.dart';
 import 'package:anikki/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart';
 import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/library/store.dart';
 import 'package:anikki/models/user_list_enum.dart';
 
 class UserListRefresh extends StatefulWidget {
@@ -27,8 +27,6 @@ class _UserListRefreshState extends State<UserListRefresh>
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: IconButton(
         onPressed: () {
-          final localStore = context.read<LocalStore>();
-
           if (widget.type == UserListEnum.watchList) {
             if (isConnected) {
               BlocProvider.of<WatchListBloc>(context).add(
@@ -36,10 +34,9 @@ class _UserListRefreshState extends State<UserListRefresh>
               );
             }
           } else {
-            if (localStore.lastPath != null) {
-              localStore.files = [];
-              localStore.getFiles(localStore.lastPath!);
-            }
+            final libraryBloc = BlocProvider.of<LibraryBloc>(context);
+            libraryBloc
+                .add(LibraryUpdateRequested(path: libraryBloc.state.path));
           }
         },
         icon: const AnikkiIcon(icon: Icons.refresh),

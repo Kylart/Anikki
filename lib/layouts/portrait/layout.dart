@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/watch_list/watch_list.dart';
+import 'package:anikki/library/repository/repository.dart';
 import 'package:anikki/anilist_auth/view/anilist_auth_view.dart';
 import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
-import 'package:anikki/library/repository.dart';
 import 'package:anikki/components/search/search.dart';
 import 'package:anikki/settings/settings.dart';
 import 'package:anikki/library/library.dart';
@@ -45,7 +45,9 @@ class _PortraitLayoutState extends State<PortraitLayout> {
                   UserListAppBar(
                     userListType: UserListEnum.local,
                   ),
-                  Expanded(child: Library()),
+                  Expanded(
+                    child: LibraryView(),
+                  ),
                 ],
               ),
               Column(

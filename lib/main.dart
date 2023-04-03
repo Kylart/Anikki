@@ -6,7 +6,6 @@ import 'package:graphql/client.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:protocol_handler/protocol_handler.dart';
-import 'package:provider/provider.dart';
 
 import 'package:anikki/bloc_provider.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
@@ -15,7 +14,6 @@ import 'package:anikki/helpers/anilist_client.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/layouts/landscape/layout.dart';
 import 'package:anikki/layouts/portrait/layout.dart';
-import 'package:anikki/library/store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,14 +38,9 @@ void main() async {
   runApp(
     //// Providers are above [Anikki] instead of inside it, so that tests
     //// can use [Anikki] while mocking the providers
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LocalStore()),
-      ],
-      child: AnikkiBlocProvider(
-        child: Anikki(
-          client: anilistClient,
-        ),
+    AnikkiBlocProvider(
+      child: Anikki(
+        client: anilistClient,
       ),
     ),
   );

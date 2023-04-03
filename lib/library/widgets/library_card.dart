@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/library/library_actions.dart';
+import 'package:anikki/library/helpers/library_actions.dart';
 import 'package:anikki/components/entry_card/entry_card.dart';
 import 'package:anikki/models/local_file.dart';
 

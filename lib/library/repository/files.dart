@@ -1,28 +1,4 @@
-import 'dart:io';
-
-import 'package:anilist/anilist.dart';
-import 'package:anitomy/anitomy.dart';
-import 'package:file_selector/file_selector.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:open_app_file/open_app_file.dart';
-import 'package:path/path.dart';
-import 'package:wakelock/wakelock.dart';
-
-import 'package:anikki/settings/bloc/settings_bloc.dart';
-import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/helpers/anilist_client.dart';
-import 'package:anikki/components/fade_overlay.dart';
-import 'package:anikki/components/video_player/desktop_player.dart';
-import 'package:anikki/components/video_player/mobile_player.dart';
-import 'package:anikki/components/video_player/video_player.dart';
-import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/library/store.dart';
-import 'package:anikki/helpers/errors/library_directory_does_not_exist_exception.dart';
-import 'package:anikki/models/local_file.dart';
+part of 'repository.dart';
 
 Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   final List<LocalFile> results = [];
@@ -113,7 +89,9 @@ deleteFile(LocalFile entry, BuildContext context) {
           PlatformTextButton(
             onPressed: () {
               entry.file.delete().then((value) {
-                context.read<LocalStore>().removeFile(entry);
+                BlocProvider.of<LibraryBloc>(context).add(
+                  LibraryFileDeleted(file: entry),
+                );
                 navigator.pop();
               });
             },
@@ -136,7 +114,7 @@ Future<void> playFile(LocalFile entry, BuildContext context) async {
       /// by OpenAppFile.
       OpenAppFile.open(
           entry.file.path.replaceAll('(', '\\(').replaceAll(')', '\\)')),
-      _updateEntry(context, entry),
+      updateEntry(context, entry),
     ]);
   } else {
     Wakelock.enable();
@@ -152,80 +130,10 @@ Future<void> playFile(LocalFile entry, BuildContext context) async {
           SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge),
           SystemChrome.setPreferredOrientations([]),
           player.stop(),
-          _updateEntry(context, entry),
+          updateEntry(context, entry),
           Wakelock.disable(),
         ]),
       ),
     );
   }
-}
-
-Future<void> _updateEntry(BuildContext context, LocalFile entry) async {
-  final auth = BlocProvider.of<AnilistAuthBloc>(context);
-  final lists = BlocProvider.of<WatchListBloc>(context);
-  final scaffold = ScaffoldMessenger.of(context);
-  final theme = Theme.of(context);
-  final anilist = Anilist(client: getAnilistClient());
-
-  if (!auth.isConnected) return;
-
-  if (entry.media?.id != null) {
-    final episode = int.tryParse(entry.episode ?? '1') ?? 1;
-
-    try {
-      await anilist.watchedEntry(
-        episode: episode,
-        mediaId: entry.media!.id,
-      );
-
-      scaffold.showSnackBar(
-        SnackBar(
-          backgroundColor: theme.colorScheme.background,
-          content: ListTile(
-            title: const Text('Anilist list updated!'),
-            subtitle: Text(
-                'Updated ${entry.media?.title?.userPreferred} with episode $episode.'),
-          ),
-        ),
-      );
-
-      lists.add(
-        WatchListRequested(
-            username: (auth.state as AnilistAuthSuccess).me.name),
-      );
-    } on AnilistUpdateListException catch (e) {
-      _handleAnilistUpdateException(e, context);
-    }
-  }
-}
-
-void _handleAnilistUpdateException(
-    AnilistUpdateListException error, BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      backgroundColor: Theme.of(context).colorScheme.error,
-      content: ListTile(
-        title: Text(error.cause),
-        subtitle: Text('Error was ${error.error}.'),
-      ),
-    ),
-  );
-}
-
-Future<void> updateFolderPath(BuildContext context) async {
-  final settingsBloc = BlocProvider.of<SettingsBloc>(context);
-  final localStore = context.read<LocalStore>();
-  String? path = await getDirectoryPath();
-
-  if (path == null) return;
-
-  settingsBloc.add(
-    SettingsUpdated(
-      settingsBloc.state.settings.copyWith(
-        localDirectory: path,
-      ),
-    ),
-  );
-  localStore.files = [];
-  localStore.getFiles(path);
 }
