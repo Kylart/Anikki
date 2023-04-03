@@ -24,7 +24,12 @@ class NewsComplete extends NewsState {
   final List<Query$AiringSchedule$Page$airingSchedules> entries;
 
   @override
-  List<Object> get props => [range, '${entries.length} entries'];
+  List<Object> get props => [range, entries];
+
+  @override
+  String toString() {
+    return [range, '${entries.length} entries'].join(', ');
+  }
 }
 
 class NewsError extends NewsState {

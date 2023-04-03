@@ -39,13 +39,21 @@ class WatchListComplete extends WatchListState {
   @override
   List<Object?> get props => [
         username,
-        'Current List: ${current.length} entries',
-        'Completed List: ${completed.length} entries',
-        'Dropped List: ${dropped.length} entries',
-        'Paused List: ${paused.length} entries',
-        'Planning List: ${planning.length} entries',
-        'Repeating List: ${repeating.length} entries',
+        watchList,
       ];
+
+  @override
+  String toString() {
+    return [
+      username,
+      'Current List: ${current.length} entries',
+      'Completed List: ${completed.length} entries',
+      'Dropped List: ${dropped.length} entries',
+      'Paused List: ${paused.length} entries',
+      'Planning List: ${planning.length} entries',
+      'Repeating List: ${repeating.length} entries',
+    ].join(', ');
+  }
 }
 
 class WatchListError extends WatchListState {
