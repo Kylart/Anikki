@@ -1,13 +1,14 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/settings/bloc/settings_bloc.dart';
+import 'package:anikki/settings/models/settings.dart';
 import 'package:anikki/components/entry_tile.dart';
 import 'package:anikki/watch_list/helpers/watch_list_actions.dart';
 import 'package:anikki/watch_list/widgets/watch_list_card.dart';
 import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
-import 'package:anikki/providers/user_preferences/user_list_layout.dart';
 import 'package:anikki/user_list/user_list_grid_delegate.dart';
 
 class WatchListLayout extends StatelessWidget {
@@ -17,7 +18,10 @@ class WatchListLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final layout = context.watch<UserListLayout>().layout;
+    final layout = BlocProvider.of<SettingsBloc>(context, listen: true)
+        .state
+        .settings
+        .userListLayouts;
 
     return layout == UserListLayouts.grid
         ? CustomGridView(

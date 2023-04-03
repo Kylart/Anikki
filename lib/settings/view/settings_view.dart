@@ -1,9 +1,9 @@
-import 'package:anikki/helpers/capitalize.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import 'package:anikki/providers/user_preferences/theme.dart';
+import 'package:anikki/helpers/capitalize.dart';
+import 'package:anikki/settings/bloc/settings_bloc.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -15,6 +15,8 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    final settingsBloc = BlocProvider.of<SettingsBloc>(context, listen: true);
+
     return SettingsList(
       sections: [
         SettingsSection(
@@ -25,7 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
               leading: const Icon(Icons.format_paint),
               title: const Text('Theme'),
               trailing: DropdownButton(
-                value: context.watch<AnikkiTheme>().theme,
+                value: settingsBloc.state.settings.theme,
                 items: ThemeMode.values
                     .map((mode) => DropdownMenuItem(
                           value: mode,
@@ -35,7 +37,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 onChanged: (value) {
                   if (value == null) return;
 
-                  context.read<AnikkiTheme>().theme = value;
+                  settingsBloc.add(
+                    SettingsUpdated(
+                      settingsBloc.state.settings.copyWith(
+                        theme: value,
+                      ),
+                    ),
+                  );
                 },
               ),
             ),

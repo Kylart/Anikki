@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:graphql/client.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:provider/provider.dart';
 
-import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/bloc_provider.dart';
+import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/bloc_observer.dart';
 import 'package:anikki/helpers/anilist_client.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/layouts/landscape/layout.dart';
 import 'package:anikki/layouts/portrait/layout.dart';
 import 'package:anikki/library/store.dart';
-import 'package:anikki/providers/user_preferences/user_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,9 @@ void main() async {
   Paint.enableDithering = true;
 
   Bloc.observer = const Observer();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
 
   final anilistClient = getAnilistClient();
 
@@ -39,15 +43,11 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LocalStore()),
-
-        //// User Preferences
-        ChangeNotifierProvider(create: (_) => LocalDirectory()),
-        ChangeNotifierProvider(create: (_) => AnikkiTheme()),
-        ChangeNotifierProvider(create: (_) => NewsLayout()),
-        ChangeNotifierProvider(create: (_) => UserListLayout()),
       ],
-      child: Anikki(
-        client: anilistClient,
+      child: AnikkiBlocProvider(
+        child: Anikki(
+          client: anilistClient,
+        ),
       ),
     ),
   );
@@ -134,25 +134,18 @@ class _AnikkiState extends State<Anikki> {
         /// fontFamily: GoogleFonts.notoSans().fontFamily,
       ),
 
-      themeMode: context.watch<AnikkiTheme>().theme,
-      home: BlocProvider(
-        create: (context) =>
-            AnilistAuthBloc()..add(AnilistAuthLoginRequested()),
-        child: BlocProvider(
-          create: (context) {
-            final authBloc = BlocProvider.of<AnilistAuthBloc>(context);
-            return WatchListBloc(authBloc);
-          },
-          child: Scaffold(
-            body: SafeArea(
-              child: LayoutBuilder(
-                builder: ((BuildContext context, BoxConstraints constraints) {
-                  return constraints.maxWidth > 600
-                      ? const LandscapeLayout()
-                      : const PortraitLayout();
-                }),
-              ),
-            ),
+      themeMode: BlocProvider.of<SettingsBloc>(context, listen: true)
+          .state
+          .settings
+          .theme,
+      home: Scaffold(
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: ((BuildContext context, BoxConstraints constraints) {
+              return constraints.maxWidth > 600
+                  ? const LandscapeLayout()
+                  : const PortraitLayout();
+            }),
           ),
         ),
       ),

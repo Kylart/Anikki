@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/settings/bloc/settings_bloc.dart';
+import 'package:anikki/settings/models/settings.dart';
 import 'package:anikki/components/entry_tile.dart';
 import 'package:anikki/library/library_actions.dart';
 import 'package:anikki/library/library_card.dart';
 import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
 import 'package:anikki/library/store.dart';
-import 'package:anikki/providers/user_preferences/user_list_layout.dart';
 import 'package:anikki/user_list/user_list_grid_delegate.dart';
 
 class LibraryLayout extends StatelessWidget {
@@ -15,8 +16,11 @@ class LibraryLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final layout = context.watch<UserListLayout>().layout;
     final entries = context.watch<LocalStore>().files;
+    final layout = BlocProvider.of<SettingsBloc>(context, listen: true)
+        .state
+        .settings
+        .userListLayouts;
 
     return layout == UserListLayouts.grid
         ? CustomGridView(
@@ -37,9 +41,7 @@ class LibraryLayout extends StatelessWidget {
                   entry.media?.coverImage?.large ??
                   entry.media?.coverImage?.medium,
               bannerImage: entry.media?.bannerImage,
-              tags: entry.media?.genres
-                  ?.whereType<String>()
-                  .toList(),
+              tags: entry.media?.genres?.whereType<String>().toList(),
               episode: entry.episode,
             ),
           );

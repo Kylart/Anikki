@@ -6,6 +6,9 @@ PODS:
   - FlutterMacOS (1.0.0)
   - macos_window_utils (1.0.0):
     - FlutterMacOS
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - protocol_handler (0.0.1):
     - FlutterMacOS
   - screen_retriever (0.0.1):
@@ -25,6 +28,7 @@ DEPENDENCIES:
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - macos_window_utils (from `Flutter/ephemeral/.symlinks/plugins/macos_window_utils/macos`)
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
   - protocol_handler (from `Flutter/ephemeral/.symlinks/plugins/protocol_handler/macos`)
   - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
   - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/macos`)
@@ -41,6 +45,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral
   macos_window_utils:
     :path: Flutter/ephemeral/.symlinks/plugins/macos_window_utils/macos
+  path_provider_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
   protocol_handler:
     :path: Flutter/ephemeral/.symlinks/plugins/protocol_handler/macos
   screen_retriever:
@@ -59,6 +65,7 @@ SPEC CHECKSUMS:
   file_selector_macos: 0f85c1108e2fd597b58246bc0b0c1cb483d7593b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   macos_window_utils: 933f91f64805e2eb91a5bd057cf97cd097276663
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   protocol_handler: 587e1caf6c0b92ce351ab14081968dae49cb8cc6
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472

@@ -11,10 +11,10 @@ import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 import 'package:wakelock/wakelock.dart';
 
+import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/helpers/anilist_client.dart';
-import 'package:anikki/providers/user_preferences/local_directory.dart';
 import 'package:anikki/components/fade_overlay.dart';
 import 'package:anikki/components/video_player/desktop_player.dart';
 import 'package:anikki/components/video_player/mobile_player.dart';
@@ -213,13 +213,19 @@ void _handleAnilistUpdateException(
 }
 
 Future<void> updateFolderPath(BuildContext context) async {
+  final settingsBloc = BlocProvider.of<SettingsBloc>(context);
   final localStore = context.read<LocalStore>();
-  final preferences = context.read<LocalDirectory>();
   String? path = await getDirectoryPath();
 
   if (path == null) return;
 
-  preferences.path = path;
+  settingsBloc.add(
+    SettingsUpdated(
+      settingsBloc.state.settings.copyWith(
+        localDirectory: path,
+      ),
+    ),
+  );
   localStore.files = [];
   localStore.getFiles(path);
 }

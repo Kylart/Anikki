@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:empty_widget/empty_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/providers/user_preferences/user_preferences.dart';
+import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/components/error_tile.dart';
 import 'package:anikki/helpers/errors/library_directory_does_not_exist_exception.dart';
 import 'package:anikki/library/library_layout.dart';
@@ -17,7 +17,10 @@ class Library extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final path = context.watch<LocalDirectory>().path;
+    final path = BlocProvider.of<SettingsBloc>(context, listen: true)
+        .state
+        .settings
+        .localDirectory;
 
     return FutureBuilder(
       future: context.read<LocalStore>().getFiles(path),
@@ -39,8 +42,8 @@ class Library extends StatelessWidget {
 
           if ((Platform.isIOS || Platform.isMacOS) &&
               snapshot.error!.runtimeType == FileSystemException) {
-                print('No access');
-              }
+            print('No access');
+          }
 
           return const ErrorTile();
         }

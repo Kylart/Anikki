@@ -1,14 +1,14 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/settings/bloc/settings_bloc.dart';
+import 'package:anikki/settings/models/settings.dart';
 import 'package:anikki/components/entry_tile.dart';
 import 'package:anikki/news/helpers/news_actions.dart';
 import 'package:anikki/news/widgets/news_card.dart';
 import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
-import 'package:anikki/providers/user_preferences/news_layout.dart' as prefs;
-import 'package:anikki/providers/user_preferences/news_layout.dart';
 
 class NewsLayout extends StatelessWidget {
   const NewsLayout({super.key, required this.entries});
@@ -17,9 +17,10 @@ class NewsLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final layout = context.watch<prefs.NewsLayout>().layout;
+    final settings =
+        BlocProvider.of<SettingsBloc>(context, listen: true).state.settings;
 
-    return NewsLayouts.grid == layout
+    return NewsLayouts.grid == settings.newsLayout
         ? CustomGridView(
             entries: entries,
             builder: (entry) => NewsCard(entry: entry),

@@ -17,7 +17,12 @@ class AnilistAuthSuccess extends AnilistAuthState {
   final Query$Viewer$Viewer me;
 
   @override
-  List<Object> get props => [me.name];
+  List<Object> get props => [me];
+
+  @override
+  String toString() {
+    return [me.name].join(', ');
+  }
 }
 
 class AnilistAuthError extends AnilistAuthState {
