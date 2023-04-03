@@ -22,7 +22,15 @@ class _NewsCardState extends State<NewsCard> {
   bool showBookmark = false;
   bool showDone = false;
 
-  void onWatchListComplete(WatchListState state) {
+  @override
+  Widget build(BuildContext context) {
+    final coverImage = widget.entry.media?.coverImage?.extraLarge ??
+        widget.entry.media?.coverImage?.large ??
+        widget.entry.media?.coverImage?.medium;
+    final title = widget.entry.media?.title?.userPreferred ?? 'N/A';
+
+    final state = BlocProvider.of<WatchListBloc>(context, listen: true).state;
+
     if (state is WatchListComplete) {
       final followed = isFollowed(state, widget.entry);
       final seen = isSeen(state, widget.entry);
@@ -32,19 +40,6 @@ class _NewsCardState extends State<NewsCard> {
         showDone = seen;
       });
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final coverImage = widget.entry.media?.coverImage?.extraLarge ??
-        widget.entry.media?.coverImage?.large ??
-        widget.entry.media?.coverImage?.medium;
-    final title = widget.entry.media?.title?.userPreferred ?? 'N/A';
-
-    final watchListBloc = BlocProvider.of<WatchListBloc>(context);
-
-    onWatchListComplete(watchListBloc.state);
-    watchListBloc.stream.listen(onWatchListComplete);
 
     return EntryCard(
       coverImage: coverImage,
