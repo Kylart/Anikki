@@ -18,7 +18,7 @@ import 'package:anikki/layouts/portrait/layout.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (isDesktop()) setUpDesktop();
+  if (isDesktop()) await setUpDesktop();
 
   /// Register a custom protocol
   await protocolHandler.register('anikki');
