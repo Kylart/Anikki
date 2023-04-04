@@ -36,7 +36,7 @@ class _WatchListViewState extends State<WatchListView>
 
   @override
   Widget build(BuildContext context) {
-    final state = BlocProvider.of<WatchListBloc>(context).state;
+    final state = BlocProvider.of<WatchListBloc>(context, listen: true).state;
 
     switch (state.runtimeType) {
       case WatchListInitial:
