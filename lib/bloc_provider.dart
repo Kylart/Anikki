@@ -1,3 +1,4 @@
+import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +22,9 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SettingsBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ConnectivityBloc(),
         ),
       ],
       child: MultiBlocProvider(
