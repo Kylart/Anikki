@@ -1,15 +1,21 @@
 import 'dart:ui';
 
+import 'package:anikki/helpers/connectivity_bloc/is_online_mixin.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/anilist_auth/anilist_auth.dart';
 import 'package:anikki/components/search/search.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatefulWidget {
   const CustomAppBar({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+}
+
+class _CustomAppBarState extends State<CustomAppBar> with IsOnlineMixin {
   @override
   Widget build(BuildContext context) {
     void onTap() {
@@ -47,8 +53,8 @@ class CustomAppBar extends StatelessWidget {
                 textAlign: TextAlign.center,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.search_outlined),
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: 24.0, vertical: 12.0),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
                   filled: false,
                   fillColor: Colors.transparent,
                   focusedBorder: OutlineInputBorder(),
@@ -59,6 +65,12 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
+          if (!isOnline)
+            const Tooltip(
+              message:
+                  'No internet connection detected. Some features will not work.',
+              child: Icon(Icons.signal_wifi_connected_no_internet_4),
+            ),
           const AnilistAuthView(),
         ],
       ),
