@@ -2,10 +2,9 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/news/widgets/news_tile.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/settings/models/settings.dart';
-import 'package:anikki/components/entry_tile.dart';
-import 'package:anikki/news/helpers/news_actions.dart';
 import 'package:anikki/news/widgets/news_card.dart';
 import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
@@ -27,23 +26,7 @@ class NewsLayout extends StatelessWidget {
           )
         : CustomListView(
             entries: entries,
-            builder: (context, entry) => EntryTile(
-              entry: entry,
-              subtitle: Text(
-                'Episode ${entry.episode}',
-              ),
-              actions: getNewsActions(
-                context: context,
-                entry: entry,
-              ),
-              title: entry.media?.title?.userPreferred,
-              coverImage: entry.media?.coverImage?.extraLarge ??
-                  entry.media?.coverImage?.large ??
-                  entry.media?.coverImage?.medium,
-              bannerImage: entry.media?.bannerImage,
-              tags: entry.media?.genres?.whereType<String>().toList(),
-              episode: entry.episode.toString(),
-            ),
+            builder: (context, entry) => NewsTile(entry: entry),
           );
   }
 }

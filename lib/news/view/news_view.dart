@@ -107,7 +107,9 @@ class _NewsViewState extends State<NewsView> with AnilistAuthIsConnectedMixin {
                   );
                 }
 
-                return Expanded(child: NewsLayout(entries: filteredEnries));
+                return Expanded(
+                  child: NewsLayout(entries: filteredEnries),
+                );
 
               default:
                 return const SizedBox();

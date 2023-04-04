@@ -18,6 +18,8 @@ class EntryTile<T> extends StatelessWidget {
     this.coverImage,
     this.tags,
     this.episode,
+    this.showBookmark = false,
+    this.showDone = false,
   });
 
   final T entry;
@@ -28,6 +30,8 @@ class EntryTile<T> extends StatelessWidget {
   final String? coverImage;
   final List<String>? tags;
   final String? episode;
+  final bool showBookmark;
+  final bool showDone;
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +75,15 @@ class EntryTile<T> extends StatelessWidget {
           isThreeLine: true,
           contentPadding: const EdgeInsets.all(4.0),
           title: Text(title ?? 'N/A'),
-          leading: coverImage != null
-              ? CircleAvatar(
+          leading: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (coverImage != null)
+                CircleAvatar(
                   backgroundImage: NetworkImage(coverImage!),
-                )
-              : const SizedBox(),
+                ),
+            ],
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -83,44 +91,39 @@ class EntryTile<T> extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: subtitle,
               ),
-              if (tags != null)
-                Row(
-                  children:
-                      (tags!.length > 1 ? tags!.sublist(0, 2) : tags!).map(
-                    (genre) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(40)),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Theme.of(context).colorScheme.outline,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(40),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4.0,
-                                  horizontal: 10.0,
-                                ),
-                                child: Text(
-                                  genre.toString(),
-                                  style: const TextStyle(fontSize: 12.0),
-                                ),
-                              ),
-                            ),
+              Row(
+                children: [
+                  /// Tags
+                  if (tags != null)
+                    ...(tags!.length > 1 ? tags!.sublist(0, 2) : tags!).map(
+                      (genre) {
+                        return EntryTag(
+                          child: Text(
+                            genre.toString(),
+                            style: const TextStyle(fontSize: 12.0),
                           ),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                ),
+                        );
+                      },
+                    ).toList(),
+
+                  if (showBookmark)
+                    EntryTag(
+                      child: Icon(
+                        Icons.bookmark_added_outlined,
+                        size: 16.0,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    )
+                  else if (showDone)
+                    const EntryTag(
+                      child: Icon(
+                        Icons.done_all,
+                        size: 16.0,
+                        color: Colors.green,
+                      ),
+                    ),
+                ],
+              ),
             ],
           ),
           trailing: actions.isEmpty
@@ -134,8 +137,8 @@ class EntryTile<T> extends StatelessWidget {
                         message: actions.first.label,
                         child: GlassCircle(
                           child: SizedBox(
-                            width: 40,
-                            height: 40,
+                            width: 35,
+                            height: 35,
                             child: Container(
                               decoration: BoxDecoration(
                                 border: Border.all(
@@ -157,8 +160,8 @@ class EntryTile<T> extends StatelessWidget {
                     ),
                     GlassCircle(
                       child: SizedBox(
-                        width: 40,
-                        height: 40,
+                        width: 35,
+                        height: 35,
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -188,6 +191,42 @@ class EntryTile<T> extends StatelessWidget {
                     ),
                   ],
                 ),
+        ),
+      ),
+    );
+  }
+}
+
+class EntryTag extends StatelessWidget {
+  const EntryTag({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(40)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).colorScheme.outline,
+              ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(40),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 4.0,
+                horizontal: 10.0,
+              ),
+              child: child,
+            ),
+          ),
         ),
       ),
     );
