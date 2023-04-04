@@ -17,12 +17,12 @@ class NewsTile extends StatefulWidget {
 }
 
 class _NewsTileState extends State<NewsTile> {
+  bool showBookmark = false;
+  bool showDone = false;
+
   @override
   Widget build(BuildContext context) {
     final entry = widget.entry;
-
-    bool showBookmark = false;
-    bool showDone = false;
 
     final state = BlocProvider.of<WatchListBloc>(context, listen: true).state;
 
@@ -30,8 +30,10 @@ class _NewsTileState extends State<NewsTile> {
       final followed = isFollowed(state, entry);
       final seen = isSeen(state, entry);
 
-      showBookmark = followed && !seen;
-      showDone = seen;
+      setState(() {
+        showBookmark = followed && !seen;
+        showDone = seen;
+      });
     }
 
     return EntryTile(
