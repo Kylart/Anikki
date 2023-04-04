@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 
 import 'package:anikki/helpers/logger.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/helpers/anilist_client.dart';
+import 'package:anikki/helpers/anilist/anilist_client.dart';
 
 part 'watch_list_event.dart';
 part 'watch_list_state.dart';

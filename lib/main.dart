@@ -1,8 +1,9 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:graphql/client.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:protocol_handler/protocol_handler.dart';
@@ -10,38 +11,44 @@ import 'package:protocol_handler/protocol_handler.dart';
 import 'package:anikki/bloc_provider.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/bloc_observer.dart';
-import 'package:anikki/helpers/anilist_client.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/layouts/landscape/layout.dart';
 import 'package:anikki/layouts/portrait/layout.dart';
 
 void main() async {
+  /// Flutter hooks
   WidgetsFlutterBinding.ensureInitialized();
-
-  if (isDesktop()) await setUpDesktop();
-
-  /// Register a custom protocol
-  await protocolHandler.register('anikki');
-
-  /// Register env variables
-  await dotenv.load();
-
   Paint.enableDithering = true;
 
+  final storageDirectory = kDebugMode
+      ? await getTemporaryDirectory()
+      : await getApplicationDocumentsDirectory();
+
+  await Future.wait([
+    /// Storage
+    Hive.initFlutter(storageDirectory.path),
+
+    /// Desktop hooks
+    if (isDesktop()) setUpDesktop(),
+
+    /// Register a custom protocol
+    protocolHandler.register('anikki'),
+
+    /// Register env variables
+    dotenv.load(),
+  ]);
+
+  /// Bloc init hooks
   Bloc.observer = const Observer();
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
+    storageDirectory: storageDirectory,
   );
-
-  final anilistClient = getAnilistClient();
 
   runApp(
     //// Providers are above [Anikki] instead of inside it, so that tests
     //// can use [Anikki] while mocking the providers
-    AnikkiBlocProvider(
-      child: Anikki(
-        client: anilistClient,
-      ),
+    const AnikkiBlocProvider(
+      child: Anikki(),
     ),
   );
 }
@@ -49,10 +56,7 @@ void main() async {
 class Anikki extends StatefulWidget {
   const Anikki({
     super.key,
-    required this.client,
   });
-
-  final GraphQLClient client;
 
   @override
   State<Anikki> createState() => _AnikkiState();

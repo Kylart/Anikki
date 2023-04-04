@@ -1,16 +1,17 @@
 import 'package:anilist/anilist.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 import 'package:anikki/helpers/logger.dart';
-import 'package:anikki/helpers/anilist_client.dart';
+import 'package:anikki/helpers/anilist/anilist_client.dart';
 
 part 'anilist_auth_event.dart';
 part 'anilist_auth_state.dart';
 
 class AnilistAuthBloc extends Bloc<AnilistAuthEvent, AnilistAuthState> {
   static const tokenKey = 'user_preferences_anilistAccessToken';
+  static const boxName = 'anilist_auth';
 
   final repository = Anilist(client: getAnilistClient());
 
@@ -31,8 +32,8 @@ class AnilistAuthBloc extends Bloc<AnilistAuthEvent, AnilistAuthState> {
 
     try {
       if (event.token != null) {
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString(tokenKey, event.token!);
+        final box = await Hive.openBox(boxName);
+        box.put(tokenKey, event.token);
       }
 
       final me = await repository.getMe();
@@ -47,8 +48,8 @@ class AnilistAuthBloc extends Bloc<AnilistAuthEvent, AnilistAuthState> {
 
   Future<void> _logout(
       AnilistAuthLogoutRequested event, Emitter<AnilistAuthState> emit) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove(tokenKey);
+    final box = await Hive.openBox(boxName);
+    box.delete(tokenKey);
 
     emit(AnilistAuthLoggedOut());
   }
