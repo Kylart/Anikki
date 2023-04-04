@@ -4,6 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:anikki/helpers/logger.dart';
 import 'package:anikki/settings/models/settings.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
@@ -26,6 +27,18 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
 
     on<SettingsUpdated>(_onUpdated);
     on<SettingsUpdateFailed>(_onUpdateFailed);
+
+    /// Default to downloads directory if no directory
+    if (state.settings.localDirectory.isEmpty) {
+      getDownloadsDirectory().then(
+        (downloadDir) {
+          if (downloadDir != null) {
+            add(SettingsUpdated(
+                state.settings.copyWith(localDirectory: downloadDir.path)));
+          }
+        },
+      );
+    }
   }
 
   Future<void> _onUpdated(
