@@ -1,3 +1,4 @@
+import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,9 +39,14 @@ class _NewsViewState extends State<NewsView> with AnilistAuthIsConnectedMixin {
           initialRange: dateRange,
           onDateChange: (DateTimeRange range) {
             setState(() {
-              dateRange = range;
-              BlocProvider.of<NewsBloc>(context)
-                  .add(NewsRequested(range: range));
+              final isOnline =
+                  BlocProvider.of<ConnectivityBloc>(context).isOnline;
+
+              if (isOnline) {
+                dateRange = range;
+                BlocProvider.of<NewsBloc>(context)
+                    .add(NewsRequested(range: range));
+              }
             });
           },
           onOnlyFollowedChanged: (value) => setState(() {
