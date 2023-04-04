@@ -51,7 +51,7 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
       file.media = anilist.getInfoFromInfo(file.title!, info);
     }
   } on AnilistGetInfoException {
-    /// TODO: Handle if not information on not connected
+    logger.v('Could not retrieve file media info, offline.');
   }
 
   // Ordering files using name and episode
