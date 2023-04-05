@@ -16,6 +16,8 @@ part 'player_controls_volume.dart';
 part 'player_controls_progress.dart';
 part 'player_controls_fullscreen.dart';
 part 'player_controls_playback.dart';
+part 'player_controls_subtitles.dart';
+part 'player_controls_audios.dart';
 
 class PlayerControls extends StatefulWidget {
   const PlayerControls({super.key, required this.playerInstance});
@@ -56,6 +58,8 @@ class _PlayerControlsState extends State<PlayerControls>
                     ),
                     Row(
                       children: [
+                        PlayerControlsSubtitles(player: player),
+                        PlayerControlsAudios(player: player),
                         PlayerControlsStop(player: player),
                         const PlayerControlsFullscreen(),
                       ],
