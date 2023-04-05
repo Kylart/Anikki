@@ -35,6 +35,7 @@ class _PlayerControlsAudiosState extends State<PlayerControlsAudios> {
     if (available == null || available!.isEmpty) return const SizedBox();
 
     return PopupMenuButton(
+      tooltip: 'Audio',
       icon: const Icon(Icons.audiotrack_outlined),
       itemBuilder: (context) {
         return available!.map((track) {

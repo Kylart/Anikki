@@ -36,6 +36,7 @@ class _PlayerControlsSubtitlesState extends State<PlayerControlsSubtitles> {
     if (available == null || available!.isEmpty) return const SizedBox();
 
     return PopupMenuButton(
+      tooltip: 'Subtitles',
       icon: const Icon(Icons.subtitles_outlined),
       itemBuilder: (context) {
         return available!.map((track) {
