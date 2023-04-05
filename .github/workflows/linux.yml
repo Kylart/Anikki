@@ -22,7 +22,7 @@ jobs:
           channel: "stable"
 
       - name: Install ninja
-        run: sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev vlc libvlc-dev
+        run: sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev vlc libvlc-dev mpv libmpv-dev
 
       - name: "Config"
         run: flutter config --enable-linux-desktop
@@ -60,7 +60,7 @@ jobs:
           cache: true
 
       - name: Install ninja
-        run: sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev vlc libvlc-dev
+        run: sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev vlc libvlc-dev mpv libmpv-dev
 
       - name: "Config"
         run: flutter pub get
