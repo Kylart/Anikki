@@ -20,43 +20,36 @@ class MobilePlayer<T> implements VideoPlayer {
   late VlcPlayerController videoPlayerController;
   final T input;
 
-  @override
   Platform platform = Platform();
 
-  @override
   void pause() {
     videoPlayerController.pause();
   }
 
-  @override
   void play() {
     videoPlayerController.play();
   }
 
-  @override
   void seek(Duration duration) {
     videoPlayerController.seekTo(duration);
   }
 
-  @override
   void setRate(double rate) {}
 
-  @override
   void setVolume(double value) {
     videoPlayerController.setVolume(value.toInt());
+  }
+
+  void togglePlay() {
+    videoPlayerController.isPlaying().then((value) => value ?? false
+        ? videoPlayerController.pause()
+        : videoPlayerController.play());
   }
 
   @override
   Future<void> stop() async {
     await videoPlayerController.stopRendererScanning();
     await videoPlayerController.dispose();
-  }
-
-  @override
-  void togglePlay() {
-    videoPlayerController.isPlaying().then((value) => value ?? false
-        ? videoPlayerController.pause()
-        : videoPlayerController.play());
   }
 
   @override

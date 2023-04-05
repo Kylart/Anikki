@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:dart_vlc/dart_vlc.dart';
 
 import 'package:anikki/components/video_player/controls_mixin.dart';
 import 'package:anikki/components/video_player/desktop_player.dart';
+import 'package:media_kit/media_kit.dart';
 
 // Inspired by https://github.com/alexmercerind/dart_vlc/blob/master/lib/src/widgets/controls.dart
 class DesktopPlayerControls extends StatefulWidget {
-  const DesktopPlayerControls({super.key, required this.player});
+  const DesktopPlayerControls({super.key, required this.playerInstance});
 
-  final DesktopPlayer player;
-  Player get vlcPlayer => player.player;
+  final DesktopPlayer playerInstance;
+  Player get player => playerInstance.player;
 
   @override
   State<DesktopPlayerControls> createState() => _DesktopPlayerControlsState();
@@ -25,10 +25,10 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
   bool isFullscreen = false;
   double volume = 1.0;
 
-  DesktopPlayer get player => widget.player;
-  Player get vlcPlayer => player.player;
+  DesktopPlayer get playerInstance => widget.playerInstance;
+  Player get player => widget.player;
 
-  late StreamSubscription<PlaybackState> playPauseStream;
+  late StreamSubscription<bool> playPauseStream;
   late AnimationController playPauseController;
 
   @override
@@ -36,9 +36,9 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
     super.initState();
     playPauseController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 400));
-    playPauseStream = vlcPlayer.playbackStream
-        .listen((event) => setPlaybackMode(event.isPlaying));
-    if (vlcPlayer.playback.isPlaying) playPauseController.forward();
+    playPauseStream =
+        player.streams.playing.listen((event) => setPlaybackMode(event));
+    if (player.state.playing) playPauseController.forward();
   }
 
   @override
@@ -61,7 +61,7 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (vlcPlayer.playback.isPlaying) {
+        if (player.state.playing) {
           if (displayTapped) {
             setState(() {
               hideControls = true;
@@ -96,18 +96,18 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 8.0),
+                      horizontal: 24.0,
+                      vertical: 8.0,
+                    ),
                     child: Column(
                       children: [
-                        StreamBuilder<PositionState>(
-                          stream: widget.vlcPlayer.positionStream,
+                        StreamBuilder<Duration>(
+                          stream: player.streams.position,
                           builder: (BuildContext context,
-                              AsyncSnapshot<PositionState> snapshot) {
+                              AsyncSnapshot<Duration> snapshot) {
                             final durationState = snapshot.data;
-                            final progress =
-                                durationState?.position ?? Duration.zero;
-                            final total =
-                                durationState?.duration ?? Duration.zero;
+                            final progress = durationState ?? Duration.zero;
+                            final total = player.state.duration;
 
                             return Padding(
                               padding:
@@ -119,14 +119,14 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
                                 timeLabelLocation: TimeLabelLocation.sides,
                                 timeLabelType: TimeLabelType.totalTime,
                                 onSeek: (duration) {
-                                  player.seek(duration);
+                                  playerInstance.seek(duration);
                                 },
                               ),
                             );
                           },
                         ),
-                        StreamBuilder<CurrentState>(
-                          stream: widget.vlcPlayer.currentStream,
+                        StreamBuilder<double>(
+                          stream: player.streams.volume,
                           builder: (context, snapshot) {
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,7 +155,7 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
                                   children: [
                                     IconButton(
                                       onPressed: () {
-                                        player.rewind(
+                                        playerInstance.rewind(
                                             const Duration(seconds: 10));
                                       },
                                       icon: const Icon(Icons.replay_10),
@@ -167,7 +167,7 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
                                           icon: AnimatedIcons.play_pause,
                                           progress: playPauseController),
                                       onPressed: () {
-                                        if (vlcPlayer.playback.isPlaying) {
+                                        if (player.state.playing) {
                                           player.pause();
                                           playPauseController.reverse();
                                         } else {
@@ -178,7 +178,7 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        player.forward(
+                                        playerInstance.forward(
                                           const Duration(seconds: 10),
                                         );
                                       },
@@ -186,7 +186,7 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        player.forward(
+                                        playerInstance.forward(
                                           const Duration(
                                               minutes: 1, seconds: 25),
                                         );
@@ -200,7 +200,7 @@ class _DesktopPlayerControlsState extends State<DesktopPlayerControls>
                                     IconButton(
                                       onPressed: () async {
                                         final nav = Navigator.of(context);
-                                        await player.stop();
+                                        await playerInstance.stop();
                                         nav.pop();
                                       },
                                       icon: const Icon(Icons.stop),

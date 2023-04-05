@@ -107,8 +107,9 @@ deleteFile(LocalFile entry, BuildContext context) {
   );
 }
 
-Future<void> playFile(LocalFile entry, BuildContext context) async {
-  if (Platform.isMacOS) {
+Future<void> playFile(LocalFile entry, BuildContext context,
+    [bool playInside = false]) async {
+  if (playInside) {
     await Future.wait([
       /// We need to escape the brackets because they are not escaped properly
       /// by OpenAppFile.
