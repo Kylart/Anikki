@@ -43,7 +43,7 @@ class _PlayerControlsVolumeState extends State<PlayerControlsVolume> {
     return StreamBuilder<double>(
       stream: widget.player.streams.volume,
       builder: (context, snapshot) {
-        final volume = snapshot.data ?? 1.0;
+        final volume = snapshot.data ?? 100.0;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,11 +63,11 @@ class _PlayerControlsVolumeState extends State<PlayerControlsVolume> {
             SizedBox(
               width: 150,
               child: Slider(
-                value: volume,
-                label: (volume * 100).round().toString(),
+                value: volume / 100,
+                label: volume.round().toString(),
                 divisions: 100,
                 onChanged: (volume) {
-                  widget.player.setVolume(volume);
+                  widget.player.setVolume(volume * 100);
                 },
               ),
             ),
