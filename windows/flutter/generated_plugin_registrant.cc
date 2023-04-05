@@ -10,6 +10,7 @@
 #include <dart_vlc/dart_vlc_plugin.h>
 #include <file_selector_windows/file_selector_windows.h>
 #include <flutter_acrylic/flutter_acrylic_plugin.h>
+#include <media_kit_video/media_kit_video_plugin_c_api.h>
 #include <protocol_handler/protocol_handler_plugin.h>
 #include <url_launcher_windows/url_launcher_windows.h>
 
@@ -22,6 +23,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("FileSelectorWindows"));
   FlutterAcrylicPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterAcrylicPlugin"));
+  MediaKitVideoPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("MediaKitVideoPluginCApi"));
   ProtocolHandlerPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ProtocolHandlerPlugin"));
   UrlLauncherWindowsRegisterWithRegistrar(

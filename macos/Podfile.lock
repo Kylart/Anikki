@@ -9,6 +9,12 @@ PODS:
   - FlutterMacOS (1.0.0)
   - macos_window_utils (1.0.0):
     - FlutterMacOS
+  - media_kit_libs_macos_video (1.0.0):
+    - FlutterMacOS
+  - media_kit_native_event_loop (1.0.0):
+    - FlutterMacOS
+  - media_kit_video (0.0.1):
+    - FlutterMacOS
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -26,6 +32,9 @@ DEPENDENCIES:
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - macos_window_utils (from `Flutter/ephemeral/.symlinks/plugins/macos_window_utils/macos`)
+  - media_kit_libs_macos_video (from `Flutter/ephemeral/.symlinks/plugins/media_kit_libs_macos_video/macos`)
+  - media_kit_native_event_loop (from `Flutter/ephemeral/.symlinks/plugins/media_kit_native_event_loop/macos`)
+  - media_kit_video (from `Flutter/ephemeral/.symlinks/plugins/media_kit_video/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
   - protocol_handler (from `Flutter/ephemeral/.symlinks/plugins/protocol_handler/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
@@ -46,6 +55,12 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral
   macos_window_utils:
     :path: Flutter/ephemeral/.symlinks/plugins/macos_window_utils/macos
+  media_kit_libs_macos_video:
+    :path: Flutter/ephemeral/.symlinks/plugins/media_kit_libs_macos_video/macos
+  media_kit_native_event_loop:
+    :path: Flutter/ephemeral/.symlinks/plugins/media_kit_native_event_loop/macos
+  media_kit_video:
+    :path: Flutter/ephemeral/.symlinks/plugins/media_kit_video/macos
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
   protocol_handler:
@@ -61,12 +76,15 @@ SPEC CHECKSUMS:
   file_selector_macos: 0f85c1108e2fd597b58246bc0b0c1cb483d7593b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   macos_window_utils: 933f91f64805e2eb91a5bd057cf97cd097276663
+  media_kit_libs_macos_video: d8f5b02cc1ab6f26dc3880e8367fd8ccaea73751
+  media_kit_native_event_loop: db47f732bacd877aaaf78c38c4fa8cdd7127db3f
+  media_kit_video: 4e7996581172a6b1dfae7deda317c4036d0c458c
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   protocol_handler: 587e1caf6c0b92ce351ab14081968dae49cb8cc6
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   url_launcher_macos: 5335912b679c073563f29d89d33d10d459f95451
   wakelock_macos: bc3f2a9bd8d2e6c89fee1e1822e7ddac3bd004a9
 
-PODFILE CHECKSUM: c67a90e1792db128566accc673186a5ac66083c3
+PODFILE CHECKSUM: b6236c6fda4009ab3fddd4f7239b9a7f9f361e5e
 
 COCOAPODS: 1.11.3
