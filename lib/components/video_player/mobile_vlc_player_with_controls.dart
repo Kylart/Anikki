@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
-import 'package:anikki/components/video_player/controls_mixin.dart';
+import 'package:anikki/components/video_player/player_controls/controls_mixin.dart';
 
 class MobileVlcPlayerWithControls extends StatefulWidget {
   final VlcPlayerController controller;
