@@ -38,21 +38,23 @@ class _PlayerControlsSubtitlesState extends State<PlayerControlsSubtitles> {
     return PopupMenuButton(
       icon: const Icon(Icons.subtitles_outlined),
       itemBuilder: (context) {
-        return available!
-            .map(
-              (track) => PopupMenuItem(
-                child: ListTile(
-                  title: Text(track.title ?? track.language ?? track.id),
-                  textColor: track == selected
-                      ? Theme.of(context).colorScheme.primary
-                      : null,
-                ),
-                onTap: () {
-                  widget.player.setSubtitleTrack(track);
-                },
-              ),
-            )
-            .toList();
+        return available!.map((track) {
+          String title = track.title ?? track.language ?? track.id;
+
+          if (title == 'no') title = 'Disabled';
+
+          return PopupMenuItem(
+            child: ListTile(
+              title: Text(title),
+              textColor: track == selected
+                  ? Theme.of(context).colorScheme.primary
+                  : null,
+            ),
+            onTap: () {
+              widget.player.setSubtitleTrack(track);
+            },
+          );
+        }).toList();
       },
     );
   }
