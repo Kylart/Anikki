@@ -43,9 +43,17 @@ class _NewsViewState extends State<NewsView> with AnilistAuthIsConnectedMixin {
                   BlocProvider.of<ConnectivityBloc>(context).isOnline;
 
               if (isOnline) {
-                dateRange = range;
-                BlocProvider.of<NewsBloc>(context)
-                    .add(NewsRequested(range: range));
+                dateRange = DateTimeRange(
+                  start: range.start,
+                  end: range.end.copyWith(
+                    hour: 23,
+                    minute: 59,
+                    second: 59,
+                  ),
+                );
+                BlocProvider.of<NewsBloc>(context).add(
+                  NewsRequested(range: dateRange),
+                );
               }
             });
           },

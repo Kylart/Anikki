@@ -28,7 +28,8 @@ class NewsAppBar extends StatefulWidget {
   State<NewsAppBar> createState() => _NewsAppBarState();
 }
 
-class _NewsAppBarState extends State<NewsAppBar> with AnilistAuthIsConnectedMixin {
+class _NewsAppBarState extends State<NewsAppBar>
+    with AnilistAuthIsConnectedMixin {
   bool showFollowed = false;
   bool showUnseen = false;
 
@@ -97,9 +98,7 @@ class _NewsAppBarState extends State<NewsAppBar> with AnilistAuthIsConnectedMixi
                   context: context,
                   initialDateRange: widget.initialRange,
                   firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                  lastDate: DateTime.now()
-                      .add(const Duration(days: 7))
-                      .copyWith(hour: 23, minute: 59, second: 59),
+                  lastDate: DateTime.now().add(const Duration(days: 7)),
                 );
 
                 if (dateRange == null) return;
