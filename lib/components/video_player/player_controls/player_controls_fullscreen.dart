@@ -11,21 +11,30 @@ class PlayerControlsFullscreen extends StatefulWidget {
 class _PlayerControlsFullscreenState extends State<PlayerControlsFullscreen> {
   bool isFullscreen = false;
 
+  void toggle() {
+    if (isFullscreen) {
+      Window.exitFullscreen();
+    } else {
+      Window.enterFullscreen();
+    }
+
+    setState(() {
+      isFullscreen = !isFullscreen;
+    });
+  }
+
+  @override
+  void dispose() {
+    if (isFullscreen) toggle();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () async {
-        if (isDesktop()) {
-          if (isFullscreen) {
-            Window.exitFullscreen();
-          } else {
-            Window.enterFullscreen();
-          }
-
-          setState(() {
-            isFullscreen = !isFullscreen;
-          });
-        }
+        if (isDesktop()) toggle();
       },
       icon: Icon(
         isFullscreen ? Icons.fullscreen_exit : Icons.fullscreen,
