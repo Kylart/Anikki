@@ -22,7 +22,7 @@ class NewsLayout extends StatelessWidget {
     return NewsLayouts.grid == settings.newsLayout
         ? CustomGridView(
             entries: entries,
-            builder: (entry) => NewsCard(entry: entry),
+            builder: (entry, index) => NewsCard(entry: entry),
           )
         : CustomListView(
             entries: entries,

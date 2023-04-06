@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/components/entry_card/entry_card_cover.dart';
 import 'package:anikki/components/anikki_glass_icon.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
 import 'package:anikki/components/entry_action.dart';
-import 'package:anikki/components/entry_card/entry_card_bookmark.dart';
-import 'package:anikki/components/entry_card/entry_card_completed.dart';
-import 'package:anikki/components/glass_circle.dart';
 
 class EntryCard extends StatelessWidget {
   const EntryCard({
@@ -16,6 +14,7 @@ class EntryCard extends StatelessWidget {
     this.episode,
     this.showBookmark = false,
     this.showDone = false,
+    this.isExpandable = false,
   });
 
   final List<EntryAction> actions;
@@ -25,8 +24,18 @@ class EntryCard extends StatelessWidget {
   final bool showBookmark;
   final bool showDone;
 
+  /// For expandable cards
+  final bool isExpandable;
+
   @override
   Widget build(BuildContext context) {
+    final cover = EntryCardCover(
+      coverImage: coverImage,
+      showBookmark: showBookmark,
+      showDone: showDone,
+      episode: episode,
+    );
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -49,76 +58,35 @@ class EntryCard extends StatelessWidget {
         },
         child: Column(
           children: [
-            Expanded(
-              child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                ),
+            if (!isExpandable)
+              Expanded(
+                child: cover,
+              )
+            else
+              Expanded(
                 child: Stack(
-                  fit: StackFit.expand,
                   children: [
-                    /// Cover image or placeholder image
-                    if (coverImage != null)
-                      Image.network(
-                        coverImage!,
-                        fit: BoxFit.fill,
-                      )
-                    else
-                      Opacity(
-                        opacity: 0.7,
-                        child: Image.asset(
-                          'assets/images/placeholder.png',
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topCenter,
-                        ),
+                    Opacity(
+                      opacity: 0.4,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 3.0, top: 3.0),
+                        child: cover,
                       ),
-    
-                    /// Show only if followed
-                    if (showBookmark)
-                      const Positioned(
-                        right: 10,
-                        top: 10,
-                        child: EntryCardBookmark(),
+                    ),
+                    Opacity(
+                      opacity: 0.7,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 6.0, top: 6.0),
+                        child: cover,
                       ),
-    
-                    /// Show if entry has been seen
-                    if (showDone)
-                      const Positioned(
-                        right: 10,
-                        top: 10,
-                        child: EntryCardCompleted(),
-                      ),
-    
-                    /// Show episode
-                    if (episode != null)
-                      Positioned(
-                        right: 10,
-                        bottom: 10,
-                        child: GlassCircle(
-                          child: Container(
-                            width: 35,
-                            height: 35,
-                            decoration: const BoxDecoration(
-                              color: Colors.black26,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Text(
-                                episode!,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 9.0, top: 9.0),
+                      child: cover,
+                    ),
                   ],
                 ),
               ),
-            ),
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
               title: Opacity(

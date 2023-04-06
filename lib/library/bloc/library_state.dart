@@ -21,7 +21,7 @@ class LibraryLoading extends LibraryState {
 }
 
 class LibraryLoaded extends LibraryState {
-  final List<LocalFile> entries;
+  final List<LibraryEntry> entries;
 
   const LibraryLoaded({required this.entries, required super.path});
 
@@ -31,8 +31,10 @@ class LibraryLoaded extends LibraryState {
   @override
   String toString() {
     return [
+      'LibraryLoaded(',
       path,
       'Entries: ${entries.length}',
+      ')',
     ].join(', ');
   }
 }

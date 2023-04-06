@@ -11,6 +11,7 @@ import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 import 'package:wakelock/wakelock.dart';
 
+import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/components/fade_overlay.dart';
 import 'package:anikki/components/video_player/desktop_player.dart';

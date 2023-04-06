@@ -1,7 +1,7 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'package:anikki/components/entry_tag.dart';
 import 'package:anikki/components/glass_circle.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
 import 'package:anikki/components/anikki_glass_icon.dart';
@@ -191,42 +191,6 @@ class EntryTile<T> extends StatelessWidget {
                     ),
                   ],
                 ),
-        ),
-      ),
-    );
-  }
-}
-
-class EntryTag extends StatelessWidget {
-  const EntryTag({super.key, required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(40)),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).colorScheme.outline,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(40),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-                horizontal: 10.0,
-              ),
-              child: child,
-            ),
-          ),
         ),
       ),
     );

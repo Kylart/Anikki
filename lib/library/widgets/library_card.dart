@@ -4,25 +4,49 @@ import 'package:anikki/library/helpers/library_actions.dart';
 import 'package:anikki/components/entry_card/entry_card.dart';
 import 'package:anikki/models/local_file.dart';
 
-class LibraryCard extends StatelessWidget {
-  const LibraryCard({super.key, required this.entry});
+class LibraryCard extends StatefulWidget {
+  const LibraryCard({
+    super.key,
+    required this.entry,
+    this.episode,
+    required this.isExpandable,
+    required this.isExpanded,
+    required this.onTap,
+  });
 
   final LocalFile entry;
+  final String? episode;
+  final bool isExpandable;
+  final bool isExpanded;
+  final void Function() onTap;
 
   @override
-  Widget build(BuildContext context) {
-    final coverImage = entry.media?.coverImage?.extraLarge ??
-        entry.media?.coverImage?.large ??
-        entry.media?.coverImage?.medium;
-    final title = entry.media?.title?.userPreferred ?? entry.title ?? 'N/A';
+  State<LibraryCard> createState() => _LibraryCardState();
+}
 
-    return EntryCard(
-      coverImage: coverImage,
-      title: title,
-      episode: entry.episode?.toString(),
-      actions: getLibraryActions(
-        context,
-        entry,
+class _LibraryCardState extends State<LibraryCard> {
+  @override
+  Widget build(BuildContext context) {
+    final coverImage = widget.entry.media?.coverImage?.extraLarge ??
+        widget.entry.media?.coverImage?.large ??
+        widget.entry.media?.coverImage?.medium;
+    final title =
+        widget.entry.media?.title?.userPreferred ?? widget.entry.title ?? 'N/A';
+
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: AbsorbPointer(
+        absorbing: !widget.isExpanded,
+        child: EntryCard(
+          coverImage: coverImage,
+          title: title,
+          episode: widget.episode,
+          isExpandable: widget.isExpandable,
+          actions: getLibraryActions(
+            context,
+            widget.entry,
+          ),
+        ),
       ),
     );
   }

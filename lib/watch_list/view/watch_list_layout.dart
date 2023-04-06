@@ -27,7 +27,7 @@ class WatchListLayout extends StatelessWidget {
         ? CustomGridView(
             entries: entries,
             gridDelegate: userListGridDelegate,
-            builder: (entry) => WatchListCard(entry: entry),
+            builder: (entry, index) => WatchListCard(entry: entry),
           )
         : CustomListView(
             entries: entries,

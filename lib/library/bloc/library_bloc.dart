@@ -1,7 +1,8 @@
 import 'dart:io';
 
+import 'package:anikki/library/helpers/to_library_entry.dart';
+import 'package:anikki/models/library_entry.dart';
 import 'package:bloc/bloc.dart';
-import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:path/path.dart';
 import 'package:watcher/watcher.dart';
@@ -80,7 +81,16 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
       if (files.isEmpty) {
         emit(LibraryEmpty(path: path));
       } else {
-        emit(LibraryLoaded(entries: files, path: path));
+        final entries = toLibraryEntry(files);
+
+        sortEntries(entries);
+
+        emit(
+          LibraryLoaded(
+            entries: entries,
+            path: path,
+          ),
+        );
       }
 
       _setupWatcher(path);
@@ -96,15 +106,28 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
   void _onFileDeleted(LibraryFileDeleted event, Emitter<LibraryState> emit) {
     if (state is LibraryLoaded) {
-      emit(
-        LibraryLoaded(
-          entries: (state as LibraryLoaded)
-              .entries
-              .whereNot((element) => element == event.file)
-              .toList(),
-          path: state.path,
-        ),
-      );
+      final file = event.file;
+
+      /// Find `file` in existing entries if any
+      final List<LibraryEntry> entries =
+          List.from((state as LibraryLoaded).entries);
+      final existsIndex =
+          entries.indexWhere((element) => element.media?.id == file.media?.id);
+
+      if (existsIndex != -1) {
+        entries[existsIndex]
+            .entries
+            .removeWhere((element) => element.path == element.path);
+
+        if (entries.isEmpty) entries.removeAt(existsIndex);
+
+        emit(
+          LibraryLoaded(
+            entries: entries,
+            path: state.path,
+          ),
+        );
+      }
     }
   }
 
@@ -112,16 +135,29 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
       LibraryFileAdded event, Emitter<LibraryState> emit) async {
     if (state is LibraryLoaded) {
       final file = await retrieveLocalFile(path: event.path);
-      final List<LocalFile> files = [
-        ...List.from((state as LibraryLoaded).entries),
-        file,
-      ];
 
-      sortEntries(files);
+      /// Find `file` in existing entries if any
+      final List<LibraryEntry> entries =
+          List.from((state as LibraryLoaded).entries);
+      final existsIndex =
+          entries.indexWhere((element) => element.media?.id == file.media?.id);
+
+      if (existsIndex != -1) {
+        entries[existsIndex].entries.add(file);
+      } else {
+        entries.add(
+          LibraryEntry(
+            media: file.media,
+            entries: [file],
+          ),
+        );
+      }
+
+      sortEntries(entries);
 
       emit(
         LibraryLoaded(
-          entries: files,
+          entries: entries,
           path: state.path,
         ),
       );

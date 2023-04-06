@@ -17,7 +17,7 @@ class CustomGridView<T> extends StatelessWidget {
   });
 
   final SliverGridDelegate gridDelegate;
-  final Widget Function(T entry) builder;
+  final Widget Function(T entry, int index) builder;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class CustomGridView<T> extends StatelessWidget {
             duration: const Duration(milliseconds: 300),
             child: ScaleAnimation(
               child: FadeInAnimation(
-                child: builder(entries[index]),
+                child: builder(entries[index], index),
               ),
             ),
           );

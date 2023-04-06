@@ -80,26 +80,35 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
     logger.v('Could not retrieve file media info.');
   }
 
-  // Ordering files using name and episode
-  sortEntries(results);
   return results;
 }
 
-void sortEntries(List<LocalFile> files) {
-  files.sort((a, b) {
-    final aTitle = a.title ?? '';
-    final bTitle = b.title ?? '';
-    final aEp = int.tryParse(a.episode ?? '0') ?? 0;
-    final bEp = int.tryParse(b.episode ?? '0') ?? 0;
-
-    final comparisonResult = aTitle.compareTo(bTitle);
-
-    if (comparisonResult != 0) {
-      return comparisonResult;
-    }
-
-    return bEp.compareTo(aEp);
+void sortEntries(List<LibraryEntry> entries) {
+  /// Sort with top level first based on path
+  /// Sorting with path because title might not be parsable
+  /// or plain up wrong.
+  entries.sort((a, b) {
+    return basename(a.entries.first.path).compareTo(b.entries.first.path);
   });
+
+  /// Then we have to sort all the `entries` of each `LibraryEntry`;
+  /// Parsing with title and episode
+  for (final entry in entries) {
+    entry.entries.sort((a, b) {
+      final aTitle = a.title ?? '';
+      final bTitle = b.title ?? '';
+      final aEp = int.tryParse(a.episode ?? '0') ?? 0;
+      final bEp = int.tryParse(b.episode ?? '0') ?? 0;
+
+      final comparisonResult = aTitle.compareTo(bTitle);
+
+      if (comparisonResult != 0) {
+        return comparisonResult;
+      }
+
+      return bEp.compareTo(aEp);
+    });
+  }
 }
 
 deleteFile(LocalFile entry, BuildContext context) {
