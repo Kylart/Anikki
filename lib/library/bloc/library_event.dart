@@ -21,3 +21,9 @@ class LibraryFileDeleted extends LibraryEvent {
 
   final LocalFile file;
 }
+
+class LibraryFileAdded extends LibraryEvent {
+  const LibraryFileAdded({ required this.path });
+
+  final String path;
+}

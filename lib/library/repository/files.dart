@@ -1,5 +1,31 @@
 part of 'repository.dart';
 
+Future<LocalFile> retrieveLocalFile({required String path}) async {
+  final file = File(path);
+  final parser = Anitomy(inputString: basename(path));
+  final result = LocalFile(
+    path: path,
+    file: file,
+    episode: parser.episode,
+    releaseGroup: parser.releaseGroup,
+    title: parser.title,
+  );
+
+  if (parser.title == null) return result;
+
+  try {
+    final anilist = Anilist(client: getAnilistClient());
+
+    final info = await anilist.infoFromMultiple([result.title!]);
+
+    result.media = info.values.first;
+  } on AnilistGetInfoException {
+    logger.v('Could not retrieve file media info.');
+  }
+
+  return result;
+}
+
 Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   final List<LocalFile> results = [];
 
@@ -51,15 +77,15 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
       file.media = anilist.getInfoFromInfo(file.title!, info);
     }
   } on AnilistGetInfoException {
-    logger.v('Could not retrieve file media info, offline.');
+    logger.v('Could not retrieve file media info.');
   }
 
   // Ordering files using name and episode
-  _sortEntries(results);
+  sortEntries(results);
   return results;
 }
 
-void _sortEntries(List<LocalFile> files) {
+void sortEntries(List<LocalFile> files) {
   files.sort((a, b) {
     final aTitle = a.title ?? '';
     final bTitle = b.title ?? '';
