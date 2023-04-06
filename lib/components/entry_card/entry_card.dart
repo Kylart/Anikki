@@ -27,135 +27,138 @@ class EntryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => actions[0].callback(context),
-      onSecondaryTapUp: (details) {
-        showEntryContextMenu(
-          offset: details.globalPosition,
-          context: context,
-          actions: actions,
-          title: title,
-        );
-      },
-      onLongPressStart: (details) {
-        showEntryContextMenu(
-          offset: details.globalPosition,
-          context: context,
-          actions: actions,
-          title: title,
-        );
-      },
-      child: Column(
-        children: [
-          Expanded(
-            child: Card(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.outline,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => actions[0].callback(context),
+        onSecondaryTapUp: (details) {
+          showEntryContextMenu(
+            offset: details.globalPosition,
+            context: context,
+            actions: actions,
+            title: title,
+          );
+        },
+        onLongPressStart: (details) {
+          showEntryContextMenu(
+            offset: details.globalPosition,
+            context: context,
+            actions: actions,
+            title: title,
+          );
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  /// Cover image or placeholder image
-                  if (coverImage != null)
-                    Image.network(
-                      coverImage!,
-                      fit: BoxFit.fill,
-                    )
-                  else
-                    Opacity(
-                      opacity: 0.7,
-                      child: Image.asset(
-                        'assets/images/placeholder.png',
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    /// Cover image or placeholder image
+                    if (coverImage != null)
+                      Image.network(
+                        coverImage!,
+                        fit: BoxFit.fill,
+                      )
+                    else
+                      Opacity(
+                        opacity: 0.7,
+                        child: Image.asset(
+                          'assets/images/placeholder.png',
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                        ),
                       ),
-                    ),
-
-                  /// Show only if followed
-                  if (showBookmark)
-                    const Positioned(
-                      right: 10,
-                      top: 10,
-                      child: EntryCardBookmark(),
-                    ),
-
-                  /// Show if entry has been seen
-                  if (showDone)
-                    const Positioned(
-                      right: 10,
-                      top: 10,
-                      child: EntryCardCompleted(),
-                    ),
-
-                  /// Show episode
-                  if (episode != null)
-                    Positioned(
-                      right: 10,
-                      bottom: 10,
-                      child: GlassCircle(
-                        child: Container(
-                          width: 35,
-                          height: 35,
-                          decoration: const BoxDecoration(
-                            color: Colors.black26,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Text(
-                              episode!,
-                              style: const TextStyle(color: Colors.white),
+    
+                    /// Show only if followed
+                    if (showBookmark)
+                      const Positioned(
+                        right: 10,
+                        top: 10,
+                        child: EntryCardBookmark(),
+                      ),
+    
+                    /// Show if entry has been seen
+                    if (showDone)
+                      const Positioned(
+                        right: 10,
+                        top: 10,
+                        child: EntryCardCompleted(),
+                      ),
+    
+                    /// Show episode
+                    if (episode != null)
+                      Positioned(
+                        right: 10,
+                        bottom: 10,
+                        child: GlassCircle(
+                          child: Container(
+                            width: 35,
+                            height: 35,
+                            decoration: const BoxDecoration(
+                              color: Colors.black26,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                episode!,
+                                style: const TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            title: Opacity(
-              opacity: 0.7,
-              child: Text(
-                '$title\n',
-                style: Theme.of(context).textTheme.titleSmall,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                maxLines: 2,
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              title: Opacity(
+                opacity: 0.7,
+                child: Text(
+                  '$title\n',
+                  style: Theme.of(context).textTheme.titleSmall,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                ),
               ),
-            ),
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTapUp: (details) {
-                        showEntryContextMenu(
-                          offset: details.globalPosition,
-                          context: context,
-                          actions: actions,
-                          title: title,
-                        );
-                      },
-                      child: const AnikkiIcon(
-                        icon: Icons.more_vert,
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTapUp: (details) {
+                          showEntryContextMenu(
+                            offset: details.globalPosition,
+                            context: context,
+                            actions: actions,
+                            title: title,
+                          );
+                        },
+                        child: const AnikkiIcon(
+                          icon: Icons.more_vert,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
