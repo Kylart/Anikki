@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class CustomGridView<T> extends StatelessWidget {
   final List<T> entries;
@@ -20,13 +21,23 @@ class CustomGridView<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(8.0),
-      itemCount: entries.length,
-      gridDelegate: gridDelegate,
-      itemBuilder: (context, index) {
-        return builder(entries[index]);
-      },
+    return AnimationLimiter(
+      child: GridView.builder(
+        padding: const EdgeInsets.all(8.0),
+        itemCount: entries.length,
+        gridDelegate: gridDelegate,
+        itemBuilder: (context, index) {
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            duration: const Duration(milliseconds: 300),
+            child: ScaleAnimation(
+              child: FadeInAnimation(
+                child: builder(entries[index]),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
