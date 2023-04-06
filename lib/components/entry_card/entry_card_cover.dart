@@ -70,7 +70,7 @@ class EntryCardCover extends StatelessWidget {
               bottom: 10,
               child: EntryTag(
                 color: Colors.black26,
-                outline: Colors.black26,
+                outline: Colors.transparent,
                 child: Text(episode!),
               ),
             ),
