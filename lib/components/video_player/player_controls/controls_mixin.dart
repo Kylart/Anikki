@@ -6,6 +6,7 @@ mixin ControlsMixin<T extends StatefulWidget> on State<T> {
   Timer? _hideTimer;
   bool hideControls = true;
   bool displayTapped = false;
+  bool controlsHovered = false;
 
   void cancelAndRestartTimer() {
     _hideTimer?.cancel();
@@ -21,13 +22,16 @@ mixin ControlsMixin<T extends StatefulWidget> on State<T> {
   }
 
   void _startHideTimer() {
-    _hideTimer = Timer(const Duration(seconds: 3), () {
-      if (mounted) {
-        setState(() {
-          hideControls = true;
-          displayTapped = false;
-        });
-      }
-    });
+    _hideTimer = Timer(
+      const Duration(seconds: 3),
+      () {
+        if (mounted && !controlsHovered) {
+          setState(() {
+            hideControls = true;
+            displayTapped = false;
+          });
+        }
+      },
+    );
   }
 }

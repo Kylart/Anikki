@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
@@ -30,43 +31,70 @@ class PlayerControls extends StatefulWidget {
 }
 
 class _PlayerControlsState extends State<PlayerControls>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, ControlsMixin {
   DesktopPlayer get playerInstance => widget.playerInstance;
   Player get player => widget.player;
 
   @override
   Widget build(BuildContext context) {
     return PlayerCursorHandler(
+      hideControls: hideControls,
+      onHover: () => cancelAndRestartTimer(),
+      onTapped: () {
+        if (widget.player.state.playing) {
+          if (displayTapped) {
+            setState(() {
+              hideControls = true;
+              displayTapped = false;
+            });
+          } else {
+            cancelAndRestartTimer();
+          }
+        } else {
+          setState(() => hideControls = true);
+        }
+      },
       player: player,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          PlayerControlsBackground(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: PlayerControlsProgress(player: player),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    PlayerControlsVolume(player: player),
-                    PlayerControlsPlayback(
-                      player: player,
-                      playerInstance: playerInstance,
-                    ),
-                    Row(
-                      children: [
-                        PlayerControlsSubtitles(player: player),
-                        PlayerControlsAudios(player: player),
-                        PlayerControlsStop(player: player),
-                        const PlayerControlsFullscreen(),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+          MouseRegion(
+            onEnter: (_) => setState(() {
+              hideControls = false;
+              controlsHovered = true;
+            }),
+            onExit: (_) {
+              setState(() {
+                controlsHovered = false;
+              });
+            },
+            child: PlayerControlsBackground(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: PlayerControlsProgress(player: player),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      PlayerControlsVolume(player: player),
+                      PlayerControlsPlayback(
+                        player: player,
+                        playerInstance: playerInstance,
+                      ),
+                      Row(
+                        children: [
+                          PlayerControlsSubtitles(player: player),
+                          PlayerControlsAudios(player: player),
+                          PlayerControlsStop(player: player),
+                          const PlayerControlsFullscreen(),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

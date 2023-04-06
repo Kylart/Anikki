@@ -5,43 +5,37 @@ class PlayerCursorHandler extends StatefulWidget {
     super.key,
     required this.player,
     required this.child,
+    required this.hideControls,
+    required this.onTapped,
+    required this.onHover,
   });
 
   final Player player;
   final Widget child;
 
+  final bool hideControls;
+  final void Function() onTapped;
+  final void Function() onHover;
+
   @override
   State<PlayerCursorHandler> createState() => _PlayerCursorHandlerState();
 }
 
-class _PlayerCursorHandlerState extends State<PlayerCursorHandler>
-    with ControlsMixin {
+class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (widget.player.state.playing) {
-          if (displayTapped) {
-            setState(() {
-              hideControls = true;
-              displayTapped = false;
-            });
-          } else {
-            cancelAndRestartTimer();
-          }
-        } else {
-          setState(() => hideControls = true);
-        }
-      },
+      onTap: () => widget.onTapped(),
       child: MouseRegion(
-        cursor:
-            hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
-        onHover: (_) => cancelAndRestartTimer(),
+        cursor: widget.hideControls
+            ? SystemMouseCursors.none
+            : SystemMouseCursors.basic,
+        onHover: (_) => widget.onHover(),
         child: AbsorbPointer(
-          absorbing: hideControls,
+          absorbing: widget.hideControls,
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
-            opacity: hideControls ? 0.0 : 1.0,
+            opacity: widget.hideControls ? 0.0 : 1.0,
             child: widget.child,
           ),
         ),
