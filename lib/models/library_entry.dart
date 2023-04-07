@@ -15,7 +15,7 @@ class LibraryEntry {
     for (final entry in entries) {
       if (entry.episode == null) continue;
 
-      final episode = int.tryParse(entry.episode!);
+      final episode = entry.episode;
 
       if (episode == null) continue;
 
@@ -33,7 +33,7 @@ class LibraryEntry {
     for (final entry in entries) {
       if (entry.episode == null) continue;
 
-      final episode = int.tryParse(entry.episode!);
+      final episode = entry.episode;
 
       if (episode == null) continue;
 

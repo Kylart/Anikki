@@ -31,21 +31,18 @@ class _LibraryCardState extends State<LibraryCard> {
     final title =
         widget.entry.media?.title?.userPreferred ?? widget.entry.title ?? 'N/A';
 
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: AbsorbPointer(
-        absorbing: widget.isExpandable,
-        child: EntryCard(
-          coverImage: coverImage,
-          title: title,
-          episode: widget.episode,
-          isExpandable: widget.isExpandable,
-          actions: getLibraryActions(
-            context,
-            widget.entry,
-          ),
-        ),
-      ),
+    return EntryCard(
+      coverImage: coverImage,
+      title: title,
+      episode: widget.episode,
+      isExpandable: widget.isExpandable,
+      actions: widget.isExpandable
+          ? geExpandabletLibraryActions(
+              context: context,
+              entry: widget.entry,
+              onShrink: widget.onTap,
+            )
+          : getLibraryActions(context, widget.entry),
     );
   }
 }

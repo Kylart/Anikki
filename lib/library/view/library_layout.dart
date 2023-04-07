@@ -55,6 +55,12 @@ class _LibraryLayoutState extends State<LibraryLayout> {
     );
   }
 
+  void toggleExpanded(int index) {
+    setState(() {
+      isExpanded[index] = !isExpanded[index];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final layout = BlocProvider.of<SettingsBloc>(context, listen: true)
@@ -71,14 +77,10 @@ class _LibraryLayoutState extends State<LibraryLayout> {
 
               if (isShrinkEntry) {
                 return Center(
+                  key: Key(entry.path),
                   child: IconButton(
                     onPressed: () {
-                      /// Find index of the file in entries
-                      final index = int.tryParse(entry.path.split('/')[1])!;
-
-                      setState(() {
-                        isExpanded[index] = !isExpanded[index];
-                      });
+                      toggleExpanded(int.tryParse(entry.path.split('/')[1])!);
                     },
                     icon: const Icon(Icons.keyboard_arrow_right),
                   ),
@@ -88,20 +90,14 @@ class _LibraryLayoutState extends State<LibraryLayout> {
                 final libraryEntry = widget.entries.elementAt(entryIndex);
 
                 return LibraryCard(
-                  onTap: () {
-                    /// Find index of the file in entries
-                    final index = entryIndex;
-
-                    setState(() {
-                      isExpanded[index] = !isExpanded[index];
-                    });
-                  },
+                  onTap: () => toggleExpanded(entryIndex),
                   entry: entry,
                   episode:
                       libraryEntry.entries.length == 1 || isExpanded[entryIndex]
                           ? libraryEntry.entries
                               .firstWhere((element) => element == entry)
                               .episode
+                              ?.toString()
                           : '${libraryEntry.epMin} ~ ${libraryEntry.epMax}',
                   isExpandable: libraryEntry.entries.length > 1 &&
                       !isExpanded[entryIndex],
@@ -112,26 +108,51 @@ class _LibraryLayoutState extends State<LibraryLayout> {
         : CustomListView(
             entries: entries,
             builder: (context, entry) {
-              final entryIndex = indexOf(entry);
-              final libraryEntry = widget.entries.elementAt(entryIndex);
+              final isShrinkEntry = entry.path.startsWith('shrink/');
 
-              return EntryTile(
-                entry: entry,
-                subtitle: libraryEntry.entries.length == 1
-                    ? Text(
-                        'Episode ${libraryEntry.entries.firstWhere((element) => element == entry).episode ?? 'not specified'}')
-                    : Text(
-                        'Episode ${libraryEntry.epMin} to ${libraryEntry.epMax}'),
-                actions: getLibraryActions(context, entry),
-                title:
-                    entry.title ?? entry.media?.title?.userPreferred ?? 'N/A',
-                coverImage: entry.media?.coverImage?.extraLarge ??
-                    entry.media?.coverImage?.large ??
-                    entry.media?.coverImage?.medium,
-                bannerImage: entry.media?.bannerImage,
-                tags: entry.media?.genres?.whereType<String>().toList(),
-                episode: entry.episode,
-              );
+              if (isShrinkEntry) {
+                return ListTile(
+                  dense: true,
+                  trailing: IconButton(
+                    onPressed: () {
+                      toggleExpanded(int.tryParse(entry.path.split('/')[1])!);
+                    },
+                    icon: const Icon(Icons.expand_less),
+                  ),
+                );
+              } else {
+                final entryIndex = indexOf(entry);
+                final libraryEntry = widget.entries.elementAt(entryIndex);
+                final isExpandable =
+                    libraryEntry.entries.length > 1 && !isExpanded[entryIndex];
+
+                return EntryTile(
+                  entry: entry,
+                  subtitle:
+                      libraryEntry.entries.length == 1 || isExpanded[entryIndex]
+                          ? Text(
+                              'Episode ${libraryEntry.entries.firstWhere((element) => element == entry).episode ?? 'not specified'}',
+                            )
+                          : Text(
+                              'Episode ${libraryEntry.epMin} to ${libraryEntry.epMax}',
+                            ),
+                  actions: isExpandable
+                      ? geExpandabletLibraryActions(
+                          context: context,
+                          entry: entry,
+                          onShrink: () => toggleExpanded(entryIndex),
+                        )
+                      : getLibraryActions(context, entry),
+                  title:
+                      entry.title ?? entry.media?.title?.userPreferred ?? 'N/A',
+                  coverImage: entry.media?.coverImage?.extraLarge ??
+                      entry.media?.coverImage?.large ??
+                      entry.media?.coverImage?.medium,
+                  bannerImage: entry.media?.bannerImage,
+                  tags: entry.media?.genres?.whereType<String>().toList(),
+                  episode: entry.episode?.toString(),
+                );
+              }
             },
           );
   }

@@ -6,7 +6,7 @@ Future<LocalFile> retrieveLocalFile({required String path}) async {
   final result = LocalFile(
     path: path,
     file: file,
-    episode: parser.episode,
+    episode: parser.episode != null ? int.tryParse(parser.episode!) : null,
     releaseGroup: parser.releaseGroup,
     title: parser.title,
   );
@@ -47,7 +47,7 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
     final entry = LocalFile(
       path: path,
       file: File(path),
-      episode: parser.episode,
+      episode: parser.episode != null ? int.tryParse(parser.episode!) : null,
       releaseGroup: parser.releaseGroup,
       title: parser.title,
     );
@@ -97,8 +97,8 @@ void sortEntries(List<LibraryEntry> entries) {
     entry.entries.sort((a, b) {
       final aTitle = a.title ?? '';
       final bTitle = b.title ?? '';
-      final aEp = int.tryParse(a.episode ?? '0') ?? 0;
-      final bEp = int.tryParse(b.episode ?? '0') ?? 0;
+      final aEp = a.episode ?? 0;
+      final bEp = b.episode ?? 0;
 
       final comparisonResult = aTitle.compareTo(bTitle);
 

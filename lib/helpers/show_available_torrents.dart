@@ -98,10 +98,7 @@ void _fromLibrary(BuildContext context, LocalFile entry) {
       builder: (context) {
         return Dialog(
           child: DownloadResults(
-            episode:
-                entry.episode != null && int.tryParse(entry.episode!) != null
-                    ? int.tryParse(entry.episode!)! + 1
-                    : null,
+            episode: entry.episode,
             term: entry.title!,
           ),
         );
@@ -111,9 +108,7 @@ void _fromLibrary(BuildContext context, LocalFile entry) {
     Navigator.of(context).push(
       FadeOverlay(
         child: DownloadResults(
-          episode: entry.episode != null && int.tryParse(entry.episode!) != null
-              ? int.tryParse(entry.episode!)! + 1
-              : null,
+          episode: entry.episode,
           term: entry.title!,
         ),
         onClose: () async {},

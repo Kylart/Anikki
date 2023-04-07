@@ -10,7 +10,7 @@ Future<void> updateEntry(BuildContext context, LocalFile entry) async {
   if (!auth.isConnected) return;
 
   if (entry.media?.id != null) {
-    final episode = int.tryParse(entry.episode ?? '1') ?? 1;
+    final episode = entry.episode ?? 1;
 
     try {
       await anilist.watchedEntry(

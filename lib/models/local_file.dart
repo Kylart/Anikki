@@ -7,7 +7,7 @@ class LocalFile {
   final String path;
   final File file;
   final String? title;
-  final String? episode;
+  final int? episode;
   final String? releaseGroup;
   Fragment$shortMedia? media;
 
@@ -24,7 +24,7 @@ class LocalFile {
     String? path,
     File? file,
     String? title,
-    String? episode,
+    int? episode,
     String? releaseGroup,
     Fragment$shortMedia? media,
   }) {
