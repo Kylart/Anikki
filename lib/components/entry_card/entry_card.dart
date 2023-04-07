@@ -89,14 +89,17 @@ class EntryCard extends StatelessWidget {
               ),
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-              title: Opacity(
-                opacity: 0.7,
-                child: Text(
-                  '$title\n',
-                  style: Theme.of(context).textTheme.titleSmall,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
+              title: Tooltip(
+                message: title,
+                child: Opacity(
+                  opacity: 0.7,
+                  child: Text(
+                    '$title\n',
+                    style: Theme.of(context).textTheme.titleSmall,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                  ),
                 ),
               ),
               trailing: Column(
