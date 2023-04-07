@@ -10,14 +10,12 @@ class LibraryCard extends StatefulWidget {
     required this.entry,
     this.episode,
     required this.isExpandable,
-    required this.isExpanded,
     required this.onTap,
   });
 
   final LocalFile entry;
   final String? episode;
   final bool isExpandable;
-  final bool isExpanded;
   final void Function() onTap;
 
   @override
@@ -36,7 +34,7 @@ class _LibraryCardState extends State<LibraryCard> {
     return GestureDetector(
       onTap: widget.onTap,
       child: AbsorbPointer(
-        absorbing: !widget.isExpanded,
+        absorbing: widget.isExpandable,
         child: EntryCard(
           coverImage: coverImage,
           title: title,

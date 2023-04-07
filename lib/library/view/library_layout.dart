@@ -78,7 +78,6 @@ class _LibraryLayoutState extends State<LibraryLayout> {
                 episode: libraryEntry.entries.length == 1 || isExpanded[entryIndex]
                     ? libraryEntry.entries.firstWhere((element) => element == entry).episode
                     : '${libraryEntry.epMin} ~ ${libraryEntry.epMax}',
-                isExpanded: isExpanded[entryIndex],
                 isExpandable:
                     libraryEntry.entries.length > 1 && !isExpanded[entryIndex],
               );
