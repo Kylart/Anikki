@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,6 +37,9 @@ class _LibraryLayoutState extends State<LibraryLayout> {
 
     for (int index = 0; index < widget.entries.length; index++) {
       if (isExpanded.elementAt(index)) {
+        if (widget.entries.elementAt(index).entries.length > 1) {
+          result.add(LocalFile(path: 'shrink/$index', file: File('')));
+        }
         result.addAll(widget.entries.elementAt(index).entries);
       } else {
         result.add(widget.entries.elementAt(index).entries.last);
@@ -62,25 +67,46 @@ class _LibraryLayoutState extends State<LibraryLayout> {
             entries: entries,
             gridDelegate: userListGridDelegate,
             builder: (entry, index) {
-              final entryIndex = indexOf(entry);
-              final libraryEntry = widget.entries.elementAt(entryIndex);
+              final isShrinkEntry = entry.path.startsWith('shrink/');
 
-              return LibraryCard(
-                onTap: () {
-                  /// Find index of the file in entries
-                  final index = entryIndex;
+              if (isShrinkEntry) {
+                return Center(
+                  child: IconButton(
+                    onPressed: () {
+                      /// Find index of the file in entries
+                      final index = int.tryParse(entry.path.split('/')[1])!;
 
-                  setState(() {
-                    isExpanded[index] = !isExpanded[index];
-                  });
-                },
-                entry: entry,
-                episode: libraryEntry.entries.length == 1 || isExpanded[entryIndex]
-                    ? libraryEntry.entries.firstWhere((element) => element == entry).episode
-                    : '${libraryEntry.epMin} ~ ${libraryEntry.epMax}',
-                isExpandable:
-                    libraryEntry.entries.length > 1 && !isExpanded[entryIndex],
-              );
+                      setState(() {
+                        isExpanded[index] = !isExpanded[index];
+                      });
+                    },
+                    icon: const Icon(Icons.keyboard_arrow_right),
+                  ),
+                );
+              } else {
+                final entryIndex = indexOf(entry);
+                final libraryEntry = widget.entries.elementAt(entryIndex);
+
+                return LibraryCard(
+                  onTap: () {
+                    /// Find index of the file in entries
+                    final index = entryIndex;
+
+                    setState(() {
+                      isExpanded[index] = !isExpanded[index];
+                    });
+                  },
+                  entry: entry,
+                  episode:
+                      libraryEntry.entries.length == 1 || isExpanded[entryIndex]
+                          ? libraryEntry.entries
+                              .firstWhere((element) => element == entry)
+                              .episode
+                          : '${libraryEntry.epMin} ~ ${libraryEntry.epMax}',
+                  isExpandable: libraryEntry.entries.length > 1 &&
+                      !isExpanded[entryIndex],
+                );
+              }
             },
           )
         : CustomListView(
@@ -92,8 +118,10 @@ class _LibraryLayoutState extends State<LibraryLayout> {
               return EntryTile(
                 entry: entry,
                 subtitle: libraryEntry.entries.length == 1
-                    ? Text('Episode ${libraryEntry.entries.firstWhere((element) => element == entry).episode ?? 'not specified'}')
-                    : Text('Episode ${libraryEntry.epMin} to ${libraryEntry.epMax}'),
+                    ? Text(
+                        'Episode ${libraryEntry.entries.firstWhere((element) => element == entry).episode ?? 'not specified'}')
+                    : Text(
+                        'Episode ${libraryEntry.epMin} to ${libraryEntry.epMax}'),
                 actions: getLibraryActions(context, entry),
                 title:
                     entry.title ?? entry.media?.title?.userPreferred ?? 'N/A',
