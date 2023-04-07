@@ -34,7 +34,7 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
 
   if (!exists) throw LibraryDoesNotExistException();
 
-  final fileStream = directory.list(recursive: false, followLinks: false);
+  final fileStream = directory.list(recursive: true, followLinks: false);
   final files = await fileStream.toList();
 
   for (final file in files) {
