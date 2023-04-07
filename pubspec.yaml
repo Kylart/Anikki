@@ -84,6 +84,7 @@ dependencies:
   media_kit_libs_linux: ^1.0.1
   watcher: ^1.0.2
   flutter_staggered_animations: ^1.1.1
+  flutter_reorderable_grid_view: ^4.0.0
 
 dev_dependencies:
   flutter_test:
