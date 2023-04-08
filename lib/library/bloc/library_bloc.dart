@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:anikki/library/helpers/to_library_entry.dart';
-import 'package:anikki/models/library_entry.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:path/path.dart';
 import 'package:watcher/watcher.dart';
 
+import 'package:anikki/library/helpers/to_library_entry.dart';
+import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/library/repository/repository.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/helpers/logger.dart';
@@ -28,6 +28,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     on<LibraryUpdateRequested>(_onUpdateRequested);
     on<LibraryFileDeleted>(_onFileDeleted);
     on<LibraryFileAdded>(_onFileAdded);
+    on<LibraryEntryExpanded>(_onEntryExpanded);
 
     settingsBloc.stream.listen((settingsState) {
       final newPath = settingsState.settings.localDirectory;
@@ -37,6 +38,22 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         add(LibraryUpdateRequested(path: newPath));
       }
     });
+  }
+
+  void _onEntryExpanded(
+      LibraryEntryExpanded event, Emitter<LibraryState> emit) {
+    if (state is LibraryLoaded) {
+      final s = state as LibraryLoaded;
+      final List<bool> expanded = List.from(s.expandedEntries);
+
+      expanded[event.index] = !expanded[event.index];
+
+      emit(LibraryLoaded(
+        path: s.path,
+        entries: s.entries,
+        expandedEntries: expanded,
+      ));
+    }
   }
 
   void _setupWatcher(String path) {
@@ -88,6 +105,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         emit(
           LibraryLoaded(
             entries: entries,
+            expandedEntries: entries.map((e) => e.entries.length == 1).toList(),
             path: path,
           ),
         );
@@ -105,25 +123,32 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   }
 
   void _onFileDeleted(LibraryFileDeleted event, Emitter<LibraryState> emit) {
-    if (state is LibraryLoaded) {
+    if (state.runtimeType == LibraryLoaded) {
       final file = event.file;
 
       /// Find `file` in existing entries if any
-      final List<LibraryEntry> entries =
-          List.from((state as LibraryLoaded).entries);
+      final currentState = state as LibraryLoaded;
+
+      final entries = List<LibraryEntry>.from(currentState.entries);
+      final expandedEntries = List<bool>.from(currentState.expandedEntries);
+
       final existsIndex =
-          entries.indexWhere((element) => element.media?.id == file.media?.id);
+          entries.indexWhere((element) => element.entries.contains(file));
 
       if (existsIndex != -1) {
         entries[existsIndex]
             .entries
             .removeWhere((element) => element.path == element.path);
 
-        if (entries.isEmpty) entries.removeAt(existsIndex);
+        if (entries[existsIndex].entries.isEmpty) {
+          entries.removeAt(existsIndex);
+          expandedEntries.removeAt(existsIndex);
+        }
 
         emit(
           LibraryLoaded(
             entries: entries,
+            expandedEntries: expandedEntries,
             path: state.path,
           ),
         );
@@ -133,31 +158,48 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
   Future<void> _onFileAdded(
       LibraryFileAdded event, Emitter<LibraryState> emit) async {
-    if (state is LibraryLoaded) {
+    if (state.runtimeType == LibraryLoaded) {
       final file = await retrieveLocalFile(path: event.path);
 
       /// Find `file` in existing entries if any
-      final List<LibraryEntry> entries =
-          List.from((state as LibraryLoaded).entries);
+      final currentState = state as LibraryLoaded;
+
+      final entries = List<LibraryEntry>.from(currentState.entries);
+      final expandedEntries = List<bool>.from(currentState.expandedEntries);
+
       final existsIndex =
-          entries.indexWhere((element) => element.media?.id == file.media?.id);
+          entries.indexWhere((element) => element.entries.contains(file));
 
       if (existsIndex != -1) {
         entries[existsIndex].entries.add(file);
       } else {
-        entries.add(
-          LibraryEntry(
-            media: file.media,
-            entries: [file],
-          ),
+        final newEntry = LibraryEntry(
+          media: file.media,
+          entries: [file],
         );
-      }
 
-      sortEntries(entries);
+        /// Looking where to insert the new entry
+        for (int index = 0; index < entries.length; index++) {
+          if (compareTitles(entries.elementAt(index), newEntry) > 0) {
+            /// Means we need to place the new entry just the index before
+            final insertIndex = index;
+
+            entries.insert(
+              insertIndex,
+              newEntry,
+            );
+
+            expandedEntries.insert(insertIndex, true);
+
+            break;
+          }
+        }
+      }
 
       emit(
         LibraryLoaded(
           entries: entries,
+          expandedEntries: expandedEntries,
           path: state.path,
         ),
       );

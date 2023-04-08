@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/library/bloc/library_bloc.dart';
 import 'package:anikki/models/local_file.dart';
 import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
@@ -14,35 +15,27 @@ import 'package:anikki/components/custom_list_view.dart';
 import 'package:anikki/components/custom_grid_view.dart';
 import 'package:anikki/user_list/user_list_grid_delegate.dart';
 
-class LibraryLayout extends StatefulWidget {
-  const LibraryLayout({super.key, required this.entries});
+class LibraryLayout extends StatelessWidget {
+  const LibraryLayout({
+    super.key,
+    required this.entries,
+    required this.isExpanded,
+  });
 
   final List<LibraryEntry> entries;
+  final List<bool> isExpanded;
 
-  @override
-  State<LibraryLayout> createState() => _LibraryLayoutState();
-}
-
-class _LibraryLayoutState extends State<LibraryLayout> {
-  List<bool> isExpanded = [];
-
-  @override
-  void initState() {
-    super.initState();
-    isExpanded = widget.entries.map((e) => e.entries.length == 1).toList();
-  }
-
-  List<LocalFile> get entries {
+  List<LocalFile> get expandedEntries {
     List<LocalFile> result = [];
 
-    for (int index = 0; index < widget.entries.length; index++) {
+    for (int index = 0; index < entries.length; index++) {
       if (isExpanded.elementAt(index)) {
-        if (widget.entries.elementAt(index).entries.length > 1) {
+        if (entries.elementAt(index).entries.length > 1) {
           result.add(LocalFile(path: 'shrink/$index', file: File('')));
         }
-        result.addAll(widget.entries.elementAt(index).entries);
+        result.addAll(entries.elementAt(index).entries);
       } else {
-        result.add(widget.entries.elementAt(index).entries.last);
+        result.add(entries.elementAt(index).entries.last);
       }
     }
 
@@ -50,15 +43,15 @@ class _LibraryLayoutState extends State<LibraryLayout> {
   }
 
   int indexOf(LocalFile file) {
-    return widget.entries.indexWhere(
+    return entries.indexWhere(
       (element) => element.entries.contains(file),
     );
   }
 
-  void toggleExpanded(int index) {
-    setState(() {
-      isExpanded[index] = !isExpanded[index];
-    });
+  void toggleExpanded(BuildContext context, int index) {
+    BlocProvider.of<LibraryBloc>(context).add(
+      LibraryEntryExpanded(index: index),
+    );
   }
 
   @override
@@ -70,7 +63,7 @@ class _LibraryLayoutState extends State<LibraryLayout> {
 
     return layout == UserListLayouts.grid
         ? CustomGridView(
-            entries: entries,
+            entries: expandedEntries,
             gridDelegate: userListGridDelegate,
             builder: (entry, index) {
               final isShrinkEntry = entry.path.startsWith('shrink/');
@@ -80,17 +73,18 @@ class _LibraryLayoutState extends State<LibraryLayout> {
                   key: Key(entry.path),
                   child: IconButton(
                     onPressed: () {
-                      toggleExpanded(int.tryParse(entry.path.split('/')[1])!);
+                      toggleExpanded(
+                          context, int.tryParse(entry.path.split('/')[1])!);
                     },
                     icon: const Icon(Icons.keyboard_arrow_right),
                   ),
                 );
               } else {
                 final entryIndex = indexOf(entry);
-                final libraryEntry = widget.entries.elementAt(entryIndex);
+                final libraryEntry = entries.elementAt(entryIndex);
 
                 return LibraryCard(
-                  onTap: () => toggleExpanded(entryIndex),
+                  onTap: () => toggleExpanded(context, entryIndex),
                   entry: entry,
                   episode:
                       libraryEntry.entries.length == 1 || isExpanded[entryIndex]
@@ -106,7 +100,7 @@ class _LibraryLayoutState extends State<LibraryLayout> {
             },
           )
         : CustomListView(
-            entries: entries,
+            entries: expandedEntries,
             builder: (context, entry) {
               final isShrinkEntry = entry.path.startsWith('shrink/');
 
@@ -115,14 +109,15 @@ class _LibraryLayoutState extends State<LibraryLayout> {
                   dense: true,
                   trailing: IconButton(
                     onPressed: () {
-                      toggleExpanded(int.tryParse(entry.path.split('/')[1])!);
+                      toggleExpanded(
+                          context, int.tryParse(entry.path.split('/')[1])!);
                     },
                     icon: const Icon(Icons.expand_less),
                   ),
                 );
               } else {
                 final entryIndex = indexOf(entry);
-                final libraryEntry = widget.entries.elementAt(entryIndex);
+                final libraryEntry = entries.elementAt(entryIndex);
                 final isExpandable =
                     libraryEntry.entries.length > 1 && !isExpanded[entryIndex];
 
@@ -140,7 +135,7 @@ class _LibraryLayoutState extends State<LibraryLayout> {
                       ? geExpandabletLibraryActions(
                           context: context,
                           entry: entry,
-                          onShrink: () => toggleExpanded(entryIndex),
+                          onShrink: () => toggleExpanded(context, entryIndex),
                         )
                       : getLibraryActions(context, entry),
                   title:

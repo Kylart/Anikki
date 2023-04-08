@@ -36,8 +36,11 @@ class LibraryView extends StatelessWidget {
         );
 
       case LibraryLoaded:
-        final entries = (state as LibraryLoaded).entries;
-        return LibraryLayout(entries: entries);
+        final loadedState = (state as LibraryLoaded);
+        return LibraryLayout(
+          entries: loadedState.entries,
+          isExpanded: loadedState.expandedEntries,
+        );
 
       default:
         return const SizedBox();

@@ -83,13 +83,32 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   return results;
 }
 
+///
+/// Compare local files by trying to compare 3 properties
+/// 1. Media titles if any
+/// 2. File parsed title if any
+/// 3. Path
+///
+int compareTitles(LibraryEntry a, LibraryEntry b) {
+  /// Comparing media titles first
+  if (a.media?.title?.userPreferred != null &&
+      b.media?.title?.userPreferred != null) {
+    return a.media!.title!.userPreferred!
+        .compareTo(b.media!.title!.userPreferred!);
+  }
+
+  if (a.entries.first.title != null && b.entries.first.title != null) {
+    return a.entries.first.title!.compareTo(b.entries.first.title!);
+  }
+
+  return basename(a.entries.first.path).compareTo(b.entries.first.path);
+}
+
 void sortEntries(List<LibraryEntry> entries) {
   /// Sort with top level first based on path
   /// Sorting with path because title might not be parsable
   /// or plain up wrong.
-  entries.sort((a, b) {
-    return basename(a.entries.first.path).compareTo(b.entries.first.path);
-  });
+  entries.sort(compareTitles);
 
   /// Then we have to sort all the `entries` of each `LibraryEntry`;
   /// Parsing with title and episode

@@ -22,11 +22,16 @@ class LibraryLoading extends LibraryState {
 
 class LibraryLoaded extends LibraryState {
   final List<LibraryEntry> entries;
+  final List<bool> expandedEntries;
 
-  const LibraryLoaded({required this.entries, required super.path});
+  const LibraryLoaded({
+    required super.path,
+    required this.entries,
+    required this.expandedEntries,
+  });
 
   @override
-  List<Object> get props => [entries, path];
+  List<Object> get props => [entries, path, expandedEntries];
 
   @override
   String toString() {
@@ -34,6 +39,7 @@ class LibraryLoaded extends LibraryState {
       'LibraryLoaded(',
       path,
       'Entries: ${entries.length}',
+      expandedEntries,
       ')',
     ].join(', ');
   }

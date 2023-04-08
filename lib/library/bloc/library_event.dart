@@ -17,13 +17,19 @@ class LibraryUpdateRequested extends LibraryEvent {
 }
 
 class LibraryFileDeleted extends LibraryEvent {
-  const LibraryFileDeleted({ required this.file });
+  const LibraryFileDeleted({required this.file});
 
   final LocalFile file;
 }
 
 class LibraryFileAdded extends LibraryEvent {
-  const LibraryFileAdded({ required this.path });
+  const LibraryFileAdded({required this.path});
 
   final String path;
+}
+
+class LibraryEntryExpanded extends LibraryEvent {
+  const LibraryEntryExpanded({required this.index});
+
+  final int index;
 }
