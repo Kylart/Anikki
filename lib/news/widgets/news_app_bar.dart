@@ -86,7 +86,7 @@ class _NewsAppBarState extends State<NewsAppBar>
           if (widget.showTitle)
             Text(
               'News',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           const Spacer(),
           Padding(
