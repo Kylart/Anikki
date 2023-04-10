@@ -6,8 +6,24 @@ List<LibraryEntry> toLibraryEntry(List<LocalFile> files) {
   final List<LibraryEntry> result = [];
 
   for (final file in files) {
-    final exists =
-        result.indexWhere((element) => element.media?.id == file.media?.id);
+    final exists = result.indexWhere((element) {
+      /// Comparing media IDs if any
+      /// This will most likely happen only when online
+      if (element.media != null && file.media != null) {
+        return element.media?.id == file.media?.id;
+      }
+
+      /// Fallback for if there is no medai to compare
+      /// This should most likely happen on offline use
+      /// Comparing parsed titles
+      if (element.entries.first.title != null && file.title != null) {
+        return element.entries.first.title! == file.title;
+      }
+
+      /// Otherwise, no assumption can be made, better be on the safe side
+      /// even if it means not grouping entries together
+      return false;
+    });
 
     if (exists != -1) {
       /// Exists
