@@ -1,6 +1,18 @@
 import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/models/local_file.dart';
 
+/// Takes a list of `LocalFile` elements and maps them to a
+/// list of `LibraryEntry`.
+///
+/// This helps group similar `LocalFile` together and is quite helpful
+/// for the library feature.
+///
+/// To do so. The method tries to find similar `LocalFile` by matching
+/// `file.media?.id` if not null. If there is no `media` property
+/// on the `LocalFile`, it tries matching the parsed `title` property
+/// if any.
+///
+/// Otherwise, no assumption can be made and no match can be found.
 List<LibraryEntry> toLibraryEntry(List<LocalFile> files) {
   /// Grouping files which are the same
   final List<LibraryEntry> result = [];

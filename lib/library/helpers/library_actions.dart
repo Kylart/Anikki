@@ -51,6 +51,7 @@ EntryAction _expandAction(
       label: 'Show all episodes',
     );
 
+/// Library actions that should be available only for non-expandables or expanded entries.
 List<EntryAction> getLibraryActions(BuildContext context, LocalFile entry) {
   return [
     _playAction(context, entry),
@@ -60,6 +61,7 @@ List<EntryAction> getLibraryActions(BuildContext context, LocalFile entry) {
   ];
 }
 
+/// Library actions that should be available for expandable entries.
 List<EntryAction> geExpandabletLibraryActions({
   required BuildContext context,
   required LocalFile entry,
