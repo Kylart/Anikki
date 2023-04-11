@@ -24,6 +24,17 @@ class LibraryLoaded extends LibraryState {
   final List<LibraryEntry> entries;
   final List<bool> expandedEntries;
 
+  get playlist => entries.fold<List<String>>(
+        [],
+        (previousValue, element) => [
+          ...previousValue,
+
+          /// Taking `reversed` becasue the entries of a `LibraryEntry` are sorted descendingly
+          /// and we want the next eposide to be the (N + 1)th.
+          ...element.entries.reversed.map((e) => e.path),
+        ],
+      );
+
   const LibraryLoaded({
     required super.path,
     required this.entries,

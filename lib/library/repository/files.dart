@@ -175,7 +175,12 @@ Future<void> playFile(LocalFile entry, BuildContext context,
     Wakelock.enable();
 
     VideoPlayer player = isDesktop()
-        ? DesktopPlayer<File>(input: entry.file)
+        ? DesktopPlayer(
+            first: entry,
+            sources:
+                (BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded)
+                    .playlist,
+          )
         : MobilePlayer(input: entry.file);
 
     Navigator.of(context).push(

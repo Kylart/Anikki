@@ -1,32 +1,30 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 
+import 'package:anikki/models/local_file.dart';
 import 'package:anikki/components/video_player/video_player.dart';
 import 'package:anikki/components/video_player/player_widget.dart';
 import 'package:anikki/components/video_player/player_controls/player_controls.dart';
 
-class DesktopPlayer<T> implements VideoPlayer {
+class DesktopPlayer implements VideoPlayer {
   /// Player instace
   final player = Player();
 
-  /// Media to be open
-  late final Media source;
+  /// First element of the playlist to be played. If `null`, the first element played will
+  /// be the very first element given on `sources`.
+  final LocalFile? first;
+  int? get firstIndex => first == null ? null : sources.indexOf(first!.path);
 
-  /// Input can be a String or a File instance.
-  /// String can be used to open URLs and File for local files.
-  final T input;
+  /// Array of URLs.
+  final List<String> sources;
 
-  DesktopPlayer({required this.input}) {
-    if (T == String) {
-      source = Media(input as String);
-    } else if (T == File) {
-      source = Media((input as File).path);
-    } else {
-      throw 'Unhandled format for Desktop Player.';
-    }
-  }
+  /// Actual playlist that the player will play
+  Playlist get playlist => Playlist(sources.map((e) => Media(e)).toList());
+
+  DesktopPlayer({
+    required this.sources,
+    this.first,
+  });
 
   @override
   Future<void> stop() async {}
@@ -37,8 +35,9 @@ class DesktopPlayer<T> implements VideoPlayer {
       children: [
         Positioned.fill(
           child: PlayerWidget(
+            firstIndex: firstIndex,
             player: player,
-            source: source,
+            playlist: playlist,
           ),
         ),
         Positioned.fill(

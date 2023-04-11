@@ -3,10 +3,17 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
 class PlayerWidget extends StatefulWidget {
-  const PlayerWidget({super.key, required this.player, required this.source});
+  const PlayerWidget({
+    super.key,
+    required this.player,
+    required this.playlist,
+    this.firstIndex,
+  });
 
   final Player player;
-  final Media source;
+
+  final int? firstIndex;
+  final Playlist playlist;
 
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();
@@ -28,7 +35,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       // Must be created before opening any media. Otherwise, a separate window will be created.
       setState(() {});
 
-      await widget.player.open(widget.source);
+      await widget.player.open(widget.playlist);
+
+      if (widget.firstIndex != null) {
+        await widget.player.jump(widget.firstIndex!);
+      }
+
       await widget.player.play();
     });
   }
@@ -36,7 +48,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   @override
   void dispose() {
     Future.microtask(() async {
-      // Release allocated resources back to the system.
+      // Release allocated replaylists back to the system.
       await controller?.dispose();
       await widget.player.dispose();
     });
