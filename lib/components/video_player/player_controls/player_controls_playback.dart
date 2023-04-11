@@ -108,7 +108,11 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
           icon: const Icon(Icons.fast_forward),
         ),
         IconButton(
-          onPressed: player.next,
+          onPressed: () {
+            /// "Hackz" so that the player calls the `completed` event without the user noticing it.
+            player
+                .seek(player.state.duration - const Duration(milliseconds: 10));
+          },
           icon: const Icon(Icons.skip_next_outlined),
         ),
       ],

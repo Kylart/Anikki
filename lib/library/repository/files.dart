@@ -174,12 +174,27 @@ Future<void> playFile(LocalFile entry, BuildContext context,
   } else {
     Wakelock.enable();
 
+    final libraryState =
+        BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded;
+
     VideoPlayer player = isDesktop()
         ? DesktopPlayer(
+            onVideoComplete: (media) {
+              if (libraryState.playlist.contains(media.uri)) {
+                /// We have to find the `LocalFile` that was just completed
+                final entry = libraryState.entries.fold<List<LocalFile>>(
+                  [],
+                  (previousValue, element) => [
+                    ...previousValue,
+                    ...element.entries.reversed.map((e) => e),
+                  ],
+                ).firstWhere((element) => element.path == media.uri);
+
+                updateEntry(context, entry);
+              }
+            },
             first: entry,
-            sources:
-                (BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded)
-                    .playlist,
+            sources: libraryState.playlist,
           )
         : MobilePlayer(input: entry.file);
 

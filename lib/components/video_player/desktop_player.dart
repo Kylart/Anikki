@@ -7,6 +7,12 @@ import 'package:anikki/components/video_player/player_widget.dart';
 import 'package:anikki/components/video_player/player_controls/player_controls.dart';
 
 class DesktopPlayer implements VideoPlayer {
+  DesktopPlayer({
+    required this.sources,
+    this.first,
+    this.onVideoComplete,
+  });
+
   /// Player instace
   final player = Player();
 
@@ -21,10 +27,7 @@ class DesktopPlayer implements VideoPlayer {
   /// Actual playlist that the player will play
   Playlist get playlist => Playlist(sources.map((e) => Media(e)).toList());
 
-  DesktopPlayer({
-    required this.sources,
-    this.first,
-  });
+  final void Function(Media media)? onVideoComplete;
 
   @override
   Future<void> stop() async {}
@@ -38,6 +41,7 @@ class DesktopPlayer implements VideoPlayer {
             firstIndex: firstIndex,
             player: player,
             playlist: playlist,
+            onVideoComplete: onVideoComplete,
           ),
         ),
         Positioned.fill(

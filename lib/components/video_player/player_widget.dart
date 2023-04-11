@@ -8,12 +8,15 @@ class PlayerWidget extends StatefulWidget {
     required this.player,
     required this.playlist,
     this.firstIndex,
+    this.onVideoComplete,
   });
 
   final Player player;
 
   final int? firstIndex;
   final Playlist playlist;
+
+  final void Function(Media media)? onVideoComplete;
 
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();
@@ -42,6 +45,15 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       }
 
       await widget.player.play();
+
+      if (widget.onVideoComplete != null) {
+        widget.player.streams.completed.listen((completed) {
+          if (!completed) return;
+
+          final playlist = widget.player.state.playlist;
+          widget.onVideoComplete!(playlist.medias.elementAt(playlist.index));
+        });
+      }
     });
   }
 
