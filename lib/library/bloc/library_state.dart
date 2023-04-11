@@ -24,7 +24,7 @@ class LibraryLoaded extends LibraryState {
   final List<LibraryEntry> entries;
   final List<bool> expandedEntries;
 
-  get playlist => entries.fold<List<String>>(
+  List<String> get playlist => entries.fold<List<String>>(
         [],
         (previousValue, element) => [
           ...previousValue,
