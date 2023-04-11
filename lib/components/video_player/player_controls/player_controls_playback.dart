@@ -67,6 +67,10 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
     return Row(
       children: [
         IconButton(
+          onPressed: player.previous,
+          icon: const Icon(Icons.skip_previous_outlined),
+        ),
+        IconButton(
           onPressed: () {
             rewind(const Duration(seconds: 10));
           },
@@ -102,6 +106,10 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
             );
           },
           icon: const Icon(Icons.fast_forward),
+        ),
+        IconButton(
+          onPressed: player.next,
+          icon: const Icon(Icons.skip_next_outlined),
         ),
       ],
     );
