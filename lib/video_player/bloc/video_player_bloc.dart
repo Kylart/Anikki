@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:media_kit/media_kit.dart';
 
+import 'package:anikki/helpers/logger.dart';
+
 part 'video_player_event.dart';
 part 'video_player_state.dart';
 
@@ -16,6 +18,10 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
       : super(
           const VideoPlayerState(),
         ) {
+    on<VideoPlayerEvent>((event, emit) {
+      logger.v('Video Player event: ${event.runtimeType}');
+    });
+
     on<VideoPlayerDisplayTapped>((event, emit) {
       if (player.state.playing) {
         if (state.displayTapped) {
