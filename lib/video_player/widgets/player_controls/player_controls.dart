@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:anikki/video_player/bloc/video_player_bloc.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 
+import 'package:anikki/video_player/bloc/video_player_bloc.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 
 part 'player_controls_background.dart';
@@ -22,18 +22,10 @@ part 'player_controls_playback.dart';
 part 'player_controls_subtitles.dart';
 part 'player_controls_audios.dart';
 
-class PlayerControls extends StatefulWidget {
+class PlayerControls extends StatelessWidget {
   const PlayerControls({super.key, required this.player});
 
   final Player player;
-
-  @override
-  State<PlayerControls> createState() => _PlayerControlsState();
-}
-
-class _PlayerControlsState extends State<PlayerControls>
-    with SingleTickerProviderStateMixin {
-  Player get player => widget.player;
 
   @override
   Widget build(BuildContext context) {
