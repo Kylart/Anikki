@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/glass_circle.dart';
+import 'package:anikki/widgets/glass_circle.dart';
 
-class EntryCardBookmark extends StatelessWidget {
-  const EntryCardBookmark({super.key});
+class EntryCardCompleted extends StatelessWidget {
+  const EntryCardCompleted({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +15,10 @@ class EntryCardBookmark extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.black54,
         ),
-        child: Center(
+        child: const Center(
           child: Icon(
-            Icons.bookmark_added_outlined,
-            color: Theme.of(context).colorScheme.primary,
+            Icons.done_all,
+            color: Colors.green,
           ),
         ),
       ),

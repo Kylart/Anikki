@@ -1,11 +1,11 @@
-import 'package:anikki/helpers/loader.dart';
+import 'package:anikki/widgets/loader.dart';
 import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/helpers/capitalize.dart';
-import 'package:anikki/components/error_tile.dart';
+import 'package:anikki/widgets/error_tile.dart';
 import 'package:anikki/watch_list/view/watch_list_layout.dart';
 
 class WatchListView extends StatefulWidget {

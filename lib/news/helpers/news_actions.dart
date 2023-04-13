@@ -11,7 +11,7 @@ import 'package:anikki/watch_list/helpers/watch_list_actions.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';
-import 'package:anikki/components/entry_action.dart';
+import 'package:anikki/widgets/entry/entry_action.dart';
 
 List<EntryAction> getNewsActions({
   required BuildContext context,

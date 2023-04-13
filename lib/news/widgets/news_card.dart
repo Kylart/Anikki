@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/news/helpers/news_actions.dart';
-import 'package:anikki/components/entry_card/entry_card.dart';
+import 'package:anikki/widgets/entry_card/entry_card.dart';
 import 'package:anikki/helpers/anilist/filters/is_followed.dart';
 import 'package:anikki/helpers/anilist/filters/is_seen.dart';
 

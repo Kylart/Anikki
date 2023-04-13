@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-import 'package:anikki/components/list_view_divider.dart';
+import 'package:anikki/widgets/list_view/list_view_divider.dart';
 
 class CustomListView<T> extends StatelessWidget {
   const CustomListView({

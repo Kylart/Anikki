@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/library/repository/repository.dart';
-import 'package:anikki/components/entry_action.dart';
+import 'package:anikki/widgets/entry/entry_action.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';
 import 'package:anikki/models/local_file.dart';

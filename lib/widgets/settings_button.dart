@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:anikki/components/anikki_glass_icon.dart';
+import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,9 +1,9 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/fade_overlay.dart';
+import 'package:anikki/widgets/fade_overlay.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/components/download_results_dialog/download_results.dart';
+import 'package:anikki/download_results_dialog/download_results.dart';
 import 'package:anikki/models/local_file.dart';
 
 void showAvailableTorrents<T>(BuildContext context, T entry) {

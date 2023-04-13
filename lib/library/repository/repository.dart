@@ -13,7 +13,7 @@ import 'package:wakelock/wakelock.dart';
 
 import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/components/fade_overlay.dart';
+import 'package:anikki/widgets/fade_overlay.dart';
 import 'package:anikki/video_player/video_player.dart';
 import 'package:anikki/helpers/anilist/anilist_client.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';

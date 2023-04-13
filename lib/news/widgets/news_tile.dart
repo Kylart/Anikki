@@ -2,7 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/components/entry_tile.dart';
+import 'package:anikki/widgets/entry/entry_tile.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/news/helpers/news_actions.dart';
 import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';

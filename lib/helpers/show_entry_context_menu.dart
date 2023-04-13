@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/anikki_glass_icon.dart';
-import 'package:anikki/components/entry_action.dart';
+import 'package:anikki/widgets/anikki_icon.dart';
+import 'package:anikki/widgets/entry/entry_action.dart';
 
 void showEntryContextMenu({
   required Offset offset,

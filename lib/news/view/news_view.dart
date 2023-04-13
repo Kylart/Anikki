@@ -2,11 +2,11 @@ import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/helpers/loader.dart';
+import 'package:anikki/widgets/loader.dart';
 import 'package:anikki/news/bloc/news_bloc.dart';
 import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart';
-import 'package:anikki/components/error_tile.dart';
+import 'package:anikki/widgets/error_tile.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/news/widgets/news_app_bar.dart';
 import 'package:anikki/news/view/news_layout.dart';

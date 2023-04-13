@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/entry_card/entry_card_cover.dart';
-import 'package:anikki/components/anikki_glass_icon.dart';
+import 'package:anikki/widgets/entry_card/entry_card_cover.dart';
+import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
-import 'package:anikki/components/entry_action.dart';
+import 'package:anikki/widgets/entry/entry_action.dart';
 
 class EntryCard extends StatelessWidget {
   const EntryCard({

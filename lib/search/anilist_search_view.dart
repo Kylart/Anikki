@@ -1,9 +1,9 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/search/character_list_view.dart';
-import 'package:anikki/components/search/media_list_view.dart';
-import 'package:anikki/components/search/staff_list_view.dart';
+import 'package:anikki/search/character_list_view.dart';
+import 'package:anikki/search/media_list_view.dart';
+import 'package:anikki/search/staff_list_view.dart';
 
 class AnilistSearchView extends StatelessWidget {
   const AnilistSearchView({

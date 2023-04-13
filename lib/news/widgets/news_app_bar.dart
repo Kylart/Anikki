@@ -2,9 +2,9 @@ import 'package:anikki/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'package:anikki/components/anikki_glass_icon.dart';
+import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/news/widgets/news_layout_toggle.dart';
-import 'package:anikki/components/settings_button.dart';
+import 'package:anikki/widgets/settings_button.dart';
 import 'package:anikki/models/settings_action.dart';
 
 class NewsAppBar extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:anikki/helpers/connectivity_bloc/is_online_mixin.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/anilist_auth/anilist_auth.dart';
-import 'package:anikki/components/search/search.dart';
+import 'package:anikki/search/search.dart';
 
 class CustomAppBar extends StatefulWidget {
   const CustomAppBar({

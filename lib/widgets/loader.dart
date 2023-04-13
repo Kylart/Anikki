@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:anikki/components/box_skeleton.dart';
+import 'package:anikki/widgets/list_view/tile_skeleton.dart';
 
 class Loader extends StatelessWidget {
   const Loader({super.key});
@@ -18,7 +18,7 @@ class Loader extends StatelessWidget {
             baseColor: Colors.grey.shade500,
             highlightColor: Colors.white38,
             period: Duration(milliseconds: timer),
-            child: skeletonBox(),
+            child: const TileSkeleton(),
           );
         },
       ),

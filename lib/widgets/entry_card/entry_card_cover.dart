@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/entry_card/entry_card_bookmark.dart';
-import 'package:anikki/components/entry_tag.dart';
-import 'package:anikki/components/entry_card/entry_card_completed.dart';
+import 'package:anikki/widgets/entry_card/entry_card_bookmark.dart';
+import 'package:anikki/widgets/entry/entry_tag.dart';
+import 'package:anikki/widgets/entry_card/entry_card_completed.dart';
 
 class EntryCardCover extends StatelessWidget {
   const EntryCardCover({

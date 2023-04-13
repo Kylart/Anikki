@@ -4,7 +4,7 @@ import 'package:anikki/watch_list/watch_list.dart';
 import 'package:anikki/library/repository/repository.dart';
 import 'package:anikki/anilist_auth/view/anilist_auth_view.dart';
 import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
-import 'package:anikki/components/search/search.dart';
+import 'package:anikki/search/search.dart';
 import 'package:anikki/settings/settings.dart';
 import 'package:anikki/library/library.dart';
 import 'package:anikki/models/user_list_enum.dart';

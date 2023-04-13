@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
 
 import 'package:anikki/helpers/anilist/anilist_client.dart';
-import 'package:anikki/components/search/search_part.dart';
+import 'package:anikki/search/search_part.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});

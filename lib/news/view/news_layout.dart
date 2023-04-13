@@ -6,8 +6,8 @@ import 'package:anikki/news/widgets/news_tile.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/settings/models/settings.dart';
 import 'package:anikki/news/widgets/news_card.dart';
-import 'package:anikki/components/custom_list_view.dart';
-import 'package:anikki/components/custom_grid_view.dart';
+import 'package:anikki/widgets/list_view/custom_list_view.dart';
+import 'package:anikki/widgets/grid_view/custom_grid_view.dart';
 
 class NewsLayout extends StatelessWidget {
   const NewsLayout({super.key, required this.entries});

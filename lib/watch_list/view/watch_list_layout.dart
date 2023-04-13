@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/settings/models/settings.dart';
-import 'package:anikki/components/entry_tile.dart';
+import 'package:anikki/widgets/entry/entry_tile.dart';
 import 'package:anikki/watch_list/helpers/watch_list_actions.dart';
 import 'package:anikki/watch_list/widgets/watch_list_card.dart';
-import 'package:anikki/components/custom_list_view.dart';
-import 'package:anikki/components/custom_grid_view.dart';
+import 'package:anikki/widgets/list_view/custom_list_view.dart';
+import 'package:anikki/widgets/grid_view/custom_grid_view.dart';
 import 'package:anikki/user_list/user_list_grid_delegate.dart';
 
 class WatchListLayout extends StatelessWidget {

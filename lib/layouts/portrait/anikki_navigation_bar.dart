@@ -1,4 +1,4 @@
-import 'package:anikki/components/anikki_glass_icon.dart';
+import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:flutter/material.dart';
 
 class AnikkiNavigationBar extends StatelessWidget {

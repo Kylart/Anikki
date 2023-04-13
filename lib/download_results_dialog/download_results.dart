@@ -1,7 +1,7 @@
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/download_results_dialog/download_results_container.dart';
+import 'package:anikki/download_results_dialog/download_results_container.dart';
 import 'package:nyaa/nyaa.dart';
 
 class DownloadResults extends StatelessWidget {

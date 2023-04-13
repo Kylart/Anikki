@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:anikki/components/entry_tag.dart';
-import 'package:anikki/components/glass_circle.dart';
+import 'package:anikki/widgets/entry/entry_tag.dart';
+import 'package:anikki/widgets/glass_circle.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
-import 'package:anikki/components/anikki_glass_icon.dart';
-import 'package:anikki/components/entry_action.dart';
+import 'package:anikki/widgets/anikki_icon.dart';
+import 'package:anikki/widgets/entry/entry_action.dart';
 
 class EntryTile<T> extends StatelessWidget {
   const EntryTile({

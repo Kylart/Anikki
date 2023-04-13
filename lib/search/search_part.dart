@@ -2,8 +2,8 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
 
-import 'package:anikki/components/download_results_dialog/download_results_dialog_list_view.dart';
-import 'package:anikki/components/search/anilist_search_view.dart';
+import 'package:anikki/download_results_dialog/download_results_dialog_list_view.dart';
+import 'package:anikki/search/anilist_search_view.dart';
 
 class SearchPart<T> extends StatefulWidget {
   const SearchPart({

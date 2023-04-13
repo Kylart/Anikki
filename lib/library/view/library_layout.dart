@@ -8,11 +8,11 @@ import 'package:anikki/models/local_file.dart';
 import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/settings/models/settings.dart';
-import 'package:anikki/components/entry_tile.dart';
+import 'package:anikki/widgets/entry/entry_tile.dart';
 import 'package:anikki/library/helpers/library_actions.dart';
 import 'package:anikki/library/widgets/library_card.dart';
-import 'package:anikki/components/custom_list_view.dart';
-import 'package:anikki/components/custom_grid_view.dart';
+import 'package:anikki/widgets/list_view/custom_list_view.dart';
+import 'package:anikki/widgets/grid_view/custom_grid_view.dart';
 import 'package:anikki/user_list/user_list_grid_delegate.dart';
 
 class LibraryLayout extends StatelessWidget {
