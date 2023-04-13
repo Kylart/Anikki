@@ -4,14 +4,9 @@ class PlayerMovableControls extends StatefulWidget {
   const PlayerMovableControls({
     super.key,
     required this.child,
-    required this.onEnter,
-    required this.onExit,
   });
 
   final Widget child;
-
-  final void Function() onEnter;
-  final void Function() onExit;
 
   @override
   State<PlayerMovableControls> createState() => _PlayerMovableControlsState();
@@ -28,6 +23,7 @@ class _PlayerMovableControlsState extends State<PlayerMovableControls> {
 
   @override
   Widget build(BuildContext context) {
+    final videoBloc = BlocProvider.of<VideoPlayerBloc>(context, listen: true);
     final screenSize = MediaQuery.of(context).size;
 
     if (screenSize != storedScreenSize) {
@@ -60,8 +56,8 @@ class _PlayerMovableControlsState extends State<PlayerMovableControls> {
               });
             },
             child: MouseRegion(
-              onEnter: (_) => widget.onEnter(),
-              onExit: (_) => widget.onExit(),
+              onEnter: (_) => videoBloc.add(const VideoPlayerControlsHovered(true)),
+              onExit: (_) => videoBloc.add(const VideoPlayerControlsHovered(false)),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.7),

@@ -1,8 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
-
-import 'package:anikki/components/video_player/player_controls/controls_mixin.dart';
 
 class MobileVlcPlayerWithControls extends StatefulWidget {
   final VlcPlayerController controller;
@@ -16,7 +16,7 @@ class MobileVlcPlayerWithControls extends StatefulWidget {
 
 class MobileVlcPlayerWithControlsState
     extends State<MobileVlcPlayerWithControls>
-    with AutomaticKeepAliveClientMixin, ControlsMixin {
+    with AutomaticKeepAliveClientMixin {
   late VlcPlayerController _controller;
 
   bool fullscreen = false;
@@ -28,6 +28,38 @@ class MobileVlcPlayerWithControlsState
   bool validPosition = false;
   List<double> playbackSpeeds = [0.5, 1.0, 1.5, 2.0];
   int playbackSpeedIndex = 1;
+
+  Timer? _hideTimer;
+  bool hideControls = true;
+  bool displayTapped = false;
+  bool controlsHovered = false;
+
+  void cancelAndRestartTimer() {
+    _hideTimer?.cancel();
+
+    if (mounted) {
+      _startHideTimer();
+
+      setState(() {
+        hideControls = false;
+        displayTapped = true;
+      });
+    }
+  }
+
+  void _startHideTimer() {
+    _hideTimer = Timer(
+      const Duration(seconds: 3),
+      () {
+        if (mounted && !controlsHovered) {
+          setState(() {
+            hideControls = true;
+            displayTapped = false;
+          });
+        }
+      },
+    );
+  }
 
   @override
   bool get wantKeepAlive => true;

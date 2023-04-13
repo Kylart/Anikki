@@ -1,21 +1,23 @@
 part of 'player_controls.dart';
 
 class PlayerNonMovableControls extends StatelessWidget {
-  const PlayerNonMovableControls({super.key, required this.child, required this.onEnter, required this.onExit,});
+  const PlayerNonMovableControls({
+    super.key,
+    required this.child,
+  });
 
   final Widget child;
 
-  final void Function() onEnter;
-  final void Function() onExit;
-
   @override
   Widget build(BuildContext context) {
+    final videoBloc = BlocProvider.of<VideoPlayerBloc>(context, listen: true);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         MouseRegion(
-          onEnter: (_) => onEnter(),
-          onExit: (_) => onExit(),
+          onEnter: (_) => videoBloc.add(const VideoPlayerControlsHovered(true)),
+          onExit: (_) => videoBloc.add(const VideoPlayerControlsHovered(false)),
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(

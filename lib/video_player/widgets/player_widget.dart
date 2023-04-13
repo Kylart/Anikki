@@ -1,4 +1,6 @@
+import 'package:anikki/video_player/bloc/video_player_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
@@ -69,9 +71,13 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Video(
-      /// Pass the [controller] to display the video output.
-      controller: controller,
+    return BlocBuilder<VideoPlayerBloc, VideoPlayerState>(
+      builder: (context, state) {
+        return Video(
+          /// Pass the [controller] to display the video output.
+          controller: controller,
+        );
+      },
     );
   }
 }

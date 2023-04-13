@@ -178,7 +178,7 @@ Future<void> playFile(LocalFile entry, BuildContext context,
         BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded;
 
     VideoPlayer player = isDesktop()
-        ? DesktopPlayer(
+        ? AnikkiVideoPlayer(
             onVideoComplete: (media) {
               if (libraryState.playlist.contains(media.uri)) {
                 /// We have to find the `LocalFile` that was just completed

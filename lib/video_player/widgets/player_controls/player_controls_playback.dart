@@ -4,10 +4,8 @@ class PlayerControlsPlayback extends StatefulWidget {
   const PlayerControlsPlayback({
     super.key,
     required this.player,
-    required this.playerInstance,
   });
 
-  final DesktopPlayer playerInstance;
   final Player player;
 
   @override
@@ -16,7 +14,6 @@ class PlayerControlsPlayback extends StatefulWidget {
 
 class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
     with SingleTickerProviderStateMixin {
-  DesktopPlayer get playerInstance => widget.playerInstance;
   Player get player => widget.player;
 
   bool isPlaying = true;
