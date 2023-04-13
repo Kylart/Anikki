@@ -1,32 +1,32 @@
 part of 'player_controls.dart';
 
 class PlayerControlsBackground extends StatelessWidget {
-  const PlayerControlsBackground({super.key, required this.child});
+  const PlayerControlsBackground({
+    super.key,
+    required this.child,
+    required this.onEnter,
+    required this.onExit,
+  });
 
   final Widget child;
 
+  final void Function() onEnter;
+  final void Function() onExit;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          end: Alignment.topCenter,
-          begin: Alignment.bottomCenter,
-          colors: [Colors.black54, Colors.black26],
-        ),
-      ),
-      child: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 4.0,
-            ),
+    final useMovable = MediaQuery.of(context).size.width > 800;
+
+    return useMovable
+        ? PlayerMovableControls(
+            onEnter: onEnter,
+            onExit: onExit,
             child: child,
-          ),
-        ),
-      ),
-    );
+          )
+        : PlayerNonMovableControls(
+            onEnter: onEnter,
+            onExit: onExit,
+            child: child,
+          );
   }
 }

@@ -11,6 +11,8 @@ import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/components/video_player/player_controls/controls_mixin.dart';
 
 part 'player_controls_background.dart';
+part 'player_movable_controls.dart';
+part 'player_non_movable_controls.dart';
 part 'player_cursor_handler.dart';
 part 'player_controls_stop.dart';
 part 'player_controls_volume.dart';
@@ -55,49 +57,40 @@ class _PlayerControlsState extends State<PlayerControls>
         }
       },
       player: player,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          MouseRegion(
-            onEnter: (_) => setState(() {
-              hideControls = false;
-              controlsHovered = true;
-            }),
-            onExit: (_) {
-              setState(() {
-                controlsHovered = false;
-              });
-            },
-            child: PlayerControlsBackground(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: PlayerControlsProgress(player: player),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      PlayerControlsVolume(player: player),
-                      PlayerControlsPlayback(
-                        player: player,
-                        playerInstance: playerInstance,
-                      ),
-                      Row(
-                        children: [
-                          PlayerControlsSubtitles(player: player),
-                          PlayerControlsAudios(player: player),
-                          PlayerControlsStop(player: player),
-                          const PlayerControlsFullscreen(),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+      child: PlayerControlsBackground(
+        onEnter: () => setState(() {
+          hideControls = false;
+          controlsHovered = true;
+        }),
+        onExit: () => setState(() {
+          controlsHovered = false;
+        }),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: PlayerControlsProgress(player: player),
             ),
-          ),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                PlayerControlsVolume(player: player),
+                PlayerControlsPlayback(
+                  player: player,
+                  playerInstance: playerInstance,
+                ),
+                Row(
+                  children: [
+                    PlayerControlsSubtitles(player: player),
+                    PlayerControlsAudios(player: player),
+                    PlayerControlsStop(player: player),
+                    const PlayerControlsFullscreen(),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
