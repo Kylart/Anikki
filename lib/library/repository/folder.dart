@@ -18,3 +18,10 @@ Future<void> updateFolderPath(BuildContext context) async {
 
   libraryBloc.add(LibraryUpdateRequested(path: path));
 }
+
+Future<void> openFolderInExplorer(BuildContext context) async {
+  final path =
+      BlocProvider.of<SettingsBloc>(context).state.settings.localDirectory;
+
+  OpenAppFile.open(path);
+}

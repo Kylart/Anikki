@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:anikki/models/user_list_enum.dart';
@@ -71,6 +73,14 @@ class _UserListAppBarState extends State<UserListAppBar> {
                     label: 'Change folder',
                     trailing: const SizedBox(),
                     callback: () async => updateFolderPath(context),
+                  ),
+                  SettingsAction(
+                    icon: Icons.open_in_new,
+                    label: Platform.isMacOS
+                        ? 'Open in Finder'
+                        : 'Open in Explorer',
+                    trailing: const SizedBox(),
+                    callback: () async => openFolderInExplorer(context),
                   ),
                 ],
               ),
