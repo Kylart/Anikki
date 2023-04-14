@@ -74,6 +74,7 @@ fragment media on Media {
 
 fragment shortMedia on Media {
   id
+  idMal
   siteUrl
   title {
     userPreferred
