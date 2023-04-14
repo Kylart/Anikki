@@ -9,22 +9,36 @@ mixin AnilistSchedule on AnilistClient {
   Future<List<Query$AiringSchedule$Page$airingSchedules>> getSchedule(
       DateTimeRange range) async {
     try {
-      final result =
-          await client.query$AiringSchedule(Options$Query$AiringSchedule(
-              variables: Variables$Query$AiringSchedule(
-        start: (range.start.millisecondsSinceEpoch / 1000).round(),
-        end: (range.end.millisecondsSinceEpoch / 1000).round(),
-        page: 1,
-      )));
+      int page = 1;
+      final List<Query$AiringSchedule$Page$airingSchedules> results = [];
 
-      if (result.hasException) {
-        throw AnilistGetScheduleException(error: result.exception.toString());
-      }
+      QueryResult<Query$AiringSchedule> result;
 
-      return result.parsedData?.Page?.airingSchedules
-              ?.whereType<Query$AiringSchedule$Page$airingSchedules>()
-              .toList() ??
-          [];
+      do {
+        result = await client.query$AiringSchedule(
+          Options$Query$AiringSchedule(
+            variables: Variables$Query$AiringSchedule(
+              start: (range.start.millisecondsSinceEpoch / 1000).round(),
+              end: (range.end.millisecondsSinceEpoch / 1000).round(),
+              page: page,
+            ),
+          ),
+        );
+
+        if (result.hasException) {
+          throw AnilistGetScheduleException(error: result.exception.toString());
+        }
+
+        results.addAll(
+          result.parsedData?.Page?.airingSchedules
+                  ?.whereType<Query$AiringSchedule$Page$airingSchedules>() ??
+              [],
+        );
+
+        page++;
+      } while (result.parsedData?.Page?.pageInfo?.hasNextPage == true);
+
+      return results;
     } on GraphQLError catch (e) {
       throw AnilistGetScheduleException(error: e.message);
     }
