@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:anikki/widgets/entry/entry_tag.dart';
-import 'package:anikki/widgets/glass_circle.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
 import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/widgets/entry/entry_action.dart';
@@ -135,57 +133,32 @@ class EntryTile<T> extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8.0),
                       child: Tooltip(
                         message: actions.first.label,
-                        child: GlassCircle(
-                          child: SizedBox(
-                            width: 35,
-                            height: 35,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Theme.of(context).colorScheme.outline,
-                                ),
-                                shape: BoxShape.circle,
-                              ),
-                              child: IconButton(
-                                padding: const EdgeInsets.all(4.0),
-                                constraints: const BoxConstraints(),
-                                onPressed: () =>
-                                    actions.first.callback(context),
-                                icon: AnikkiIcon(icon: actions.first.icon),
-                              ),
-                            ),
+                        child: EntryTag(
+                          padding: EdgeInsets.zero,
+                          child: IconButton(
+                            constraints: const BoxConstraints(),
+                            onPressed: () => actions.first.callback(context),
+                            icon: AnikkiIcon(icon: actions.first.icon),
                           ),
                         ),
                       ),
                     ),
-                    GlassCircle(
-                      child: SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: IconButton(
-                            // padding: const EdgeInsets.all(4.0),
-                            constraints: const BoxConstraints(),
-                            onPressed: () {},
-                            icon: GestureDetector(
-                              onTapUp: (details) {
-                                showEntryContextMenu(
-                                  offset: details.globalPosition,
-                                  context: context,
-                                  actions: actions,
-                                  title: title ?? '',
-                                  episode: episode,
-                                );
-                              },
-                              child: const AnikkiIcon(icon: Icons.more_horiz),
-                            ),
-                          ),
+                    EntryTag(
+                      padding: EdgeInsets.zero,
+                      child: IconButton(
+                        constraints: const BoxConstraints(),
+                        onPressed: () {},
+                        icon: GestureDetector(
+                          onTapUp: (details) {
+                            showEntryContextMenu(
+                              offset: details.globalPosition,
+                              context: context,
+                              actions: actions,
+                              title: title ?? '',
+                              episode: episode,
+                            );
+                          },
+                          child: const AnikkiIcon(icon: Icons.more_horiz),
                         ),
                       ),
                     ),

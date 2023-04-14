@@ -8,11 +8,18 @@ class EntryTag extends StatelessWidget {
     required this.child,
     this.color = Colors.transparent,
     this.outline,
+    this.padding = const EdgeInsets.only(
+      top: 3.0,
+      bottom: 5.0,
+      left: 10.0,
+      right: 10.0,
+    ),
   });
 
   final Widget child;
   final Color color;
   final Color? outline;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +34,15 @@ class EntryTag extends StatelessWidget {
               color: color,
               border: Border.all(
                 color: outline == null
-                  ? Theme.of(context).colorScheme.outline
-                  : outline!,
+                    ? Theme.of(context).colorScheme.outline
+                    : outline!,
               ),
               borderRadius: const BorderRadius.all(
                 Radius.circular(40),
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4.0,
-                horizontal: 10.0,
-              ),
+              padding: padding,
               child: child,
             ),
           ),
