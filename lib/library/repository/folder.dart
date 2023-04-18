@@ -4,7 +4,7 @@ Future<void> updateFolderPath(BuildContext context) async {
   final settingsBloc = BlocProvider.of<SettingsBloc>(context);
   final libraryBloc = BlocProvider.of<LibraryBloc>(context);
 
-  String? path = await getDirectoryPath();
+  String? path = await FilePicker.platform.getDirectoryPath();
 
   if (path == null) return;
 
