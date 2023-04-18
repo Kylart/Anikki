@@ -51,10 +51,10 @@ packages:
     dependency: "direct main"
     description:
       name: audio_video_progress_bar
-      sha256: "7be62917604e19e3873e12c8025bbc6dbee5876e1fa4cd7772ea1d0eb0e88d99"
+      sha256: "67f3a5ea70d48b48caaf29f5a0606284a6aa3a393736daf9e82bec985d2f9b70"
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.0"
+    version: "1.0.1"
   bloc:
     dependency: "direct main"
     description:
@@ -127,14 +127,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.6.3"
-  cross_file:
-    dependency: transitive
-    description:
-      name: cross_file
-      sha256: "0b0036e8cccbfbe0555fd83c1d31a6f30b77a96b598b35a5d36dd41f718695e9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.3+4"
   crypto:
     dependency: "direct main"
     description:
@@ -207,62 +199,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
-  file_selector:
+  file_picker:
     dependency: "direct main"
     description:
-      name: file_selector
-      sha256: "1ebc23f487172ac2cb9ead80fa2fab09af75e1e8239cbf8ef6d62b623991f785"
+      name: file_picker
+      sha256: dcde5ad1a0cebcf3715ea3f24d0db1888bf77027a26c77d7779e8ef63b8ade62
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.2+4"
-  file_selector_ios:
-    dependency: transitive
-    description:
-      name: file_selector_ios
-      sha256: eabb039d0260f902d0e99f41d73a5a8b6b8d246d86021d96dac7bc30f148a4e9
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.1+2"
-  file_selector_linux:
-    dependency: transitive
-    description:
-      name: file_selector_linux
-      sha256: "39eb2bec65a532ff81816123ee0f08d4993ee2a3cd82d88c7e4b64275e565b54"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.1+2"
-  file_selector_macos:
-    dependency: transitive
-    description:
-      name: file_selector_macos
-      sha256: "89d24ed1b37df4f2f7d8fa6ad166f4533ecc94b00ebcee82a2445c64b603202b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.0+7"
-  file_selector_platform_interface:
-    dependency: transitive
-    description:
-      name: file_selector_platform_interface
-      sha256: "98b3f98effcc135bd951b34b575886620ce208d3ff60e3b61cbaea9e2e00f54b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  file_selector_web:
-    dependency: transitive
-    description:
-      name: file_selector_web
-      sha256: dd961a76a1954225b407313356f41cc106ccffc764a1c30764cc6fe09b109932
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.0+4"
-  file_selector_windows:
-    dependency: transitive
-    description:
-      name: file_selector_windows
-      sha256: "92f1d84f070405506ee4564eec848a0ad5576d7fe6388227ec237c97f5330dac"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.1+7"
+    version: "5.2.9"
   flex_color_scheme:
     dependency: "direct main"
     description:
@@ -324,14 +268,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  flutter_reorderable_grid_view:
-    dependency: "direct main"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
     description:
-      name: flutter_reorderable_grid_view
-      sha256: ac92a49a8411adfda40f75eff44d0958ee879b0f9d6776bb6154c74aa166aaf1
+      name: flutter_plugin_android_lifecycle
+      sha256: c224ac897bed083dabf11f238dd11a239809b446740be0c2044608c50029ffdf
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "2.0.9"
   flutter_staggered_animations:
     dependency: "direct main"
     description:
@@ -345,22 +289,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_vlc_player:
-    dependency: "direct main"
-    description:
-      name: flutter_vlc_player
-      sha256: "0fbe714db09646617e46610195f5d81086d41d065a6301f2bb728a07f09f96b9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.2.0"
-  flutter_vlc_player_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_vlc_player_platform_interface
-      sha256: "8562d5c31213a44cc5e009cb6776a030e0a0c8cbfb825da4fdf27b730170563c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -570,58 +498,66 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit
-      sha256: "6b1e851865c2da3d84e93e8132ee0add32f604bf7fc211d019db9101a44c8608"
+      sha256: "39145cb65556597afa5d00f78e846abd0677610b1f3f859768e300e5c27e1953"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3+3"
+    version: "0.0.5"
+  media_kit_libs_android_video:
+    dependency: "direct main"
+    description:
+      name: media_kit_libs_android_video
+      sha256: "76fa95350b472f9dc163dd11e0145133c2e05456c06d0febb4e189922a68bd3c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   media_kit_libs_ios_video:
     dependency: "direct main"
     description:
       name: media_kit_libs_ios_video
-      sha256: "495d6e2db9b325aebda16dad3c5ae6593a9dfa37ebe08360b4765a43fa09a3b0"
+      sha256: "28c6ddd5ed43263641293832c8d1fb3f24af81b4eba0b61d6da9bedadbf2e1b1"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.4"
   media_kit_libs_linux:
     dependency: "direct main"
     description:
       name: media_kit_libs_linux
-      sha256: "7310b17dd2abc2e7363f78a273086445c2216c7b6dfb60933ca3814031d03814"
+      sha256: "21acc71cbae3518b3aeef9023a6a3a3decb579a40153764333814987ccd61040"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   media_kit_libs_macos_video:
     dependency: "direct main"
     description:
       name: media_kit_libs_macos_video
-      sha256: ff06adff5f544b11aa1d3ad596f9add477264c6026a60aebeed69eda1c7d9d63
+      sha256: ab1cbdf51400e30a9087bd7d6e10c6130d17296e76313fedd0ef0c57dae8c0f4
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.4"
   media_kit_libs_windows_video:
     dependency: "direct main"
     description:
       name: media_kit_libs_windows_video
-      sha256: c2bcbe31e6e6f1e6ae5813c5fe9b7bfde1110c2e95643869919972a7845948e1
+      sha256: "99a3a85b185ae012a8e3bd596cf0ca425834477d0bec86207548d6ff7c926254"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   media_kit_native_event_loop:
     dependency: "direct main"
     description:
       name: media_kit_native_event_loop
-      sha256: "677ea41d13a2013ca7fe050674eac3b5d891185d4300779727a5860a85cdda60"
+      sha256: ed87140ad4b64156b2b470c8105f48d8cad7923c952ca05d23e02d28978d2cb3
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   media_kit_video:
     dependency: "direct main"
     description:
       name: media_kit_video
-      sha256: "1a870a3d731a9ce34e12ec5baed05b3081164f0c85b71baf05900ca47ee5639c"
+      sha256: "2764c42ee4d1aa35cf3acc06cf67a932c8549ec2ed510c9f3976d969ff119746"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.4"
+    version: "0.0.5"
   meta:
     dependency: transitive
     description:

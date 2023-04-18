@@ -4,12 +4,50 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
-  - file_selector_ios (0.0.1):
+  - DKImagePickerController/Core (4.3.4):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.3.4)
+  - DKImagePickerController/PhotoGallery (4.3.4):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.3.4)
+  - DKPhotoGallery (0.0.17):
+    - DKPhotoGallery/Core (= 0.0.17)
+    - DKPhotoGallery/Model (= 0.0.17)
+    - DKPhotoGallery/Preview (= 0.0.17)
+    - DKPhotoGallery/Resource (= 0.0.17)
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Core (0.0.17):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Model (0.0.17):
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Preview (0.0.17):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Resource (0.0.17):
+    - SDWebImage
+    - SwiftyGif
+  - file_picker (0.0.1):
+    - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
   - flutter_vlc_player (3.0.3):
     - Flutter
     - MobileVLCKit (~> 3.5.1)
+  - media_kit_libs_ios_video (1.0.4):
+    - Flutter
+  - media_kit_native_event_loop (1.0.0):
+    - Flutter
+  - media_kit_video (0.0.1):
+    - Flutter
   - MobileVLCKit (3.5.1)
   - open_app_file (3.2.2):
     - Flutter
@@ -19,9 +57,10 @@ PODS:
   - protocol_handler (0.0.1):
     - Flutter
   - ReachabilitySwift (5.0.0)
-  - shared_preferences_foundation (0.0.1):
-    - Flutter
-    - FlutterMacOS
+  - SDWebImage (5.15.4):
+    - SDWebImage/Core (= 5.15.4)
+  - SDWebImage/Core (5.15.4)
+  - SwiftyGif (5.4.4)
   - url_launcher_ios (0.0.1):
     - Flutter
   - wakelock (0.0.1):
@@ -30,40 +69,50 @@ PODS:
 DEPENDENCIES:
   - anitomy (from `.symlinks/plugins/anitomy/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
-  - file_selector_ios (from `.symlinks/plugins/file_selector_ios/ios`)
+  - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_vlc_player (from `.symlinks/plugins/flutter_vlc_player/ios`)
+  - media_kit_libs_ios_video (from `.symlinks/plugins/media_kit_libs_ios_video/ios`)
+  - media_kit_native_event_loop (from `.symlinks/plugins/media_kit_native_event_loop/ios`)
+  - media_kit_video (from `.symlinks/plugins/media_kit_video/ios`)
   - open_app_file (from `.symlinks/plugins/open_app_file/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - protocol_handler (from `.symlinks/plugins/protocol_handler/ios`)
-  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
   trunk:
+    - DKImagePickerController
+    - DKPhotoGallery
     - MobileVLCKit
     - ReachabilitySwift
+    - SDWebImage
+    - SwiftyGif
 
 EXTERNAL SOURCES:
   anitomy:
     :path: ".symlinks/plugins/anitomy/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
-  file_selector_ios:
-    :path: ".symlinks/plugins/file_selector_ios/ios"
+  file_picker:
+    :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
   flutter_vlc_player:
     :path: ".symlinks/plugins/flutter_vlc_player/ios"
+  media_kit_libs_ios_video:
+    :path: ".symlinks/plugins/media_kit_libs_ios_video/ios"
+  media_kit_native_event_loop:
+    :path: ".symlinks/plugins/media_kit_native_event_loop/ios"
+  media_kit_video:
+    :path: ".symlinks/plugins/media_kit_video/ios"
   open_app_file:
     :path: ".symlinks/plugins/open_app_file/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
   protocol_handler:
     :path: ".symlinks/plugins/protocol_handler/ios"
-  shared_preferences_foundation:
-    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   wakelock:
@@ -72,18 +121,24 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   anitomy: 18d71e5419fdad1320cb71de8595678b2e4af555
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
-  file_selector_ios: 8c25d700d625e1dcdd6599f2d927072f2254647b
+  DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
+  DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
+  file_picker: ce3938a0df3cc1ef404671531facef740d03f920
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_vlc_player: e321a4dcfaa0b9018a644791231e3e24e73d2fc7
+  media_kit_libs_ios_video: 96259eccffaa309b63a7ee610c2c7786a3b335e5
+  media_kit_native_event_loop: 9f9eb778d0d806ab9486eff7513f7f90f07d50f8
+  media_kit_video: c6ae801433b484912087b519b45f1beac97b960b
   MobileVLCKit: 144d5f565512d1147d63b0fa1379231b3fd66535
   open_app_file: 205f73051668bfbd68356005fef8a62e620f0a77
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   protocol_handler: ae9efcf3b307f3fdffcd9d5252775b9f7d9f0d09
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  SDWebImage: 1c39de67663e5eebb2f41324d5d580eeea12dd4c
+  SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
-PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+PODFILE CHECKSUM: 1654cf9cb45c645da778fbc46fe8a12ec2e32455
 
 COCOAPODS: 1.11.3
