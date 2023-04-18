@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 
@@ -18,6 +19,8 @@ import 'package:anikki/layouts/portrait/layout.dart';
 void main() async {
   /// Flutter hooks
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
+
   Paint.enableDithering = true;
 
   final storageDirectory = kDebugMode

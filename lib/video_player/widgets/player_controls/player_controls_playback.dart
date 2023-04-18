@@ -4,9 +4,11 @@ class PlayerControlsPlayback extends StatefulWidget {
   const PlayerControlsPlayback({
     super.key,
     required this.player,
+    this.dense = false,
   });
 
   final Player player;
+  final bool dense;
 
   @override
   State<PlayerControlsPlayback> createState() => _PlayerControlsPlaybackState();
@@ -63,16 +65,18 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          onPressed: player.previous,
-          icon: const Icon(Icons.skip_previous_outlined),
-        ),
-        IconButton(
-          onPressed: () {
-            rewind(const Duration(seconds: 10));
-          },
-          icon: const Icon(Icons.replay_10),
-        ),
+        if (!widget.dense)
+          IconButton(
+            onPressed: player.previous,
+            icon: const Icon(Icons.skip_previous_outlined),
+          ),
+        if (!widget.dense)
+          IconButton(
+            onPressed: () {
+              rewind(const Duration(seconds: 10));
+            },
+            icon: const Icon(Icons.replay_10),
+          ),
         IconButton(
           color: Colors.white,
           iconSize: 40,
@@ -88,14 +92,15 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
             }
           },
         ),
-        IconButton(
-          onPressed: () {
-            forward(
-              const Duration(seconds: 10),
-            );
-          },
-          icon: const Icon(Icons.forward_10),
-        ),
+        if (!widget.dense)
+          IconButton(
+            onPressed: () {
+              forward(
+                const Duration(seconds: 10),
+              );
+            },
+            icon: const Icon(Icons.forward_10),
+          ),
         IconButton(
           onPressed: () {
             forward(
@@ -104,14 +109,15 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
           },
           icon: const Icon(Icons.fast_forward),
         ),
-        IconButton(
-          onPressed: () {
-            /// "Hackz" so that the player calls the `completed` event without the user noticing it.
-            player
-                .seek(player.state.duration - const Duration(milliseconds: 10));
-          },
-          icon: const Icon(Icons.skip_next_outlined),
-        ),
+        if (!widget.dense)
+          IconButton(
+            onPressed: () {
+              /// "Hackz" so that the player calls the `completed` event without the user noticing it.
+              player.seek(
+                  player.state.duration - const Duration(milliseconds: 10));
+            },
+            icon: const Icon(Icons.skip_next_outlined),
+          ),
       ],
     );
   }

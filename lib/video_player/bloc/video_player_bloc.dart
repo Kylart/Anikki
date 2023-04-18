@@ -23,24 +23,11 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     });
 
     on<VideoPlayerDisplayTapped>((event, emit) {
-      if (player.state.playing) {
-        if (state.displayTapped) {
-          emit(
-            state.copyWith(
-              hideControls: true,
-              displayTapped: false,
-            ),
-          );
-        } else {
-          restartShowTimer(emit);
-        }
-      } else {
-        emit(
-          state.copyWith(
-            hideControls: true,
-          ),
-        );
-      }
+      emit(state.copyWith(
+        hideControls: !state.hideControls,
+      ));
+
+      if (!state.hideControls) restartShowTimer(emit);
     });
 
     on<VideoPlayerControlsHovered>((event, emit) {
@@ -77,7 +64,10 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
 
   void startHideTimer(Emitter<VideoPlayerState> emit) {
     _hideTimer = Timer(
-      const Duration(seconds: 3),
+      const Duration(
+        seconds: 1,
+        milliseconds: 500,
+      ),
       () {
         if (!state.controlsHovered) {
           add(
@@ -101,7 +91,6 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     emit(
       state.copyWith(
         hideControls: false,
-        displayTapped: true,
       ),
     );
   }

@@ -4,11 +4,10 @@ import 'package:media_kit/media_kit.dart';
 
 import 'package:anikki/video_player/bloc/video_player_bloc.dart';
 import 'package:anikki/models/local_file.dart';
-import 'package:anikki/video_player/video_player.dart';
 import 'package:anikki/video_player/widgets/player_widget.dart';
 import 'package:anikki/video_player/widgets/player_controls/player_controls.dart';
 
-class AnikkiVideoPlayer implements VideoPlayer {
+class AnikkiVideoPlayer {
   AnikkiVideoPlayer({
     required this.sources,
     this.first,
@@ -31,10 +30,6 @@ class AnikkiVideoPlayer implements VideoPlayer {
 
   final void Function(Media media)? onVideoComplete;
 
-  @override
-  Future<void> stop() async {}
-
-  @override
   Widget widget() {
     return BlocProvider(
       create: (context) => VideoPlayerBloc(player),

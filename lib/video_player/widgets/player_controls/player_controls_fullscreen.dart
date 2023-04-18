@@ -13,9 +13,27 @@ class _PlayerControlsFullscreenState extends State<PlayerControlsFullscreen> {
 
   void toggle() {
     if (isFullscreen) {
-      Window.exitFullscreen();
+      if (isDesktop()) {
+        Window.exitFullscreen();
+      } else {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeRight,
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]);
+      }
     } else {
-      Window.enterFullscreen();
+      if (isDesktop()) {
+        Window.enterFullscreen();
+      } else {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ]);
+      }
     }
 
     setState(() {
@@ -33,9 +51,7 @@ class _PlayerControlsFullscreenState extends State<PlayerControlsFullscreen> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () async {
-        if (isDesktop()) toggle();
-      },
+      onPressed: toggle,
       icon: Icon(
         isFullscreen ? Icons.fullscreen_exit : Icons.fullscreen,
       ),

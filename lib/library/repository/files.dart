@@ -177,34 +177,29 @@ Future<void> playFile(LocalFile entry, BuildContext context,
     final libraryState =
         BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded;
 
-    VideoPlayer player = isDesktop()
-        ? AnikkiVideoPlayer(
-            onVideoComplete: (media) {
-              if (libraryState.playlist.contains(media.uri)) {
-                /// We have to find the `LocalFile` that was just completed
-                final entry = libraryState.entries.fold<List<LocalFile>>(
-                  [],
-                  (previousValue, element) => [
-                    ...previousValue,
-                    ...element.entries.reversed.map((e) => e),
-                  ],
-                ).firstWhere((element) => element.path == media.uri);
+    AnikkiVideoPlayer player = AnikkiVideoPlayer(
+      onVideoComplete: (media) {
+        if (libraryState.playlist.contains(media.uri)) {
+          /// We have to find the `LocalFile` that was just completed
+          final entry = libraryState.entries.fold<List<LocalFile>>(
+            [],
+            (previousValue, element) => [
+              ...previousValue,
+              ...element.entries.reversed.map((e) => e),
+            ],
+          ).firstWhere((element) => element.path == media.uri);
 
-                updateEntry(context, entry);
-              }
-            },
-            first: entry,
-            sources: libraryState.playlist,
-          )
-        : MobilePlayer(input: entry.file);
+          updateEntry(context, entry);
+        }
+      },
+      first: entry,
+      sources: libraryState.playlist,
+    );
 
     Navigator.of(context).push(
       FadeOverlay(
         child: player.widget(),
         onClose: () async => await Future.wait([
-          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge),
-          SystemChrome.setPreferredOrientations([]),
-          player.stop(),
           updateEntry(context, entry),
           Wakelock.disable(),
         ]),

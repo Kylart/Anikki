@@ -34,9 +34,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     Future.microtask(() async {
       // Create a [VideoController] instance from `package:media_kit_video`.
       // Pass the [handle] of the [Player] from `package:media_kit` to the [VideoController] constructor.
-      controller = await VideoController.create(
-        widget.player.handle,
-      );
+      controller = await VideoController.create(widget.player);
       // Must be created before opening any media. Otherwise, a separate window will be created.
       setState(() {});
 

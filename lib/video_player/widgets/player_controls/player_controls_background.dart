@@ -10,9 +10,9 @@ class PlayerControlsBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final useMovable = MediaQuery.of(context).size.width > 800;
+    final isLargeScreen = MediaQuery.of(context).size.width > 1200;
 
-    return useMovable
+    return isDesktop() && isLargeScreen
         ? PlayerMovableControls(
             child: child,
           )

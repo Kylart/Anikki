@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
@@ -29,6 +30,9 @@ class PlayerControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 600;
+
     return BlocBuilder<VideoPlayerBloc, VideoPlayerState>(
       builder: (context, state) {
         return PlayerCursorHandler(
@@ -43,9 +47,10 @@ class PlayerControls extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    PlayerControlsVolume(player: player),
+                    if (!isSmallScreen) PlayerControlsVolume(player: player),
                     PlayerControlsPlayback(
                       player: player,
+                      dense: isSmallScreen,
                     ),
                     Row(
                       children: [
