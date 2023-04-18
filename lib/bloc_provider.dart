@@ -1,7 +1,8 @@
-import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
+import 'package:anikki/news/bloc/news_bloc.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/library/bloc/library_bloc.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
@@ -25,6 +26,12 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ConnectivityBloc(),
+        ),
+        BlocProvider(
+          create: (context) => NewsBloc()
+            ..add(
+              NewsRequested(range: NewsBloc.initalDateRange),
+            ),
         ),
       ],
       child: MultiBlocProvider(
