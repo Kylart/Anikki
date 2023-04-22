@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class FadeOverlay extends ModalRoute<void> {
   final Widget child;
-  final Future<void> Function() onClose;
+  final Future<void> Function()? onClose;
 
-  FadeOverlay({required this.child, required this.onClose});
+  FadeOverlay({required this.child, this.onClose});
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 300);
@@ -26,7 +26,7 @@ class FadeOverlay extends ModalRoute<void> {
 
   @override
   void dispose() async {
-    await onClose();
+    if (onClose != null) await onClose!();
     super.dispose();
   }
 
