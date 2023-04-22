@@ -9,51 +9,26 @@ class PlayerControlsFullscreen extends StatefulWidget {
 }
 
 class _PlayerControlsFullscreenState extends State<PlayerControlsFullscreen> {
-  bool isFullscreen = false;
-
-  void toggle() {
-    if (isFullscreen) {
-      if (isDesktop()) {
-        Window.exitFullscreen();
-      } else {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.landscapeRight,
-          DeviceOrientation.landscapeLeft,
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
-        ]);
-      }
-    } else {
-      if (isDesktop()) {
-        Window.enterFullscreen();
-      } else {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.landscapeLeft,
-          DeviceOrientation.landscapeRight,
-        ]);
-      }
-    }
-
-    setState(() {
-      isFullscreen = !isFullscreen;
-    });
-  }
-
   @override
-  void dispose() {
-    if (isFullscreen) toggle();
+  void dispose() async {
+    if (isDesktop()) {
+      if (await Window.isWindowFullscreened()) Window.exitFullscreen();
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    }
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final videoBloc = BlocProvider.of<VideoPlayerBloc>(context, listen: true);
+
     return IconButton(
-      onPressed: toggle,
+      onPressed: () => videoBloc.add(VideoPlayerToggleFullscreen()),
       icon: Icon(
-        isFullscreen ? Icons.fullscreen_exit : Icons.fullscreen,
+        videoBloc.state.fullscreen ? Icons.fullscreen_exit : Icons.fullscreen,
       ),
     );
   }
