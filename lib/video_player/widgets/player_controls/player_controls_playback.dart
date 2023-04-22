@@ -81,7 +81,9 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
           color: Colors.white,
           iconSize: 40,
           icon: AnimatedIcon(
-              icon: AnimatedIcons.play_pause, progress: playPauseController),
+            icon: AnimatedIcons.play_pause,
+            progress: playPauseController,
+          ),
           onPressed: () {
             if (player.state.playing) {
               player.pause();

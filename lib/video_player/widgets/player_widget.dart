@@ -1,8 +1,10 @@
-import 'package:anikki/video_player/bloc/video_player_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+
+import 'package:anikki/video_player/bloc/video_player_bloc.dart';
 
 class PlayerWidget extends StatefulWidget {
   const PlayerWidget({
@@ -13,7 +15,7 @@ class PlayerWidget extends StatefulWidget {
     this.onVideoComplete,
   });
 
-  final Player player;
+  final Player player; 
 
   final int? firstIndex;
   final Playlist playlist;
