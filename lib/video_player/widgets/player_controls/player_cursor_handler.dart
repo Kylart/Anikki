@@ -14,9 +14,13 @@ class PlayerCursorHandler extends StatelessWidget {
   Widget build(BuildContext context) {
     final videoBloc = BlocProvider.of<VideoPlayerBloc>(context, listen: true);
     final hideControls = videoBloc.state.hideControls;
+    final desktop = isDesktop();
 
     return GestureDetector(
       onTap: () => videoBloc.add(VideoPlayerDisplayTapped()),
+      onDoubleTap: desktop
+        ? () => videoBloc.add(VideoPlayerToggleFullscreen())
+        : null,
       child: MouseRegion(
         cursor:
             hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
@@ -26,7 +30,40 @@ class PlayerCursorHandler extends StatelessWidget {
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
             opacity: hideControls ? 0.0 : 1.0,
-            child: child,
+            child: Stack(
+              children: [
+                if (!desktop)
+                  Positioned.fill(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              player.seek(
+                                player.state.position +
+                                    const Duration(seconds: -10),
+                              );
+                              videoBloc.add(VideoPlayerResetShowTimer());
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              player.seek(
+                                player.state.position +
+                                    const Duration(seconds: 10),
+                              );
+                              videoBloc.add(VideoPlayerResetShowTimer());
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                child,
+              ],
+            ),
           ),
         ),
       ),

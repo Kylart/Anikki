@@ -30,3 +30,5 @@ class VideoPlayerStateUpdated extends VideoPlayerEvent {
   @override
   List<Object> get props => [state];
 }
+
+class VideoPlayerToggleFullscreen extends VideoPlayerEvent {}
