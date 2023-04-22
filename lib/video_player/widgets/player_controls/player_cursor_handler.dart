@@ -18,9 +18,30 @@ class PlayerCursorHandler extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => videoBloc.add(VideoPlayerDisplayTapped()),
-      onDoubleTap: desktop
-        ? () => videoBloc.add(VideoPlayerToggleFullscreen())
-        : null,
+      onDoubleTap:
+          desktop ? () => videoBloc.add(VideoPlayerToggleFullscreen()) : null,
+      onLongPress: () {
+        player.playOrPause();
+        videoBloc.add(VideoPlayerResetShowTimer());
+      },
+      onDoubleTapDown: (details) {
+        final screenWidth = MediaQuery.of(context).size.width;
+
+        if (details.globalPosition.dx < screenWidth / 2) {
+          player.seek(
+            player.state.position + const Duration(seconds: -10),
+          );
+        } else {
+          player.seek(
+            player.state.position + const Duration(seconds: 10),
+          );
+        }
+      },
+      onHorizontalDragUpdate: (details) {
+        player.seek(
+          player.state.position + Duration(seconds: (details.delta.dx.toInt())),
+        );
+      },
       child: MouseRegion(
         cursor:
             hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
@@ -30,40 +51,7 @@ class PlayerCursorHandler extends StatelessWidget {
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
             opacity: hideControls ? 0.0 : 1.0,
-            child: Stack(
-              children: [
-                if (!desktop)
-                  Positioned.fill(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onDoubleTap: () {
-                              player.seek(
-                                player.state.position +
-                                    const Duration(seconds: -10),
-                              );
-                              videoBloc.add(VideoPlayerResetShowTimer());
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onDoubleTap: () {
-                              player.seek(
-                                player.state.position +
-                                    const Duration(seconds: 10),
-                              );
-                              videoBloc.add(VideoPlayerResetShowTimer());
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                child,
-              ],
-            ),
+            child: child,
           ),
         ),
       ),
