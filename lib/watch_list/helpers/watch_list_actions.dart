@@ -1,29 +1,29 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/watch_list/widgets/watch_list_edit.dart';
-import 'package:anikki/widgets/entry/entry_action.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';
 
-List<EntryAction> getWatchListActions(
+List<AnikkiAction> getWatchListActions(
     BuildContext context, Query$GetLists$MediaListCollection$lists$entries entry) {
   return [
-    EntryAction(
+    AnikkiAction(
       callback: (context) {
         showAnilistEdit(context, entry);
       },
       icon: Icons.edit_outlined,
       label: 'Edit Watch list entry',
     ),
-    EntryAction(
+    AnikkiAction(
       callback: (context) {
         showAvailableTorrents<Query$GetLists$MediaListCollection$lists$entries>(context, entry);
       },
       icon: Icons.file_download_outlined,
       label: 'Show torrents',
     ),
-    EntryAction(
+    AnikkiAction(
       callback: (context) {
         openInBrowser(entry.media?.siteUrl);
       },

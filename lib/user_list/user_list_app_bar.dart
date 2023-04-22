@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:anikki/models/user_list_enum.dart';
 import 'package:anikki/library/repository/repository.dart';
 import 'package:anikki/user_list/user_list_refresh.dart';
-import 'package:anikki/widgets/settings_button.dart';
-import 'package:anikki/models/settings_action.dart';
+import 'package:anikki/widgets/anikki_action_button.dart';
+import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/user_list/user_list_layout_toggle.dart';
 
 class UserListAppBar extends StatefulWidget {
@@ -66,21 +66,19 @@ class _UserListAppBarState extends State<UserListAppBar> {
           if (currentIndex == 0 && widget.tabController != null)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: SettingsButton(
+              child: AnikkiActionButton(
                 actions: [
-                  SettingsAction(
+                  AnikkiAction(
                     icon: Icons.folder_open_outlined,
                     label: 'Change folder',
-                    trailing: const SizedBox(),
-                    callback: () async => updateFolderPath(context),
+                    callback: (context) async => updateFolderPath(context),
                   ),
-                  SettingsAction(
+                  AnikkiAction(
                     icon: Icons.open_in_new,
                     label: Platform.isMacOS
                         ? 'Open in Finder'
                         : 'Open in Explorer',
-                    trailing: const SizedBox(),
-                    callback: () async => openFolderInExplorer(context),
+                    callback: (context) async => openFolderInExplorer(context),
                   ),
                 ],
               ),

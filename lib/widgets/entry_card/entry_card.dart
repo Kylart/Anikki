@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/widgets/entry_card/entry_card_cover.dart';
 import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
-import 'package:anikki/widgets/entry/entry_action.dart';
 
 class EntryCard extends StatelessWidget {
   const EntryCard({
@@ -17,7 +17,7 @@ class EntryCard extends StatelessWidget {
     this.isExpandable = false,
   });
 
-  final List<EntryAction> actions;
+  final List<AnikkiAction> actions;
   final String title;
   final String? coverImage;
   final String? episode;

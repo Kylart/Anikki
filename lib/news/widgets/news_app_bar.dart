@@ -4,8 +4,8 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/news/widgets/news_layout_toggle.dart';
-import 'package:anikki/widgets/settings_button.dart';
-import 'package:anikki/models/settings_action.dart';
+import 'package:anikki/widgets/anikki_action_button.dart';
+import 'package:anikki/models/anikki_action.dart';
 
 class NewsAppBar extends StatefulWidget {
   const NewsAppBar(
@@ -35,10 +35,11 @@ class _NewsAppBarState extends State<NewsAppBar>
 
   @override
   Widget build(BuildContext context) {
-    List<SettingsAction> settings = [
+    List<AnikkiAction> settings = [
       if (isConnected)
-        SettingsAction(
-          callback: () {},
+        AnikkiAction(
+          callback: (_) {},
+          icon: Icons.bookmark_add_outlined,
           label: 'Only followed entries',
           trailing: StatefulBuilder(
             builder: (context, setState) {
@@ -57,8 +58,9 @@ class _NewsAppBarState extends State<NewsAppBar>
           ),
         ),
       if (isConnected)
-        SettingsAction(
-          callback: () {},
+        AnikkiAction(
+          callback: (_) {},
+          icon: Icons.bookmark_added_outlined,
           label: 'Only unseen entries',
           trailing: StatefulBuilder(
             builder: (context, setState) {
@@ -108,7 +110,7 @@ class _NewsAppBarState extends State<NewsAppBar>
             ),
           ),
           const NewsLayoutToggle(),
-          if (settings.isNotEmpty) SettingsButton(actions: settings),
+          if (settings.isNotEmpty) AnikkiActionButton(actions: settings),
         ],
       ),
     );

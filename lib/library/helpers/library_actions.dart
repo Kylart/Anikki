@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/library/repository/repository.dart';
-import 'package:anikki/widgets/entry/entry_action.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
 import 'package:anikki/helpers/show_available_torrents.dart';
 import 'package:anikki/models/local_file.dart';
 
-EntryAction _playAction(BuildContext context, LocalFile entry) => EntryAction(
+AnikkiAction _playAction(BuildContext context, LocalFile entry) => AnikkiAction(
       callback: (context) {
         playFile(entry, context);
       },
@@ -14,8 +14,8 @@ EntryAction _playAction(BuildContext context, LocalFile entry) => EntryAction(
       label: 'Play episode',
     );
 
-EntryAction _showTorrentsAction(BuildContext context, LocalFile entry) =>
-    EntryAction(
+AnikkiAction _showTorrentsAction(BuildContext context, LocalFile entry) =>
+    AnikkiAction(
       callback: (context) {
         showAvailableTorrents(context, entry);
       },
@@ -23,8 +23,8 @@ EntryAction _showTorrentsAction(BuildContext context, LocalFile entry) =>
       label: 'Show torrents',
     );
 
-EntryAction _openBrowserAction(BuildContext context, LocalFile entry) =>
-    EntryAction(
+AnikkiAction _openBrowserAction(BuildContext context, LocalFile entry) =>
+    AnikkiAction(
       callback: (context) {
         openInBrowser(entry.media?.siteUrl);
       },
@@ -32,8 +32,8 @@ EntryAction _openBrowserAction(BuildContext context, LocalFile entry) =>
       label: 'See on Anilist',
     );
 
-EntryAction _deleteFileAction(BuildContext context, LocalFile entry) =>
-    EntryAction(
+AnikkiAction _deleteFileAction(BuildContext context, LocalFile entry) =>
+    AnikkiAction(
       callback: (context) {
         deleteFile(entry, context);
       },
@@ -41,9 +41,9 @@ EntryAction _deleteFileAction(BuildContext context, LocalFile entry) =>
       label: 'Delete file',
     );
 
-EntryAction _expandAction(
+AnikkiAction _expandAction(
         BuildContext context, LocalFile entry, void Function() onShrink) =>
-    EntryAction(
+    AnikkiAction(
       callback: (context) {
         onShrink();
       },
@@ -52,7 +52,7 @@ EntryAction _expandAction(
     );
 
 /// Library actions that should be available only for non-expandables or expanded entries.
-List<EntryAction> getLibraryActions(BuildContext context, LocalFile entry) {
+List<AnikkiAction> getLibraryActions(BuildContext context, LocalFile entry) {
   return [
     _playAction(context, entry),
     _showTorrentsAction(context, entry),
@@ -62,7 +62,7 @@ List<EntryAction> getLibraryActions(BuildContext context, LocalFile entry) {
 }
 
 /// Library actions that should be available for expandable entries.
-List<EntryAction> geExpandabletLibraryActions({
+List<AnikkiAction> geExpandabletLibraryActions({
   required BuildContext context,
   required LocalFile entry,
   required void Function() onShrink,

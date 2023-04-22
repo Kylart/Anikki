@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/widgets/anikki_action_button.dart';
+import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/widgets/entry/entry_tag.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
 import 'package:anikki/widgets/anikki_icon.dart';
-import 'package:anikki/widgets/entry/entry_action.dart';
 
 class EntryTile<T> extends StatelessWidget {
   const EntryTile({
@@ -22,7 +23,7 @@ class EntryTile<T> extends StatelessWidget {
 
   final T entry;
   final Widget subtitle;
-  final List<EntryAction> actions;
+  final List<AnikkiAction> actions;
   final String? title;
   final String? bannerImage;
   final String? coverImage;
@@ -145,23 +146,11 @@ class EntryTile<T> extends StatelessWidget {
                     ),
                     EntryTag(
                       padding: EdgeInsets.zero,
-                      child: IconButton(
-                        constraints: const BoxConstraints(),
-                        onPressed: () {},
-                        icon: GestureDetector(
-                          onTapUp: (details) {
-                            showEntryContextMenu(
-                              offset: details.globalPosition,
-                              context: context,
-                              actions: actions,
-                              title: title ?? '',
-                              episode: episode,
-                            );
-                          },
-                          child: const AnikkiIcon(icon: Icons.more_horiz),
-                        ),
+                      child: AnikkiActionButton(
+                        icon: const AnikkiIcon(icon: Icons.more_horiz),
+                        actions: actions,
                       ),
-                    ),
+                    )
                   ],
                 ),
         ),
