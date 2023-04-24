@@ -6,8 +6,4 @@ abstract class AnilistAuthEvent {
 
 class AnilistAuthLogoutRequested extends AnilistAuthEvent {}
 
-class AnilistAuthLoginRequested extends AnilistAuthEvent {
-  AnilistAuthLoginRequested({this.token});
-
-  final String? token;
-}
+class AnilistAuthLoginRequested extends AnilistAuthEvent {}

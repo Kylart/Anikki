@@ -1,9 +1,10 @@
-import 'package:anikki/widgets/loader.dart';
-import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/anilist_auth/anilist_auth.dart';
+import 'package:anikki/widgets/loader.dart';
+import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/helpers/capitalize.dart';
 import 'package:anikki/widgets/error_tile.dart';
 import 'package:anikki/watch_list/view/watch_list_layout.dart';
@@ -40,10 +41,8 @@ class _WatchListViewState extends State<WatchListView>
 
     switch (state.runtimeType) {
       case WatchListInitial:
-        return ListTile(
-          tileColor: Theme.of(context).colorScheme.error.withOpacity(0.3),
-          title: const Text('Not logged into Anilist'),
-          subtitle: const Text('Please login to Anilist to use this feature'),
+        return const Center(
+          child: AnilistAuthView()
         );
       case WatchListLoading:
         return const Loader();

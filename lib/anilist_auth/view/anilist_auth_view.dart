@@ -1,10 +1,10 @@
-import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:protocol_handler/protocol_handler.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:simple_icons/simple_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import 'package:anikki/anilist_auth/mixins/anilist_auth_mixin.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
 
 enum AnilistMenuItem {
@@ -19,86 +19,93 @@ class AnilistAuthView extends StatefulWidget {
   State<AnilistAuthView> createState() => _AnilistAuthViewState();
 }
 
-class _AnilistAuthViewState extends State<AnilistAuthView>
-    with ProtocolListener, AnilistAuthMixin {
+class _AnilistAuthViewState extends State<AnilistAuthView> {
+  final oauthUrl = Uri(
+    scheme: 'https',
+    host: 'anilist.co',
+    path: '/api/v2/oauth/authorize',
+    queryParameters: {
+      'client_id': dotenv.env['ANILIST_ID'],
+      'response_type': 'token',
+    },
+  );
+
+  Future<void> login(BuildContext context) async {
+    final authBloc = BlocProvider.of<AnilistAuthBloc>(context);
+    final box = await Hive.openBox(AnilistAuthBloc.boxName);
+
+    box.watch(key: AnilistAuthBloc.tokenKey).listen((event) {
+      if (event.value == null || event.deleted) return;
+
+      authBloc.add(AnilistAuthLoginRequested());
+
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Connected to Anilist'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Close'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+
+    launchUrl(oauthUrl, mode: LaunchMode.externalApplication);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AnilistAuthBloc, AnilistAuthState>(
       builder: (context, state) {
-        Query$Viewer$Viewer? user;
-
-        if (state.runtimeType == AnilistAuthSuccess) {
-          user = (state as AnilistAuthSuccess).me;
-        }
-
-        return Material(
-          color: Colors.transparent,
-          child: PopupMenuButton(
-            onSelected: (value) async {
-              if (value == AnilistMenuItem.auth) login(context);
-              if (value == AnilistMenuItem.logout) logout(context);
-            },
-            tooltip: user == null
-                ? 'Anilist'
-                : 'Connected to Anilist as ${user.name}',
-            icon: user == null
-                ? const Icon(
-                    SimpleIcons.anilist,
-                    color: Color(0xFF02A9FF),
-                  )
-                : CircleAvatar(
-                    backgroundImage: NetworkImage(user.avatar!.medium!),
+        switch (state.runtimeType) {
+          case AnilistAuthLoggedOut:
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'You are not logged into Anilist.',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-            itemBuilder: (context) {
-              switch (state.runtimeType) {
-                case AnilistAuthLoggedOut:
-                case AnilistAuthPending:
-                case AnilistAuthError:
-                  return [
-                    PopupMenuItem<AnilistMenuItem>(
-                      value: AnilistMenuItem.auth,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.only(right: 10.0),
-                            child: Text('Log in'),
-                          ),
-                          Icon(Icons.open_in_new),
-                        ],
-                      ),
-                    )
-                  ];
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => login(context),
+                  label: const Text('Log In'),
+                  icon: const Icon(SimpleIcons.anilist),
+                ),
+              ],
+            );
+          case AnilistAuthError:
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Could not log you into Anilist',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => login(context),
+                  label: const Text('Retry'),
+                  icon: const Icon(SimpleIcons.anilist),
+                ),
+              ],
+            );
 
-                case AnilistAuthSuccess:
-                  return [
-                    PopupMenuItem<AnilistMenuItem>(
-                      value: AnilistMenuItem.logout,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.only(right: 10.0),
-                            child: Text(
-                              'Logout',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ),
-                          Icon(
-                            Icons.logout,
-                            color: Colors.red,
-                          ),
-                        ],
-                      ),
-                    )
-                  ];
-
-                default:
-                  return [];
-              }
-            },
-          ),
-        );
+          case AnilistAuthSuccess:
+          default:
+            return const SizedBox();
+        }
       },
     );
   }

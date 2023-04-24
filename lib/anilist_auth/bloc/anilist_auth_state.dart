@@ -9,8 +9,6 @@ abstract class AnilistAuthState extends Equatable {
 
 class AnilistAuthLoggedOut extends AnilistAuthState {}
 
-class AnilistAuthPending extends AnilistAuthState {}
-
 class AnilistAuthSuccess extends AnilistAuthState {
   const AnilistAuthSuccess(this.me);
 

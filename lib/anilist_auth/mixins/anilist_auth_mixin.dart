@@ -1,28 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:protocol_handler/protocol_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:window_manager/window_manager.dart';
 
+import 'package:anikki/helpers/desktop_hooks.dart';
+import 'package:anikki/main.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/anilist_auth/view/anilist_auth_view.dart';
 
-mixin AnilistAuthMixin on State<AnilistAuthView>, ProtocolListener {
+mixin AnilistAuthMixin on State<Anikki>, ProtocolListener {
   final availableHosts = [
     'anilist-auth',
   ];
-
-  final oauthUrl = Uri(
-    scheme: 'https',
-    host: 'anilist.co',
-    path: '/api/v2/oauth/authorize',
-    queryParameters: {
-      'client_id': dotenv.env['ANILIST_ID'],
-      'response_type': 'token',
-    },
-  );
-
-  String? accessToken;
 
   @override
   void initState() {
@@ -37,7 +25,7 @@ mixin AnilistAuthMixin on State<AnilistAuthView>, ProtocolListener {
   }
 
   @override
-  void onProtocolUrlReceived(String url) {
+  void onProtocolUrlReceived(String url) async {
     final uri = Uri.parse(url.replaceFirst('#', '?'));
 
     /**
@@ -53,66 +41,11 @@ mixin AnilistAuthMixin on State<AnilistAuthView>, ProtocolListener {
 
     final token = uri.queryParameters['access_token'];
 
-    if (token == null) return;
+    final box = await Hive.openBox(AnilistAuthBloc.boxName);
+    await box.put(AnilistAuthBloc.tokenKey, token);
 
-    setState(() {
-      accessToken = token;
-    });
-  }
-
-  Future<void> showConnectionDialog(
-      BuildContext context, bool connected) async {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        if (connected) {
-          return AlertDialog(
-            title: const Text('Connected to Anilist'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Close'),
-              ),
-            ],
-          );
-        } else {
-          return AlertDialog(
-            title: const Text('Connecting to Anilist'),
-            content: const Text(
-                'Please press Next once you have authorized Anikki on Anilsit'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Next'),
-              ),
-            ],
-          );
-        }
-      },
-    );
-  }
-
-  Future<void> login(BuildContext context) async {
-    final authBloc = BlocProvider.of<AnilistAuthBloc>(context);
-
-    launchUrl(oauthUrl, mode: LaunchMode.externalApplication);
-    await showConnectionDialog(context, false);
-
-    if (accessToken == null) return;
-
-    authBloc.add(AnilistAuthLoginRequested(token: accessToken));
-
-    if (mounted) await showConnectionDialog(context, true);
-  }
-
-  Future<void> logout(BuildContext context) async {
-    BlocProvider.of<AnilistAuthBloc>(context).add(AnilistAuthLogoutRequested());
-    setState(() {
-      accessToken = null;
-    });
+    if (isDesktop()) {
+      windowManager.focus();
+    }
   }
 }

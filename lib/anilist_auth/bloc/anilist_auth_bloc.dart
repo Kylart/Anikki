@@ -28,14 +28,7 @@ class AnilistAuthBloc extends Bloc<AnilistAuthEvent, AnilistAuthState> {
 
   Future<void> _login(
       AnilistAuthLoginRequested event, Emitter<AnilistAuthState> emit) async {
-    emit(AnilistAuthPending());
-
     try {
-      if (event.token != null) {
-        final box = await Hive.openBox(boxName);
-        box.put(tokenKey, event.token);
-      }
-
       final me = await repository.getMe();
 
       emit(AnilistAuthSuccess(me));

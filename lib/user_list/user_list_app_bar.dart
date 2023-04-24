@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart';
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/models/user_list_enum.dart';
 import 'package:anikki/library/repository/repository.dart';
 import 'package:anikki/user_list/user_list_refresh.dart';
@@ -25,7 +29,8 @@ class UserListAppBar extends StatefulWidget {
   State<UserListAppBar> createState() => _UserListAppBarState();
 }
 
-class _UserListAppBarState extends State<UserListAppBar> {
+class _UserListAppBarState extends State<UserListAppBar>
+    with AnilistAuthIsConnectedMixin {
   int currentIndex = 0;
 
   @override
@@ -83,6 +88,20 @@ class _UserListAppBarState extends State<UserListAppBar> {
                 ],
               ),
             ),
+          if (currentIndex == 1 && widget.tabController != null && isConnected)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Tooltip(
+                message: 'Logout of Anilist',
+                child: IconButton(
+                  onPressed: () async {
+                    BlocProvider.of<AnilistAuthBloc>(context)
+                        .add(AnilistAuthLogoutRequested());
+                  },
+                  icon: const AnikkiIcon(icon: Icons.logout_outlined),
+                ),
+              ),
+            )
         ],
       ),
     );

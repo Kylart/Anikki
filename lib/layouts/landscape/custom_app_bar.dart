@@ -1,9 +1,8 @@
 import 'dart:ui';
 
-import 'package:anikki/helpers/connectivity_bloc/is_online_mixin.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/anilist_auth/anilist_auth.dart';
+import 'package:anikki/helpers/connectivity_bloc/is_online_mixin.dart';
 import 'package:anikki/search/search.dart';
 
 class CustomAppBar extends StatefulWidget {
@@ -35,12 +34,6 @@ class _CustomAppBarState extends State<CustomAppBar> with IsOnlineMixin {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          const IgnorePointer(
-            child: Opacity(
-              opacity: 0.0,
-              child: AnilistAuthView(),
-            ),
-          ),
           const Spacer(),
           SizedBox(
             width: 500,
@@ -71,7 +64,6 @@ class _CustomAppBarState extends State<CustomAppBar> with IsOnlineMixin {
                   'No internet connection detected. Some features will not work.',
               child: Icon(Icons.signal_wifi_connected_no_internet_4),
             ),
-          const AnilistAuthView(),
         ],
       ),
     );

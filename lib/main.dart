@@ -9,6 +9,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 
+import 'package:anikki/anilist_auth/mixins/anilist_auth_mixin.dart';
 import 'package:anikki/bloc_provider.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
 import 'package:anikki/bloc_observer.dart';
@@ -65,7 +66,7 @@ class Anikki extends StatefulWidget {
   State<Anikki> createState() => _AnikkiState();
 }
 
-class _AnikkiState extends State<Anikki> {
+class _AnikkiState extends State<Anikki> with ProtocolListener, AnilistAuthMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -142,7 +143,7 @@ class _AnikkiState extends State<Anikki> {
         body: SafeArea(
           child: LayoutBuilder(
             builder: ((BuildContext context, BoxConstraints constraints) {
-              return constraints.maxWidth > 872
+              return constraints.maxWidth > 800
                   ? const LandscapeLayout()
                   : const PortraitLayout();
             }),
