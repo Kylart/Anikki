@@ -3,7 +3,7 @@ part of 'repository.dart';
 Future<LocalFile> retrieveLocalFile({required String path}) async {
   final file = File(path);
   final parser = Anitomy(inputString: basename(path));
-  final result = LocalFile(
+  LocalFile result = LocalFile(
     path: path,
     file: file,
     episode: parser.episode != null ? int.tryParse(parser.episode!) : null,
@@ -18,7 +18,7 @@ Future<LocalFile> retrieveLocalFile({required String path}) async {
 
     final info = await anilist.infoFromMultiple([result.title!]);
 
-    result.media = info.values.first;
+    result = result.copyWith(media: info.values.first);
   } on AnilistGetInfoException {
     logger.v('Could not retrieve file media info.');
   }
@@ -27,7 +27,7 @@ Future<LocalFile> retrieveLocalFile({required String path}) async {
 }
 
 Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
-  final List<LocalFile> results = [];
+  List<LocalFile> results = [];
 
   final directory = Directory(path);
   final exists = await directory.exists();
@@ -73,8 +73,13 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
     final info = await anilist.infoFromMultiple(entryNames);
 
     // Feeding medias to entries
-    for (final file in results) {
-      file.media = anilist.getInfoFromInfo(file.title!, info);
+    for (int index = 0; index < results.length; index++) {
+      results[index] = results[index].copyWith(
+        media: anilist.getInfoFromInfo(
+          results[index].title!,
+          info,
+        ),
+      );
     }
   } on AnilistGetInfoException {
     logger.v('Could not retrieve file media info.');

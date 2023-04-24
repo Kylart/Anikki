@@ -2,16 +2,23 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:anilist/anilist.dart';
+import 'package:equatable/equatable.dart';
 
-class LocalFile {
+class LocalFile extends Equatable {
   final String path;
   final File file;
   final String? title;
   final int? episode;
   final String? releaseGroup;
-  Fragment$shortMedia? media;
+  final Fragment$shortMedia? media;
 
-  LocalFile({
+  @override
+  List<Object?> get props => [
+    path,
+  ];
+
+
+  const LocalFile({
     required this.path,
     required this.file,
     this.title,
@@ -68,22 +75,5 @@ class LocalFile {
   @override
   String toString() {
     return 'LocalFile(path: $path, file: $file, title: $title, episode: $episode, releaseGroup: $releaseGroup, media: $media)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is LocalFile && other.path == path;
-  }
-
-  @override
-  int get hashCode {
-    return path.hashCode ^
-        file.hashCode ^
-        title.hashCode ^
-        episode.hashCode ^
-        releaseGroup.hashCode ^
-        media.hashCode;
   }
 }

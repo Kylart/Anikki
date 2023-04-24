@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:anilist/anilist.dart';
-import 'package:flutter/foundation.dart';
+import 'package:equatable/equatable.dart';
 
 import 'package:anikki/models/local_file.dart';
 
-class LibraryEntry {
+class LibraryEntry extends Equatable {
   final Fragment$shortMedia? media;
   final List<LocalFile> entries;
+
+  @override
+  List<Object?> get props => [media, entries, epMax, epMin];
 
   int? get epMax {
     int? result;
@@ -45,7 +48,7 @@ class LibraryEntry {
     return result;
   }
 
-  LibraryEntry({
+  const LibraryEntry({
     required this.media,
     required this.entries,
   });
@@ -85,14 +88,4 @@ class LibraryEntry {
 
   @override
   String toString() => 'LibraryEntry(media: $media, entries: $entries)';
-
-  @override
-  bool operator ==(covariant LibraryEntry other) {
-    if (identical(this, other)) return true;
-
-    return other.media == media && listEquals(other.entries, entries);
-  }
-
-  @override
-  int get hashCode => media.hashCode ^ entries.hashCode;
 }
