@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/watch_list/watch_list.dart';
 import 'package:anikki/library/repository/repository.dart';
-import 'package:anikki/anilist_auth/view/anilist_auth_view.dart';
 import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/search/search.dart';
 import 'package:anikki/settings/settings.dart';
@@ -68,10 +67,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
               onPressed: () async => updateFolderPath(context),
               child: const Icon(Icons.folder_open_outlined),
             ),
-            FloatingActionButton(
-              onPressed: () {},
-              child: const AnilistAuthView(),
-            ),
+            null,
             null,
             null,
           ][currentIndex],

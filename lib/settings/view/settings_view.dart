@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/helpers/capitalize.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
 
@@ -49,6 +51,23 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ],
         ),
+        if (BlocProvider.of<AnilistAuthBloc>(context, listen: true).isConnected)
+          SettingsSection(
+            title: const Text('Anilist'),
+            tiles: <SettingsTile>[
+              /// Logout
+              SettingsTile(
+                leading: const AnikkiIcon(icon: Icons.logout_outlined),
+                title: const Text('Logout'),
+                description: const Text(
+                    'Logout from Anilist. This will remove watch list related features.'),
+                onPressed: (context) async {
+                  BlocProvider.of<AnilistAuthBloc>(context)
+                      .add(AnilistAuthLogoutRequested());
+                },
+              ),
+            ],
+          ),
       ],
     );
   }
