@@ -18,13 +18,16 @@ class PlayerCursorHandler extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => videoBloc.add(VideoPlayerDisplayTapped()),
-      onDoubleTap:
-          desktop ? () => videoBloc.add(VideoPlayerToggleFullscreen()) : null,
       onLongPress: () {
         player.playOrPause();
         videoBloc.add(VideoPlayerResetShowTimer());
       },
       onDoubleTapDown: (details) {
+        if (desktop) {
+          videoBloc.add(VideoPlayerToggleFullscreen());
+          return;
+        }
+
         final screenWidth = MediaQuery.of(context).size.width;
 
         if (details.globalPosition.dx < screenWidth / 2) {
