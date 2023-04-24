@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'library_bloc.dart';
 
 abstract class LibraryState extends Equatable {
@@ -21,6 +22,8 @@ class LibraryLoading extends LibraryState {
 }
 
 class LibraryLoaded extends LibraryState {
+  final int id;
+
   final List<LibraryEntry> entries;
   final List<bool> expandedEntries;
 
@@ -39,15 +42,17 @@ class LibraryLoaded extends LibraryState {
     required super.path,
     required this.entries,
     required this.expandedEntries,
+    this.id = 0,
   });
 
   @override
-  List<Object> get props => [entries, path, expandedEntries];
+  List<Object> get props => [id, entries, path, expandedEntries, playlist];
 
   @override
   String toString() {
     return [
       'LibraryLoaded(',
+      id,
       path,
       'Entries: ${entries.length}',
       expandedEntries,

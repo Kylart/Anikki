@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -19,6 +20,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   final StateStreamableSource<SettingsState> settingsBloc;
 
   DirectoryWatcher? watcher;
+  StreamSubscription<WatchEvent>? subscription;
 
   LibraryBloc({required this.settingsBloc}) : super(const LibraryInitial()) {
     on<LibraryEvent>((event, emit) {
@@ -57,8 +59,10 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   }
 
   void _setupWatcher(String path) {
+    subscription?.cancel();
+
     watcher = DirectoryWatcher(path);
-    watcher?.events.listen((event) {
+    subscription = watcher?.events.listen((event) {
       switch (event.type) {
         case ChangeType.ADD:
           if (['.mkv', '.mp4'].contains(extension(event.path))) {
@@ -136,17 +140,20 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
           entries.indexWhere((element) => element.entries.contains(file));
 
       if (existsIndex != -1) {
-        entries[existsIndex]
-            .entries
-            .removeWhere((element) => element.path == element.path);
+        entries[existsIndex].entries.removeWhere((element) => element == file);
 
         if (entries[existsIndex].entries.isEmpty) {
           entries.removeAt(existsIndex);
           expandedEntries.removeAt(existsIndex);
         }
 
+        if (entries[existsIndex].entries.length == 1) {
+          expandedEntries[existsIndex] = true;
+        }
+
         emit(
           LibraryLoaded(
+            id: currentState.id + 1,
             entries: entries,
             expandedEntries: expandedEntries,
             path: state.path,
@@ -164,14 +171,23 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
       /// Find `file` in existing entries if any
       final currentState = state as LibraryLoaded;
 
-      final entries = List<LibraryEntry>.from(currentState.entries);
+      List<LibraryEntry> entries =
+          List<LibraryEntry>.from(currentState.entries);
       final expandedEntries = List<bool>.from(currentState.expandedEntries);
 
-      final existsIndex =
-          entries.indexWhere((element) => element.entries.contains(file));
+      final existsIndex = entries.indexWhere(
+        (element) =>
+            element.media?.id == file.media?.id ||
+            element.entries.first.title == file.title,
+      );
 
       if (existsIndex != -1) {
         entries[existsIndex].entries.add(file);
+
+        /// Setting expanded to false if the entry went from 1 file to 2
+        if (entries[existsIndex].entries.length == 2) {
+          expandedEntries[existsIndex] = false;
+        }
       } else {
         final newEntry = LibraryEntry(
           media: file.media,
@@ -198,6 +214,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
       emit(
         LibraryLoaded(
+          id: currentState.id + 1,
           entries: entries,
           expandedEntries: expandedEntries,
           path: state.path,
