@@ -4,12 +4,12 @@ import 'dart:ui';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 
 import 'package:anikki/video_player/bloc/video_player_bloc.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
+import 'package:window_manager/window_manager.dart';
 
 part 'player_controls_background.dart';
 part 'player_movable_controls.dart';

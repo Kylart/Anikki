@@ -142,7 +142,7 @@ class _AnikkiState extends State<Anikki> {
         body: SafeArea(
           child: LayoutBuilder(
             builder: ((BuildContext context, BoxConstraints constraints) {
-              return constraints.maxWidth > 600
+              return constraints.maxWidth > 872
                   ? const LandscapeLayout()
                   : const PortraitLayout();
             }),

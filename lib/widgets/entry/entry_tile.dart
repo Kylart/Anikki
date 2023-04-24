@@ -69,28 +69,54 @@ class EntryTile<T> extends StatelessWidget {
                   image: AssetImage('assets/images/cover_placeholder.jpg'),
                 ),
         ),
-        child: ListTile(
-          dense: true,
-          isThreeLine: true,
-          contentPadding: const EdgeInsets.all(4.0),
-          title: Text(title ?? 'N/A'),
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (coverImage != null)
-                CircleAvatar(
-                  backgroundImage: NetworkImage(coverImage!),
-                ),
-            ],
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
+        child: Column(
+          children: [
+            ListTile(
+              dense: true,
+              isThreeLine: false,
+              title: Text(
+                title ?? 'N/A',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              leading: coverImage != null
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(coverImage!),
+                    )
+                  : null,
+              subtitle: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: subtitle,
               ),
-              Row(
+              trailing: actions.isEmpty
+                  ? const SizedBox()
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Tooltip(
+                          message: actions.first.label,
+                          child: EntryTag(
+                            padding: EdgeInsets.zero,
+                            child: IconButton(
+                              constraints: const BoxConstraints(),
+                              onPressed: () => actions.first.callback(context),
+                              icon: AnikkiIcon(icon: actions.first.icon),
+                            ),
+                          ),
+                        ),
+                        EntryTag(
+                          padding: EdgeInsets.zero,
+                          child: AnikkiActionButton(
+                            icon: const AnikkiIcon(icon: Icons.more_horiz),
+                            actions: actions,
+                          ),
+                        )
+                      ],
+                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 72.0, bottom: 4.0),
+              child: Row(
                 children: [
                   /// Tags
                   if (tags != null)
@@ -104,7 +130,7 @@ class EntryTile<T> extends StatelessWidget {
                         );
                       },
                     ).toList(),
-
+            
                   if (showBookmark)
                     EntryTag(
                       child: Icon(
@@ -123,36 +149,8 @@ class EntryTile<T> extends StatelessWidget {
                     ),
                 ],
               ),
-            ],
-          ),
-          trailing: actions.isEmpty
-              ? const SizedBox()
-              : Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Tooltip(
-                        message: actions.first.label,
-                        child: EntryTag(
-                          padding: EdgeInsets.zero,
-                          child: IconButton(
-                            constraints: const BoxConstraints(),
-                            onPressed: () => actions.first.callback(context),
-                            icon: AnikkiIcon(icon: actions.first.icon),
-                          ),
-                        ),
-                      ),
-                    ),
-                    EntryTag(
-                      padding: EdgeInsets.zero,
-                      child: AnikkiActionButton(
-                        icon: const AnikkiIcon(icon: Icons.more_horiz),
-                        actions: actions,
-                      ),
-                    )
-                  ],
-                ),
+            ),
+          ],
         ),
       ),
     );

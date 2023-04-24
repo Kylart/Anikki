@@ -228,14 +228,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_acrylic:
-    dependency: "direct main"
-    description:
-      name: flutter_acrylic
-      sha256: "5aea2c850c560c07717a62434ea9cb1565c2282dc78dd2e60f98a78c05f13d7b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.2"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -470,14 +462,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  macos_window_utils:
-    dependency: transitive
-    description:
-      name: macos_window_utils
-      sha256: "510de576b5432dd9ef9e4c258abcc021c6dfbb17a78a344688848a6784b352b8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.2"
   matcher:
     dependency: transitive
     description:
@@ -773,6 +757,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  screen_retriever:
+    dependency: transitive
+    description:
+      name: screen_retriever
+      sha256: "4931f226ca158123ccd765325e9fbf360bfed0af9b460a10f960f9bb13d58323"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   settings_ui:
     dependency: "direct main"
     description:
@@ -1106,6 +1098,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  window_manager:
+    dependency: "direct main"
+    description:
+      name: window_manager
+      sha256: "2b2572442b2a5178642730442dc625ac088244f5827b1f0811371b1b7485eb62"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   xdg_directories:
     dependency: transitive
     description:
