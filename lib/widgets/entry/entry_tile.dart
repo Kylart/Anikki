@@ -97,18 +97,28 @@ class EntryTile<T> extends StatelessWidget {
                           message: actions.first.label,
                           child: EntryTag(
                             padding: EdgeInsets.zero,
-                            child: IconButton(
-                              constraints: const BoxConstraints(),
-                              onPressed: () => actions.first.callback(context),
-                              icon: AnikkiIcon(icon: actions.first.icon),
+                            child: SizedBox(
+                              height: 35,
+                              width: 35,
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () =>
+                                    actions.first.callback(context),
+                                icon: AnikkiIcon(icon: actions.first.icon),
+                                // icon: AnikkiIcon(icon: actions.first.icon),
+                              ),
                             ),
                           ),
                         ),
                         EntryTag(
                           padding: EdgeInsets.zero,
-                          child: AnikkiActionButton(
-                            icon: const AnikkiIcon(icon: Icons.more_horiz),
-                            actions: actions,
+                          child: SizedBox(
+                            height: 35,
+                            width: 35,
+                            child: AnikkiActionButton(
+                              icon: const AnikkiIcon(icon: Icons.more_horiz),
+                              actions: actions,
+                            ),
                           ),
                         )
                       ],
@@ -130,7 +140,7 @@ class EntryTile<T> extends StatelessWidget {
                         );
                       },
                     ).toList(),
-            
+
                   if (showBookmark)
                     EntryTag(
                       child: Icon(
