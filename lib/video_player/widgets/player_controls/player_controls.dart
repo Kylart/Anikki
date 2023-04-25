@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:window_manager/window_manager.dart';
 
+import 'package:anikki/helpers/logger.dart';
 import 'package:anikki/video_player/bloc/video_player_bloc.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:window_manager/window_manager.dart';
 
 part 'player_controls_background.dart';
 part 'player_movable_controls.dart';
@@ -22,6 +23,9 @@ part 'player_controls_fullscreen.dart';
 part 'player_controls_playback.dart';
 part 'player_controls_subtitles.dart';
 part 'player_controls_audios.dart';
+part 'player_controls_shortcuts.dart';
+part 'intents.dart';
+part 'actions.dart';
 
 class PlayerControls extends StatelessWidget {
   const PlayerControls({super.key, required this.player});
@@ -35,34 +39,37 @@ class PlayerControls extends StatelessWidget {
 
     return BlocBuilder<VideoPlayerBloc, VideoPlayerState>(
       builder: (context, state) {
-        return PlayerCursorHandler(
+        return PlayerControlsShortcuts(
           player: player,
-          child: PlayerControlsBackground(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: PlayerControlsProgress(player: player),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if (!isSmallScreen) PlayerControlsVolume(player: player),
-                    PlayerControlsPlayback(
-                      player: player,
-                      dense: isSmallScreen,
-                    ),
-                    Row(
-                      children: [
-                        PlayerControlsSubtitles(player: player),
-                        PlayerControlsAudios(player: player),
-                        PlayerControlsStop(player: player),
-                        const PlayerControlsFullscreen(),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+          child: PlayerCursorHandler(
+            player: player,
+            child: PlayerControlsBackground(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: PlayerControlsProgress(player: player),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (!isSmallScreen) PlayerControlsVolume(player: player),
+                      PlayerControlsPlayback(
+                        player: player,
+                        dense: isSmallScreen,
+                      ),
+                      Row(
+                        children: [
+                          PlayerControlsSubtitles(player: player),
+                          PlayerControlsAudios(player: player),
+                          PlayerControlsStop(player: player),
+                          const PlayerControlsFullscreen(),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );

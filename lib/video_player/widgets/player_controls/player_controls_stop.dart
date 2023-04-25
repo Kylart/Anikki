@@ -8,11 +8,7 @@ class PlayerControlsStop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () async {
-        final nav = Navigator.of(context);
-        await player.dispose();
-        nav.pop();
-      },
+      onPressed: () => ExitAction(player: player).invoke(ExitIntent(context)),
       icon: const Icon(Icons.stop),
     );
   }

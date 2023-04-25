@@ -10,11 +10,9 @@ class PlayerControlsFullscreen extends StatefulWidget {
 
 class _PlayerControlsFullscreenState extends State<PlayerControlsFullscreen> {
   @override
-  void dispose() async {
+  void dispose() {
     if (isDesktop()) {
-      if (await windowManager.isFullScreen()) {
-        windowManager.setFullScreen(false);
-      }
+      windowManager.setFullScreen(false);
     } else {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setPreferredOrientations(DeviceOrientation.values);
