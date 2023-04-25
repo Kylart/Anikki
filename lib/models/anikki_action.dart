@@ -11,6 +11,7 @@ class AnikkiAction {
   final Widget? trailing;
   final void Function(BuildContext context) callback;
   final AnikkiActionType type;
+  final bool disabled;
 
   AnikkiAction({
     required this.label,
@@ -18,5 +19,6 @@ class AnikkiAction {
     required this.callback,
     this.icon = Icons.question_mark,
     this.type = AnikkiActionType.action,
+    this.disabled = false,
   });
 }

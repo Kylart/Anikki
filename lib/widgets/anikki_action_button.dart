@@ -37,7 +37,9 @@ class AnikkiActionButton extends StatelessWidget {
                               ? ListTile(
                                   leading: Icon(e.icon),
                                   title: Text(e.label),
-                                  onTap: () => e.callback(context),
+                                  onTap: e.disabled
+                                      ? null
+                                      : () => e.callback(context),
                                   trailing: e.trailing,
                                 )
                               : const Divider(),
@@ -60,6 +62,9 @@ class AnikkiActionButton extends StatelessWidget {
                       .map(
                         (action) => action.type == AnikkiActionType.action
                             ? CupertinoActionSheetAction(
+                                onPressed: action.disabled
+                                    ? () {}
+                                    : () => action.callback(context),
                                 child: Row(
                                   children: [
                                     AnikkiIcon(icon: action.icon),
@@ -70,7 +75,6 @@ class AnikkiActionButton extends StatelessWidget {
                                       action.trailing!,
                                   ],
                                 ),
-                                onPressed: () => action.callback(context),
                               )
                             : const Divider(
                                 height: 1,
@@ -94,6 +98,7 @@ class AnikkiActionButton extends StatelessWidget {
                 .map(
                   (e) => (e.type == AnikkiActionType.action
                       ? PopupMenuItem(
+                          enabled: !e.disabled,
                           onTap: () => e.callback(context),
                           child: ListTile(
                             contentPadding: EdgeInsets.zero,

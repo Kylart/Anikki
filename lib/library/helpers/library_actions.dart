@@ -41,6 +41,17 @@ AnikkiAction _deleteFileAction(BuildContext context, LocalFile entry) =>
       label: 'Delete file',
     );
 
+AnikkiAction _deleteAllFilesAction(BuildContext context, LocalFile entry) =>
+    AnikkiAction(
+      callback: (context) {
+        // TODO: Implement this when send to trash is available.
+        throw UnimplementedError();
+      },
+      icon: Icons.delete_sweep_outlined,
+      label: 'Delete all files',
+      disabled: true,
+    );
+
 AnikkiAction _expandAction(
         BuildContext context, LocalFile entry, void Function() onShrink) =>
     AnikkiAction(
@@ -75,5 +86,6 @@ List<AnikkiAction> geExpandabletLibraryActions({
       entry.copyWith(episode: null),
     ),
     _openBrowserAction(context, entry),
+    _deleteAllFilesAction(context, entry),
   ];
 }
