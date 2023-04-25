@@ -22,7 +22,9 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
           const VideoPlayerState(),
         ) {
     on<VideoPlayerEvent>((event, emit) {
-      logger.v('Video Player event: ${event.runtimeType}');
+      if (event.runtimeType != VideoPlayerResetShowTimer) {
+        logger.v('Video Player event: ${event.runtimeType}');
+      }
     });
 
     on<VideoPlayerDisplayTapped>((event, emit) {
@@ -104,7 +106,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         milliseconds: 500,
       ),
       () {
-        if (!state.controlsHovered) {
+        if (!state.controlsHovered && !isClosed) {
           add(
             VideoPlayerStateUpdated(
               state.copyWith(
