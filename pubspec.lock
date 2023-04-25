@@ -99,10 +99,10 @@ packages:
     dependency: "direct main"
     description:
       name: connectivity_plus
-      sha256: "8875e8ed511a49f030e313656154e4bbbcef18d68dfd32eb853fac10bce48e96"
+      sha256: d73575bb66216738db892f72ba67dc478bd3b5490fbbcf43644b57645eabc822
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.3"
+    version: "3.0.4"
   connectivity_plus_platform_interface:
     dependency: transitive
     description:
@@ -211,18 +211,18 @@ packages:
     dependency: "direct main"
     description:
       name: flex_color_scheme
-      sha256: "03a0ad67cc224b20aab9f9a775a6cef76c8f884887902a2d94635c187858b31b"
+      sha256: "1a54a5b22a4a7c4e5c30a8cabb12a8cf3c3f477c15e1ab2e1ab2f569295f4fab"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.2"
+    version: "7.0.4"
   flex_seed_scheme:
     dependency: transitive
     description:
       name: flex_seed_scheme
-      sha256: e61950ccadfb8d43ce5cdef382e8f689edc053ce6b837e277539410ecfb3b3e5
+      sha256: b3678d82403c13dec2ee2721e078b26f14577712411b6aa981b0f4269df3fabb
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "1.2.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -256,10 +256,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_platform_widgets
-      sha256: "654379d0b1c74011b0a440140d7445d472d9ea319aebab91217b88790341552d"
+      sha256: a10d674f1135a885fbef69ed50dbc1fe9fb6c4435154804b598446290fa9b5c4
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "3.3.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -482,18 +482,18 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit
-      sha256: "39145cb65556597afa5d00f78e846abd0677610b1f3f859768e300e5c27e1953"
+      sha256: "47292aae58bb0b118b7097d3aba1db86807b5ea8ecf056f1a2493663b801ff29"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5"
+    version: "0.0.6"
   media_kit_libs_android_video:
     dependency: "direct main"
     description:
       name: media_kit_libs_android_video
-      sha256: "76fa95350b472f9dc163dd11e0145133c2e05456c06d0febb4e189922a68bd3c"
+      sha256: "25bf160a477628e5c39ee7c73978ba03a910e0a9d9500d2f4454346d2aef246d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   media_kit_libs_ios_video:
     dependency: "direct main"
     description:
@@ -538,10 +538,10 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit_video
-      sha256: "2764c42ee4d1aa35cf3acc06cf67a932c8549ec2ed510c9f3976d969ff119746"
+      sha256: c6db00eded195c1a8d91fc39d74f706f4db125ba03f0fe4bc9b33d46c6d133cc
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5"
+    version: "0.0.8"
   meta:
     dependency: transitive
     description:
@@ -878,10 +878,10 @@ packages:
     dependency: transitive
     description:
       name: synchronized
-      sha256: "33b31b6beb98100bf9add464a36a8dd03eb10c7a8cf15aeec535e9b054aaf04b"
+      sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
   term_glyph:
     dependency: transitive
     description:

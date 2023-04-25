@@ -53,22 +53,22 @@ dependencies:
   anitomy:
     path: packages/anitomy
   wakelock: ^0.6.2
-  flutter_platform_widgets: ^3.0.0
+  flutter_platform_widgets: ^3.3.1
   empty_widget: ^0.0.5
-  flex_color_scheme: ^6.1.2
+  flex_color_scheme: ^7.0.4
   bloc: ^8.1.1
   flutter_bloc: ^8.1.2
   equatable: ^2.0.5
   logger: ^1.3.0
   hydrated_bloc: ^9.1.0
   path_provider: ^2.0.14
-  connectivity_plus: ^3.0.3
+  connectivity_plus: ^3.0.4
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  media_kit: ^0.0.5
+  media_kit: ^0.0.6
   # For video rendering.
-  media_kit_video: ^0.0.5
+  media_kit_video: ^0.0.8
   # Enables support for higher number of concurrent instances. Optional.
   media_kit_native_event_loop: ^1.0.3
   # Windows package for video (& audio) native libraries.
@@ -76,7 +76,7 @@ dependencies:
   # iOS package for video (& audio) native libraries.
   media_kit_libs_ios_video: ^1.0.4
   # Android package for video native libraries.
-  media_kit_libs_android_video: ^1.0.0
+  media_kit_libs_android_video: ^1.0.1
   # macOS package for video (& audio) native libraries.
   media_kit_libs_macos_video: ^1.0.4
   # Linux dependency package.
