@@ -19,6 +19,8 @@ class PlayerCursorHandler extends StatelessWidget {
     return GestureDetector(
       onTap: () => videoBloc.add(VideoPlayerDisplayTapped()),
       onLongPress: () {
+        if (desktop) return;
+
         player.playOrPause();
         videoBloc.add(VideoPlayerResetShowTimer());
       },
