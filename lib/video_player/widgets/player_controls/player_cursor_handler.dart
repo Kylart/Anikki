@@ -50,7 +50,9 @@ class PlayerCursorHandler extends StatelessWidget {
       child: MouseRegion(
         cursor:
             hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
-        onHover: (_) => videoBloc.add(VideoPlayerResetShowTimer()),
+        onHover: (_) {
+          if (desktop) videoBloc.add(VideoPlayerResetShowTimer());
+        },
         child: AbsorbPointer(
           absorbing: hideControls,
           child: AnimatedOpacity(
