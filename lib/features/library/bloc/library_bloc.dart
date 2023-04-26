@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -77,7 +76,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
             LibraryFileDeleted(
               file: LocalFile(
                 path: event.path,
-                file: File(event.path),
               ),
             ),
           );

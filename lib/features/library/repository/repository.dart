@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:anikki/features/video_player/view/anikki_video_player.dart';
 import 'package:anilist/anilist.dart';
-import 'package:anitomy/anitomy.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
