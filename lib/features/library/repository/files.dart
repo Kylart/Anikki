@@ -182,18 +182,17 @@ Future<void> playFile(LocalFile entry, BuildContext context,
 
     AnikkiVideoPlayer player = AnikkiVideoPlayer(
       onVideoComplete: (media) {
-        if (libraryState.playlist.contains(media.uri)) {
-          /// We have to find the `LocalFile` that was just completed
-          final entry = libraryState.entries.fold<List<LocalFile>>(
-            [],
-            (previousValue, element) => [
-              ...previousValue,
-              ...element.entries.reversed.map((e) => e),
-            ],
-          ).firstWhere((element) => element.path == media.uri);
+        /// We have to find the `LocalFile` that was just completed
+        final entry = libraryState.entries.fold<List<LocalFile>>(
+          [],
+          (previousValue, element) => [
+            ...previousValue,
+            ...element.entries.reversed.map((e) => e),
+          ],
+        ).firstWhere(
+            (element) => normalize(element.path) == normalize(media.uri));
 
-          updateEntry(context, entry);
-        }
+        updateEntry(context, entry);
       },
       first: entry,
       sources: libraryState.playlist,
