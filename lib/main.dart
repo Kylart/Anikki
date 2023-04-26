@@ -9,6 +9,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 
+import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anikki/anilist_auth/mixins/anilist_auth_mixin.dart';
 import 'package:anikki/bloc_provider.dart';
 import 'package:anikki/settings/bloc/settings_bloc.dart';
@@ -66,7 +67,8 @@ class Anikki extends StatefulWidget {
   State<Anikki> createState() => _AnikkiState();
 }
 
-class _AnikkiState extends State<Anikki> with ProtocolListener, AnilistAuthMixin {
+class _AnikkiState extends State<Anikki>
+    with ProtocolListener, AnilistAuthMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -141,12 +143,19 @@ class _AnikkiState extends State<Anikki> with ProtocolListener, AnilistAuthMixin
           .theme,
       home: Scaffold(
         body: SafeArea(
-          child: LayoutBuilder(
-            builder: ((BuildContext context, BoxConstraints constraints) {
-              return constraints.maxWidth > 800
-                  ? const LandscapeLayout()
-                  : const PortraitLayout();
-            }),
+
+          /// This BlocBuilder is necessary to instanciate the [ConnectivityBloc]
+          /// Otherwise it is instanciated on the first use.
+          child: BlocBuilder<ConnectivityBloc, ConnectivityState>(
+            builder: (context, _) {
+              return LayoutBuilder(
+                builder: ((BuildContext context, BoxConstraints constraints) {
+                  return constraints.maxWidth > 800
+                      ? const LandscapeLayout()
+                      : const PortraitLayout();
+                }),
+              );
+            },
           ),
         ),
       ),
