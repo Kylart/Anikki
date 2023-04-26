@@ -6,12 +6,13 @@ import 'package:window_manager/window_manager.dart';
 Future<void> setUpDesktop() async {
   await windowManager.ensureInitialized();
 
-  WindowOptions windowOptions = const WindowOptions(
-    size: Size(1280, 720),
-    minimumSize: Size(1280, 720),
+  WindowOptions windowOptions = WindowOptions(
+    size: const Size(1280, 720),
+    minimumSize: const Size(1280, 720),
     center: true,
     backgroundColor: Colors.transparent,
-    titleBarStyle: TitleBarStyle.hidden,
+    titleBarStyle:
+        Platform.isMacOS ? TitleBarStyle.hidden : TitleBarStyle.normal,
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
