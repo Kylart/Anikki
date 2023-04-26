@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +27,10 @@ void main() async {
 
   Paint.enableDithering = true;
 
-  final storageDirectory = kDebugMode
-      ? await getTemporaryDirectory()
-      : await getApplicationDocumentsDirectory();
+  final storageDirectory =
+      kDebugMode || Platform.environment.containsKey('FLUTTER_TEST')
+          ? await getTemporaryDirectory()
+          : await getApplicationDocumentsDirectory();
 
   await Future.wait([
     /// Storage
