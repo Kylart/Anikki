@@ -4,14 +4,26 @@ import 'package:anilist/anilist.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:anikki/models/local_file.dart';
+import 'package:flutter/material.dart';
 
+///
+/// [LibraryEntry] represents a entry for the `Library` feature.
+/// It helps group multiple [LocalFile] from the same Anilist `media`.
+///
+@immutable
 class LibraryEntry extends Equatable {
+  const LibraryEntry({
+    required this.media,
+    required this.entries,
+  });
+
+  /// Media information from Anilist
   final Fragment$shortMedia? media;
+
+  /// `List` of [LocalFile] that are contained by this [LibraryEntry]
   final List<LocalFile> entries;
 
-  @override
-  List<Object?> get props => [media, entries, epMax, epMin];
-
+  /// Maximum episode parsed from the [entries] property
   int? get epMax {
     int? result;
 
@@ -30,6 +42,7 @@ class LibraryEntry extends Equatable {
     return result;
   }
 
+  /// Minimum episode parsed from the [entries] property
   int? get epMin {
     int? result;
 
@@ -48,10 +61,8 @@ class LibraryEntry extends Equatable {
     return result;
   }
 
-  const LibraryEntry({
-    required this.media,
-    required this.entries,
-  });
+  @override
+  List<Object?> get props => [media, entries, epMax, epMin];
 
   LibraryEntry copyWith({
     Fragment$shortMedia? media,
