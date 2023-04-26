@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
-import 'package:wakelock/wakelock.dart';
 
 import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
