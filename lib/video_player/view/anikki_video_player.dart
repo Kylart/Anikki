@@ -10,8 +10,8 @@ import 'package:anikki/video_player/widgets/player_controls/player_controls.dart
 class AnikkiVideoPlayer {
   AnikkiVideoPlayer({
     required this.sources,
+    required this.onVideoComplete,
     this.first,
-    this.onVideoComplete,
   });
 
   /// Player instace
@@ -28,7 +28,7 @@ class AnikkiVideoPlayer {
   /// Actual playlist that the player will play
   Playlist get playlist => Playlist(sources.map((e) => Media(e)).toList());
 
-  final void Function(Media media)? onVideoComplete;
+  final void Function(Media media) onVideoComplete;
 
   Widget widget() {
     return BlocProvider(

@@ -177,8 +177,6 @@ Future<void> playFile(LocalFile entry, BuildContext context,
       updateEntry(context, entry),
     ]);
   } else {
-    Wakelock.enable();
-
     final libraryState =
         BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded;
 
@@ -202,13 +200,7 @@ Future<void> playFile(LocalFile entry, BuildContext context,
     );
 
     Navigator.of(context).push(
-      FadeOverlay(
-        child: player.widget(),
-        onClose: () async => await Future.wait([
-          updateEntry(context, entry),
-          Wakelock.disable(),
-        ]),
-      ),
+      FadeOverlay(child: player.widget()),
     );
   }
 }
