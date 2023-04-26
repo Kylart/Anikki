@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/watch_list/watch_list.dart';
-import 'package:anikki/library/repository/repository.dart';
+import 'package:anikki/features/watch_list/watch_list.dart';
+import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
-import 'package:anikki/search/search.dart';
-import 'package:anikki/settings/settings.dart';
-import 'package:anikki/library/library.dart';
+import 'package:anikki/features/search/search.dart';
+import 'package:anikki/features/settings/settings.dart';
+import 'package:anikki/features/library/library.dart';
 import 'package:anikki/models/user_list_enum.dart';
-import 'package:anikki/news/news.dart';
+import 'package:anikki/features/news/news.dart';
 import 'package:anikki/user_list/user_list_app_bar.dart';
 
 class PortraitLayout extends StatefulWidget {

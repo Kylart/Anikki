@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart';
-import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart';
+import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/models/user_list_enum.dart';
-import 'package:anikki/library/repository/repository.dart';
+import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/user_list/user_list_refresh.dart';
 import 'package:anikki/widgets/anikki_action_button.dart';
 import 'package:anikki/models/anikki_action.dart';

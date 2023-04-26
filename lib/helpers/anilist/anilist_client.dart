@@ -1,7 +1,7 @@
 import 'package:graphql/client.dart';
 import 'package:hive/hive.dart';
 
-import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
 
 GraphQLClient getAnilistClient() {
   final HttpLink httpLink = HttpLink(

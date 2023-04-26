@@ -5,8 +5,8 @@ import 'package:anikki/features/settings/models/settings.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/widgets/anikki_icon.dart';
 
-class UserListLayoutToggle extends StatelessWidget {
-  const UserListLayoutToggle({super.key});
+class NewsLayoutToggle extends StatelessWidget {
+  const NewsLayoutToggle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +16,14 @@ class UserListLayoutToggle extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ToggleButtons(
         borderRadius: const BorderRadius.all(Radius.circular(50)),
-        isSelected:
-            settingsBloc.state.settings.userListLayouts == UserListLayouts.grid
-                ? [false, true]
-                : [true, false],
+        isSelected: settingsBloc.state.settings.newsLayout == NewsLayouts.grid
+            ? [false, true]
+            : [true, false],
         onPressed: (int index) {
           settingsBloc.add(
             SettingsUpdated(
               settingsBloc.state.settings.copyWith(
-                userListLayouts:
-                    index == 0 ? UserListLayouts.list : UserListLayouts.grid,
+                newsLayout: index == 0 ? NewsLayouts.list : NewsLayouts.grid,
               ),
             ),
           );

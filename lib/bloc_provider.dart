@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
-import 'package:anikki/news/bloc/news_bloc.dart';
-import 'package:anikki/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/library/bloc/library_bloc.dart';
-import 'package:anikki/settings/bloc/settings_bloc.dart';
-import 'package:anikki/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/features/news/bloc/news_bloc.dart';
+import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/library/bloc/library_bloc.dart';
+import 'package:anikki/features/settings/bloc/settings_bloc.dart';
+import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 
 class AnikkiBlocProvider extends StatelessWidget {
   const AnikkiBlocProvider({super.key, required this.child});

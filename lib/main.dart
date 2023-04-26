@@ -10,9 +10,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 
 import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
-import 'package:anikki/anilist_auth/mixins/anilist_auth_mixin.dart';
+import 'package:anikki/features/anilist_auth/mixins/anilist_auth_mixin.dart';
 import 'package:anikki/bloc_provider.dart';
-import 'package:anikki/settings/bloc/settings_bloc.dart';
+import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/bloc_observer.dart';
 import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/layouts/landscape/layout.dart';
@@ -143,7 +143,6 @@ class _AnikkiState extends State<Anikki>
           .theme,
       home: Scaffold(
         body: SafeArea(
-
           /// This BlocBuilder is necessary to instanciate the [ConnectivityBloc]
           /// Otherwise it is instanciated on the first use.
           child: BlocBuilder<ConnectivityBloc, ConnectivityState>(
