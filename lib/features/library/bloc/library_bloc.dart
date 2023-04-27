@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
 import 'package:watcher/watcher.dart';
 
@@ -16,12 +17,17 @@ part 'library_event.dart';
 part 'library_state.dart';
 
 class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
-  final StateStreamableSource<SettingsState> settingsBloc;
+  final SettingsBloc settingsBloc;
 
   DirectoryWatcher? watcher;
   StreamSubscription<WatchEvent>? subscription;
 
-  LibraryBloc({required this.settingsBloc}) : super(const LibraryInitial()) {
+  final LibraryRepository repository;
+
+  LibraryBloc({
+    required this.settingsBloc,
+    this.repository = const LibraryRepository(),
+  }) : super(const LibraryInitial()) {
     on<LibraryEvent>((event, emit) {
       logger.v('Library event: ${event.runtimeType}');
     });
@@ -90,12 +96,14 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
   Future<void> _onUpdateRequested(
       LibraryUpdateRequested event, Emitter<LibraryState> emit) async {
-    final path = event.path;
+    final path = event.path ?? await FilePicker.platform.getDirectoryPath();
+
+    if (path == null) return;
 
     emit(LibraryLoading(path: path));
 
     try {
-      final files = await retrieveFilesFromPath(path: path);
+      final files = await repository.retrieveFilesFromPath(path);
 
       if (files.isEmpty) {
         emit(LibraryEmpty(path: path));
@@ -112,6 +120,14 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
           ),
         );
       }
+
+      settingsBloc.add(
+        SettingsUpdated(
+          settingsBloc.state.settings.copyWith(
+            localDirectory: path,
+          ),
+        ),
+      );
 
       _setupWatcher(path);
     } catch (e) {
@@ -164,7 +180,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   Future<void> _onFileAdded(
       LibraryFileAdded event, Emitter<LibraryState> emit) async {
     if (state.runtimeType == LibraryLoaded) {
-      final file = await retrieveLocalFile(path: event.path);
+      final file = await repository.getFile(event.path);
 
       /// Find `file` in existing entries if any
       final currentState = state as LibraryLoaded;

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:anikki/helpers/anilist/anilist.dart';
 import 'package:anilist/anilist.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -21,3 +20,19 @@ import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 
 part 'files.dart';
 part 'folder.dart';
+
+///
+/// [LibraryRepository] should only be used by the [LibraryBloc] class.
+/// Its main objective is to be able to be mocked during testing phases.
+/// 
+class LibraryRepository {
+  const LibraryRepository();
+
+  Future<List<LocalFile>> retrieveFilesFromPath(String path) async {
+    return _retrieveFilesFromPath(path: path);
+  }
+
+  Future<LocalFile> getFile(String path) async {
+    return LocalFile.createAndSearchMedia(path);
+  }
+}

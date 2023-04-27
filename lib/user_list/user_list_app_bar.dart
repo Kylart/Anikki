@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -76,7 +77,8 @@ class _UserListAppBarState extends State<UserListAppBar>
                   AnikkiAction(
                     icon: Icons.folder_open_outlined,
                     label: 'Change folder',
-                    callback: (context) async => updateFolderPath(context),
+                    callback: (_) => BlocProvider.of<LibraryBloc>(context)
+                        .add(const LibraryUpdateRequested()),
                   ),
                   AnikkiAction(
                     icon: Icons.open_in_new,

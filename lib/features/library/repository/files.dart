@@ -1,10 +1,6 @@
 part of 'repository.dart';
 
-Future<LocalFile> retrieveLocalFile({required String path}) async {
-  return LocalFile.createAndSearchMedia(path);
-}
-
-Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
+Future<List<LocalFile>> _retrieveFilesFromPath({required String path}) async {
   List<LocalFile> results = [];
 
   final directory = Directory(path);

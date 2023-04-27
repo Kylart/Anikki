@@ -1,7 +1,7 @@
+import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/watch_list/watch_list.dart';
-import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/features/search/search.dart';
 import 'package:anikki/features/settings/settings.dart';
@@ -9,6 +9,7 @@ import 'package:anikki/features/library/library.dart';
 import 'package:anikki/models/user_list_enum.dart';
 import 'package:anikki/features/news/news.dart';
 import 'package:anikki/user_list/user_list_app_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PortraitLayout extends StatefulWidget {
   const PortraitLayout({
@@ -64,7 +65,8 @@ class _PortraitLayoutState extends State<PortraitLayout> {
           floatingActionButton: [
             null,
             FloatingActionButton(
-              onPressed: () async => updateFolderPath(context),
+              onPressed: () async => BlocProvider.of<LibraryBloc>(context)
+                  .add(const LibraryUpdateRequested()),
               child: const Icon(Icons.folder_open_outlined),
             ),
             null,
