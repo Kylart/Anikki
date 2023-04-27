@@ -46,5 +46,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-lib/bindings/anitomy/build
 .env
+
+test/resources/others/*
+!test/resources/others/.gitkeep
