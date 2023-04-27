@@ -1,11 +1,22 @@
-part of 'repository.dart';
+import 'package:anilist/anilist.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-Future<void> updateEntry(BuildContext context, LocalFile entry) async {
+import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/helpers/anilist/anilist_client.dart';
+import 'package:anikki/models/local_file.dart';
+
+Future<void> updateEntry(
+  BuildContext context,
+  LocalFile entry, [
+  Anilist? client,
+]) async {
   final auth = BlocProvider.of<AnilistAuthBloc>(context);
   final lists = BlocProvider.of<WatchListBloc>(context);
   final scaffold = ScaffoldMessenger.of(context);
   final theme = Theme.of(context);
-  final anilist = Anilist(client: getAnilistClient());
+  final anilist = client ?? Anilist(client: getAnilistClient());
 
   if (!auth.isConnected) return;
 
