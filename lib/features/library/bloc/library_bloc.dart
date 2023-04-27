@@ -190,9 +190,9 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
       final expandedEntries = List<bool>.from(currentState.expandedEntries);
 
       final existsIndex = entries.indexWhere(
-        (element) =>
-            element.media?.id == file.media?.id ||
-            element.entries.first.title == file.title,
+        (element) => file.media != null
+            ? element.media?.id == file.media?.id
+            : element.entries.first.title == file.title,
       );
 
       if (existsIndex != -1) {
@@ -208,20 +208,32 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
           entries: [file],
         );
 
-        /// Looking where to insert the new entry
-        for (int index = 0; index < entries.length; index++) {
-          if (compareTitles(entries.elementAt(index), newEntry) > 0) {
-            /// Means we need to place the new entry just the index before
-            final insertIndex = index;
+        if (entries.isEmpty) {
+          entries.add(newEntry);
+          expandedEntries.add(true);
+        } else {
+          /// Looking where to insert the new entry
+          for (int index = 0; index < entries.length; index++) {
+            if (compareTitles(entries.elementAt(index), newEntry) > 0) {
+              /// Means we need to place the new entry just the index before
+              final insertIndex = index;
 
-            entries.insert(
-              insertIndex,
-              newEntry,
-            );
+              entries.insert(
+                insertIndex,
+                newEntry,
+              );
 
-            expandedEntries.insert(insertIndex, true);
+              expandedEntries.insert(insertIndex, true);
 
-            break;
+              break;
+            }
+
+            /// Means that the entry didn't fit before
+            if (index == entries.length - 1) {
+              entries.add(newEntry);
+              expandedEntries.add(true);
+              break;
+            }
           }
         }
       }
