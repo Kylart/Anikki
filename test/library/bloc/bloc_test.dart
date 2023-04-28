@@ -94,6 +94,11 @@ void main() {
             [true],
           ),
         ],
+        verify: (bloc) {
+          verify(
+            () => repository.getFile(toAddPath),
+          ).called(1);
+        },
       );
 
       blocTest<LibraryBloc, LibraryState>(
@@ -132,6 +137,11 @@ void main() {
             [true, true],
           ),
         ],
+        verify: (bloc) {
+          verify(
+            () => repository.getFile(toAddPath),
+          ).called(1);
+        },
       );
 
       blocTest<LibraryBloc, LibraryState>(
@@ -194,6 +204,11 @@ void main() {
             [true, false],
           ),
         ],
+        verify: (bloc) {
+          verify(
+            () => repository.getFile(toAddPath),
+          ).called(1);
+        },
       );
     });
   });
