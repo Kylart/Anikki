@@ -169,6 +169,16 @@ void main() {
     });
 
     group('Event: [LibraryFileAdded]', () {
+      blocTest(
+        'does nothing if state is not [LibraryLoaded]',
+        build: () => bloc,
+        act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
+        expect: () => [],
+        verify: (bloc) {
+          verifyNever(() => repository.getFile(toAddPath));
+        },
+      );
+
       blocTest<LibraryBloc, LibraryState>(
         'emit [LibraryLoaded] when [LibraryFileAdded] is added when no entry in [Library]',
         build: () => bloc,
@@ -312,6 +322,88 @@ void main() {
             () => repository.getFile(toAddPath),
           ).called(1);
         },
+      );
+    });
+
+    group('Event: [LibraryFileDeleted]', () {
+      blocTest(
+        'does nothing if state is not [LibraryLoaded]',
+        build: () => bloc,
+        act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
+        expect: () => [],
+        verify: (bloc) {
+          verifyNever(() => repository.getFile(toAddPath));
+        },
+      );
+
+      blocTest<LibraryBloc, LibraryState>(
+        'emits [LibraryEmpty] after deleting a file alone in the only [LibraryEntry] available',
+        build: () => bloc,
+        seed: () => LibraryLoaded(
+          path: path,
+          entries: [
+            LibraryEntry(media: null, entries: [mockFile]),
+          ],
+          expandedEntries: const [true],
+        ),
+        act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
+        expect: () => [
+          const LibraryEmpty(path: path),
+        ],
+      );
+
+      blocTest<LibraryBloc, LibraryState>(
+        'emits [LibraryLoaded] after deleting a file alone in its [LibraryEntry] but there are others',
+        build: () => bloc,
+        seed: () => LibraryLoaded(
+          path: path,
+          entries: [
+            LibraryEntry(media: null, entries: [mockFile]),
+            LibraryEntry(media: null, entries: [files[0]]),
+          ],
+          expandedEntries: const [true, true],
+        ),
+        act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
+        expect: () => [
+          isA<LibraryLoaded>()
+              .having(
+            (p0) => p0.entries.length,
+            'with 1 entry remaining',
+            equals(1),
+          )
+              .having(
+            (p0) => p0.expandedEntries,
+            'with 1 expanded entry',
+            [true],
+          ),
+        ],
+      );
+
+      blocTest<LibraryBloc, LibraryState>(
+        'emits [LibraryLoaded] after deleting a file not alone in its [LibraryEntry] but there are others',
+        build: () => bloc,
+        seed: () => LibraryLoaded(
+          path: path,
+          entries: [
+            LibraryEntry(media: null, entries: [mockFile, files[2]]),
+            LibraryEntry(media: null, entries: [files[0]]),
+          ],
+          expandedEntries: const [false, true],
+        ),
+        act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
+        expect: () => [
+          isA<LibraryLoaded>()
+              .having(
+            (p0) => p0.entries.length,
+            'with 2 entries still',
+            equals(2),
+          )
+              .having(
+            (p0) => p0.expandedEntries,
+            'with correct expandedEntries',
+            [true, true],
+          ),
+        ],
       );
     });
   });

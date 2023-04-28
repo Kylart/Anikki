@@ -159,18 +159,23 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
       final existsIndex =
           entries.indexWhere((element) => element.entries.contains(file));
 
-      if (existsIndex != -1) {
-        entries[existsIndex].entries.removeWhere((element) => element == file);
+      /// Should never happen
+      if (existsIndex == -1) return;
 
-        if (entries[existsIndex].entries.isEmpty) {
-          entries.removeAt(existsIndex);
-          expandedEntries.removeAt(existsIndex);
-        }
+      entries[existsIndex].entries.removeWhere((element) => element == file);
 
-        if (entries[existsIndex].entries.length == 1) {
-          expandedEntries[existsIndex] = true;
-        }
+      if (entries[existsIndex].entries.length == 1) {
+        expandedEntries[existsIndex] = true;
+      }
 
+      if (entries[existsIndex].entries.isEmpty) {
+        entries.removeAt(existsIndex);
+        expandedEntries.removeAt(existsIndex);
+      }
+
+      if (entries.isEmpty) {
+        emit(LibraryEmpty(path: state.path));
+      } else {
         emit(
           LibraryLoaded(
             id: currentState.id + 1,
