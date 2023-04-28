@@ -197,6 +197,9 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
       if (existsIndex != -1) {
         entries[existsIndex].entries.add(file);
+        entries[existsIndex]
+            .entries
+            .sort((a, b) => b.episode?.compareTo(a.episode ?? 0) ?? 0);
 
         /// Setting expanded to false if the entry went from 1 file to 2
         if (entries[existsIndex].entries.length == 2) {

@@ -181,6 +181,14 @@ void main() {
                 equals(2),
               )
               .having(
+                (p0) => p0.entries
+                    .firstWhere((element) => element.entries.contains(mockFile))
+                    .entries
+                    .first,
+                'entries in the the right order',
+                equals(mockFile),
+              )
+              .having(
             (p0) => p0.expandedEntries,
             'with right expanded entries list',
             [true, false],
