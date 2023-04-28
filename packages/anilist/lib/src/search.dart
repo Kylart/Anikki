@@ -21,7 +21,7 @@ mixin AnilistSearch on AnilistClient {
         ),
       );
 
-      if (query.parsedData == null) {
+      if (query.parsedData == null && query.hasException) {
         throw query.exception?.graphqlErrors[0].message ??
             'Could not retrieve list';
       }
@@ -43,8 +43,8 @@ mixin AnilistSearch on AnilistClient {
           [];
 
       return result;
-    } on GraphQLError catch (e) {
-      throw AnilistSearchException(error: e.message);
+    } catch (e) {
+      throw AnilistSearchException(error: e.toString());
     }
   }
 }
