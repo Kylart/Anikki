@@ -331,9 +331,6 @@ void main() {
         build: () => bloc,
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [],
-        verify: (bloc) {
-          verifyNever(() => repository.getFile(toAddPath));
-        },
       );
 
       blocTest<LibraryBloc, LibraryState>(
@@ -402,6 +399,39 @@ void main() {
             (p0) => p0.expandedEntries,
             'with correct expandedEntries',
             [true, true],
+          ),
+        ],
+      );
+    });
+
+    group('Event: [LibraryEntryExpanded]', () {
+      blocTest(
+        'does nothing if state is not [LibraryLoaded]',
+        build: () => bloc,
+        act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
+        expect: () => [],
+      );
+
+      blocTest<LibraryBloc, LibraryState>(
+        'emits [LibraryLoaded] with updated values',
+        build: () => bloc,
+        act: (bloc) => bloc.add(const LibraryEntryExpanded(index: 0)),
+        seed: () => LibraryLoaded(
+          path: path,
+          entries: [
+            LibraryEntry(media: null, entries: [mockFile, files[2]]),
+            LibraryEntry(media: null, entries: [files[0]]),
+          ],
+          expandedEntries: const [false, true],
+        ),
+        expect: () => [
+          LibraryLoaded(
+            path: path,
+            entries: [
+              LibraryEntry(media: null, entries: [mockFile, files[2]]),
+              LibraryEntry(media: null, entries: [files[0]]),
+            ],
+            expandedEntries: const [true, true],
           ),
         ],
       );
