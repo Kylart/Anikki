@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -96,7 +97,12 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
   Future<void> _onUpdateRequested(
       LibraryUpdateRequested event, Emitter<LibraryState> emit) async {
-    final path = event.path ?? await FilePicker.platform.getDirectoryPath();
+    final path = event.path ??
+
+        /// Cannot mock `getDirecotryPath` method...
+        (Platform.environment.containsKey('FLUTTER_TEST')
+            ? null
+            : await FilePicker.platform.getDirectoryPath());
 
     if (path == null) return;
 
