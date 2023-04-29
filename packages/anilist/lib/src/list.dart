@@ -64,8 +64,8 @@ mixin AnilistList on AnilistClient {
       }
 
       return watchList;
-    } on GraphQLError catch (e) {
-      throw AnilistGetListException(error: e.message);
+    } catch (e) {
+      throw AnilistGetListException(error: e.toString());
     }
   }
 }

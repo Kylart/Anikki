@@ -108,6 +108,103 @@ void main() {
           expect(e, isA<AnilistSearchException>());
         }
       });
+
+      group('[getWatchLists] method', () {
+        test('gets lists if no error occurs', () async {
+          final result = generateMockQuery<Query$GetLists>(mockGraphQLClient);
+          when(() => result.hasException).thenReturn(false);
+          when(() => result.parsedData).thenReturn(Query$GetLists(
+              MediaListCollection: Query$GetLists$MediaListCollection(lists: [
+            Query$GetLists$MediaListCollection$lists(
+              entries: [
+                Query$GetLists$MediaListCollection$lists$entries(
+                  status: Enum$MediaListStatus.COMPLETED,
+                  media: shortMediaMock,
+                ),
+              ],
+            ),
+            Query$GetLists$MediaListCollection$lists(
+              entries: [
+                Query$GetLists$MediaListCollection$lists$entries(
+                  status: Enum$MediaListStatus.CURRENT,
+                  media: shortMediaMock,
+                ),
+              ],
+            ),
+          ])));
+
+          final anilist = Anilist(client: mockGraphQLClient);
+          final lists = await anilist.getWatchLists('Hello');
+
+          expect(
+            lists[Enum$MediaListStatus.COMPLETED],
+            allOf(
+              [
+                isNotNull,
+                isNotEmpty,
+                hasLength(1),
+              ],
+            ),
+          );
+          expect(
+            lists[Enum$MediaListStatus.CURRENT],
+            allOf(
+              [
+                isNotNull,
+                isNotEmpty,
+                hasLength(1),
+              ],
+            ),
+          );
+          expect(
+            lists[Enum$MediaListStatus.DROPPED],
+            allOf(
+              [isNotNull, isEmpty],
+            ),
+          );
+          expect(
+            lists[Enum$MediaListStatus.PAUSED],
+            allOf(
+              [isNotNull, isEmpty],
+            ),
+          );
+          expect(
+            lists[Enum$MediaListStatus.PLANNING],
+            allOf(
+              [isNotNull, isEmpty],
+            ),
+          );
+          expect(
+            lists[Enum$MediaListStatus.REPEATING],
+            allOf(
+              [isNotNull, isEmpty],
+            ),
+          );
+        });
+
+        test('throws an error if query fails ', () async {
+          final result = generateMockQuery<Query$GetLists>(mockGraphQLClient);
+          when(() => result.hasException).thenReturn(true);
+          when(() => result.parsedData).thenReturn(null);
+          when(() => result.exception).thenReturn(
+            OperationException(
+              graphqlErrors: [
+                const GraphQLError(message: 'Some error'),
+              ],
+            ),
+          );
+
+          final anilist = Anilist(client: mockGraphQLClient);
+
+          try {
+            await anilist.getWatchLists('Kylart');
+
+            fail('Error was not thrown');
+          } catch (e) {
+            expect(e, isA<AnilistGetListException>());
+          }
+        });
+      });
     });
   });
 }
