@@ -1,5 +1,3 @@
-import 'package:graphql/client.dart';
-
 import 'package:anilist/src/anilist_client.dart';
 import 'package:anilist/src/exceptions/exceptions.dart';
 import 'package:anilist/src/models/models.dart';
