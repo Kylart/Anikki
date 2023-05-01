@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/helpers/logger.dart';
-import 'package:anikki/helpers/anilist/anilist_client.dart';
 
 part 'news_event.dart';
 part 'news_state.dart';
@@ -19,9 +18,9 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         .copyWith(hour: 23, minute: 59, second: 59),
   );
 
-  final repository = Anilist(client: getAnilistClient());
+  final Anilist repository;
 
-  NewsBloc()
+  NewsBloc(this.repository)
       : super(
           NewsInitial(range: initalDateRange),
         ) {

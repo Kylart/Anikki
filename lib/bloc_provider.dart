@@ -1,3 +1,5 @@
+import 'package:anikki/helpers/anilist/anilist_client.dart';
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,11 +17,13 @@ class AnikkiBlocProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final anilist = Anilist(client: getAnilistClient());
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) =>
-              AnilistAuthBloc()..add(AnilistAuthLoginRequested()),
+              AnilistAuthBloc(anilist)..add(AnilistAuthLoginRequested()),
         ),
         BlocProvider(
           create: (context) => SettingsBloc(),
@@ -28,7 +32,7 @@ class AnikkiBlocProvider extends StatelessWidget {
           create: (context) => ConnectivityBloc(),
         ),
         BlocProvider(
-          create: (context) => NewsBloc()
+          create: (context) => NewsBloc(anilist)
             ..add(
               NewsRequested(range: NewsBloc.initalDateRange),
             ),
@@ -39,7 +43,10 @@ class AnikkiBlocProvider extends StatelessWidget {
           BlocProvider(
             create: (context) {
               final authBloc = BlocProvider.of<AnilistAuthBloc>(context);
-              return WatchListBloc(authBloc);
+              return WatchListBloc(
+                authBloc: authBloc,
+                repository: anilist,
+              );
             },
           ),
           BlocProvider(

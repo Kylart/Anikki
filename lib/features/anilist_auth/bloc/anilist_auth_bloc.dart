@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 import 'package:anikki/helpers/logger.dart';
-import 'package:anikki/helpers/anilist/anilist_client.dart';
 
 part 'anilist_auth_event.dart';
 part 'anilist_auth_state.dart';
@@ -13,11 +12,11 @@ class AnilistAuthBloc extends Bloc<AnilistAuthEvent, AnilistAuthState> {
   static const tokenKey = 'user_preferences_anilistAccessToken';
   static const boxName = 'anilist_auth';
 
-  final repository = Anilist(client: getAnilistClient());
+  final Anilist repository;
 
   bool get isConnected => state.runtimeType == AnilistAuthSuccess;
 
-  AnilistAuthBloc() : super(AnilistAuthLoggedOut()) {
+  AnilistAuthBloc(this.repository) : super(AnilistAuthLoggedOut()) {
     on<AnilistAuthEvent>((event, emit) {
       logger.v('AnilistAuth event: ${event.runtimeType}');
     });

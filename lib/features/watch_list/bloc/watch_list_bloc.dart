@@ -6,17 +6,19 @@ import 'package:equatable/equatable.dart';
 
 import 'package:anikki/helpers/logger.dart';
 import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/helpers/anilist/anilist_client.dart';
 
 part 'watch_list_event.dart';
 part 'watch_list_state.dart';
 
 class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
-  final repository = Anilist(client: getAnilistClient());
+  final Anilist repository;
 
   final StateStreamableSource<AnilistAuthState> authBloc;
 
-  WatchListBloc(this.authBloc) : super(const WatchListInitial(username: null)) {
+  WatchListBloc({
+    required this.repository,
+    required this.authBloc,
+  }) : super(const WatchListInitial(username: null)) {
     authBloc.stream.listen((state) {
       if (state is AnilistAuthSuccess) {
         add(WatchListRequested(username: state.me.name));
