@@ -10,15 +10,18 @@ mixin AnilistList on AnilistClient {
   /// It does not set anything else.
   ///
   /// throws [AnilistUpdateListException]
-  Future<void> watchedEntry(
-      {required int episode, required int mediaId}) async {
+  Future<void> watchedEntry({
+    required int episode,
+    required int mediaId,
+    Enum$MediaListStatus? status,
+  }) async {
     try {
       await client.mutate$UpdateEntry(
         Options$Mutation$UpdateEntry(
           variables: Variables$Mutation$UpdateEntry(
             mediaId: mediaId,
             progress: episode,
-            status: Enum$MediaListStatus.CURRENT,
+            status: status,
           ),
         ),
       );
