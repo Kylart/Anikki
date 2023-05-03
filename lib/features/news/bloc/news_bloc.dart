@@ -44,8 +44,6 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     } on AnilistGetScheduleException catch (e) {
       emit(NewsError(
           range: range, message: e.error ?? 'Something went wrong...'));
-    } catch (e) {
-      emit(NewsError(range: range, message: e.toString()));
     }
   }
 }

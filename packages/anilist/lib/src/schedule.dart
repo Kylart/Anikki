@@ -39,8 +39,8 @@ mixin AnilistSchedule on AnilistClient {
       } while (result.parsedData?.Page?.pageInfo?.hasNextPage == true);
 
       return results;
-    } on GraphQLError catch (e) {
-      throw AnilistGetScheduleException(error: e.message);
+    } catch (e) {
+      throw AnilistGetScheduleException(error: e.toString());
     }
   }
 }
