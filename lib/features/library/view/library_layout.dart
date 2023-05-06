@@ -66,37 +66,22 @@ class LibraryLayout extends StatelessWidget {
             entries: expandedEntries,
             gridDelegate: userListGridDelegate,
             builder: (entry, index) {
-              final isShrinkEntry = entry.path.startsWith('shrink/');
+              final entryIndex = indexOf(entry);
+              final libraryEntry = entries.elementAt(entryIndex);
 
-              if (isShrinkEntry) {
-                return Center(
-                  key: Key(entry.path),
-                  child: IconButton(
-                    onPressed: () {
-                      toggleExpanded(
-                          context, int.tryParse(entry.path.split('/')[1])!);
-                    },
-                    icon: const Icon(Icons.keyboard_arrow_right),
-                  ),
-                );
-              } else {
-                final entryIndex = indexOf(entry);
-                final libraryEntry = entries.elementAt(entryIndex);
-
-                return LibraryCard(
-                  onTap: () => toggleExpanded(context, entryIndex),
-                  entry: entry,
-                  episode:
-                      libraryEntry.entries.length == 1 || isExpanded[entryIndex]
-                          ? libraryEntry.entries
-                              .firstWhere((element) => element == entry)
-                              .episode
-                              ?.toString()
-                          : '${libraryEntry.epMin} ~ ${libraryEntry.epMax}',
-                  isExpandable: libraryEntry.entries.length > 1 &&
-                      !isExpanded[entryIndex],
-                );
-              }
+              return LibraryCard(
+                onTap: () => toggleExpanded(context, entryIndex),
+                entry: libraryEntry,
+                episode:
+                    libraryEntry.entries.length == 1 || isExpanded[entryIndex]
+                        ? libraryEntry.entries
+                            .firstWhere((element) => element == entry)
+                            .episode
+                            ?.toString()
+                        : '${libraryEntry.epMin} ~ ${libraryEntry.epMax}',
+                isExpandable:
+                    libraryEntry.entries.length > 1 && !isExpanded[entryIndex],
+              );
             },
           )
         : CustomListView(
