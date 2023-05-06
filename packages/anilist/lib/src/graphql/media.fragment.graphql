@@ -93,7 +93,13 @@ fragment shortMedia on Media {
   isAdult
   episodes
   format
-  popularity
+  description
+  source
+  studios(isMain: true) {
+    nodes {
+      name
+    }
+  }
   countryOfOrigin
   startDate {
     year

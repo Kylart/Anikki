@@ -78,6 +78,7 @@ mixin AnilistInfo on AnilistClient {
       fragment shortMedia on Media {
         id
         siteUrl
+        idMal
         title {
           userPreferred
           romaji
@@ -94,7 +95,13 @@ mixin AnilistInfo on AnilistClient {
         genres
         isAdult
         format
-        popularity
+        description
+        source
+        studios(isMain: true) {
+          nodes {
+            name
+          }
+        }
         countryOfOrigin
         startDate {
           year
