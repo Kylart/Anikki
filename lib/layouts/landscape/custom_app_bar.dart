@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'package:anikki/helpers/connectivity_bloc/is_online_mixin.dart';
