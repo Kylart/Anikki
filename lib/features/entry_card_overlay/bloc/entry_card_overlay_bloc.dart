@@ -20,10 +20,6 @@ class EntryCardOverlayBloc
         (state as EntryCardOverlayActive).overlay.remove();
 
         emit(EntryCardOverlayEmpty());
-      } else if (state is EntryCardOverlayActiveExpanded) {
-        (state as EntryCardOverlayActiveExpanded).overlay.remove();
-
-        emit(EntryCardOverlayEmpty());
       }
     });
 
