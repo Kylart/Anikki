@@ -1,6 +1,7 @@
-import 'package:anikki/features/library/widgets/library_card_overlay.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
+import 'package:anikki/features/library/widgets/library_card_overlay.dart';
 import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/widgets/entry_card/entry_card.dart';
 
@@ -23,10 +24,13 @@ class LibraryCard extends StatelessWidget {
     final coverImage = entry.media?.coverImage?.extraLarge ??
         entry.media?.coverImage?.large ??
         entry.media?.coverImage?.medium;
+    final title = entry.media?.title?.userPreferred ??
+        entry.entries.first.title ??
+        basename(entry.entries.first.path);
 
     return EntryCard(
       coverImage: coverImage,
-      title: '',
+      title: title,
       episode: episode,
       expandedWidget: LibraryCardOverlay(
         entry: entry,

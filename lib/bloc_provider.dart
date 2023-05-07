@@ -1,8 +1,9 @@
-import 'package:anikki/helpers/anilist/anilist_client.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/helpers/anilist/anilist_client.dart';
 import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anikki/features/news/bloc/news_bloc.dart';
 import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
@@ -30,6 +31,9 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ConnectivityBloc(),
+        ),
+        BlocProvider(
+          create: (context) => EntryCardOverlayBloc(),
         ),
         BlocProvider(
           create: (context) => NewsBloc(anilist)
