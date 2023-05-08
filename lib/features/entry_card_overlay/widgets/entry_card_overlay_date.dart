@@ -22,10 +22,10 @@ class _EntryCardOverlayDateState extends State<EntryCardOverlayDate> {
   Duration timeUntil = Duration.zero;
   String get formattedTimeUntil {
     if (timeUntil.inDays != 0) {
-      return '${timeUntil.inDays} days, ${timeUntil.inHours.remainder(60)} hours.';
+      return '${timeUntil.inDays} days, ${timeUntil.inHours.remainder(24)} hours.';
     }
     if (timeUntil.inHours != 0) {
-      return '${timeUntil.inHours.remainder(60)} hours, ${timeUntil.inMinutes.remainder(60)} minutes.';
+      return '${timeUntil.inHours.remainder(24)} hours, ${timeUntil.inMinutes.remainder(60)} minutes.';
     }
 
     return '${timeUntil.inMinutes.remainder(60)} minutes.';
