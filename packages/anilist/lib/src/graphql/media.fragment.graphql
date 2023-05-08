@@ -92,6 +92,10 @@ fragment shortMedia on Media {
   genres
   isAdult
   episodes
+  nextAiringEpisode {
+    airingAt
+    episode
+  }
   format
   description
   source

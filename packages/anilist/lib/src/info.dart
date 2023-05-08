@@ -97,6 +97,11 @@ mixin AnilistInfo on AnilistClient {
         format
         description
         source
+        episodes
+        nextAiringEpisode {
+          airingAt
+          episode
+        }
         studios(isMain: true) {
           nodes {
             name
