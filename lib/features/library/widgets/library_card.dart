@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
-import 'package:anikki/features/library/widgets/library_card_overlay.dart';
+import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_media.dart';
 import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/widgets/entry_card/entry_card.dart';
 
@@ -32,7 +32,9 @@ class LibraryCard extends StatelessWidget {
       coverImage: coverImage,
       title: title,
       episode: episode,
-      expandedWidget: LibraryCardOverlay(
+      overlayWidget: EntryCardOverlayMedia(
+        isLibrary: true,
+        media: entry.media,
         entry: entry,
       ),
     );

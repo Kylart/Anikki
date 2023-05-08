@@ -3,29 +3,26 @@ import 'dart:async';
 import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/widgets/entry_card/entry_card_cover.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EntryCard extends StatefulWidget {
   const EntryCard({
     super.key,
-    this.actions = const [],
     required this.title,
     this.coverImage,
     this.episode,
     this.showBookmark = false,
     this.showDone = false,
-    this.expandedWidget = const Card(),
+    this.overlayWidget = const Card(),
   });
 
-  final List<AnikkiAction> actions;
   final String title;
   final String? coverImage;
   final String? episode;
   final bool showBookmark;
   final bool showDone;
-  final Widget expandedWidget;
+  final Widget overlayWidget;
 
   @override
   State<EntryCard> createState() => _EntryCardState();
@@ -48,7 +45,7 @@ class _EntryCardState extends State<EntryCard> {
             EntryCardOverlayRequested(
               key: key,
               context: context,
-              child: widget.expandedWidget,
+              child: widget.overlayWidget,
             ),
           );
         });

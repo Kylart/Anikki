@@ -1,10 +1,10 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_media.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/features/news/helpers/news_actions.dart';
 import 'package:anikki/widgets/entry_card/entry_card.dart';
 import 'package:anikki/helpers/anilist/filters/is_followed.dart';
 import 'package:anikki/helpers/anilist/filters/is_seen.dart';
@@ -47,9 +47,9 @@ class _NewsCardState extends State<NewsCard> {
       showDone: showDone,
       title: title,
       episode: widget.entry.episode.toString(),
-      actions: getNewsActions(
-        context: context,
-        entry: widget.entry,
+      overlayWidget: EntryCardOverlayMedia(
+        media: widget.entry.media,
+        fallbackEpisodeNumber: widget.entry.episode,
       ),
     );
   }

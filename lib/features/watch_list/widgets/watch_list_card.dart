@@ -1,7 +1,7 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/watch_list/helpers/watch_list_actions.dart';
+import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_media.dart';
 import 'package:anikki/widgets/entry_card/entry_card.dart';
 
 class WatchListCard extends StatelessWidget {
@@ -29,9 +29,8 @@ class WatchListCard extends StatelessWidget {
           : entry.score == 0
               ? '-'
               : entry.score.toString(),
-      actions: getWatchListActions(
-        context,
-        entry,
+      overlayWidget: EntryCardOverlayMedia(
+        media: entry.media,
       ),
     );
   }
