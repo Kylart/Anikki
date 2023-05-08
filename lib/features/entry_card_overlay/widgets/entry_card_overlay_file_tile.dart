@@ -1,4 +1,6 @@
+import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart';
 
 import 'package:anikki/features/entry_card_overlay/helpers/overlay_action.dart';
@@ -29,8 +31,15 @@ class EntryCardOverlayFileTile extends StatelessWidget {
       ),
       trailing: IconButton(
         onPressed: () {
+          /// Trick to get the original card context that should still exist
+          /// even when the overlay disapears.
+          final ctx = (BlocProvider.of<EntryCardOverlayBloc>(context).state
+                  as EntryCardOverlayActive)
+              .key
+              .currentContext;
+
           overlayAction(
-            () => playFile(file, context),
+            () => ctx == null ? null : playFile(file, ctx),
             context,
           );
         },
