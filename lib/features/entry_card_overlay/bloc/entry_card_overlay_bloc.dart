@@ -15,19 +15,24 @@ class EntryCardOverlayBloc
       logger.v('EntryCardOverlayEvent event: ${event.runtimeType}');
     });
 
-    on<EntryCardOverlayClosed>((event, emit) {
-      if (state is EntryCardOverlayActive) {
-        (state as EntryCardOverlayActive).overlay.remove();
-
-        emit(EntryCardOverlayEmpty());
-      }
-    });
+    on<EntryCardOverlayClosed>(_onClose);
 
     on<EntryCardOverlayRequested>(_onRequested);
   }
 
+  void _onClose(
+      EntryCardOverlayClosed event, Emitter<EntryCardOverlayState> emit) {
+    if (state is EntryCardOverlayActive) {
+      _closeCurrentOverlay();
+
+      emit(EntryCardOverlayEmpty());
+    }
+  }
+
   void _onRequested(
       EntryCardOverlayRequested event, Emitter<EntryCardOverlayState> emit) {
+    _closeCurrentOverlay();
+
     final box = event.key.currentContext?.findRenderObject() as RenderBox;
 
     final widgetSize = _getWidgetSize(box);
@@ -70,6 +75,12 @@ class EntryCardOverlayBloc
         overlay: overlayEntry,
       ),
     );
+  }
+
+  void _closeCurrentOverlay() {
+    if (state is EntryCardOverlayActive) {
+      (state as EntryCardOverlayActive).overlay.remove();
+    }
   }
 
   Size _getWidgetSize(RenderBox box) {
