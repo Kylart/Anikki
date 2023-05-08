@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart';
 import 'package:simple_icons/simple_icons.dart';
 
+import 'package:anikki/features/library/bloc/library_bloc.dart';
+import 'package:anikki/models/local_file.dart';
+import 'package:anilist/anilist.dart';
 import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/helpers/capitalize.dart';
@@ -124,38 +128,14 @@ class LibraryCardOverlay extends StatelessWidget {
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: ListView.separated(
-                                    itemBuilder: (context, index) {
-                                      final file =
-                                          entry.entries.elementAt(index);
-
-                                      return ListTile(
-                                        dense: true,
-                                        leading: IconButton(
-                                          onPressed: () {},
-                                          icon:
-                                              const Icon(Icons.delete_outline),
-                                          color: Colors.red,
+                                  child: entry.media == null ||
+                                          entry.media!.episodes == null
+                                      ? EpisodeListNoMedia(
+                                          entry: entry,
+                                        )
+                                      : EpisodeList(
+                                          media: entry.media!,
                                         ),
-                                        trailing: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                              Icons.play_circle_outline),
-                                        ),
-                                        title: Text(
-                                          file.episode == null
-                                              ? file.title ??
-                                                  basename(file.path)
-                                              : 'Episode ${file.episode}',
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder: (_, index) =>
-                                        const Divider(
-                                      height: 1,
-                                    ),
-                                    itemCount: entry.entries.length,
-                                  ),
                                 ),
                               ),
                               LibraryCardOverlayActions(
@@ -177,6 +157,11 @@ class LibraryCardOverlay extends StatelessWidget {
   }
 }
 
+void overlayAction(void Function() callback, BuildContext context) {
+  callback();
+  BlocProvider.of<EntryCardOverlayBloc>(context).add(EntryCardOverlayClosed());
+}
+
 class LibraryCardOverlayActions extends StatelessWidget {
   const LibraryCardOverlayActions({super.key, required this.entry});
 
@@ -193,10 +178,12 @@ class LibraryCardOverlayActions extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: IconButton(
             onPressed: () {
-              showAvailableTorrents(
-                context,
-                entry.entries.first.copyWith(episode: null),
-              );
+              overlayAction(() {
+                showAvailableTorrents(
+                  context,
+                  entry.entries.first.copyWith(episode: null),
+                );
+              }, context);
             },
             icon: const Icon(Icons.file_download_outlined),
           ),
@@ -222,6 +209,203 @@ class LibraryCardOverlayActions extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class EpisodeList extends StatelessWidget {
+  EpisodeList({super.key, required this.media}) {
+    assert(media.episodes != null);
+  }
+
+  final Fragment$shortMedia media;
+
+  int get episodes => media.episodes!;
+  bool get isAiring => media.nextAiringEpisode != null;
+  List<int> get episodeList => List<int>.generate(
+      isAiring ? media.nextAiringEpisode!.episode : episodes,
+      (index) => index + 1).reversed.toList();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        final episodeNumber = episodeList.elementAt(index);
+        final title = 'Episode $episodeNumber';
+        final isNext = media.nextAiringEpisode?.episode == episodeNumber;
+
+        if (isNext) {
+          return EntryCardOverlayDate(
+            title: title,
+            date: DateTime.fromMillisecondsSinceEpoch(
+              media.nextAiringEpisode!.airingAt * 1000,
+            ),
+          );
+        }
+
+        final library =
+            BlocProvider.of<LibraryBloc>(context, listen: true).state;
+
+        if (library.runtimeType == LibraryLoaded) {
+          final matches = (library as LibraryLoaded).entries.where(
+                (element) =>
+                    element.media?.id == media.id &&
+                    element.entries
+                        .where((f) => f.episode == episodeNumber)
+                        .isNotEmpty,
+              );
+
+          if (matches.isNotEmpty) {
+            return EntryCardOverlayFileTile(
+              file: matches.first.entries.firstWhere(
+                (element) => element.episode == episodeNumber,
+              ),
+            );
+          }
+        }
+
+        return ListTile(
+          dense: true,
+          title: Text(title),
+          trailing: IconButton(
+            onPressed: () {
+              overlayAction(
+                () => showAvailableTorrents(
+                  context,
+                  media,
+                  episodeNumber,
+                ),
+                context,
+              );
+            },
+            icon: const Icon(Icons.file_download_outlined),
+          ),
+        );
+      },
+      separatorBuilder: (_, index) => const Divider(
+        height: 1,
+      ),
+      itemCount: episodeList.length,
+    );
+  }
+}
+
+class EpisodeListNoMedia extends StatelessWidget {
+  const EpisodeListNoMedia({
+    super.key,
+    required this.entry,
+  });
+
+  final LibraryEntry entry;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return EntryCardOverlayFileTile(
+          file: entry.entries.elementAt(index),
+        );
+      },
+      separatorBuilder: (_, index) => const Divider(
+        height: 1,
+      ),
+      itemCount: entry.entries.length,
+    );
+  }
+}
+
+class EntryCardOverlayDate extends StatefulWidget {
+  const EntryCardOverlayDate({
+    super.key,
+    required this.title,
+    required this.date,
+  });
+
+  final String title;
+  final DateTime date;
+
+  @override
+  State<EntryCardOverlayDate> createState() => _EntryCardOverlayDateState();
+}
+
+class _EntryCardOverlayDateState extends State<EntryCardOverlayDate> {
+  late Timer timer;
+
+  Duration timeUntil = Duration.zero;
+  String get formattedTimeUntil {
+    if (timeUntil.inDays != 0) {
+      return '${timeUntil.inDays} days, ${timeUntil.inHours.remainder(60)} hours.';
+    }
+    if (timeUntil.inHours != 0) {
+      return '${timeUntil.inHours.remainder(60)} hours, ${timeUntil.inMinutes.remainder(60)} minutes.';
+    }
+
+    return '${timeUntil.inMinutes.remainder(60)} minutes.';
+  }
+
+  @override
+  void initState() {
+    timeUntil = widget.date.difference(DateTime.now());
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        timeUntil = widget.date.difference(DateTime.now());
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      dense: true,
+      title: Text(widget.title),
+      subtitle: Text('Airing in $formattedTimeUntil'),
+    );
+  }
+}
+
+class EntryCardOverlayFileTile extends StatelessWidget {
+  const EntryCardOverlayFileTile({
+    super.key,
+    required this.file,
+  });
+
+  final LocalFile file;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      dense: true,
+      leading: IconButton(
+        onPressed: () {
+          overlayAction(
+            () => deleteFile(file, context),
+            context,
+          );
+        },
+        icon: const Icon(Icons.delete_outline),
+        color: Colors.red,
+      ),
+      trailing: IconButton(
+        onPressed: () {
+          overlayAction(
+            () => playFile(file, context),
+            context,
+          );
+        },
+        icon: const Icon(Icons.play_circle_outline),
+      ),
+      title: Text(
+        file.episode == null
+            ? file.title ?? basename(file.path)
+            : 'Episode ${file.episode}',
+      ),
     );
   }
 }
