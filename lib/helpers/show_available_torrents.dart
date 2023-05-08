@@ -6,7 +6,8 @@ import 'package:anikki/helpers/desktop_hooks.dart';
 import 'package:anikki/features/download_results_dialog/download_results.dart';
 import 'package:anikki/models/local_file.dart';
 
-void showAvailableTorrents<T>(BuildContext context, T rawEntry) {
+void showAvailableTorrents<T>(BuildContext context, T rawEntry,
+    [int? episode]) {
   Widget? downloadResults;
 
   switch (T) {
@@ -40,6 +41,15 @@ void showAvailableTorrents<T>(BuildContext context, T rawEntry) {
       downloadResults = DownloadResults(
         episode: entry.episode,
         term: entry.title!,
+      );
+      break;
+
+    case Fragment$shortMedia:
+      final entry = rawEntry as Fragment$shortMedia;
+
+      downloadResults = DownloadResults(
+        episode: episode,
+        term: entry.title?.userPreferred ?? entry.title?.romaji ?? '',
       );
       break;
   }
