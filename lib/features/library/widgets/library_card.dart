@@ -36,6 +36,7 @@ class LibraryCard extends StatelessWidget {
         isLibrary: true,
         media: entry.media,
         entry: entry,
+        fallbackEpisodeNumber: entry.epMax ?? 0,
       ),
     );
   }

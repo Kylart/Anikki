@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/helpers/overlay_action.dart';
 import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_date.dart';
 import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_file_tile.dart';
@@ -24,6 +27,31 @@ class EpisodeList extends StatelessWidget {
       isAiring ? media.nextAiringEpisode!.episode : episodes,
       (index) => index + 1).reversed.toList();
 
+  Query$GetLists$MediaListCollection$lists$entries? getListEntryIfAny(
+      BuildContext context) {
+    Query$GetLists$MediaListCollection$lists$entries? listEntry;
+
+    final isConnected = BlocProvider.of<AnilistAuthBloc>(context, listen: true)
+        .state is AnilistAuthSuccess;
+    final watchListBloc = BlocProvider.of<WatchListBloc>(context, listen: true);
+    final hasLists = watchListBloc.state is WatchListComplete;
+
+    if (isConnected && hasLists) {
+      final lists = watchListBloc.state as WatchListComplete;
+
+      for (final list in lists.watchList.values) {
+        final match =
+            list.firstWhereOrNull((element) => element.media?.id == media.id);
+
+        if (match != null) {
+          listEntry = match;
+          break;
+        }
+      }
+    }
+    return listEntry;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -41,6 +69,8 @@ class EpisodeList extends StatelessWidget {
           );
         }
 
+        final listEntry = getListEntryIfAny(context);
+
         final library =
             BlocProvider.of<LibraryBloc>(context, listen: true).state;
 
@@ -49,15 +79,20 @@ class EpisodeList extends StatelessWidget {
                 (element) =>
                     element.media?.id == media.id &&
                     element.entries
-                        .where((f) => f.episode == episodeNumber)
+                        .where((f) => media.format == Enum$MediaFormat.MOVIE
+                            ? true
+                            : f.episode == episodeNumber)
                         .isNotEmpty,
               );
 
           if (matches.isNotEmpty) {
             return EntryCardOverlayFileTile(
               file: matches.first.entries.firstWhere(
-                (element) => element.episode == episodeNumber,
+                (element) => media.format == Enum$MediaFormat.MOVIE
+                    ? true
+                    : element.episode == episodeNumber,
               ),
+              listEntry: listEntry,
             );
           }
         }
@@ -65,18 +100,26 @@ class EpisodeList extends StatelessWidget {
         return ListTile(
           dense: true,
           title: Text(title),
-          trailing: IconButton(
-            onPressed: () {
-              overlayAction(
-                () => showAvailableTorrents(
-                  context,
-                  media,
-                  episodeNumber,
-                ),
-                context,
-              );
-            },
-            icon: const Icon(Icons.file_download_outlined),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (listEntry?.progress != null &&
+                  listEntry!.progress! >= episodeNumber)
+                const Icon(Icons.done),
+              IconButton(
+                onPressed: () {
+                  overlayAction(
+                    () => showAvailableTorrents(
+                      context,
+                      media,
+                      episodeNumber,
+                    ),
+                    context,
+                  );
+                },
+                icon: const Icon(Icons.file_download_outlined),
+              ),
+            ],
           ),
         );
       },
