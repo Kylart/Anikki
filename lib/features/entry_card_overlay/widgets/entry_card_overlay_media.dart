@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/entry_card_overlay/widgets/episode_list.dart';
 import 'package:anikki/features/entry_card_overlay/widgets/episode_list_no_media.dart';
-import 'package:anikki/features/library/widgets/library_card_overlay_actions.dart';
+import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_actions.dart';
 import 'package:anilist/anilist.dart';
 import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/library/repository/repository.dart';
@@ -73,7 +73,8 @@ class EntryCardOverlayMedia extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            if (media?.studios != null && media!.studios!.nodes!.isNotEmpty)
+                            if (media?.studios != null &&
+                                media!.studios!.nodes!.isNotEmpty)
                               EntryTag(
                                 child: Text(
                                   media!.studios!.nodes!.first!.name,
@@ -140,14 +141,15 @@ class EntryCardOverlayMedia extends StatelessWidget {
                                         )
                                       : EpisodeList(
                                           media: media!,
-                                          fallbackEpisodeNumber: fallbackEpisodeNumber,
+                                          fallbackEpisodeNumber:
+                                              fallbackEpisodeNumber,
                                         ),
                                 ),
                               ),
-                              if (isLibrary)
-                                LibraryCardOverlayActions(
-                                  entry: entry!,
-                                ),
+                              EntryCardOverlayActions(
+                                entry: entry,
+                                media: media,
+                              ),
                             ],
                           ),
                         ),
