@@ -10,7 +10,7 @@ void showAvailableTorrents<T>(BuildContext context, T rawEntry,
     [int? episode]) {
   Widget? downloadResults;
 
-  switch (T) {
+  switch (rawEntry.runtimeType) {
     case Query$AiringSchedule$Page$airingSchedules:
       final entry = rawEntry as Query$AiringSchedule$Page$airingSchedules;
 
