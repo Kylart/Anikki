@@ -52,8 +52,11 @@ class EntryCardOverlayBloc
             color: Colors.transparent,
             child: Stack(
               children: [
-                Container(
-                  color: Colors.black26,
+                GestureDetector(
+                  onTap: () => add(EntryCardOverlayClosed()),
+                  child: Container(
+                    color: Colors.black26,
+                  ),
                 ),
                 EntryCardOverlayPage(
                   child: event.child,
