@@ -2,7 +2,6 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_media.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/models/settings.dart';
 import 'package:anikki/widgets/entry/entry_tile.dart';
@@ -33,12 +32,7 @@ class WatchListLayout extends StatelessWidget {
         : CustomListView(
             entries: entries,
             builder: (context, entry) => EntryTile(
-              entry: entry,
-              overlayWidget: EntryCardOverlayMedia(
-                isLibrary: true,
-                media: entry.media,
-                fallbackEpisodeNumber: entry.media?.episodes ?? 0,
-              ),
+              media: entry.media!,
               subtitle: entry.status == Enum$MediaListStatus.CURRENT &&
                       entry.progress != null
                   ? Text('Currently at episode ${entry.progress!.toString()}')
@@ -47,11 +41,6 @@ class WatchListLayout extends StatelessWidget {
                       ? Text(entry.notes!)
                       : const SizedBox(),
               actions: getWatchListActions(context, entry),
-              title: entry.media?.title?.userPreferred,
-              coverImage: entry.media?.coverImage?.extraLarge ??
-                  entry.media?.coverImage?.large,
-              bannerImage: entry.media?.bannerImage,
-              tags: entry.media?.genres?.whereType<String>().toList(),
             ),
           );
   }

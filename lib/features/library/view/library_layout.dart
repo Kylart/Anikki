@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_media.dart';
 import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:anikki/models/local_file.dart';
 import 'package:anikki/models/library_entry.dart';
@@ -98,13 +98,9 @@ class LibraryLayout extends StatelessWidget {
                     libraryEntry.entries.length > 1 && !isExpanded[entryIndex];
 
                 return EntryTile(
-                  entry: entry,
-                  overlayWidget: EntryCardOverlayMedia(
-                    isLibrary: true,
-                    media: entry.media,
-                    entry: libraryEntry,
-                    fallbackEpisodeNumber: libraryEntry.epMax ?? 0,
-                  ),
+                  media: entry.media == null
+                      ? Fragment$shortMedia(id: 0)
+                      : entry.media!,
                   subtitle:
                       libraryEntry.entries.length == 1 || isExpanded[entryIndex]
                           ? Text(
@@ -120,13 +116,6 @@ class LibraryLayout extends StatelessWidget {
                           onShrink: () => toggleExpanded(context, entryIndex),
                         )
                       : getLibraryActions(context, entry),
-                  title:
-                      entry.title ?? entry.media?.title?.userPreferred ?? 'N/A',
-                  coverImage: entry.media?.coverImage?.extraLarge ??
-                      entry.media?.coverImage?.large ??
-                      entry.media?.coverImage?.medium,
-                  bannerImage: entry.media?.bannerImage,
-                  tags: entry.media?.genres?.whereType<String>().toList(),
                   episode: entry.episode?.toString(),
                 );
               }

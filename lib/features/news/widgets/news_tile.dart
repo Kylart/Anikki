@@ -2,7 +2,6 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_media.dart';
 import 'package:anikki/widgets/entry/entry_tile.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/features/news/helpers/news_actions.dart';
@@ -38,11 +37,7 @@ class _NewsTileState extends State<NewsTile> {
     }
 
     return EntryTile(
-      entry: entry,
-      overlayWidget: EntryCardOverlayMedia(
-        media: entry.media,
-        fallbackEpisodeNumber: entry.episode,
-      ),
+      media: entry.media!,
       subtitle: Text(
         'Episode ${entry.episode}',
       ),
@@ -50,12 +45,6 @@ class _NewsTileState extends State<NewsTile> {
         context: context,
         entry: entry,
       ),
-      title: entry.media?.title?.userPreferred,
-      coverImage: entry.media?.coverImage?.extraLarge ??
-          entry.media?.coverImage?.large ??
-          entry.media?.coverImage?.medium,
-      bannerImage: entry.media?.bannerImage,
-      tags: entry.media?.genres?.whereType<String>().toList(),
       episode: entry.episode.toString(),
       showBookmark: showBookmark,
       showDone: showDone,

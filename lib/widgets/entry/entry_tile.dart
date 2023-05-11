@@ -1,57 +1,41 @@
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/features/entry_card_overlay/helpers/show_overlay.dart';
+import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/widgets/anikki_action_button.dart';
 import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/widgets/entry/entry_tag.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
 import 'package:anikki/widgets/anikki_icon.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EntryTile<T> extends StatefulWidget {
+class EntryTile extends StatefulWidget {
   const EntryTile({
     super.key,
-    required this.entry,
-    required this.subtitle,
+    required this.media,
     required this.actions,
-    required this.overlayWidget,
-    this.title,
-    this.bannerImage,
-    this.coverImage,
-    this.tags,
+    this.subtitle,
+    this.libraryEntry,
     this.episode,
     this.showBookmark = false,
     this.showDone = false,
   });
 
-  /// Entry for thie [EntryTile], for now, should be either
-  /// [Fragment$shortMedia], [Query$GetLists$MediaListCollection$lists$entries]
-  /// or [LocalFile].
-  final T entry;
+  /// [Fragment$shortMedia] this entry card is about
+  final Fragment$shortMedia media;
 
   /// [AnikkiAction] list to show onSecondaryTap, onLongPress or with
   /// [AnikkiActionButton]
   final List<AnikkiAction> actions;
 
-  /// What should be display in the `title` property
-  final String? title;
+  /// [LibraryEntry] for this card if any
+  final LibraryEntry? libraryEntry;
 
   /// What should be display in the `subtitle` property
-  final Widget subtitle;
+  final Widget? subtitle;
 
-  /// BannerImage URL to show as background of the tile.
-  /// Will be replaced by placeholder asset `assets/images/cover_placeholder.jpg`
-  /// if `null`
-  final String? bannerImage;
-
-  /// CoverImage URL to show as leading [CircleAvatar] if any.
-  final String? coverImage;
-
-  /// Tags to be displayed for this entry
-  final List<String>? tags;
-
-  /// Episode to show more context on Context Menu
+  /// What episode should this tile use as a reference
+  /// when showing context menu
   final String? episode;
 
   /// Will add an icon if `true`. Defaults to `false`
@@ -60,25 +44,31 @@ class EntryTile<T> extends StatefulWidget {
   /// Will add an icon if `true`. Defaults to `false`
   final bool showDone;
 
-  /// Overlay Widget to show onTap
-  final Widget overlayWidget;
-
   @override
-  State<EntryTile<T>> createState() => _EntryTileState<T>();
+  State<EntryTile> createState() => _EntryTileState();
 }
 
-class _EntryTileState<T> extends State<EntryTile<T>> {
+class _EntryTileState<T> extends State<EntryTile> {
   GlobalKey key = GlobalKey();
+
+  String get title =>
+      widget.media.title?.userPreferred ??
+      widget.libraryEntry?.entries.first.title ??
+      'N/A';
+
+  String? get coverImage =>
+      widget.media.coverImage?.extraLarge ??
+      widget.media.coverImage?.large ??
+      widget.media.coverImage?.medium;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => BlocProvider.of<EntryCardOverlayBloc>(context).add(
-        EntryCardOverlayRequested(
-          key: key,
-          context: context,
-          child: widget.overlayWidget,
-        ),
+      onTap: () => showOverlay(
+        context: context,
+        media: widget.media,
+        libraryEntry: widget.libraryEntry,
+        key: key,
       ),
       key: key,
       onSecondaryTapUp: (details) {
@@ -86,7 +76,7 @@ class _EntryTileState<T> extends State<EntryTile<T>> {
           offset: details.globalPosition,
           context: context,
           actions: widget.actions,
-          title: widget.title ?? '',
+          title: title,
           episode: widget.episode,
         );
       },
@@ -95,17 +85,17 @@ class _EntryTileState<T> extends State<EntryTile<T>> {
           offset: details.globalPosition,
           context: context,
           actions: widget.actions,
-          title: widget.title ?? '',
+          title: title,
           episode: widget.episode,
         );
       },
       child: Container(
         decoration: BoxDecoration(
-          image: widget.bannerImage != null
+          image: widget.media.bannerImage != null
               ? DecorationImage(
                   opacity: 0.25,
                   fit: BoxFit.cover,
-                  image: NetworkImage(widget.bannerImage!),
+                  image: NetworkImage(widget.media.bannerImage!),
                 )
               : const DecorationImage(
                   alignment: Alignment.topCenter,
@@ -120,13 +110,16 @@ class _EntryTileState<T> extends State<EntryTile<T>> {
               dense: true,
               isThreeLine: false,
               title: Text(
-                widget.title ?? 'N/A',
+                title,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-              leading: widget.coverImage != null
-                  ? CircleAvatar(
-                      backgroundImage: NetworkImage(widget.coverImage!),
+              leading: coverImage != null
+                  ? Hero(
+                      tag: coverImage!,
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(coverImage!),
+                      ),
                     )
                   : null,
               subtitle: Padding(
@@ -174,11 +167,11 @@ class _EntryTileState<T> extends State<EntryTile<T>> {
               padding: const EdgeInsets.only(left: 72.0, bottom: 4.0),
               child: Row(
                 children: [
-                  /// Tags
-                  if (widget.tags != null)
-                    ...(widget.tags!.length > 1
-                            ? widget.tags!.sublist(0, 2)
-                            : widget.tags!)
+                  /// Genres
+                  if (widget.media.genres != null)
+                    ...(widget.media.genres!.length > 1
+                            ? widget.media.genres!.sublist(0, 2)
+                            : widget.media.genres!)
                         .map(
                       (genre) {
                         return EntryTag(
