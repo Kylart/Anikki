@@ -91,7 +91,7 @@ class _NewsViewState extends State<NewsView> with AnilistAuthIsConnectedMixin {
                 final filteredEnries = entries.where((entry) {
                   bool included = true;
 
-                  if (isConnected && lists.state is WatchListComplete) {
+                  if (lists.state is WatchListComplete) {
                     final state = lists.state as WatchListComplete;
                     if (onlyFollowed) {
                       included = isFollowed(state, entry);
