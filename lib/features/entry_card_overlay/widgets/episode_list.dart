@@ -1,3 +1,5 @@
+import 'package:anikki/features/entry_card_overlay/widgets/episode_list_no_media.dart';
+import 'package:anikki/models/library_entry.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,10 +17,12 @@ class EpisodeList extends StatelessWidget {
   const EpisodeList({
     super.key,
     required this.media,
+    this.libraryEntry,
     this.fallbackEpisodeNumber = 0,
   });
 
   final Fragment$shortMedia media;
+  final LibraryEntry? libraryEntry;
   final int fallbackEpisodeNumber;
 
   int get episodes => media.episodes ?? fallbackEpisodeNumber;
@@ -54,6 +58,18 @@ class EpisodeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (libraryEntry != null) {
+      switch (media.format) {
+        case Enum$MediaFormat.MOVIE:
+        case Enum$MediaFormat.SPECIAL:
+        case Enum$MediaFormat.OVA:
+        case Enum$MediaFormat.ONA:
+          return EpisodeListNoMedia(entry: libraryEntry!);
+        default:
+          break;
+      }
+    }
+
     return ListView.separated(
       physics: const ClampingScrollPhysics(),
       shrinkWrap: true,
@@ -81,9 +97,7 @@ class EpisodeList extends StatelessWidget {
                 (element) =>
                     element.media?.id == media.id &&
                     element.entries
-                        .where((f) => media.format == Enum$MediaFormat.MOVIE
-                            ? true
-                            : f.episode == episodeNumber)
+                        .where((f) => f.episode == episodeNumber)
                         .isNotEmpty,
               );
 

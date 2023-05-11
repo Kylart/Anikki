@@ -135,12 +135,13 @@ class EntryCardOverlayMedia extends StatelessWidget {
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: media == null
+                                  child: media == null || media?.id == 0
                                       ? EpisodeListNoMedia(
                                           entry: entry!,
                                         )
                                       : EpisodeList(
                                           media: media!,
+                                          libraryEntry: entry,
                                           fallbackEpisodeNumber:
                                               fallbackEpisodeNumber,
                                         ),
