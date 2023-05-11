@@ -19,9 +19,9 @@ class LibraryCard extends StatelessWidget {
       media: entry.media == null ? Fragment$shortMedia(id: 0) : entry.media!,
       libraryEntry: entry,
       cover: EntryCardCover(
-        coverImage: entry.media!.coverImage?.extraLarge ??
-            entry.media!.coverImage?.large ??
-            entry.media!.coverImage?.medium,
+        coverImage: entry.media?.coverImage?.extraLarge ??
+            entry.media?.coverImage?.large ??
+            entry.media?.coverImage?.medium,
         episode: entry.entries.length == 1
             ? entry.epMax?.toString()
             : '${entry.epMin} ~ ${entry.epMax}',
