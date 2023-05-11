@@ -71,17 +71,7 @@ class LibraryLayout extends StatelessWidget {
               final libraryEntry = entries.elementAt(entryIndex);
 
               return LibraryCard(
-                onTap: () => toggleExpanded(context, entryIndex),
                 entry: libraryEntry,
-                episode:
-                    libraryEntry.entries.length == 1 || isExpanded[entryIndex]
-                        ? libraryEntry.entries
-                            .firstWhere((element) => element == entry)
-                            .episode
-                            ?.toString()
-                        : '${libraryEntry.epMin} ~ ${libraryEntry.epMax}',
-                isExpandable:
-                    libraryEntry.entries.length > 1 && !isExpanded[entryIndex],
               );
             },
           )

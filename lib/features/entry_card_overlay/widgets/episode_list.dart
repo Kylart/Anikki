@@ -55,6 +55,8 @@ class EpisodeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      physics: const ClampingScrollPhysics(),
+      shrinkWrap: true,
       itemBuilder: (context, index) {
         final episodeNumber = episodeList.elementAt(index);
         final title = 'Episode $episodeNumber';

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_media.dart';
+import 'package:anikki/widgets/entry_card/entry_card_cover.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/widgets/entry_card/entry_card.dart';
 import 'package:anikki/helpers/anilist/filters/is_followed.dart';
@@ -27,7 +27,6 @@ class _NewsCardState extends State<NewsCard> {
     final coverImage = widget.entry.media?.coverImage?.extraLarge ??
         widget.entry.media?.coverImage?.large ??
         widget.entry.media?.coverImage?.medium;
-    final title = widget.entry.media?.title?.userPreferred ?? 'N/A';
 
     final state = BlocProvider.of<WatchListBloc>(context, listen: true).state;
 
@@ -42,14 +41,12 @@ class _NewsCardState extends State<NewsCard> {
     }
 
     return EntryCard(
-      coverImage: coverImage,
-      showBookmark: showBookmark,
-      showDone: showDone,
-      title: title,
-      episode: widget.entry.episode.toString(),
-      overlayWidget: EntryCardOverlayMedia(
-        media: widget.entry.media,
-        fallbackEpisodeNumber: widget.entry.episode,
+      media: widget.entry.media!,
+      cover: EntryCardCover(
+        coverImage: coverImage,
+        showBookmark: showBookmark,
+        showDone: showDone,
+        episode: widget.entry.episode.toString(),
       ),
     );
   }

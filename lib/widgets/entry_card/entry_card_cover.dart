@@ -9,8 +9,8 @@ class EntryCardCover extends StatelessWidget {
     super.key,
     this.coverImage,
     this.episode,
-    required this.showBookmark,
-    required this.showDone,
+    this.showBookmark = false,
+    this.showDone = false,
   });
 
   final String? coverImage;
