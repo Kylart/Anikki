@@ -33,9 +33,12 @@ class EntryCardCover extends StatelessWidget {
         children: [
           /// Cover image or placeholder image
           if (coverImage != null)
-            Image.network(
-              coverImage!,
-              fit: BoxFit.fill,
+            Hero(
+              tag: coverImage!,
+              child: Image.network(
+                coverImage!,
+                fit: BoxFit.fill,
+              ),
             )
           else
             Opacity(

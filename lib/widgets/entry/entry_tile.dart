@@ -1,17 +1,21 @@
+import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/widgets/anikki_action_button.dart';
 import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/widgets/entry/entry_tag.dart';
 import 'package:anikki/helpers/show_entry_context_menu.dart';
 import 'package:anikki/widgets/anikki_icon.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EntryTile<T> extends StatelessWidget {
+class EntryTile<T> extends StatefulWidget {
   const EntryTile({
     super.key,
     required this.entry,
     required this.subtitle,
     required this.actions,
+    required this.overlayWidget,
     this.title,
     this.bannerImage,
     this.coverImage,
@@ -21,46 +25,87 @@ class EntryTile<T> extends StatelessWidget {
     this.showDone = false,
   });
 
+  /// Entry for thie [EntryTile], for now, should be either
+  /// [Fragment$shortMedia], [Query$GetLists$MediaListCollection$lists$entries]
+  /// or [LocalFile].
   final T entry;
-  final Widget subtitle;
+
+  /// [AnikkiAction] list to show onSecondaryTap, onLongPress or with
+  /// [AnikkiActionButton]
   final List<AnikkiAction> actions;
+
+  /// What should be display in the `title` property
   final String? title;
+
+  /// What should be display in the `subtitle` property
+  final Widget subtitle;
+
+  /// BannerImage URL to show as background of the tile.
+  /// Will be replaced by placeholder asset `assets/images/cover_placeholder.jpg`
+  /// if `null`
   final String? bannerImage;
+
+  /// CoverImage URL to show as leading [CircleAvatar] if any.
   final String? coverImage;
+
+  /// Tags to be displayed for this entry
   final List<String>? tags;
+
+  /// Episode to show more context on Context Menu
   final String? episode;
+
+  /// Will add an icon if `true`. Defaults to `false`
   final bool showBookmark;
+
+  /// Will add an icon if `true`. Defaults to `false`
   final bool showDone;
+
+  /// Overlay Widget to show onTap
+  final Widget overlayWidget;
+
+  @override
+  State<EntryTile<T>> createState() => _EntryTileState<T>();
+}
+
+class _EntryTileState<T> extends State<EntryTile<T>> {
+  GlobalKey key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => BlocProvider.of<EntryCardOverlayBloc>(context).add(
+        EntryCardOverlayRequested(
+          key: key,
+          context: context,
+          child: widget.overlayWidget,
+        ),
+      ),
+      key: key,
       onSecondaryTapUp: (details) {
         showEntryContextMenu(
           offset: details.globalPosition,
           context: context,
-          actions: actions,
-          title: title ?? '',
-          episode: episode,
+          actions: widget.actions,
+          title: widget.title ?? '',
+          episode: widget.episode,
         );
       },
       onLongPressStart: (details) {
         showEntryContextMenu(
           offset: details.globalPosition,
           context: context,
-          actions: actions,
-          title: title ?? '',
-          episode: episode,
+          actions: widget.actions,
+          title: widget.title ?? '',
+          episode: widget.episode,
         );
       },
       child: Container(
         decoration: BoxDecoration(
-          image: bannerImage != null
+          image: widget.bannerImage != null
               ? DecorationImage(
                   opacity: 0.25,
                   fit: BoxFit.cover,
-                  image: NetworkImage(bannerImage!),
+                  image: NetworkImage(widget.bannerImage!),
                 )
               : const DecorationImage(
                   alignment: Alignment.topCenter,
@@ -75,26 +120,26 @@ class EntryTile<T> extends StatelessWidget {
               dense: true,
               isThreeLine: false,
               title: Text(
-                title ?? 'N/A',
+                widget.title ?? 'N/A',
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-              leading: coverImage != null
+              leading: widget.coverImage != null
                   ? CircleAvatar(
-                      backgroundImage: NetworkImage(coverImage!),
+                      backgroundImage: NetworkImage(widget.coverImage!),
                     )
                   : null,
               subtitle: Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: subtitle,
+                child: widget.subtitle,
               ),
-              trailing: actions.isEmpty
+              trailing: widget.actions.isEmpty
                   ? const SizedBox()
                   : Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Tooltip(
-                          message: actions.first.label,
+                          message: widget.actions.first.label,
                           child: EntryTag(
                             padding: EdgeInsets.zero,
                             child: SizedBox(
@@ -103,8 +148,9 @@ class EntryTile<T> extends StatelessWidget {
                               child: IconButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () =>
-                                    actions.first.callback(context),
-                                icon: AnikkiIcon(icon: actions.first.icon),
+                                    widget.actions.first.callback(context),
+                                icon:
+                                    AnikkiIcon(icon: widget.actions.first.icon),
                                 // icon: AnikkiIcon(icon: actions.first.icon),
                               ),
                             ),
@@ -117,7 +163,7 @@ class EntryTile<T> extends StatelessWidget {
                             width: 35,
                             child: AnikkiActionButton(
                               icon: const AnikkiIcon(icon: Icons.more_horiz),
-                              actions: actions,
+                              actions: widget.actions,
                             ),
                           ),
                         )
@@ -129,8 +175,11 @@ class EntryTile<T> extends StatelessWidget {
               child: Row(
                 children: [
                   /// Tags
-                  if (tags != null)
-                    ...(tags!.length > 1 ? tags!.sublist(0, 2) : tags!).map(
+                  if (widget.tags != null)
+                    ...(widget.tags!.length > 1
+                            ? widget.tags!.sublist(0, 2)
+                            : widget.tags!)
+                        .map(
                       (genre) {
                         return EntryTag(
                           child: Text(
@@ -141,7 +190,7 @@ class EntryTile<T> extends StatelessWidget {
                       },
                     ).toList(),
 
-                  if (showBookmark)
+                  if (widget.showBookmark)
                     EntryTag(
                       child: Icon(
                         Icons.bookmark_added_outlined,
@@ -149,7 +198,7 @@ class EntryTile<T> extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     )
-                  else if (showDone)
+                  else if (widget.showDone)
                     const EntryTag(
                       child: Icon(
                         Icons.done_all,

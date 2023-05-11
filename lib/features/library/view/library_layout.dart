@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_media.dart';
 import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:anikki/models/local_file.dart';
 import 'package:anikki/models/library_entry.dart';
@@ -108,6 +109,12 @@ class LibraryLayout extends StatelessWidget {
 
                 return EntryTile(
                   entry: entry,
+                  overlayWidget: EntryCardOverlayMedia(
+                    isLibrary: true,
+                    media: entry.media,
+                    entry: libraryEntry,
+                    fallbackEpisodeNumber: libraryEntry.epMax ?? 0,
+                  ),
                   subtitle:
                       libraryEntry.entries.length == 1 || isExpanded[entryIndex]
                           ? Text(

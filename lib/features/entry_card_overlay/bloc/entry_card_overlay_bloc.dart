@@ -91,8 +91,11 @@ class EntryCardOverlayBloc
   }
 
   Size _computeOverlaySize(Size widgetSize) {
-    final height = widgetSize.height * 1.1;
-    final width = height / 0.8;
+    double height = widgetSize.height * 1.1;
+
+    if (height < 400) height = 350;
+
+    double width = height / 0.8;
 
     return Size(width, height);
   }

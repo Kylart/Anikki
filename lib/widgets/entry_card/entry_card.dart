@@ -30,7 +30,6 @@ class EntryCard extends StatefulWidget {
 
 class _EntryCardState extends State<EntryCard> {
   GlobalKey key = GlobalKey();
-  OverlayEntry? overlayEntry;
 
   Timer? debounce;
 
@@ -47,9 +46,9 @@ class _EntryCardState extends State<EntryCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: key,
       onTap: () => showOverlay(context),
       child: MouseRegion(
-        key: key,
         cursor: SystemMouseCursors.click,
         onEnter: (_) {
           debounce = Timer(const Duration(milliseconds: 700), () {
