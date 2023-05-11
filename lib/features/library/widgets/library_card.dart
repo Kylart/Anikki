@@ -24,7 +24,7 @@ class LibraryCard extends StatelessWidget {
             entry.media?.coverImage?.medium,
         episode: entry.entries.length == 1
             ? entry.epMax?.toString()
-            : '${entry.epMin} ~ ${entry.epMax}',
+            : '${entry.epMin ?? '?'} ~ ${entry.epMax ?? '?'}',
       ),
     );
   }
