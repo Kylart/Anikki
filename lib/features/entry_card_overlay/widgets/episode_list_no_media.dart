@@ -14,6 +14,8 @@ class EpisodeListNoMedia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
       itemBuilder: (context, index) {
         return EntryCardOverlayFileTile(
           file: entry.entries.elementAt(index),
