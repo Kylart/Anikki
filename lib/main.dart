@@ -11,6 +11,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 
+import 'package:anikki/helpers/screen_format.dart';
 import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anikki/features/anilist_auth/mixins/anilist_auth_mixin.dart';
 import 'package:anikki/bloc_provider.dart';
@@ -152,7 +153,7 @@ class _AnikkiState extends State<Anikki>
             builder: (context, _) {
               return LayoutBuilder(
                 builder: ((BuildContext context, BoxConstraints constraints) {
-                  return constraints.maxWidth > 800
+                  return constraints.maxWidth > breakpoint
                       ? const LandscapeLayout()
                       : const PortraitLayout();
                 }),
