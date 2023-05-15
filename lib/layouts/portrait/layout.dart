@@ -36,12 +36,12 @@ class _PortraitLayoutState extends State<PortraitLayout> {
                 currentIndex = value;
               });
             },
-            children: [
-              const NewsPage(
+            children: const [
+              NewsPage(
                 showOutline: false,
               ),
               Column(
-                children: const [
+                children: [
                   UserListAppBar(
                     userListType: UserListEnum.local,
                   ),
@@ -51,15 +51,15 @@ class _PortraitLayoutState extends State<PortraitLayout> {
                 ],
               ),
               Column(
-                children: const [
+                children: [
                   UserListAppBar(
                     userListType: UserListEnum.watchList,
                   ),
                   Expanded(child: WatchListView()),
                 ],
               ),
-              const Search(),
-              const SettingsPage(),
+              Search(),
+              SettingsPage(),
             ],
           ),
           floatingActionButton: [

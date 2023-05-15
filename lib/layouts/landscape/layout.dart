@@ -14,15 +14,15 @@ class LandscapeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const CustomAppBar(),
+        CustomAppBar(),
         Expanded(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
             child: Row(
-              children: const [
+              children: [
                 Flexible(
                   flex: 2,
                   child: UserList(),
