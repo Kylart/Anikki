@@ -74,7 +74,7 @@ DEPENDENCIES:
   - media_kit_native_event_loop (from `.symlinks/plugins/media_kit_native_event_loop/ios`)
   - media_kit_video (from `.symlinks/plugins/media_kit_video/ios`)
   - open_app_file (from `.symlinks/plugins/open_app_file/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - protocol_handler (from `.symlinks/plugins/protocol_handler/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
@@ -107,7 +107,7 @@ EXTERNAL SOURCES:
   open_app_file:
     :path: ".symlinks/plugins/open_app_file/ios"
   path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/ios"
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   protocol_handler:
     :path: ".symlinks/plugins/protocol_handler/ios"
   url_launcher_ios:
@@ -122,7 +122,7 @@ SPEC CHECKSUMS:
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: ce3938a0df3cc1ef404671531facef740d03f920
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
+  integration_test: 13825b8a9334a850581300559b8839134b124670
   media_kit_libs_ios_video: 96259eccffaa309b63a7ee610c2c7786a3b335e5
   media_kit_native_event_loop: 9f9eb778d0d806ab9486eff7513f7f90f07d50f8
   media_kit_video: c6ae801433b484912087b519b45f1beac97b960b
