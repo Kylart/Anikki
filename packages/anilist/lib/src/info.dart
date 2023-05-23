@@ -93,6 +93,7 @@ mixin AnilistInfo on AnilistClient {
         }
         bannerImage
         genres
+        synonyms
         isAdult
         format
         description
