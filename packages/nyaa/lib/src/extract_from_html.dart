@@ -11,7 +11,7 @@ extractFromHtml({required String data, required String baseUrl}) {
 
   final rawTorrents = document.querySelectorAll('tr');
 
-  if (rawTorrents.isEmpty) throw NyaaNoResultException;
+  if (rawTorrents.isEmpty) throw NyaaNoResultException();
 
   rawTorrents.sublist(1).forEach((element) {
     final Element nameElement = element.children[1].children.length == 2
