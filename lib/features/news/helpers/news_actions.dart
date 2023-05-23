@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/watch_list/helpers/watch_list_actions.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
-import 'package:anikki/helpers/show_available_torrents.dart';
 
 List<AnikkiAction> getNewsActions({
   required BuildContext context,
@@ -25,16 +25,24 @@ List<AnikkiAction> getNewsActions({
       label: 'Show torrents',
       icon: Icons.file_download_outlined,
       callback: (_) {
-        showAvailableTorrents(context, entry);
+        BlocProvider.of<DownloaderBloc>(context).add(
+          DownloaderRequested(
+            context: context,
+            media: entry.media!,
+            episode: entry.episode,
+          ),
+        );
       },
     ),
     AnikkiAction(
       label: 'Show all torrents',
       icon: Icons.cloud_download_outlined,
       callback: (context) {
-        showAvailableTorrents(
-          context,
-          entry.copyWith(episode: -1),
+        BlocProvider.of<DownloaderBloc>(context).add(
+          DownloaderRequested(
+            context: context,
+            media: entry.media,
+          ),
         );
       },
     ),

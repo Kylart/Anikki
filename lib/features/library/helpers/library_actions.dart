@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/helpers/open_in_browser.dart';
-import 'package:anikki/helpers/show_available_torrents.dart';
 import 'package:anikki/models/local_file.dart';
 
 AnikkiAction _playAction(BuildContext context, LocalFile entry) => AnikkiAction(
@@ -17,7 +20,14 @@ AnikkiAction _playAction(BuildContext context, LocalFile entry) => AnikkiAction(
 AnikkiAction _showTorrentsAction(BuildContext context, LocalFile entry) =>
     AnikkiAction(
       callback: (context) {
-        showAvailableTorrents(context, entry);
+        BlocProvider.of<DownloaderBloc>(context).add(
+          DownloaderRequested(
+            context: context,
+            media: entry.media,
+            entry: LibraryEntry(media: entry.media, entries: [entry]),
+            episode: entry.episode,
+          ),
+        );
       },
       icon: Icons.download_outlined,
       label: 'Show torrents',

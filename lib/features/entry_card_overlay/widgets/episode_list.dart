@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/helpers/overlay_action.dart';
@@ -11,7 +12,6 @@ import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_da
 import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_file_tile.dart';
 import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:anilist/anilist.dart';
-import 'package:anikki/helpers/show_available_torrents.dart';
 
 class EpisodeList extends StatelessWidget {
   const EpisodeList({
@@ -125,10 +125,13 @@ class EpisodeList extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   overlayAction(
-                    () => showAvailableTorrents(
-                      context,
-                      media,
-                      episodeNumber,
+                    () => BlocProvider.of<DownloaderBloc>(context).add(
+                      DownloaderRequested(
+                        context: context,
+                        media: media,
+                        entry: libraryEntry,
+                        episode: episodeNumber,
+                      ),
                     ),
                     context,
                   );

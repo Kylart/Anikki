@@ -2,7 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
 
-import 'package:anikki/features/download_results_dialog/download_results_dialog_list_view.dart';
+import 'package:anikki/features/downloader/widgets/torrents_list.dart';
 import 'package:anikki/features/search/anilist_search_view.dart';
 
 class SearchPart<T> extends StatefulWidget {
@@ -61,11 +61,10 @@ class _SearchPartState<T> extends State<SearchPart<T>> {
                 final entries = data as List<Torrent>;
 
                 return Flexible(
-                  child: DownloadResultsDialogListView(
-                    entries: entries.length > numberOfResults
+                  child: TorrentsList(
+                    torrents: entries.length > numberOfResults
                         ? entries.sublist(0, numberOfResults)
                         : entries,
-                    outlineColor: outline,
                   ),
                 );
               } else {
