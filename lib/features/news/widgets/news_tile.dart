@@ -37,6 +37,7 @@ class _NewsTileState extends State<NewsTile> {
 
     return EntryTile(
       media: entry.media!,
+      heroTag: 'news-${entry.id}',
       subtitle: Text(
         'Episode ${entry.episode}',
       ),

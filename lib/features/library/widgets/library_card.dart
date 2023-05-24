@@ -9,16 +9,20 @@ class LibraryCard extends StatelessWidget {
   const LibraryCard({
     super.key,
     required this.entry,
+    required this.heroTag,
   });
 
   final LibraryEntry entry;
+  final String heroTag;
 
   @override
   Widget build(BuildContext context) {
     return EntryCard(
       media: entry.media == null ? Fragment$shortMedia(id: 0) : entry.media!,
       libraryEntry: entry,
+      heroTag: heroTag,
       cover: EntryCardCover(
+        heroTag: heroTag,
         coverImage: entry.media?.coverImage?.extraLarge ??
             entry.media?.coverImage?.large ??
             entry.media?.coverImage?.medium,

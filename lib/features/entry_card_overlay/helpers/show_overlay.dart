@@ -13,6 +13,7 @@ void showOverlay({
   required Fragment$shortMedia media,
   required LibraryEntry? libraryEntry,
   required GlobalKey key,
+  required String heroTag,
 }) {
   if (isPortrait(context)) {
     Navigator.of(context).push(
@@ -21,6 +22,7 @@ void showOverlay({
           return EntryCardModal(
             media: media,
             libraryEntry: libraryEntry,
+            heroTag: heroTag,
           );
         },
       ),

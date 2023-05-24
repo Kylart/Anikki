@@ -26,12 +26,16 @@ class WatchListLayout extends StatelessWidget {
         ? CustomGridView(
             entries: entries,
             gridDelegate: userListGridDelegate,
-            builder: (entry, index) => WatchListCard(entry: entry),
+            builder: (entry, index) => WatchListCard(
+              entry: entry,
+              heroTag: 'list-${entry.media?.id}',
+            ),
           )
         : CustomListView(
             entries: entries,
             builder: (context, entry) => EntryTile(
               media: entry.media!,
+              heroTag: 'list-${entry.media?.id}',
               subtitle: entry.status == Enum$MediaListStatus.CURRENT &&
                       entry.progress != null
                   ? Text('Currently at episode ${entry.progress!.toString()}')

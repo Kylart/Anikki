@@ -24,6 +24,7 @@ class _NewsCardState extends State<NewsCard> {
 
   @override
   Widget build(BuildContext context) {
+    final heroTag = 'news-${widget.entry.id}';
     final coverImage = widget.entry.media?.coverImage?.extraLarge ??
         widget.entry.media?.coverImage?.large ??
         widget.entry.media?.coverImage?.medium;
@@ -41,8 +42,10 @@ class _NewsCardState extends State<NewsCard> {
     }
 
     return EntryCard(
+      heroTag: heroTag,
       media: widget.entry.media!,
       cover: EntryCardCover(
+        heroTag: heroTag,
         coverImage: coverImage,
         showBookmark: showBookmark,
         showDone: showDone,

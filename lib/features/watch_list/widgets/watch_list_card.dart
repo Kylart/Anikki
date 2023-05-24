@@ -5,9 +5,14 @@ import 'package:anikki/widgets/entry_card/entry_card_cover.dart';
 import 'package:anikki/widgets/entry_card/entry_card.dart';
 
 class WatchListCard extends StatelessWidget {
-  const WatchListCard({super.key, required this.entry});
+  const WatchListCard({
+    super.key,
+    required this.entry,
+    required this.heroTag,
+  });
 
   final Query$GetLists$MediaListCollection$lists$entries entry;
+  final String heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,9 @@ class WatchListCard extends StatelessWidget {
         '';
 
     return EntryCard(
+      heroTag: heroTag,
       cover: EntryCardCover(
+        heroTag: heroTag,
         coverImage: coverImage,
         episode: [
           Enum$MediaListStatus.CURRENT,

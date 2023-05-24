@@ -7,6 +7,7 @@ import 'package:anikki/widgets/entry_card/entry_card_completed.dart';
 class EntryCardCover extends StatelessWidget {
   const EntryCardCover({
     super.key,
+    required this.heroTag,
     this.coverImage,
     this.episode,
     this.showBookmark = false,
@@ -15,6 +16,7 @@ class EntryCardCover extends StatelessWidget {
 
   final String? coverImage;
   final String? episode;
+  final String heroTag;
   final bool showBookmark;
   final bool showDone;
 
@@ -34,7 +36,7 @@ class EntryCardCover extends StatelessWidget {
           /// Cover image or placeholder image
           if (coverImage != null)
             Hero(
-              tag: coverImage!,
+              tag: heroTag,
               child: Image.network(
                 coverImage!,
                 fit: BoxFit.fill,
