@@ -59,6 +59,7 @@ class DownloaderView extends StatelessWidget {
                     spacing: 16.0,
                     runSpacing: 8.0,
                     crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.center,
                     children: [
                       Column(
                         children: [
@@ -108,25 +109,6 @@ class DownloaderView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SegmentedButton(
-                        multiSelectionEnabled: true,
-                        emptySelectionAllowed: true,
-                        selectedIcon: const Icon(Icons.done),
-                        segments: Quality.values
-                            .map((e) =>
-                                ButtonSegment(value: e, label: Text(e.value)))
-                            .toList(),
-                        selected: currentState.filter.qualities.toSet(),
-                        onSelectionChanged: (qualities) {
-                          bloc.add(
-                            DownloaderFiltered(
-                              bloc.filter.copyWith(
-                                qualities: qualities.toList(),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
                       DownloaderMore(
                         onChanged: (value) {
                           bloc.add(
@@ -147,6 +129,25 @@ class DownloaderView extends StatelessWidget {
                               media: currentState.media,
                               entry: currentState.entry,
                               title: value,
+                            ),
+                          );
+                        },
+                      ),
+                      SegmentedButton(
+                        multiSelectionEnabled: true,
+                        emptySelectionAllowed: true,
+                        selectedIcon: const Icon(Icons.done),
+                        segments: Quality.values
+                            .map((e) =>
+                                ButtonSegment(value: e, label: Text(e.value)))
+                            .toList(),
+                        selected: currentState.filter.qualities.toSet(),
+                        onSelectionChanged: (qualities) {
+                          bloc.add(
+                            DownloaderFiltered(
+                              bloc.filter.copyWith(
+                                qualities: qualities.toList(),
+                              ),
                             ),
                           );
                         },

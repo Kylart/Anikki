@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
@@ -46,7 +49,6 @@ class Synonyms extends StatelessWidget {
           fontSize: 14,
         ),
         dropdownMenuEntries: synonyms
-            .whereType<String>()
             .map(
               (e) => DropdownMenuEntry(
                 value: e,
@@ -57,7 +59,45 @@ class Synonyms extends StatelessWidget {
       );
     } else {
       return IconButton.outlined(
-        onPressed: () {},
+        onPressed: () {
+          if (Platform.isIOS) {
+            showCupertinoModalPopup(
+                context: context,
+                builder: (context) {
+                  return CupertinoActionSheet(
+                    title: const Text('Other names'),
+                    actions: synonyms
+                        .map(
+                          (e) => CupertinoActionSheetAction(
+                            child: Text(e),
+                            onPressed: () => onSelected(e),
+                          ),
+                        )
+                        .toList(),
+                  );
+                });
+          } else {
+            showModalBottomSheet(
+                enableDrag: false,
+                context: context,
+                builder: (context) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: synonyms
+                          .map(
+                            (e) => ListTile(
+                              title: Text(e),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  );
+                });
+          }
+        },
         icon: const Icon(Icons.multiple_stop),
       );
     }
