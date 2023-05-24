@@ -87,7 +87,7 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback>
           IconButton(
             onPressed: () => SeekAction(player: player).invoke(
               SeekIntent(
-                player.state.duration - const Duration(milliseconds: 10),
+                player.state.duration - const Duration(milliseconds: 10) - player.state.position,
               ),
             ),
             icon: const Icon(Icons.skip_next_outlined),
