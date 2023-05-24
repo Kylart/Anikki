@@ -2,6 +2,7 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/widgets/time_until_date.dart';
 import 'package:anikki/widgets/entry/entry_tile.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
@@ -38,8 +39,15 @@ class _NewsTileState extends State<NewsTile> {
     return EntryTile(
       media: entry.media!,
       heroTag: 'news-${entry.id}',
-      subtitle: Text(
-        'Episode ${entry.episode}',
+      subtitle: Row(
+        children: [
+          Text(
+            'Episode ${entry.episode} - ',
+          ),
+          TimeUntilDate(
+            date: DateTime.fromMillisecondsSinceEpoch(entry.airingAt * 1000),
+          )
+        ],
       ),
       episode: entry.episode.toString(),
       showBookmark: showBookmark,

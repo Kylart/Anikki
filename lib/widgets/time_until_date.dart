@@ -2,21 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class EntryCardOverlayDate extends StatefulWidget {
-  const EntryCardOverlayDate({
+class TimeUntilDate extends StatefulWidget {
+  const TimeUntilDate({
     super.key,
-    required this.title,
     required this.date,
   });
 
-  final String title;
   final DateTime date;
 
   @override
-  State<EntryCardOverlayDate> createState() => _EntryCardOverlayDateState();
+  State<TimeUntilDate> createState() => _TimeUntilDateState();
 }
 
-class _EntryCardOverlayDateState extends State<EntryCardOverlayDate> {
+class _TimeUntilDateState extends State<TimeUntilDate> {
   late Timer timer;
 
   Duration timeUntil = Duration.zero;
@@ -50,10 +48,8 @@ class _EntryCardOverlayDateState extends State<EntryCardOverlayDate> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      dense: true,
-      title: Text(widget.title),
-      subtitle: Text('Airing in $formattedTimeUntil'),
-    );
+    return timeUntil.isNegative
+        ? const Text('Aired')
+        : Text('Airing in $formattedTimeUntil');
   }
 }
