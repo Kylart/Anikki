@@ -25,7 +25,6 @@ class LibraryLoaded extends LibraryState {
   final int id;
 
   final List<LibraryEntry> entries;
-  final List<bool> expandedEntries;
 
   List<String> get playlist => entries.fold<List<String>>(
         [],
@@ -41,12 +40,11 @@ class LibraryLoaded extends LibraryState {
   const LibraryLoaded({
     required super.path,
     required this.entries,
-    required this.expandedEntries,
     this.id = 0,
   });
 
   @override
-  List<Object> get props => [id, entries, path, expandedEntries, playlist];
+  List<Object> get props => [id, entries, path, playlist];
 
   @override
   String toString() {
@@ -55,7 +53,6 @@ class LibraryLoaded extends LibraryState {
       id,
       path,
       'Entries: ${entries.length}',
-      expandedEntries,
       ')',
     ].join(', ');
   }

@@ -121,16 +121,10 @@ void main() {
         act: (bloc) => bloc.add(const LibraryUpdateRequested(path: path)),
         expect: () => [
           const LibraryLoading(path: path),
-          isA<LibraryLoaded>()
-              .having(
+          isA<LibraryLoaded>().having(
             (p0) => p0.entries.length,
             'with the right number of entries',
             4,
-          )
-              .having(
-            (p0) => p0.expandedEntries,
-            'with the right expanded list',
-            [true, false, true, true],
           ),
         ],
         verify: (bloc) {
@@ -186,7 +180,6 @@ void main() {
           id: 0,
           path: path,
           entries: [],
-          expandedEntries: [],
         ),
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [
@@ -200,12 +193,7 @@ void main() {
                 (p0) => p0.entries.first.entries.first,
                 'with the right file',
                 equals(mockFile),
-              )
-              .having(
-            (p0) => p0.expandedEntries,
-            'Has expanded entries list',
-            [true],
-          ),
+              ),
         ],
         verify: (bloc) {
           verify(
@@ -228,7 +216,6 @@ void main() {
               ],
             )
           ],
-          expandedEntries: const [true],
         ),
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [
@@ -243,12 +230,7 @@ void main() {
                     (element) => element.entries.contains(mockFile)),
                 'with the new file',
                 isNotNull,
-              )
-              .having(
-            (p0) => p0.expandedEntries,
-            'with right expanded entries list',
-            [true, true],
-          ),
+              ),
         ],
         verify: (bloc) {
           verify(
@@ -279,7 +261,6 @@ void main() {
               ],
             )
           ],
-          expandedEntries: const [true, true],
         ),
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [
@@ -310,12 +291,7 @@ void main() {
                     .first,
                 'entries in the the right order',
                 equals(mockFile),
-              )
-              .having(
-            (p0) => p0.expandedEntries,
-            'with right expanded entries list',
-            [true, false],
-          ),
+              ),
         ],
         verify: (bloc) {
           verify(
@@ -341,7 +317,6 @@ void main() {
           entries: [
             LibraryEntry(media: null, entries: [mockFile]),
           ],
-          expandedEntries: const [true],
         ),
         act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
         expect: () => [
@@ -358,20 +333,13 @@ void main() {
             LibraryEntry(media: null, entries: [mockFile]),
             LibraryEntry(media: null, entries: [files[0]]),
           ],
-          expandedEntries: const [true, true],
         ),
         act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
         expect: () => [
-          isA<LibraryLoaded>()
-              .having(
+          isA<LibraryLoaded>().having(
             (p0) => p0.entries.length,
             'with 1 entry remaining',
             equals(1),
-          )
-              .having(
-            (p0) => p0.expandedEntries,
-            'with 1 expanded entry',
-            [true],
           ),
         ],
       );
@@ -385,20 +353,13 @@ void main() {
             LibraryEntry(media: null, entries: [mockFile, files[2]]),
             LibraryEntry(media: null, entries: [files[0]]),
           ],
-          expandedEntries: const [false, true],
         ),
         act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
         expect: () => [
-          isA<LibraryLoaded>()
-              .having(
+          isA<LibraryLoaded>().having(
             (p0) => p0.entries.length,
             'with 2 entries still',
             equals(2),
-          )
-              .having(
-            (p0) => p0.expandedEntries,
-            'with correct expandedEntries',
-            [true, true],
           ),
         ],
       );
@@ -410,30 +371,6 @@ void main() {
         build: () => bloc,
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [],
-      );
-
-      blocTest<LibraryBloc, LibraryState>(
-        'emits [LibraryLoaded] with updated values',
-        build: () => bloc,
-        act: (bloc) => bloc.add(const LibraryEntryExpanded(index: 0)),
-        seed: () => LibraryLoaded(
-          path: path,
-          entries: [
-            LibraryEntry(media: null, entries: [mockFile, files[2]]),
-            LibraryEntry(media: null, entries: [files[0]]),
-          ],
-          expandedEntries: const [false, true],
-        ),
-        expect: () => [
-          LibraryLoaded(
-            path: path,
-            entries: [
-              LibraryEntry(media: null, entries: [mockFile, files[2]]),
-              LibraryEntry(media: null, entries: [files[0]]),
-            ],
-            expandedEntries: const [true, true],
-          ),
-        ],
       );
     });
   });

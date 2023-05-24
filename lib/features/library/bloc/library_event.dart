@@ -32,12 +32,3 @@ class LibraryFileAdded extends LibraryEvent {
   @override
   List<Object> get props => [path];
 }
-
-class LibraryEntryExpanded extends LibraryEvent {
-  const LibraryEntryExpanded({required this.index});
-
-  final int index;
-
-  @override
-  List<Object> get props => [index];
-}

@@ -36,7 +36,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     on<LibraryUpdateRequested>(_onUpdateRequested);
     on<LibraryFileDeleted>(_onFileDeleted);
     on<LibraryFileAdded>(_onFileAdded);
-    on<LibraryEntryExpanded>(_onEntryExpanded);
 
     settingsBloc.stream.listen((settingsState) {
       final newPath = settingsState.settings.localDirectory;
@@ -46,22 +45,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         add(LibraryUpdateRequested(path: newPath));
       }
     });
-  }
-
-  void _onEntryExpanded(
-      LibraryEntryExpanded event, Emitter<LibraryState> emit) {
-    if (state is LibraryLoaded) {
-      final s = state as LibraryLoaded;
-      final List<bool> expanded = List.from(s.expandedEntries);
-
-      expanded[event.index] = !expanded[event.index];
-
-      emit(LibraryLoaded(
-        path: s.path,
-        entries: s.entries,
-        expandedEntries: expanded,
-      ));
-    }
   }
 
   void _setupWatcher(String path) {
@@ -121,7 +104,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         emit(
           LibraryLoaded(
             entries: entries,
-            expandedEntries: entries.map((e) => e.entries.length == 1).toList(),
             path: path,
           ),
         );
@@ -154,7 +136,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
       final currentState = state as LibraryLoaded;
 
       final entries = List<LibraryEntry>.from(currentState.entries);
-      final expandedEntries = List<bool>.from(currentState.expandedEntries);
 
       final existsIndex =
           entries.indexWhere((element) => element.entries.contains(file));
@@ -164,13 +145,8 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
       entries[existsIndex].entries.removeWhere((element) => element == file);
 
-      if (entries[existsIndex].entries.length == 1) {
-        expandedEntries[existsIndex] = true;
-      }
-
       if (entries[existsIndex].entries.isEmpty) {
         entries.removeAt(existsIndex);
-        expandedEntries.removeAt(existsIndex);
       }
 
       if (entries.isEmpty) {
@@ -180,7 +156,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
           LibraryLoaded(
             id: currentState.id + 1,
             entries: entries,
-            expandedEntries: expandedEntries,
             path: state.path,
           ),
         );
@@ -198,7 +173,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
       List<LibraryEntry> entries =
           List<LibraryEntry>.from(currentState.entries);
-      final expandedEntries = List<bool>.from(currentState.expandedEntries);
 
       final existsIndex = entries.indexWhere(
         (element) => file.media != null
@@ -211,11 +185,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         entries[existsIndex]
             .entries
             .sort((a, b) => b.episode?.compareTo(a.episode ?? 0) ?? 0);
-
-        /// Setting expanded to false if the entry went from 1 file to 2
-        if (entries[existsIndex].entries.length == 2) {
-          expandedEntries[existsIndex] = false;
-        }
       } else {
         final newEntry = LibraryEntry(
           media: file.media,
@@ -224,7 +193,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
         if (entries.isEmpty) {
           entries.add(newEntry);
-          expandedEntries.add(true);
         } else {
           /// Looking where to insert the new entry
           for (int index = 0; index < entries.length; index++) {
@@ -237,15 +205,12 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
                 newEntry,
               );
 
-              expandedEntries.insert(insertIndex, true);
-
               break;
             }
 
             /// Means that the entry didn't fit before
             if (index == entries.length - 1) {
               entries.add(newEntry);
-              expandedEntries.add(true);
               break;
             }
           }
@@ -256,7 +221,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         LibraryLoaded(
           id: currentState.id + 1,
           entries: entries,
-          expandedEntries: expandedEntries,
           path: state.path,
         ),
       );

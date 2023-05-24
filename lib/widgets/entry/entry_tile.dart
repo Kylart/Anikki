@@ -1,19 +1,15 @@
+import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/entry_card_overlay/helpers/show_overlay.dart';
 import 'package:anikki/models/library_entry.dart';
-import 'package:anikki/widgets/anikki_action_button.dart';
-import 'package:anikki/models/anikki_action.dart';
 import 'package:anikki/widgets/entry/entry_tag.dart';
-import 'package:anikki/helpers/show_entry_context_menu.dart';
-import 'package:anikki/widgets/anikki_icon.dart';
 
 class EntryTile extends StatefulWidget {
   const EntryTile({
     super.key,
     required this.media,
-    required this.actions,
     this.subtitle,
     this.libraryEntry,
     this.episode,
@@ -23,10 +19,6 @@ class EntryTile extends StatefulWidget {
 
   /// [Fragment$shortMedia] this entry card is about
   final Fragment$shortMedia media;
-
-  /// [AnikkiAction] list to show onSecondaryTap, onLongPress or with
-  /// [AnikkiActionButton]
-  final List<AnikkiAction> actions;
 
   /// [LibraryEntry] for this card if any
   final LibraryEntry? libraryEntry;
@@ -70,25 +62,19 @@ class _EntryTileState<T> extends State<EntryTile> {
         libraryEntry: widget.libraryEntry,
         key: key,
       ),
+      onLongPress: () => showOverlay(
+        context: context,
+        media: widget.media,
+        libraryEntry: widget.libraryEntry,
+        key: key,
+      ),
+      onSecondaryTapUp: (details) => showOverlay(
+        context: context,
+        media: widget.media,
+        libraryEntry: widget.libraryEntry,
+        key: key,
+      ),
       key: key,
-      onSecondaryTapUp: (details) {
-        showEntryContextMenu(
-          offset: details.globalPosition,
-          context: context,
-          actions: widget.actions,
-          title: title,
-          episode: widget.episode,
-        );
-      },
-      onLongPressStart: (details) {
-        showEntryContextMenu(
-          offset: details.globalPosition,
-          context: context,
-          actions: widget.actions,
-          title: title,
-          episode: widget.episode,
-        );
-      },
       child: Container(
         decoration: BoxDecoration(
           image: widget.media.bannerImage != null
@@ -126,42 +112,22 @@ class _EntryTileState<T> extends State<EntryTile> {
                 padding: const EdgeInsets.all(4.0),
                 child: widget.subtitle,
               ),
-              trailing: widget.actions.isEmpty
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Tooltip(
-                          message: widget.actions.first.label,
-                          child: EntryTag(
-                            padding: EdgeInsets.zero,
-                            child: SizedBox(
-                              height: 35,
-                              width: 35,
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () =>
-                                    widget.actions.first.callback(context),
-                                icon:
-                                    AnikkiIcon(icon: widget.actions.first.icon),
-                                // icon: AnikkiIcon(icon: actions.first.icon),
-                              ),
-                            ),
-                          ),
-                        ),
-                        EntryTag(
-                          padding: EdgeInsets.zero,
-                          child: SizedBox(
-                            height: 35,
-                            width: 35,
-                            child: AnikkiActionButton(
-                              icon: const AnikkiIcon(icon: Icons.more_horiz),
-                              actions: widget.actions,
-                            ),
-                          ),
-                        )
-                      ],
+              trailing: EntryTag(
+                padding: EdgeInsets.zero,
+                child: SizedBox(
+                  height: 35,
+                  width: 35,
+                  child: IconButton(
+                    onPressed: () => showOverlay(
+                      context: context,
+                      media: widget.media,
+                      libraryEntry: widget.libraryEntry,
+                      key: key,
                     ),
+                    icon: const AnikkiIcon(icon: Icons.more_horiz),
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 72.0, bottom: 4.0),

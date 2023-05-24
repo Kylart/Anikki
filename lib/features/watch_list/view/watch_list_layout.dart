@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/models/settings.dart';
 import 'package:anikki/widgets/entry/entry_tile.dart';
-import 'package:anikki/features/watch_list/helpers/watch_list_actions.dart';
 import 'package:anikki/features/watch_list/widgets/watch_list_card.dart';
 import 'package:anikki/widgets/list_view/custom_list_view.dart';
 import 'package:anikki/widgets/grid_view/custom_grid_view.dart';
@@ -40,7 +39,6 @@ class WatchListLayout extends StatelessWidget {
                           entry.notes != null)
                       ? Text(entry.notes!)
                       : const SizedBox(),
-              actions: getWatchListActions(context, entry),
             ),
           );
   }

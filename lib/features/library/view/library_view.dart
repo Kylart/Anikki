@@ -39,7 +39,6 @@ class LibraryView extends StatelessWidget {
             final loadedState = (state as LibraryLoaded);
             return LibraryLayout(
               entries: loadedState.entries,
-              isExpanded: loadedState.expandedEntries,
             );
 
           default:

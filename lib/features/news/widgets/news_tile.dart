@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/widgets/entry/entry_tile.dart';
 import 'package:anikki/helpers/anilist/filters/filters.dart';
-import 'package:anikki/features/news/helpers/news_actions.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 
 class NewsTile extends StatefulWidget {
@@ -40,10 +39,6 @@ class _NewsTileState extends State<NewsTile> {
       media: entry.media!,
       subtitle: Text(
         'Episode ${entry.episode}',
-      ),
-      actions: getNewsActions(
-        context: context,
-        entry: entry,
       ),
       episode: entry.episode.toString(),
       showBookmark: showBookmark,
