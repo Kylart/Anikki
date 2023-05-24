@@ -90,6 +90,7 @@ class Synonyms extends StatelessWidget {
                           .map(
                             (e) => ListTile(
                               title: Text(e),
+                              onTap: () => onSelected(e),
                             ),
                           )
                           .toList(),
