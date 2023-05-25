@@ -20,8 +20,10 @@ class _CustomAppBarState extends State<CustomAppBar> with IsOnlineMixin {
         context: context,
         builder: (context) {
           return const Dialog(
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
             alignment: Alignment.topCenter,
-            child: Search(),
+            child: SearchPage(),
           );
         },
       );
@@ -32,32 +34,26 @@ class _CustomAppBarState extends State<CustomAppBar> with IsOnlineMixin {
       child: Row(
         children: [
           const Spacer(),
-          SizedBox(
-            width: 500,
-            child: TextField(
-              mouseCursor: SystemMouseCursors.click,
-              onTap: onTap,
-              showCursor: false,
-              textAlign: TextAlign.center,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                filled: false,
-                fillColor: Colors.transparent,
-                focusedBorder: OutlineInputBorder(),
-                border: OutlineInputBorder(),
-                hintText: 'Search anything',
-              ),
-            ),
-          ),
-          const Spacer(),
           Offstage(
             offstage: isOnline,
             child: const Tooltip(
               message:
                   'No internet connection detected. Some features will not work.',
               child: Icon(Icons.signal_wifi_connected_no_internet_4),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: IconButton.filledTonal(
+              onPressed: onTap,
+              icon: const Icon(Icons.search),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: IconButton.filledTonal(
+              onPressed: () {},
+              icon: const Icon(Icons.settings),
             ),
           ),
         ],

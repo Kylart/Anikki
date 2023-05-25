@@ -1,5 +1,5 @@
 query Search ($search: String) {
-	anime: Page(perPage: 4) {
+	anime: Page(perPage: 12) {
 		pageInfo {
 			total
 		}
@@ -8,7 +8,7 @@ query Search ($search: String) {
 		}
 	}
 
-	characters: Page(perPage: 4) {
+	characters: Page(perPage: 12) {
 		pageInfo {
 			total
 		}
@@ -27,7 +27,7 @@ query Search ($search: String) {
 		}
 	}
 
-	staff: Page(perPage: 4) {
+	staff: Page(perPage: 12) {
 		pageInfo {
 			total
 		}
