@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/helpers/connectivity_bloc/is_online_mixin.dart';
+import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anikki/features/search/search.dart';
 
 class CustomAppBar extends StatefulWidget {
@@ -12,7 +13,7 @@ class CustomAppBar extends StatefulWidget {
   State<CustomAppBar> createState() => _CustomAppBarState();
 }
 
-class _CustomAppBarState extends State<CustomAppBar> with IsOnlineMixin {
+class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     void onTap() {
@@ -34,13 +35,17 @@ class _CustomAppBarState extends State<CustomAppBar> with IsOnlineMixin {
       child: Row(
         children: [
           const Spacer(),
-          Offstage(
-            offstage: isOnline,
-            child: const Tooltip(
-              message:
-                  'No internet connection detected. Some features will not work.',
-              child: Icon(Icons.signal_wifi_connected_no_internet_4),
-            ),
+          BlocBuilder<ConnectivityBloc, ConnectivityState>(
+            builder: (context, state) {
+              return Offstage(
+                offstage: state is ConnectivityOnline,
+                child: const Tooltip(
+                  message:
+                      'No internet connection detected. Some features will not work.',
+                  child: Icon(Icons.signal_wifi_connected_no_internet_4),
+                ),
+              );
+            },
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
