@@ -30,9 +30,9 @@ extractFromHtml({required String data, required String baseUrl}) {
                 1000)
             .toString(),
         filesize: element.children[3].text,
-        magnet: element.children[2].children[1].attributes['href'] ?? '',
+        magnet: element.children[2].children.last.attributes['href'] ?? '',
         torrent: baseUrl +
-            (element.children[2].children[0].attributes['href'] ?? ''),
+            (element.children[2].children.first.attributes['href'] ?? ''),
         seeders: element.children[5].text,
         leechers: element.children[6].text,
         completed: element.children[7].text,
