@@ -1,0 +1,14 @@
+name: transmission
+description: An interface to remotely control a Transmission instance.
+version: 1.0.0
+
+environment:
+  sdk: ^3.0.0
+
+# Add regular dependencies here.
+dependencies:
+  equatable: ^2.0.5
+  http: ^1.0.0
+
+dev_dependencies:
+  lints: ^2.0.0

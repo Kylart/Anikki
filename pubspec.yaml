@@ -52,6 +52,8 @@ dependencies:
     path: packages/anilist
   anitomy:
     path: packages/anitomy
+  transmission:
+    path: packages/transmission
   wakelock: ^0.6.2
   flutter_platform_widgets: ^3.3.4
   empty_widget: ^0.0.5
