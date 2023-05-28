@@ -24,7 +24,7 @@ part 'folder.dart';
 ///
 /// [LibraryRepository] should only be used by the [LibraryBloc] class.
 /// Its main objective is to be able to be mocked during testing phases.
-/// 
+///
 class LibraryRepository {
   const LibraryRepository();
 

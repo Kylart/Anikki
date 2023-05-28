@@ -119,8 +119,10 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
     int? episode,
     String? title,
   }) {
-    String term =
-        title ?? entry?.entries.first.title ?? media?.title?.userPreferred ?? '';
+    String term = title ??
+        entry?.entries.first.title ??
+        media?.title?.userPreferred ??
+        '';
 
     if (episode != null) term += ' $episode';
 

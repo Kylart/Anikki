@@ -56,8 +56,10 @@ class _PlayerMovableControlsState extends State<PlayerMovableControls> {
               });
             },
             child: MouseRegion(
-              onEnter: (_) => videoBloc.add(const VideoPlayerControlsHovered(true)),
-              onExit: (_) => videoBloc.add(const VideoPlayerControlsHovered(false)),
+              onEnter: (_) =>
+                  videoBloc.add(const VideoPlayerControlsHovered(true)),
+              onExit: (_) =>
+                  videoBloc.add(const VideoPlayerControlsHovered(false)),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.7),

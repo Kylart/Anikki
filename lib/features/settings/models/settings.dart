@@ -60,9 +60,11 @@ class Settings extends Equatable {
   factory Settings.fromMap(Map<String, dynamic> map) {
     return Settings(
       localDirectory: map['localDirectory'] as String,
-      newsLayout: NewsLayouts.values.where((e) => e.name == map['newsLayout']).first,
-      userListLayouts:
-          UserListLayouts.values.where((e) => e.name == map['userListLayouts']).first,
+      newsLayout:
+          NewsLayouts.values.where((e) => e.name == map['newsLayout']).first,
+      userListLayouts: UserListLayouts.values
+          .where((e) => e.name == map['userListLayouts'])
+          .first,
       theme: ThemeMode.values.where((e) => e.name == map['theme']).first,
     );
   }

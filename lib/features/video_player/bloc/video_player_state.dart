@@ -12,7 +12,7 @@ class VideoPlayerState extends Equatable {
   final bool hideControls;
   final bool displayTapped;
   final bool controlsHovered;
-  
+
   final bool fullscreen;
 
   @override

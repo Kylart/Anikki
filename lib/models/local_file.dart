@@ -35,7 +35,6 @@ class LocalFile extends Equatable {
   LocalFile({
     required this.path,
     this.media,
-
     int? episode,
     File? file,
   }) {
