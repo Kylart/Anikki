@@ -3,6 +3,8 @@ import 'package:anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/helpers/anilist/anilist_client.dart';
@@ -68,6 +70,14 @@ class AnikkiBlocProvider extends StatelessWidget {
                     path: settingsBloc.state.settings.localDirectory,
                   ),
                 );
+            },
+          ),
+          BlocProvider(
+            create: (context) {
+              final settingsBloc = BlocProvider.of<SettingsBloc>(context);
+              return TorrentBloc(settingsBloc: settingsBloc)
+                ..add(const TorrentClientRequested(TorrentType.transmission))
+                ..add(const TorrentClientRequested(TorrentType.qbittorrent));
             },
           ),
         ],
