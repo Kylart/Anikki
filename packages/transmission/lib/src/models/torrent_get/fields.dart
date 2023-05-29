@@ -1,4 +1,4 @@
-const kTorrentAddFields = [
+const kTorrentGetFields = [
   "activityDate",
   "addedDate",
   "availability",

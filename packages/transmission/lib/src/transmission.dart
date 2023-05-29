@@ -121,7 +121,7 @@ class Transmission {
     final response = await _send(
       Method.get,
       arguments: {
-        'fields': kTorrentAddFields,
+        'fields': kTorrentGetFields,
         if (ids != null) 'ids': ids,
       },
     );
