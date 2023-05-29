@@ -173,6 +173,7 @@ class Transmission {
       Method.remove,
       arguments: {
         'delete-local-data': deleteLocal,
+        'ids': [id],
       },
     );
 

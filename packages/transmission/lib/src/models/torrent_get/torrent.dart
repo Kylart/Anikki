@@ -52,8 +52,8 @@ class Torrent extends Equatable {
   final PeersFrom? peersFrom;
   final int? peersGettingFromUs;
   final int? peersSendingToUs;
-  final int? percentComplete;
-  final int? percentDone;
+  final double? percentComplete;
+  final double? percentDone;
   final int? pieceCount;
   final int? pieceSize;
   final String? pieces;
@@ -213,8 +213,8 @@ class Torrent extends Equatable {
             : PeersFrom.fromMap(data['peersFrom'] as Map<String, dynamic>),
         peersGettingFromUs: data['peersGettingFromUs'] as int?,
         peersSendingToUs: data['peersSendingToUs'] as int?,
-        percentComplete: data['percentComplete'] as int?,
-        percentDone: data['percentDone'] as int?,
+        percentComplete: data['percentComplete'].toDouble(),
+        percentDone: data['percentDone'].toDouble(),
         pieceCount: data['pieceCount'] as int?,
         pieceSize: data['pieceSize'] as int?,
         pieces: data['pieces'] as String?,
