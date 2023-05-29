@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 
-class TransmissionAppBar extends StatelessWidget {
-  const TransmissionAppBar({super.key});
+class TorrentAppBar extends StatelessWidget {
+  const TorrentAppBar({
+    super.key,
+    required this.type,
+  });
+
+  final TorrentType type;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class TransmissionAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            TorrentType.transmission.title(),
+            type.title(),
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ],

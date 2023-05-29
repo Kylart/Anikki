@@ -1,8 +1,9 @@
+import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/transmission/bloc/transmission_bloc.dart';
-import 'package:anikki/features/transmission/widgets/transmission_app_bar.dart';
+import 'package:anikki/widgets/torrent_app_bar.dart';
 import 'package:anikki/features/transmission/widgets/transmission_torrent_tile.dart';
 import 'package:anikki/layouts/landscape/layout_card.dart';
 
@@ -21,7 +22,9 @@ class TransmissionView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const TransmissionAppBar(),
+                  const TorrentAppBar(
+                    type: TorrentType.transmission,
+                  ),
                   Container(
                     constraints: const BoxConstraints(
                       maxHeight: 300,
