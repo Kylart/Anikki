@@ -59,7 +59,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
                 ],
               ),
               SearchPage(),
-              SettingsPage(),
+              SettingsView(),
             ],
           ),
           floatingActionButton: [
