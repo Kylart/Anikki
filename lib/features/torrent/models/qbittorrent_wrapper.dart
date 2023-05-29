@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:qbittorrent/qbittorrent.dart';
 
 class QBitTorrentWrapper extends Equatable {
   const QBitTorrentWrapper(this.qBitTorrent, this.isAuthorized);
 
-  final Object qBitTorrent;
+  final QBitTorrent qBitTorrent;
   final bool isAuthorized;
 
   @override

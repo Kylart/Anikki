@@ -1,0 +1,65 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:qbittorrent/qbittorrent.dart';
+
+import 'package:anikki/helpers/logger.dart';
+
+part 'qbittorrent_event.dart';
+part 'qbittorrent_state.dart';
+
+class QBitTorrentBloc extends Bloc<QBitTorrentEvent, QBitTorrentState> {
+  Timer? interval;
+
+  final QBitTorrent qBitTorrent;
+
+  QBitTorrentBloc(this.qBitTorrent) : super(QBitTorrentInitial()) {
+    on<QBitTorrentEvent>((event, emit) {
+      if (event is! QBitTorrentDataRequested) {
+        logger.v('QBitTorrent Event: ${event.runtimeType}');
+      }
+    });
+
+    on<QBitTorrentDataRequested>(_onDataRequested);
+    on<QBitTorrentPauseTorrent>(_onPauseTorrent);
+    on<QBitTorrentStartTorrent>(_onStartTorrent);
+    on<QBitTorrentRemoveTorrent>(_onRemoveTorrent);
+
+    interval = Timer.periodic(
+      const Duration(milliseconds: 500),
+      (timer) async {
+        if (!isClosed) add(QBitTorrentDataRequested());
+      },
+    );
+  }
+
+  Future<void> _onDataRequested(
+      QBitTorrentDataRequested event, Emitter<QBitTorrentState> emit) async {
+    final torrents = await qBitTorrent.getTorrents();
+    final loaded = QBitTorrentLoaded(torrents);
+
+    emit(loaded.torrents.isEmpty ? QBitTorrentEmpty() : loaded);
+  }
+
+  Future<void> _onPauseTorrent(
+      QBitTorrentPauseTorrent event, Emitter<QBitTorrentState> emit) async {
+    await qBitTorrent.pauseTorrent(event.hash);
+
+    add(QBitTorrentDataRequested());
+  }
+
+  Future<void> _onStartTorrent(
+      QBitTorrentStartTorrent event, Emitter<QBitTorrentState> emit) async {
+    await qBitTorrent.resumeTorrent(event.hash);
+
+    add(QBitTorrentDataRequested());
+  }
+
+  Future<void> _onRemoveTorrent(
+      QBitTorrentRemoveTorrent event, Emitter<QBitTorrentState> emit) async {
+    await qBitTorrent.deleteTorrent(event.hash, event.removeFile);
+
+    add(QBitTorrentDataRequested());
+  }
+}

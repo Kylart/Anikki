@@ -1,8 +1,8 @@
+import 'package:anikki/features/qbittorrent/view/qbittorrent_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/layouts/landscape/layout_card.dart';
-import 'package:anikki/widgets/error_tile.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
@@ -31,8 +31,8 @@ class TorrentView extends StatelessWidget {
                     wrapper: (state as TorrentLoaded).transmissionWrapper!,
                   );
                 } else {
-                  return const ErrorTile(
-                    title: 'QBitTorrent is not implemented yet',
+                  return QBitTorrentPage(
+                    wrapper: (state as TorrentLoaded).qBitTorrentWrapper!,
                   );
                 }
 
