@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import 'package:anikki/features/settings/widgets/settings_text_field.dart';
+import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/widgets/anikki_icon.dart';
 import 'package:anikki/helpers/capitalize.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+class SettingsView extends StatefulWidget {
+  const SettingsView({Key? key}) : super(key: key);
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<SettingsView> createState() => _SettingsViewState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
     final settingsBloc = BlocProvider.of<SettingsBloc>(context, listen: true);
@@ -68,6 +71,173 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           ),
+        SettingsSection(
+          title: const Text('Torrent Client'),
+          tiles: [
+            SettingsTile(
+              leading: const Icon(Icons.format_paint),
+              title: const Text('Theme'),
+              trailing: DropdownButton(
+                value: settingsBloc.state.settings.torrentType,
+                items: TorrentType.values
+                    .map((type) => DropdownMenuItem(
+                          value: type,
+                          child: Text(type.title()),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  if (value == null) return;
+
+                  settingsBloc.add(
+                    SettingsUpdated(
+                      settingsBloc.state.settings.copyWith(
+                        torrentType: value,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            if (settingsBloc.state.settings.torrentType ==
+                TorrentType.transmission) ...[
+              SettingsTile(
+                key: const Key('transmission-username'),
+                leading: const AnikkiIcon(icon: Icons.account_circle_outlined),
+                title: const Text('Username'),
+                trailing: SettingsTextField(
+                  initialValue:
+                      settingsBloc.state.settings.transmissionSettings.username,
+                  onChanged: (value) {
+                    settingsBloc.add(
+                      SettingsUpdated(
+                        settingsBloc.state.settings.copyWith(
+                          transmissionSettings: settingsBloc
+                              .state.settings.transmissionSettings
+                              .copyWith(
+                            username: value,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              SettingsTile(
+                key: const Key('transmission-password'),
+                leading: const AnikkiIcon(icon: Icons.password),
+                title: const Text('Password'),
+                trailing: SettingsTextField(
+                  initialValue:
+                      settingsBloc.state.settings.transmissionSettings.password,
+                  obscureText: true,
+                  onChanged: (value) {
+                    settingsBloc.add(
+                      SettingsUpdated(
+                        settingsBloc.state.settings.copyWith(
+                          transmissionSettings: settingsBloc
+                              .state.settings.transmissionSettings
+                              .copyWith(
+                            password: value,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              /// Login
+              SettingsTile(
+                key: const Key('transmission-login'),
+                trailing: const AnikkiIcon(icon: Icons.login),
+                title: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    'Login',
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+                onPressed: (context) async {
+                  BlocProvider.of<TorrentBloc>(context).add(
+                    const TorrentClientRequested(
+                      TorrentType.transmission,
+                    ),
+                  );
+                },
+              ),
+            ],
+            if (settingsBloc.state.settings.torrentType ==
+                TorrentType.qbittorrent) ...[
+              SettingsTile(
+                key: const Key('qbittorent-username'),
+                leading: const AnikkiIcon(icon: Icons.account_circle_outlined),
+                title: const Text('Username'),
+                trailing: SettingsTextField(
+                  initialValue:
+                      settingsBloc.state.settings.qBitTorrentSettings.username,
+                  onChanged: (value) {
+                    settingsBloc.add(
+                      SettingsUpdated(
+                        settingsBloc.state.settings.copyWith(
+                          qBitTorrentSettings: settingsBloc
+                              .state.settings.qBitTorrentSettings
+                              .copyWith(
+                            username: value,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              SettingsTile(
+                key: const Key('qbittorent-password'),
+                leading: const AnikkiIcon(icon: Icons.password),
+                title: const Text('Password'),
+                trailing: SettingsTextField(
+                  initialValue:
+                      settingsBloc.state.settings.qBitTorrentSettings.password,
+                  obscureText: true,
+                  onChanged: (value) {
+                    settingsBloc.add(
+                      SettingsUpdated(
+                        settingsBloc.state.settings.copyWith(
+                          qBitTorrentSettings: settingsBloc
+                              .state.settings.qBitTorrentSettings
+                              .copyWith(
+                            password: value,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              /// Login
+              SettingsTile(
+                key: const Key('qbittorent-login'),
+                trailing: const AnikkiIcon(icon: Icons.login),
+                title: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    'Login',
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+                onPressed: (context) async {
+                  BlocProvider.of<TorrentBloc>(context).add(
+                    const TorrentClientRequested(
+                      TorrentType.qbittorrent,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ],
+        ),
       ],
     );
   }

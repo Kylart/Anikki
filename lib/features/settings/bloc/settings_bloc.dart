@@ -1,10 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
+import 'package:anikki/features/settings/models/qbittorrent_settings.dart';
+import 'package:anikki/features/settings/models/transmission_settings.dart';
+import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:anikki/helpers/logger.dart';
 import 'package:anikki/features/settings/models/settings.dart';
-import 'package:path_provider/path_provider.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
@@ -18,6 +21,9 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
               newsLayout: NewsLayouts.list,
               userListLayouts: UserListLayouts.grid,
               theme: ThemeMode.system,
+              torrentType: TorrentType.none,
+              transmissionSettings: TransmissionSettings(),
+              qBitTorrentSettings: QBitTorrentSettings(),
             ),
           ),
         ) {

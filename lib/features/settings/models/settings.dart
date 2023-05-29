@@ -1,8 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+
+import 'package:anikki/features/settings/models/qbittorrent_settings.dart';
+import 'package:anikki/features/torrent/helpers/torrent_type.dart';
+import 'package:anikki/features/settings/models/transmission_settings.dart';
 
 enum NewsLayouts {
   grid,
@@ -20,11 +23,18 @@ class Settings extends Equatable {
   final UserListLayouts userListLayouts;
   final ThemeMode theme;
 
+  final TorrentType torrentType;
+  final TransmissionSettings transmissionSettings;
+  final QBitTorrentSettings qBitTorrentSettings;
+
   const Settings({
     required this.localDirectory,
     required this.newsLayout,
     required this.userListLayouts,
     required this.theme,
+    required this.torrentType,
+    required this.transmissionSettings,
+    required this.qBitTorrentSettings,
   });
 
   Settings copyWith({
@@ -32,12 +42,18 @@ class Settings extends Equatable {
     NewsLayouts? newsLayout,
     UserListLayouts? userListLayouts,
     ThemeMode? theme,
+    TorrentType? torrentType,
+    TransmissionSettings? transmissionSettings,
+    QBitTorrentSettings? qBitTorrentSettings,
   }) {
     return Settings(
       localDirectory: localDirectory ?? this.localDirectory,
       newsLayout: newsLayout ?? this.newsLayout,
       userListLayouts: userListLayouts ?? this.userListLayouts,
       theme: theme ?? this.theme,
+      torrentType: torrentType ?? this.torrentType,
+      transmissionSettings: transmissionSettings ?? this.transmissionSettings,
+      qBitTorrentSettings: qBitTorrentSettings ?? this.qBitTorrentSettings,
     );
   }
 
@@ -45,8 +61,17 @@ class Settings extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props =>
-      [localDirectory, newsLayout, userListLayouts, theme];
+  List<Object> get props {
+    return [
+      localDirectory,
+      newsLayout,
+      userListLayouts,
+      theme,
+      torrentType,
+      transmissionSettings,
+      qBitTorrentSettings,
+    ];
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -54,6 +79,9 @@ class Settings extends Equatable {
       'newsLayout': newsLayout.name,
       'userListLayouts': userListLayouts.name,
       'theme': theme.name,
+      'torrentType': torrentType.name,
+      'transmissionSettings': transmissionSettings.toMap(),
+      'qBitTorrentSettings': qBitTorrentSettings.toMap(),
     };
   }
 
@@ -66,6 +94,12 @@ class Settings extends Equatable {
           .where((e) => e.name == map['userListLayouts'])
           .first,
       theme: ThemeMode.values.where((e) => e.name == map['theme']).first,
+      torrentType:
+          TorrentType.values.where((e) => e.name == map['torrentType']).first,
+      transmissionSettings: TransmissionSettings.fromMap(
+          map['transmissionSettings'] as Map<String, dynamic>),
+      qBitTorrentSettings: QBitTorrentSettings.fromMap(
+          map['qBitTorrentSettings'] as Map<String, dynamic>),
     );
   }
 

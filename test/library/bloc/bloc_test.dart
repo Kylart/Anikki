@@ -1,12 +1,15 @@
 import 'dart:io';
 
-import 'package:anikki/features/settings/models/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
+import 'package:anikki/features/settings/models/qbittorrent_settings.dart';
+import 'package:anikki/features/settings/models/settings.dart';
+import 'package:anikki/features/settings/models/transmission_settings.dart';
+import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
@@ -57,6 +60,9 @@ void main() {
     newsLayout: NewsLayouts.list,
     userListLayouts: UserListLayouts.grid,
     theme: ThemeMode.system,
+    torrentType: TorrentType.none,
+    transmissionSettings: TransmissionSettings(),
+    qBitTorrentSettings: QBitTorrentSettings(),
   );
 
   group('unit test: Library Bloc', () {
