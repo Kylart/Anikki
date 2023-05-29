@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/features/torrent/torrent.dart';
 import 'package:anikki/layouts/landscape/custom_app_bar.dart';
 import 'package:anikki/layouts/landscape/layout_card.dart';
 import 'package:anikki/layouts/landscape/user_list.dart';
@@ -31,10 +32,17 @@ class LandscapeLayout extends StatelessWidget {
                 ),
                 Flexible(
                   flex: 1,
-                  child: LayoutCard(
-                    child: NewsPage(
-                      showOutline: true,
-                    ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: LayoutCard(
+                          child: NewsPage(
+                            showOutline: true,
+                          ),
+                        ),
+                      ),
+                      TorrentView(),
+                    ],
                   ),
                 ),
               ],
