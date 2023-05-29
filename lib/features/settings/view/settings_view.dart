@@ -76,7 +76,7 @@ class _SettingsViewState extends State<SettingsView> {
           tiles: [
             SettingsTile(
               leading: const Icon(Icons.format_paint),
-              title: const Text('Theme'),
+              title: const Text('Torrent Client type'),
               trailing: DropdownButton(
                 value: settingsBloc.state.settings.torrentType,
                 items: TorrentType.values
@@ -94,6 +94,10 @@ class _SettingsViewState extends State<SettingsView> {
                         torrentType: value,
                       ),
                     ),
+                  );
+
+                  BlocProvider.of<TorrentBloc>(context).add(
+                    TorrentClientRequested(value),
                   );
                 },
               ),
@@ -208,6 +212,31 @@ class _SettingsViewState extends State<SettingsView> {
                               .state.settings.qBitTorrentSettings
                               .copyWith(
                             password: value,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              SettingsTile(
+                key: const Key('qbittorent-port'),
+                leading: const AnikkiIcon(icon: Icons.numbers),
+                title: const Text('Port'),
+                trailing: SettingsTextField(
+                  isNumber: true,
+                  initialValue: settingsBloc
+                      .state.settings.qBitTorrentSettings.port
+                      .toString(),
+                  onChanged: (value) {
+                    settingsBloc.add(
+                      SettingsUpdated(
+                        settingsBloc.state.settings.copyWith(
+                          qBitTorrentSettings: settingsBloc
+                              .state.settings.qBitTorrentSettings
+                              .copyWith(
+                            port: int.tryParse(value),
                           ),
                         ),
                       ),

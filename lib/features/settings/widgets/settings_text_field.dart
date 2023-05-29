@@ -5,11 +5,13 @@ class SettingsTextField extends StatefulWidget {
     super.key,
     required this.onChanged,
     this.obscureText = false,
+    this.isNumber = false,
     this.initialValue,
   });
 
   final void Function(String value) onChanged;
   final bool obscureText;
+  final bool isNumber;
   final String? initialValue;
 
   @override
@@ -33,6 +35,7 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
     return SizedBox(
       width: 200,
       child: TextFormField(
+        keyboardType: widget.isNumber ? TextInputType.number : null,
         controller: controller,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 12.0),

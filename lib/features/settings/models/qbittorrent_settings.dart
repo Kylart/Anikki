@@ -10,7 +10,7 @@ class QBitTorrentSettings extends Equatable {
   final String? password;
 
   const QBitTorrentSettings({
-    this.port = 9091,
+    this.port = 8080,
     this.scheme = 'http',
     this.host = '127.0.0.1',
     this.username,
