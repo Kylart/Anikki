@@ -16,7 +16,9 @@ class TransmissionBloc extends Bloc<TransmissionEvent, TransmissionState> {
 
   TransmissionBloc(this.transmission) : super(TransmissionInitial()) {
     on<TransmissionEvent>((event, emit) {
-      logger.v('Transmission Event: ${event.runtimeType}');
+      if (event is! TransmissionDataRequested) {
+        logger.v('Transmission Event: ${event.runtimeType}');
+      }
     });
 
     on<TransmissionDataRequested>(_onDataRequested);
