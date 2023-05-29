@@ -54,6 +54,8 @@ dependencies:
     path: packages/anitomy
   transmission:
     path: packages/transmission
+  qbittorrent:
+    path: packages/qbittorrent
   wakelock: ^0.6.2
   flutter_platform_widgets: ^3.3.4
   empty_widget: ^0.0.5
