@@ -26,15 +26,21 @@ class TorrentView extends StatelessWidget {
                 return const CircularProgressIndicator();
 
               case TorrentLoaded:
-                if (torrentType == TorrentType.transmission) {
+                final currentState = state as TorrentLoaded;
+
+                if (torrentType == TorrentType.transmission &&
+                    currentState.transmissionWrapper != null) {
                   return TransmissionPage(
-                    wrapper: (state as TorrentLoaded).transmissionWrapper!,
+                    wrapper: currentState.transmissionWrapper!,
                   );
-                } else {
+                } else if (torrentType == TorrentType.qbittorrent &&
+                    currentState.qBitTorrentWrapper != null) {
                   return QBitTorrentPage(
-                    wrapper: (state as TorrentLoaded).qBitTorrentWrapper!,
+                    wrapper: currentState.qBitTorrentWrapper!,
                   );
                 }
+
+                return const SizedBox();
 
               case TorrentNotFound:
                 return LayoutCard(
