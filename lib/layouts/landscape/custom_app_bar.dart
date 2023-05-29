@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/settings/settings.dart';
+import 'package:anikki/widgets/fade_overlay.dart';
 import 'package:anikki/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anikki/features/search/search.dart';
 
@@ -16,7 +18,7 @@ class CustomAppBar extends StatefulWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    void onTap() {
+    void showSearch() {
       showDialog(
         context: context,
         builder: (context) {
@@ -27,6 +29,21 @@ class _CustomAppBarState extends State<CustomAppBar> {
             child: SearchPage(),
           );
         },
+      );
+    }
+
+    void showSettings() {
+      Navigator.of(context).push(
+        FadeOverlay(
+          child: Column(
+            children: [
+              AppBar(
+                title: const Text('Settings'),
+              ),
+              const Expanded(child: SettingsView()),
+            ],
+          ),
+        ),
       );
     }
 
@@ -50,14 +67,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: IconButton.filledTonal(
-              onPressed: onTap,
+              onPressed: showSearch,
               icon: const Icon(Icons.search),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: IconButton.filledTonal(
-              onPressed: () {},
+              onPressed: showSettings,
               icon: const Icon(Icons.settings),
             ),
           ),
