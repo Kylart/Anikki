@@ -165,7 +165,9 @@ class Torrent extends Equatable {
   factory Torrent.fromMap(Map<String, dynamic> data) => Torrent(
         activityDate: data['activityDate'] as int?,
         addedDate: data['addedDate'] as int?,
-        availability: data['availability'] == null ? null : List<int>.from(data['availability']),
+        availability: data['availability'] == null
+            ? null
+            : List<int>.from(data['availability']),
         bandwidthPriority: data['bandwidthPriority'] as int?,
         comment: data['comment'] as String?,
         corruptEver: data['corruptEver'] as int?,
@@ -219,7 +221,9 @@ class Torrent extends Equatable {
         pieceSize: data['pieceSize'] as int?,
         pieces: data['pieces'] as String?,
         primaryMimeType: data['primary-mime-type'] as String?,
-        priorities: data['priorities'] == null ? null : List<int>.from(data['priorities']),
+        priorities: data['priorities'] == null
+            ? null
+            : List<int>.from(data['priorities']),
         queuePosition: data['queuePosition'] as int?,
         rateDownload: data['rateDownload'] as int?,
         rateUpload: data['rateUpload'] as int?,
