@@ -28,10 +28,11 @@ class TransmissionStartTorrent extends TransmissionEvent {
 }
 
 class TransmissionRemoveTorrent extends TransmissionEvent {
-  const TransmissionRemoveTorrent(this.id);
+  const TransmissionRemoveTorrent(this.id, [this.removeFile = false]);
 
   final int id;
+  final bool removeFile;
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [id, removeFile];
 }

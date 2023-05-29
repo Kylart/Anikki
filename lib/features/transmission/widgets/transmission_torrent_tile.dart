@@ -75,7 +75,10 @@ class TransmissionTorrentTile extends StatelessWidget {
             iconSize: 20.0,
             onPressed: () {
               bloc.add(
-                TransmissionRemoveTorrent(torrent.id ?? 0),
+                TransmissionRemoveTorrent(
+                  torrent.id ?? 0,
+                  progress != 1.0,
+                ),
               );
             },
             icon: const Icon(Icons.close),

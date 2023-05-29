@@ -53,7 +53,7 @@ class TransmissionBloc extends Bloc<TransmissionEvent, TransmissionState> {
 
   Future<void> _onRemoveTorrent(
       TransmissionRemoveTorrent event, Emitter<TransmissionState> emit) async {
-    await transmission.removeTorrent(event.id);
+    await transmission.removeTorrent(event.id, event.removeFile);
 
     add(TransmissionDataRequested());
   }
