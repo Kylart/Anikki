@@ -65,7 +65,7 @@ class TransmissionTorrentTile extends StatelessWidget {
                   TransmissionPauseTorrent(torrent.id ?? 0),
                 );
               },
-              icon: const Icon(Icons.pause_circle_outline),
+              icon: const Icon(Icons.pause),
             ),
           const SizedBox(
             width: 4.0,
