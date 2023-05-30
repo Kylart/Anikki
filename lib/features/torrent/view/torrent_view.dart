@@ -8,8 +8,15 @@ import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:anikki/features/transmission/view/transmission_page.dart';
 
-class TorrentView extends StatelessWidget {
+class TorrentView extends StatefulWidget {
   const TorrentView({super.key});
+
+  @override
+  State<TorrentView> createState() => _TorrentViewState();
+}
+
+class _TorrentViewState extends State<TorrentView> {
+  bool dismissed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +29,6 @@ class TorrentView extends StatelessWidget {
         return BlocBuilder<TorrentBloc, TorrentState>(
           builder: (context, state) {
             switch (state.runtimeType) {
-              case TorrentLoading:
-                return const CircularProgressIndicator();
-
               case TorrentLoaded:
                 final currentState = state as TorrentLoaded;
 
@@ -42,7 +46,10 @@ class TorrentView extends StatelessWidget {
 
                 return const SizedBox();
 
+              case TorrentLoading:
               case TorrentNotFound:
+                if (dismissed) return const SizedBox();
+
                 return LayoutCard(
                   child: ListTile(
                     dense: true,
@@ -50,6 +57,12 @@ class TorrentView extends StatelessWidget {
                         Text('Could not find ${torrentType.title()} instance'),
                     subtitle: Text(
                       'Are you sure your ${torrentType.title()} is running and accepting connections?',
+                    ),
+                    trailing: IconButton(
+                      onPressed: () => setState(() {
+                        dismissed = true;
+                      }),
+                      icon: const Icon(Icons.close),
                     ),
                   ),
                 );

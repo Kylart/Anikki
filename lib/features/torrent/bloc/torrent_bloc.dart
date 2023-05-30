@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -26,14 +27,14 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
 
     on<TorrentClientRequested>(_onClientRequested);
 
-    // interval = Timer.periodic(
-    //   const Duration(seconds: 1),
-    //   (timer) {
-    //     add(
-    //       TorrentClientRequested(settingsBloc.state.settings.torrentType),
-    //     );
-    //   },
-    // );
+    interval = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        add(
+          TorrentClientRequested(settingsBloc.state.settings.torrentType),
+        );
+      },
+    );
   }
 
   Future<void> _onClientRequested(
@@ -58,7 +59,14 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
         break;
     }
 
-    if (state is TorrentLoaded) interval?.cancel();
+    if (state is TorrentLoaded) {
+      interval?.cancel();
+    } else {
+      emit(TorrentNotFound(
+        transmissionWrapper: state.transmissionWrapper,
+        qBitTorrentWrapper: state.qBitTorrentWrapper,
+      ));
+    }
   }
 
   Future<void> _searchForTransmission(Emitter<TorrentState> emit) async {
@@ -94,6 +102,13 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
           qBitTorrentWrapper: state.qBitTorrentWrapper,
         ),
       );
+    } on SocketException {
+      emit(
+        TorrentNotFound(
+          transmissionWrapper: state.transmissionWrapper,
+          qBitTorrentWrapper: state.qBitTorrentWrapper,
+        ),
+      );
     }
   }
 
@@ -123,6 +138,13 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
         qBitTorrentWrapper: QBitTorrentWrapper(qBitTorrent, false),
       ));
     } on qbit.ConnectionRefusedError {
+      emit(
+        TorrentNotFound(
+          transmissionWrapper: state.transmissionWrapper,
+          qBitTorrentWrapper: state.qBitTorrentWrapper,
+        ),
+      );
+    } on SocketException {
       emit(
         TorrentNotFound(
           transmissionWrapper: state.transmissionWrapper,

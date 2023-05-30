@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:qbittorrent/qbittorrent.dart';
@@ -13,8 +15,10 @@ class QBitTorrentBloc extends Bloc<QBitTorrentEvent, QBitTorrentState> {
   Timer? interval;
 
   final QBitTorrent qBitTorrent;
+  final TorrentBloc torrentBloc;
 
-  QBitTorrentBloc(this.qBitTorrent) : super(QBitTorrentInitial()) {
+  QBitTorrentBloc(this.qBitTorrent, this.torrentBloc)
+      : super(QBitTorrentInitial()) {
     on<QBitTorrentEvent>((event, emit) {
       if (event is! QBitTorrentDataRequested) {
         logger.v('QBitTorrent Event: ${event.runtimeType}');
@@ -36,10 +40,14 @@ class QBitTorrentBloc extends Bloc<QBitTorrentEvent, QBitTorrentState> {
 
   Future<void> _onDataRequested(
       QBitTorrentDataRequested event, Emitter<QBitTorrentState> emit) async {
-    final torrents = await qBitTorrent.getTorrents();
-    final loaded = QBitTorrentLoaded(torrents);
+    try {
+      final torrents = await qBitTorrent.getTorrents();
+      final loaded = QBitTorrentLoaded(torrents);
 
-    emit(loaded.torrents.isEmpty ? QBitTorrentEmpty() : loaded);
+      emit(loaded.torrents.isEmpty ? QBitTorrentEmpty() : loaded);
+    } catch (e) {
+      torrentBloc.add(const TorrentClientRequested(TorrentType.qbittorrent));
+    }
   }
 
   Future<void> _onPauseTorrent(

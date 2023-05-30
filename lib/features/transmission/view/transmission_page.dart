@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/models/transmission_wrapper.dart';
 import 'package:anikki/features/transmission/bloc/transmission_bloc.dart';
 import 'package:anikki/features/transmission/view/transmission_view.dart';
@@ -24,7 +25,8 @@ class TransmissionPage extends StatelessWidget {
     }
 
     return BlocProvider(
-      create: (context) => TransmissionBloc(wrapper.transmission),
+      create: (context) => TransmissionBloc(
+          wrapper.transmission, BlocProvider.of<TorrentBloc>(context)),
       child: const TransmissionView(),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +25,10 @@ class QBitTorrentPage extends StatelessWidget {
     }
 
     return BlocProvider(
-      create: (context) => QBitTorrentBloc(wrapper.qBitTorrent),
+      create: (context) => QBitTorrentBloc(
+        wrapper.qBitTorrent,
+        BlocProvider.of<TorrentBloc>(context),
+      ),
       child: const QBitTorrentView(),
     );
   }
