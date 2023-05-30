@@ -126,15 +126,19 @@ class QBitTorrent {
           }
         : {};
 
-    final response = await _post(
-      ApiName.auth,
-      AuthMethod.login.name,
-      arguments,
-    );
+    try {
+      final response = await _post(
+        ApiName.auth,
+        AuthMethod.login.name,
+        arguments,
+      );
 
-    if (response.headers['set-cookie'] != null) {
-      _cookie = response.headers['set-cookie']!;
-    } else {
+      if (response.headers['set-cookie'] != null) {
+        _cookie = response.headers['set-cookie']!;
+      } else {
+        throw UnauthorizedError();
+      }
+    } on HttpException {
       throw UnauthorizedError();
     }
   }

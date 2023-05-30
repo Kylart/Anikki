@@ -85,6 +85,8 @@ class Transmission {
       }
     } on http.ClientException {
       throw ConnectionRefusedError();
+    } on HttpException {
+      throw ConnectionRefusedError();
     }
   }
 
