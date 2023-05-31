@@ -5,20 +5,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:qbittorrent/src/errors/errors.dart';
 import 'package:qbittorrent/src/errors/user_is_banned_error.dart';
+import 'package:qbittorrent/src/models/methods.dart';
 import 'package:qbittorrent/src/models/torrent.dart';
-
-enum AuthMethod { login }
-
-enum TorrentsMethod {
-  info,
-  pause,
-  resume,
-  delete,
-  add,
-
-  toggleSequentialDownload,
-  toggleFirstLastPiecePrio,
-}
 
 enum ApiName {
   auth,
@@ -111,7 +99,7 @@ class QBitTorrent {
       request.fields[key] = arguments[key]!;
     }
 
-    final response = await request.send();
+    final response = await _client.send(request);
 
     _handleStatusCode(response.statusCode);
 
