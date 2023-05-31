@@ -90,6 +90,7 @@ dependencies:
   file_picker: ^5.2.9
   window_manager: ^0.3.4
   intl: ^0.18.1
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:

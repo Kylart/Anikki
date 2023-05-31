@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -105,8 +106,9 @@ class EntryCardOverlayMedia extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               ListTile(
-                                title: Text(
+                                title: AutoSizeText(
                                   title,
+                                  maxLines: 2,
                                   textAlign: TextAlign.center,
                                 ),
                                 subtitle: Text(
