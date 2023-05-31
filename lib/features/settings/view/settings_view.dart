@@ -75,7 +75,7 @@ class _SettingsViewState extends State<SettingsView> {
           title: const Text('Torrent Client'),
           tiles: [
             SettingsTile(
-              leading: const Icon(Icons.format_paint),
+              leading: const Icon(Icons.home_repair_service_outlined),
               title: const Text('Torrent Client type'),
               trailing: DropdownButton(
                 value: settingsBloc.state.settings.torrentType,
