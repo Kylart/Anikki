@@ -27,14 +27,7 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
 
     on<TorrentClientRequested>(_onClientRequested);
 
-    interval = Timer.periodic(
-      const Duration(seconds: 1),
-      (timer) {
-        add(
-          TorrentClientRequested(settingsBloc.state.settings.torrentType),
-        );
-      },
-    );
+    _setUpInterval();
   }
 
   Future<void> _onClientRequested(
@@ -61,12 +54,28 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
 
     if (state is TorrentLoaded) {
       interval?.cancel();
+      interval = null;
     } else {
+      if (interval == null) {
+        _setUpInterval();
+      }
+
       emit(TorrentNotFound(
         transmissionWrapper: state.transmissionWrapper,
         qBitTorrentWrapper: state.qBitTorrentWrapper,
       ));
     }
+  }
+
+  void _setUpInterval() {
+    interval = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        add(
+          TorrentClientRequested(settingsBloc.state.settings.torrentType),
+        );
+      },
+    );
   }
 
   Future<void> _searchForTransmission(Emitter<TorrentState> emit) async {
