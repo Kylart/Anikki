@@ -27,7 +27,9 @@ Future<void> updateEntry(
       await anilist.watchedEntry(
         episode: episode,
         mediaId: entry.media!.id,
-        status: episode == 1 ? Enum$MediaListStatus.CURRENT : null,
+        status: episode == 1 && entry.media?.episodes != 1
+            ? Enum$MediaListStatus.CURRENT
+            : null,
       );
 
       scaffold.showSnackBar(
