@@ -28,8 +28,7 @@ class PlayerWidget extends StatefulWidget {
 }
 
 class _PlayerWidgetState extends State<PlayerWidget> {
-  // Reference to the [VideoController] instance from `package:media_kit_video`.
-  VideoController? controller;
+  late final VideoController controller;
 
   @override
   void initState() {
@@ -38,9 +37,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     Wakelock.enable();
 
     Future.microtask(() async {
-      // Create a [VideoController] instance from `package:media_kit_video`.
-      // Pass the [handle] of the [Player] from `package:media_kit` to the [VideoController] constructor.
-      controller = await VideoController.create(widget.player);
+      controller = VideoController(widget.player);
       // Must be created before opening any media. Otherwise, a separate window will be created.
       setState(() {});
 
@@ -69,8 +66,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     widget.onVideoComplete(playlist.medias.elementAt(playlist.index));
 
     Future.microtask(() async {
-      // Release allocated replaylists back to the system.
-      await controller?.dispose();
       await widget.player.dispose();
     });
 

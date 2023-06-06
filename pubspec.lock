@@ -529,18 +529,18 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit
-      sha256: "47292aae58bb0b118b7097d3aba1db86807b5ea8ecf056f1a2493663b801ff29"
+      sha256: "080cfb5af8d04f8cc454cb4c5ea34b19de5b8e1a1b3af62a34e766364b5244ad"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.6"
+    version: "0.0.11"
   media_kit_libs_android_video:
     dependency: "direct main"
     description:
       name: media_kit_libs_android_video
-      sha256: "25bf160a477628e5c39ee7c73978ba03a910e0a9d9500d2f4454346d2aef246d"
+      sha256: daeaeb254aee1089fa77f11cbeb0864a1238cbd0cb2a1c5ab9b2a2e66cc5ff42
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.6"
   media_kit_libs_ios_video:
     dependency: "direct main"
     description:
@@ -561,10 +561,10 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit_libs_macos_video
-      sha256: ab1cbdf51400e30a9087bd7d6e10c6130d17296e76313fedd0ef0c57dae8c0f4
+      sha256: c4d3706af5a67bf194d8208eef5cf29ea79e64931ea9bcd50f665b9a438f8416
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   media_kit_libs_windows_video:
     dependency: "direct main"
     description:
@@ -577,18 +577,18 @@ packages:
     dependency: "direct main"
     description:
       name: media_kit_native_event_loop
-      sha256: ed87140ad4b64156b2b470c8105f48d8cad7923c952ca05d23e02d28978d2cb3
+      sha256: "521125e534603c3f603b93283db3938f557f33ecc383fbd62edd4beb3bf73747"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   media_kit_video:
     dependency: "direct main"
     description:
       name: media_kit_video
-      sha256: c6db00eded195c1a8d91fc39d74f706f4db125ba03f0fe4bc9b33d46c6d133cc
+      sha256: "89d3c2cdb0f74d1bb597a9c9a7678f656fe538d20620ad1317b7354fd5d1af15"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.8"
+    version: "0.0.12"
   meta:
     dependency: transitive
     description:
