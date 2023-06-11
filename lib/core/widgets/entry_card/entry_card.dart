@@ -4,7 +4,7 @@ import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import 'package:anikki/features/entry_card_overlay/helpers/show_overlay.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/helpers/show_overlay.dart';
 import 'package:anikki/core/models/library_entry.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';
 

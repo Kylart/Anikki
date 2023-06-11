@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_icons/simple_icons.dart';
 
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
-import 'package:anikki/features/entry_card_overlay/helpers/overlay_action.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/helpers/overlay_action.dart';
 import 'package:anikki/core/helpers/open_in_browser.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 

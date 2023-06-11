@@ -2,7 +2,7 @@ import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/entry_card_overlay/helpers/show_overlay.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/helpers/show_overlay.dart';
 import 'package:anikki/core/models/library_entry.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 

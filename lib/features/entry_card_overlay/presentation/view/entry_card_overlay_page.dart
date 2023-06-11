@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
-import 'package:anikki/features/entry_card_overlay/view/entry_card_overlay_view.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/view/entry_card_overlay_view.dart';
 
 class EntryCardOverlayPage extends StatelessWidget {
   const EntryCardOverlayPage({
