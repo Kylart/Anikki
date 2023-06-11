@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/news/bloc/news_bloc.dart';
-import 'package:anikki/features/news/widgets/news_app_bar.dart';
-import 'package:anikki/features/news/view/news_layout.dart';
+import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
+import 'package:anikki/features/news/presentation/widgets/news_app_bar.dart';
+import 'package:anikki/features/news/presentation/view/news_layout.dart';
 import 'package:anikki/core/widgets/error_tile.dart';
 import 'package:anikki/core/widgets/loader.dart';
 

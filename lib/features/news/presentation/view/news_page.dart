@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/news/view/news_view.dart';
+import 'package:anikki/features/news/presentation/view/news_view.dart';
 
 class NewsPage extends StatelessWidget {
   const NewsPage({super.key, required this.showOutline});

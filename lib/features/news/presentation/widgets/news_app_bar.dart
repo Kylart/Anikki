@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/news/helpers/news_options_actions.dart';
-import 'package:anikki/features/news/bloc/news_bloc.dart';
+import 'package:anikki/features/news/presentation/helpers/news_options_actions.dart';
+import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
 import 'package:anikki/core/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
-import 'package:anikki/features/news/widgets/news_layout_toggle.dart';
+import 'package:anikki/features/news/presentation/widgets/news_layout_toggle.dart';
 import 'package:anikki/core/widgets/anikki_action_button.dart';
 
 class NewsAppBar extends StatelessWidget {
