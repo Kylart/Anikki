@@ -1,7 +1,7 @@
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/features/news/domain/domain.dart';
 import 'package:anikki/features/news/presentation/widgets/news_tile.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/models/settings.dart';
@@ -12,7 +12,7 @@ import 'package:anikki/core/widgets/grid_view/custom_grid_view.dart';
 class NewsLayout extends StatelessWidget {
   const NewsLayout({super.key, required this.entries});
 
-  final List<Query$AiringSchedule$Page$airingSchedules> entries;
+  final List<NewsEntry> entries;
 
   @override
   Widget build(BuildContext context) {

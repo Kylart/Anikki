@@ -79,7 +79,7 @@ class AnikkiBlocProvider extends StatelessWidget {
                 final watchListBloc = BlocProvider.of<WatchListBloc>(context);
 
                 return NewsBloc(
-                  repository: anilist,
+                  anilist: anilist,
                   settingsBloc: settingsBloc,
                   watchListBloc: watchListBloc,
                 )..add(

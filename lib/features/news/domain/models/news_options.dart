@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:equatable/equatable.dart';
+part of 'models.dart';
 
 class NewsOptions extends Equatable {
   const NewsOptions({

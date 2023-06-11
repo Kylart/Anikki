@@ -30,8 +30,8 @@ class NewsComplete extends NewsState {
     this.filteredEntries,
   });
 
-  final List<Query$AiringSchedule$Page$airingSchedules> entries;
-  final List<Query$AiringSchedule$Page$airingSchedules>? filteredEntries;
+  final List<NewsEntry> entries;
+  final List<NewsEntry>? filteredEntries;
 
   @override
   List<Object> get props => [range, entries, options];

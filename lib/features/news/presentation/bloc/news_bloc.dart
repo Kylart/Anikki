@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/news/domain/usescases/usecases.dart';
-import 'package:anikki/features/news/domain/models/models.dart';
+import 'package:anikki/features/news/domain/domain.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/helpers/logger.dart';
@@ -22,21 +21,23 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         .copyWith(hour: 23, minute: 59, second: 59),
   );
 
-  final Anilist repository;
   final SettingsBloc settingsBloc;
   final WatchListBloc watchListBloc;
+  late final NewsRepository repository;
 
   bool get isWatchListLoaded => watchListBloc.state is WatchListComplete;
   WatchListComplete? get watchList =>
       isWatchListLoaded ? watchListBloc.state as WatchListComplete : null;
 
   NewsBloc({
-    required this.repository,
+    required Anilist anilist,
     required this.settingsBloc,
     required this.watchListBloc,
   }) : super(
           NewsEmpty(range: initalDateRange),
         ) {
+    repository = NewsRepository(anilist);
+
     on<NewsEvent>((event, emit) {
       logger.v('News event: ${event.runtimeType}');
     });
