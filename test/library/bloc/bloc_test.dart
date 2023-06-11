@@ -1,21 +1,18 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
-import 'package:anikki/features/settings/models/qbittorrent_settings.dart';
-import 'package:anikki/features/settings/models/settings.dart';
-import 'package:anikki/features/settings/models/transmission_settings.dart';
-import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/models/library_entry.dart';
 import 'package:anikki/models/local_file.dart';
 
+import '../../fixtures/path.dart';
+import '../../fixtures/settings.dart';
 import '../../helpers/init_hive.dart';
 import '../../helpers/init_hydrated_storage.dart';
 
@@ -32,7 +29,6 @@ void main() {
   /// Shuts off logging except for errors
   Logger.level = Level.error;
 
-  const path = 'test/resources/movies';
   const emptyPath = '$path/empty';
   const noPath = 'no/path';
   const toAddPath =
@@ -54,16 +50,6 @@ void main() {
         path:
             '$path/nested/[SubsPlease] NieR Automata Ver1 - 02 (1080p) [CC00E892].mkv'),
   ];
-
-  const settings = Settings(
-    localDirectory: path,
-    newsLayout: NewsLayouts.list,
-    userListLayouts: UserListLayouts.grid,
-    theme: ThemeMode.system,
-    torrentType: TorrentType.none,
-    transmissionSettings: TransmissionSettings(),
-    qBitTorrentSettings: QBitTorrentSettings(),
-  );
 
   group('unit test: Library Bloc', () {
     late LibraryBloc bloc;
