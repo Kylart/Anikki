@@ -6,7 +6,7 @@ import 'package:anikki/core/models/library_entry.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/models/settings.dart';
 import 'package:anikki/core/widgets/entry/entry_tile.dart';
-import 'package:anikki/features/library/widgets/library_card.dart';
+import 'package:anikki/features/library/presentation/widgets/library_card.dart';
 import 'package:anikki/core/widgets/list_view/custom_list_view.dart';
 import 'package:anikki/core/widgets/grid_view/custom_grid_view.dart';
 import 'package:anikki/features/user_list/user_list_grid_delegate.dart';

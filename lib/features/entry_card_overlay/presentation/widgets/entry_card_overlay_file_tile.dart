@@ -1,3 +1,4 @@
+import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart';
@@ -5,7 +6,6 @@ import 'package:path/path.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/helpers/overlay_action.dart';
-import 'package:anikki/features/library/repository/repository.dart';
 
 class EntryCardOverlayFileTile extends StatelessWidget {
   const EntryCardOverlayFileTile({
@@ -28,7 +28,12 @@ class EntryCardOverlayFileTile extends StatelessWidget {
       leading: IconButton(
         onPressed: () {
           overlayAction(
-            () => deleteFile(file, context),
+            () => BlocProvider.of<LibraryBloc>(context).add(
+              LibraryFileDeleteRequested(
+                file: file,
+                context: context,
+              ),
+            ),
             context,
           );
         },
@@ -51,7 +56,14 @@ class EntryCardOverlayFileTile extends StatelessWidget {
                       .currentContext;
 
               overlayAction(
-                () => ctx == null ? null : playFile(file, ctx),
+                () => ctx == null
+                    ? null
+                    : BlocProvider.of<LibraryBloc>(context).add(
+                        LibraryFilePlayRequested(
+                          file: file,
+                          context: ctx,
+                        ),
+                      ),
                 context,
               );
             },

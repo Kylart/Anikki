@@ -11,3 +11,4 @@ export 'desktop_hooks.dart';
 export 'logger.dart';
 export 'open_in_browser.dart';
 export 'screen_format.dart';
+export 'folder.dart';

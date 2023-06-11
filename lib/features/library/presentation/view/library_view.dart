@@ -2,10 +2,10 @@ import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/library/bloc/library_bloc.dart';
+import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/core/widgets/error_tile.dart';
-import 'package:anikki/features/library/view/library_layout.dart';
+import 'package:anikki/features/library/presentation/view/library_layout.dart';
 
 class LibraryView extends StatelessWidget {
   const LibraryView({

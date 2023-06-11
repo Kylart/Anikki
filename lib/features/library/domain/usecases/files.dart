@@ -1,6 +1,17 @@
-part of 'repository.dart';
+import 'dart:io';
 
-Future<List<LocalFile>> _retrieveFilesFromPath({required String path}) async {
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:open_app_file/open_app_file.dart';
+import 'package:path/path.dart';
+
+import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/fade_overlay.dart';
+import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
+import 'package:anikki/features/video_player/view/anikki_video_player.dart';
+
+Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   List<LocalFile> results = [];
 
   final directory = Directory(path);

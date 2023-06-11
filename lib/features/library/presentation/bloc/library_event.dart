@@ -32,3 +32,35 @@ class LibraryFileAdded extends LibraryEvent {
   @override
   List<Object> get props => [path];
 }
+
+class LibraryFileDeleteRequested extends LibraryEvent {
+  const LibraryFileDeleteRequested({
+    required this.file,
+    required this.context,
+  });
+
+  final LocalFile file;
+  final BuildContext context;
+
+  @override
+  List<Object> get props => [
+        file,
+        context,
+      ];
+}
+
+class LibraryFilePlayRequested extends LibraryEvent {
+  const LibraryFilePlayRequested({
+    required this.file,
+    required this.context,
+  });
+
+  final LocalFile file;
+  final BuildContext context;
+
+  @override
+  List<Object> get props => [
+        file,
+        context,
+      ];
+}

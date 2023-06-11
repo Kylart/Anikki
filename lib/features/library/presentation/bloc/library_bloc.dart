@@ -4,12 +4,13 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:watcher/watcher.dart';
 
-import 'package:anikki/features/library/helpers/to_library_entry.dart';
+import 'package:anikki/features/library/domain/domain.dart';
+import 'package:anikki/features/library/presentation/helpers/to_library_entry.dart';
 import 'package:anikki/core/models/library_entry.dart';
-import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/helpers/logger.dart';
 import 'package:anikki/core/models/local_file.dart';
@@ -36,6 +37,8 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     on<LibraryUpdateRequested>(_onUpdateRequested);
     on<LibraryFileDeleted>(_onFileDeleted);
     on<LibraryFileAdded>(_onFileAdded);
+    on<LibraryFileDeleteRequested>(__onFileDeleteRequested);
+    on<LibraryFilePlayRequested>(__onFilePlayRequested);
 
     settingsBloc.stream.listen((settingsState) {
       final newPath = settingsState.settings.localDirectory;
@@ -129,94 +132,20 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   }
 
   void _onFileDeleted(LibraryFileDeleted event, Emitter<LibraryState> emit) {
-    if (state.runtimeType == LibraryLoaded) {
-      final file = event.file;
+    if (state.runtimeType != LibraryLoaded) return;
 
-      /// Find `file` in existing entries if any
-      final currentState = state as LibraryLoaded;
+    final file = event.file;
 
-      final entries = List<LibraryEntry>.from(currentState.entries);
+    /// Find `file` in existing entries if any
+    final currentState = state as LibraryLoaded;
 
-      final existsIndex =
-          entries.indexWhere((element) => element.entries.contains(file));
+    final entries = List<LibraryEntry>.from(currentState.entries);
 
-      /// Should never happen
-      if (existsIndex == -1) return;
+    removeFile(entries, file);
 
-      entries[existsIndex].entries.removeWhere((element) => element == file);
-
-      if (entries[existsIndex].entries.isEmpty) {
-        entries.removeAt(existsIndex);
-      }
-
-      if (entries.isEmpty) {
-        emit(LibraryEmpty(path: state.path));
-      } else {
-        emit(
-          LibraryLoaded(
-            id: currentState.id + 1,
-            entries: entries,
-            path: state.path,
-          ),
-        );
-      }
-    }
-  }
-
-  Future<void> _onFileAdded(
-      LibraryFileAdded event, Emitter<LibraryState> emit) async {
-    if (state.runtimeType == LibraryLoaded) {
-      final file = await repository.getFile(event.path);
-
-      /// Find `file` in existing entries if any
-      final currentState = state as LibraryLoaded;
-
-      List<LibraryEntry> entries =
-          List<LibraryEntry>.from(currentState.entries);
-
-      final existsIndex = entries.indexWhere(
-        (element) => file.media != null
-            ? element.media?.id == file.media?.id
-            : element.entries.first.title == file.title,
-      );
-
-      if (existsIndex != -1) {
-        entries[existsIndex].entries.add(file);
-        entries[existsIndex]
-            .entries
-            .sort((a, b) => b.episode?.compareTo(a.episode ?? 0) ?? 0);
-      } else {
-        final newEntry = LibraryEntry(
-          media: file.media,
-          entries: [file],
-        );
-
-        if (entries.isEmpty) {
-          entries.add(newEntry);
-        } else {
-          /// Looking where to insert the new entry
-          for (int index = 0; index < entries.length; index++) {
-            if (compareTitles(entries.elementAt(index), newEntry) > 0) {
-              /// Means we need to place the new entry just the index before
-              final insertIndex = index;
-
-              entries.insert(
-                insertIndex,
-                newEntry,
-              );
-
-              break;
-            }
-
-            /// Means that the entry didn't fit before
-            if (index == entries.length - 1) {
-              entries.add(newEntry);
-              break;
-            }
-          }
-        }
-      }
-
+    if (entries.isEmpty) {
+      emit(LibraryEmpty(path: state.path));
+    } else {
       emit(
         LibraryLoaded(
           id: currentState.id + 1,
@@ -225,5 +154,37 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         ),
       );
     }
+  }
+
+  Future<void> _onFileAdded(
+      LibraryFileAdded event, Emitter<LibraryState> emit) async {
+    if (state.runtimeType != LibraryLoaded) return;
+
+    final file = await repository.getFile(event.path);
+
+    /// Find `file` in existing entries if any
+    final currentState = state as LibraryLoaded;
+
+    List<LibraryEntry> entries = List<LibraryEntry>.from(currentState.entries);
+
+    addFile(entries, file);
+
+    emit(
+      LibraryLoaded(
+        id: currentState.id + 1,
+        entries: entries,
+        path: state.path,
+      ),
+    );
+  }
+
+  Future<void> __onFileDeleteRequested(
+      LibraryFileDeleteRequested event, Emitter<LibraryState> emit) async {
+    await deleteFile(event.file, event.context);
+  }
+
+  Future<void> __onFilePlayRequested(
+      LibraryFilePlayRequested event, Emitter<LibraryState> emit) async {
+    await playFile(event.file, event.context);
   }
 }

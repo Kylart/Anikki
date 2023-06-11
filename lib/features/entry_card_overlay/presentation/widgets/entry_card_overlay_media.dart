@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,6 @@ import 'package:anikki/features/entry_card_overlay/presentation/widgets/episode_
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/episode_list_no_media.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_actions.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
-import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 
 class EntryCardOverlayMedia extends StatelessWidget {
@@ -88,7 +88,12 @@ class EntryCardOverlayMedia extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: FilledButton.icon(
                                   onPressed: () {
-                                    playFile(entry!.entries.first, context);
+                                    BlocProvider.of<LibraryBloc>(context).add(
+                                      LibraryFilePlayRequested(
+                                        file: entry!.entries.first,
+                                        context: context,
+                                      ),
+                                    );
                                   },
                                   label: const Text('Play'),
                                   icon: const Icon(Icons.play_circle_outline),

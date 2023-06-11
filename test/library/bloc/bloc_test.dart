@@ -5,8 +5,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
-import 'package:anikki/features/library/bloc/library_bloc.dart';
-import 'package:anikki/features/library/repository/repository.dart';
+import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
+import 'package:anikki/features/library/domain/repository/repository.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/models/library_entry.dart';
 import 'package:anikki/core/models/local_file.dart';

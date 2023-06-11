@@ -11,7 +11,7 @@ import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/helpers/overlay_action.dart';
 import 'package:anikki/core/widgets/time_until_date.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_file_tile.dart';
-import 'package:anikki/features/library/bloc/library_bloc.dart';
+import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 
 class EpisodeList extends StatelessWidget {
   const EpisodeList({
