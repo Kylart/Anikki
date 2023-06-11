@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 
-import 'package:anikki/features/downloader/models/downloader_filter.dart';
-import 'package:anikki/features/downloader/helpers/show_downloader.dart';
+import 'package:anikki/features/downloader/domain/domain.dart';
+import 'package:anikki/features/downloader/presentation/helpers/show_downloader.dart';
 
 part 'downloader_event.dart';
 part 'downloader_state.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/downloader/widgets/torrent_tile.dart';
+import 'package:anikki/features/downloader/presentation/widgets/torrent_tile.dart';
 
 class TorrentsList extends StatelessWidget {
   const TorrentsList({

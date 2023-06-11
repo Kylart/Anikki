@@ -4,10 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/downloader/widgets/downloader_more.dart';
-import 'package:anikki/features/downloader/widgets/synonyms.dart';
-import 'package:anikki/features/downloader/widgets/torrents_list.dart';
-import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/features/downloader/presentation/widgets/widgets.dart';
+import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/core/widgets/error_tile.dart';
 import 'package:anikki/core/widgets/loader.dart';
 

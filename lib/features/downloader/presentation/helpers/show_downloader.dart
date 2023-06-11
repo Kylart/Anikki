@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
-import 'package:anikki/features/downloader/downloader.dart';
 import 'package:anikki/core/helpers/screen_format.dart';
+import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
+import 'package:anikki/features/downloader/presentation/view/downloader_view.dart';
 
 void showDownloader(BuildContext context, String term) {
   final bloc = BlocProvider.of<DownloaderBloc>(context);

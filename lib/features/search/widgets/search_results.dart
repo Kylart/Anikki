@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/downloader/widgets/torrents_list.dart';
+import 'package:anikki/features/downloader/presentation/widgets/torrents_list.dart';
 import 'package:anikki/features/library/view/library_layout.dart';
 import 'package:anikki/features/search/bloc/search_bloc.dart';
 import 'package:anikki/core/helpers/open_in_browser.dart';

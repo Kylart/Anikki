@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/core/helpers/screen_format.dart';
 
 class Synonyms extends StatelessWidget {

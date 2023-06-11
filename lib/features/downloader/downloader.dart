@@ -1,1 +1,1 @@
-export './view/downloader_view.dart';
+export 'presentation/view/downloader_view.dart';
