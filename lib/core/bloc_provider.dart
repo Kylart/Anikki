@@ -6,7 +6,7 @@ import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
-import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';

@@ -4,8 +4,8 @@ import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/anilist_auth/mixins/anilist_auth_is_connected_mixin.dart';
-import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/anilist_auth/shared/mixins/anilist_auth_is_connected_mixin.dart';
+import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/models/user_list_enum.dart';
 import 'package:anikki/features/library/repository/repository.dart';

@@ -12,7 +12,7 @@ import 'package:protocol_handler/protocol_handler.dart';
 
 import 'package:anikki/core/core.dart';
 
-import 'package:anikki/features/anilist_auth/mixins/anilist_auth_mixin.dart';
+import 'package:anikki/features/anilist_auth/shared/mixins/anilist_auth_mixin.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/layouts/landscape/layout.dart';
 import 'package:anikki/features/layouts/portrait/layout.dart';

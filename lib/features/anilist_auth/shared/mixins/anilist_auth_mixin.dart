@@ -5,7 +5,7 @@ import 'package:window_manager/window_manager.dart';
 
 import 'package:anikki/core/helpers/desktop_hooks.dart';
 import 'package:anikki/main.dart';
-import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 
 mixin AnilistAuthMixin on State<Anikki>, ProtocolListener {
   final availableHosts = [

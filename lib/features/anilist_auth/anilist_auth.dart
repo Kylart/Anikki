@@ -1,1 +1,1 @@
-export 'view/anilist_auth_view.dart';
+export 'presentation/view/anilist_auth_view.dart';

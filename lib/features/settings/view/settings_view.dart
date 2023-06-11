@@ -5,7 +5,7 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:anikki/features/settings/widgets/settings_text_field.dart';
 import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
-import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/helpers/capitalize.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
