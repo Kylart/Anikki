@@ -1,11 +1,11 @@
 import 'package:anikki/features/library/library.dart';
 import 'package:anikki/features/library/view/library_layout.dart';
 import 'package:anikki/features/library/widgets/library_card.dart';
-import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/layouts/portrait/anikki_navigation_bar.dart';
-import 'package:anikki/user_list/user_list_app_bar.dart';
-import 'package:anikki/user_list/user_list_layout_toggle.dart';
-import 'package:anikki/widgets/anikki_action_button.dart';
+import 'package:anikki/core/helpers/desktop_hooks.dart';
+import 'package:anikki/features/layouts/portrait/anikki_navigation_bar.dart';
+import 'package:anikki/features/user_list/user_list_app_bar.dart';
+import 'package:anikki/features/user_list/user_list_layout_toggle.dart';
+import 'package:anikki/core/widgets/anikki_action_button.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

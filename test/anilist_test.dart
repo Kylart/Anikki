@@ -1,4 +1,4 @@
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:graphql/client.dart';

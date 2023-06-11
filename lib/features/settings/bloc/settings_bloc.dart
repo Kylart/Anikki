@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:anikki/features/settings/models/qbittorrent_settings.dart';
 import 'package:anikki/features/settings/models/transmission_settings.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
-import 'package:anikki/helpers/logger.dart';
+import 'package:anikki/core/helpers/logger.dart';
 import 'package:anikki/features/settings/models/settings.dart';
 
 part 'settings_event.dart';

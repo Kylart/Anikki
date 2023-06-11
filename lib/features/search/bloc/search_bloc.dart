@@ -1,11 +1,11 @@
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nyaa/nyaa.dart';
 
 import 'package:anikki/features/library/bloc/library_bloc.dart';
-import 'package:anikki/helpers/logger.dart';
-import 'package:anikki/models/library_entry.dart';
+import 'package:anikki/core/helpers/logger.dart';
+import 'package:anikki/core/models/library_entry.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';

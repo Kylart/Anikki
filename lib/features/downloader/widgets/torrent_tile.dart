@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nyaa/nyaa.dart';
 import 'package:open_app_file/open_app_file.dart';
 
-import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/helpers/open_in_browser.dart';
+import 'package:anikki/core/helpers/desktop_hooks.dart';
+import 'package:anikki/core/helpers/open_in_browser.dart';
 
 class TorrentTile extends StatelessWidget {
   const TorrentTile({

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/features/torrent/models/qbittorrent_wrapper.dart';
 import 'package:anikki/features/qbittorrent/bloc/qbittorrent_bloc.dart';
 import 'package:anikki/features/qbittorrent/view/qbittorrent_view.dart';
-import 'package:anikki/widgets/error_tile.dart';
+import 'package:anikki/core/widgets/error_tile.dart';
 
 class QBitTorrentPage extends StatelessWidget {
   const QBitTorrentPage({

@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:transmission/transmission.dart';
+import 'package:anikki/core/providers/transmission/transmission.dart';
 
 import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
-import 'package:anikki/helpers/logger.dart';
+import 'package:anikki/core/helpers/logger.dart';
 
 part 'transmission_event.dart';
 part 'transmission_state.dart';

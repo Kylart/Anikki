@@ -1,4 +1,4 @@
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,8 +6,8 @@ import 'package:anikki/features/news/widgets/news_tile.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/models/settings.dart';
 import 'package:anikki/features/news/widgets/news_card.dart';
-import 'package:anikki/widgets/list_view/custom_list_view.dart';
-import 'package:anikki/widgets/grid_view/custom_grid_view.dart';
+import 'package:anikki/core/widgets/list_view/custom_list_view.dart';
+import 'package:anikki/core/widgets/grid_view/custom_grid_view.dart';
 
 class NewsLayout extends StatelessWidget {
   const NewsLayout({super.key, required this.entries});

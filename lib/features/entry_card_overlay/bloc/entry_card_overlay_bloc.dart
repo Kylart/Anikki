@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/entry_card_overlay/view/entry_card_overlay_page.dart';
-import 'package:anikki/helpers/logger.dart';
+import 'package:anikki/core/helpers/logger.dart';
 
 part 'entry_card_overlay_state.dart';
 part 'entry_card_overlay_event.dart';

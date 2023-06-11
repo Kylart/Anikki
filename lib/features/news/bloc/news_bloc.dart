@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:anikki/features/news/helpers/filter_entries.dart';
 import 'package:anikki/features/news/models/news_options.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/helpers/logger.dart';
+import 'package:anikki/core/helpers/logger.dart';
 
 part 'news_event.dart';
 part 'news_state.dart';

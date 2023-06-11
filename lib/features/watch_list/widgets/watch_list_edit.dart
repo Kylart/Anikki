@@ -1,8 +1,8 @@
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:anikki/helpers/capitalize.dart';
+import 'package:anikki/core/helpers/capitalize.dart';
 
 class WatchListEdit extends StatefulWidget {
   const WatchListEdit({super.key, required this.entry});

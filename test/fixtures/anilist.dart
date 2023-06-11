@@ -1,4 +1,4 @@
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:graphql/client.dart';
 import 'package:mocktail/mocktail.dart';
 

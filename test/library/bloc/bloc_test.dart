@@ -8,8 +8,8 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:anikki/features/library/bloc/library_bloc.dart';
 import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/models/library_entry.dart';
-import 'package:anikki/models/local_file.dart';
+import 'package:anikki/core/models/library_entry.dart';
+import 'package:anikki/core/models/local_file.dart';
 
 import '../../fixtures/path.dart';
 import '../../fixtures/settings.dart';

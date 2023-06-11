@@ -8,11 +8,11 @@ import 'package:path/path.dart';
 import 'package:watcher/watcher.dart';
 
 import 'package:anikki/features/library/helpers/to_library_entry.dart';
-import 'package:anikki/models/library_entry.dart';
+import 'package:anikki/core/models/library_entry.dart';
 import 'package:anikki/features/library/repository/repository.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/helpers/logger.dart';
-import 'package:anikki/models/local_file.dart';
+import 'package:anikki/core/helpers/logger.dart';
+import 'package:anikki/core/models/local_file.dart';
 
 part 'library_event.dart';
 part 'library_state.dart';

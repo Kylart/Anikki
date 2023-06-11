@@ -5,12 +5,12 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:nyaa/nyaa.dart';
 
 import 'package:anikki/features/downloader/widgets/downloader_more.dart';
-import 'package:anikki/helpers/screen_format.dart';
+import 'package:anikki/core/helpers/screen_format.dart';
 import 'package:anikki/features/downloader/widgets/synonyms.dart';
 import 'package:anikki/features/downloader/widgets/torrents_list.dart';
 import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
-import 'package:anikki/widgets/error_tile.dart';
-import 'package:anikki/widgets/loader.dart';
+import 'package:anikki/core/widgets/error_tile.dart';
+import 'package:anikki/core/widgets/loader.dart';
 
 class DownloaderView extends StatelessWidget {
   const DownloaderView({super.key});

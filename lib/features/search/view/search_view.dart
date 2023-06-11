@@ -2,12 +2,12 @@ import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/widgets/error_tile.dart';
+import 'package:anikki/core/widgets/error_tile.dart';
 import 'package:anikki/features/search/widgets/anikki_search_bar.dart';
 import 'package:anikki/features/search/bloc/search_bloc.dart';
 import 'package:anikki/features/search/widgets/search_results.dart';
-import 'package:anikki/helpers/screen_format.dart';
-import 'package:anikki/widgets/loader.dart';
+import 'package:anikki/core/helpers/screen_format.dart';
+import 'package:anikki/core/widgets/loader.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});

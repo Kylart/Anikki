@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:anikki/helpers/logger.dart';
+import 'package:anikki/core/helpers/logger.dart';
 import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
 
 part 'watch_list_event.dart';

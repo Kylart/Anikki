@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/features/qbittorrent/bloc/qbittorrent_bloc.dart';
 import 'package:anikki/features/qbittorrent/widgets/qbittorrent_torrent_tile.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
-import 'package:anikki/layouts/landscape/layout_card.dart';
-import 'package:anikki/widgets/torrent_app_bar.dart';
+import 'package:anikki/features/layouts/landscape/layout_card.dart';
+import 'package:anikki/core/widgets/torrent_app_bar.dart';
 
 class QBitTorrentView extends StatelessWidget {
   const QBitTorrentView({super.key});

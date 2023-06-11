@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/settings/models/settings.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/widgets/anikki_icon.dart';
+import 'package:anikki/core/widgets/anikki_icon.dart';
 
 class NewsLayoutToggle extends StatelessWidget {
   const NewsLayoutToggle({super.key});

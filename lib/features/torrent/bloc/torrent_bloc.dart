@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:qbittorrent/qbittorrent.dart' as qbit;
-import 'package:transmission/transmission.dart' as tr;
+import 'package:anikki/core/providers/transmission/transmission.dart' as tr;
 
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/torrent/models/qbittorrent_wrapper.dart';
 import 'package:anikki/features/torrent/models/transmission_wrapper.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
-import 'package:anikki/helpers/logger.dart';
+import 'package:anikki/core/helpers/logger.dart';
 
 part 'torrent_event.dart';
 part 'torrent_state.dart';

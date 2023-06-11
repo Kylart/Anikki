@@ -1,13 +1,13 @@
 import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
-import 'package:anikki/helpers/screen_format.dart';
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/helpers/screen_format.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart';
 
 import 'package:anikki/features/entry_card_overlay/helpers/overlay_action.dart';
 import 'package:anikki/features/library/repository/repository.dart';
-import 'package:anikki/models/local_file.dart';
+import 'package:anikki/core/models/local_file.dart';
 
 class EntryCardOverlayFileTile extends StatelessWidget {
   const EntryCardOverlayFileTile({

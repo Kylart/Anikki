@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:anikki/features/downloader/widgets/torrents_list.dart';
 import 'package:anikki/features/library/view/library_layout.dart';
 import 'package:anikki/features/search/bloc/search_bloc.dart';
-import 'package:anikki/helpers/open_in_browser.dart';
-import 'package:anikki/widgets/entry/entry_tile.dart';
+import 'package:anikki/core/helpers/open_in_browser.dart';
+import 'package:anikki/core/widgets/entry/entry_tile.dart';
 
 class SearchResults extends StatefulWidget {
   const SearchResults({

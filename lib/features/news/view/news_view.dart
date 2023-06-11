@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/features/news/bloc/news_bloc.dart';
 import 'package:anikki/features/news/widgets/news_app_bar.dart';
 import 'package:anikki/features/news/view/news_layout.dart';
-import 'package:anikki/widgets/error_tile.dart';
-import 'package:anikki/widgets/loader.dart';
+import 'package:anikki/core/widgets/error_tile.dart';
+import 'package:anikki/core/widgets/loader.dart';
 
 class NewsView extends StatelessWidget {
   const NewsView({

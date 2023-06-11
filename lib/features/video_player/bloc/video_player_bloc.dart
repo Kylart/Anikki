@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
 
-import 'package:anikki/helpers/desktop_hooks.dart';
-import 'package:anikki/helpers/logger.dart';
+import 'package:anikki/core/helpers/desktop_hooks.dart';
+import 'package:anikki/core/helpers/logger.dart';
 
 part 'video_player_event.dart';
 part 'video_player_state.dart';

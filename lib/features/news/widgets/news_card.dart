@@ -1,13 +1,13 @@
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/widgets/entry_card/entry_card_cover.dart';
+import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/widgets/entry_card/entry_card.dart';
-import 'package:anikki/helpers/anilist/filters/is_followed.dart';
-import 'package:anikki/helpers/anilist/filters/is_seen.dart';
+import 'package:anikki/core/widgets/entry_card/entry_card.dart';
+import 'package:anikki/core/helpers/anilist/filters/is_followed.dart';
+import 'package:anikki/core/helpers/anilist/filters/is_seen.dart';
 
 class NewsCard extends StatefulWidget {
   const NewsCard({super.key, required this.entry});

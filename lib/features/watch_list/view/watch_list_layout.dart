@@ -1,14 +1,14 @@
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/models/settings.dart';
-import 'package:anikki/widgets/entry/entry_tile.dart';
+import 'package:anikki/core/widgets/entry/entry_tile.dart';
 import 'package:anikki/features/watch_list/widgets/watch_list_card.dart';
-import 'package:anikki/widgets/list_view/custom_list_view.dart';
-import 'package:anikki/widgets/grid_view/custom_grid_view.dart';
-import 'package:anikki/user_list/user_list_grid_delegate.dart';
+import 'package:anikki/core/widgets/list_view/custom_list_view.dart';
+import 'package:anikki/core/widgets/grid_view/custom_grid_view.dart';
+import 'package:anikki/features/user_list/user_list_grid_delegate.dart';
 
 class WatchListLayout extends StatelessWidget {
   const WatchListLayout({super.key, required this.entries});

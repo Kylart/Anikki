@@ -7,12 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/widgets/episode_list.dart';
 import 'package:anikki/features/entry_card_overlay/widgets/episode_list_no_media.dart';
 import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_actions.dart';
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:anikki/features/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/library/repository/repository.dart';
-import 'package:anikki/helpers/capitalize.dart';
-import 'package:anikki/models/library_entry.dart';
-import 'package:anikki/widgets/entry/entry_tag.dart';
+import 'package:anikki/core/helpers/capitalize.dart';
+import 'package:anikki/core/models/library_entry.dart';
+import 'package:anikki/core/widgets/entry/entry_tag.dart';
 
 class EntryCardOverlayMedia extends StatelessWidget {
   EntryCardOverlayMedia({

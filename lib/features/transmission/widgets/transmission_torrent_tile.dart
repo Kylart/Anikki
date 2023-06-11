@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:transmission/transmission.dart';
+import 'package:anikki/core/providers/transmission/transmission.dart';
 
 import 'package:anikki/features/transmission/bloc/transmission_bloc.dart';
 import 'package:anikki/features/transmission/helpers/get_status.dart';

@@ -1,15 +1,15 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/entry_card_overlay/widgets/episode_list_no_media.dart';
-import 'package:anikki/models/library_entry.dart';
+import 'package:anikki/core/models/library_entry.dart';
 import 'package:anikki/features/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/features/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/helpers/overlay_action.dart';
-import 'package:anikki/widgets/time_until_date.dart';
+import 'package:anikki/core/widgets/time_until_date.dart';
 import 'package:anikki/features/entry_card_overlay/widgets/entry_card_overlay_file_tile.dart';
 import 'package:anikki/features/library/bloc/library_bloc.dart';
 

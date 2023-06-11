@@ -1,0 +1,16 @@
+query Viewer {
+  Viewer {
+    name
+    avatar {
+      large
+      medium
+    }
+    bannerImage
+    isBlocked
+    options {
+      displayAdultContent
+      airingNotifications
+      profileColor
+    }
+  }
+}

@@ -1,10 +1,10 @@
-import 'package:anilist/anilist.dart';
+import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/widgets/time_until_date.dart';
-import 'package:anikki/widgets/entry/entry_tile.dart';
-import 'package:anikki/helpers/anilist/filters/filters.dart';
+import 'package:anikki/core/widgets/time_until_date.dart';
+import 'package:anikki/core/widgets/entry/entry_tile.dart';
+import 'package:anikki/core/helpers/anilist/filters/filters.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 
 class NewsTile extends StatefulWidget {
