@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "gen:schema:anilist": "get-graphql-schema https://graphql.anilist.co > lib/core/providers/anilist/graphql/schema.graphql"
+    "gen:schema:anilist": "get-graphql-schema https://graphql.anilist.co > ../lib/core/providers/anilist/graphql/schema.graphql"
   },
   "devDependencies": {
     "get-graphql-schema": "^2.1.2"
