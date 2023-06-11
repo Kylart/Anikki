@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
-import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:qbittorrent/qbittorrent.dart';
 
 import 'package:anikki/core/helpers/logger.dart';
+import 'package:anikki/core/providers/qbittorrent/qbittorrent.dart';
+import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 
 part 'qbittorrent_event.dart';
 part 'qbittorrent_state.dart';

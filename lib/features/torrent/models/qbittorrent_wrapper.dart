@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:qbittorrent/qbittorrent.dart';
+import 'package:anikki/core/providers/qbittorrent/qbittorrent.dart';
 
 class QBitTorrentWrapper extends Equatable {
   const QBitTorrentWrapper(this.qBitTorrent, this.isAuthorized);

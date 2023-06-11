@@ -17,13 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.6.0"
-  anilist:
-    dependency: "direct main"
-    description:
-      path: "packages/anilist"
-      relative: true
-    source: path
-    version: "1.0.0"
   anitomy:
     dependency: "direct main"
     description:
@@ -773,13 +766,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.2"
-  nyaa:
-    dependency: "direct main"
-    description:
-      path: "packages/nyaa"
-      relative: true
-    source: path
-    version: "1.0.0"
   open_app_file:
     dependency: "direct main"
     description:
@@ -924,13 +910,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  qbittorrent:
-    dependency: "direct main"
-    description:
-      path: "packages/qbittorrent"
-      relative: true
-    source: path
-    version: "1.0.0"
   quiver:
     dependency: "direct main"
     description:
@@ -1144,13 +1123,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  transmission:
-    dependency: "direct main"
-    description:
-      path: "packages/transmission"
-      relative: true
-    source: path
-    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:

@@ -1,15 +1,13 @@
 import 'dart:async';
 
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:nyaa/nyaa.dart';
+
+import 'package:anikki/core/core.dart';
 
 import 'package:anikki/features/downloader/models/downloader_filter.dart';
 import 'package:anikki/features/downloader/helpers/show_downloader.dart';
-import 'package:anikki/core/helpers/logger.dart';
-import 'package:anikki/core/models/library_entry.dart';
 
 part 'downloader_event.dart';
 part 'downloader_state.dart';

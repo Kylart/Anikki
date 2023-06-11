@@ -1,5 +1,5 @@
+import 'package:anikki/core/core.dart';
 import 'package:equatable/equatable.dart';
-import 'package:nyaa/nyaa.dart';
 
 class DownloaderFilter extends Equatable {
   const DownloaderFilter({

@@ -46,16 +46,8 @@ dependencies:
   protocol_handler: ^0.1.5
   flutter_dotenv: ^5.0.2
   url_launcher: ^6.1.11
-  nyaa:
-    path: packages/nyaa
-  anilist:
-    path: packages/anilist
   anitomy:
     path: packages/anitomy
-  transmission:
-    path: packages/transmission
-  qbittorrent:
-    path: packages/qbittorrent
   wakelock: ^0.6.2
   flutter_platform_widgets: ^3.3.4
   empty_widget: ^0.0.5

@@ -5,6 +5,7 @@ import 'package:anikki/core/providers/nyaa/extract_from_html.dart';
 import 'package:anikki/core/providers/nyaa/models/models.dart';
 
 export 'package:anikki/core/providers/nyaa/models/models.dart';
+export 'package:anikki/core/providers/nyaa/errors/nyaa_no_result_exception.dart';
 
 class Nyaa {
   final String baseUrl = 'nyaa.si';

@@ -1,4 +1,0 @@
-enum MethodType {
-  session,
-  torrent,
-}

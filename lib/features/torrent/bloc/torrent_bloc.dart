@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:qbittorrent/qbittorrent.dart' as qbit;
+import 'package:anikki/core/providers/qbittorrent/qbittorrent.dart' as qbit;
 import 'package:anikki/core/providers/transmission/transmission.dart' as tr;
 
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
