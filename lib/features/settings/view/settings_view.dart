@@ -151,6 +151,31 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
               ),
 
+              SettingsTile(
+                key: const Key('transmission-port'),
+                leading: const AnikkiIcon(icon: Icons.numbers),
+                title: const Text('Port'),
+                trailing: SettingsTextField(
+                  isNumber: true,
+                  initialValue: settingsBloc
+                      .state.settings.transmissionSettings.port
+                      .toString(),
+                  onChanged: (value) {
+                    settingsBloc.add(
+                      SettingsUpdated(
+                        settingsBloc.state.settings.copyWith(
+                          transmissionSettings: settingsBloc
+                              .state.settings.transmissionSettings
+                              .copyWith(
+                            port: int.tryParse(value),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
               /// Login
               SettingsTile(
                 key: const Key('transmission-login'),
