@@ -4,7 +4,7 @@ import 'package:anikki/features/entry_card_overlay/presentation/widgets/episode_
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_actions.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/episode_list.dart';
 import 'package:anikki/core/helpers/capitalize.dart';
-import 'package:anikki/core/models/library_entry.dart';
+import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/core/providers/anilist/anilist.dart';
 

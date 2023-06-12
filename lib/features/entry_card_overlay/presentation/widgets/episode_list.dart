@@ -4,7 +4,7 @@ import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/episode_list_no_media.dart';
-import 'package:anikki/core/models/library_entry.dart';
+import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';

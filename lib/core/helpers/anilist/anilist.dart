@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/core/helpers/anilist/anilist_client.dart';
-import 'package:anikki/core/models/local_file.dart';
+import 'package:anikki/features/library/domain/models/local_file.dart';
 
 Future<void> updateEntry(
   BuildContext context,

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:anikki/core/models/local_file.dart';
+import 'package:anikki/features/library/domain/models/local_file.dart';
 import 'package:flutter/material.dart';
 
 ///

@@ -10,10 +10,8 @@ import 'package:watcher/watcher.dart';
 
 import 'package:anikki/features/library/domain/domain.dart';
 import 'package:anikki/features/library/presentation/helpers/to_library_entry.dart';
-import 'package:anikki/core/models/library_entry.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/helpers/logger.dart';
-import 'package:anikki/core/models/local_file.dart';
 
 part 'library_event.dart';
 part 'library_state.dart';

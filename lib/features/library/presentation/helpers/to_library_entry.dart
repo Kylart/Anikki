@@ -1,5 +1,5 @@
-import 'package:anikki/core/models/library_entry.dart';
-import 'package:anikki/core/models/local_file.dart';
+import 'package:anikki/features/library/domain/models/library_entry.dart';
+import 'package:anikki/features/library/domain/models/local_file.dart';
 
 /// Takes a list of `LocalFile` elements and maps them to a
 /// list of `LibraryEntry`.

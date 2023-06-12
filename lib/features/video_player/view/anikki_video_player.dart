@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 
 import 'package:anikki/features/video_player/bloc/video_player_bloc.dart';
-import 'package:anikki/core/models/local_file.dart';
+import 'package:anikki/features/library/domain/models/local_file.dart';
 import 'package:anikki/features/video_player/widgets/player_widget.dart';
 import 'package:anikki/features/video_player/widgets/player_controls/player_controls.dart';
 

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/core.dart';
+import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 
 part 'search_event.dart';

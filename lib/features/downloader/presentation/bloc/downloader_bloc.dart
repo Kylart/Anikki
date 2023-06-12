@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 
+import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/downloader/domain/domain.dart';
 import 'package:anikki/features/downloader/presentation/helpers/show_downloader.dart';
 
