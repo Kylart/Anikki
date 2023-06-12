@@ -6,9 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
-import 'package:anikki/core/helpers/anilist/anilist_client.dart';
-import 'package:anikki/core/helpers/logger.dart';
-import 'package:anikki/core/providers/anilist/anilist.dart';
+import 'package:anikki/core/core.dart';
 
 ///
 /// [LocalFile] represents a file on the host machine. It can be used
@@ -64,7 +62,7 @@ class LocalFile extends Equatable {
   late final String? releaseGroup;
 
   /// Anilist media retrieved using the parsed title if any.
-  final Fragment$shortMedia? media;
+  final Media? media;
 
   /// For the [Equatable] class. Only path is used there since a file is
   /// identified by its path.
@@ -87,7 +85,9 @@ class LocalFile extends Equatable {
 
       final info = await anilist.infoFromMultiple([tmpFile.title!]);
 
-      return tmpFile.copyWith(media: info.values.first);
+      return tmpFile.copyWith(
+        media: Media(anilistInfo: info.values.first),
+      );
     } catch (e) {
       logger.v('Could not retrieve file media info for $path');
     }
@@ -99,7 +99,7 @@ class LocalFile extends Equatable {
     String? path,
     int? episode,
     File? file,
-    Fragment$shortMedia? media,
+    Media? media,
   }) {
     return LocalFile(
       path: path ?? this.path,
@@ -119,7 +119,7 @@ class LocalFile extends Equatable {
   factory LocalFile.fromMap(Map<String, dynamic> map) {
     return LocalFile(
       path: map['path'] ?? '',
-      media: Fragment$shortMedia.fromJson(map['media']),
+      media: Media.fromMap(map['media']),
     );
   }
 

@@ -92,9 +92,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         .entries
         .where(
           (entry) =>
-              (entry.media?.title?.userPreferred ?? '')
-                  .toLowerCase()
-                  .contains(term) ||
+              (entry.media?.title ?? '').toLowerCase().contains(term) ||
               (entry.entries.first.title ?? '').toLowerCase().contains(term),
         )
         .toList();

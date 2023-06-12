@@ -98,7 +98,7 @@ class EpisodeList extends StatelessWidget {
         if (library.runtimeType == LibraryLoaded) {
           final matches = (library as LibraryLoaded).entries.where(
                 (element) =>
-                    element.media?.id == media.id &&
+                    element.media?.anilistInfo.id == media.id &&
                     element.entries
                         .where((f) => f.episode == episodeNumber)
                         .isNotEmpty,

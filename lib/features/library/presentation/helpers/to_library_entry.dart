@@ -22,7 +22,7 @@ List<LibraryEntry> toLibraryEntry(List<LocalFile> files) {
       /// Comparing media IDs if any
       /// This will most likely happen only when online
       if (element.media != null && file.media != null) {
-        return element.media?.id == file.media?.id;
+        return element.media?.anilistInfo.id == file.media?.anilistInfo.id;
       }
 
       /// Fallback for if there is no medai to compare

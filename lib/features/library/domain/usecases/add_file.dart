@@ -4,7 +4,7 @@ import 'package:anikki/features/library/domain/usecases/files.dart';
 void addFile(List<LibraryEntry> entries, LocalFile file) {
   final existsIndex = entries.indexWhere(
     (element) => file.media != null
-        ? element.media?.id == file.media?.id
+        ? element.media?.anilistInfo.id == file.media?.anilistInfo.id
         : element.entries.first.title == file.title,
   );
 

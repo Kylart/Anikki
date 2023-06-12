@@ -1,7 +1,7 @@
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/core/core.dart';
 import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/models/settings.dart';
@@ -47,7 +47,7 @@ class LibraryLayout extends StatelessWidget {
               return EntryTile(
                 media: entry.media == null
                     ? Fragment$shortMedia(id: 0)
-                    : entry.media!,
+                    : entry.media!.anilistInfo,
                 heroTag: heroTag,
                 subtitle: entry.entries.length == 1
                     ? Text(

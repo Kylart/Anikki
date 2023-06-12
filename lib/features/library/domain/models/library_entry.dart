@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:equatable/equatable.dart';
-
-import 'package:anikki/features/library/domain/models/local_file.dart';
 import 'package:flutter/material.dart';
+
+import 'package:anikki/core/core.dart';
+import 'package:anikki/features/library/domain/models/local_file.dart';
 
 ///
 /// [LibraryEntry] represents a entry for the `Library` feature.
@@ -18,7 +18,7 @@ class LibraryEntry extends Equatable {
   });
 
   /// Media information from Anilist
-  final Fragment$shortMedia? media;
+  final Media? media;
 
   /// `List` of [LocalFile] that are contained by this [LibraryEntry]
   final List<LocalFile> entries;
@@ -65,7 +65,7 @@ class LibraryEntry extends Equatable {
   List<Object?> get props => [media, entries, epMax, epMin];
 
   LibraryEntry copyWith({
-    Fragment$shortMedia? media,
+    Media? media,
     List<LocalFile>? entries,
   }) {
     return LibraryEntry(
@@ -83,7 +83,7 @@ class LibraryEntry extends Equatable {
 
   factory LibraryEntry.fromMap(Map<String, dynamic> map) {
     return LibraryEntry(
-      media: Fragment$shortMedia.fromJson(map['media'] as Map<String, dynamic>),
+      media: Media.fromMap(map['media'] as Map<String, dynamic>),
       entries: List<LocalFile>.from(
         (map['entries'] as List<int>).map<LocalFile>(
           (x) => LocalFile.fromMap(x as Map<String, dynamic>),

@@ -1,10 +1,9 @@
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/core/core.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/core/helpers/anilist/anilist_client.dart';
 import 'package:anikki/features/library/domain/models/local_file.dart';
 
 Future<void> updateEntry(
@@ -20,14 +19,14 @@ Future<void> updateEntry(
 
   if (!auth.isConnected) return;
 
-  if (entry.media?.id != null) {
+  if (entry.media?.anilistInfo.id != null) {
     final episode = entry.episode ?? 1;
 
     try {
       await anilist.watchedEntry(
         episode: episode,
-        mediaId: entry.media!.id,
-        status: episode == 1 && entry.media?.episodes != 1
+        mediaId: entry.media!.anilistInfo.id,
+        status: episode == 1 && entry.media?.anilistInfo.episodes != 1
             ? Enum$MediaListStatus.CURRENT
             : null,
       );
@@ -37,8 +36,8 @@ Future<void> updateEntry(
           backgroundColor: theme.colorScheme.background,
           content: ListTile(
             title: const Text('Anilist list updated!'),
-            subtitle: Text(
-                'Updated ${entry.media?.title?.userPreferred} with episode $episode.'),
+            subtitle:
+                Text('Updated ${entry.media?.title} with episode $episode.'),
           ),
         ),
       );

@@ -18,14 +18,14 @@ class LibraryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EntryCard(
-      media: entry.media == null ? Fragment$shortMedia(id: 0) : entry.media!,
+      media: entry.media == null
+          ? Fragment$shortMedia(id: 0)
+          : entry.media!.anilistInfo,
       libraryEntry: entry,
       heroTag: heroTag,
       cover: EntryCardCover(
         heroTag: heroTag,
-        coverImage: entry.media?.coverImage?.extraLarge ??
-            entry.media?.coverImage?.large ??
-            entry.media?.coverImage?.medium,
+        coverImage: entry.media?.coverImage,
         episode: entry.entries.length == 1
             ? entry.epMax?.toString()
             : '${entry.epMin ?? '?'} ~ ${entry.epMax ?? '?'}',

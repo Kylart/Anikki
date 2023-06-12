@@ -54,9 +54,11 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
     // Feeding medias to entries
     for (int index = 0; index < results.length; index++) {
       results[index] = results[index].copyWith(
-        media: anilist.getInfoFromInfo(
-          results[index].title!,
-          info,
+        media: Media(
+          anilistInfo: anilist.getInfoFromInfo(
+            results[index].title!,
+            info,
+          ),
         ),
       );
     }
@@ -75,10 +77,8 @@ Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
 ///
 int compareTitles(LibraryEntry a, LibraryEntry b) {
   /// Comparing media titles first
-  if (a.media?.title?.userPreferred != null &&
-      b.media?.title?.userPreferred != null) {
-    return a.media!.title!.userPreferred!
-        .compareTo(b.media!.title!.userPreferred!);
+  if (a.media?.title != null && b.media?.title != null) {
+    return a.media!.title!.compareTo(b.media!.title!);
   }
 
   if (a.entries.first.title != null && b.entries.first.title != null) {
