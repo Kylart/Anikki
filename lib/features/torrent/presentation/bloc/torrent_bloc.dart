@@ -7,9 +7,9 @@ import 'package:anikki/core/providers/qbittorrent/qbittorrent.dart' as qbit;
 import 'package:anikki/core/providers/transmission/transmission.dart' as tr;
 
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/features/torrent/models/qbittorrent_wrapper.dart';
-import 'package:anikki/features/torrent/models/transmission_wrapper.dart';
-import 'package:anikki/features/torrent/helpers/torrent_type.dart';
+import 'package:anikki/features/torrent/domain/models/qbittorrent_wrapper.dart';
+import 'package:anikki/features/torrent/domain/models/transmission_wrapper.dart';
+import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 import 'package:anikki/core/helpers/logger.dart';
 
 part 'torrent_event.dart';

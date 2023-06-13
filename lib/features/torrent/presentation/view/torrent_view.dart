@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/layouts/landscape/layout_card.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
-import 'package:anikki/features/torrent/helpers/torrent_type.dart';
+import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
+import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 import 'package:anikki/features/transmission/view/transmission_page.dart';
 
 class TorrentView extends StatefulWidget {

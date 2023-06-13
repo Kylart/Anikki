@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/torrent/helpers/torrent_type.dart';
+import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 
 class TorrentAppBar extends StatelessWidget {
   const TorrentAppBar({

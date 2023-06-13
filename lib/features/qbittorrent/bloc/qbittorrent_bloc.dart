@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/helpers/logger.dart';
 import 'package:anikki/core/providers/qbittorrent/qbittorrent.dart';
-import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
-import 'package:anikki/features/torrent/helpers/torrent_type.dart';
+import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
+import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 
 part 'qbittorrent_event.dart';
 part 'qbittorrent_state.dart';

@@ -4,7 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:anikki/features/settings/domain/models/models.dart';
-import 'package:anikki/features/torrent/helpers/torrent_type.dart';
+import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 import 'package:anikki/core/helpers/logger.dart';
 
 part 'settings_event.dart';
