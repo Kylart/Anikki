@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:anikki/features/watch_list/watch_list.dart';
 import 'package:anikki/features/library/library.dart';
 import 'package:anikki/features/layouts/landscape/layout_card.dart';
-import 'package:anikki/features/user_list/user_list_app_bar.dart';
+import 'package:anikki/features/user_list/presentation/widgets/user_list_app_bar.dart';
 
-class UserList extends StatefulWidget {
-  const UserList({
+class UserListView extends StatefulWidget {
+  const UserListView({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<UserList> createState() => _UserListState();
+  State<UserListView> createState() => _UserListViewState();
 }
 
-class _UserListState extends State<UserList>
+class _UserListViewState extends State<UserListView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final List<Tab> tabs = const <Tab>[

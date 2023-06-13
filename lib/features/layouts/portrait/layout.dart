@@ -8,7 +8,7 @@ import 'package:anikki/features/settings/settings.dart';
 import 'package:anikki/features/library/library.dart';
 import 'package:anikki/core/models/user_list_enum.dart';
 import 'package:anikki/features/news/news.dart';
-import 'package:anikki/features/user_list/user_list_app_bar.dart';
+import 'package:anikki/features/user_list/presentation/widgets/user_list_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PortraitLayout extends StatefulWidget {

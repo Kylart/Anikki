@@ -9,8 +9,8 @@ import 'package:anikki/core/widgets/anikki_action_button.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/features/anilist_auth/shared/mixins/anilist_auth_is_connected_mixin.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/features/user_list/user_list_refresh.dart';
-import 'package:anikki/features/user_list/user_list_layout_toggle.dart';
+import 'package:anikki/features/user_list/presentation/widgets/user_list_refresh.dart';
+import 'package:anikki/features/user_list/presentation/widgets/user_list_layout_toggle.dart';
 
 class UserListAppBar extends StatefulWidget {
   const UserListAppBar({
