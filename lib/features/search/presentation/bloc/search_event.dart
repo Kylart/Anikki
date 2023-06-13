@@ -10,5 +10,16 @@ abstract class SearchEvent extends Equatable {
 }
 
 class SearchRequested extends SearchEvent {
-  const SearchRequested(super.term);
+  const SearchRequested(
+    super.term, {
+    this.libraryEntries = const [],
+  });
+
+  final List<LibraryEntry> libraryEntries;
+
+  @override
+  List<Object> get props => [
+        term,
+        libraryEntries,
+      ];
 }

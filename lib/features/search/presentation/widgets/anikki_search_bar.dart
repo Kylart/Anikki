@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:anikki/features/search/bloc/search_bloc.dart';
+import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
+import 'package:anikki/features/search/presentation/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,8 +36,17 @@ class _AnikkiSearchBarState extends State<AnikkiSearchBar> {
           _debounce = Timer(
             const Duration(milliseconds: 300),
             () {
-              BlocProvider.of<SearchBloc>(context)
-                  .add(SearchRequested(controller.text));
+              final libraryBloc = BlocProvider.of<LibraryBloc>(context);
+              final searchBloc = BlocProvider.of<SearchBloc>(context);
+
+              searchBloc.add(
+                SearchRequested(
+                  controller.text,
+                  libraryEntries: libraryBloc.state is LibraryLoaded
+                      ? (libraryBloc.state as LibraryLoaded).entries
+                      : const [],
+                ),
+              );
             },
           );
         },

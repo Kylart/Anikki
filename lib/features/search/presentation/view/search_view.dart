@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/widgets/error_tile.dart';
-import 'package:anikki/features/search/widgets/anikki_search_bar.dart';
-import 'package:anikki/features/search/bloc/search_bloc.dart';
-import 'package:anikki/features/search/widgets/search_results.dart';
+import 'package:anikki/features/search/presentation/widgets/anikki_search_bar.dart';
+import 'package:anikki/features/search/presentation/bloc/search_bloc.dart';
+import 'package:anikki/features/search/presentation/widgets/search_results.dart';
 import 'package:anikki/core/helpers/screen_format.dart';
 import 'package:anikki/core/widgets/loader.dart';
 
