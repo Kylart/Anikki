@@ -5,22 +5,9 @@ import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
-import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
-import 'package:anikki/features/library/domain/repository/repository.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 
 import '../../fixtures/anilist.dart';
-import '../../fixtures/settings.dart';
-
-class MockLibraryRepository extends Mock implements LibraryRepository {}
-
-class MockSettingsBloc extends Mock implements SettingsBloc {}
-
-class MockWatchListBloc extends Mock implements WatchListBloc {}
-
-class MockLocalFile extends Mock implements LocalFile {}
 
 void main() {
   /// Shuts off logging except for errors
@@ -29,31 +16,7 @@ void main() {
   group('unit test: News Bloc', () {
     late MockGraphQLClient mockGraphQLClient;
     late NewsBloc bloc;
-    late SettingsBloc settingsBloc;
-    late WatchListBloc watchListBloc;
     late Anilist repository;
-
-    setUp(() {
-      /// Settings Bloc mock
-      settingsBloc = MockSettingsBloc();
-      when(() => settingsBloc.stream).thenAnswer(
-        (_) => const Stream<SettingsState>.empty(),
-      );
-      when(() => settingsBloc.state).thenAnswer(
-        (_) => const SettingsState(
-          settings: settings,
-        ),
-      );
-
-      /// WatchList Bloc mock
-      watchListBloc = MockWatchListBloc();
-      when(() => watchListBloc.stream).thenAnswer(
-        (_) => const Stream<WatchListState>.empty(),
-      );
-      when(() => watchListBloc.state).thenAnswer(
-        (_) => const WatchListInitial(username: 'username'),
-      );
-    });
 
     blocTest(
       'emits [NewsLoading, NewsComplete] when [NewsRequested] is added',

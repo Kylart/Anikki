@@ -7,18 +7,14 @@ import 'package:bloc_test/bloc_test.dart';
 
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/features/library/domain/repository/repository.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/features/library/domain/models/local_file.dart';
 
 import '../../fixtures/path.dart';
-import '../../fixtures/settings.dart';
 import '../../helpers/init_hive.dart';
 import '../../helpers/init_hydrated_storage.dart';
 
 class MockLibraryRepository extends Mock implements LibraryRepository {}
-
-class MockSettingsBloc extends Mock implements SettingsBloc {}
 
 class MockLocalFile extends Mock implements LocalFile {}
 
@@ -54,7 +50,6 @@ void main() {
   group('unit test: Library Bloc', () {
     late LibraryBloc bloc;
     late LibraryRepository repository;
-    late SettingsBloc settingsBloc;
 
     late LocalFile mockFile;
 
@@ -76,17 +71,6 @@ void main() {
       );
       when(() => repository.retrieveFilesFromPath(path)).thenAnswer(
         (_) async => files,
-      );
-
-      /// Settings Bloc mock
-      settingsBloc = MockSettingsBloc();
-      when(() => settingsBloc.stream).thenAnswer(
-        (_) => const Stream<SettingsState>.empty(),
-      );
-      when(() => settingsBloc.state).thenAnswer(
-        (_) => const SettingsState(
-          settings: settings,
-        ),
       );
 
       /// Instanciating bloc mock
