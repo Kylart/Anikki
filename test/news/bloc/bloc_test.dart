@@ -88,7 +88,6 @@ void main() {
         repository = Anilist(client: mockGraphQLClient);
         bloc = NewsBloc(
           anilist: repository,
-          watchListBloc: watchListBloc,
         );
       },
     );
@@ -120,7 +119,6 @@ void main() {
         repository = Anilist(client: mockGraphQLClient);
         bloc = NewsBloc(
           anilist: repository,
-          watchListBloc: watchListBloc,
         );
       },
     );

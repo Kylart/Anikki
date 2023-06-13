@@ -39,6 +39,14 @@ class AnikkiBlocProvider extends StatelessWidget {
         BlocProvider(
           create: (context) => DownloaderBloc(nyaa),
         ),
+        BlocProvider(
+          create: (context) {
+            return NewsBloc(anilist: anilist)
+              ..add(
+                NewsRequested(range: NewsBloc.initalDateRange),
+              );
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -71,23 +79,7 @@ class AnikkiBlocProvider extends StatelessWidget {
             },
           ),
         ],
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) {
-                final watchListBloc = BlocProvider.of<WatchListBloc>(context);
-
-                return NewsBloc(
-                  anilist: anilist,
-                  watchListBloc: watchListBloc,
-                )..add(
-                    NewsRequested(range: NewsBloc.initalDateRange),
-                  );
-              },
-            ),
-          ],
-          child: child,
-        ),
+        child: child,
       ),
     );
   }

@@ -5,9 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/news/domain/domain.dart';
-import 'package:anikki/core/providers/anilist/anilist.dart';
-import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
-import 'package:anikki/core/helpers/logger.dart';
+import 'package:anikki/core/core.dart';
 
 part 'news_event.dart';
 part 'news_state.dart';
@@ -20,16 +18,10 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         .copyWith(hour: 23, minute: 59, second: 59),
   );
 
-  final WatchListBloc watchListBloc;
   late final NewsRepository repository;
-
-  bool get isWatchListLoaded => watchListBloc.state is WatchListComplete;
-  WatchListComplete? get watchList =>
-      isWatchListLoaded ? watchListBloc.state as WatchListComplete : null;
 
   NewsBloc({
     required Anilist anilist,
-    required this.watchListBloc,
   }) : super(
           NewsEmpty(range: initalDateRange),
         ) {
@@ -53,16 +45,13 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     try {
       final entries = await repository.getSchedule(range);
 
-      emit(NewsComplete(
-        range: range,
-        entries: entries,
-        options: state.options,
-        filteredEntries: filterEntries(
-          entries,
-          state.options,
-          watchList,
+      emit(
+        NewsComplete(
+          range: range,
+          entries: entries,
+          options: state.options,
         ),
-      ));
+      );
     } on AnilistGetScheduleException catch (e) {
       emit(NewsError(
           range: range, message: e.error ?? 'Something went wrong...'));
@@ -79,11 +68,6 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         range: currentState.range,
         entries: currentState.entries,
         options: event.options,
-        filteredEntries: filterEntries(
-          currentState.entries,
-          event.options,
-          watchList,
-        ),
       ),
     );
   }

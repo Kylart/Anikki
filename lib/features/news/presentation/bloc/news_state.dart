@@ -27,11 +27,9 @@ class NewsComplete extends NewsState {
     super.options,
     required super.range,
     required this.entries,
-    this.filteredEntries,
   });
 
   final List<NewsEntry> entries;
-  final List<NewsEntry>? filteredEntries;
 
   @override
   List<Object> get props => [range, entries, options];
