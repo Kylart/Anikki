@@ -24,8 +24,8 @@ const kSessionHeaderName = 'X-Transmission-Session-Id';
 /// await transmission.getSession();
 /// ```
 ///
-class Transmission {
-  Transmission({
+class TransmissionRepository {
+  TransmissionRepository({
     Uri? uri,
     http.Client? client,
     this.username,

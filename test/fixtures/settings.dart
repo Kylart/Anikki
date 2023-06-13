@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/settings/domain/models/models.dart';
-import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
+import 'package:anikki/core/models/torrent_type.dart';
 
 import 'path.dart';
 

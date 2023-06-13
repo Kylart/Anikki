@@ -1,8 +1,8 @@
+import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
@@ -26,6 +26,9 @@ class AnikkiBlocProvider extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               AnilistAuthBloc(anilist)..add(AnilistAuthLoginRequested()),
+        ),
+        BlocProvider(
+          create: (context) => LayoutBloc(),
         ),
         BlocProvider(
           create: (context) => SettingsBloc(),
@@ -68,14 +71,6 @@ class AnikkiBlocProvider extends StatelessWidget {
                     path: settingsBloc.state.settings.localDirectory,
                   ),
                 );
-            },
-          ),
-          BlocProvider(
-            create: (context) {
-              final settingsBloc = BlocProvider.of<SettingsBloc>(context);
-              return TorrentBloc(settingsBloc: settingsBloc)
-                ..add(TorrentClientRequested(
-                    settingsBloc.state.settings.torrentType));
             },
           ),
         ],

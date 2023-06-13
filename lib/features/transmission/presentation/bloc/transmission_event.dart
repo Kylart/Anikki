@@ -9,6 +9,17 @@ abstract class TransmissionEvent extends Equatable {
 
 class TransmissionDataRequested extends TransmissionEvent {}
 
+class TransmissionSettingsUpdated extends TransmissionEvent {
+  const TransmissionSettingsUpdated(this.settings);
+
+  final TransmissionSettings settings;
+
+  @override
+  List<Object> get props => [
+        settings,
+      ];
+}
+
 class TransmissionPauseTorrent extends TransmissionEvent {
   const TransmissionPauseTorrent(this.id);
 

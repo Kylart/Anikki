@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import 'package:anikki/features/settings/presentation/widgets/settings_text_field.dart';
-import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
-import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
+import 'package:anikki/core/models/torrent_type.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/helpers/capitalize.dart';
@@ -95,10 +94,6 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                     ),
                   );
-
-                  BlocProvider.of<TorrentBloc>(context).add(
-                    TorrentClientRequested(value),
-                  );
                 },
               ),
             ),
@@ -126,7 +121,6 @@ class _SettingsViewState extends State<SettingsView> {
                   },
                 ),
               ),
-
               SettingsTile(
                 key: const Key('transmission-password'),
                 leading: const AnikkiIcon(icon: Icons.password),
@@ -150,7 +144,6 @@ class _SettingsViewState extends State<SettingsView> {
                   },
                 ),
               ),
-
               SettingsTile(
                 key: const Key('transmission-port'),
                 leading: const AnikkiIcon(icon: Icons.numbers),
@@ -174,26 +167,6 @@ class _SettingsViewState extends State<SettingsView> {
                     );
                   },
                 ),
-              ),
-
-              /// Login
-              SettingsTile(
-                key: const Key('transmission-login'),
-                trailing: const AnikkiIcon(icon: Icons.login),
-                title: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    'Login',
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-                onPressed: (context) async {
-                  BlocProvider.of<TorrentBloc>(context).add(
-                    const TorrentClientRequested(
-                      TorrentType.transmission,
-                    ),
-                  );
-                },
               ),
             ],
             if (settingsBloc.state.settings.torrentType ==
@@ -220,7 +193,6 @@ class _SettingsViewState extends State<SettingsView> {
                   },
                 ),
               ),
-
               SettingsTile(
                 key: const Key('qbittorent-password'),
                 leading: const AnikkiIcon(icon: Icons.password),
@@ -244,7 +216,6 @@ class _SettingsViewState extends State<SettingsView> {
                   },
                 ),
               ),
-
               SettingsTile(
                 key: const Key('qbittorent-port'),
                 leading: const AnikkiIcon(icon: Icons.numbers),
@@ -268,26 +239,6 @@ class _SettingsViewState extends State<SettingsView> {
                     );
                   },
                 ),
-              ),
-
-              /// Login
-              SettingsTile(
-                key: const Key('qbittorent-login'),
-                trailing: const AnikkiIcon(icon: Icons.login),
-                title: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    'Login',
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-                onPressed: (context) async {
-                  BlocProvider.of<TorrentBloc>(context).add(
-                    const TorrentClientRequested(
-                      TorrentType.qbittorrent,
-                    ),
-                  );
-                },
               ),
             ],
           ],

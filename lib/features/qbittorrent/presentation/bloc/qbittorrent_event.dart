@@ -9,6 +9,17 @@ abstract class QBitTorrentEvent extends Equatable {
 
 class QBitTorrentDataRequested extends QBitTorrentEvent {}
 
+class QBitTorrentSettingsUpdated extends QBitTorrentEvent {
+  const QBitTorrentSettingsUpdated(this.settings);
+
+  final QBitTorrentSettings settings;
+
+  @override
+  List<Object> get props => [
+        settings,
+      ];
+}
+
 class QBitTorrentPauseTorrent extends QBitTorrentEvent {
   const QBitTorrentPauseTorrent(this.hash);
 

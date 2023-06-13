@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:anikki/features/transmission/domain/domain.dart';
-import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
-import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 import 'package:anikki/core/helpers/logger.dart';
+import 'package:anikki/features/settings/domain/models/models.dart';
+import 'package:anikki/features/transmission/domain/domain.dart';
 
 part 'transmission_event.dart';
 part 'transmission_state.dart';
@@ -14,11 +13,9 @@ part 'transmission_state.dart';
 class TransmissionBloc extends Bloc<TransmissionEvent, TransmissionState> {
   Timer? interval;
 
-  Transmission transmission;
-  TorrentBloc torrentBloc;
+  TransmissionRepository transmission;
 
-  TransmissionBloc(this.transmission, this.torrentBloc)
-      : super(TransmissionInitial()) {
+  TransmissionBloc(this.transmission) : super(TransmissionInitial()) {
     on<TransmissionEvent>((event, emit) {
       if (event is! TransmissionDataRequested) {
         logger.v('Transmission Event: ${event.runtimeType}');
@@ -29,6 +26,7 @@ class TransmissionBloc extends Bloc<TransmissionEvent, TransmissionState> {
     on<TransmissionPauseTorrent>(_onPauseTorrent);
     on<TransmissionStartTorrent>(_onStartTorrent);
     on<TransmissionRemoveTorrent>(_onRemoveTorrent);
+    on<TransmissionSettingsUpdated>(_onSettingsChanged);
 
     interval = Timer.periodic(const Duration(milliseconds: 500), (timer) async {
       if (!isClosed) add(TransmissionDataRequested());
@@ -43,8 +41,24 @@ class TransmissionBloc extends Bloc<TransmissionEvent, TransmissionState> {
 
       emit(loaded.torrents.isEmpty ? TransmissionEmpty() : loaded);
     } catch (e) {
-      torrentBloc.add(const TorrentClientRequested(TorrentType.qbittorrent));
+      emit(TransmissionCannotLoad());
     }
+  }
+
+  void _onSettingsChanged(
+      TransmissionSettingsUpdated event, Emitter<TransmissionState> emit) {
+    transmission = TransmissionRepository(
+      uri: Uri(
+        host: event.settings.host,
+        port: event.settings.port,
+        scheme: event.settings.scheme,
+        path: 'transmission/rpc',
+      ),
+      username: event.settings.username,
+      password: event.settings.password,
+    );
+
+    add(TransmissionDataRequested());
   }
 
   Future<void> _onPauseTorrent(

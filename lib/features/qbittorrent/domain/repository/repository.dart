@@ -10,14 +10,19 @@ enum ApiName {
   torrents,
 }
 
-class QBitTorrent {
-  QBitTorrent({
+class QBitTorrentRepository {
+  QBitTorrentRepository({
     Uri? uri,
     http.Client? client,
     this.username,
     this.password,
   }) {
-    _uri = uri ?? Uri(scheme: 'http', host: 'localhost', port: 8080);
+    _uri = uri ??
+        Uri(
+          scheme: 'http',
+          host: 'localhost',
+          port: 8080,
+        );
 
     _client = client ?? http.Client();
   }

@@ -21,3 +21,5 @@ class TransmissionLoaded extends TransmissionState {
   @override
   List<Object> get props => [torrentGet];
 }
+
+class TransmissionCannotLoad extends TransmissionState {}

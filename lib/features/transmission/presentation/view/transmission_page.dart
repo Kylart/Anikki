@@ -1,32 +1,36 @@
+import 'package:anikki/features/settings/bloc/settings_bloc.dart';
+import 'package:anikki/features/transmission/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
-import 'package:anikki/features/torrent/domain/models/transmission_wrapper.dart';
 import 'package:anikki/features/transmission/presentation/bloc/transmission_bloc.dart';
 import 'package:anikki/features/transmission/presentation/view/transmission_view.dart';
-import 'package:anikki/core/widgets/error_tile.dart';
 
 class TransmissionPage extends StatelessWidget {
   const TransmissionPage({
     super.key,
-    required this.wrapper,
   });
-
-  final TransmissionWrapper wrapper;
 
   @override
   Widget build(BuildContext context) {
-    if (!wrapper.isAuthorized) {
-      return const ErrorTile(
-        title: 'Cannot log into Transmission client',
-        description: 'Please enter the right credentials in the settings.',
-      );
-    }
+    final settings = BlocProvider.of<SettingsBloc>(context)
+        .state
+        .settings
+        .transmissionSettings;
+
+    final transmission = TransmissionRepository(
+      uri: Uri(
+        host: settings.host,
+        port: settings.port,
+        scheme: settings.scheme,
+        path: 'transmission/rpc',
+      ),
+      username: settings.username,
+      password: settings.password,
+    );
 
     return BlocProvider(
-      create: (context) => TransmissionBloc(
-          wrapper.transmission, BlocProvider.of<TorrentBloc>(context)),
+      create: (context) => TransmissionBloc(transmission),
       child: const TransmissionView(),
     );
   }

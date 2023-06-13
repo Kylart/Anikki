@@ -2,7 +2,7 @@ part of 'qbittorrent_bloc.dart';
 
 abstract class QBitTorrentState extends Equatable {
   const QBitTorrentState();
-  
+
   @override
   List<Object> get props => [];
 }
@@ -19,3 +19,5 @@ class QBitTorrentLoaded extends QBitTorrentState {
   @override
   List<Object> get props => [torrents];
 }
+
+class QBitTorrentCannotLoad extends QBitTorrentState {}
