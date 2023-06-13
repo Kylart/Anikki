@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/settings/models/settings.dart';
+import 'package:anikki/features/settings/domain/models/models.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 

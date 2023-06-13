@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/features/settings/models/settings.dart';
+import 'package:anikki/features/settings/domain/models/models.dart';
 import 'package:anikki/core/widgets/entry/entry_tile.dart';
 import 'package:anikki/features/watch_list/widgets/watch_list_card.dart';
 import 'package:anikki/core/widgets/list_view/custom_list_view.dart';

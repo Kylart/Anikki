@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'package:anikki/features/settings/models/qbittorrent_settings.dart';
-import 'package:anikki/features/settings/models/transmission_settings.dart';
+import 'package:anikki/features/settings/domain/models/models.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:anikki/core/helpers/logger.dart';
-import 'package:anikki/features/settings/models/settings.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';

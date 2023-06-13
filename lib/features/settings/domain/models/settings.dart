@@ -1,11 +1,4 @@
-import 'dart:convert';
-
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-
-import 'package:anikki/features/settings/models/qbittorrent_settings.dart';
-import 'package:anikki/features/torrent/helpers/torrent_type.dart';
-import 'package:anikki/features/settings/models/transmission_settings.dart';
+part of 'models.dart';
 
 enum NewsLayouts {
   grid,

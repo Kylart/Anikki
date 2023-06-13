@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import 'package:anikki/features/settings/widgets/settings_text_field.dart';
+import 'package:anikki/features/settings/presentation/widgets/settings_text_field.dart';
 import 'package:anikki/features/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/helpers/torrent_type.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
@@ -77,7 +77,7 @@ class _SettingsViewState extends State<SettingsView> {
             SettingsTile(
               leading: const Icon(Icons.home_repair_service_outlined),
               title: const Text('Torrent Client type'),
-              trailing: DropdownButton(
+              trailing: DropdownButton<TorrentType>(
                 value: settingsBloc.state.settings.torrentType,
                 items: TorrentType.values
                     .map((type) => DropdownMenuItem(

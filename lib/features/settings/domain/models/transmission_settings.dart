@@ -1,16 +1,14 @@
-import 'dart:convert';
+part of 'models.dart';
 
-import 'package:equatable/equatable.dart';
-
-class QBitTorrentSettings extends Equatable {
+class TransmissionSettings extends Equatable {
   final int port;
   final String scheme;
   final String host;
   final String? username;
   final String? password;
 
-  const QBitTorrentSettings({
-    this.port = 8080,
+  const TransmissionSettings({
+    this.port = 9091,
     this.scheme = 'http',
     this.host = '127.0.0.1',
     this.username,
@@ -26,14 +24,14 @@ class QBitTorrentSettings extends Equatable {
         if (password != null) password!,
       ];
 
-  QBitTorrentSettings copyWith({
+  TransmissionSettings copyWith({
     int? port,
     String? scheme,
     String? host,
     String? username,
     String? password,
   }) {
-    return QBitTorrentSettings(
+    return TransmissionSettings(
       port: port ?? this.port,
       scheme: scheme ?? this.scheme,
       host: host ?? this.host,
@@ -52,8 +50,8 @@ class QBitTorrentSettings extends Equatable {
     };
   }
 
-  factory QBitTorrentSettings.fromMap(Map<String, dynamic> map) {
-    return QBitTorrentSettings(
+  factory TransmissionSettings.fromMap(Map<String, dynamic> map) {
+    return TransmissionSettings(
       port: map['port'] as int,
       scheme: map['scheme'] as String,
       host: map['host'] as String,
@@ -64,16 +62,16 @@ class QBitTorrentSettings extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory QBitTorrentSettings.fromJson(String source) =>
-      QBitTorrentSettings.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TransmissionSettings.fromJson(String source) =>
+      TransmissionSettings.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'QBitTorrentSettings(port: $port, scheme: $scheme, host: $host, username: $username, password: $password)';
+    return 'TransmissionSettings(port: $port, scheme: $scheme, host: $host, username: $username, password: $password)';
   }
 
   @override
-  bool operator ==(covariant QBitTorrentSettings other) {
+  bool operator ==(covariant TransmissionSettings other) {
     if (identical(this, other)) return true;
 
     return other.port == port &&
