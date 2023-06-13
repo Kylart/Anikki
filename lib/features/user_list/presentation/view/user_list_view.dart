@@ -50,7 +50,7 @@ class _UserListViewState extends State<UserListView>
             child: TabBarView(
               controller: _tabController,
               children: const [
-                LibraryView(),
+                LibraryPage(),
                 WatchListView(),
               ],
             ),

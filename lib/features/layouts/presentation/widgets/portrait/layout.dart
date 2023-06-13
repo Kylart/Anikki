@@ -46,7 +46,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
                     userListType: UserListEnum.local,
                   ),
                   Expanded(
-                    child: LibraryView(),
+                    child: LibraryPage(),
                   ),
                 ],
               ),

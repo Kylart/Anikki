@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/core/widgets/error_tile.dart';
-import 'package:anikki/features/library/presentation/view/library_layout.dart';
+import 'package:anikki/features/library/presentation/widgets/library_layout.dart';
 
 class LibraryView extends StatelessWidget {
   const LibraryView({

@@ -10,22 +10,18 @@ import 'package:watcher/watcher.dart';
 
 import 'package:anikki/features/library/domain/domain.dart';
 import 'package:anikki/features/library/presentation/helpers/to_library_entry.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/helpers/logger.dart';
 
 part 'library_event.dart';
 part 'library_state.dart';
 
 class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
-  final SettingsBloc settingsBloc;
-
   DirectoryWatcher? watcher;
   StreamSubscription<WatchEvent>? subscription;
 
   final LibraryRepository repository;
 
   LibraryBloc({
-    required this.settingsBloc,
     this.repository = const LibraryRepository(),
   }) : super(const LibraryInitial()) {
     on<LibraryEvent>((event, emit) {
@@ -37,15 +33,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     on<LibraryFileAdded>(_onFileAdded);
     on<LibraryFileDeleteRequested>(__onFileDeleteRequested);
     on<LibraryFilePlayRequested>(__onFilePlayRequested);
-
-    settingsBloc.stream.listen((settingsState) {
-      final newPath = settingsState.settings.localDirectory;
-      final currentPath = state.path;
-
-      if (newPath != currentPath) {
-        add(LibraryUpdateRequested(path: newPath));
-      }
-    });
   }
 
   void _setupWatcher(String path) {
@@ -109,14 +96,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
           ),
         );
       }
-
-      settingsBloc.add(
-        SettingsUpdated(
-          settingsBloc.state.settings.copyWith(
-            localDirectory: path,
-          ),
-        ),
-      );
 
       _setupWatcher(path);
     } catch (e) {

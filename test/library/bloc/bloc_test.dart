@@ -91,7 +91,6 @@ void main() {
 
       /// Instanciating bloc mock
       bloc = LibraryBloc(
-        settingsBloc: settingsBloc,
         repository: repository,
       );
     });

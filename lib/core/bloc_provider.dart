@@ -54,7 +54,7 @@ class AnikkiBlocProvider extends StatelessWidget {
           BlocProvider(
             create: (context) {
               final settingsBloc = BlocProvider.of<SettingsBloc>(context);
-              return LibraryBloc(settingsBloc: settingsBloc)
+              return LibraryBloc()
                 ..add(
                   LibraryUpdateRequested(
                     path: settingsBloc.state.settings.localDirectory,

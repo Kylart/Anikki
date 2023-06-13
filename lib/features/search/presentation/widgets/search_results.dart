@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/downloader/presentation/widgets/torrents_list.dart';
-import 'package:anikki/features/library/presentation/view/library_layout.dart';
+import 'package:anikki/features/library/presentation/widgets/library_layout.dart';
 import 'package:anikki/features/search/presentation/bloc/search_bloc.dart';
 import 'package:anikki/core/helpers/open_in_browser.dart';
 import 'package:anikki/core/widgets/entry/entry_tile.dart';

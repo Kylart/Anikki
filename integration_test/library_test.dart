@@ -1,5 +1,5 @@
 import 'package:anikki/features/library/library.dart';
-import 'package:anikki/features/library/presentation/view/library_layout.dart';
+import 'package:anikki/features/library/presentation/widgets/library_layout.dart';
 import 'package:anikki/features/library/presentation/widgets/library_card.dart';
 import 'package:anikki/core/helpers/desktop_hooks.dart';
 import 'package:anikki/features/layouts/presentation/widgets/portrait/anikki_navigation_bar.dart';
@@ -23,8 +23,8 @@ void main() {
       await tester.pumpAndSettle();
 
       if (isDesktop()) {
-        /// Checking for existence of [LibraryView].
-        final library = find.byType(LibraryView);
+        /// Checking for existence of [LibraryPage].
+        final library = find.byType(LibraryPage);
         expect(library, findsOneWidget);
 
         /// Checking [UserListAppBar]
@@ -54,8 +54,8 @@ void main() {
         await tester.tap(libraryButton);
         await tester.pumpAndSettle();
 
-        /// Checking for existence of [LibraryView].
-        final library = find.byType(LibraryView);
+        /// Checking for existence of [LibraryPage].
+        final library = find.byType(LibraryPage);
         expect(library, findsOneWidget);
 
         /// Finds Change folder button
