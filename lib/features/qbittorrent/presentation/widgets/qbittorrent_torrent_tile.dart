@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/core/providers/qbittorrent/models/torrent.dart';
-import 'package:anikki/features/qbittorrent/helpers/get_status.dart';
-import 'package:anikki/features/qbittorrent/bloc/qbittorrent_bloc.dart';
+import 'package:anikki/features/qbittorrent/domain/domain.dart';
+import 'package:anikki/features/qbittorrent/presentation/bloc/qbittorrent_bloc.dart';
 
 class QBitTorrentTorrentTile extends StatelessWidget {
   const QBitTorrentTorrentTile({

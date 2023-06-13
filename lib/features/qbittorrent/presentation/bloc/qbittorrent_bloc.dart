@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/helpers/logger.dart';
-import 'package:anikki/core/providers/qbittorrent/qbittorrent.dart';
+import 'package:anikki/features/qbittorrent/domain/domain.dart';
 import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 

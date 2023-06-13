@@ -1,4 +1,4 @@
-import 'package:anikki/features/qbittorrent/view/qbittorrent_page.dart';
+import 'package:anikki/features/qbittorrent/presentation/view/qbittorrent_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

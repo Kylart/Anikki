@@ -3,11 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import 'errors/errors.dart';
-import 'models/models.dart';
-
-export 'errors/errors.dart';
-export 'models/models.dart';
+import 'package:anikki/features/qbittorrent/domain/models/models.dart';
 
 enum ApiName {
   auth,

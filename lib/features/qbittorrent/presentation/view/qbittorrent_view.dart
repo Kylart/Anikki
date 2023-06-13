@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/qbittorrent/bloc/qbittorrent_bloc.dart';
-import 'package:anikki/features/qbittorrent/widgets/qbittorrent_torrent_tile.dart';
-import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
+import 'package:anikki/features/qbittorrent/presentation/bloc/qbittorrent_bloc.dart';
+import 'package:anikki/features/qbittorrent/presentation/widgets/qbittorrent_torrent_tile.dart';
+import 'package:anikki/features/torrent/domain/models/models.dart';
 import 'package:anikki/features/layouts/landscape/layout_card.dart';
 import 'package:anikki/core/widgets/torrent_app_bar.dart';
 

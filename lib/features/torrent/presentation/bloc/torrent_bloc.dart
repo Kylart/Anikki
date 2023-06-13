@@ -5,7 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 /// TODO: Rework Torrent feature to not use external domains
-import 'package:anikki/core/providers/qbittorrent/qbittorrent.dart' as qbit;
+import 'package:anikki/features/qbittorrent/domain/domain.dart' as qbit;
 import 'package:anikki/features/transmission/domain/domain.dart' as tr;
 
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
