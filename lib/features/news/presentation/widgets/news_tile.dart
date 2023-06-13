@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/features/news/domain/domain.dart';
 import 'package:anikki/core/widgets/time_until_date.dart';
 import 'package:anikki/core/widgets/entry/entry_tile.dart';
-import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 
 class NewsTile extends StatefulWidget {
   const NewsTile({super.key, required this.entry});

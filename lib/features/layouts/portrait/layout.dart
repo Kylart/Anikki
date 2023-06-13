@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/features/watch_list/watch_list.dart';
+import 'package:anikki/features/anilist_watch_list/watch_list.dart';
 import 'package:anikki/features/layouts/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/features/search/search.dart';
 import 'package:anikki/features/settings/settings.dart';

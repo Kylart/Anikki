@@ -7,7 +7,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
-import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/library/domain/repository/repository.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 

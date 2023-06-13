@@ -1,5 +1,5 @@
 import 'package:anikki/features/news/domain/models/models.dart';
-import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 
 bool isFollowed(WatchListComplete watchList, NewsEntry entry) {
   return [...watchList.planning, ...watchList.current]

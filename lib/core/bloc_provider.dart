@@ -9,7 +9,7 @@ import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 
 class AnikkiBlocProvider extends StatelessWidget {
   const AnikkiBlocProvider({super.key, required this.child});

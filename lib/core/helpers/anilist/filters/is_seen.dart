@@ -1,6 +1,6 @@
 import 'package:anikki/core/providers/anilist/anilist.dart';
 
-import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 
 bool isSeen(
     WatchListComplete lists, Query$AiringSchedule$Page$airingSchedules entry) {

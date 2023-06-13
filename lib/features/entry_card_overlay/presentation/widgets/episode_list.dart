@@ -7,7 +7,7 @@ import 'package:anikki/features/entry_card_overlay/presentation/widgets/episode_
 import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/features/watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/helpers/overlay_action.dart';
 import 'package:anikki/core/widgets/time_until_date.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_file_tile.dart';
