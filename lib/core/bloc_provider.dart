@@ -75,12 +75,10 @@ class AnikkiBlocProvider extends StatelessWidget {
           providers: [
             BlocProvider(
               create: (context) {
-                final settingsBloc = BlocProvider.of<SettingsBloc>(context);
                 final watchListBloc = BlocProvider.of<WatchListBloc>(context);
 
                 return NewsBloc(
                   anilist: anilist,
-                  settingsBloc: settingsBloc,
                   watchListBloc: watchListBloc,
                 )..add(
                     NewsRequested(range: NewsBloc.initalDateRange),

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:anikki/features/news/domain/domain.dart';
 import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/helpers/logger.dart';
 
 part 'news_event.dart';
@@ -21,7 +20,6 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         .copyWith(hour: 23, minute: 59, second: 59),
   );
 
-  final SettingsBloc settingsBloc;
   final WatchListBloc watchListBloc;
   late final NewsRepository repository;
 
@@ -31,7 +29,6 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
 
   NewsBloc({
     required Anilist anilist,
-    required this.settingsBloc,
     required this.watchListBloc,
   }) : super(
           NewsEmpty(range: initalDateRange),
