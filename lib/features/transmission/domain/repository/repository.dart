@@ -2,18 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:anikki/core/providers/transmission/errors/errors.dart';
-import 'package:anikki/core/providers/transmission/models/models.dart';
 
-export 'errors/errors.dart';
-export 'models/models.dart';
+import 'package:anikki/features/transmission/domain/models/models.dart';
 
 const kSessionHeaderName = 'X-Transmission-Session-Id';
 
 /// Class to remotely commuincate with a Transmission instance using its RPC api.
-/// 
+///
 /// Documentation for RPC api: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md`
-/// 
+///
 /// Example:
 /// ```dart
 /// /// Instanciate link
@@ -22,11 +19,11 @@ const kSessionHeaderName = 'X-Transmission-Session-Id';
 ///   username: username,
 ///   password: password,
 /// );
-/// 
+///
 /// /// Read current session information
 /// await transmission.getSession();
 /// ```
-/// 
+///
 class Transmission {
   Transmission({
     Uri? uri,
@@ -111,7 +108,7 @@ class Transmission {
   }
 
   /// Inner method to handle CSRF protection protocol
-  /// 
+  ///
   /// More here: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md#231-csrf-protection`
   Future<String> _handle409(
     http.Response response,
@@ -122,7 +119,9 @@ class Transmission {
   }) {
     final sessionId = response.headers[kSessionHeaderName.toLowerCase()];
 
-    if (sessionId == null) throw const FormatException('Could not find Session ID.');
+    if (sessionId == null) {
+      throw const FormatException('Could not find Session ID.');
+    }
 
     _sessionId = sessionId;
     return _send(
@@ -134,7 +133,7 @@ class Transmission {
   }
 
   /// Allows to get client session information
-  /// 
+  ///
   /// More here: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md#412-accessors`
   Future<SessionGet> getSession() async {
     final response = await _send(
@@ -147,9 +146,9 @@ class Transmission {
 
   /// Retrieve all the current torrents in the Transmission instance
   /// along with all the fields available
-  /// 
+  ///
   /// More here: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md#33-torrent-accessor-torrent-get`
-  /// 
+  ///
   Future<TorrentGet> getTorrents([List<int>? ids]) async {
     final response = await _send(
       Method.get,
@@ -164,7 +163,7 @@ class Transmission {
 
   /// Adds a torrent to the Transmission instance.
   /// `torrent` can be a magnet URL or a file URL to a .torrent file.
-  /// 
+  ///
   /// More here: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md#34-adding-a-torrent`
   Future<TorrentAdd> addTorrent(String torrent) async {
     final response = await _send(
@@ -185,7 +184,7 @@ class Transmission {
 
   /// Stops a torrent from communicating. Does not remove it from the
   /// Transmission instance.
-  /// 
+  ///
   /// More here: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md#31-torrent-action-requests`
   Future<bool> stopTorrent(int id) async {
     final response = await _send(
@@ -198,9 +197,8 @@ class Transmission {
     return BasicResponse.fromJson(response).result == 'success';
   }
 
-
   /// Starts or resumes a torrent.
-  /// 
+  ///
   /// More here: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md#31-torrent-action-requests`
   Future<bool> startTorrent(int id) async {
     final response = await _send(
@@ -214,7 +212,7 @@ class Transmission {
   }
 
   /// Removes a torrent from the Transmission instance
-  /// 
+  ///
   /// More here: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md#35-removing-a-torrent`
   Future<bool> removeTorrent(int id, [bool deleteLocal = false]) async {
     final response = await _send(

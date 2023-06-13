@@ -2,9 +2,9 @@ import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/transmission/bloc/transmission_bloc.dart';
+import 'package:anikki/features/transmission/presentation/bloc/transmission_bloc.dart';
 import 'package:anikki/core/widgets/torrent_app_bar.dart';
-import 'package:anikki/features/transmission/widgets/transmission_torrent_tile.dart';
+import 'package:anikki/features/transmission/presentation/widgets/transmission_torrent_tile.dart';
 import 'package:anikki/features/layouts/landscape/layout_card.dart';
 
 class TransmissionView extends StatelessWidget {

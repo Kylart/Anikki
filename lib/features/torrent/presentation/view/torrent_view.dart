@@ -6,7 +6,7 @@ import 'package:anikki/features/layouts/landscape/layout_card.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/domain/domain.dart';
-import 'package:anikki/features/transmission/view/transmission_page.dart';
+import 'package:anikki/features/transmission/presentation/view/transmission_page.dart';
 
 class TorrentView extends StatefulWidget {
   const TorrentView({super.key});

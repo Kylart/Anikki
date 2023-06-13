@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:anikki/core/providers/transmission/transmission.dart';
 
-import 'package:anikki/features/transmission/bloc/transmission_bloc.dart';
-import 'package:anikki/features/transmission/helpers/get_status.dart';
+import 'package:anikki/features/transmission/domain/domain.dart';
+import 'package:anikki/features/transmission/presentation/bloc/transmission_bloc.dart';
 
 class TransmissionTorrentTile extends StatelessWidget {
   const TransmissionTorrentTile({

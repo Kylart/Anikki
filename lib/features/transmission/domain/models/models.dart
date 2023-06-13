@@ -7,3 +7,5 @@ export 'basic_response.dart';
 export 'torrent_get/torrent_get.dart';
 export 'torrent_get/torrent.dart';
 export 'torrent_get/fields.dart';
+
+export 'errors/errors.dart';

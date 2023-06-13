@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:anikki/core/providers/transmission/transmission.dart';
+import 'package:anikki/features/transmission/domain/domain.dart';
 
 class TransmissionWrapper extends Equatable {
   const TransmissionWrapper(this.transmission, this.isAuthorized);

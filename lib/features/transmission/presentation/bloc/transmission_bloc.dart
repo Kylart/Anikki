@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:anikki/core/providers/transmission/transmission.dart';
 
+import 'package:anikki/features/transmission/domain/domain.dart';
 import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/domain/models/torrent_type.dart';
 import 'package:anikki/core/helpers/logger.dart';

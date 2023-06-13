@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/domain/models/transmission_wrapper.dart';
-import 'package:anikki/features/transmission/bloc/transmission_bloc.dart';
-import 'package:anikki/features/transmission/view/transmission_view.dart';
+import 'package:anikki/features/transmission/presentation/bloc/transmission_bloc.dart';
+import 'package:anikki/features/transmission/presentation/view/transmission_view.dart';
 import 'package:anikki/core/widgets/error_tile.dart';
 
 class TransmissionPage extends StatelessWidget {
