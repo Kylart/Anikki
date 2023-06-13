@@ -3,8 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:protocol_handler/protocol_handler.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'package:anikki/anikki.dart';
 import 'package:anikki/core/helpers/desktop_hooks.dart';
-import 'package:anikki/main.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 
 mixin AnilistAuthMixin on State<Anikki>, ProtocolListener {
