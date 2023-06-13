@@ -6,7 +6,7 @@ import 'package:anikki/core/widgets/error_tile.dart';
 import 'package:anikki/features/search/presentation/widgets/anikki_search_bar.dart';
 import 'package:anikki/features/search/presentation/bloc/search_bloc.dart';
 import 'package:anikki/features/search/presentation/widgets/search_results.dart';
-import 'package:anikki/core/helpers/screen_format.dart';
+import 'package:anikki/features/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/core/widgets/loader.dart';
 
 class SearchView extends StatefulWidget {

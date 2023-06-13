@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/core/helpers/screen_format.dart';
+import 'package:anikki/features/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/downloader/presentation/view/downloader_view.dart';
 

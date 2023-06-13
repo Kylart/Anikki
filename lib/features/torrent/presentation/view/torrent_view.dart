@@ -2,7 +2,7 @@ import 'package:anikki/features/qbittorrent/presentation/view/qbittorrent_page.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/features/layouts/landscape/layout_card.dart';
+import 'package:anikki/features/layouts/presentation/widgets/landscape/layout_card.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/domain/domain.dart';

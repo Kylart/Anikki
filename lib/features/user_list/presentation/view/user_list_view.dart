@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/features/anilist_watch_list/watch_list.dart';
 import 'package:anikki/features/library/library.dart';
-import 'package:anikki/features/layouts/landscape/layout_card.dart';
+import 'package:anikki/features/layouts/presentation/widgets/landscape/layout_card.dart';
 import 'package:anikki/features/user_list/presentation/widgets/user_list_app_bar.dart';
 
 class UserListView extends StatefulWidget {

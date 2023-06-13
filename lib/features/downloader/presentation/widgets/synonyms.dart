@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
-import 'package:anikki/core/helpers/screen_format.dart';
+import 'package:anikki/features/layouts/shared/helpers/helpers.dart';
 
 class Synonyms extends StatelessWidget {
   Synonyms({

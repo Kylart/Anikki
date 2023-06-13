@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/torrent/torrent.dart';
-import 'package:anikki/features/layouts/landscape/custom_app_bar.dart';
-import 'package:anikki/features/layouts/landscape/layout_card.dart';
+import 'package:anikki/features/layouts/presentation/widgets/landscape/custom_app_bar.dart';
+import 'package:anikki/features/layouts/presentation/widgets/landscape/layout_card.dart';
 import 'package:anikki/features/user_list/presentation/view/user_list_view.dart';
 import 'package:anikki/features/news/news.dart';
 

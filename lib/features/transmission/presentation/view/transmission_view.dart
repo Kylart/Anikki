@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/features/transmission/presentation/bloc/transmission_bloc.dart';
 import 'package:anikki/core/widgets/torrent_app_bar.dart';
 import 'package:anikki/features/transmission/presentation/widgets/transmission_torrent_tile.dart';
-import 'package:anikki/features/layouts/landscape/layout_card.dart';
+import 'package:anikki/features/layouts/presentation/widgets/landscape/layout_card.dart';
 
 class TransmissionView extends StatelessWidget {
   const TransmissionView({super.key});

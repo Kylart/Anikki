@@ -12,10 +12,9 @@ import 'package:protocol_handler/protocol_handler.dart';
 
 import 'package:anikki/core/core.dart';
 
+import 'package:anikki/features/layouts/presentation/view/layout_page.dart';
 import 'package:anikki/features/anilist_auth/shared/mixins/anilist_auth_mixin.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
-import 'package:anikki/features/layouts/landscape/layout.dart';
-import 'package:anikki/features/layouts/portrait/layout.dart';
 
 import 'package:anikki/config/config.dart';
 
@@ -93,13 +92,7 @@ class _AnikkiState extends State<Anikki>
           /// Otherwise it is instanciated on the first use.
           child: BlocBuilder<ConnectivityBloc, ConnectivityState>(
             builder: (context, _) {
-              return LayoutBuilder(
-                builder: ((BuildContext context, BoxConstraints constraints) {
-                  return constraints.maxWidth > breakpoint
-                      ? const LandscapeLayout()
-                      : const PortraitLayout();
-                }),
-              );
+              return const LayoutPage();
             },
           ),
         ),
