@@ -9,7 +9,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:anikki/core/helpers/logger.dart';
-import 'package:anikki/features/video_player/bloc/video_player_bloc.dart';
+import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 import 'package:anikki/core/helpers/desktop_hooks.dart';
 
 part 'player_controls_background.dart';

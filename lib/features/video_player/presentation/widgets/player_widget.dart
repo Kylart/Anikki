@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
-import 'package:anikki/features/video_player/bloc/video_player_bloc.dart';
+import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 import 'package:wakelock/wakelock.dart';
 
 class PlayerWidget extends StatefulWidget {

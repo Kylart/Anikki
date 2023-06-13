@@ -10,7 +10,7 @@ import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/fade_overlay.dart';
 import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/features/video_player/view/anikki_video_player.dart';
+import 'package:anikki/features/video_player/presentation/view/anikki_video_player.dart';
 
 Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   List<LocalFile> results = [];

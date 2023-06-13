@@ -2,12 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/services.dart';
-import 'package:window_manager/window_manager.dart';
 import 'package:media_kit/media_kit.dart';
 
-import 'package:anikki/core/helpers/desktop_hooks.dart';
-import 'package:anikki/core/helpers/logger.dart';
+import 'package:anikki/features/video_player/domain/domain.dart';
+import 'package:anikki/core/core.dart';
 
 part 'video_player_event.dart';
 part 'video_player_state.dart';
@@ -36,29 +34,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     });
 
     on<VideoPlayerToggleFullscreen>((event, emit) {
-      if (state.fullscreen) {
-        if (isDesktop()) {
-          windowManager.setFullScreen(false);
-        } else {
-          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-          SystemChrome.setPreferredOrientations([
-            DeviceOrientation.portraitUp,
-            DeviceOrientation.landscapeLeft,
-            DeviceOrientation.landscapeRight,
-            DeviceOrientation.portraitDown,
-          ]);
-        }
-      } else {
-        if (isDesktop()) {
-          windowManager.setFullScreen(true);
-        } else {
-          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-          SystemChrome.setPreferredOrientations([
-            DeviceOrientation.landscapeLeft,
-            DeviceOrientation.landscapeRight,
-          ]);
-        }
-      }
+      handleFullscreen(state.fullscreen);
 
       emit(
         state.copyWith(
