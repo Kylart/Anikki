@@ -84,6 +84,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         if (isClosed) {
           interval?.cancel();
           interval = null;
+          return;
         }
 
         if (!state.options.autoRefresh) return;
