@@ -11,12 +11,9 @@ part 'news_event.dart';
 part 'news_state.dart';
 
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
-  static final initalDateRange = DateTimeRange(
-    start: DateTime.now().subtract(const Duration(days: 1)),
-    end: DateTime.now()
-        .add(const Duration(days: 1))
-        .copyWith(hour: 23, minute: 59, second: 59),
-  );
+  Timer? interval;
+
+  static final initalDateRange = computeRange();
 
   late final NewsRepository repository;
 
@@ -34,6 +31,8 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     on<NewsRequested>(_onRequested);
 
     on<NewsOptionsChanged>(_onOptionChanged);
+
+    _setUpInterval();
   }
 
   Future<void> _onRequested(
@@ -53,8 +52,14 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         ),
       );
     } on AnilistGetScheduleException catch (e) {
-      emit(NewsError(
-          range: range, message: e.error ?? 'Something went wrong...'));
+      emit(
+        NewsError(
+          range: range,
+          message: e.error ?? 'Something went wrong...',
+        ),
+      );
+    } finally {
+      _setUpInterval();
     }
   }
 
@@ -69,6 +74,26 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         entries: currentState.entries,
         options: event.options,
       ),
+    );
+  }
+
+  void _setUpInterval() {
+    interval = Timer.periodic(
+      const Duration(hours: 6),
+      (timer) {
+        if (isClosed) {
+          interval?.cancel();
+          interval = null;
+        }
+
+        if (!state.options.autoRefresh) return;
+
+        add(
+          NewsRequested(
+            range: computeRange(),
+          ),
+        );
+      },
     );
   }
 }
