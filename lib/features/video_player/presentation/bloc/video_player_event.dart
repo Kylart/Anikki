@@ -7,6 +7,35 @@ abstract class VideoPlayerEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class VideoPlayerPlayRequested extends VideoPlayerEvent {
+  const VideoPlayerPlayRequested({
+    required this.context,
+    required this.sources,
+    required this.onVideoComplete,
+    this.first,
+  });
+
+  final BuildContext context;
+
+  /// First element of the playlist to be played. If `null`, the first element played will
+  /// be the very first element given on `sources`.
+  final LocalFile? first;
+
+  /// Array of URLs.
+  final List<String> sources;
+
+  final void Function(mk.Media media) onVideoComplete;
+
+  @override
+  List<Object> get props => [
+        context,
+        sources,
+        if (first != null) first!,
+      ];
+}
+
+class VideoPlayerClosed extends VideoPlayerEvent {}
+
 class VideoPlayerResetShowTimer extends VideoPlayerEvent {}
 
 class VideoPlayerInit extends VideoPlayerEvent {}

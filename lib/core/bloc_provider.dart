@@ -1,8 +1,9 @@
-import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
+import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
+import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
@@ -41,6 +42,9 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DownloaderBloc(nyaa),
+        ),
+        BlocProvider(
+          create: (context) => VideoPlayerBloc(),
         ),
         BlocProvider(
           create: (context) {

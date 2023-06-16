@@ -8,9 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:anikki/core/helpers/logger.dart';
+import 'package:anikki/core/core.dart'; 
 import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
-import 'package:anikki/core/helpers/desktop_hooks.dart';
 
 part 'player_controls_background.dart';
 part 'player_movable_controls.dart';
@@ -37,43 +36,39 @@ class PlayerControls extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 600;
 
-    return BlocBuilder<VideoPlayerBloc, VideoPlayerState>(
-      builder: (context, state) {
-        return PlayerControlsShortcuts(
-          player: player,
-          child: PlayerCursorHandler(
-            player: player,
-            child: PlayerControlsBackground(
-              child: Column(
+    return PlayerControlsShortcuts(
+      player: player,
+      child: PlayerCursorHandler(
+        player: player,
+        child: PlayerControlsBackground(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: PlayerControlsProgress(player: player),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: PlayerControlsProgress(player: player),
+                  if (!isSmallScreen) PlayerControlsVolume(player: player),
+                  PlayerControlsPlayback(
+                    player: player,
+                    dense: isSmallScreen,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (!isSmallScreen) PlayerControlsVolume(player: player),
-                      PlayerControlsPlayback(
-                        player: player,
-                        dense: isSmallScreen,
-                      ),
-                      Row(
-                        children: [
-                          PlayerControlsSubtitles(player: player),
-                          PlayerControlsAudios(player: player),
-                          PlayerControlsStop(player: player),
-                          const PlayerControlsFullscreen(),
-                        ],
-                      ),
+                      PlayerControlsSubtitles(player: player),
+                      PlayerControlsAudios(player: player),
+                      PlayerControlsStop(player: player),
+                      const PlayerControlsFullscreen(),
                     ],
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -7,10 +7,9 @@ import 'package:open_app_file/open_app_file.dart';
 import 'package:path/path.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/core/widgets/fade_overlay.dart';
 import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/features/video_player/presentation/view/anikki_video_player.dart';
+import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 
 Future<List<LocalFile>> retrieveFilesFromPath({required String path}) async {
   List<LocalFile> results = [];
@@ -159,26 +158,25 @@ Future<void> playFile(LocalFile entry, BuildContext context,
     final libraryState =
         BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded;
 
-    AnikkiVideoPlayer player = AnikkiVideoPlayer(
-      onVideoComplete: (media) {
-        /// We have to find the `LocalFile` that was just completed
-        final entry = libraryState.entries.fold<List<LocalFile>>(
-          [],
-          (previousValue, element) => [
-            ...previousValue,
-            ...element.entries.reversed.map((e) => e),
-          ],
-        ).firstWhere(
-            (element) => normalize(element.path) == normalize(media.uri));
+    BlocProvider.of<VideoPlayerBloc>(context).add(
+      VideoPlayerPlayRequested(
+        context: context,
+        sources: libraryState.playlist,
+        first: entry,
+        onVideoComplete: (media) {
+          /// We have to find the `LocalFile` that was just completed
+          final entry = libraryState.entries.fold<List<LocalFile>>(
+            [],
+            (previousValue, element) => [
+              ...previousValue,
+              ...element.entries.reversed.map((e) => e),
+            ],
+          ).firstWhere(
+              (element) => normalize(element.path) == normalize(media.uri));
 
-        updateEntry(context, entry);
-      },
-      first: entry,
-      sources: libraryState.playlist,
-    );
-
-    Navigator.of(context).push(
-      FadeOverlay(child: player.widget()),
+          updateEntry(context, entry);
+        },
+      ),
     );
   }
 }

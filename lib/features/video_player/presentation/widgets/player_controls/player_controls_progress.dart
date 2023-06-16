@@ -23,6 +23,7 @@ class PlayerControlsProgress extends StatelessWidget {
           onSeek: (duration) {
             player.seek(duration);
           },
+          buffered: player.state.buffer,
         );
       },
     );
