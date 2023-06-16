@@ -47,7 +47,7 @@ class NewsView extends StatelessWidget {
                     final currentState = (state as NewsComplete);
                     final entries = filterEntries(
                       currentState.entries,
-                      state.options,
+                      currentState.options,
                       watchList,
                     );
 

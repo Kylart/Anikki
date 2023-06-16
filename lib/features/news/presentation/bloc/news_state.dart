@@ -15,11 +15,11 @@ abstract class NewsState extends Equatable {
 }
 
 class NewsEmpty extends NewsState {
-  const NewsEmpty({required super.range});
+  const NewsEmpty({super.options, required super.range});
 }
 
 class NewsLoading extends NewsState {
-  const NewsLoading({required super.range});
+  const NewsLoading({super.options, required super.range});
 }
 
 class NewsComplete extends NewsState {
@@ -41,7 +41,7 @@ class NewsComplete extends NewsState {
 }
 
 class NewsError extends NewsState {
-  const NewsError({required super.range, required this.message});
+  const NewsError({super.options, required super.range, required this.message});
 
   final String message;
 

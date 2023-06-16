@@ -39,7 +39,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
       NewsRequested event, Emitter<NewsState> emit) async {
     final range = event.range;
 
-    emit(NewsLoading(range: range));
+    emit(NewsLoading(range: range, options: state.options));
 
     try {
       final entries = await repository.getSchedule(range);
@@ -55,6 +55,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
       emit(
         NewsError(
           range: range,
+          options: state.options,
           message: e.error ?? 'Something went wrong...',
         ),
       );
