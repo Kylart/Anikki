@@ -36,11 +36,9 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
     Wakelock.enable();
 
-    Future.microtask(() async {
-      controller = VideoController(widget.player);
-      // Must be created before opening any media. Otherwise, a separate window will be created.
-      setState(() {});
+    controller = VideoController(widget.player);
 
+    Future.microtask(() async {
       await widget.player.open(widget.playlist);
       if (widget.firstIndex != null) {
         await widget.player.jump(widget.firstIndex!);
@@ -66,7 +64,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     widget.onVideoComplete(playlist.medias.elementAt(playlist.index));
 
     Future.microtask(() async {
-      await widget.player.dispose();
+      widget.player.dispose();
     });
 
     super.dispose();

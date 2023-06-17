@@ -30,6 +30,12 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     });
 
     on<VideoPlayerPlayRequested>((event, emit) {
+      emit(
+        state.copyWith(
+          player: mk.Player(),
+        ),
+      );
+
       Navigator.of(event.context).push(
         FadeOverlay(
           child: VideoPlayerView(
@@ -64,6 +70,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         emit(
           state.copyWith(
             controlsHovered: true,
+            displayTapped: false,
           ),
         );
       } else {
@@ -71,6 +78,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         emit(
           state.copyWith(
             controlsHovered: false,
+            displayTapped: false,
           ),
         );
       }
@@ -94,8 +102,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
   void startHideTimer(Emitter<VideoPlayerState> emit) {
     _hideTimer = Timer(
       const Duration(
-        seconds: 1,
-        milliseconds: 500,
+        seconds: 3,
       ),
       () {
         if (!state.controlsHovered && !isClosed) {
