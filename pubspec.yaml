@@ -86,6 +86,7 @@ dependencies:
   html: ^0.15.4
   http: ^0.13.6
   quiver: ^3.2.1
+  youtube_explode_dart: ^1.12.4
 
 dev_dependencies:
   flutter_test:
