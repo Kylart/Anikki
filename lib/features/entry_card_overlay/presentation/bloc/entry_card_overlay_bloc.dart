@@ -1,8 +1,8 @@
-import 'package:anikki/core/core.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/core/core.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/view/entry_card_overlay_view.dart';
 
 part 'entry_card_overlay_state.dart';
@@ -18,15 +18,17 @@ class EntryCardOverlayBloc
     on<EntryCardOverlayClosed>(_onClose);
 
     on<EntryCardOverlayRequested>(_onRequested);
+
+    on<EntryCardOverlayExpanded>(_onExpanded);
   }
 
   void _onClose(
       EntryCardOverlayClosed event, Emitter<EntryCardOverlayState> emit) {
-    if (state is EntryCardOverlayActive) {
-      _closeCurrentOverlay();
+    if (state is! EntryCardOverlayActive) return;
 
-      emit(EntryCardOverlayEmpty());
-    }
+    _closeCurrentOverlay();
+
+    emit(EntryCardOverlayEmpty());
   }
 
   void _onRequested(
@@ -60,6 +62,26 @@ class EntryCardOverlayBloc
         position: position,
         size: overlaySize,
         overlay: overlayEntry,
+      ),
+    );
+  }
+
+  void _onExpanded(
+      EntryCardOverlayExpanded event, Emitter<EntryCardOverlayState> emit) {
+    if (state is! EntryCardOverlayActive) return;
+
+    final screenSize = MediaQuery.of(event.context).size;
+    final overlaySize = Size(screenSize.width * 0.6, screenSize.height * 0.9);
+    final overlayPosition = Offset(
+      (screenSize.width - overlaySize.width) / 2,
+      (screenSize.height - overlaySize.height) / 2,
+    );
+
+    emit(
+      (state as EntryCardOverlayActive).copyWith(
+        isExpanded: true,
+        position: overlayPosition,
+        size: overlaySize,
       ),
     );
   }

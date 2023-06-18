@@ -25,6 +25,8 @@ class EntryCardOverlayMedia extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<EntryCardOverlayBloc, EntryCardOverlayState>(
         builder: (context, state) {
+      final isExpanded = (state as EntryCardOverlayActive).isExpanded;
+
       return Card(
         child: ClipRRect(
           child: BackdropFilter(
@@ -45,10 +47,25 @@ class EntryCardOverlayMedia extends StatelessWidget {
                         : Text(media.anilistInfo.title!.native!),
                     trailing: EntryTag(
                       padding: EdgeInsets.zero,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.expand_more),
-                      ),
+                      child: isExpanded
+                          ? IconButton(
+                              onPressed: () {
+                                BlocProvider.of<EntryCardOverlayBloc>(context)
+                                    .add(
+                                  EntryCardOverlayClosed(),
+                                );
+                              },
+                              icon: const Icon(Icons.close),
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                BlocProvider.of<EntryCardOverlayBloc>(context)
+                                    .add(
+                                  EntryCardOverlayExpanded(context: context),
+                                );
+                              },
+                              icon: const Icon(Icons.expand_rounded),
+                            ),
                     ),
                   ),
                   Padding(
@@ -88,6 +105,7 @@ class EntryCardOverlayMedia extends StatelessWidget {
                         },
                       ).toList(),
                     ),
+                  if (isExpanded) const Expanded(child: SizedBox()),
                 ],
               ),
             ),

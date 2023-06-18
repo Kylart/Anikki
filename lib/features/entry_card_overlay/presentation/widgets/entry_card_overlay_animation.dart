@@ -20,7 +20,8 @@ class EntryCardOverlayAnimation extends StatefulWidget {
       _LibraryEntryCardOverlayAnimationState();
 }
 
-class _LibraryEntryCardOverlayAnimationState extends State<EntryCardOverlayAnimation>
+class _LibraryEntryCardOverlayAnimationState
+    extends State<EntryCardOverlayAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 200),
@@ -50,8 +51,15 @@ class _LibraryEntryCardOverlayAnimationState extends State<EntryCardOverlayAnima
       left: widget.position.dx,
       top: widget.position.dy,
       child: MouseRegion(
-        onExit: (event) => BlocProvider.of<EntryCardOverlayBloc>(context)
-            .add(EntryCardOverlayClosed()),
+        onExit: (event) {
+          final bloc = BlocProvider.of<EntryCardOverlayBloc>(context);
+
+          if (bloc.state is! EntryCardOverlayActive) return;
+
+          if (!(bloc.state as EntryCardOverlayActive).isExpanded) {
+            bloc.add(EntryCardOverlayClosed());
+          }
+        },
         child: ScaleTransition(
           scale: _animation,
           child: Container(
