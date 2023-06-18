@@ -3,14 +3,11 @@ part of 'video_player_bloc.dart';
 
 class VideoPlayerState extends Equatable {
   const VideoPlayerState({
-    required this.player,
     this.hideControls = false,
     this.displayTapped = false,
     this.controlsHovered = false,
     this.fullscreen = false,
   });
-
-  final mk.Player player;
 
   final bool hideControls;
   final bool displayTapped;
@@ -20,7 +17,6 @@ class VideoPlayerState extends Equatable {
 
   @override
   List<Object> get props => [
-        player,
         hideControls,
         displayTapped,
         controlsHovered,
@@ -28,14 +24,12 @@ class VideoPlayerState extends Equatable {
       ];
 
   VideoPlayerState copyWith({
-    mk.Player? player,
     bool? hideControls,
     bool? displayTapped,
     bool? controlsHovered,
     bool? fullscreen,
   }) {
     return VideoPlayerState(
-      player: player ?? this.player,
       hideControls: hideControls ?? this.hideControls,
       displayTapped: displayTapped ?? this.displayTapped,
       controlsHovered: controlsHovered ?? this.controlsHovered,
@@ -47,7 +41,6 @@ class VideoPlayerState extends Equatable {
   String toString() {
     return [
       'VideoPlayerState(',
-      'player: $player',
       'hideControls: $hideControls',
       'displayTapped: $displayTapped',
       'controlsHovered: $controlsHovered',

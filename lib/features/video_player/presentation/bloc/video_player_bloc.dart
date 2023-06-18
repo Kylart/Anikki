@@ -19,9 +19,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
 
   VideoPlayerBloc()
       : super(
-          VideoPlayerState(
-            player: mk.Player(),
-          ),
+          const VideoPlayerState(),
         ) {
     on<VideoPlayerEvent>((event, emit) {
       if (event.runtimeType != VideoPlayerResetShowTimer) {
@@ -30,12 +28,6 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
     });
 
     on<VideoPlayerPlayRequested>((event, emit) {
-      emit(
-        state.copyWith(
-          player: mk.Player(),
-        ),
-      );
-
       Navigator.of(event.context).push(
         FadeOverlay(
           child: VideoPlayerView(

@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:anikki/core/core.dart'; 
+import 'package:anikki/core/core.dart';
 import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 
 part 'player_controls_background.dart';
@@ -20,6 +20,7 @@ part 'player_controls_volume.dart';
 part 'player_controls_progress.dart';
 part 'player_controls_fullscreen.dart';
 part 'player_controls_playback.dart';
+part 'player_controls_play_pause.dart';
 part 'player_controls_subtitles.dart';
 part 'player_controls_audios.dart';
 part 'player_controls_shortcuts.dart';
@@ -67,6 +68,39 @@ class PlayerControls extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class PlayerControlsReduced extends StatelessWidget {
+  const PlayerControlsReduced({
+    super.key,
+    required this.player,
+  });
+
+  final Player player;
+
+  @override
+  Widget build(BuildContext context) {
+    return PlayerCursorHandler(
+      player: player,
+      child: PlayerControlsBackground(
+        nonMovable: true,
+        child: Row(
+          children: [
+            PlayerControlsPlayPause(
+              player: player,
+              dense: true,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: PlayerControlsProgress(player: player),
+              ),
+            ),
+          ],
         ),
       ),
     );
