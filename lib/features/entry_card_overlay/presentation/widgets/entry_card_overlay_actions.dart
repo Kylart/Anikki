@@ -1,13 +1,12 @@
-import 'package:anikki/features/library/domain/models/library_entry.dart';
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_icons/simple_icons.dart';
 
-import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/helpers/overlay_action.dart';
-import 'package:anikki/core/helpers/open_in_browser.dart';
+import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
+import 'package:anikki/features/entry_card_overlay/domain/domain.dart';
+import 'package:anikki/features/library/domain/models/library_entry.dart';
+import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 
 class EntryCardOverlayActions extends StatelessWidget {
   const EntryCardOverlayActions({
@@ -21,11 +20,19 @@ class EntryCardOverlayActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      runSpacing: 8.0,
-      spacing: 8.0,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        EntryTag(
+          padding: EdgeInsets.zero,
+          child: FilledButton.tonalIcon(
+            onPressed: () {},
+            icon: const Icon(Icons.play_arrow),
+            label: const Text('Play'),
+          ),
+        ),
+        const Spacer(),
         EntryTag(
           padding: EdgeInsets.zero,
           child: IconButton(

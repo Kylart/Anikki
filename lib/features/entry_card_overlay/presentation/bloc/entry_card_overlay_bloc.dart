@@ -1,9 +1,9 @@
+import 'package:anikki/core/core.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/entry_card_overlay/presentation/view/entry_card_overlay_page.dart';
-import 'package:anikki/core/helpers/logger.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/view/entry_card_overlay_view.dart';
 
 part 'entry_card_overlay_state.dart';
 part 'entry_card_overlay_event.dart';
@@ -47,24 +47,7 @@ class EntryCardOverlayBloc
 
     final overlayEntry = OverlayEntry(
       builder: (context) {
-        return SafeArea(
-          child: Material(
-            color: Colors.transparent,
-            child: Stack(
-              children: [
-                GestureDetector(
-                  onTap: () => add(EntryCardOverlayClosed()),
-                  child: Container(
-                    color: Colors.black26,
-                  ),
-                ),
-                EntryCardOverlayPage(
-                  child: event.child,
-                ),
-              ],
-            ),
-          ),
-        );
+        return const EntryCardOverlayView();
       },
     );
 
@@ -72,6 +55,7 @@ class EntryCardOverlayBloc
 
     emit(
       EntryCardOverlayActive(
+        media: event.media,
         key: event.key,
         position: position,
         size: overlaySize,

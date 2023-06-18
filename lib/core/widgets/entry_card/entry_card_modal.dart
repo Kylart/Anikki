@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/entry_card_overlay/presentation/widgets/episode_list_no_media.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_actions.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/widgets/episode_list.dart';
 import 'package:anikki/core/helpers/capitalize.dart';
 import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
@@ -106,12 +104,6 @@ class EntryCardModal extends StatelessWidget {
               title: Text('Episodes'),
             ),
             const Divider(),
-            if (media.id == 0 && libraryEntry != null)
-              EpisodeListNoMedia(entry: libraryEntry!)
-            else
-              EpisodeList(
-                media: media,
-              ),
           ],
         ),
       ),
