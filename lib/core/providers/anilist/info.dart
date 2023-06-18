@@ -91,6 +91,17 @@ mixin AnilistInfo on AnilistClient {
           medium
           color
         }
+        trailer {
+          id
+          site
+          thumbnail
+        }
+        streamingEpisodes {
+          title
+          thumbnail
+          url
+          site
+        }
         bannerImage
         genres
         synonyms
