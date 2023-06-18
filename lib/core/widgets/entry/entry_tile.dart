@@ -2,7 +2,6 @@ import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/entry_card_overlay/presentation/helpers/show_overlay.dart';
 import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 
@@ -60,27 +59,27 @@ class _EntryTileState<T> extends State<EntryTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => showOverlay(
-        context: context,
-        media: widget.media,
-        heroTag: widget.heroTag,
-        libraryEntry: widget.libraryEntry,
-        key: key,
-      ),
-      onLongPress: () => showOverlay(
-        context: context,
-        media: widget.media,
-        heroTag: widget.heroTag,
-        libraryEntry: widget.libraryEntry,
-        key: key,
-      ),
-      onSecondaryTapUp: (details) => showOverlay(
-        context: context,
-        media: widget.media,
-        heroTag: widget.heroTag,
-        libraryEntry: widget.libraryEntry,
-        key: key,
-      ),
+      // onTap: () => showOverlay(
+      //   context: context,
+      //   media: widget.media,
+      //   heroTag: widget.heroTag,
+      //   libraryEntry: widget.libraryEntry,
+      //   key: key,
+      // ),
+      // onLongPress: () => showOverlay(
+      //   context: context,
+      //   media: widget.media,
+      //   heroTag: widget.heroTag,
+      //   libraryEntry: widget.libraryEntry,
+      //   key: key,
+      // ),
+      // onSecondaryTapUp: (details) => showOverlay(
+      //   context: context,
+      //   media: widget.media,
+      //   heroTag: widget.heroTag,
+      //   libraryEntry: widget.libraryEntry,
+      //   key: key,
+      // ),
       key: key,
       child: Container(
         decoration: BoxDecoration(
@@ -125,13 +124,14 @@ class _EntryTileState<T> extends State<EntryTile> {
                   height: 35,
                   width: 35,
                   child: IconButton(
-                    onPressed: () => showOverlay(
-                      context: context,
-                      media: widget.media,
-                      heroTag: widget.heroTag,
-                      libraryEntry: widget.libraryEntry,
-                      key: key,
-                    ),
+                    onPressed: () {},
+                    // onPressed: () => showOverlay(
+                    //   context: context,
+                    //   media: widget.media,
+                    //   heroTag: widget.heroTag,
+                    //   libraryEntry: widget.libraryEntry,
+                    //   key: key,
+                    // ),
                     icon: const AnikkiIcon(icon: Icons.more_horiz),
                   ),
                 ),
