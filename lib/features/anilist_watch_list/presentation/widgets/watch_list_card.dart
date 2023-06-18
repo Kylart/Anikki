@@ -1,6 +1,6 @@
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card.dart';
 
@@ -36,7 +36,9 @@ class WatchListCard extends StatelessWidget {
                 ? '-'
                 : entry.score.toString(),
       ),
-      media: entry.media!,
+      media: Media(
+        anilistInfo: entry.media,
+      ),
     );
   }
 }

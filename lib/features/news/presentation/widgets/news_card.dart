@@ -38,7 +38,7 @@ class _NewsCardState extends State<NewsCard> {
 
     return EntryCard(
       heroTag: heroTag,
-      media: widget.entry.media.anilistInfo,
+      media: widget.entry.media,
       cover: EntryCardCover(
         heroTag: heroTag,
         coverImage: widget.entry.media.coverImage,

@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:anikki/core/providers/anilist/anilist.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import 'package:anikki/features/entry_card_overlay/presentation/helpers/show_overlay.dart';
 import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EntryCard extends StatefulWidget {
   const EntryCard({
@@ -17,8 +18,8 @@ class EntryCard extends StatefulWidget {
     this.libraryEntry,
   });
 
-  /// [Fragment$shortMedia] this entry card is about
-  final Fragment$shortMedia media;
+  /// [Media] this entry card is about
+  final Media media;
 
   /// [LibraryEntry] for this card if any
   final LibraryEntry? libraryEntry;
@@ -39,14 +40,9 @@ class _EntryCardState extends State<EntryCard> {
   Timer? debounce;
 
   String get title =>
-      widget.media.title?.userPreferred ??
-      widget.libraryEntry?.entries.first.title ??
-      'N/A';
+      widget.media.title ?? widget.libraryEntry?.entries.first.title ?? 'N/A';
 
-  String? get coverImage =>
-      widget.media.coverImage?.extraLarge ??
-      widget.media.coverImage?.large ??
-      widget.media.coverImage?.medium;
+  String? get coverImage => widget.media.coverImage;
 
   @override
   void dispose() {
@@ -60,12 +56,12 @@ class _EntryCardState extends State<EntryCard> {
 
     return GestureDetector(
       key: key,
-      onTap: () => showOverlay(
-        context: context,
-        media: widget.media,
-        heroTag: widget.heroTag,
-        libraryEntry: widget.libraryEntry,
-        key: key,
+      onTap: () => BlocProvider.of<EntryCardOverlayBloc>(context).add(
+        EntryCardOverlayRequested(
+          media: widget.media,
+          key: key,
+          context: context,
+        ),
       ),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
@@ -73,12 +69,12 @@ class _EntryCardState extends State<EntryCard> {
           debounce = Timer(
             const Duration(milliseconds: 700),
             () {
-              showOverlay(
-                context: context,
-                media: widget.media,
-                heroTag: widget.heroTag,
-                libraryEntry: widget.libraryEntry,
-                key: key,
+              BlocProvider.of<EntryCardOverlayBloc>(context).add(
+                EntryCardOverlayRequested(
+                  media: widget.media,
+                  key: key,
+                  context: context,
+                ),
               );
             },
           );
