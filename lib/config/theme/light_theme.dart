@@ -27,5 +27,5 @@ final lightTheme = FlexThemeData.light(
   swapLegacyOnMaterial3: true,
 
   /// To use the playground font, add GoogleFonts package and uncomment
-  /// fontFamily: GoogleFonts.notoSans().fontFamily,
+  fontFamily: GoogleFonts.overpass().fontFamily,
 );

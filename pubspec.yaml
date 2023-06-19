@@ -87,6 +87,7 @@ dependencies:
   http: ^0.13.6
   quiver: ^3.2.1
   youtube_explode_dart: ^1.12.4
+  google_fonts: ^4.0.4
 
 dev_dependencies:
   flutter_test:

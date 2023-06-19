@@ -27,5 +27,5 @@ final darkTheme = FlexThemeData.dark(
   swapLegacyOnMaterial3: true,
 
   /// To use the Playground font, add GoogleFonts package and uncomment
-  /// fontFamily: GoogleFonts.notoSans().fontFamily,
+  fontFamily: GoogleFonts.overpass().fontFamily,
 );
