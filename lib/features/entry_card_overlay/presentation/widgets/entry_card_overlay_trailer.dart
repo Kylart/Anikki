@@ -1,4 +1,5 @@
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_video_player.dart';
 import 'package:flutter/material.dart';
 
@@ -31,10 +32,15 @@ class _EntryCardOverlayTrailerState extends State<EntryCardOverlayTrailer> {
     return showThumbnail
         ? Stack(
             children: [
-              Positioned.fill(
-                child: Image.network(
-                  thumbnail!,
-                  fit: BoxFit.cover,
+              Center(
+                child: LayoutCard(
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.network(
+                      thumbnail!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
               Center(
