@@ -1,8 +1,8 @@
-import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_media.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_media.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_animation.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_container.dart';
 
@@ -23,7 +23,9 @@ class EntryCardOverlayView extends StatelessWidget {
               child: EntryCardOverlayAnimation(
                 size: currentState.size,
                 position: currentState.position,
-                child: EntryCardOverlayMedia(media: currentState.media),
+                child: EntryCardOverlayMedia(
+                  media: currentState.media,
+                ),
               ),
             );
           case EntryCardOverlayEmpty:
