@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/layouts/presentation/widgets/landscape/layout_card.dart';
+import 'package:anikki/core/widgets/layout_card.dart';
 
 class TorrentCannotLoad extends StatefulWidget {
   const TorrentCannotLoad({

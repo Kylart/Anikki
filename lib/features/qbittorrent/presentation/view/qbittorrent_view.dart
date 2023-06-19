@@ -6,7 +6,7 @@ import 'package:anikki/features/torrent/presentation/shared/widgets/torrent_app_
 import 'package:anikki/features/torrent/presentation/shared/widgets/torrent_cannot_load.dart';
 import 'package:anikki/features/qbittorrent/presentation/bloc/qbittorrent_bloc.dart';
 import 'package:anikki/features/qbittorrent/presentation/widgets/qbittorrent_torrent_tile.dart';
-import 'package:anikki/features/layouts/presentation/widgets/landscape/layout_card.dart';
+import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 
 class QBitTorrentView extends StatelessWidget {

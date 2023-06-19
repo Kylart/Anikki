@@ -5,7 +5,9 @@ class LayoutCard extends StatelessWidget {
 
   final Widget child;
 
-  final borderRadius = const BorderRadius.all(Radius.circular(20));
+  final borderRadius = const BorderRadius.all(
+    Radius.circular(20),
+  );
 
   @override
   Widget build(BuildContext context) {
