@@ -62,7 +62,9 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
             child: IconButton(
               iconSize: 18.0,
               constraints: const BoxConstraints(),
-              onPressed: () {},
+              onPressed: () {
+                openInBrowser(info?.url);
+              },
               icon: const Icon(SimpleIcons.crunchyroll),
             ),
           ),

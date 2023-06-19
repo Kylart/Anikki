@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/view/entry_card_overlay_view.dart';
 
 part 'entry_card_overlay_state.dart';
 part 'entry_card_overlay_event.dart';
@@ -26,15 +25,11 @@ class EntryCardOverlayBloc
       EntryCardOverlayClosed event, Emitter<EntryCardOverlayState> emit) {
     if (state is! EntryCardOverlayActive) return;
 
-    _closeCurrentOverlay();
-
     emit(EntryCardOverlayEmpty());
   }
 
   void _onRequested(
       EntryCardOverlayRequested event, Emitter<EntryCardOverlayState> emit) {
-    _closeCurrentOverlay();
-
     final box = event.key.currentContext?.findRenderObject() as RenderBox;
 
     final widgetSize = _getWidgetSize(box);
@@ -47,21 +42,12 @@ class EntryCardOverlayBloc
       overlaySize: overlaySize,
     );
 
-    final overlayEntry = OverlayEntry(
-      builder: (context) {
-        return const EntryCardOverlayView();
-      },
-    );
-
-    Overlay.of(event.context).insert(overlayEntry);
-
     emit(
       EntryCardOverlayActive(
         media: event.media,
         key: event.key,
         position: position,
         size: overlaySize,
-        overlay: overlayEntry,
       ),
     );
   }
@@ -84,12 +70,6 @@ class EntryCardOverlayBloc
         size: overlaySize,
       ),
     );
-  }
-
-  void _closeCurrentOverlay() {
-    if (state is EntryCardOverlayActive) {
-      (state as EntryCardOverlayActive).overlay.remove();
-    }
   }
 
   Size _getWidgetSize(RenderBox box) {

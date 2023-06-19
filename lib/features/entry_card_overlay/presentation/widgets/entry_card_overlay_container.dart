@@ -13,23 +13,18 @@ class EntryCardOverlayContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Material(
-        color: Colors.transparent,
-        child: Stack(
-          children: [
-            GestureDetector(
-              onTap: () => BlocProvider.of<EntryCardOverlayBloc>(context).add(
-                EntryCardOverlayClosed(),
-              ),
-              child: Container(
-                color: Colors.black26,
-              ),
-            ),
-            child,
-          ],
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () => BlocProvider.of<EntryCardOverlayBloc>(context).add(
+            EntryCardOverlayClosed(),
+          ),
+          child: Container(
+            color: Colors.black26,
+          ),
         ),
-      ),
+        child,
+      ],
     );
   }
 }

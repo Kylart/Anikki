@@ -57,17 +57,17 @@ class EntryCardOverlayEpisode extends StatelessWidget {
                   info: info,
                   index: index,
                 ),
-                if (aired)
+                if (isNextAiringEpisode)
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.next_plan_outlined),
+                  )
+                else if (aired)
                   EntryCardOverlayEpisodeActions(
                     media: media,
                     index: index,
                     entry: entry,
                     info: info,
-                  )
-                else if (isNextAiringEpisode)
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.next_plan_outlined),
                   )
                 else
                   IconButton(

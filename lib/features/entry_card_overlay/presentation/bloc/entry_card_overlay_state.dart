@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'entry_card_overlay_bloc.dart';
 
 abstract class EntryCardOverlayState extends Equatable {
@@ -16,7 +15,6 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
     required this.key,
     required this.position,
     required this.size,
-    required this.overlay,
     this.isExpanded = false,
   });
 
@@ -24,7 +22,6 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
   final GlobalKey key;
   final Offset position;
   final Size size;
-  final OverlayEntry overlay;
   final bool isExpanded;
 
   @override
@@ -33,7 +30,6 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
         key,
         position,
         size,
-        overlay,
         isExpanded,
       ];
 
@@ -42,7 +38,6 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
     GlobalKey? key,
     Offset? position,
     Size? size,
-    OverlayEntry? overlay,
     bool? isExpanded,
   }) {
     return EntryCardOverlayActive(
@@ -50,7 +45,6 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
       key: key ?? this.key,
       position: position ?? this.position,
       size: size ?? this.size,
-      overlay: overlay ?? this.overlay,
       isExpanded: isExpanded ?? this.isExpanded,
     );
   }
