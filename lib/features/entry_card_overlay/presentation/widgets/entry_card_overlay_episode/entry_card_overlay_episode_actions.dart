@@ -28,7 +28,21 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        if (localFile != null)
+        if (localFile != null) ...[
+          IconButton(
+            onPressed: () {
+              BlocProvider.of<LibraryBloc>(context).add(
+                LibraryFileDeleteRequested(
+                  context: context,
+                  file: localFile!,
+                ),
+              );
+            },
+            iconSize: 18.0,
+            constraints: const BoxConstraints(),
+            color: Colors.red,
+            icon: const Icon(Icons.delete_forever_rounded),
+          ),
           Tooltip(
             message: 'Open in Explorer',
             child: IconButton(
@@ -39,8 +53,8 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
               constraints: const BoxConstraints(),
               icon: const Icon(Icons.folder),
             ),
-          )
-        else
+          ),
+        ] else
           IconButton(
             onPressed: () {
               BlocProvider.of<DownloaderBloc>(context).add(
@@ -65,11 +79,27 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
               onPressed: () {
                 openInBrowser(info?.url);
               },
-              icon: const Icon(SimpleIcons.crunchyroll),
+              icon: const Icon(
+                SimpleIcons.crunchyroll,
+                color: Color(0xFFF47521),
+              ),
             ),
           ),
         IconButton.filledTonal(
-          onPressed: () {},
+          onPressed: () {
+            if (localFile != null) {
+              BlocProvider.of<VideoPlayerBloc>(context).add(
+                VideoPlayerPlayRequested(
+                  context: context,
+                  sources: entry!.entries.map((e) => e.path).toList(),
+                  first: localFile,
+                  onVideoComplete: (media) {
+                    updateEntry(context, localFile!);
+                  },
+                ),
+              );
+            }
+          },
           icon: const Icon(Icons.play_arrow),
         ),
       ],

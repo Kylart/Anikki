@@ -31,7 +31,7 @@ class EntryCardOverlayEpisodes extends StatelessWidget {
           physics: const ClampingScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 150,
+            maxCrossAxisExtent: 185,
             childAspectRatio: 0.75,
             crossAxisSpacing: 0,
           ),
