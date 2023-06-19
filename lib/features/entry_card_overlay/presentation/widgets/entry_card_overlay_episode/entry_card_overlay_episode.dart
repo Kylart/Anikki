@@ -1,4 +1,3 @@
-import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
@@ -8,6 +7,7 @@ import 'package:simple_icons/simple_icons.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_completed.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
+import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';

@@ -44,6 +44,7 @@ class EntryCardOverlayBloc
 
     emit(
       EntryCardOverlayActive(
+        rootContext: event.context,
         media: event.media,
         key: event.key,
         position: position,

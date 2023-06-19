@@ -4,9 +4,9 @@ import 'package:simple_icons/simple_icons.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/features/entry_card_overlay/domain/domain.dart';
-import 'package:anikki/features/library/domain/models/library_entry.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
+import 'package:anikki/features/entry_card_overlay/domain/domain.dart';
+import 'package:anikki/features/library/domain/models/models.dart';
 
 class EntryCardOverlayActions extends StatelessWidget {
   const EntryCardOverlayActions({
@@ -27,7 +27,11 @@ class EntryCardOverlayActions extends StatelessWidget {
         EntryTag(
           padding: EdgeInsets.zero,
           child: FilledButton.tonalIcon(
-            onPressed: () {},
+            onPressed: () => playAnyway(
+              context: context,
+              media: media,
+              entry: entry,
+            ),
             icon: const Icon(Icons.play_arrow),
             label: const Text('Play'),
           ),

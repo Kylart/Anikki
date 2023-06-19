@@ -15,9 +15,11 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
     required this.key,
     required this.position,
     required this.size,
+    required this.rootContext,
     this.isExpanded = false,
   });
 
+  final BuildContext rootContext;
   final Media media;
   final GlobalKey key;
   final Offset position;
@@ -26,6 +28,7 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
 
   @override
   List<Object> get props => [
+        rootContext,
         media,
         key,
         position,
@@ -34,6 +37,7 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
       ];
 
   EntryCardOverlayActive copyWith({
+    BuildContext? rootContext,
     Media? media,
     GlobalKey? key,
     Offset? position,
@@ -41,6 +45,7 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
     bool? isExpanded,
   }) {
     return EntryCardOverlayActive(
+      rootContext: rootContext ?? this.rootContext,
       media: media ?? this.media,
       key: key ?? this.key,
       position: position ?? this.position,
