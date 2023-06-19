@@ -110,12 +110,12 @@ class EntryCardOverlayMedia extends StatelessWidget {
                       alignment: WrapAlignment.center,
                       runSpacing: 4.0,
                       spacing: 4.0,
-                      children: media.anilistInfo.genres!.map(
+                      children:
+                          media.anilistInfo.genres!.whereType<String>().map(
                         (genre) {
                           return EntryTag(
                             child: Text(
-                              genre.toString(),
-                              style: const TextStyle(fontSize: 10.0),
+                              genre,
                             ),
                           );
                         },
