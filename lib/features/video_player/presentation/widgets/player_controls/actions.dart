@@ -30,7 +30,6 @@ class ExitAction extends PlayerAction<ExitIntent> {
   @override
   void invoke(covariant ExitIntent intent) {
     final nav = Navigator.of(intent.context);
-    player.dispose();
     nav.pop();
   }
 }

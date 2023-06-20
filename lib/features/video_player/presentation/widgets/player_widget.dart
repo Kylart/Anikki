@@ -63,9 +63,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     final playlist = widget.player.state.playlist;
     widget.onVideoComplete(playlist.medias.elementAt(playlist.index));
 
-    Future.microtask(() async {
-      widget.player.dispose();
-    });
+    widget.player.dispose();
 
     super.dispose();
   }
