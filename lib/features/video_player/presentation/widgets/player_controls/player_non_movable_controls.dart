@@ -26,17 +26,12 @@ class PlayerNonMovableControls extends StatelessWidget {
                 colors: [Colors.black54, Colors.black26],
               ),
             ),
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0,
-                    vertical: 4.0,
-                  ),
-                  child: child,
-                ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 4.0,
               ),
+              child: child,
             ),
           ),
         ),
