@@ -9,6 +9,7 @@ import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_
 import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
+import 'package:path/path.dart';
 
 void playAnyway({
   required BuildContext context,
@@ -63,7 +64,21 @@ void playAnyway({
         first: file,
         sources: playlist?.toList() ?? [],
         onVideoComplete: (media) {
-          updateEntry(ctx, file!);
+          final libraryState = BlocProvider.of<LibraryBloc>(ctx).state;
+
+          if (libraryState is! LibraryLoaded) return;
+
+          /// We have to find the `LocalFile` that was just completed
+          final entry = libraryState.entries.fold<List<LocalFile>>(
+            [],
+            (previousValue, element) => [
+              ...previousValue,
+              ...element.entries.reversed.map((e) => e),
+            ],
+          ).firstWhere(
+              (element) => normalize(element.path) == normalize(media.uri));
+
+          updateEntry(ctx, entry);
         },
       ),
     );
