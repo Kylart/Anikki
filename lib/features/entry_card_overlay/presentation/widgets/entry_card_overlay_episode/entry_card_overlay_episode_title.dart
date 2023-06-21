@@ -5,10 +5,12 @@ class EntryCardOverlayEpisodeTitle extends StatelessWidget {
     super.key,
     required this.info,
     required this.index,
+    this.textAlign = TextAlign.center,
   });
 
   final Fragment$shortMedia$streamingEpisodes? info;
   final int index;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class EntryCardOverlayEpisodeTitle extends StatelessWidget {
         info?.title ?? 'Episode $index',
         maxLines: 2,
         style: Theme.of(context).textTheme.labelLarge,
-        textAlign: TextAlign.center,
+        textAlign: textAlign,
       ),
     );
   }

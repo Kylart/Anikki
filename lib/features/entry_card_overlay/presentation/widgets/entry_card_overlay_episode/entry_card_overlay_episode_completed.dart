@@ -28,12 +28,8 @@ class EntryCardOverlayEpisodeCompleted extends StatelessWidget {
 
         if (!seen) return const SizedBox();
 
-        return const Positioned(
-          top: 5,
-          right: 5,
-          child: EntryCardCompleted(
-            dense: true,
-          ),
+        return const EntryCardCompleted(
+          dense: true,
         );
       },
     );

@@ -1,13 +1,15 @@
 import 'dart:async';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
-import 'package:anikki/features/library/domain/models/library_entry.dart';
-import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_media_portrait.dart';
+import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
+import 'package:anikki/features/library/domain/models/library_entry.dart';
 
 class EntryCard extends StatefulWidget {
   const EntryCard({
@@ -54,55 +56,73 @@ class _EntryCardState extends State<EntryCard> {
   Widget build(BuildContext context) {
     timeDilation = 1.2;
 
-    return GestureDetector(
+    return BlocBuilder<LayoutBloc, LayoutState>(
       key: key,
-      onTap: () => BlocProvider.of<EntryCardOverlayBloc>(context).add(
-        EntryCardOverlayRequested(
-          media: widget.media,
-          key: key,
-          context: context,
-          isExpanded: true,
-        ),
-      ),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) {
-          debounce = Timer(
-            const Duration(milliseconds: 700),
-            () {
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            if (state is LayoutLandscape) {
               BlocProvider.of<EntryCardOverlayBloc>(context).add(
                 EntryCardOverlayRequested(
                   media: widget.media,
                   key: key,
                   context: context,
+                  isExpanded: true,
                 ),
               );
+            } else if (state is LayoutPortrait) {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return EntryCardOverlayMediaPortrait(
+                      media: widget.media,
+                    );
+                  },
+                ),
+              );
+            }
+          },
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onEnter: (_) {
+              debounce = Timer(
+                const Duration(milliseconds: 700),
+                () {
+                  BlocProvider.of<EntryCardOverlayBloc>(context).add(
+                    EntryCardOverlayRequested(
+                      media: widget.media,
+                      key: key,
+                      context: context,
+                    ),
+                  );
+                },
+              );
             },
-          );
-        },
-        onExit: (_) => debounce?.cancel(),
-        child: Column(
-          children: [
-            Expanded(child: widget.cover),
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-              title: Tooltip(
-                message: title,
-                child: Opacity(
-                  opacity: 0.8,
-                  child: Text(
-                    '$title\n',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+            onExit: (_) => debounce?.cancel(),
+            child: Column(
+              children: [
+                Expanded(child: widget.cover),
+                ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  title: Tooltip(
+                    message: title,
+                    child: Opacity(
+                      opacity: 0.8,
+                      child: Text(
+                        '$title\n',
+                        style: Theme.of(context).textTheme.titleSmall,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

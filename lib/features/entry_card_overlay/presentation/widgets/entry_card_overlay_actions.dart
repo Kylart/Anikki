@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_media_portrait.dart';
+import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,31 +33,43 @@ class EntryCardOverlayActions extends StatelessWidget {
     final key = GlobalKey();
 
     final children = [
-      EntryTag(
-        padding: EdgeInsets.zero,
-        child: FilledButton.tonalIcon(
-          onPressed: () => playAnyway(
-            context: context,
-            media: media.anilistInfo,
-            entry: entry,
-          ),
-          icon: const Icon(Icons.play_arrow),
-          label: const Text('Play'),
+      FilledButton.tonalIcon(
+        style: FilledButton.styleFrom(
+            side: BorderSide(color: Theme.of(context).colorScheme.outline)),
+        onPressed: () => playAnyway(
+          context: context,
+          media: media.anilistInfo,
+          entry: entry,
         ),
+        icon: const Icon(Icons.play_arrow),
+        label: const Text('Play'),
       ),
       if (showExpand)
         EntryTag(
           padding: EdgeInsets.zero,
           child: IconButton(
             onPressed: () {
-              BlocProvider.of<EntryCardOverlayBloc>(context).add(
-                EntryCardOverlayRequested(
-                  media: media,
-                  key: key,
-                  context: context,
-                  isExpanded: true,
-                ),
-              );
+              final layout = BlocProvider.of<LayoutBloc>(context).state;
+              if (layout is LayoutLandscape) {
+                BlocProvider.of<EntryCardOverlayBloc>(context).add(
+                  EntryCardOverlayRequested(
+                    media: media,
+                    key: key,
+                    context: context,
+                    isExpanded: true,
+                  ),
+                );
+              } else if (layout is LayoutPortrait) {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) {
+                      return EntryCardOverlayMediaPortrait(
+                        media: media,
+                      );
+                    },
+                  ),
+                );
+              }
             },
             icon: Transform(
               alignment: Alignment.center,

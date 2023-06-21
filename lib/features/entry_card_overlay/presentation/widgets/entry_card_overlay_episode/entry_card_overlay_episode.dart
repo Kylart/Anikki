@@ -6,7 +6,9 @@ import 'package:simple_icons/simple_icons.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_completed.dart';
-import 'package:anikki/core/widgets/layout_card.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_episode/entry_card_overlay_episode_landscape.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_episode/entry_card_overlay_episode_portrait.dart';
+import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
@@ -44,47 +46,32 @@ class EntryCardOverlayEpisode extends StatelessWidget {
     final isNextAiringEpisode =
         nextAiringEpisode != null && nextAiringEpisode.episode == index;
 
-    return LayoutCard(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                EntryCardOverlayEpisodeCover(
-                  episodeCover: episodeCover,
-                ),
-                EntryCardOverlayEpisodeTitle(
-                  info: info,
-                  index: index,
-                ),
-                if (isNextAiringEpisode)
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.next_plan_outlined),
-                  )
-                else if (aired)
-                  EntryCardOverlayEpisodeActions(
-                    media: media,
-                    index: index,
-                    entry: entry,
-                    info: info,
-                  )
-                else
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.unpublished_outlined),
-                  ),
-              ],
-            ),
-            EntryCardOverlayEpisodeCompleted(
-              media: media,
-              index: index,
-            ),
-          ],
-        ),
-      ),
+    return BlocBuilder<LayoutBloc, LayoutState>(
+      builder: (context, state) {
+        if (state is LayoutLandscape) {
+          return EntryCardOverlayEpisodeLandscape(
+            episodeCover: episodeCover,
+            info: info,
+            index: index,
+            isNextAiringEpisode: isNextAiringEpisode,
+            aired: aired,
+            media: media,
+            entry: entry,
+          );
+        } else if (state is LayoutPortrait) {
+          return EntryCardOverlayEpisodePortrait(
+            episodeCover: episodeCover,
+            info: info,
+            index: index,
+            isNextAiringEpisode: isNextAiringEpisode,
+            aired: aired,
+            media: media,
+            entry: entry,
+          );
+        }
+
+        return const SizedBox();
+      },
     );
   }
 }

@@ -7,12 +7,14 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
     required this.index,
     required this.entry,
     required this.info,
+    this.mainAxisSize = MainAxisSize.max,
   });
 
   final Media media;
   final int index;
   final LibraryEntry? entry;
   final Fragment$shortMedia$streamingEpisodes? info;
+  final MainAxisSize mainAxisSize;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisSize: mainAxisSize,
       children: [
         if (localFile != null) ...[
           IconButton(

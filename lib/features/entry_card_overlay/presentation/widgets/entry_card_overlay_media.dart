@@ -77,8 +77,7 @@ class EntryCardOverlayMedia extends StatelessWidget {
                                 alignment: Alignment.center,
                                 transform: Matrix4.rotationY(pi),
                                 child: const Icon(
-                                  CupertinoIcons
-                                      .arrow_up_left_arrow_down_right,
+                                  CupertinoIcons.arrow_up_left_arrow_down_right,
                                 ),
                               ),
                             ),
