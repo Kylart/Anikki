@@ -46,8 +46,8 @@ class LibraryLayout extends StatelessWidget {
 
               return EntryTile(
                 media: entry.media == null
-                    ? Fragment$shortMedia(id: 0)
-                    : entry.media!.anilistInfo,
+                    ? Media(anilistInfo: Fragment$shortMedia(id: 0))
+                    : entry.media!,
                 heroTag: heroTag,
                 subtitle: entry.entries.length == 1
                     ? Text(
