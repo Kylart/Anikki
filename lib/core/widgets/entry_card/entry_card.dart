@@ -61,6 +61,7 @@ class _EntryCardState extends State<EntryCard> {
           media: widget.media,
           key: key,
           context: context,
+          isExpanded: true,
         ),
       ),
       child: MouseRegion(

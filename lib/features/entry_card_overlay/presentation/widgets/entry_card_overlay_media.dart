@@ -38,7 +38,8 @@ class EntryCardOverlayMedia extends StatelessWidget {
 
         return BlocBuilder<EntryCardOverlayBloc, EntryCardOverlayState>(
             builder: (context, state) {
-          final isExpanded = (state as EntryCardOverlayActive).isExpanded;
+          final isExpanded =
+              state is EntryCardOverlayActive ? state.isExpanded : false;
 
           return LayoutCard(
             child: Padding(
@@ -87,7 +88,7 @@ class EntryCardOverlayMedia extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: EntryCardOverlayActions(
-                      media: media.anilistInfo,
+                      media: media,
                       entry: libraryEntry,
                     ),
                   ),

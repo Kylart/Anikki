@@ -51,6 +51,10 @@ class EntryCardOverlayBloc
         size: overlaySize,
       ),
     );
+
+    if (event.isExpanded) {
+      add(EntryCardOverlayExpanded(context: event.context));
+    }
   }
 
   void _onExpanded(

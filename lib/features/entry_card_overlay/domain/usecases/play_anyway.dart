@@ -23,6 +23,13 @@ void playAnyway({
   int? progress;
   LocalFile? file;
 
+  /// If no entry is given, try to find one in the library, we never know...
+  if (entry == null && library is LibraryLoaded) {
+    entry = library.entries.firstWhereOrNull(
+      (element) => element.media?.anilistInfo.id == media?.id,
+    );
+  }
+
   final playlist = library is LibraryLoaded
       ? library.entries.fold<List<String>>(
           [],
@@ -49,14 +56,17 @@ void playAnyway({
     file = entry?.entries
         .firstWhereOrNull((element) => element.episode == progress! + 1);
   } else {
-    file =
-        entry?.entries.firstWhere((element) => element.episode == entry.epMin);
+    if (media?.format == Enum$MediaFormat.MOVIE) {
+      file = entry?.entries
+          .firstWhere((element) => element.episode == entry?.epMin);
+    }
   }
 
   if (file != null) {
-    final ctx = (BlocProvider.of<EntryCardOverlayBloc>(context).state
-            as EntryCardOverlayActive)
-        .rootContext;
+    final overlayState = BlocProvider.of<EntryCardOverlayBloc>(context).state;
+    final ctx = overlayState is EntryCardOverlayActive
+        ? overlayState.rootContext
+        : context;
 
     videoBloc.add(
       VideoPlayerPlayRequested(

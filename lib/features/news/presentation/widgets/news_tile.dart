@@ -36,7 +36,7 @@ class _NewsTileState extends State<NewsTile> {
     }
 
     return EntryTile(
-      media: entry.media.anilistInfo,
+      media: entry.media,
       heroTag: 'news-${entry.media.anilistInfo.id}-${entry.episode}',
       subtitle: Row(
         children: [

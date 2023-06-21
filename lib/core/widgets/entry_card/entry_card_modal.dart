@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_actions.dart';
-import 'package:anikki/core/helpers/capitalize.dart';
-import 'package:anikki/features/library/domain/models/library_entry.dart';
+import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/core/providers/anilist/anilist.dart';
+import 'package:anikki/features/library/domain/models/library_entry.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_actions.dart';
 
 class EntryCardModal extends StatelessWidget {
   const EntryCardModal({
@@ -97,7 +96,7 @@ class EntryCardModal extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: EntryCardOverlayActions(
                 entry: libraryEntry,
-                media: media,
+                media: Media(anilistInfo: media),
               ),
             ),
             const ListTile(

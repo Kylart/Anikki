@@ -43,18 +43,20 @@ class _EntryCardOverlayTrailerState extends State<EntryCardOverlayTrailer> {
                   ),
                 ),
               ),
-              Center(
-                child: IconButton.filledTonal(
-                  onPressed: () => setState(() {
-                    showThumbnail = false;
-                  }),
-                  icon: const Icon(Icons.play_arrow),
+              Positioned.fill(
+                child: Center(
+                  child: IconButton.filledTonal(
+                    onPressed: () => setState(() {
+                      showThumbnail = false;
+                    }),
+                    icon: const Icon(Icons.play_arrow),
+                  ),
                 ),
               )
             ],
           )
         : EntryCardOverlayVideoPlayer(
-            url: 'https://www.${site!}.com/watch?v=${id!}',
-          );
+          url: 'https://www.${site!}.com/watch?v=${id!}',
+        );
   }
 }

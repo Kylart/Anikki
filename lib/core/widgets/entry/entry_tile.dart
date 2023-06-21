@@ -1,9 +1,10 @@
-import 'package:anikki/core/widgets/anikki_icon.dart';
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/features/library/domain/models/library_entry.dart';
+import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
+import 'package:anikki/features/library/domain/models/library_entry.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_actions.dart';
+import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_trailer.dart';
 
 class EntryTile extends StatefulWidget {
   const EntryTile({
@@ -17,8 +18,8 @@ class EntryTile extends StatefulWidget {
     this.showDone = false,
   });
 
-  /// [Fragment$shortMedia] this entry card is about
-  final Fragment$shortMedia media;
+  /// [Media] this entry card is about
+  final Media media;
 
   /// [LibraryEntry] for this card if any
   final LibraryEntry? libraryEntry;
@@ -44,108 +45,64 @@ class EntryTile extends StatefulWidget {
 }
 
 class _EntryTileState<T> extends State<EntryTile> {
-  GlobalKey key = GlobalKey();
-
+  Media get media => widget.media;
   String get title =>
-      widget.media.title?.userPreferred ??
-      widget.libraryEntry?.entries.first.title ??
-      'N/A';
-
-  String? get coverImage =>
-      widget.media.coverImage?.extraLarge ??
-      widget.media.coverImage?.large ??
-      widget.media.coverImage?.medium;
+      media.title ?? widget.libraryEntry?.entries.first.title ?? 'N/A';
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      // onTap: () => showOverlay(
-      //   context: context,
-      //   media: widget.media,
-      //   heroTag: widget.heroTag,
-      //   libraryEntry: widget.libraryEntry,
-      //   key: key,
-      // ),
-      // onLongPress: () => showOverlay(
-      //   context: context,
-      //   media: widget.media,
-      //   heroTag: widget.heroTag,
-      //   libraryEntry: widget.libraryEntry,
-      //   key: key,
-      // ),
-      // onSecondaryTapUp: (details) => showOverlay(
-      //   context: context,
-      //   media: widget.media,
-      //   heroTag: widget.heroTag,
-      //   libraryEntry: widget.libraryEntry,
-      //   key: key,
-      // ),
-      key: key,
-      child: Container(
-        decoration: BoxDecoration(
-          image: widget.media.bannerImage != null
-              ? DecorationImage(
-                  opacity: 0.25,
-                  fit: BoxFit.cover,
-                  image: NetworkImage(widget.media.bannerImage!),
-                )
-              : const DecorationImage(
-                  alignment: Alignment.topCenter,
-                  opacity: 0.25,
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/images/cover_placeholder.jpg'),
-                ),
+    return Container(
+      decoration: BoxDecoration(
+        image: media.anilistInfo.bannerImage != null
+            ? DecorationImage(
+                opacity: 0.25,
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+                image: NetworkImage(media.anilistInfo.bannerImage!),
+              )
+            : const DecorationImage(
+                alignment: Alignment.topCenter,
+                opacity: 0.25,
+                fit: BoxFit.cover,
+                image: AssetImage('assets/images/cover_placeholder.jpg'),
+              ),
+      ),
+      child: ExpansionTile(
+        controlAffinity: ListTileControlAffinity.platform,
+        childrenPadding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+          vertical: 4.0,
         ),
-        child: Column(
-          children: [
-            ListTile(
-              dense: true,
-              isThreeLine: false,
-              title: Text(
-                title,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-              leading: coverImage != null
-                  ? Hero(
-                      tag: widget.heroTag,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(coverImage!),
-                      ),
-                    )
-                  : null,
-              subtitle: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: widget.subtitle,
-              ),
-              trailing: EntryTag(
-                padding: EdgeInsets.zero,
-                child: SizedBox(
-                  height: 35,
-                  width: 35,
-                  child: IconButton(
-                    onPressed: () {},
-                    // onPressed: () => showOverlay(
-                    //   context: context,
-                    //   media: widget.media,
-                    //   heroTag: widget.heroTag,
-                    //   libraryEntry: widget.libraryEntry,
-                    //   key: key,
-                    // ),
-                    icon: const AnikkiIcon(icon: Icons.more_horiz),
-                  ),
+        title: Text(
+          title,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+        ),
+        leading: media.coverImage != null
+            ? Hero(
+                tag: widget.heroTag,
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(media.coverImage!),
                 ),
-              ),
+              )
+            : null,
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: widget.subtitle,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 72.0, bottom: 4.0),
-              child: Row(
+              padding: const EdgeInsets.all(4.0),
+              child: Wrap(
+                alignment: WrapAlignment.start,
                 children: [
                   /// Genres
-                  if (widget.media.genres != null)
-                    ...(widget.media.genres!.length > 1
-                            ? widget.media.genres!.sublist(0, 2)
-                            : widget.media.genres!)
+                  if (media.anilistInfo.genres != null)
+                    ...(media.anilistInfo.genres!.length > 1
+                            ? media.anilistInfo.genres!.sublist(0, 2)
+                            : media.anilistInfo.genres!)
                         .map(
                       (genre) {
                         return EntryTag(
@@ -178,6 +135,30 @@ class _EntryTileState<T> extends State<EntryTile> {
             ),
           ],
         ),
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              EntryCardOverlayActions(
+                media: media,
+                entry: widget.libraryEntry,
+                reversed: true,
+                showExpand: true,
+              ),
+              if (media.anilistInfo.trailer?.id != null &&
+                  media.anilistInfo.trailer?.site == 'youtube' &&
+                  media.anilistInfo.trailer?.thumbnail != null)
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: EntryCardOverlayTrailer(media: media),
+                  ),
+                ),
+            ],
+          )
+        ],
       ),
     );
   }

@@ -1,9 +1,9 @@
+import 'package:anikki/core/core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/features/downloader/presentation/widgets/torrents_list.dart';
 import 'package:anikki/features/library/presentation/widgets/library_layout.dart';
 import 'package:anikki/features/search/presentation/bloc/search_bloc.dart';
-import 'package:anikki/core/helpers/open_in_browser.dart';
 import 'package:anikki/core/widgets/entry/entry_tile.dart';
 
 class SearchResults extends StatefulWidget {
@@ -88,7 +88,7 @@ class _SearchResultsState extends State<SearchResults>
                   children: widget.state.medias!
                       .map(
                         (e) => EntryTile(
-                          media: e,
+                          media: Media(anilistInfo: e),
                           heroTag: 'search-${e.id}',
                         ),
                       )

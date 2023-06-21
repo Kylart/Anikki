@@ -1,7 +1,7 @@
-import 'package:anikki/core/providers/anilist/anilist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/core/core.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/domain/models/models.dart';
 import 'package:anikki/core/widgets/entry/entry_tile.dart';
@@ -34,7 +34,7 @@ class WatchListLayout extends StatelessWidget {
         : CustomListView(
             entries: entries,
             builder: (context, entry) => EntryTile(
-              media: entry.media!,
+              media: Media(anilistInfo: entry.media!),
               heroTag: 'list-${entry.media?.id}',
               subtitle: entry.status == Enum$MediaListStatus.CURRENT &&
                       entry.progress != null
