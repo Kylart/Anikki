@@ -42,10 +42,8 @@ class EntryCardOverlayMedia extends StatelessWidget {
               state is EntryCardOverlayActive ? state.isExpanded : false;
 
           return LayoutCard(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                bottom: 8.0,
-              ),
+            child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
               child: Column(
                 children: [
                   ListTile(
@@ -79,7 +77,8 @@ class EntryCardOverlayMedia extends StatelessWidget {
                                 alignment: Alignment.center,
                                 transform: Matrix4.rotationY(pi),
                                 child: const Icon(
-                                  CupertinoIcons.arrow_up_left_arrow_down_right,
+                                  CupertinoIcons
+                                      .arrow_up_left_arrow_down_right,
                                 ),
                               ),
                             ),
@@ -95,32 +94,40 @@ class EntryCardOverlayMedia extends StatelessWidget {
                   if (media.anilistInfo.trailer?.id != null &&
                       media.anilistInfo.trailer?.site == 'youtube' &&
                       media.anilistInfo.trailer?.thumbnail != null)
-                    Expanded(
+                    Container(
+                      constraints: BoxConstraints(
+                        maxHeight: state is EntryCardOverlayActive
+                            ? isExpanded
+                                ? 350
+                                : state.size.height * 0.5
+                            : 350,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Center(
                           child: EntryCardOverlayTrailer(media: media),
                         ),
                       ),
-                    )
-                  else
-                    const Spacer(),
+                    ),
                   if (media.anilistInfo.genres != null &&
                       media.anilistInfo.genres!.isNotEmpty)
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      runSpacing: 4.0,
-                      spacing: 4.0,
-                      children:
-                          media.anilistInfo.genres!.whereType<String>().map(
-                        (genre) {
-                          return EntryTag(
-                            child: Text(
-                              genre,
-                            ),
-                          );
-                        },
-                      ).toList(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4.0),
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        runSpacing: 4.0,
+                        spacing: 4.0,
+                        children:
+                            media.anilistInfo.genres!.whereType<String>().map(
+                          (genre) {
+                            return EntryTag(
+                              child: Text(
+                                genre,
+                              ),
+                            );
+                          },
+                        ).toList(),
+                      ),
                     ),
                   if (isExpanded)
                     EntryCardOverlayEpisodes(

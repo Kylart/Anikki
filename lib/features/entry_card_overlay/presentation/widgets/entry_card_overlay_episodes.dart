@@ -23,27 +23,25 @@ class EntryCardOverlayEpisodes extends StatelessWidget {
   Widget build(BuildContext context) {
     if (numberOfEpisodes == 0) return const SizedBox();
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: GridView.builder(
-          itemCount: numberOfEpisodes,
-          physics: const ClampingScrollPhysics(),
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 185,
-            childAspectRatio: 0.75,
-            crossAxisSpacing: 0,
-          ),
-          itemBuilder: (context, index) {
-            index = numberOfEpisodes - index;
-            return EntryCardOverlayEpisode(
-              index: index,
-              media: media,
-              entry: entry,
-            );
-          },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: GridView.builder(
+        itemCount: numberOfEpisodes,
+        physics: const ClampingScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 185,
+          childAspectRatio: 0.75,
+          crossAxisSpacing: 0,
         ),
+        itemBuilder: (context, index) {
+          index = numberOfEpisodes - index;
+          return EntryCardOverlayEpisode(
+            index: index,
+            media: media,
+            entry: entry,
+          );
+        },
       ),
     );
   }
