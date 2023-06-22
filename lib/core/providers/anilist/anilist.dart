@@ -1,5 +1,3 @@
-import 'package:graphql/client.dart';
-
 import 'package:anikki/core/providers/anilist/schedule.dart';
 import 'package:anikki/core/providers/anilist/anilist_client.dart';
 import 'package:anikki/core/providers/anilist/auth.dart';
@@ -13,5 +11,5 @@ export 'anilist.dart';
 
 class Anilist extends AnilistClient
     with AnilistAuth, AnilistInfo, AnilistList, AnilistSearch, AnilistSchedule {
-  Anilist({required GraphQLClient client}) : super(client: client);
+  Anilist({required super.client});
 }
