@@ -42,18 +42,18 @@ class EntryCardOverlayEpisodeLandscape extends StatelessWidget {
     return LayoutCard(
       child: InkWell(
         onTap: () {
-          if (localFile != null) {
-            BlocProvider.of<VideoPlayerBloc>(context).add(
-              VideoPlayerPlayRequested(
-                context: context,
-                sources: entry!.entries.map((e) => e.path).toList(),
-                first: localFile,
-                onVideoComplete: (media) {
-                  updateEntry(context, localFile!);
-                },
-              ),
-            );
-          }
+          if (localFile == null) return;
+
+          BlocProvider.of<VideoPlayerBloc>(context).add(
+            VideoPlayerPlayRequested(
+              context: context,
+              sources: entry!.entries.map((e) => e.path).toList(),
+              first: localFile,
+              onVideoComplete: (media) {
+                updateEntry(context, localFile!);
+              },
+            ),
+          );
         },
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8.0),

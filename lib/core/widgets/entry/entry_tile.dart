@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
@@ -73,10 +74,9 @@ class _EntryTileState<T> extends State<EntryTile> {
           horizontal: 8.0,
           vertical: 4.0,
         ),
-        title: Text(
+        title: AutoSizeText(
           title,
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
         ),
         leading: media.coverImage != null
             ? Hero(
