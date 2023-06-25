@@ -52,7 +52,10 @@ class EntryCardOverlayEpisodePortrait extends StatelessWidget {
                   child: Center(
                     child: EntryTag(
                       padding: EdgeInsets.all(4.0),
-                      child: Icon(Icons.play_arrow_rounded, size: 12,),
+                      child: Icon(
+                        Icons.play_arrow_rounded,
+                        size: 12,
+                      ),
                     ),
                   ),
                 ),
@@ -88,6 +91,8 @@ class EntryCardOverlayEpisodePortrait extends StatelessWidget {
               ],
             ),
       onTap: () {
+        if (localFile == null) return;
+
         BlocProvider.of<VideoPlayerBloc>(context).add(
           VideoPlayerPlayRequested(
             context: context,
