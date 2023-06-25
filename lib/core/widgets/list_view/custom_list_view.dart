@@ -17,7 +17,6 @@ class CustomListView<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimationLimiter(
       child: ListView.separated(
-        padding: const EdgeInsets.all(4.0),
         itemCount: entries.length,
         separatorBuilder: (context, index) => const ListViewDivider(),
         itemBuilder: (context, index) {
