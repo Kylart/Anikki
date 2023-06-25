@@ -1,3 +1,4 @@
+import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,10 +41,22 @@ class EntryCardOverlayEpisodePortrait extends StatelessWidget {
 
     return ListTile(
       leading: episodeCover != null
-          ? CircleAvatar(
-              backgroundImage: (episodeCover == null
-                  ? const AssetImage('assets/images/cover_placeholder.jpg')
-                  : NetworkImage(episodeCover!)) as ImageProvider,
+          ? Stack(
+              children: [
+                CircleAvatar(
+                  backgroundImage: (episodeCover == null
+                      ? const AssetImage('assets/images/cover_placeholder.jpg')
+                      : NetworkImage(episodeCover!)) as ImageProvider,
+                ),
+                const Positioned.fill(
+                  child: Center(
+                    child: EntryTag(
+                      padding: EdgeInsets.all(4.0),
+                      child: Icon(Icons.play_arrow_rounded, size: 12,),
+                    ),
+                  ),
+                ),
+              ],
             )
           : null,
       title: EntryCardOverlayEpisodeTitle(
