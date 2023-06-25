@@ -6,11 +6,11 @@ import 'package:simple_icons/simple_icons.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_completed.dart';
+import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_episode/entry_card_overlay_episode_landscape.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_episode/entry_card_overlay_episode_portrait.dart';
 import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/library/domain/models/models.dart';

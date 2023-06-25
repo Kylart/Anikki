@@ -5,8 +5,9 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
     super.key,
     required this.media,
     required this.index,
-    required this.entry,
     required this.info,
+    this.entry,
+    this.localFile,
     this.mainAxisSize = MainAxisSize.max,
   });
 
@@ -15,23 +16,16 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
   final LibraryEntry? entry;
   final Fragment$shortMedia$streamingEpisodes? info;
   final MainAxisSize mainAxisSize;
+  final LocalFile? localFile;
 
   @override
   Widget build(BuildContext context) {
-    LocalFile? localFile =
-        entry?.entries.firstWhereOrNull((element) => element.episode == index);
-
-    if (media.anilistInfo.format == Enum$MediaFormat.MOVIE &&
-        entry != null &&
-        localFile == null) {
-      localFile = entry?.entries.first;
-    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: mainAxisSize,
       children: [
-        if (localFile != null) ...[
+        if (localFile != null)
           IconButton(
             onPressed: () {
               BlocProvider.of<LibraryBloc>(context).add(
@@ -45,19 +39,8 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
             constraints: const BoxConstraints(),
             color: Colors.red,
             icon: const Icon(Icons.delete_forever_rounded),
-          ),
-          Tooltip(
-            message: 'Open in Explorer',
-            child: IconButton(
-              onPressed: () {
-                openFolderInExplorer(context);
-              },
-              iconSize: 18.0,
-              constraints: const BoxConstraints(),
-              icon: const Icon(Icons.folder),
-            ),
-          ),
-        ] else
+          )
+        else
           IconButton(
             onPressed: () {
               BlocProvider.of<DownloaderBloc>(context).add(
@@ -88,23 +71,6 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
               ),
             ),
           ),
-        IconButton.filledTonal(
-          onPressed: () {
-            if (localFile != null) {
-              BlocProvider.of<VideoPlayerBloc>(context).add(
-                VideoPlayerPlayRequested(
-                  context: context,
-                  sources: entry!.entries.map((e) => e.path).toList(),
-                  first: localFile,
-                  onVideoComplete: (media) {
-                    updateEntry(context, localFile!);
-                  },
-                ),
-              );
-            }
-          },
-          icon: const Icon(Icons.play_arrow),
-        ),
       ],
     );
   }

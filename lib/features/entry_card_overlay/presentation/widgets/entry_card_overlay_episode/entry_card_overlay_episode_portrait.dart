@@ -1,8 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_episode/entry_card_overlay_episode.dart';
 import 'package:anikki/features/library/domain/models/models.dart';
+import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 
 class EntryCardOverlayEpisodePortrait extends StatelessWidget {
   const EntryCardOverlayEpisodePortrait({
@@ -26,6 +29,15 @@ class EntryCardOverlayEpisodePortrait extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalFile? localFile =
+        entry?.entries.firstWhereOrNull((element) => element.episode == index);
+
+    if (media.anilistInfo.format == Enum$MediaFormat.MOVIE &&
+        entry != null &&
+        localFile == null) {
+      localFile = entry?.entries.first;
+    }
+
     return ListTile(
       leading: episodeCover != null
           ? CircleAvatar(
@@ -44,6 +56,7 @@ class EntryCardOverlayEpisodePortrait extends StatelessWidget {
               media: media,
               index: index,
               entry: entry,
+              localFile: localFile,
               info: info,
               mainAxisSize: MainAxisSize.min,
             )
@@ -53,14 +66,26 @@ class EntryCardOverlayEpisodePortrait extends StatelessWidget {
       subtitle: isNextAiringEpisode
           ? const Text('Not aired yet')
           : Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              EntryCardOverlayEpisodeCompleted(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                EntryCardOverlayEpisodeCompleted(
                   media: media,
                   index: index,
                 ),
-            ],
+              ],
+            ),
+      onTap: () {
+        BlocProvider.of<VideoPlayerBloc>(context).add(
+          VideoPlayerPlayRequested(
+            context: context,
+            sources: entry!.entries.map((e) => e.path).toList(),
+            first: localFile,
+            onVideoComplete: (media) {
+              updateEntry(context, localFile!);
+            },
           ),
+        );
+      },
     );
   }
 }

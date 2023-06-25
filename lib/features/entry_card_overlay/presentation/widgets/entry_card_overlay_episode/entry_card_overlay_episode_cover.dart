@@ -9,10 +9,12 @@ class EntryCardOverlayEpisodeCover extends StatefulWidget {
   final String? episodeCover;
 
   @override
-  State<EntryCardOverlayEpisodeCover> createState() => _EntryCardOverlayEpisodeCoverState();
+  State<EntryCardOverlayEpisodeCover> createState() =>
+      _EntryCardOverlayEpisodeCoverState();
 }
 
-class _EntryCardOverlayEpisodeCoverState extends State<EntryCardOverlayEpisodeCover> {
+class _EntryCardOverlayEpisodeCoverState
+    extends State<EntryCardOverlayEpisodeCover> {
   bool isError = false;
 
   @override
@@ -35,6 +37,15 @@ class _EntryCardOverlayEpisodeCoverState extends State<EntryCardOverlayEpisodeCo
                   isError = true;
                 });
               },
+            ),
+          ),
+          child: const Center(
+            child: EntryTag(
+              padding: EdgeInsets.all(4.0),
+              child: Icon(
+                Icons.play_arrow_rounded,
+                size: 34,
+              ),
             ),
           ),
         ),
