@@ -52,14 +52,11 @@ void playAnyway({
     progress = watchListEntry.progress;
   }
 
-  if (progress != null) {
-    file = entry?.entries
-        .firstWhereOrNull((element) => element.episode == progress! + 1);
-  } else {
-    if (media?.format == Enum$MediaFormat.MOVIE) {
-      file = entry?.entries
-          .firstWhere((element) => element.episode == entry?.epMin);
-    }
+  file = entry?.entries
+      .firstWhereOrNull((element) => element.episode == (progress ?? 0) + 1);
+
+  if (media?.format == Enum$MediaFormat.MOVIE) {
+    file = entry?.entries.first;
   }
 
   if (file != null) {
