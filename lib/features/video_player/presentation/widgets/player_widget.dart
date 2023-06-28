@@ -56,12 +56,17 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   void dispose() {
-    /// Enabling the screen to sleep again
+    /// Enabling the device to sleep again
     Wakelock.disable();
 
+    final playerState = widget.player.state;
+
     /// Trigger onVideoComplete
-    final playlist = widget.player.state.playlist;
-    widget.onVideoComplete(playlist.medias.elementAt(playlist.index));
+    final playlist = playerState.playlist;
+
+    if (playerState.position.inSeconds / playerState.duration.inSeconds > 0.5) {
+      widget.onVideoComplete(playlist.medias.elementAt(playlist.index));
+    }
 
     widget.player.dispose();
 
@@ -73,7 +78,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     return BlocBuilder<VideoPlayerBloc, VideoPlayerState>(
       builder: (context, state) {
         return Video(
-          /// Pass the [controller] to display the video output.
           controller: controller,
         );
       },
