@@ -54,7 +54,7 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
             },
             iconSize: 18.0,
             constraints: const BoxConstraints(),
-            icon: const Icon(Icons.download_rounded),
+            icon: const Icon(Icons.file_download_outlined),
           ),
         if (info?.url != null && info?.site != null)
           Tooltip(
