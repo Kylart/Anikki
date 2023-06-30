@@ -44,6 +44,9 @@ class DownloaderView extends StatelessWidget {
                       title: Text(
                         'Results for ${currentState.term}',
                       ),
+                      subtitle: currentState.isStreaming
+                        ? const Text('Choose which torrent to stream')
+                        : null,
                       leading: IconButton(
                         onPressed: () {
                           bloc.add(DownloaderClosed(context));

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:open_app_file/open_app_file.dart';
 
-import 'package:anikki/core/core.dart';
+import 'package:anikki/core/core.dart' as core;
+import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
+import 'package:anikki/features/downloader/presentation/widgets/stream_placeholder.dart';
+import 'package:anikki/features/torrent/domain/models/models.dart';
+import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 
 class TorrentTile extends StatelessWidget {
   const TorrentTile({
@@ -10,17 +15,69 @@ class TorrentTile extends StatelessWidget {
     required this.torrent,
   });
 
-  final Torrent torrent;
+  final core.Torrent torrent;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       dense: true,
       onTap: () async {
-        if (isDesktop()) {
-          await OpenAppFile.open(torrent.magnet);
+        final state = (BlocProvider.of<DownloaderBloc>(context).state
+            as DownloaderSuccess);
+        final isStreaming = state.isStreaming;
+
+        void showError() {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return PlatformAlertDialog(
+                  title: const Text('Torrent client not connected'),
+                  content: const Text(
+                      'Please start your torrent client to enable streaming.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Ok'),
+                    ),
+                  ],
+                );
+              });
+        }
+
+        if (isStreaming) {
+          final bloc = BlocProvider.of<TorrentBloc>(context);
+
+          if (bloc.state is TorrentCannotLoad) return showError();
+
+          bloc.add(
+            TorrentAddTorrent(
+              magnet: torrent.magnet,
+              stream: true,
+              callback: (Torrent torrent) {
+                Navigator.of(context).pop();
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      surfaceTintColor: Colors.transparent,
+                      child: StreamPlaceholder(
+                        magnet: torrent.magnet,
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          );
         } else {
-          openInBrowser(torrent.magnet);
+          if (core.isDesktop()) {
+            await OpenAppFile.open(torrent.magnet);
+          } else {
+            core.openInBrowser(torrent.magnet);
+          }
         }
       },
       leading: CircleAvatar(

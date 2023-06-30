@@ -1,3 +1,4 @@
+import 'package:anikki/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,51 +21,69 @@ class _TorrentViewState extends State<TorrentView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TorrentBloc, TorrentState>(
-      builder: (context, state) {
-        final torrentType =
-            BlocProvider.of<SettingsBloc>(context).state.settings.torrentType;
-
-        switch (state.runtimeType) {
-          case TorrentLoaded:
-            final currentState = state as TorrentLoaded;
-
-            return LayoutCard(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TorrentAppBar(
-                    type: torrentType,
-                  ),
-                  Container(
-                    constraints: const BoxConstraints(
-                      maxHeight: 300,
-                    ),
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final torrent = currentState.torrents.elementAt(index);
-
-                        return TorrentTile(torrent: torrent);
-                      },
-                      separatorBuilder: (context, index) => const Divider(
-                        height: 1,
-                      ),
-                      itemCount: currentState.torrents.length,
-                    ),
-                  )
-                ],
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (context, settingsStage) {
+        final settings = settingsStage.settings;
+        return BlocBuilder<TorrentBloc, TorrentState>(
+          builder: (context, state) {
+            BlocProvider.of<TorrentBloc>(context).add(
+              TorrentSettingsUpdated(
+                transmissionSettings:
+                    settings.torrentType == TorrentType.transmission
+                        ? settings.transmissionSettings
+                        : null,
+                qBitTorrentSettings:
+                    settings.torrentType == TorrentType.qbittorrent
+                        ? settings.qBitTorrentSettings
+                        : null,
               ),
             );
 
-          case TorrentCannotLoad:
-            return TorrentCannotLoadWidget(type: torrentType);
+            final torrentType = settings.torrentType;
 
-          case TorrentEmpty:
-          case TorrentInitial:
-          default:
-            return const SizedBox();
-        }
+            switch (state.runtimeType) {
+              case TorrentLoaded:
+                final currentState = state as TorrentLoaded;
+
+                return LayoutCard(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TorrentAppBar(
+                        type: torrentType,
+                      ),
+                      Container(
+                        constraints: const BoxConstraints(
+                          maxHeight: 300,
+                        ),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final torrent =
+                                currentState.torrents.elementAt(index);
+
+                            return TorrentTile(torrent: torrent);
+                          },
+                          separatorBuilder: (context, index) => const Divider(
+                            height: 1,
+                          ),
+                          itemCount: currentState.torrents.length,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+
+              case TorrentCannotLoad:
+                return TorrentCannotLoadWidget(type: torrentType);
+
+              case TorrentEmpty:
+              case TorrentInitial:
+              default:
+                return const SizedBox();
+            }
+          },
+        );
       },
     );
   }

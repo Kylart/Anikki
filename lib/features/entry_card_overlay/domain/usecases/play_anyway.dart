@@ -94,14 +94,14 @@ void playAnyway({
   }
 
   /// Could not find any file on disk for this entry.
-  /// Opening downloader for episode.
-  /// TODO: Update this to setup streaming.
+  /// Opening stream window
   BlocProvider.of<DownloaderBloc>(context).add(
     DownloaderRequested(
       context: context,
       media: media,
       episode: progress != null ? progress + 1 : null,
       entry: entry,
+      isStreaming: true,
     ),
   );
 }

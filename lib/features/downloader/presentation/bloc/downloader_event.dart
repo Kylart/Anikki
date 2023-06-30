@@ -25,6 +25,7 @@ class DownloaderRequested extends DownloaderEvent {
     this.entry,
     this.episode,
     this.title,
+    this.isStreaming = false,
   });
 
   final BuildContext context;
@@ -32,6 +33,7 @@ class DownloaderRequested extends DownloaderEvent {
   final LibraryEntry? entry;
   final int? episode;
   final String? title;
+  final bool isStreaming;
 
   @override
   List<Object> get props => [
@@ -39,6 +41,7 @@ class DownloaderRequested extends DownloaderEvent {
         if (entry != null) entry!,
         if (episode != null) episode!,
         if (title != null) title!,
+        isStreaming,
       ];
 }
 

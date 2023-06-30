@@ -44,6 +44,7 @@ class DownloaderSuccess extends DownloaderState {
     this.media,
     this.entry,
     this.episode,
+    this.isStreaming = false,
   });
 
   /// Term used for research on Nyaa.
@@ -67,6 +68,9 @@ class DownloaderSuccess extends DownloaderState {
   /// Episode number used for this state. Used for smart filtering.
   final int? episode;
 
+  /// Whether the torrent results will be used for download or streaming.
+  final bool isStreaming;
+
   @override
   List<Object> get props => [
         term,
@@ -76,6 +80,7 @@ class DownloaderSuccess extends DownloaderState {
         if (media != null) media!,
         if (entry != null) entry!,
         if (episode != null) episode!,
+        isStreaming,
       ];
 
   @override
@@ -89,6 +94,7 @@ class DownloaderSuccess extends DownloaderState {
       media?.id,
       if (entry != null) entry!,
       if (episode != null) episode!,
+      isStreaming,
       ')',
     ].join(', ');
   }
@@ -101,6 +107,7 @@ class DownloaderSuccess extends DownloaderState {
     Fragment$shortMedia? media,
     LibraryEntry? entry,
     int? episode,
+    bool? isStreaming,
   }) {
     return DownloaderSuccess(
       term: term ?? this.term,
@@ -110,6 +117,7 @@ class DownloaderSuccess extends DownloaderState {
       media: media ?? this.media,
       entry: entry ?? this.entry,
       episode: episode ?? this.episode,
+      isStreaming: isStreaming ?? this.isStreaming,
     );
   }
 }
