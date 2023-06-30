@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/features/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/downloader/presentation/view/downloader_view.dart';
@@ -26,7 +27,12 @@ void showDownloader(BuildContext context, String term) {
       context: context,
       builder: (context) {
         return const Dialog(
-          child: DownloaderView(),
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          child: LayoutCard(
+            child: DownloaderView(),
+          ),
         );
       },
     ).then((value) => bloc.add(const DownloaderClosed(null)));
