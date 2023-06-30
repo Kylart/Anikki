@@ -1,3 +1,4 @@
+import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -43,14 +44,39 @@ class _AnilistAuthViewState extends State<AnilistAuthView> {
         showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              title: const Text('Connected to Anilist'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Close'),
+            return Dialog(
+              shadowColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              surfaceTintColor: Colors.transparent,
+              child: LayoutCard(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 300,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Connected to Anilist!',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Close'),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ],
+              ),
             );
           },
         );
