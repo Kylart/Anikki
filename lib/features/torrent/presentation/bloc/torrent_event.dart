@@ -10,13 +10,10 @@ abstract class TorrentEvent extends Equatable {
 class TorrentDataRequested extends TorrentEvent {}
 
 class TorrentSettingsUpdated extends TorrentEvent {
-  TorrentSettingsUpdated(
-      {this.transmissionSettings, this.qBitTorrentSettings}) {
-    assert(
-      transmissionSettings != null || qBitTorrentSettings != null,
-      'At least one setting type is required',
-    );
-  }
+  const TorrentSettingsUpdated({
+    this.transmissionSettings,
+    this.qBitTorrentSettings,
+  });
 
   final TransmissionSettings? transmissionSettings;
   final QBitTorrentSettings? qBitTorrentSettings;
@@ -68,7 +65,7 @@ class TorrentAddTorrent extends TorrentEvent {
 
   final String magnet;
   final bool stream;
-  final void Function(String path)? callback;
+  final void Function(Torrent torrent)? callback;
 
   @override
   List<Object> get props => [

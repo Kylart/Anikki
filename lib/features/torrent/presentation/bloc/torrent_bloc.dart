@@ -15,6 +15,10 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
 
   Timer? interval;
 
+  bool get isTransmission => repository is TransmissionRepository;
+  bool get isQBitTorrent => repository is QBitTorrentRepository;
+  bool get isEmpty => repository is EmptyRepository;
+
   TorrentBloc(this.repository) : super(TorrentInitial()) {
     on<TorrentEvent>((event, emit) {
       if (event is TorrentDataRequested) return;
@@ -120,5 +124,15 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
   }
 
   Future<void> _onAddTorrent(
-      TorrentAddTorrent event, Emitter<TorrentState> emit) async {}
+      TorrentAddTorrent event, Emitter<TorrentState> emit) async {
+    final torrent = await repository.addTorrent(event.magnet);
+
+    if (event.stream) {
+      await repository.streamTorrent(torrent);
+
+      if (event.callback != null) {
+        event.callback!(torrent);
+      }
+    }
+  }
 }
