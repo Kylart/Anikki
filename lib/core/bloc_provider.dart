@@ -92,7 +92,7 @@ class AnikkiBlocProvider extends StatelessWidget {
                             ? settings.transmissionSettings
                             : null,
                     qBitTorrentSettings:
-                        settings.torrentType == TorrentType.transmission
+                        settings.torrentType == TorrentType.qbittorrent
                             ? settings.qBitTorrentSettings
                             : null,
                   ),
