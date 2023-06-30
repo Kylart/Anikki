@@ -11,6 +11,8 @@ import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/features/settings/bloc/settings_bloc.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
+import 'package:anikki/features/torrent/domain/domain.dart';
+import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 
 class AnikkiBlocProvider extends StatelessWidget {
   const AnikkiBlocProvider({super.key, required this.child});
@@ -73,6 +75,26 @@ class AnikkiBlocProvider extends StatelessWidget {
                 ..add(
                   LibraryUpdateRequested(
                     path: settingsBloc.state.settings.localDirectory,
+                  ),
+                );
+            },
+          ),
+          BlocProvider(
+            create: (context) {
+              final settingsBloc = BlocProvider.of<SettingsBloc>(context);
+              final settings = settingsBloc.state.settings;
+
+              return TorrentBloc(EmptyRepository())
+                ..add(
+                  TorrentSettingsUpdated(
+                    transmissionSettings:
+                        settings.torrentType == TorrentType.transmission
+                            ? settings.transmissionSettings
+                            : null,
+                    qBitTorrentSettings:
+                        settings.torrentType == TorrentType.transmission
+                            ? settings.qBitTorrentSettings
+                            : null,
                   ),
                 );
             },
