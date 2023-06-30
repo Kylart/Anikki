@@ -25,6 +25,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           return const Dialog(
             backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
+            shadowColor: Colors.transparent,
             alignment: Alignment.topCenter,
             child: SearchPage(),
           );
