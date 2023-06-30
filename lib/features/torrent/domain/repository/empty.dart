@@ -2,7 +2,7 @@ import 'package:anikki/features/torrent/domain/domain.dart';
 
 class EmptyRepository extends TorrentRepository {
   @override
-  Future<String> addTorrent(String magnet) {
+  Future<Torrent> addTorrent(String magnet) {
     throw UnimplementedError();
   }
 

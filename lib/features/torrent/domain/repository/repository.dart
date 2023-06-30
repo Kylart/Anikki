@@ -35,7 +35,7 @@ abstract class TorrentRepository {
 
   Future<List<Torrent>> getTorrents();
 
-  Future<String> addTorrent(String magnet);
+  Future<Torrent> addTorrent(String magnet);
 
   Future<bool> stopTorrent(Torrent torrent);
 

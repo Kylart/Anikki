@@ -126,7 +126,7 @@ class TransmissionRepository extends TorrentRepository {
   ///
   /// More here: `https://github.com/transmission/transmission/blob/main/docs/rpc-spec.md#34-adding-a-torrent`
   @override
-  Future<String> addTorrent(String magnet) async {
+  Future<Torrent> addTorrent(String magnet) async {
     final response = await _send(
       tr.Method.add,
       arguments: {
@@ -140,9 +140,13 @@ class TransmissionRepository extends TorrentRepository {
       throw Exception('Could not add torrent - ${result.result}');
     }
 
-    final torrent = result.arguments?.torrentAdded;
+    final torrents = await getTorrents();
+    final torrent = torrents.firstWhere(
+      (element) =>
+          int.tryParse(element.id) == result.arguments?.torrentAdded?.id,
+    );
 
-    return torrent?.id.toString() ?? '';
+    return torrent;
   }
 
   /// Retrieve all the current torrents in the Transmission instance

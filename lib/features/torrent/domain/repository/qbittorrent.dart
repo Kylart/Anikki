@@ -193,7 +193,7 @@ class QBitTorrentRepository extends TorrentRepository {
   ///
   /// Doc: https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#add-new-torrent
   @override
-  Future<String> addTorrent(String magnet) async {
+  Future<Torrent> addTorrent(String magnet) async {
     await _post(
       ApiName.torrents,
       qbit.TorrentsMethod.add.name,
@@ -204,7 +204,12 @@ class QBitTorrentRepository extends TorrentRepository {
       },
     );
 
-    return 'OK';
+    final torrents = await getTorrents();
+    final hash = Uri.parse(magnet).queryParameters['xt'];
+    final torrent = torrents.firstWhere(
+        (element) => Uri.parse(element.magnet).queryParameters['xt'] == hash);
+
+    return torrent;
   }
 
   /// Remove a torrent from the instance
