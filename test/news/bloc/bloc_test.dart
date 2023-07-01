@@ -18,6 +18,17 @@ void main() {
     late NewsBloc bloc;
     late Anilist repository;
 
+    test('has an interval running', () {
+      mockGraphQLClient = generateMockGraphQLClient();
+      repository = Anilist(client: mockGraphQLClient);
+      bloc = NewsBloc(
+        anilist: repository,
+      );
+
+      expect(bloc.interval, isNotNull);
+      expect(bloc.interval?.isActive, isTrue);
+    });
+
     blocTest(
       'emits [NewsLoading, NewsComplete] when [NewsRequested] is added',
       build: () => bloc,
