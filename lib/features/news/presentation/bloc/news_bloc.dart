@@ -79,6 +79,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   }
 
   void _setUpInterval() {
+    interval?.cancel();
     interval = Timer.periodic(
       const Duration(hours: 6),
       (timer) {
