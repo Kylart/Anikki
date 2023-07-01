@@ -15,6 +15,7 @@ void playAnyway({
   required BuildContext context,
   Fragment$shortMedia? media,
   LibraryEntry? entry,
+  int? episode,
 }) {
   final videoBloc = BlocProvider.of<VideoPlayerBloc>(context);
   final library = BlocProvider.of<LibraryBloc>(context).state;
@@ -23,7 +24,9 @@ void playAnyway({
   int? progress;
   LocalFile? file;
 
-  /// If no entry is given, try to find one in the library, we never know...
+  if (episode != null) progress = episode - 1;
+
+  /// If no entry is given, try to find one in the library
   if (entry == null && library is LibraryLoaded) {
     entry = library.entries.firstWhereOrNull(
       (element) => element.media?.anilistInfo.id == media?.id,
@@ -49,7 +52,7 @@ void playAnyway({
       : null;
 
   if (watchListEntry != null) {
-    progress = watchListEntry.progress;
+    progress ??= watchListEntry.progress;
   }
 
   file = entry?.entries
