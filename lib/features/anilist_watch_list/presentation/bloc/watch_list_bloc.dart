@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:anikki/core/providers/anilist/anilist.dart';
+import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/helpers/logger.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
+import 'package:flutter/material.dart';
 
 part 'watch_list_event.dart';
 part 'watch_list_state.dart';
@@ -14,6 +16,8 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
   final Anilist repository;
 
   final StateStreamableSource<AnilistAuthState> authBloc;
+
+  bool get isConnected => authBloc.state is AnilistAuthSuccess;
 
   WatchListBloc({
     required this.repository,
@@ -33,10 +37,9 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
 
     on<WatchListRequested>(_onRequested);
     on<WatchListReset>(_onReset);
+    on<WatchListWatched>(_onUpdateEntry);
 
-    /// When pc is too good, the event arrives before this bloc is even
-    /// created.
-    if (authBloc.state is AnilistAuthSuccess) {
+    if (isConnected) {
       add(WatchListRequested(
           username: (authBloc.state as AnilistAuthSuccess).me.name));
     }
@@ -64,6 +67,53 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
           username: username, message: e.error ?? 'Something went wrong...'));
     } catch (e) {
       emit(WatchListError(username: username, message: e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateEntry(
+      WatchListWatched event, Emitter<WatchListState> emit) async {
+    if (!isConnected) return;
+
+    final entry = event.entry;
+
+    if (entry.media?.anilistInfo.id != null) {
+      final episode = entry.episode ?? 1;
+
+      try {
+        await repository.watchedEntry(
+          episode: episode,
+          mediaId: entry.media!.anilistInfo.id,
+          status: episode == 1 && entry.media?.anilistInfo.episodes != 1
+              ? Enum$MediaListStatus.CURRENT
+              : null,
+        );
+
+        event.scaffold.showSnackBar(
+          SnackBar(
+            content: ListTile(
+              title: const Text('Anilist list updated!'),
+              subtitle:
+                  Text('Updated ${entry.media?.title} with episode $episode.'),
+            ),
+          ),
+        );
+
+        add(
+          WatchListRequested(
+            username: (authBloc.state as AnilistAuthSuccess).me.name,
+          ),
+        );
+      } on AnilistUpdateListException catch (e) {
+        event.scaffold.showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: ListTile(
+              title: Text(e.cause),
+              subtitle: Text('Error was ${e.error}.'),
+            ),
+          ),
+        );
+      }
     }
   }
 }

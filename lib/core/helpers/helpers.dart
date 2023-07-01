@@ -1,4 +1,3 @@
-export 'anilist/anilist.dart';
 export 'anilist/anilist_client.dart';
 export 'anilist/filters/filters.dart';
 

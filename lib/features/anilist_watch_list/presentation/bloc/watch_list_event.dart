@@ -17,3 +17,19 @@ class WatchListRequested extends WatchListEvent {
 }
 
 class WatchListReset extends WatchListEvent {}
+
+class WatchListWatched extends WatchListEvent {
+  const WatchListWatched({
+    required this.entry,
+    required this.scaffold,
+  });
+
+  final LocalFile entry;
+  final ScaffoldMessengerState scaffold;
+
+  @override
+  List<Object> get props => [
+        entry,
+        scaffold,
+      ];
+}

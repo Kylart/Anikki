@@ -1,3 +1,4 @@
+import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,11 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
-import 'package:path/path.dart';
 
 void playAnyway({
   required BuildContext context,
@@ -63,10 +62,8 @@ void playAnyway({
   }
 
   if (file != null) {
-    final overlayState = BlocProvider.of<EntryCardOverlayBloc>(context).state;
-    final ctx = overlayState is EntryCardOverlayActive
-        ? overlayState.rootContext
-        : context;
+    final watchListBloc = BlocProvider.of<WatchListBloc>(context);
+    final scaffold = ScaffoldMessenger.of(context);
 
     videoBloc.add(
       VideoPlayerPlayRequested(
@@ -74,21 +71,14 @@ void playAnyway({
         first: file,
         sources: playlist?.toList() ?? [],
         onVideoComplete: (media) {
-          final libraryState = BlocProvider.of<LibraryBloc>(ctx).state;
-
-          if (libraryState is! LibraryLoaded) return;
-
-          /// We have to find the `LocalFile` that was just completed
-          final entry = libraryState.entries.fold<List<LocalFile>>(
-            [],
-            (previousValue, element) => [
-              ...previousValue,
-              ...element.entries.reversed.map((e) => e),
-            ],
-          ).firstWhere(
-              (element) => normalize(element.path) == normalize(media.uri));
-
-          updateEntry(ctx, entry);
+          LocalFile.createAndSearchMedia(media.uri).then(
+            (entry) => watchListBloc.add(
+              WatchListWatched(
+                entry: entry,
+                scaffold: scaffold,
+              ),
+            ),
+          );
         },
       ),
     );

@@ -24,21 +24,20 @@ class _TorrentViewState extends State<TorrentView> {
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, settingsStage) {
         final settings = settingsStage.settings;
+
+        BlocProvider.of<TorrentBloc>(context).add(
+          TorrentSettingsUpdated(
+            transmissionSettings:
+                settings.torrentType == TorrentType.transmission
+                    ? settings.transmissionSettings
+                    : null,
+            qBitTorrentSettings: settings.torrentType == TorrentType.qbittorrent
+                ? settings.qBitTorrentSettings
+                : null,
+          ),
+        );
         return BlocBuilder<TorrentBloc, TorrentState>(
           builder: (context, state) {
-            BlocProvider.of<TorrentBloc>(context).add(
-              TorrentSettingsUpdated(
-                transmissionSettings:
-                    settings.torrentType == TorrentType.transmission
-                        ? settings.transmissionSettings
-                        : null,
-                qBitTorrentSettings:
-                    settings.torrentType == TorrentType.qbittorrent
-                        ? settings.qBitTorrentSettings
-                        : null,
-              ),
-            );
-
             final torrentType = settings.torrentType;
 
             switch (state.runtimeType) {

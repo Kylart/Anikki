@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
@@ -27,7 +27,9 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
   Widget build(BuildContext context) {
     return BlocListener<TorrentBloc, TorrentState>(
       listener: (context, state) {
-        final bloc = BlocProvider.of<TorrentBloc>(context);
+        final torrentBloc = BlocProvider.of<TorrentBloc>(context);
+        final watchListBloc = BlocProvider.of<WatchListBloc>(context);
+        final scaffold = ScaffoldMessenger.of(context);
         if (state is! TorrentLoaded) return;
 
         final hash = Uri.parse(widget.magnet).queryParameters['xt'];
@@ -41,9 +43,9 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
 
         if (!file.existsSync()) return;
 
-        final minProgress = bloc.isTransmission
+        final minProgress = torrentBloc.isTransmission
             ? 0.1
-            : bloc.isQBitTorrent
+            : torrentBloc.isQBitTorrent
                 ? 0.03
                 : 1;
 
@@ -56,12 +58,11 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
             onVideoComplete: (media) {
               LocalFile.createAndSearchMedia(media.uri).then(
                 (file) {
-                  updateEntry(
-                    context,
-                    file,
+                  watchListBloc.add(
+                    WatchListWatched(entry: file, scaffold: scaffold),
                   );
 
-                  bloc.add(
+                  torrentBloc.add(
                     TorrentRemoveTorrent(torrent, true),
                   );
                 },

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -144,16 +145,24 @@ deleteFile(LocalFile entry, BuildContext context) {
   );
 }
 
-Future<void> playFile(LocalFile entry, BuildContext context,
-    [bool playInside = false]) async {
+Future<void> playFile(
+  LocalFile entry,
+  BuildContext context, [
+  bool playInside = false,
+]) async {
+  final watchListBloc = BlocProvider.of<WatchListBloc>(context);
   if (playInside) {
-    await Future.wait([
-      /// We need to escape the brackets because they are not escaped properly
-      /// by OpenAppFile.
-      OpenAppFile.open(
-          entry.file.path.replaceAll('(', '\\(').replaceAll(')', '\\)')),
-      updateEntry(context, entry),
-    ]);
+    watchListBloc.add(
+      WatchListWatched(
+        entry: entry,
+        scaffold: ScaffoldMessenger.of(context),
+      ),
+    );
+
+    /// We need to escape the brackets because they are not escaped properly
+    /// by OpenAppFile.;
+    await OpenAppFile.open(
+        entry.file.path.replaceAll('(', '\\(').replaceAll(')', '\\)'));
   } else {
     final libraryState =
         BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded;
@@ -174,7 +183,12 @@ Future<void> playFile(LocalFile entry, BuildContext context,
           ).firstWhere(
               (element) => normalize(element.path) == normalize(media.uri));
 
-          updateEntry(context, entry);
+          watchListBloc.add(
+            WatchListWatched(
+              entry: entry,
+              scaffold: ScaffoldMessenger.of(context),
+            ),
+          );
         },
       ),
     );
