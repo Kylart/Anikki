@@ -23,7 +23,7 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
 
     on<WatchListRequested>(_onRequested);
     on<WatchListReset>(_onReset);
-    on<WatchListWatched>(_onUpdateEntry);
+    on<WatchListWatched>(_onWatched);
     on<WatchListAuthUpdated>(_onAuthUpdated);
   }
 
@@ -37,7 +37,10 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
   }
 
   void _onReset(WatchListReset event, Emitter<WatchListState> emit) {
-    emit(const WatchListInitial(username: null));
+    emit(const WatchListInitial(
+      username: null,
+      connected: false,
+    ));
   }
 
   Future<void> _onRequested(
@@ -52,16 +55,33 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
         useCache: false,
       );
 
-      emit(WatchListComplete(username: username, watchList: watchList));
+      emit(
+        WatchListComplete(
+          username: username,
+          watchList: watchList,
+          connected: true,
+        ),
+      );
     } on AnilistGetListException catch (e) {
-      emit(WatchListError(
-          username: username, message: e.error ?? 'Something went wrong...'));
+      emit(
+        WatchListError(
+          username: username,
+          message: e.error ?? 'Something went wrong...',
+          connected: state.connected,
+        ),
+      );
     } catch (e) {
-      emit(WatchListError(username: username, message: e.toString()));
+      emit(
+        WatchListError(
+          username: username,
+          message: e.toString(),
+          connected: state.connected,
+        ),
+      );
     }
   }
 
-  Future<void> _onUpdateEntry(
+  Future<void> _onWatched(
       WatchListWatched event, Emitter<WatchListState> emit) async {
     if (!state.connected) return;
 
