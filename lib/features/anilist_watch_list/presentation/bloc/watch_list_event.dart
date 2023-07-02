@@ -18,6 +18,26 @@ class WatchListRequested extends WatchListEvent {
 
 class WatchListReset extends WatchListEvent {}
 
+class WatchListAuthUpdated extends WatchListEvent {
+  WatchListAuthUpdated({
+    required this.connected,
+    this.username,
+  }) {
+    if (connected) {
+      assert(username != null, 'Cannot be connected without a username.');
+    }
+  }
+
+  final bool connected;
+  final String? username;
+
+  @override
+  List<Object> get props => [
+        connected,
+        if (username != null) username!,
+      ];
+}
+
 class WatchListWatched extends WatchListEvent {
   const WatchListWatched({
     required this.entry,

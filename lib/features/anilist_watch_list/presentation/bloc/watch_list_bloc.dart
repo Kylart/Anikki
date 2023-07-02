@@ -6,7 +6,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/helpers/logger.dart';
-import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:flutter/material.dart';
 
 part 'watch_list_event.dart';
@@ -15,22 +14,9 @@ part 'watch_list_state.dart';
 class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
   final Anilist repository;
 
-  final StateStreamableSource<AnilistAuthState> authBloc;
-
-  bool get isConnected => authBloc.state is AnilistAuthSuccess;
-
-  WatchListBloc({
-    required this.repository,
-    required this.authBloc,
-  }) : super(const WatchListInitial(username: null)) {
-    authBloc.stream.listen((state) {
-      if (state is AnilistAuthSuccess) {
-        add(WatchListRequested(username: state.me.name));
-      } else {
-        add(WatchListReset());
-      }
-    });
-
+  WatchListBloc(
+    this.repository,
+  ) : super(const WatchListInitial(username: null)) {
     on<WatchListEvent>((event, emit) {
       logger.v('WatchList event: ${event.runtimeType}');
     });
@@ -38,10 +24,15 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
     on<WatchListRequested>(_onRequested);
     on<WatchListReset>(_onReset);
     on<WatchListWatched>(_onUpdateEntry);
+    on<WatchListAuthUpdated>(_onAuthUpdated);
+  }
 
-    if (isConnected) {
-      add(WatchListRequested(
-          username: (authBloc.state as AnilistAuthSuccess).me.name));
+  void _onAuthUpdated(
+      WatchListAuthUpdated event, Emitter<WatchListState> emit) {
+    if (event.connected) {
+      add(WatchListRequested(username: event.username!));
+    } else {
+      add(WatchListReset());
     }
   }
 
@@ -72,7 +63,7 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
 
   Future<void> _onUpdateEntry(
       WatchListWatched event, Emitter<WatchListState> emit) async {
-    if (!isConnected) return;
+    if (!state.connected) return;
 
     final entry = event.entry;
 
@@ -100,7 +91,7 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
 
         add(
           WatchListRequested(
-            username: (authBloc.state as AnilistAuthSuccess).me.name,
+            username: state.username!,
           ),
         );
       } on AnilistUpdateListException catch (e) {

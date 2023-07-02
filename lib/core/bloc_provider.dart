@@ -49,6 +49,9 @@ class AnikkiBlocProvider extends StatelessWidget {
           create: (context) => VideoPlayerBloc(),
         ),
         BlocProvider(
+          create: (context) => WatchListBloc(anilist),
+        ),
+        BlocProvider(
           create: (context) {
             return NewsBloc(anilist: anilist)
               ..add(
@@ -59,15 +62,6 @@ class AnikkiBlocProvider extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) {
-              final authBloc = BlocProvider.of<AnilistAuthBloc>(context);
-              return WatchListBloc(
-                authBloc: authBloc,
-                repository: anilist,
-              );
-            },
-          ),
           BlocProvider(
             create: (context) {
               final settingsBloc = BlocProvider.of<SettingsBloc>(context);
@@ -100,7 +94,19 @@ class AnikkiBlocProvider extends StatelessWidget {
             },
           ),
         ],
-        child: child,
+        child: BlocListener<AnilistAuthBloc, AnilistAuthState>(
+          listener: (context, state) {
+            final connected = state is AnilistAuthSuccess;
+
+            BlocProvider.of<WatchListBloc>(context).add(
+              WatchListAuthUpdated(
+                connected: connected,
+                username: connected ? state.me.name : null,
+              ),
+            );
+          },
+          child: child,
+        ),
       ),
     );
   }

@@ -1,12 +1,19 @@
 part of 'watch_list_bloc.dart';
 
 abstract class WatchListState extends Equatable {
-  const WatchListState({required this.username});
+  const WatchListState({
+    required this.username,
+    this.connected = false,
+  });
 
   final String? username;
+  final bool connected;
 
   @override
-  List<Object?> get props => [username];
+  List<Object?> get props => [
+        username,
+        connected,
+      ];
 }
 
 class WatchListInitial extends WatchListState {
@@ -40,6 +47,7 @@ class WatchListComplete extends WatchListState {
   List<Object?> get props => [
         username,
         watchList,
+        connected,
       ];
 
   @override
@@ -57,7 +65,11 @@ class WatchListComplete extends WatchListState {
 }
 
 class WatchListError extends WatchListState {
-  const WatchListError({required super.username, required this.message});
+  const WatchListError({
+    required super.username,
+    super.connected,
+    required this.message,
+  });
 
   final String message;
 
