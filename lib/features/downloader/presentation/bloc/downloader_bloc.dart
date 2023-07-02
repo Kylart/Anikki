@@ -129,10 +129,10 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
     return term;
   }
 
-  List<Torrent> _filterTorrents(List<Torrent> torrents, {int? episode}) {
+  List<NyaaTorrent> _filterTorrents(List<NyaaTorrent> torrents, {int? episode}) {
     if (filter.showAll) return torrents;
 
-    List<Torrent> result = torrents;
+    List<NyaaTorrent> result = torrents;
 
     if (filter.more != null) {
       result = result

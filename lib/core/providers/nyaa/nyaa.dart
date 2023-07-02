@@ -11,9 +11,9 @@ class Nyaa {
   final String baseUrl = 'nyaa.si';
   final Client client = Client();
 
-  Map<String, List<Torrent>> results = LruMap(maximumSize: 10);
+  Map<String, List<NyaaTorrent>> results = LruMap(maximumSize: 10);
 
-  Future<List<Torrent>> search(String term) async {
+  Future<List<NyaaTorrent>> search(String term) async {
     if (results.containsKey(term) && results[term]!.isNotEmpty) {
       return results[term]!;
     }
@@ -46,10 +46,10 @@ class Nyaa {
     );
   }
 
-  Future<List<Torrent>> _getAll({String? term}) async {
+  Future<List<NyaaTorrent>> _getAll({String? term}) async {
     final Map<String, dynamic> firstPage = await _searchPage(term: term);
 
-    List<Torrent> results = firstPage['results'];
+    List<NyaaTorrent> results = firstPage['results'];
     int maxPage = firstPage['maxPage'];
 
     // Current page starts at 2 because we already did one research.

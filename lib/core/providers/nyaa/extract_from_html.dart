@@ -6,7 +6,7 @@ import 'package:anikki/core/providers/nyaa/models/models.dart';
 import 'package:anikki/core/providers/nyaa/errors/nyaa_no_result_exception.dart';
 
 extractFromHtml({required String data, required String baseUrl}) {
-  List<Torrent> results = [];
+  List<NyaaTorrent> results = [];
   Document document = parse(data);
 
   final rawTorrents = document.querySelectorAll('tr');
@@ -20,7 +20,7 @@ extractFromHtml({required String data, required String baseUrl}) {
     final name = nameElement.attributes['title'].toString();
 
     results.add(
-      Torrent(
+      NyaaTorrent(
         id: element.children[1].children[0].attributes['href']
                 ?.replaceAll('/view/', '') ??
             '000',

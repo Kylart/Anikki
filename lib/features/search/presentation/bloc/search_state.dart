@@ -26,7 +26,7 @@ class SearchSuccess extends SearchState {
 
   List<LibraryEntry>? get libraryEntries => result.libraryEntries;
 
-  List<Torrent>? get torrents => result.torrents;
+  List<NyaaTorrent>? get torrents => result.torrents;
 
   List<Query$Search$staff$results>? get staffs => result.staffs;
   List<Query$Search$characters$results>? get characters => result.characters;

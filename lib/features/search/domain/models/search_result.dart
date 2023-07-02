@@ -19,7 +19,7 @@ class SearchResult extends Equatable {
   final List<LibraryEntry>? libraryEntries;
 
   /// [Nyaa] results
-  final List<Torrent>? torrents;
+  final List<NyaaTorrent>? torrents;
 
   /// Anilist related results
   final List<Query$Search$staff$results>? staffs;

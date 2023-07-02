@@ -24,7 +24,7 @@ class SearchRepository {
         _searchAnilist(term),
       ]);
 
-      final torrents = results.first as List<Torrent>;
+      final torrents = results.first as List<NyaaTorrent>;
       final anilistResult =
           results.last as Map<AnilistSearchPart, List<Object>>;
 
@@ -51,7 +51,7 @@ class SearchRepository {
     }
   }
 
-  Future<List<Torrent>> _searchNyaa(String term) async {
+  Future<List<NyaaTorrent>> _searchNyaa(String term) async {
     try {
       return await nyaa.search(term);
     } on NyaaNoResultException {

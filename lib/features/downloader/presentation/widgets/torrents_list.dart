@@ -9,7 +9,7 @@ class TorrentsList extends StatelessWidget {
     required this.torrents,
   });
 
-  final List<Torrent> torrents;
+  final List<NyaaTorrent> torrents;
 
   @override
   Widget build(BuildContext context) {

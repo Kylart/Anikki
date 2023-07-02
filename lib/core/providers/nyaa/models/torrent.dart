@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:anitomy/anitomy.dart';
 
-class Torrent {
+class NyaaTorrent {
   String id;
   String name;
   String date;
@@ -15,7 +15,7 @@ class Torrent {
   String status;
   Anitomy parsed;
 
-  Torrent({
+  NyaaTorrent({
     required this.id,
     required this.name,
     required this.date,
@@ -29,7 +29,7 @@ class Torrent {
     required this.parsed,
   });
 
-  Torrent copyWith({
+  NyaaTorrent copyWith({
     String? id,
     String? name,
     String? date,
@@ -42,7 +42,7 @@ class Torrent {
     String? status,
     Anitomy? parsed,
   }) {
-    return Torrent(
+    return NyaaTorrent(
       id: id ?? this.id,
       name: name ?? this.name,
       date: date ?? this.date,
@@ -73,8 +73,8 @@ class Torrent {
     };
   }
 
-  factory Torrent.fromMap(Map<String, dynamic> map) {
-    return Torrent(
+  factory NyaaTorrent.fromMap(Map<String, dynamic> map) {
+    return NyaaTorrent(
       id: map['id'] as String,
       name: map['name'] as String,
       date: map['date'] as String,
@@ -91,8 +91,8 @@ class Torrent {
 
   String toJson() => json.encode(toMap());
 
-  factory Torrent.fromJson(String source) =>
-      Torrent.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory NyaaTorrent.fromJson(String source) =>
+      NyaaTorrent.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -100,7 +100,7 @@ class Torrent {
   }
 
   @override
-  bool operator ==(covariant Torrent other) {
+  bool operator ==(covariant NyaaTorrent other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&

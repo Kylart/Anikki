@@ -25,7 +25,7 @@ void main() async {
             torrent,
             allOf([
               anything,
-              isA<Torrent>(),
+              isA<NyaaTorrent>(),
             ]));
       }
     });

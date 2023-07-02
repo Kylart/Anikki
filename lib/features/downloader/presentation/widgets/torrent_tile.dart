@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:open_app_file/open_app_file.dart';
 
-import 'package:anikki/core/core.dart' as core;
+import 'package:anikki/core/core.dart';
 import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/downloader/presentation/widgets/stream_placeholder.dart';
 import 'package:anikki/features/torrent/domain/models/models.dart';
@@ -15,7 +15,7 @@ class TorrentTile extends StatelessWidget {
     required this.torrent,
   });
 
-  final core.Torrent torrent;
+  final NyaaTorrent torrent;
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +73,10 @@ class TorrentTile extends StatelessWidget {
             ),
           );
         } else {
-          if (core.isDesktop()) {
+          if (isDesktop()) {
             await OpenAppFile.open(torrent.magnet);
           } else {
-            core.openInBrowser(torrent.magnet);
+            openInBrowser(torrent.magnet);
           }
         }
       },
