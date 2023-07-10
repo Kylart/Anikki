@@ -10,10 +10,20 @@ abstract class TorrentEvent extends Equatable {
 class TorrentDataRequested extends TorrentEvent {}
 
 class TorrentSettingsUpdated extends TorrentEvent {
-  const TorrentSettingsUpdated({
+  TorrentSettingsUpdated({
     this.transmissionSettings,
     this.qBitTorrentSettings,
-  });
+  }) {
+    if (transmissionSettings != null) {
+      assert(qBitTorrentSettings == null,
+          'Cannot have transmission and qbittorrent settings at the same time.');
+    }
+
+    if (qBitTorrentSettings != null) {
+      assert(transmissionSettings == null,
+          'Cannot have transmission and qbittorrent settings at the same time.');
+    }
+  }
 
   final TransmissionSettings? transmissionSettings;
   final QBitTorrentSettings? qBitTorrentSettings;

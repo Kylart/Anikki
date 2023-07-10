@@ -33,6 +33,10 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
     on<TorrentRemoveTorrent>(_onRemoveTorrent);
     on<TorrentAddTorrent>(_onAddTorrent);
 
+    _setUpInterval();
+  }
+
+  void _setUpInterval() {
     interval ??= Timer.periodic(
       const Duration(seconds: 1),
       (timer) {
@@ -62,7 +66,9 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
           path: 'transmission/rpc',
         ),
       );
-    } else if (event.qBitTorrentSettings != null) {
+    }
+
+    if (event.qBitTorrentSettings != null) {
       final settings = event.qBitTorrentSettings as QBitTorrentSettings;
 
       repository = QBitTorrentRepository(
@@ -86,17 +92,21 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
 
   Future<void> _onDataRequested(
       TorrentDataRequested event, Emitter<TorrentState> emit) async {
-    if (repository is EmptyRepository) {
-      interval?.cancel();
-      interval = null;
-      return;
-    }
+    if (repository is EmptyRepository) return;
 
     try {
       final torrents = await repository.getTorrents();
       final loaded = TorrentLoaded(torrents);
 
       emit(loaded.torrents.isEmpty ? TorrentEmpty() : loaded);
+    } on UserIsBannedError {
+      interval?.cancel();
+      interval = null;
+
+      Timer(
+        const Duration(minutes: 5),
+        _setUpInterval,
+      );
     } catch (e) {
       emit(TorrentCannotLoad());
     }
