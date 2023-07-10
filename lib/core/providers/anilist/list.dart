@@ -16,7 +16,7 @@ mixin AnilistList on AnilistClient {
     Enum$MediaListStatus? status,
   }) async {
     try {
-      await client.mutate$UpdateEntry(
+      final result = await client.mutate$UpdateEntry(
         Options$Mutation$UpdateEntry(
           variables: Variables$Mutation$UpdateEntry(
             mediaId: mediaId,
@@ -25,8 +25,12 @@ mixin AnilistList on AnilistClient {
           ),
         ),
       );
+
+      if (result.hasException) throw result.exception!;
     } on GraphQLError catch (e) {
       throw AnilistUpdateListException(error: e.message);
+    } on OperationException catch (e) {
+      throw AnilistUpdateListException(error: e.toString());
     }
   }
 
@@ -47,8 +51,9 @@ mixin AnilistList on AnilistClient {
 
       final result = await client.query$GetLists(
         Options$Query$GetLists(
-            variables: Variables$Query$GetLists(username: username),
-            fetchPolicy: useCache ? null : FetchPolicy.noCache),
+          variables: Variables$Query$GetLists(username: username),
+          fetchPolicy: useCache ? null : FetchPolicy.noCache,
+        ),
       );
 
       if (result.parsedData?.MediaListCollection?.lists == null) {

@@ -1,4 +1,5 @@
-import 'package:anikki/core/providers/anilist/anilist.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/features/library/domain/domain.dart';
 import 'package:graphql/client.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -52,6 +53,15 @@ final shortMediaMock = Fragment$shortMedia(
   id: 20,
 );
 
+final localFileMock = LocalFile(
+  path:
+      'test\\resources\\movies\\[SubsPlease] Kaminaki Sekai no Kamisama Katsudou - 03 (1080p) [0328F445].mkv',
+  media: Media(
+    anilistInfo: shortMediaMock,
+  ),
+  episode: 3,
+);
+
 final airingScheduleMock = Query$AiringSchedule(
   Page: Query$AiringSchedule$Page(
     pageInfo: Query$AiringSchedule$Page$pageInfo(
@@ -77,4 +87,59 @@ final airingScheduleMock = Query$AiringSchedule(
       ),
     ],
   ),
+);
+
+final watchListMock = Query$GetLists(
+  MediaListCollection: Query$GetLists$MediaListCollection(
+    lists: [
+      Query$GetLists$MediaListCollection$lists(
+        entries: [
+          Query$GetLists$MediaListCollection$lists$entries(
+            status: Enum$MediaListStatus.CURRENT,
+          ),
+          Query$GetLists$MediaListCollection$lists$entries(
+            status: Enum$MediaListStatus.CURRENT,
+          ),
+        ],
+      ),
+      Query$GetLists$MediaListCollection$lists(
+        entries: [
+          Query$GetLists$MediaListCollection$lists$entries(
+            status: Enum$MediaListStatus.COMPLETED,
+          ),
+          Query$GetLists$MediaListCollection$lists$entries(
+            status: Enum$MediaListStatus.COMPLETED,
+          ),
+        ],
+      ),
+      Query$GetLists$MediaListCollection$lists(
+        entries: [
+          Query$GetLists$MediaListCollection$lists$entries(
+            status: Enum$MediaListStatus.DROPPED,
+          ),
+        ],
+      ),
+      Query$GetLists$MediaListCollection$lists(
+        entries: [
+          Query$GetLists$MediaListCollection$lists$entries(
+            status: Enum$MediaListStatus.PLANNING,
+          ),
+        ],
+      ),
+      Query$GetLists$MediaListCollection$lists(
+        entries: [
+          Query$GetLists$MediaListCollection$lists$entries(
+            status: Enum$MediaListStatus.PAUSED,
+          ),
+          Query$GetLists$MediaListCollection$lists$entries(
+            status: Enum$MediaListStatus.PAUSED,
+          ),
+        ],
+      ),
+    ],
+  ),
+);
+
+final watchListUpdateMock = Mutation$UpdateEntry(
+  SaveMediaListEntry: Mutation$UpdateEntry$SaveMediaListEntry(id: 1),
 );

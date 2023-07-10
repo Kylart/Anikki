@@ -99,7 +99,7 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
               : null,
         );
 
-        event.scaffold.showSnackBar(
+        event.scaffold?.showSnackBar(
           SnackBar(
             content: ListTile(
               title: const Text('Anilist list updated!'),
@@ -115,7 +115,7 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
           ),
         );
       } on AnilistUpdateListException catch (e) {
-        event.scaffold.showSnackBar(
+        event.scaffold?.showSnackBar(
           SnackBar(
             backgroundColor: Colors.redAccent,
             content: ListTile(

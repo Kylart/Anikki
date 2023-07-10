@@ -41,15 +41,15 @@ class WatchListAuthUpdated extends WatchListEvent {
 class WatchListWatched extends WatchListEvent {
   const WatchListWatched({
     required this.entry,
-    required this.scaffold,
+    this.scaffold,
   });
 
   final LocalFile entry;
-  final ScaffoldMessengerState scaffold;
+  final ScaffoldMessengerState? scaffold;
 
   @override
   List<Object> get props => [
         entry,
-        scaffold,
+        if (scaffold != null) scaffold!,
       ];
 }
