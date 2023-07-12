@@ -14,8 +14,6 @@ void main() {
   /// Shuts off logging except for errors
   Logger.level = Level.error;
 
-  const username = 'Kylart';
-
   group('unit test: WatchList Bloc', () {
     late MockGraphQLClient mockGraphQLClient;
     late WatchListBloc bloc;
