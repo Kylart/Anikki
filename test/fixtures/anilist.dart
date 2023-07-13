@@ -58,8 +58,10 @@ final viewerMock = Query$Viewer(
 );
 
 final shortMediaMock = Fragment$shortMedia(
-  id: 20,
-);
+    id: 20,
+    title: Fragment$shortMedia$title(
+      userPreferred: 'Sakura Trick',
+    ));
 
 final localFileMock = LocalFile(
   path:
