@@ -55,7 +55,6 @@ class EntryCardOverlayActions extends StatelessWidget {
                   EntryCardOverlayRequested(
                     media: media,
                     key: key,
-                    context: context,
                     isExpanded: true,
                   ),
                 );

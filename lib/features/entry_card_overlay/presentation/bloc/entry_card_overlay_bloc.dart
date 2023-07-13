@@ -14,9 +14,9 @@ class EntryCardOverlayBloc
       logger.v('EntryCardOverlayEvent event: ${event.runtimeType}');
     });
 
-    on<EntryCardOverlayClosed>(_onClose);
     on<EntryCardOverlayRequested>(_onRequested);
     on<EntryCardOverlayExpanded>(_onExpanded);
+    on<EntryCardOverlayClosed>(_onClose);
   }
 
   void _onClose(
@@ -30,14 +30,13 @@ class EntryCardOverlayBloc
       EntryCardOverlayRequested event, Emitter<EntryCardOverlayState> emit) {
     emit(
       EntryCardOverlayActive(
-        rootContext: event.context,
         media: event.media,
         key: event.key,
       ),
     );
 
     if (event.isExpanded) {
-      add(EntryCardOverlayExpanded(context: event.context));
+      add(const EntryCardOverlayExpanded());
     }
   }
 

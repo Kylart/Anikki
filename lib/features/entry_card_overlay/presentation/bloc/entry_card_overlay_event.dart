@@ -9,35 +9,23 @@ abstract class EntryCardOverlayEvent extends Equatable {
 }
 
 class EntryCardOverlayExpanded extends EntryCardOverlayEvent {
-  const EntryCardOverlayExpanded({
-    required this.context,
-  });
-
-  final BuildContext context;
-
-  @override
-  List<Object> get props => [
-        context,
-      ];
+  const EntryCardOverlayExpanded();
 }
 
 class EntryCardOverlayRequested extends EntryCardOverlayEvent {
   const EntryCardOverlayRequested({
     required this.media,
     required this.key,
-    required this.context,
     this.isExpanded = false,
   });
 
   final Media media;
   final GlobalKey key;
-  final BuildContext context;
   final bool isExpanded;
 
   @override
   List<Object> get props => [
         key,
-        context,
         media,
         isExpanded,
       ];

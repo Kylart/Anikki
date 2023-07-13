@@ -72,7 +72,7 @@ class EntryCardOverlayMedia extends StatelessWidget {
                               onPressed: () {
                                 BlocProvider.of<EntryCardOverlayBloc>(context)
                                     .add(
-                                  EntryCardOverlayExpanded(context: context),
+                                  const EntryCardOverlayExpanded(),
                                 );
                               },
                               icon: Transform(

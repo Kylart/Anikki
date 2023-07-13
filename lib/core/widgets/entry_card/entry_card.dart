@@ -66,7 +66,6 @@ class _EntryCardState extends State<EntryCard> {
                 EntryCardOverlayRequested(
                   media: widget.media,
                   key: key,
-                  context: context,
                   isExpanded: true,
                 ),
               );
@@ -92,7 +91,6 @@ class _EntryCardState extends State<EntryCard> {
                     EntryCardOverlayRequested(
                       media: widget.media,
                       key: key,
-                      context: context,
                     ),
                   );
                 },
