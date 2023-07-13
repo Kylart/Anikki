@@ -13,8 +13,6 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
   const EntryCardOverlayActive({
     required this.media,
     required this.key,
-    required this.position,
-    required this.size,
     required this.rootContext,
     this.isExpanded = false,
   });
@@ -22,8 +20,6 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
   final BuildContext rootContext;
   final Media media;
   final GlobalKey key;
-  final Offset position;
-  final Size size;
   final bool isExpanded;
 
   @override
@@ -31,8 +27,6 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
         rootContext,
         media,
         key,
-        position,
-        size,
         isExpanded,
       ];
 
@@ -40,16 +34,12 @@ class EntryCardOverlayActive extends EntryCardOverlayState {
     BuildContext? rootContext,
     Media? media,
     GlobalKey? key,
-    Offset? position,
-    Size? size,
     bool? isExpanded,
   }) {
     return EntryCardOverlayActive(
       rootContext: rootContext ?? this.rootContext,
       media: media ?? this.media,
       key: key ?? this.key,
-      position: position ?? this.position,
-      size: size ?? this.size,
       isExpanded: isExpanded ?? this.isExpanded,
     );
   }

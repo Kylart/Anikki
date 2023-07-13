@@ -19,9 +19,11 @@ class EntryCardOverlayMedia extends StatelessWidget {
   const EntryCardOverlayMedia({
     super.key,
     required this.media,
+    required this.size,
   });
 
   final Media media;
+  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +100,7 @@ class EntryCardOverlayMedia extends StatelessWidget {
                         maxHeight: state is EntryCardOverlayActive
                             ? isExpanded
                                 ? 350
-                                : state.size.height * 0.5
+                                : size.height * 0.5
                             : 350,
                       ),
                       child: Padding(

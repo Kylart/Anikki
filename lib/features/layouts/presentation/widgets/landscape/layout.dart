@@ -60,7 +60,11 @@ class LandscapeLayout extends StatelessWidget {
             builder: (context, state) {
           if (state is! EntryCardOverlayActive) return const SizedBox();
 
-          return const EntryCardOverlayView();
+          return EntryCardOverlayView(
+            media: state.media,
+            anchorKey: state.key,
+            isExpanded: state.isExpanded,
+          );
         })
       ],
     );
