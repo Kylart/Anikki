@@ -11,8 +11,19 @@ class DownloaderClose extends DownloaderState {
   const DownloaderClose();
 }
 
+class DownloaderShow extends DownloaderState {
+  const DownloaderShow(this.term);
+
+  final String term;
+
+  @override
+  List<Object> get props => [
+        term,
+      ];
+}
+
 class DownloaderLoading extends DownloaderState {
-  const DownloaderLoading({required this.term});
+  const DownloaderLoading(this.term);
 
   final String term;
 

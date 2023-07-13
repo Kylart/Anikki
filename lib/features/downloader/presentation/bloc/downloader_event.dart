@@ -8,19 +8,11 @@ abstract class DownloaderEvent extends Equatable {
 }
 
 class DownloaderClosed extends DownloaderEvent {
-  const DownloaderClosed(this.context);
-
-  final BuildContext? context;
-
-  @override
-  List<Object> get props => [
-        if (context != null) context!,
-      ];
+  const DownloaderClosed();
 }
 
 class DownloaderRequested extends DownloaderEvent {
   const DownloaderRequested({
-    required this.context,
     required this.media,
     this.entry,
     this.episode,
@@ -28,7 +20,6 @@ class DownloaderRequested extends DownloaderEvent {
     this.isStreaming = false,
   });
 
-  final BuildContext context;
   final Fragment$shortMedia? media;
   final LibraryEntry? entry;
   final int? episode;

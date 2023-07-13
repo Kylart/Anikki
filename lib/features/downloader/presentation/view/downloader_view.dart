@@ -45,11 +45,11 @@ class DownloaderView extends StatelessWidget {
                         'Results for ${currentState.term}',
                       ),
                       subtitle: currentState.isStreaming
-                        ? const Text('Choose which torrent to stream')
-                        : null,
+                          ? const Text('Choose which torrent to stream')
+                          : null,
                       leading: IconButton(
                         onPressed: () {
-                          bloc.add(DownloaderClosed(context));
+                          bloc.add(const DownloaderClosed());
                         },
                         icon: const Icon(Icons.close),
                       ),
@@ -126,7 +126,6 @@ class DownloaderView extends StatelessWidget {
                         onSelected: (value) {
                           bloc.add(
                             DownloaderRequested(
-                              context: context,
                               media: currentState.media,
                               entry: currentState.entry,
                               title: value,

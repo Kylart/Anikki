@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 
 import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/downloader/domain/domain.dart';
-import 'package:anikki/features/downloader/presentation/helpers/show_downloader.dart';
 
 part 'downloader_event.dart';
 part 'downloader_state.dart';
@@ -16,7 +14,6 @@ part 'downloader_state.dart';
 class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
   final Nyaa repository;
 
-  bool isShowing = false;
   DownloaderFilter filter = const DownloaderFilter();
 
   DownloaderBloc(this.repository) : super(const DownloaderClose()) {
@@ -40,13 +37,9 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
       title: event.title,
     );
 
-    if (!isShowing) {
-      showDownloader(event.context, term);
-      isShowing = true;
-    }
-
     try {
-      emit(DownloaderLoading(term: term));
+      emit(DownloaderShow(term));
+      emit(DownloaderLoading(term));
 
       final result = await repository.search(term);
       final filteredTorrents = _filterTorrents(
@@ -85,12 +78,6 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
 
   FutureOr<void> _onDownloaderClose(
       DownloaderClosed event, Emitter<DownloaderState> emit) async {
-    if (event.context != null) {
-      Navigator.pop(event.context!);
-    }
-
-    isShowing = false;
-
     emit(const DownloaderClose());
   }
 
@@ -129,7 +116,8 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
     return term;
   }
 
-  List<NyaaTorrent> _filterTorrents(List<NyaaTorrent> torrents, {int? episode}) {
+  List<NyaaTorrent> _filterTorrents(List<NyaaTorrent> torrents,
+      {int? episode}) {
     if (filter.showAll) return torrents;
 
     List<NyaaTorrent> result = torrents;

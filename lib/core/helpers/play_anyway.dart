@@ -89,7 +89,6 @@ void playAnyway({
   /// Opening stream window
   BlocProvider.of<DownloaderBloc>(context).add(
     DownloaderRequested(
-      context: context,
       media: media,
       episode: progress != null ? progress + 1 : null,
       entry: entry,

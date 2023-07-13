@@ -22,9 +22,10 @@ class TorrentTile extends StatelessWidget {
     return ListTile(
       dense: true,
       onTap: () async {
-        final state = (BlocProvider.of<DownloaderBloc>(context).state
-            as DownloaderSuccess);
-        final isStreaming = state.isStreaming;
+        final state = BlocProvider.of<DownloaderBloc>(context).state;
+
+        final isStreaming =
+            state is DownloaderSuccess ? state.isStreaming : false;
 
         void showError() {
           showDialog(

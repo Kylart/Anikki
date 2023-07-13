@@ -20,7 +20,6 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: mainAxisSize,
@@ -45,7 +44,6 @@ class EntryCardOverlayEpisodeActions extends StatelessWidget {
             onPressed: () {
               BlocProvider.of<DownloaderBloc>(context).add(
                 DownloaderRequested(
-                  context: context,
                   media: media.anilistInfo,
                   episode: index,
                   entry: entry,
