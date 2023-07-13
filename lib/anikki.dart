@@ -1,3 +1,4 @@
+import 'package:anikki/bloc_listeners.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:protocol_handler/protocol_handler.dart';
@@ -41,7 +42,9 @@ class _AnikkiState extends State<Anikki>
           /// Otherwise it is instanciated on the first use.
           child: BlocBuilder<ConnectivityBloc, ConnectivityState>(
             builder: (context, _) {
-              return const LayoutPage();
+              return const BlocListeners(
+                child: LayoutPage(),
+              );
             },
           ),
         ),

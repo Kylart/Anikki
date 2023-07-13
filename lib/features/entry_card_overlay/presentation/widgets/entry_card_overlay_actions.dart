@@ -88,7 +88,6 @@ class EntryCardOverlayActions extends StatelessWidget {
             overlayAction(() {
               BlocProvider.of<DownloaderBloc>(context).add(
                 DownloaderRequested(
-                  context: context,
                   media: media.anilistInfo,
                   entry: entry,
                 ),
