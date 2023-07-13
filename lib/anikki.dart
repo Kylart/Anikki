@@ -6,7 +6,7 @@ import 'package:protocol_handler/protocol_handler.dart';
 import 'package:anikki/config/config.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/features/anilist_auth/shared/mixins/anilist_auth_mixin.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
+import 'package:anikki/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:anikki/features/layouts/presentation/view/layout_page.dart';
 
 class Anikki extends StatefulWidget {

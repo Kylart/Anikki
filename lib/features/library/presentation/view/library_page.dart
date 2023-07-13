@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
 import 'package:anikki/features/library/presentation/view/library_view.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
+import 'package:anikki/features/settings/presentation/bloc/settings_bloc.dart';
 
 class LibraryPage extends StatelessWidget {
   const LibraryPage({super.key});

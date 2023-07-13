@@ -7,7 +7,7 @@ import 'package:anikki/core/models/torrent_type.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/helpers/capitalize.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
+import 'package:anikki/features/settings/presentation/bloc/settings_bloc.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);

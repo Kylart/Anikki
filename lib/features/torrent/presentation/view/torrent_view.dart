@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
+import 'package:anikki/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 import 'package:anikki/features/torrent/presentation/widgets/torrent_app_bar.dart';
 import 'package:anikki/features/torrent/presentation/widgets/torrent_cannot_load.dart';

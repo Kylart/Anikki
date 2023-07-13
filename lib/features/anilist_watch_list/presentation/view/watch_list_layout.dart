@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/settings/bloc/settings_bloc.dart';
+import 'package:anikki/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:anikki/features/settings/domain/models/models.dart';
 import 'package:anikki/core/widgets/entry/entry_tile.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/widgets/watch_list_card.dart';
