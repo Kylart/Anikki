@@ -1,7 +1,7 @@
 part of 'settings_bloc.dart';
 
 class SettingsState extends Equatable {
-  const SettingsState({required this.settings});
+  const SettingsState(this.settings);
 
   final Settings settings;
 
@@ -10,7 +10,7 @@ class SettingsState extends Equatable {
 }
 
 class SettingsError extends SettingsState {
-  const SettingsError({required super.settings, required this.message});
+  const SettingsError(super.settings, this.message);
 
   final String message;
 

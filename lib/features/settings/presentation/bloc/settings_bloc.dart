@@ -11,18 +11,19 @@ part 'settings_event.dart';
 part 'settings_state.dart';
 
 class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
-  SettingsBloc()
+  SettingsBloc([Settings? settings])
       : super(
-          const SettingsState(
-            settings: Settings(
-              localDirectory: '',
-              newsLayout: NewsLayouts.list,
-              userListLayouts: UserListLayouts.grid,
-              theme: ThemeMode.system,
-              torrentType: TorrentType.none,
-              transmissionSettings: TransmissionSettings(),
-              qBitTorrentSettings: QBitTorrentSettings(),
-            ),
+          SettingsState(
+            settings ??
+                const Settings(
+                  localDirectory: '',
+                  newsLayout: NewsLayouts.list,
+                  userListLayouts: UserListLayouts.grid,
+                  theme: ThemeMode.system,
+                  torrentType: TorrentType.none,
+                  transmissionSettings: TransmissionSettings(),
+                  qBitTorrentSettings: QBitTorrentSettings(),
+                ),
           ),
         ) {
     on<SettingsEvent>((event, emit) {
@@ -48,22 +49,26 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
   Future<void> _onUpdated(
       SettingsUpdated event, Emitter<SettingsState> emit) async {
     try {
-      emit(SettingsState(settings: event.settings));
+      emit(SettingsState(event.settings));
     } catch (e) {
-      add(SettingsUpdateFailed(
-          settings: event.settings, message: e.toString()));
+      add(
+        SettingsUpdateFailed(
+          event.settings,
+          e.toString(),
+        ),
+      );
     }
   }
 
   void _onUpdateFailed(
       SettingsUpdateFailed event, Emitter<SettingsState> emit) {
-    emit(SettingsError(settings: event.settings, message: event.message));
+    emit(SettingsError(event.settings, event.message));
   }
 
   @override
   SettingsState fromJson(Map<String, dynamic> json) {
     return SettingsState(
-      settings: Settings.fromJson(
+      Settings.fromJson(
         json['settings'],
       ),
     );

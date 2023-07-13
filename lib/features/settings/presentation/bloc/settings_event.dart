@@ -14,7 +14,7 @@ class SettingsUpdated extends SettingsEvent {
 }
 
 class SettingsUpdateFailed extends SettingsEvent {
-  const SettingsUpdateFailed({required this.settings, required this.message});
+  const SettingsUpdateFailed(this.settings, this.message);
 
   final Settings settings;
   final String message;
