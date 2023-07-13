@@ -36,15 +36,16 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
     _setUpInterval();
   }
 
+  void _closeInterval() {
+    interval?.cancel();
+    interval = null;
+  }
+
   void _setUpInterval() {
     interval ??= Timer.periodic(
       const Duration(seconds: 1),
       (timer) {
-        if (isClosed) {
-          interval?.cancel();
-          interval = null;
-          return;
-        }
+        if (isClosed) return _closeInterval();
 
         add(TorrentDataRequested());
       },
@@ -100,8 +101,7 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
 
       emit(loaded.torrents.isEmpty ? TorrentEmpty() : loaded);
     } on UserIsBannedError {
-      interval?.cancel();
-      interval = null;
+      _closeInterval();
 
       Timer(
         const Duration(minutes: 5),
