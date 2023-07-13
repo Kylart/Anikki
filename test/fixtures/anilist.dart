@@ -72,6 +72,8 @@ final localFileMock = LocalFile(
   episode: 3,
 );
 
+final anilistMediaMock = Media(anilistInfo: shortMediaMock);
+
 final airingScheduleMock = Query$AiringSchedule(
   Page: Query$AiringSchedule$Page(
     pageInfo: Query$AiringSchedule$Page$pageInfo(
