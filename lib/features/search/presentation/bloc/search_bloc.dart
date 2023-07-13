@@ -13,15 +13,7 @@ part 'search_state.dart';
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   late final SearchRepository repository;
 
-  SearchBloc({
-    required Nyaa nyaa,
-    required Anilist anilist,
-  }) : super(const SearchEmptyTerm()) {
-    repository = SearchRepository(
-      nyaa: nyaa,
-      anilist: anilist,
-    );
-
+  SearchBloc(this.repository) : super(const SearchEmptyTerm()) {
     on<SearchEvent>((event, emit) {
       logger.v('Search Event: ${event.runtimeType}');
     });

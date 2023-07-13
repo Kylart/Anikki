@@ -1,3 +1,4 @@
+import 'package:anikki/features/search/domain/repository/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,8 +13,12 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SearchBloc(
-        nyaa: Nyaa(),
-        anilist: Anilist(client: getAnilistClient()),
+        SearchRepository(
+          nyaa: Nyaa(),
+          anilist: Anilist(
+            client: getAnilistClient(),
+          ),
+        ),
       ),
       child: const SearchView(),
     );
