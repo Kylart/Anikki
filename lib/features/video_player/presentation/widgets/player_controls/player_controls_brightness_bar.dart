@@ -1,14 +1,14 @@
 part of 'player_controls.dart';
 
-class PlayerControlsVolumeBar extends StatelessWidget {
-  const PlayerControlsVolumeBar({
+class PlayerControlsBrightnessBar extends StatelessWidget {
+  const PlayerControlsBrightnessBar({
     super.key,
     required this.show,
-    required this.player,
+    required this.screenBrightness,
   });
 
   final bool show;
-  final Player player;
+  final ScreenBrightness screenBrightness;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +16,11 @@ class PlayerControlsVolumeBar extends StatelessWidget {
       opacity: show ? 1 : 0,
       duration: const Duration(milliseconds: 300),
       child: StreamBuilder(
-        stream: player.stream.volume,
+        stream: screenBrightness.onCurrentBrightnessChanged,
         builder: (context, snapshot) {
           if (snapshot.data == null) return const SizedBox();
+
+          final value = snapshot.data! * 100;
 
           return SizedBox(
             height: 200,
@@ -36,19 +38,19 @@ class PlayerControlsVolumeBar extends StatelessWidget {
                           const TextStyle(color: Colors.black, fontSize: 8),
                       direction: Axis.vertical,
                       verticalDirection: VerticalDirection.up,
-                      currentValue: snapshot.data!,
-                      displayText: '%',
+                      currentValue: value,
+                      displayText: '',
                     ),
                   ),
                 ),
-                if (snapshot.data! == 0)
-                  const Icon(Icons.volume_off)
-                else if (snapshot.data! < 33)
-                  const Icon(Icons.volume_mute)
-                else if (snapshot.data! < 66)
-                  const Icon(Icons.volume_down)
+                if (value == 0)
+                  const Icon(Icons.light_mode, size: 10)
+                else if (value < 33)
+                  const Icon(Icons.light_mode, size: 12)
+                else if (value < 66)
+                  const Icon(Icons.light_mode, size: 14)
                 else
-                  const Icon(Icons.volume_up),
+                  const Icon(Icons.light_mode, size: 16),
               ],
             ),
           );

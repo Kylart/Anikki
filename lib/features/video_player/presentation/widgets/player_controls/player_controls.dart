@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:anikki/core/core.dart';
@@ -26,6 +27,7 @@ part 'player_controls_subtitles.dart';
 part 'player_controls_audios.dart';
 part 'player_controls_shortcuts.dart';
 part 'player_controls_volume_bar.dart';
+part 'player_controls_brightness_bar.dart';
 part 'intents.dart';
 part 'actions.dart';
 

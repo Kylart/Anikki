@@ -15,6 +15,8 @@ class PlayerCursorHandler extends StatefulWidget {
 }
 
 class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
+  final ScreenBrightness screenBrightness = ScreenBrightness();
+
   Timer? volumeBarInterval;
   bool showVolumeBar = false;
 
@@ -136,24 +138,43 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
               ),
         );
       },
-      onVerticalDragUpdate: (details) {
+      onVerticalDragUpdate: (details) async {
         if (_shouldIgnoreDrag(context, details)) return;
 
-        if (!showVolumeBar) {
-          setState(() {
-            showVolumeBar = true;
-          });
-        }
-
-        final currentVolume = widget.player.state.volume;
         final delta = details.primaryDelta?.ceilToDouble() ?? 0;
 
-        final newVolume = currentVolume - delta;
+        final isLeftSide =
+            details.globalPosition.dx < MediaQuery.of(context).size.width / 2;
 
-        if (delta.sign < 0) {
-          widget.player.setVolume(min(newVolume, 100.0));
+        if (isLeftSide) {
+          if (!showBrightnessBar) {
+            setState(() {
+              showBrightnessBar = true;
+            });
+          }
+
+          final currentBrightness = await screenBrightness.current;
+          final newBrightness = ((currentBrightness * 100 - delta) / 100.0);
+
+          screenBrightness.setScreenBrightness(
+            max(min(newBrightness, 1), 0),
+          );
         } else {
-          widget.player.setVolume(max(newVolume, 0.0));
+          if (!showVolumeBar) {
+            setState(() {
+              showVolumeBar = true;
+            });
+          }
+
+          final currentVolume = widget.player.state.volume;
+
+          final newVolume = currentVolume - delta;
+
+          if (delta.sign < 0) {
+            widget.player.setVolume(min(newVolume, 100.0));
+          } else {
+            widget.player.setVolume(max(newVolume, 0.0));
+          }
         }
       },
       onVerticalDragCancel: _hideDragControls,
@@ -182,7 +203,10 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(),
+                    PlayerControlsBrightnessBar(
+                      show: showBrightnessBar,
+                      screenBrightness: screenBrightness,
+                    ),
                     PlayerControlsVolumeBar(
                       show: showVolumeBar,
                       player: widget.player,
