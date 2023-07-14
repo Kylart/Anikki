@@ -16,15 +16,13 @@ class EntryCardOverlayEpisodeCompleted extends StatelessWidget {
       builder: (context, state) {
         if (state is! WatchListComplete) return const SizedBox();
 
-        final seen = isSeen(
-          state,
-          Query$AiringSchedule$Page$airingSchedules(
-            id: 0,
-            episode: index,
-            media: media.anilistInfo,
-            airingAt: 0,
-          ),
-        );
+        final completedEntry = state.completed.firstWhereOrNull(
+            (element) => element.media?.id == media.anilistInfo.id);
+        final currentEntry = state.current.firstWhereOrNull(
+            (element) => element.media?.id == media.anilistInfo.id);
+
+        final seen =
+            completedEntry == null || (currentEntry?.progress ?? 0) >= index;
 
         if (!seen) return const SizedBox();
 

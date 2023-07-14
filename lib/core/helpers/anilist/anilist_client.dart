@@ -4,11 +4,11 @@ import 'package:hive/hive.dart';
 import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 
 GraphQLClient getAnilistClient() {
-  final HttpLink httpLink = HttpLink(
+  final httpLink = HttpLink(
     'https://graphql.anilist.co',
   );
 
-  final AuthLink authLink = AuthLink(
+  final authLink = AuthLink(
     getToken: () async {
       final box = await Hive.openBox(AnilistAuthBloc.boxName);
       final token = box.get(AnilistAuthBloc.tokenKey);
@@ -17,7 +17,7 @@ GraphQLClient getAnilistClient() {
     },
   );
 
-  final Link link = authLink.concat(httpLink);
+  final link = authLink.concat(httpLink);
 
   return GraphQLClient(
     link: link,
