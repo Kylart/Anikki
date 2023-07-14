@@ -25,6 +25,7 @@ part 'player_controls_play_pause.dart';
 part 'player_controls_subtitles.dart';
 part 'player_controls_audios.dart';
 part 'player_controls_shortcuts.dart';
+part 'player_controls_volume_bar.dart';
 part 'intents.dart';
 part 'actions.dart';
 
