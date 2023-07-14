@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:graphql/client.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'fixtures/anilist.dart';
+import '../../fixtures/anilist.dart';
 
 void main() {
   late MockGraphQLClient mockGraphQLClient;
