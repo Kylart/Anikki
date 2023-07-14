@@ -15,9 +15,13 @@ class PlayerCursorHandler extends StatefulWidget {
 }
 
 class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
+  Timer? volumeBarInterval;
   bool showVolumeBar = false;
+
+  Timer? brightnessBarInterval;
   bool showBrightnessBar = false;
 
+  Timer? seekNumberInterval;
   bool showSeekNumber = false;
 
   /// Drag is only available on mobile. However, a drag event should be ignored
@@ -44,6 +48,32 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
 
             // Width left
             position.dx > 60);
+  }
+
+  void _hideDragControls() {
+    volumeBarInterval?.cancel();
+    volumeBarInterval = Timer(
+      const Duration(seconds: 3),
+      () => setState(() {
+        showVolumeBar = false;
+      }),
+    );
+
+    brightnessBarInterval?.cancel();
+    brightnessBarInterval = Timer(
+      const Duration(seconds: 3),
+      () => setState(() {
+        showBrightnessBar = false;
+      }),
+    );
+
+    seekNumberInterval?.cancel();
+    seekNumberInterval = Timer(
+      const Duration(seconds: 3),
+      () => setState(() {
+        showSeekNumber = false;
+      }),
+    );
   }
 
   @override
@@ -99,6 +129,12 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
       onVerticalDragUpdate: (details) {
         if (_shouldIgnoreDrag(context, details)) return;
 
+        if (!showVolumeBar) {
+          setState(() {
+            showVolumeBar = true;
+          });
+        }
+
         final currentVolume = widget.player.state.volume;
         final delta = details.primaryDelta?.ceilToDouble() ?? 0;
 
@@ -110,19 +146,81 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
           widget.player.setVolume(max(newVolume, 0.0));
         }
       },
+      onVerticalDragCancel: _hideDragControls,
+      onVerticalDragEnd: (_) => _hideDragControls(),
       child: MouseRegion(
         cursor:
             hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
         onHover: (_) {
           if (desktop) videoBloc.add(VideoPlayerResetShowTimer());
         },
-        child: AbsorbPointer(
-          absorbing: hideControls,
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 300),
-            opacity: hideControls ? 0.0 : 1.0,
-            child: widget.child,
-          ),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: AbsorbPointer(
+                absorbing: hideControls,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 300),
+                  opacity: hideControls ? 0.0 : 1.0,
+                  child: widget.child,
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(),
+                    AnimatedOpacity(
+                      opacity: showVolumeBar ? 1 : 0,
+                      duration: const Duration(milliseconds: 300),
+                      child: StreamBuilder(
+                        stream: widget.player.stream.volume,
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) return const SizedBox();
+
+                          return SizedBox(
+                            height: 200,
+                            width: 20,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: FAProgressBar(
+                                      animatedDuration: const Duration(milliseconds: 150),
+                                      progressColor: Colors.white,
+                                      size: 22,
+                                      displayTextStyle: const TextStyle(
+                                          color: Colors.black, fontSize: 8),
+                                      direction: Axis.vertical,
+                                      verticalDirection: VerticalDirection.up,
+                                      currentValue: snapshot.data!,
+                                      displayText: '%',
+                                    ),
+                                  ),
+                                ),
+                                if (snapshot.data! == 0)
+                                  const Icon(Icons.volume_off)
+                                else if (snapshot.data! < 33)
+                                  const Icon(Icons.volume_mute)
+                                else if (snapshot.data! < 66)
+                                  const Icon(Icons.volume_down)
+                                else
+                                  const Icon(Icons.volume_up),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
