@@ -41,7 +41,7 @@ class _PlayerControlsVolumeState extends State<PlayerControlsVolume> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<double>(
-      stream: widget.player.streams.volume,
+      stream: widget.player.stream.volume,
       builder: (context, snapshot) {
         final volume = snapshot.data ?? 100.0;
 

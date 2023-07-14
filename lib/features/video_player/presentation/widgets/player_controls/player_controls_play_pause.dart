@@ -30,7 +30,7 @@ class _PlayerControlsPlayPauseState extends State<PlayerControlsPlayPause>
     playPauseController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 400));
     playPauseStream =
-        player.streams.playing.listen((event) => setPlaybackMode(event));
+        player.stream.playing.listen((event) => setPlaybackMode(event));
     if (player.state.playing) playPauseController.forward();
   }
 

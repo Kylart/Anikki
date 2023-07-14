@@ -8,7 +8,7 @@ class PlayerControlsProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Duration>(
-      stream: player.streams.position,
+      stream: player.stream.position,
       builder: (BuildContext context, AsyncSnapshot<Duration> snapshot) {
         final durationState = snapshot.data;
         final progress = durationState ?? Duration.zero;

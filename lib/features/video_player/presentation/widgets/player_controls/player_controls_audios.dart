@@ -17,13 +17,13 @@ class _PlayerControlsAudiosState extends State<PlayerControlsAudios> {
   void initState() {
     super.initState();
 
-    widget.player.streams.tracks.listen((track) {
+    widget.player.stream.tracks.listen((track) {
       setState(() {
         available = track.audio;
       });
     });
 
-    widget.player.streams.track.listen((event) {
+    widget.player.stream.track.listen((event) {
       setState(() {
         selected = event.audio;
       });
