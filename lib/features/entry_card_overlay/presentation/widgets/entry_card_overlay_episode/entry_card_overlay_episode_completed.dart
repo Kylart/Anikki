@@ -22,7 +22,7 @@ class EntryCardOverlayEpisodeCompleted extends StatelessWidget {
             (element) => element.media?.id == media.anilistInfo.id);
 
         final seen =
-            completedEntry == null || (currentEntry?.progress ?? 0) >= index;
+            completedEntry != null || (currentEntry?.progress ?? 0) >= index;
 
         if (!seen) return const SizedBox();
 
