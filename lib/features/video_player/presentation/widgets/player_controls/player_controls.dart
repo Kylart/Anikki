@@ -11,6 +11,7 @@ import 'package:screen_brightness/screen_brightness.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
 
 part 'player_controls_background.dart';

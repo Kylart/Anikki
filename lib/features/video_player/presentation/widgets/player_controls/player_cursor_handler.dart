@@ -23,8 +23,19 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
   Timer? brightnessBarInterval;
   bool showBrightnessBar = false;
 
-  Timer? seekNumberInterval;
-  bool showSeekNumber = false;
+  bool showSeekDuration = false;
+
+  Duration seekDuration = Duration.zero;
+  String get seekDurationString {
+    final sign = seekDuration.isNegative ? '-' : '+';
+    final minutes = seekDuration.inMinutes.abs();
+
+    var seconds = '${seekDuration.inSeconds.abs() % 60}';
+
+    if (seconds.toString().length == 1) seconds = '0$seconds';
+
+    return '$sign$minutes:$seconds';
+  }
 
   /// Drag is only available on mobile. However, a drag event should be ignored
   /// when starting on the very side of the device as to not act on the video
@@ -52,10 +63,9 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
             position.dx > 60);
   }
 
-  void _hideDragControls() {
+  void _hideDragBarControls() {
     volumeBarInterval?.cancel();
     brightnessBarInterval?.cancel();
-    seekNumberInterval?.cancel();
 
     volumeBarInterval = Timer(
       const Duration(seconds: 3),
@@ -70,20 +80,12 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
         showBrightnessBar = false;
       }),
     );
-
-    seekNumberInterval = Timer(
-      const Duration(seconds: 3),
-      () => setState(() {
-        showSeekNumber = false;
-      }),
-    );
   }
 
   @override
   void dispose() {
     volumeBarInterval?.cancel();
     brightnessBarInterval?.cancel();
-    seekNumberInterval?.cancel();
 
     super.dispose();
   }
@@ -123,20 +125,22 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
       onHorizontalDragUpdate: (details) {
         if (_shouldIgnoreDrag(context, details)) return;
 
-        final delta = details.primaryDelta;
+        var value = details.delta.dx * 750;
 
-        if (delta == null) return;
-
-        var value = delta.ceilToDouble() * 2;
-
-        if (value.abs() < 5) return;
-
+        setState(() {
+          seekDuration += Duration(
+            milliseconds: value.toInt(),
+          );
+        });
+      },
+      onHorizontalDragEnd: (details) {
         widget.player.seek(
-          widget.player.state.position +
-              Duration(
-                seconds: value.toInt(),
-              ),
+          widget.player.state.position + seekDuration,
         );
+
+        setState(() {
+          seekDuration = Duration.zero;
+        });
       },
       onVerticalDragUpdate: (details) async {
         if (_shouldIgnoreDrag(context, details)) return;
@@ -177,8 +181,8 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
           }
         }
       },
-      onVerticalDragCancel: _hideDragControls,
-      onVerticalDragEnd: (_) => _hideDragControls(),
+      onVerticalDragCancel: _hideDragBarControls,
+      onVerticalDragEnd: (_) => _hideDragBarControls(),
       child: MouseRegion(
         cursor:
             hideControls ? SystemMouseCursors.none : SystemMouseCursors.basic,
@@ -214,7 +218,25 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
                   ],
                 ),
               ),
-            )
+            ),
+            if (seekDuration != Duration.zero)
+              Positioned.fill(
+                child: Center(
+                  child: LayoutCard(
+                    transparent: true,
+                    child: Container(
+                      color: Colors.black54,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          seekDurationString,
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
