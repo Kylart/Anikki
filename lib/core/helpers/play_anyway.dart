@@ -69,13 +69,18 @@ void playAnyway({
         context: context,
         first: file,
         sources: playlist?.toList() ?? [],
-        onVideoComplete: (media) {
-          LocalFile.createAndSearchMedia(media.uri).then(
-            (entry) => watchListBloc.add(
-              WatchListWatched(
-                entry: entry,
-                scaffold: scaffold,
-              ),
+        onVideoComplete: (mkMedia) {
+          if (media == null) return;
+
+          final entry = LocalFile(
+            path: mkMedia.uri,
+            media: Media(anilistInfo: media),
+          );
+
+          watchListBloc.add(
+            WatchListWatched(
+              entry: entry,
+              scaffold: scaffold,
             ),
           );
         },
