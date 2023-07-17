@@ -79,6 +79,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       builder: (context, state) {
         return Video(
           controller: controller,
+          controls: NoVideoControls,
         );
       },
     );
