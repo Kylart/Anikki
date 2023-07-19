@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/features/layouts/shared/helpers/helpers.dart';
+import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/downloader/presentation/view/downloader_view.dart';
 
-void showDownloader(BuildContext context, String term) {
+void showDownloader(BuildContext context, String term) async {
+  final bloc = BlocProvider.of<DownloaderBloc>(context);
+
   if (isPortrait(context)) {
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (context) => Scaffold(
           appBar: AppBar(
@@ -17,7 +21,7 @@ void showDownloader(BuildContext context, String term) {
       ),
     );
   } else {
-    showDialog(
+    await showDialog(
       context: context,
       builder: (context) {
         return const Dialog(
@@ -31,4 +35,6 @@ void showDownloader(BuildContext context, String term) {
       },
     );
   }
+
+  bloc.add(const DownloaderClosed());
 }

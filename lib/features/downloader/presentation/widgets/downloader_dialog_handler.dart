@@ -22,10 +22,6 @@ class _DownloaderDialogHandlerState extends State<DownloaderDialogHandler> {
     return BlocListener<DownloaderBloc, DownloaderState>(
       listener: (context, state) {
         switch (state.runtimeType) {
-          case DownloaderClose:
-            Navigator.of(context).pop();
-            break;
-
           case DownloaderShow:
             if (!(state as DownloaderShow).alreadyShow) {
               showDownloader(context, state.term);

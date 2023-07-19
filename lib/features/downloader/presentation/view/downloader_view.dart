@@ -49,6 +49,7 @@ class DownloaderView extends StatelessWidget {
                           : null,
                       leading: IconButton(
                         onPressed: () {
+                          Navigator.of(context).pop();
                           bloc.add(const DownloaderClosed());
                         },
                         icon: const Icon(Icons.close),
