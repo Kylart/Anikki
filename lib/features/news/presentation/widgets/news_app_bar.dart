@@ -47,7 +47,7 @@ class NewsAppBar extends StatelessWidget {
                     onPressed: () async {
                       showDateRangePicker(
                         context: context,
-                        initialDateRange: NewsBloc.initalDateRange,
+                        initialDateRange: newsState.range,
                         firstDate:
                             DateTime.now().subtract(const Duration(days: 365)),
                         lastDate: DateTime.now().add(const Duration(days: 7)),
