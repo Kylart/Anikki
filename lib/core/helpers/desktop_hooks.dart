@@ -7,9 +7,6 @@ Future<void> setUpDesktop() async {
   await windowManager.ensureInitialized();
 
   WindowOptions windowOptions = WindowOptions(
-    size: const Size(1280, 720),
-    minimumSize: const Size(1280, 720),
-    center: true,
     backgroundColor: Colors.transparent,
     titleBarStyle:
         Platform.isMacOS ? TitleBarStyle.hidden : TitleBarStyle.normal,
