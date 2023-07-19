@@ -129,6 +129,7 @@ class DownloaderView extends StatelessWidget {
                               media: currentState.media,
                               entry: currentState.entry,
                               title: value,
+                              isStreaming: currentState.isStreaming,
                             ),
                           );
                         },
