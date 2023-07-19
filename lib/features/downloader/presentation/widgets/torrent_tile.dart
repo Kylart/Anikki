@@ -26,6 +26,7 @@ class TorrentTile extends StatelessWidget {
 
         final isStreaming =
             state is DownloaderSuccess ? state.isStreaming : false;
+        final media = state is DownloaderSuccess ? state.media : null;
 
         void showError() {
           showDialog(
@@ -66,6 +67,7 @@ class TorrentTile extends StatelessWidget {
                       surfaceTintColor: Colors.transparent,
                       child: StreamPlaceholder(
                         magnet: torrent.magnet,
+                        media: media != null ? Media(anilistInfo: media) : null,
                       ),
                     );
                   },

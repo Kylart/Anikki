@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
-import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:anikki/features/library/domain/models/models.dart';
 import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
 import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
@@ -16,9 +15,11 @@ class StreamPlaceholder extends StatefulWidget {
   const StreamPlaceholder({
     super.key,
     required this.magnet,
+    this.media,
   });
 
   final String magnet;
+  final Media? media;
 
   @override
   State<StreamPlaceholder> createState() => _StreamPlaceholderState();
@@ -32,11 +33,6 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
         final torrentBloc = BlocProvider.of<TorrentBloc>(context);
         final watchListBloc = BlocProvider.of<WatchListBloc>(context);
         final scaffold = ScaffoldMessenger.of(context);
-
-        final downloaderBloc = BlocProvider.of<DownloaderBloc>(context);
-        final media = downloaderBloc.state is DownloaderSuccess
-            ? (downloaderBloc.state as DownloaderSuccess).media
-            : null;
 
         if (state is! TorrentLoaded) return;
 
@@ -68,11 +64,9 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
                 TorrentRemoveTorrent(torrent, true),
               );
 
-              if (media == null) return;
-
               final entry = LocalFile(
                 path: mkMedia.uri,
-                media: Media(anilistInfo: media),
+                media: widget.media,
               );
 
               watchListBloc.add(
