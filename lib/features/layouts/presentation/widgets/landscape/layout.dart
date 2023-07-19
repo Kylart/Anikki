@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/widgets/layout_card.dart';
+import 'package:anikki/core/widgets/macos_title_bar.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/features/entry_card_overlay/presentation/view/entry_card_overlay_view.dart';
 import 'package:anikki/features/torrent/torrent.dart';
@@ -57,15 +60,17 @@ class LandscapeLayout extends StatelessWidget {
           ],
         ),
         BlocBuilder<EntryCardOverlayBloc, EntryCardOverlayState>(
-            builder: (context, state) {
-          if (state is! EntryCardOverlayActive) return const SizedBox();
+          builder: (context, state) {
+            if (state is! EntryCardOverlayActive) return const SizedBox();
 
-          return EntryCardOverlayView(
-            media: state.media,
-            anchorKey: state.key,
-            isExpanded: state.isExpanded,
-          );
-        })
+            return EntryCardOverlayView(
+              media: state.media,
+              anchorKey: state.key,
+              isExpanded: state.isExpanded,
+            );
+          },
+        ),
+        if (Platform.isMacOS) const MacosTitleBar(),
       ],
     );
   }
