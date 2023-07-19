@@ -38,7 +38,7 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
     );
 
     try {
-      emit(DownloaderShow(term));
+      emit(DownloaderShow(term, state is DownloaderSuccess));
       emit(DownloaderLoading(term));
 
       final result = await repository.search(term);
@@ -69,6 +69,7 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
           media: event.media,
           entry: event.entry,
           episode: event.episode,
+          isStreaming: event.isStreaming,
         ),
       );
     } catch (e) {

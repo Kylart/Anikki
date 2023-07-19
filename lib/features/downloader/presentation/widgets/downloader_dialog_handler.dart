@@ -12,7 +12,8 @@ class DownloaderDialogHandler extends StatefulWidget {
   final Widget child;
 
   @override
-  State<DownloaderDialogHandler> createState() => _DownloaderDialogHandlerState();
+  State<DownloaderDialogHandler> createState() =>
+      _DownloaderDialogHandlerState();
 }
 
 class _DownloaderDialogHandlerState extends State<DownloaderDialogHandler> {
@@ -26,7 +27,9 @@ class _DownloaderDialogHandlerState extends State<DownloaderDialogHandler> {
             break;
 
           case DownloaderShow:
-            showDownloader(context, (state as DownloaderShow).term);
+            if (!(state as DownloaderShow).alreadyShow) {
+              showDownloader(context, state.term);
+            }
             break;
 
           default:

@@ -12,13 +12,15 @@ class DownloaderClose extends DownloaderState {
 }
 
 class DownloaderShow extends DownloaderState {
-  const DownloaderShow(this.term);
+  const DownloaderShow(this.term, [this.alreadyShow = false]);
 
   final String term;
+  final bool alreadyShow;
 
   @override
   List<Object> get props => [
         term,
+        alreadyShow,
       ];
 }
 
