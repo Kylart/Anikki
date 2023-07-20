@@ -1,8 +1,8 @@
+import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/features/anilist_auth/shared/mixins/anilist_auth_is_connected_mixin.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 import 'package:anikki/core/models/user_list_enum.dart';
@@ -19,8 +19,7 @@ class UserListRefresh extends StatefulWidget {
   State<UserListRefresh> createState() => _UserListRefreshState();
 }
 
-class _UserListRefreshState extends State<UserListRefresh>
-    with AnilistAuthIsConnectedMixin {
+class _UserListRefreshState extends State<UserListRefresh> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,9 +27,11 @@ class _UserListRefreshState extends State<UserListRefresh>
       child: IconButton(
         onPressed: () {
           if (widget.type == UserListEnum.watchList) {
-            if (isConnected) {
+            final state = BlocProvider.of<AnilistAuthBloc>(context).state;
+
+            if (state is AnilistAuthSuccess) {
               BlocProvider.of<WatchListBloc>(context).add(
-                WatchListRequested(username: auth!.me.name),
+                WatchListRequested(username: state.me.name),
               );
             }
           } else {
