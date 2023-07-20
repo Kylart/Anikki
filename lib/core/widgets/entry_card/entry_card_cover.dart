@@ -1,3 +1,4 @@
+import 'package:anikki/config/config.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/core/widgets/entry_card/entry_card_bookmark.dart';
@@ -76,7 +77,12 @@ class EntryCardCover extends StatelessWidget {
               child: EntryTag(
                 color: Colors.black26,
                 outline: Colors.transparent,
-                child: Text(episode!),
+                child: Text(
+                  episode!,
+                  style: TextStyle(
+                    color: darkTheme.textTheme.bodyMedium?.color,
+                  ),
+                ),
               ),
             ),
         ],
