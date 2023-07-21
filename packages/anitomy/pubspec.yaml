@@ -1,7 +1,7 @@
 name: anitomy
 description: Bindings to the C++ Anitomy library.
 version: 1.0.0
-homepage: 'sdaf'
+publish_to: 'none'
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
