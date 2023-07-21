@@ -1,4 +1,4 @@
-package com.example.anikki
+package com.kylart.anikki
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -55,11 +55,15 @@ PODS:
   - protocol_handler (0.0.1):
     - Flutter
   - ReachabilitySwift (5.0.0)
+  - screen_brightness_ios (0.1.0):
+    - Flutter
   - SDWebImage (5.15.4):
     - SDWebImage/Core (= 5.15.4)
   - SDWebImage/Core (5.15.4)
   - SwiftyGif (5.4.4)
   - url_launcher_ios (0.0.1):
+    - Flutter
+  - volume_controller (0.0.1):
     - Flutter
   - wakelock (0.0.1):
     - Flutter
@@ -76,7 +80,9 @@ DEPENDENCIES:
   - open_app_file (from `.symlinks/plugins/open_app_file/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - protocol_handler (from `.symlinks/plugins/protocol_handler/ios`)
+  - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - volume_controller (from `.symlinks/plugins/volume_controller/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
@@ -110,8 +116,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   protocol_handler:
     :path: ".symlinks/plugins/protocol_handler/ios"
+  screen_brightness_ios:
+    :path: ".symlinks/plugins/screen_brightness_ios/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
+  volume_controller:
+    :path: ".symlinks/plugins/volume_controller/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
 
@@ -124,15 +134,17 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
   media_kit_libs_ios_video: 96259eccffaa309b63a7ee610c2c7786a3b335e5
-  media_kit_native_event_loop: 9f9eb778d0d806ab9486eff7513f7f90f07d50f8
+  media_kit_native_event_loop: 1eac6db2378101404392c80606103b42f7c2c491
   media_kit_video: c6ae801433b484912087b519b45f1beac97b960b
   open_app_file: 205f73051668bfbd68356005fef8a62e620f0a77
-  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   protocol_handler: ae9efcf3b307f3fdffcd9d5252775b9f7d9f0d09
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   SDWebImage: 1c39de67663e5eebb2f41324d5d580eeea12dd4c
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  volume_controller: 531ddf792994285c9b17f9d8a7e4dcdd29b3eae9
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: 1654cf9cb45c645da778fbc46fe8a12ec2e32455
