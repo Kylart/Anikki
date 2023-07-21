@@ -51,6 +51,4 @@ app.*.map.json
 test/resources/others/*
 !test/resources/others/.gitkeep
 
-*.graphql.dart
-
 node_modules
