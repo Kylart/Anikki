@@ -58,6 +58,20 @@ dart run build_runner build
 dart run build_runner watch
 ```
 
+### Run tests
+
+#### Unit tests
+> Currently only includes BloC tests
+```bash
+flutter test
+```
+
+#### Integration tests
+> Very limited for now
+```bash
+flutter test integration_test
+```
+
 ## Contributing
 Any contribution is appreciated.
 
