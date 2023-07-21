@@ -27,17 +27,20 @@ List<AnikkiAction> newsOptionsActions(
         label: 'Only followed entries',
         trailing: BlocBuilder<NewsBloc, NewsState>(
           builder: (context, state) {
-            return PlatformSwitch(
-              value: state.options.showOnlyBookmarked,
-              onChanged: (bool value) {
-                bloc.add(
-                  NewsOptionsChanged(
-                    options: state.options.copyWith(
-                      showOnlyBookmarked: value,
+            return Transform.scale(
+              scale: 0.8,
+              child: PlatformSwitch(
+                value: state.options.showOnlyBookmarked,
+                onChanged: (bool value) {
+                  bloc.add(
+                    NewsOptionsChanged(
+                      options: state.options.copyWith(
+                        showOnlyBookmarked: value,
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             );
           },
         ),
@@ -59,17 +62,20 @@ List<AnikkiAction> newsOptionsActions(
         label: 'Only unseen entries',
         trailing: BlocBuilder<NewsBloc, NewsState>(
           builder: (context, state) {
-            return PlatformSwitch(
-              value: state.options.showOnlyUnseen,
-              onChanged: (bool value) {
-                bloc.add(
-                  NewsOptionsChanged(
-                    options: state.options.copyWith(
-                      showOnlyUnseen: value,
+            return Transform.scale(
+              scale: 0.8,
+              child: PlatformSwitch(
+                value: state.options.showOnlyUnseen,
+                onChanged: (bool value) {
+                  bloc.add(
+                    NewsOptionsChanged(
+                      options: state.options.copyWith(
+                        showOnlyUnseen: value,
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             );
           },
         ),
@@ -91,17 +97,20 @@ List<AnikkiAction> newsOptionsActions(
         label: 'Adult entries',
         trailing: BlocBuilder<NewsBloc, NewsState>(
           builder: (context, state) {
-            return PlatformSwitch(
-              value: state.options.showAdult,
-              onChanged: (bool value) {
-                bloc.add(
-                  NewsOptionsChanged(
-                    options: state.options.copyWith(
-                      showAdult: value,
+            return Transform.scale(
+              scale: 0.8,
+              child: PlatformSwitch(
+                value: state.options.showAdult,
+                onChanged: (bool value) {
+                  bloc.add(
+                    NewsOptionsChanged(
+                      options: state.options.copyWith(
+                        showAdult: value,
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             );
           },
         ),
@@ -123,17 +132,20 @@ List<AnikkiAction> newsOptionsActions(
         label: 'Only Japanese entries',
         trailing: BlocBuilder<NewsBloc, NewsState>(
           builder: (context, state) {
-            return PlatformSwitch(
-              value: state.options.showOnlyJap,
-              onChanged: (bool value) {
-                bloc.add(
-                  NewsOptionsChanged(
-                    options: state.options.copyWith(
-                      showOnlyJap: value,
+            return Transform.scale(
+              scale: 0.8,
+              child: PlatformSwitch(
+                value: state.options.showOnlyJap,
+                onChanged: (bool value) {
+                  bloc.add(
+                    NewsOptionsChanged(
+                      options: state.options.copyWith(
+                        showOnlyJap: value,
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             );
           },
         ),
@@ -154,17 +166,20 @@ List<AnikkiAction> newsOptionsActions(
       label: 'Enable auto refresh',
       trailing: BlocBuilder<NewsBloc, NewsState>(
         builder: (context, state) {
-          return PlatformSwitch(
-            value: state.options.autoRefresh,
-            onChanged: (bool value) {
-              bloc.add(
-                NewsOptionsChanged(
-                  options: state.options.copyWith(
-                    autoRefresh: value,
+          return Transform.scale(
+            scale: 0.8,
+            child: PlatformSwitch(
+              value: state.options.autoRefresh,
+              onChanged: (bool value) {
+                bloc.add(
+                  NewsOptionsChanged(
+                    options: state.options.copyWith(
+                      autoRefresh: value,
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           );
         },
       ),
