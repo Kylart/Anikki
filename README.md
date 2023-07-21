@@ -1,28 +1,27 @@
-# Anikki
+# Anikki - The ultimate anime companion
+
 <p align="center">
-  <img src="assets/anikki_desktop.png" />
-</p>
-<p align="center">
-  <img height="400" src="assets/anikki_ios.png" />
-  <img height="400" src="assets/anikki_android.png" />
+  <img src="assets/anikki_android.png" height="300" />
+  <img src="assets/anikki_desktop.png" height="300" />
+  <img src="assets/anikki_ios.png" height="300" /> 
 </p>
 
 
-> Anikki is currently being developped and many things are subject to change.
+> Anikki is currently being developped as a hobby of mine and many things are subject to change.
 
 ## Features
 
-#### Done
 * Browse local anime files with Anilist information
-* Check what animes came out for a range of days
-* Download (almost) any anime on the fly
-* Embedded VLC player
-* Search for any torrent
-* Search for any anime information
-* Automatic anime watch list tracking
-
-#### To be done
-* Embedded Torrent client
+* Check what animes came out for a range of days (Yes, Korean and Hentais are included if you want to)
+* Browse your watch list and watch anything from there
+* Download or play (almost) any anime on the fly
+* Embedded player (with [media_kit](https://github.com/alexmercerind/media_kit))
+* Search for any torrent on [nyaa.si](https://nyaa.si)
+* Search for any anime, staff or character information
+* Automatic anime watch list tracking. No need to know which episode was the last one you saw anymore.
+* Remote torrent client connection for [Transmission](https://transmissionbt.com) and [QBitTorrent](https://www.qbittorrent.org) (Only on landscape mode for now)
+  * QBitTorrent is recommended for a smoother experience.
+* More to come?
 
 ## Building
 
@@ -30,49 +29,33 @@
 2. Clone this repo 
 
 ```bash
-git clone --recursive https://github.com/Kylart/Anikki
-```
+git clone --recursive https://github.com/Kylart/Anikki 
 
-```bash
-cd path/to/anikki
+cd Anikki
 cp .env.example .env
 
+flutter build <platform>
+```
+
+## Develop
+
+```bash
+flutter run
+```
+
+###  To re-generate Anilist schema and classes
+You will need [nodejs](https://nodejs.org) installed.
+
+```bash
 # Generate Anilist types
-cd packages/anilist
+cd scripts
 npm install && npm run gen:schema
+
+cd ..
 dart run build_runner build
 
 # (Optional) If you want to work on the Anilist types
 dart run build_runner watch
-```
-
-This is for the building process to be able to find native dependencies and link them properly.
-
-### For Desktop
-
-On your platform of choice
-```bash
-flutter build <macos / windows / linux>
-```
-
-### For Android
-```bash
-flutter build apk
-```
-
-### For iOS
-
-TO DO
-
-## Develop
-
-Run
-```bash
-flutter pub get
-```
-
-```bash
-flutter run
 ```
 
 ## Contributing
@@ -87,4 +70,4 @@ Any contribution is appreciated.
 ## License
 MIT License
 
-Copyright (c) Kylart
+Copyright © 2022 & onwards, Kylart <kylart.dev@gmail.com>
