@@ -125,13 +125,11 @@ deleteFile(LocalFile entry, BuildContext context) {
         content: Text('Do you really want to delete ${entry.path}?'),
         actions: [
           PlatformTextButton(
-            onPressed: () {
-              entry.file.delete().then((value) {
-                BlocProvider.of<LibraryBloc>(context).add(
-                  LibraryFileDeleted(file: entry),
-                );
-                navigator.pop();
-              });
+            onPressed: () async {
+              if (await entry.file.exists()) {
+                await entry.file.delete();
+              }
+              navigator.pop();
             },
             child: const Text('Yes!'),
           ),
