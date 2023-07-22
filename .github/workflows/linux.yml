@@ -5,11 +5,16 @@ on:
 
 jobs:
   build-desktop:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
       - name: Env setup
         run: |
@@ -17,18 +22,8 @@ jobs:
           echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
           cat .env
 
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-
-      - name: Install ninja
-        run: sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev vlc libvlc-dev mpv libmpv-dev
-
       - name: "Config"
         run: flutter config --enable-linux-desktop
-
-      - name: "Debug build"
-        run: flutter build linux --debug
 
       - name: "Test"
         run: flutter test
@@ -37,17 +32,11 @@ jobs:
         run: flutter build linux
 
   build-android:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: "true"
-
-      - name: Env setup
-        run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
-          cat .env
 
       - uses: actions/setup-java@v3
         with:
@@ -59,14 +48,14 @@ jobs:
           channel: "stable"
           cache: true
 
-      - name: Install ninja
-        run: sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev vlc libvlc-dev mpv libmpv-dev
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
 
-      - name: "Config"
-        run: flutter pub get
-
-      - name: "Debug build"
-        run: flutter build apk --debug
+      - name: "Test"
+        run: flutter test
 
       - name: "Release build"
         run: flutter build apk

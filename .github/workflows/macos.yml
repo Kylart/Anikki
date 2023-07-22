@@ -4,12 +4,17 @@ on:
       - master
 
 jobs:
-  build:
+  build-desktop:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
       - name: Env setup
         run: |
@@ -17,18 +22,64 @@ jobs:
           echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
           cat .env
 
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-
       - name: "Config"
         run: flutter config --enable-macos-desktop
-
-      - name: "Debug build"
-        run: flutter build macos --debug
 
       - name: "Test"
         run: flutter test
 
       - name: "Release build"
         run: flutter build macos
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Test"
+        run: flutter test
+
+      - name: "Release build"
+        run: flutter build ios --release --no-codesign
+
+  build-android:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Test"
+        run: flutter test
+
+      - name: "Release build"
+        run: flutter build apk
