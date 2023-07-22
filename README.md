@@ -1,4 +1,4 @@
-# Anikki - The ultimate anime companion
+<h1 align="center">Anikki</h1>
 
 <p align="center">
   <img src="assets/anikki_android.png" height="300" />
