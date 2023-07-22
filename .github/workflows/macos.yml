@@ -4,7 +4,7 @@ on:
       - master
 
 jobs:
-  build-desktop:
+  tests:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,13 +25,14 @@ jobs:
       - name: "Config"
         run: flutter config --enable-macos-desktop
 
+      - name: "Debug build"
+        run: flutter build macos --debug
+
       - name: "Test"
         run: flutter test
 
-      - name: "Release build"
-        run: flutter build macos
-
-  build-ios:
+  build-desktop:
+    needs: tests
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -49,13 +50,36 @@ jobs:
           echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
           cat .env
 
-      - name: "Test"
-        run: flutter test
+      - name: "Config"
+        run: flutter config --enable-macos-desktop
+
+      - name: "Release build"
+        run: flutter build macos
+
+  build-ios:
+    needs: tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
 
       - name: "Release build"
         run: flutter build ios --release --no-codesign
 
   build-android:
+    needs: tests
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -77,9 +101,6 @@ jobs:
           touch .env
           echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
           cat .env
-
-      - name: "Test"
-        run: flutter test
 
       - name: "Release build"
         run: flutter build apk

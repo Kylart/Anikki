@@ -4,7 +4,7 @@ on:
       - master
 
 jobs:
-  build-desktop:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,6 +25,37 @@ jobs:
       - name: "Config"
         run: flutter config --enable-linux-desktop
 
+      - name: "Debug build"
+        run: flutter build linux --debug
+
+      - name: "Test"
+        run: flutter test
+
+  build-desktop:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Config"
+        run: flutter config --enable-linux-desktop
+
+      - name: "Debug build"
+        run: flutter build linux --debug
+
       - name: "Test"
         run: flutter test
 
@@ -32,6 +63,7 @@ jobs:
         run: flutter build linux
 
   build-android:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -53,9 +85,6 @@ jobs:
           touch .env
           echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
           cat .env
-
-      - name: "Test"
-        run: flutter test
 
       - name: "Release build"
         run: flutter build apk
