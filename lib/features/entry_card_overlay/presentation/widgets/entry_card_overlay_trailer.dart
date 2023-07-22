@@ -56,7 +56,7 @@ class _EntryCardOverlayTrailerState extends State<EntryCardOverlayTrailer> {
             ],
           )
         : EntryCardOverlayVideoPlayer(
-          url: 'https://www.${site!}.com/watch?v=${id!}',
-        );
+            url: 'https://www.${site!}.com/watch?v=${id!}',
+          );
   }
 }

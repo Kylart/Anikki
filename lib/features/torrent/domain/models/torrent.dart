@@ -65,7 +65,8 @@ class Torrent {
 
   String toJson() => json.encode(toMap());
 
-  factory Torrent.fromJson(String source) => Torrent.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Torrent.fromJson(String source) =>
+      Torrent.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -75,25 +76,24 @@ class Torrent {
   @override
   bool operator ==(covariant Torrent other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.magnet == magnet &&
-      other.id == id &&
-      other.hash == hash &&
-      other.progress == progress &&
-      other.status == status &&
-      other.path == path &&
-      other.name == name;
+
+    return other.magnet == magnet &&
+        other.id == id &&
+        other.hash == hash &&
+        other.progress == progress &&
+        other.status == status &&
+        other.path == path &&
+        other.name == name;
   }
 
   @override
   int get hashCode {
     return magnet.hashCode ^
-      id.hashCode ^
-      hash.hashCode ^
-      progress.hashCode ^
-      status.hashCode ^
-      path.hashCode ^
-      name.hashCode;
+        id.hashCode ^
+        hash.hashCode ^
+        progress.hashCode ^
+        status.hashCode ^
+        path.hashCode ^
+        name.hashCode;
   }
 }
