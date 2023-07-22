@@ -15,7 +15,7 @@ class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
     });
 
     on<LayoutSizeChanged>((event, emit) {
-      if (event.constraints.maxWidth > kWidthBreakpoint) {
+      if (event.constraints.maxWidth >= kWidthBreakpoint) {
         emit(LayoutLandscape());
       } else {
         emit(LayoutPortrait());
