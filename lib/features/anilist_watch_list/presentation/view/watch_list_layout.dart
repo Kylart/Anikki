@@ -35,7 +35,6 @@ class WatchListLayout extends StatelessWidget {
             entries: entries,
             builder: (context, entry) => EntryTile(
               media: Media(anilistInfo: entry.media!),
-              heroTag: 'list-${entry.media?.id}',
               subtitle: entry.status == Enum$MediaListStatus.CURRENT &&
                       entry.progress != null
                   ? Text('Currently at episode ${entry.progress!.toString()}')

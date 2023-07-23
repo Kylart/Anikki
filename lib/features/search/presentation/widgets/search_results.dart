@@ -89,7 +89,6 @@ class _SearchResultsState extends State<SearchResults>
                       .map(
                         (e) => EntryTile(
                           media: Media(anilistInfo: e),
-                          heroTag: 'search-${e.id}',
                         ),
                       )
                       .toList(),

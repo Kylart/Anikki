@@ -24,7 +24,6 @@ class LibraryCard extends StatelessWidget {
       libraryEntry: entry,
       heroTag: heroTag,
       cover: EntryCardCover(
-        heroTag: heroTag,
         coverImage: entry.media?.coverImage,
         episode: entry.entries.length == 1
             ? entry.epMax?.toString()

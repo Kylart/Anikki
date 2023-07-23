@@ -11,7 +11,6 @@ class EntryTile extends StatefulWidget {
   const EntryTile({
     super.key,
     required this.media,
-    required this.heroTag,
     this.subtitle,
     this.libraryEntry,
     this.episode,
@@ -31,9 +30,6 @@ class EntryTile extends StatefulWidget {
   /// What episode should this tile use as a reference
   /// when showing context menu
   final String? episode;
-
-  /// [Hero] tag that should be used for this entry
-  final String heroTag;
 
   /// Will add an icon if `true`. Defaults to `false`
   final bool showBookmark;
@@ -79,11 +75,8 @@ class _EntryTileState<T> extends State<EntryTile> {
           maxLines: 2,
         ),
         leading: media.coverImage != null
-            ? Hero(
-                tag: widget.heroTag,
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(media.coverImage!),
-                ),
+            ? CircleAvatar(
+                backgroundImage: NetworkImage(media.coverImage!),
               )
             : null,
         subtitle: Column(

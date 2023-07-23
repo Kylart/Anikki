@@ -23,7 +23,6 @@ class WatchListCard extends StatelessWidget {
     return EntryCard(
       heroTag: heroTag,
       cover: EntryCardCover(
-        heroTag: heroTag,
         coverImage: coverImage,
         episode: [
           Enum$MediaListStatus.CURRENT,

@@ -42,13 +42,10 @@ class LibraryLayout extends StatelessWidget {
         : CustomListView(
             entries: entries,
             builder: (context, entry) {
-              final heroTag = 'library-${entry.entries.first.path}';
-
               return EntryTile(
                 media: entry.media == null
                     ? Media(anilistInfo: Fragment$shortMedia(id: 0))
                     : entry.media!,
-                heroTag: heroTag,
                 subtitle: entry.entries.length == 1
                     ? Text(
                         'Episode ${entry.entries.first.episode ?? 'not specified'}',

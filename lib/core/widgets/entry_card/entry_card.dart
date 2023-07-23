@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
@@ -54,8 +53,6 @@ class _EntryCardState extends State<EntryCard> {
 
   @override
   Widget build(BuildContext context) {
-    timeDilation = 1.2;
-
     return BlocBuilder<LayoutBloc, LayoutState>(
       key: key,
       builder: (context, state) {

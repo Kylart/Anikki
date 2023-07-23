@@ -40,7 +40,6 @@ class _NewsCardState extends State<NewsCard> {
       heroTag: heroTag,
       media: widget.entry.media,
       cover: EntryCardCover(
-        heroTag: heroTag,
         coverImage: widget.entry.media.coverImage,
         showBookmark: showBookmark,
         showDone: showDone,

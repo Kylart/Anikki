@@ -9,7 +9,6 @@ class EntryCardModal extends StatelessWidget {
   const EntryCardModal({
     super.key,
     required this.media,
-    required this.heroTag,
     this.libraryEntry,
   });
 
@@ -18,9 +17,6 @@ class EntryCardModal extends StatelessWidget {
 
   /// [LibraryEntry] for this card if any
   final LibraryEntry? libraryEntry;
-
-  /// [Hero] tag to use
-  final String heroTag;
 
   String get title =>
       media.title?.userPreferred ?? libraryEntry?.entries.first.title ?? 'N/A';
@@ -41,12 +37,9 @@ class EntryCardModal extends StatelessWidget {
         child: ListView(
           children: [
             if (coverImage != null)
-              Hero(
-                tag: heroTag,
-                child: Image.network(
-                  coverImage!,
-                  fit: BoxFit.fill,
-                ),
+              Image.network(
+                coverImage!,
+                fit: BoxFit.fill,
               ),
             ListTile(
               title: Text(
