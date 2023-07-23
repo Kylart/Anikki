@@ -83,6 +83,8 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
       );
     }
 
+    if (repository is EmptyRepository) return;
+
     try {
       await repository.login();
       add(TorrentDataRequested());
