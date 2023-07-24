@@ -22,7 +22,6 @@ class LibraryCard extends StatelessWidget {
           ? Media(anilistInfo: Fragment$shortMedia(id: 0))
           : entry.media!,
       libraryEntry: entry,
-      heroTag: heroTag,
       cover: EntryCardCover(
         coverImage: entry.media?.coverImage,
         episode: entry.entries.length == 1

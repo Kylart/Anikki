@@ -15,7 +15,6 @@ class EntryCard extends StatefulWidget {
     super.key,
     required this.media,
     required this.cover,
-    required this.heroTag,
     this.libraryEntry,
   });
 
@@ -27,9 +26,6 @@ class EntryCard extends StatefulWidget {
 
   /// Cover to use for this card
   final EntryCardCover cover;
-
-  /// [Hero] tag to use
-  final String heroTag;
 
   @override
   State<EntryCard> createState() => _EntryCardState();

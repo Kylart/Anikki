@@ -21,7 +21,6 @@ class WatchListCard extends StatelessWidget {
         '';
 
     return EntryCard(
-      heroTag: heroTag,
       cover: EntryCardCover(
         coverImage: coverImage,
         episode: [

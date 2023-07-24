@@ -22,8 +22,6 @@ class _NewsCardState extends State<NewsCard> {
 
   @override
   Widget build(BuildContext context) {
-    final heroTag = 'news-${widget.entry.media.anilistInfo.id}';
-
     final state = BlocProvider.of<WatchListBloc>(context, listen: true).state;
 
     if (state is WatchListComplete) {
@@ -37,7 +35,6 @@ class _NewsCardState extends State<NewsCard> {
     }
 
     return EntryCard(
-      heroTag: heroTag,
       media: widget.entry.media,
       cover: EntryCardCover(
         coverImage: widget.entry.media.coverImage,
