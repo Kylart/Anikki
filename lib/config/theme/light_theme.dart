@@ -2,11 +2,12 @@ part of 'theme.dart';
 
 final lightTheme = FlexThemeData.light(
   scheme: FlexScheme.deepBlue,
-  surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-  blendLevel: 9,
+  surfaceMode: FlexSurfaceMode.highSurfaceLowScaffold,
+  blendLevel: 15,
+  swapColors: true,
   tooltipsMatchBackground: true,
   subThemesData: const FlexSubThemesData(
-    blendOnLevel: 10,
+    blendOnLevel: 20,
     blendOnColors: false,
     sliderValueTinted: true,
     sliderTrackHeight: 1,
