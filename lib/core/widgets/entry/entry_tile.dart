@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/features/library/domain/models/library_entry.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_actions.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_trailer.dart';
+import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_actions.dart';
+import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_trailer.dart';
 
 class EntryTile extends StatefulWidget {
   const EntryTile({

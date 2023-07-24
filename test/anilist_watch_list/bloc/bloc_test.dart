@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
+import 'package:anikki/app/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
 
 import '../../fixtures/anilist.dart';
 

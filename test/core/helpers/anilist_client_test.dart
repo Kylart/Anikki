@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 
 import '../../helpers/init_hive.dart';
 

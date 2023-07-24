@@ -5,10 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/widgets/entry_card_overlay_media_portrait.dart';
-import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
-import 'package:anikki/features/library/domain/models/library_entry.dart';
+import 'package:anikki/app/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_media_portrait.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
 class EntryCard extends StatefulWidget {
   const EntryCard({

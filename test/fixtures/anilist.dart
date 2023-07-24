@@ -1,5 +1,5 @@
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/library/domain/domain.dart';
+import 'package:anikki/app/library/domain/domain.dart';
 import 'package:graphql/client.dart';
 import 'package:mocktail/mocktail.dart';
 

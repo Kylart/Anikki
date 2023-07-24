@@ -1,6 +1,6 @@
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/downloader/domain/domain.dart';
-import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
+import 'package:anikki/app/downloader/domain/domain.dart';
+import 'package:anikki/app/downloader/presentation/bloc/downloader_bloc.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';

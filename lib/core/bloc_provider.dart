@@ -1,18 +1,19 @@
+import 'package:anikki/data/data.dart';
+import 'package:anikki/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/layouts/presentation/bloc/layout_bloc.dart';
-import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
-import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
-import 'package:anikki/features/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
-import 'package:anikki/features/news/presentation/bloc/news_bloc.dart';
-import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/features/settings/presentation/bloc/settings_bloc.dart';
-import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
-import 'package:anikki/features/torrent/domain/domain.dart';
-import 'package:anikki/features/torrent/presentation/bloc/torrent_bloc.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
+import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/app/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/app/news/bloc/news_bloc.dart';
+import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/app/library/bloc/library_bloc.dart';
+import 'package:anikki/app/settings/bloc/settings_bloc.dart';
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 
 class AnikkiBlocProvider extends StatelessWidget {
   const AnikkiBlocProvider({super.key, required this.child});
@@ -23,12 +24,20 @@ class AnikkiBlocProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     final anilist = Anilist(client: getAnilistClient());
     final nyaa = Nyaa();
+    final files = Files();
+
+    final localStorageRepository = LocalStorageRepository(anilist, files);
+    final newsRepository = NewsRepository(anilist);
+    final torrentSearchRepository = TorrentSearchRepository(nyaa);
+    final userListRepository = UserListRepository(anilist);
+    final userRepository = UserRepository(anilist);
+    const videoPlayerRepository = VideoPlayerRepository();
 
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) =>
-              AnilistAuthBloc(anilist)..add(AnilistAuthLoginRequested()),
+              AnilistAuthBloc(userRepository)..add(AnilistAuthLoginRequested()),
         ),
         BlocProvider(
           create: (context) => LayoutBloc(),
@@ -43,17 +52,17 @@ class AnikkiBlocProvider extends StatelessWidget {
           create: (context) => EntryCardOverlayBloc(),
         ),
         BlocProvider(
-          create: (context) => DownloaderBloc(nyaa),
+          create: (context) => DownloaderBloc(torrentSearchRepository),
         ),
         BlocProvider(
-          create: (context) => VideoPlayerBloc(),
+          create: (context) => VideoPlayerBloc(videoPlayerRepository),
         ),
         BlocProvider(
-          create: (context) => WatchListBloc(anilist),
+          create: (context) => WatchListBloc(userListRepository),
         ),
         BlocProvider(
           create: (context) {
-            return NewsBloc(anilist: anilist)
+            return NewsBloc(newsRepository)
               ..add(
                 NewsRequested(range: NewsBloc.initalDateRange),
               );
@@ -65,7 +74,7 @@ class AnikkiBlocProvider extends StatelessWidget {
           BlocProvider(
             create: (context) {
               final settingsBloc = BlocProvider.of<SettingsBloc>(context);
-              return LibraryBloc()
+              return LibraryBloc(localStorageRepository)
                 ..add(
                   LibraryUpdateRequested(
                     path: settingsBloc.state.settings.localDirectory,

@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:anikki/data/data.dart';
 import 'package:equatable/equatable.dart';
-
-import 'package:anikki/core/providers/anilist/anilist.dart';
 
 class Media extends Equatable {
   Media({

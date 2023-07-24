@@ -1,7 +1,7 @@
 import 'package:graphql/client.dart';
 import 'package:hive/hive.dart';
 
-import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/domain/domain.dart';
 
 GraphQLClient getAnilistClient() {
   final httpLink = HttpLink(
@@ -10,8 +10,8 @@ GraphQLClient getAnilistClient() {
 
   final authLink = AuthLink(
     getToken: () async {
-      final box = await Hive.openBox(AnilistAuthBloc.boxName);
-      final token = box.get(AnilistAuthBloc.tokenKey);
+      final box = await Hive.openBox(UserRepository.boxName);
+      final token = box.get(UserRepository.tokenKey);
 
       return token == null ? null : 'Bearer $token';
     },

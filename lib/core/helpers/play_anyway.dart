@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
-import 'package:anikki/features/downloader/presentation/bloc/downloader_bloc.dart';
-import 'package:anikki/features/library/domain/models/models.dart';
-import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/features/video_player/presentation/bloc/video_player_bloc.dart';
+import 'package:anikki/data/data.dart';
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/app/library/bloc/library_bloc.dart';
+import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
 
 void playAnyway({
   required BuildContext context,

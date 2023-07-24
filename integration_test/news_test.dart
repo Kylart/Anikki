@@ -1,6 +1,6 @@
-import 'package:anikki/features/news/presentation/widgets/news_card.dart';
-import 'package:anikki/features/news/presentation/widgets/news_layout_toggle.dart';
-import 'package:anikki/features/news/presentation/widgets/news_tile.dart';
+import 'package:anikki/app/news/widgets/news_card.dart';
+import 'package:anikki/app/news/widgets/news_layout_toggle.dart';
+import 'package:anikki/app/news/widgets/news_tile.dart';
 import 'package:anikki/core/helpers/desktop_hooks.dart';
 import 'package:anikki/core/widgets/loader.dart';
 

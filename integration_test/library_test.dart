@@ -1,10 +1,10 @@
-import 'package:anikki/features/library/library.dart';
-import 'package:anikki/features/library/presentation/widgets/library_layout.dart';
-import 'package:anikki/features/library/presentation/widgets/library_card.dart';
+import 'package:anikki/app/library/library.dart';
+import 'package:anikki/app/library/widgets/library_layout.dart';
+import 'package:anikki/app/library/widgets/library_card.dart';
 import 'package:anikki/core/helpers/desktop_hooks.dart';
-import 'package:anikki/features/layouts/presentation/widgets/portrait/anikki_navigation_bar.dart';
-import 'package:anikki/features/user_list/presentation/widgets/user_list_app_bar.dart';
-import 'package:anikki/features/user_list/presentation/widgets/user_list_layout_toggle.dart';
+import 'package:anikki/app/layouts/widgets/portrait/anikki_navigation_bar.dart';
+import 'package:anikki/app/user_list/widgets/user_list_app_bar.dart';
+import 'package:anikki/app/user_list/widgets/user_list_layout_toggle.dart';
 import 'package:anikki/core/widgets/anikki_action_button.dart';
 
 import 'package:flutter/material.dart';

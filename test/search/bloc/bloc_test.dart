@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:anikki/features/search/domain/models/models.dart';
-import 'package:anikki/features/search/domain/repository/repository.dart';
-import 'package:anikki/features/search/presentation/bloc/search_bloc.dart';
+import 'package:anikki/app/search/domain/models/models.dart';
+import 'package:anikki/app/search/domain/repository/repository.dart';
+import 'package:anikki/app/search/presentation/bloc/search_bloc.dart';
 
 import '../../fixtures/anilist.dart';
 import '../../fixtures/nyaa.dart';

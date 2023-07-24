@@ -1,4 +1,4 @@
-import 'package:anikki/features/downloader/presentation/widgets/downloader_dialog_handler.dart';
+import 'package:anikki/app/downloader/widgets/downloader_dialog_handler.dart';
 import 'package:flutter/material.dart';
 
 class BlocListeners extends StatelessWidget {

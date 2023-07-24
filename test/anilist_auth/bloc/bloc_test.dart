@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/features/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/app/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
 
 import '../../fixtures/anilist.dart';
 import '../../helpers/init_hive.dart';

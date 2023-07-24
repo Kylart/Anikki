@@ -5,10 +5,10 @@ import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
-import 'package:anikki/features/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/features/library/domain/repository/repository.dart';
-import 'package:anikki/features/library/domain/models/library_entry.dart';
-import 'package:anikki/features/library/domain/models/local_file.dart';
+import 'package:anikki/app/library/presentation/bloc/library_bloc.dart';
+import 'package:anikki/app/library/domain/repository/repository.dart';
+import 'package:anikki/app/library/domain/models/library_entry.dart';
+import 'package:anikki/app/library/domain/models/local_file.dart';
 
 import '../../fixtures/path.dart';
 import '../../helpers/init_hive.dart';

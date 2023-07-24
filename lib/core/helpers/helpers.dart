@@ -10,3 +10,4 @@ export 'logger.dart';
 export 'open_in_browser.dart';
 export 'folder.dart';
 export 'play_anyway.dart';
+export 'play_file.dart';
