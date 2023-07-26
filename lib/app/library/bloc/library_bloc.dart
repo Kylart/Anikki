@@ -108,17 +108,18 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     /// Find `file` in existing entries if any
     final currentState = state as LibraryLoaded;
 
-    final entries = List<LibraryEntry>.from(currentState.entries);
+    final newEntries =
+        repository.removeFileFromEntries(currentState.entries, file);
 
-    repository.removeFileFromEntries(entries, file);
+    if (newEntries == null) return;
 
-    if (entries.isEmpty) {
+    if (newEntries.isEmpty) {
       emit(LibraryEmpty(path: state.path));
     } else {
       emit(
         LibraryLoaded(
           id: currentState.id + 1,
-          entries: entries,
+          entries: newEntries,
           path: state.path,
         ),
       );
@@ -133,10 +134,10 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
     /// Find `file` in existing entries if any
     final currentState = state as LibraryLoaded;
-
-    List<LibraryEntry> entries = List<LibraryEntry>.from(currentState.entries);
-
-    repository.addFileToEntries(entries, file);
+    final entries = repository.addFileToEntries(
+      currentState.entries,
+      file,
+    );
 
     emit(
       LibraryLoaded(

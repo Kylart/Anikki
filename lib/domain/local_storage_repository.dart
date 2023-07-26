@@ -51,18 +51,19 @@ class LocalStorageRepository {
   }
 
   /// Add a given [LocalFile] to the given [LibraryEntries] accordingly. Handles
-  /// existing / matching entries
-  /// This method modifies the given `entries` argument
-  void addFileToEntries(List<LibraryEntry> entries, LocalFile file) {
-    final existsIndex = entries.indexWhere(
+  /// existing / matching entries and returns the updated list
+  List<LibraryEntry> addFileToEntries(
+      List<LibraryEntry> entries, LocalFile file) {
+    final result = List<LibraryEntry>.from(entries);
+    final existsIndex = result.indexWhere(
       (element) => file.media != null
           ? element.media?.anilistInfo.id == file.media?.anilistInfo.id
           : element.entries.first.title == file.title,
     );
 
     if (existsIndex != -1) {
-      entries[existsIndex].entries.add(file);
-      entries[existsIndex]
+      result[existsIndex].entries.add(file);
+      result[existsIndex]
           .entries
           .sort((a, b) => b.episode?.compareTo(a.episode ?? 0) ?? 0);
     } else {
@@ -71,16 +72,16 @@ class LocalStorageRepository {
         entries: [file],
       );
 
-      if (entries.isEmpty) {
-        entries.add(newEntry);
+      if (result.isEmpty) {
+        result.add(newEntry);
       } else {
         /// Looking where to insert the new entry
         for (int index = 0; index < entries.length; index++) {
-          if (_compareTitles(entries.elementAt(index), newEntry) > 0) {
+          if (_compareTitles(result.elementAt(index), newEntry) > 0) {
             /// Means we need to place the new entry just the index before
             final insertIndex = index;
 
-            entries.insert(
+            result.insert(
               insertIndex,
               newEntry,
             );
@@ -90,28 +91,34 @@ class LocalStorageRepository {
 
           /// Means that the entry didn't fit before
           if (index == entries.length - 1) {
-            entries.add(newEntry);
+            result.add(newEntry);
             break;
           }
         }
       }
     }
+
+    return result;
   }
 
-  /// Remove the given `file` from the given `entries`
-  /// This method modifies its `entries` argument
-  void removeFileFromEntries(List<LibraryEntry> entries, LocalFile file) {
+  /// Remove the given `file` from the given `entries` and returns the updated
+  /// list. If no file cannot be found, will return [Null]
+  List<LibraryEntry>? removeFileFromEntries(
+      List<LibraryEntry> entries, LocalFile file) {
+    final result = List<LibraryEntry>.from(entries);
     final existsIndex =
-        entries.indexWhere((element) => element.entries.contains(file));
+        result.indexWhere((element) => element.entries.contains(file));
 
     /// Should never happen
-    if (existsIndex == -1) return;
+    if (existsIndex == -1) return null;
 
-    entries[existsIndex].entries.removeWhere((element) => element == file);
+    result[existsIndex].entries.removeWhere((element) => element == file);
 
-    if (entries[existsIndex].entries.isEmpty) {
-      entries.removeAt(existsIndex);
+    if (result[existsIndex].entries.isEmpty) {
+      result.removeAt(existsIndex);
     }
+
+    return result;
   }
 
   /// Updates given `files` with [Media] using the parsed name of the files and returns it.

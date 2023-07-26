@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
-import 'package:anikki/app/entry_card_overlay/presentation/bloc/entry_card_overlay_bloc.dart';
+import 'package:anikki/app/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 
 import '../../fixtures/anilist.dart';
 

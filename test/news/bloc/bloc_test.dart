@@ -1,29 +1,33 @@
-import 'package:graphql/client.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
+import 'package:anikki/app/news/bloc/news_bloc.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/app/news/presentation/bloc/news_bloc.dart';
+import 'package:anikki/data/data.dart';
+import 'package:anikki/domain/news_repository.dart';
 
 import '../../fixtures/anilist.dart';
+
+class NewsRepositoryMock extends Mock implements NewsRepository {}
 
 void main() {
   /// Shuts off logging except for errors
   Logger.level = Level.error;
 
+  final mockEntries = airingScheduleMock.Page!.airingSchedules!
+      .whereType<Query$AiringSchedule$Page$airingSchedules>()
+      .map((e) => NewsEntry.fromAnilistSchedule(e))
+      .toList();
+
   group('unit test: News Bloc', () {
-    late MockGraphQLClient mockGraphQLClient;
     late NewsBloc bloc;
-    late Anilist repository;
+    late NewsRepositoryMock repository;
 
     test('has an interval running', () {
-      mockGraphQLClient = generateMockGraphQLClient();
-      repository = Anilist(client: mockGraphQLClient);
-      bloc = NewsBloc(
-        anilist: repository,
-      );
+      repository = NewsRepositoryMock();
+      bloc = NewsBloc(repository);
 
       expect(bloc.interval, isNotNull);
       expect(bloc.interval?.isActive, isTrue);
@@ -52,17 +56,11 @@ void main() {
             ),
       ],
       setUp: () {
-        mockGraphQLClient = generateMockGraphQLClient();
+        repository = NewsRepositoryMock();
+        when(() => repository.getSchedule(NewsBloc.initalDateRange))
+            .thenAnswer((_) async => mockEntries);
 
-        final result =
-            generateMockQuery<Query$AiringSchedule>(mockGraphQLClient);
-        when(() => result.hasException).thenReturn(false);
-        when(() => result.parsedData).thenReturn(airingScheduleMock);
-
-        repository = Anilist(client: mockGraphQLClient);
-        bloc = NewsBloc(
-          anilist: repository,
-        );
+        bloc = NewsBloc(repository);
       },
     );
 
@@ -83,17 +81,11 @@ void main() {
         ),
       ],
       setUp: () {
-        mockGraphQLClient = generateMockGraphQLClient();
+        repository = NewsRepositoryMock();
+        when(() => repository.getSchedule(NewsBloc.initalDateRange))
+            .thenThrow(AnilistGetScheduleException(error: 'error'));
 
-        final result =
-            generateMockQuery<Query$AiringSchedule>(mockGraphQLClient);
-        when(() => result.hasException).thenReturn(true);
-        when(() => result.exception).thenReturn(OperationException());
-
-        repository = Anilist(client: mockGraphQLClient);
-        bloc = NewsBloc(
-          anilist: repository,
-        );
+        bloc = NewsBloc(repository);
       },
     );
   });

@@ -1,13 +1,18 @@
-import 'package:anikki/core/core.dart';
-import 'package:anikki/app/downloader/domain/domain.dart';
-import 'package:anikki/app/downloader/presentation/bloc/downloader_bloc.dart';
+import 'package:anikki/data/data.dart';
+import 'package:anikki/domain/domain.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:anikki/core/core.dart';
+import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
+
 import '../../fixtures/anilist.dart';
 import '../../fixtures/nyaa.dart';
+
+class TorrentSearchRepositoryMock extends Mock
+    implements TorrentSearchRepository {}
 
 void main() {
   /// Shuts off logging except for errors
@@ -15,7 +20,7 @@ void main() {
 
   group('unit test: Downloader Bloc', () {
     late DownloaderBloc bloc;
-    late MockNyaa repository;
+    late TorrentSearchRepositoryMock repository;
     late DownloaderFilter filter;
     late String term;
 
@@ -44,9 +49,17 @@ void main() {
             )
           ],
           setUp: () {
-            repository = MockNyaa();
+            repository = TorrentSearchRepositoryMock();
 
-            when(() => repository.search(term)).thenAnswer(
+            when(
+              () => repository.makeTerm(
+                media: anilistMediaMock,
+                entry: null,
+                episode: null,
+                title: null,
+              ),
+            ).thenReturn(term);
+            when(() => repository.searchNyaa(term)).thenAnswer(
               (invocation) async => torrentMocks,
             );
 
@@ -72,9 +85,17 @@ void main() {
             )
           ],
           setUp: () {
-            repository = MockNyaa();
+            repository = TorrentSearchRepositoryMock();
 
-            when(() => repository.search(term)).thenAnswer(
+            when(
+              () => repository.makeTerm(
+                media: anilistMediaMock,
+                entry: null,
+                episode: null,
+                title: null,
+              ),
+            ).thenReturn(term);
+            when(() => repository.searchNyaa(term)).thenAnswer(
               (invocation) async => [],
             );
 
@@ -94,9 +115,18 @@ void main() {
             DownloaderError(term: term, message: Exception('error').toString())
           ],
           setUp: () {
-            repository = MockNyaa();
+            repository = TorrentSearchRepositoryMock();
 
-            when(() => repository.search(term)).thenThrow(Exception('error'));
+            when(
+              () => repository.makeTerm(
+                media: anilistMediaMock,
+                entry: null,
+                episode: null,
+                title: null,
+              ),
+            ).thenReturn(term);
+            when(() => repository.searchNyaa(term))
+                .thenThrow(Exception('error'));
 
             bloc = DownloaderBloc(repository)..filter = filter;
           },
@@ -114,7 +144,7 @@ void main() {
             const DownloaderClose(),
           ],
           setUp: () {
-            repository = MockNyaa();
+            repository = TorrentSearchRepositoryMock();
             bloc = DownloaderBloc(repository)..filter = filter;
           },
         );
@@ -143,9 +173,17 @@ void main() {
         setUp: () {
           filter = const DownloaderFilter();
 
-          repository = MockNyaa();
+          repository = TorrentSearchRepositoryMock();
 
-          when(() => repository.search(term)).thenAnswer(
+          when(
+            () => repository.makeTerm(
+              media: anilistMediaMock,
+              entry: null,
+              episode: null,
+              title: null,
+            ),
+          ).thenReturn(term);
+          when(() => repository.searchNyaa(term)).thenAnswer(
             (invocation) async => torrentMocks,
           );
 
@@ -177,9 +215,17 @@ void main() {
             Quality.medium,
           ]);
 
-          repository = MockNyaa();
+          repository = TorrentSearchRepositoryMock();
 
-          when(() => repository.search(term)).thenAnswer(
+          when(
+            () => repository.makeTerm(
+              media: anilistMediaMock,
+              entry: null,
+              episode: null,
+              title: null,
+            ),
+          ).thenReturn(term);
+          when(() => repository.searchNyaa(term)).thenAnswer(
             (invocation) async => torrentMocks,
           );
 
@@ -220,9 +266,17 @@ void main() {
             smartFilter: true,
           );
 
-          repository = MockNyaa();
+          repository = TorrentSearchRepositoryMock();
 
-          when(() => repository.search(term)).thenAnswer(
+          when(
+            () => repository.makeTerm(
+              media: anilistMediaMock,
+              entry: null,
+              episode: 1,
+              title: null,
+            ),
+          ).thenReturn(term);
+          when(() => repository.searchNyaa(term)).thenAnswer(
             (invocation) async => torrentMocks,
           );
 
@@ -250,9 +304,17 @@ void main() {
         setUp: () {
           filter = const DownloaderFilter(showAll: true);
 
-          repository = MockNyaa();
+          repository = TorrentSearchRepositoryMock();
 
-          when(() => repository.search(term)).thenAnswer(
+          when(
+            () => repository.makeTerm(
+              media: anilistMediaMock,
+              entry: null,
+              episode: null,
+              title: null,
+            ),
+          ).thenReturn(term);
+          when(() => repository.searchNyaa(term)).thenAnswer(
             (invocation) async => torrentMocks,
           );
 
@@ -290,9 +352,17 @@ void main() {
             more: 'SubsPlease',
           );
 
-          repository = MockNyaa();
+          repository = TorrentSearchRepositoryMock();
 
-          when(() => repository.search(term)).thenAnswer(
+          when(
+            () => repository.makeTerm(
+              media: anilistMediaMock,
+              entry: null,
+              episode: null,
+              title: null,
+            ),
+          ).thenReturn(term);
+          when(() => repository.searchNyaa(term)).thenAnswer(
             (invocation) async => torrentMocks,
           );
 

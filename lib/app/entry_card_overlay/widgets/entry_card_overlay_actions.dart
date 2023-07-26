@@ -88,7 +88,6 @@ class EntryCardOverlayActions extends StatelessWidget {
                 entry: entry,
               ),
             );
-            ;
           },
           icon: const Icon(Icons.file_download_outlined),
         ),

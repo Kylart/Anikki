@@ -2,8 +2,8 @@ import 'package:graphql/client.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:anikki/domain/domain.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 
 import '../../helpers/init_hive.dart';
 
@@ -16,8 +16,8 @@ void main() {
     late Box box;
 
     setUp(() async {
-      box = await Hive.openBox(AnilistAuthBloc.boxName);
-      box.put(AnilistAuthBloc.tokenKey, token);
+      box = await Hive.openBox(UserRepository.boxName);
+      box.put(UserRepository.tokenKey, token);
     });
 
     test('Returns a client with the right token', () {

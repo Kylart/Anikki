@@ -1,23 +1,24 @@
+import 'package:anikki/data/data.dart';
+import 'package:anikki/domain/domain.dart';
 import 'package:collection/collection.dart';
-import 'package:graphql/client.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/app/anilist_watch_list/presentation/bloc/watch_list_bloc.dart';
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 
 import '../../fixtures/anilist.dart';
+
+class UserListRepositoryMock extends Mock implements UserListRepository {}
 
 void main() {
   /// Shuts off logging except for errors
   Logger.level = Level.error;
 
   group('unit test: WatchList Bloc', () {
-    late MockGraphQLClient mockGraphQLClient;
     late WatchListBloc bloc;
-    late Anilist repository;
+    late UserListRepositoryMock repository;
 
     group('on [WatchListRequested],', () {
       blocTest(
@@ -93,13 +94,11 @@ void main() {
               ),
         ],
         setUp: () {
-          mockGraphQLClient = generateMockGraphQLClient();
+          repository = UserListRepositoryMock();
 
-          final result = generateMockQuery<Query$GetLists>(mockGraphQLClient);
-          when(() => result.hasException).thenReturn(false);
-          when(() => result.parsedData).thenReturn(watchListMock);
+          when(() => repository.getList(username))
+              .thenAnswer((_) async => watchListMapMock);
 
-          repository = Anilist(client: mockGraphQLClient);
           bloc = WatchListBloc(repository);
         },
       );
@@ -127,13 +126,11 @@ void main() {
               ),
         ],
         setUp: () {
-          mockGraphQLClient = generateMockGraphQLClient();
+          repository = UserListRepositoryMock();
 
-          final result = generateMockQuery<Query$GetLists>(mockGraphQLClient);
-          when(() => result.hasException).thenReturn(true);
-          when(() => result.exception).thenReturn(OperationException());
+          when(() => repository.getList(username))
+              .thenThrow(AnilistGetListException(error: 'error'));
 
-          repository = Anilist(client: mockGraphQLClient);
           bloc = WatchListBloc(repository);
         },
       );
@@ -153,8 +150,7 @@ void main() {
           ),
         ],
         setUp: () {
-          mockGraphQLClient = generateMockGraphQLClient();
-          repository = Anilist(client: mockGraphQLClient);
+          repository = UserListRepositoryMock();
           bloc = WatchListBloc(repository);
         },
       );
@@ -179,19 +175,18 @@ void main() {
           isA<WatchListComplete>()
         ],
         setUp: () {
-          mockGraphQLClient = generateMockGraphQLClient();
+          repository = UserListRepositoryMock();
 
-          final mutationResult =
-              generateMockMutation<Mutation$UpdateEntry>(mockGraphQLClient);
-          when(() => mutationResult.hasException).thenReturn(false);
-          when(() => mutationResult.parsedData).thenReturn(watchListUpdateMock);
+          when(
+            () => repository.watchedEntry(
+              episode: localFileMock.episode!,
+              media: localFileMock.media!,
+            ),
+          ).thenAnswer((_) async {});
 
-          final queryResult =
-              generateMockQuery<Query$GetLists>(mockGraphQLClient);
-          when(() => queryResult.hasException).thenReturn(false);
-          when(() => queryResult.parsedData).thenReturn(watchListMock);
+          when(() => repository.getList(username))
+              .thenAnswer((_) async => watchListMapMock);
 
-          repository = Anilist(client: mockGraphQLClient);
           bloc = WatchListBloc(repository);
         },
       );
@@ -211,14 +206,15 @@ void main() {
         ),
         expect: () => [],
         setUp: () {
-          mockGraphQLClient = generateMockGraphQLClient();
+          repository = UserListRepositoryMock();
 
-          final mutationResult =
-              generateMockMutation<Mutation$UpdateEntry>(mockGraphQLClient);
-          when(() => mutationResult.hasException).thenReturn(true);
-          when(() => mutationResult.exception).thenReturn(OperationException());
+          when(
+            () => repository.watchedEntry(
+              episode: localFileMock.episode!,
+              media: localFileMock.media!,
+            ),
+          ).thenThrow(AnilistUpdateListException(error: 'error'));
 
-          repository = Anilist(client: mockGraphQLClient);
           bloc = WatchListBloc(repository);
         },
       );
@@ -238,9 +234,7 @@ void main() {
         ),
         expect: () => [],
         setUp: () {
-          mockGraphQLClient = generateMockGraphQLClient();
-
-          repository = Anilist(client: mockGraphQLClient);
+          repository = UserListRepositoryMock();
           bloc = WatchListBloc(repository);
         },
       );
@@ -267,8 +261,7 @@ void main() {
           ),
         ],
         setUp: () {
-          mockGraphQLClient = generateMockGraphQLClient();
-          repository = Anilist(client: mockGraphQLClient);
+          repository = UserListRepositoryMock();
           bloc = WatchListBloc(repository);
         },
       );
@@ -352,13 +345,11 @@ void main() {
               ),
         ],
         setUp: () {
-          mockGraphQLClient = generateMockGraphQLClient();
+          repository = UserListRepositoryMock();
 
-          final result = generateMockQuery<Query$GetLists>(mockGraphQLClient);
-          when(() => result.hasException).thenReturn(false);
-          when(() => result.parsedData).thenReturn(watchListMock);
+          when(() => repository.getList(username))
+              .thenAnswer((_) async => watchListMapMock);
 
-          repository = Anilist(client: mockGraphQLClient);
           bloc = WatchListBloc(repository);
         },
       );

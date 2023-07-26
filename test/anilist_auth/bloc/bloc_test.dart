@@ -1,15 +1,17 @@
-import 'package:graphql/client.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/app/anilist_auth/presentation/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/data/data.dart';
+import 'package:anikki/domain/user_repository.dart';
 
 import '../../fixtures/anilist.dart';
 import '../../helpers/init_hive.dart';
+
+class UserRepositoryMock extends Mock implements UserRepository {}
 
 void main() {
   /// Shuts off logging except for errors
@@ -18,9 +20,8 @@ void main() {
   initHive();
 
   group('unit test: AnilistAuth Bloc', () {
-    late MockGraphQLClient mockGraphQLClient;
     late AnilistAuthBloc bloc;
-    late Anilist repository;
+    late UserRepository repository;
 
     blocTest(
       'emits [AnilistAuthSuccess] when [AnilistAuthLoginRequested] is added and succeeds',
@@ -32,16 +33,12 @@ void main() {
         AnilistAuthSuccess(userMock),
       ],
       setUp: () {
-        mockGraphQLClient = generateMockGraphQLClient();
+        repository = UserRepositoryMock();
 
-        final result = generateMockQuery<Query$Viewer>(mockGraphQLClient);
-        when(() => result.hasException).thenReturn(false);
-        when(() => result.parsedData).thenReturn(viewerMock);
+        when(() => repository.getCurrentUser())
+            .thenAnswer((invocation) async => userMock);
 
-        repository = Anilist(client: mockGraphQLClient);
-        bloc = AnilistAuthBloc(
-          repository,
-        );
+        bloc = AnilistAuthBloc(repository);
       },
     );
 
@@ -55,16 +52,12 @@ void main() {
         AnilistAuthError(AnilistNotConnectedException().cause),
       ],
       setUp: () {
-        mockGraphQLClient = generateMockGraphQLClient();
+        repository = UserRepositoryMock();
 
-        final result = generateMockQuery<Query$Viewer>(mockGraphQLClient);
-        when(() => result.hasException).thenReturn(true);
-        when(() => result.exception).thenReturn(OperationException());
+        when(() => repository.getCurrentUser())
+            .thenThrow(AnilistNotConnectedException());
 
-        repository = Anilist(client: mockGraphQLClient);
-        bloc = AnilistAuthBloc(
-          repository,
-        );
+        bloc = AnilistAuthBloc(repository);
       },
     );
 
@@ -78,19 +71,15 @@ void main() {
         AnilistAuthLoggedOut(),
       ],
       setUp: () async {
-        mockGraphQLClient = generateMockGraphQLClient();
+        repository = UserRepositoryMock();
+        bloc = AnilistAuthBloc(repository);
 
-        repository = Anilist(client: mockGraphQLClient);
-        bloc = AnilistAuthBloc(
-          repository,
-        );
-
-        final box = await Hive.openBox(AnilistAuthBloc.boxName);
-        box.put(AnilistAuthBloc.tokenKey, 'blabla');
+        final box = await Hive.openBox(UserRepository.boxName);
+        box.put(UserRepository.tokenKey, 'blabla');
       },
       verify: (bloc) async {
-        final box = await Hive.openBox(AnilistAuthBloc.boxName);
-        expect(box.get(AnilistAuthBloc.tokenKey), isNull);
+        final box = await Hive.openBox(UserRepository.boxName);
+        expect(box.get(UserRepository.tokenKey), isNull);
       },
     );
   });

@@ -80,6 +80,7 @@ class LocalFile extends Equatable {
     final tmpFile = LocalFile(path: path);
 
     if (tmpFile.title == null) return tmpFile;
+    if (Platform.environment.containsKey('FLUTTER_TEST')) return tmpFile;
 
     try {
       final anilist = Anilist(client: getAnilistClient());

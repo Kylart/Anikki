@@ -1,24 +1,23 @@
-import 'dart:io';
-
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
-import 'package:anikki/app/library/presentation/bloc/library_bloc.dart';
-import 'package:anikki/app/library/domain/repository/repository.dart';
-import 'package:anikki/app/library/domain/models/library_entry.dart';
-import 'package:anikki/app/library/domain/models/local_file.dart';
+import 'package:anikki/app/library/bloc/library_bloc.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/domain/domain.dart';
 
+import '../../fixtures/anilist.dart';
 import '../../fixtures/path.dart';
 import '../../helpers/init_hive.dart';
 import '../../helpers/init_hydrated_storage.dart';
 
-class MockLibraryRepository extends Mock implements LibraryRepository {}
+class MockLocalStorageRepository extends Mock
+    implements LocalStorageRepository {}
 
 class MockLocalFile extends Mock implements LocalFile {}
 
-void main() {
+void main() async {
   initHive();
   initHydratedStorage();
 
@@ -29,64 +28,80 @@ void main() {
   const noPath = 'no/path';
   const toAddPath =
       '$path/[SubsPlease] Kaminaki Sekai no Kamisama Katsudou - 04 (1080p) [0328F445].mkv';
-  final files = [
-    LocalFile(
-        path:
-            '$path/[SubsPlease] Kimi wa Houkago Insomnia - 02 (1080p) [BC586D6A].mkv'),
-    LocalFile(
-        path:
-            '$path/[SubsPlease] Kimi wa Houkago Insomnia - 03 (1080p) [BC586D6A].mkv'),
-    LocalFile(
-        path:
-            '$path/[SubsPlease] Kaminaki Sekai no Kamisama Katsudou - 03 (1080p) [0328F445].mkv'),
-    LocalFile(
-        path:
-            '$path/[SubsPlease] Kuma Kuma Kuma Bear S2 - 04 (1080p) [67E8004E].mkv'),
-    LocalFile(
-        path:
-            '$path/nested/[SubsPlease] NieR Automata Ver1 - 02 (1080p) [CC00E892].mkv'),
+
+  final libraryEntries = [
+    LibraryEntry(
+      media: anilistMediaMock,
+      entries: [
+        LocalFile(
+          path:
+              '$path/[SubsPlease] Kimi wa Houkago Insomnia - 02 (1080p) [BC586D6A].mkv',
+        ),
+        LocalFile(
+          path:
+              '$path/[SubsPlease] Kimi wa Houkago Insomnia - 03 (1080p) [BC586D6A].mkv',
+        ),
+      ],
+    ),
+    LibraryEntry(
+      media: anilistMediaMock,
+      entries: [
+        LocalFile(
+          path:
+              '$path/[SubsPlease] Kaminaki Sekai no Kamisama Katsudou - 03 (1080p) [0328F445].mkv',
+        ),
+      ],
+    ),
+    LibraryEntry(
+      media: anilistMediaMock,
+      entries: [
+        LocalFile(
+          path:
+              '$path/[SubsPlease] Kuma Kuma Kuma Bear S2 - 04 (1080p) [67E8004E].mkv',
+        ),
+      ],
+    ),
+    LibraryEntry(
+      media: anilistMediaMock,
+      entries: [
+        LocalFile(
+          path:
+              '$path/nested/[SubsPlease] NieR Automata Ver1 - 02 (1080p) [CC00E892].mkv',
+        ),
+      ],
+    ),
   ];
+
+  final LocalFile mockFile = await LocalFile.createAndSearchMedia(toAddPath);
+  final LibraryEntry mockEntry =
+      LibraryEntry(media: anilistMediaMock, entries: [mockFile]);
 
   group('unit test: Library Bloc', () {
     late LibraryBloc bloc;
-    late LibraryRepository repository;
-
-    late LocalFile mockFile;
-
-    setUp(() {
-      /// File mock
-      mockFile = MockLocalFile();
-      when(() => mockFile.path).thenReturn(toAddPath);
-      when(() => mockFile.file).thenReturn(File(toAddPath));
-      when(() => mockFile.title)
-          .thenReturn('Kaminaki Sekai no Kamisama Katsudou');
-      when(() => mockFile.episode).thenReturn(4);
-
-      /// Repository mock
-      repository = MockLibraryRepository();
-      when(() => repository.getFile(toAddPath))
-          .thenAnswer((_) async => mockFile);
-      when(() => repository.retrieveFilesFromPath(emptyPath)).thenAnswer(
-        (_) async => [],
-      );
-      when(() => repository.retrieveFilesFromPath(path)).thenAnswer(
-        (_) async => files,
-      );
-
-      /// Instanciating bloc mock
-      bloc = LibraryBloc(
-        repository: repository,
-      );
-    });
+    late MockLocalStorageRepository repository;
 
     group('Event: [LibraryUpdateRequested]', () {
+      setUp(() {
+        repository = MockLocalStorageRepository();
+
+        when(() => repository.retrieveFilesAsLibraryEntries(emptyPath))
+            .thenAnswer(
+          (_) async => [],
+        );
+        when(() => repository.retrieveFilesAsLibraryEntries(path)).thenAnswer(
+          (_) async => libraryEntries,
+        );
+
+        /// Instanciating bloc mock
+        bloc = LibraryBloc(repository);
+      });
       blocTest(
         'emits nothing when [LibraryUpdateRequested] is added with `null` path',
         build: () => bloc,
         act: (bloc) => bloc.add(const LibraryUpdateRequested(path: null)),
         expect: () => [],
         verify: (bloc) {
-          verifyNever(() => repository.retrieveFilesFromPath(path));
+          verifyNever(() => repository.retrieveFilesAsLibraryEntries(path));
         },
       );
 
@@ -103,7 +118,8 @@ void main() {
           ),
         ],
         verify: (bloc) {
-          verify(() => repository.retrieveFilesFromPath(path)).called(1);
+          verify(() => repository.retrieveFilesAsLibraryEntries(path))
+              .called(1);
           expect(bloc.subscription, isNotNull);
         },
       );
@@ -117,7 +133,8 @@ void main() {
           const LibraryEmpty(path: emptyPath),
         ],
         verify: (bloc) {
-          verify(() => repository.retrieveFilesFromPath(emptyPath)).called(1);
+          verify(() => repository.retrieveFilesAsLibraryEntries(emptyPath))
+              .called(1);
           expect(bloc.subscription, isNotNull);
         },
       );
@@ -131,7 +148,8 @@ void main() {
           isA<LibraryError>().having((p0) => p0.path, 'the right path', noPath),
         ],
         verify: (bloc) {
-          verify(() => repository.retrieveFilesFromPath(noPath)).called(1);
+          verify(() => repository.retrieveFilesAsLibraryEntries(noPath))
+              .called(1);
           expect(bloc.subscription, isNull);
         },
       );
@@ -143,8 +161,9 @@ void main() {
         build: () => bloc,
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [],
-        verify: (bloc) {
-          verifyNever(() => repository.getFile(toAddPath));
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          bloc = LibraryBloc(repository);
         },
       );
 
@@ -170,10 +189,12 @@ void main() {
                 equals(mockFile),
               ),
         ],
-        verify: (bloc) {
-          verify(
-            () => repository.getFile(toAddPath),
-          ).called(1);
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          when(() => repository.addFileToEntries(const [], mockFile))
+              .thenAnswer((_) => [mockEntry]);
+
+          bloc = LibraryBloc(repository);
         },
       );
 
@@ -183,14 +204,7 @@ void main() {
         seed: () => LibraryLoaded(
           id: 0,
           path: path,
-          entries: [
-            LibraryEntry(
-              media: null,
-              entries: [
-                LocalFile(path: '$path/[SubsPlease] No name - 02.mkv'),
-              ],
-            )
-          ],
+          entries: [libraryEntries.first],
         ),
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [
@@ -207,10 +221,13 @@ void main() {
                 isNotNull,
               ),
         ],
-        verify: (bloc) {
-          verify(
-            () => repository.getFile(toAddPath),
-          ).called(1);
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          when(
+            () => repository.addFileToEntries([libraryEntries.first], mockFile),
+          ).thenAnswer((_) => [libraryEntries.first, mockEntry]);
+
+          bloc = LibraryBloc(repository);
         },
       );
 
@@ -220,22 +237,7 @@ void main() {
         seed: () => LibraryLoaded(
           id: 0,
           path: path,
-          entries: [
-            LibraryEntry(
-              media: null,
-              entries: [
-                LocalFile(path: '$path/[SubsPlease] No name - 02.mkv'),
-              ],
-            ),
-            LibraryEntry(
-              media: null,
-              entries: [
-                LocalFile(
-                    path:
-                        '$path/[SubsPlease] Kaminaki Sekai no Kamisama Katsudou - 03 (1080p) [0328F445].mkv'),
-              ],
-            )
-          ],
+          entries: libraryEntries.sublist(0, 2),
         ),
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [
@@ -268,10 +270,25 @@ void main() {
                 equals(mockFile),
               ),
         ],
-        verify: (bloc) {
-          verify(
-            () => repository.getFile(toAddPath),
-          ).called(1);
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          when(
+            () => repository.addFileToEntries(
+                libraryEntries.sublist(0, 2), mockFile),
+          ).thenAnswer(
+            (_) => [
+              libraryEntries.first,
+              LibraryEntry(
+                media: anilistMediaMock,
+                entries: [
+                  mockFile,
+                  libraryEntries[1].entries.first,
+                ],
+              ),
+            ],
+          );
+
+          bloc = LibraryBloc(repository);
         },
       );
     });
@@ -282,6 +299,10 @@ void main() {
         build: () => bloc,
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [],
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          bloc = LibraryBloc(repository);
+        },
       );
 
       blocTest<LibraryBloc, LibraryState>(
@@ -289,14 +310,23 @@ void main() {
         build: () => bloc,
         seed: () => LibraryLoaded(
           path: path,
-          entries: [
-            LibraryEntry(media: null, entries: [mockFile]),
-          ],
+          entries: [libraryEntries.first],
         ),
-        act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
+        act: (bloc) => bloc.add(
+          LibraryFileDeleted(file: mockFile),
+        ),
         expect: () => [
           const LibraryEmpty(path: path),
         ],
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          when(
+            () => repository
+                .removeFileFromEntries([libraryEntries.first], mockFile),
+          ).thenAnswer((_) => []);
+
+          bloc = LibraryBloc(repository);
+        },
       );
 
       blocTest<LibraryBloc, LibraryState>(
@@ -304,19 +334,28 @@ void main() {
         build: () => bloc,
         seed: () => LibraryLoaded(
           path: path,
-          entries: [
-            LibraryEntry(media: null, entries: [mockFile]),
-            LibraryEntry(media: null, entries: [files[0]]),
-          ],
+          entries: libraryEntries,
         ),
-        act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
+        act: (bloc) => bloc.add(
+          LibraryFileDeleted(file: libraryEntries.last.entries.first),
+        ),
         expect: () => [
           isA<LibraryLoaded>().having(
             (p0) => p0.entries.length,
-            'with 1 entry remaining',
-            equals(1),
+            'with ${libraryEntries.length - 1} entry remaining',
+            equals(libraryEntries.length - 1),
           ),
         ],
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          when(
+            () => repository.removeFileFromEntries(
+                libraryEntries, libraryEntries.last.entries.first),
+          ).thenAnswer(
+              (_) => libraryEntries.sublist(0, libraryEntries.length - 1));
+
+          bloc = LibraryBloc(repository);
+        },
       );
 
       blocTest<LibraryBloc, LibraryState>(
@@ -324,19 +363,32 @@ void main() {
         build: () => bloc,
         seed: () => LibraryLoaded(
           path: path,
-          entries: [
-            LibraryEntry(media: null, entries: [mockFile, files[2]]),
-            LibraryEntry(media: null, entries: [files[0]]),
-          ],
+          entries: libraryEntries,
         ),
-        act: (bloc) => bloc.add(LibraryFileDeleted(file: mockFile)),
+        act: (bloc) => bloc
+            .add(LibraryFileDeleted(file: libraryEntries.first.entries.first)),
         expect: () => [
           isA<LibraryLoaded>().having(
             (p0) => p0.entries.length,
-            'with 2 entries still',
-            equals(2),
+            'with ${libraryEntries.length} entries still',
+            equals(libraryEntries.length),
           ),
         ],
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          when(
+            () => repository.removeFileFromEntries(
+                libraryEntries, libraryEntries.first.entries.first),
+          ).thenAnswer((_) => [
+                LibraryEntry(
+                  media: anilistMediaMock,
+                  entries: [libraryEntries.first.entries.last],
+                ),
+                ...libraryEntries.sublist(1),
+              ]);
+
+          bloc = LibraryBloc(repository);
+        },
       );
     });
 
@@ -346,6 +398,10 @@ void main() {
         build: () => bloc,
         act: (bloc) => bloc.add(const LibraryFileAdded(path: toAddPath)),
         expect: () => [],
+        setUp: () {
+          repository = MockLocalStorageRepository();
+          bloc = LibraryBloc(repository);
+        },
       );
     });
   });

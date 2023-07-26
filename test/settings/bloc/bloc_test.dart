@@ -3,9 +3,8 @@ import 'package:logger/logger.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
+import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/app/settings/domain/models/models.dart';
-import 'package:anikki/app/settings/presentation/bloc/settings_bloc.dart';
 
 import '../../fixtures/path.dart';
 import '../../helpers/init_hive.dart';

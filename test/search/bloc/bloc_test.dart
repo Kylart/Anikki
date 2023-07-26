@@ -3,14 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:anikki/app/search/domain/models/models.dart';
-import 'package:anikki/app/search/domain/repository/repository.dart';
-import 'package:anikki/app/search/presentation/bloc/search_bloc.dart';
+import 'package:anikki/app/search/bloc/search_bloc.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/domain/domain.dart';
 
 import '../../fixtures/anilist.dart';
 import '../../fixtures/nyaa.dart';
 
-class MockSearchRepository extends Mock implements SearchRepository {}
+class MockAnimeInformationRepository extends Mock
+    implements AnimeInformationRepository {}
 
 void main() {
   /// Shuts off logging except for errors
@@ -18,7 +19,7 @@ void main() {
 
   group('unit test: Search Bloc', () {
     late SearchBloc bloc;
-    late MockSearchRepository repository;
+    late MockAnimeInformationRepository repository;
     late SearchResult searchResult;
     String term = 'Sakura Trick';
 
@@ -32,8 +33,7 @@ void main() {
         const SearchEmptyTerm(),
       ],
       setUp: () {
-        repository = MockSearchRepository();
-
+        repository = MockAnimeInformationRepository();
         bloc = SearchBloc(repository);
       },
     );
@@ -49,7 +49,7 @@ void main() {
         SearchSuccess(term, searchResult),
       ],
       setUp: () {
-        repository = MockSearchRepository();
+        repository = MockAnimeInformationRepository();
         searchResult = SearchResult(
           term: term,
           torrents: torrentMocks,
@@ -74,7 +74,7 @@ void main() {
         SearchError(term, Exception('error').toString()),
       ],
       setUp: () {
-        repository = MockSearchRepository();
+        repository = MockAnimeInformationRepository();
 
         when(() => repository.search(term)).thenThrow(Exception('error'));
 

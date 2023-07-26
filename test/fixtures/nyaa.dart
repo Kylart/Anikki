@@ -1,6 +1,7 @@
-import 'package:anikki/core/core.dart';
 import 'package:anitomy/anitomy.dart';
 import 'package:mocktail/mocktail.dart';
+
+import 'package:anikki/data/data.dart';
 
 class MockNyaa extends Mock implements Nyaa {}
 

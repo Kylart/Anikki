@@ -1,7 +1,8 @@
-import 'package:anikki/core/core.dart';
-import 'package:anikki/app/library/domain/domain.dart';
 import 'package:graphql/client.dart';
 import 'package:mocktail/mocktail.dart';
+
+import 'package:anikki/core/core.dart';
+import 'package:anikki/data/data.dart';
 
 class MockAnilist extends Mock implements Anilist {}
 
@@ -151,6 +152,61 @@ final watchListMock = Query$GetLists(
     ],
   ),
 );
+
+final completedEntriesMock = watchListMock.MediaListCollection?.lists
+        ?.firstWhere(
+          (element) =>
+              element?.entries?.first?.status == Enum$MediaListStatus.COMPLETED,
+        )
+        ?.entries
+        ?.whereType<Query$GetLists$MediaListCollection$lists$entries>()
+        .toList() ??
+    [];
+final plannedEntriesMock = watchListMock.MediaListCollection?.lists
+        ?.firstWhere(
+          (element) =>
+              element?.entries?.first?.status == Enum$MediaListStatus.PLANNING,
+        )
+        ?.entries
+        ?.whereType<Query$GetLists$MediaListCollection$lists$entries>()
+        .toList() ??
+    [];
+final currentEntriesMock = watchListMock.MediaListCollection?.lists
+        ?.firstWhere(
+          (element) =>
+              element?.entries?.first?.status == Enum$MediaListStatus.CURRENT,
+        )
+        ?.entries
+        ?.whereType<Query$GetLists$MediaListCollection$lists$entries>()
+        .toList() ??
+    [];
+final droppedEntriesMock = watchListMock.MediaListCollection?.lists
+        ?.firstWhere(
+          (element) =>
+              element?.entries?.first?.status == Enum$MediaListStatus.DROPPED,
+        )
+        ?.entries
+        ?.whereType<Query$GetLists$MediaListCollection$lists$entries>()
+        .toList() ??
+    [];
+final pausedEntriesMock = watchListMock.MediaListCollection?.lists
+        ?.firstWhere(
+          (element) =>
+              element?.entries?.first?.status == Enum$MediaListStatus.PAUSED,
+        )
+        ?.entries
+        ?.whereType<Query$GetLists$MediaListCollection$lists$entries>()
+        .toList() ??
+    [];
+
+final Map<Enum$MediaListStatus,
+    List<Query$GetLists$MediaListCollection$lists$entries>> watchListMapMock = {
+  Enum$MediaListStatus.COMPLETED: completedEntriesMock,
+  Enum$MediaListStatus.CURRENT: currentEntriesMock,
+  Enum$MediaListStatus.DROPPED: droppedEntriesMock,
+  Enum$MediaListStatus.PLANNING: plannedEntriesMock,
+  Enum$MediaListStatus.PAUSED: pausedEntriesMock,
+};
 
 final watchListUpdateMock = Mutation$UpdateEntry(
   SaveMediaListEntry: Mutation$UpdateEntry$SaveMediaListEntry(id: 1),

@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
-import 'package:anikki/core/providers/nyaa/nyaa.dart';
+
+import 'package:anikki/data/data.dart';
 
 void main() async {
   Nyaa nyaa = Nyaa();
