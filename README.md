@@ -61,7 +61,6 @@ dart run build_runner watch
 ### Run tests
 
 #### Unit tests
-> Currently only includes BloC tests
 ```bash
 flutter test
 ```
@@ -71,6 +70,9 @@ flutter test
 ```bash
 flutter test integration_test
 ```
+
+### Architecture
+This project is implementing the architecture described by the [BloC library](https://bloclibrary.dev/#/architecture) for now.
 
 ## Contributing
 Any contribution is appreciated.
