@@ -110,9 +110,11 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.CURRENT,
+            media: Fragment$shortMedia(id: 1),
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.CURRENT,
+            media: Fragment$shortMedia(id: 2),
           ),
         ],
       ),
@@ -120,9 +122,11 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.COMPLETED,
+            media: Fragment$shortMedia(id: 3),
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.COMPLETED,
+            media: Fragment$shortMedia(id: 4),
           ),
         ],
       ),
@@ -130,6 +134,7 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.DROPPED,
+            media: Fragment$shortMedia(id: 5),
           ),
         ],
       ),
@@ -137,6 +142,7 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PLANNING,
+            media: Fragment$shortMedia(id: 6),
           ),
         ],
       ),
@@ -144,9 +150,11 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PAUSED,
+            media: Fragment$shortMedia(id: 7),
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PAUSED,
+            media: Fragment$shortMedia(id: 8),
           ),
         ],
       ),

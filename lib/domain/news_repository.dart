@@ -9,6 +9,7 @@ import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 class NewsRepository {
   const NewsRepository(this.anilist);
 
+  /// The [Anilist] API to use for this repository
   final Anilist anilist;
 
   /// Returns the release schedule for the given `range`
@@ -43,10 +44,8 @@ class NewsRepository {
         }
       }
 
-      if (!options.showAdult) {
-        included = included &&
-            entry.media.anilistInfo.isAdult != null &&
-            !entry.media.anilistInfo.isAdult!;
+      if (options.showAdult) {
+        included = included && entry.media.anilistInfo.isAdult == true;
       }
 
       if (options.showOnlyJap) {
@@ -60,7 +59,9 @@ class NewsRepository {
   /// Helper method to compute the default range for a schedule
   static DateTimeRange computeRange() {
     return DateTimeRange(
-      start: DateTime.now().subtract(const Duration(days: 1)),
+      start: DateTime.now()
+          .subtract(const Duration(days: 1))
+          .copyWith(hour: 0, minute: 0, second: 0),
       end: DateTime.now()
           .add(const Duration(days: 1))
           .copyWith(hour: 23, minute: 59, second: 59),
