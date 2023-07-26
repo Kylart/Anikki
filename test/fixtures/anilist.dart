@@ -59,10 +59,11 @@ final viewerMock = Query$Viewer(
 );
 
 final shortMediaMock = Fragment$shortMedia(
-    id: 20,
-    title: Fragment$shortMedia$title(
-      userPreferred: 'Sakura Trick',
-    ));
+  id: 20,
+  title: Fragment$shortMedia$title(
+    userPreferred: 'Sakura Trick',
+  ),
+);
 
 final localFileMock = LocalFile(
   path:
@@ -211,3 +212,20 @@ final Map<Enum$MediaListStatus,
 final watchListUpdateMock = Mutation$UpdateEntry(
   SaveMediaListEntry: Mutation$UpdateEntry$SaveMediaListEntry(id: 1),
 );
+
+final characterMock = Query$Search$characters$results(
+  id: 0,
+  name: Query$Search$characters$results$name(full: 'Hestia'),
+);
+
+final staffMock = Query$Search$staff$results(
+  id: 0,
+  name: Query$Search$staff$results$name(full: 'Minase Inori'),
+);
+
+final searchResultMock = {
+  AnilistSearchPart.animes: List<Fragment$shortMedia>.from([shortMediaMock]),
+  AnilistSearchPart.characters:
+      List<Query$Search$characters$results>.from([characterMock]),
+  AnilistSearchPart.staffs: List<Query$Search$staff$results>.from([staffMock]),
+};

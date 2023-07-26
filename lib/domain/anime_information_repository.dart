@@ -18,37 +18,25 @@ class AnimeInformationRepository {
   }) async {
     final filteredLibraryEntries = _getLibraryEntries(term, libraryEntries);
 
-    try {
-      final results = await Future.wait([
-        _searchNyaa(term),
-        _searchAnilist(term),
-      ]);
+    final results = await Future.wait([
+      _searchNyaa(term),
+      _searchAnilist(term),
+    ]);
 
-      final torrents = results.first as List<NyaaTorrent>;
-      final anilistResult =
-          results.last as Map<AnilistSearchPart, List<Object>>;
+    final torrents = results.first as List<NyaaTorrent>;
+    final anilistResult = results.last as Map<AnilistSearchPart, List<Object>>;
 
-      return SearchResult(
-        term: term,
-        libraryEntries: filteredLibraryEntries,
-        torrents: torrents,
-        staffs: anilistResult[AnilistSearchPart.staffs]
-            as List<Query$Search$staff$results>,
-        characters: anilistResult[AnilistSearchPart.characters]
-            as List<Query$Search$characters$results>,
-        medias: anilistResult[AnilistSearchPart.animes]
-            as List<Fragment$shortMedia>,
-      );
-    } catch (e) {
-      logger.e('Error while searching', e);
-
-      if (filteredLibraryEntries.isEmpty) rethrow;
-
-      return SearchResult(
-        term: term,
-        libraryEntries: filteredLibraryEntries,
-      );
-    }
+    return SearchResult(
+      term: term,
+      libraryEntries: filteredLibraryEntries,
+      torrents: torrents,
+      staffs: anilistResult[AnilistSearchPart.staffs]
+          as List<Query$Search$staff$results>,
+      characters: anilistResult[AnilistSearchPart.characters]
+          as List<Query$Search$characters$results>,
+      medias:
+          anilistResult[AnilistSearchPart.animes] as List<Fragment$shortMedia>,
+    );
   }
 
   Future<List<NyaaTorrent>> _searchNyaa(String term) async {
@@ -56,12 +44,23 @@ class AnimeInformationRepository {
       return await nyaa.search(term);
     } on NyaaNoResultException {
       return const [];
+    } catch (e) {
+      return const [];
     }
   }
 
   Future<Map<AnilistSearchPart, List<Object>>> _searchAnilist(
       String term) async {
-    return await anilist.search(term);
+    try {
+      return await anilist.search(term);
+    } on AnilistSearchException {
+      return {
+        AnilistSearchPart.animes: List<Fragment$shortMedia>.from([]),
+        AnilistSearchPart.characters:
+            List<Query$Search$characters$results>.from([]),
+        AnilistSearchPart.staffs: List<Query$Search$staff$results>.from([]),
+      };
+    }
   }
 
   List<LibraryEntry> _getLibraryEntries(
