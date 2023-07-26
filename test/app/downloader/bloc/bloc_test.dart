@@ -8,8 +8,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 
-import '../../fixtures/anilist.dart';
-import '../../fixtures/nyaa.dart';
+import '../../../fixtures/anilist.dart';
+import '../../../fixtures/nyaa.dart';
 
 class TorrentSearchRepositoryMock extends Mock
     implements TorrentSearchRepository {}

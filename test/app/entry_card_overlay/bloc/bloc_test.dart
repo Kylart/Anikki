@@ -5,7 +5,7 @@ import 'package:bloc_test/bloc_test.dart';
 
 import 'package:anikki/app/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 
-import '../../fixtures/anilist.dart';
+import '../../../fixtures/anilist.dart';
 
 void main() {
   /// Shuts off logging except for errors

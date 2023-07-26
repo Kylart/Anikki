@@ -8,7 +8,7 @@ import 'package:bloc_test/bloc_test.dart';
 
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 
-import '../../fixtures/anilist.dart';
+import '../../../fixtures/anilist.dart';
 
 class UserListRepositoryMock extends Mock implements UserListRepository {}
 

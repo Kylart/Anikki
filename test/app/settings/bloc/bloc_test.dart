@@ -6,9 +6,9 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/core.dart';
 
-import '../../fixtures/path.dart';
-import '../../helpers/init_hive.dart';
-import '../../helpers/init_hydrated_storage.dart';
+import '../../../fixtures/path.dart';
+import '../../../helpers/init_hive.dart';
+import '../../../helpers/init_hydrated_storage.dart';
 
 void main() {
   /// Shuts off logging except for errors

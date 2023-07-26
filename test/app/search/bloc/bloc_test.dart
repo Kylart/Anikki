@@ -7,8 +7,8 @@ import 'package:anikki/app/search/bloc/search_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/domain/domain.dart';
 
-import '../../fixtures/anilist.dart';
-import '../../fixtures/nyaa.dart';
+import '../../../fixtures/anilist.dart';
+import '../../../fixtures/nyaa.dart';
 
 class MockAnimeInformationRepository extends Mock
     implements AnimeInformationRepository {}

@@ -8,7 +8,7 @@ import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/news_repository.dart';
 
-import '../../fixtures/anilist.dart';
+import '../../../fixtures/anilist.dart';
 
 class NewsRepositoryMock extends Mock implements NewsRepository {}
 

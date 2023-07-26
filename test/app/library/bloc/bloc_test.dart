@@ -7,10 +7,10 @@ import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/domain/domain.dart';
 
-import '../../fixtures/anilist.dart';
-import '../../fixtures/path.dart';
-import '../../helpers/init_hive.dart';
-import '../../helpers/init_hydrated_storage.dart';
+import '../../../fixtures/anilist.dart';
+import '../../../fixtures/path.dart';
+import '../../../helpers/init_hive.dart';
+import '../../../helpers/init_hydrated_storage.dart';
 
 class MockLocalStorageRepository extends Mock
     implements LocalStorageRepository {}

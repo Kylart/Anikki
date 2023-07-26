@@ -8,8 +8,8 @@ import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/user_repository.dart';
 
-import '../../fixtures/anilist.dart';
-import '../../helpers/init_hive.dart';
+import '../../../fixtures/anilist.dart';
+import '../../../helpers/init_hive.dart';
 
 class UserRepositoryMock extends Mock implements UserRepository {}
 
