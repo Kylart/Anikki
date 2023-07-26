@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 
 import 'package:anikki/data/data.dart';
 
-import '../../fixtures/anilist.dart';
+import '../fixtures/anilist.dart';
 
 void main() {
   late MockGraphQLClient mockGraphQLClient;
