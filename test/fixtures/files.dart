@@ -1,7 +1,12 @@
+import 'package:mocktail/mocktail.dart';
+
 import 'package:anikki/core/core.dart';
+import 'package:anikki/data/data.dart';
 
 import 'anilist.dart';
 import 'path.dart';
+
+class MockFiles extends Mock implements Files {}
 
 const emptyPath = '$path/empty';
 const noPath = 'no/path';
