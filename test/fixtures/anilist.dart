@@ -60,6 +60,7 @@ final viewerMock = Query$Viewer(
 
 final shortMediaMock = Fragment$shortMedia(
   id: 20,
+  episodes: 12,
   title: Fragment$shortMedia$title(
     userPreferred: 'Sakura Trick',
   ),
@@ -110,11 +111,13 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.CURRENT,
-            media: Fragment$shortMedia(id: 1),
+            media: Fragment$shortMedia(id: 1, episodes: 12),
+            progress: 2,
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.CURRENT,
-            media: Fragment$shortMedia(id: 2),
+            media: Fragment$shortMedia(id: 2, episodes: 12),
+            progress: 4,
           ),
         ],
       ),
@@ -122,11 +125,13 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.COMPLETED,
-            media: Fragment$shortMedia(id: 3),
+            media: Fragment$shortMedia(id: 3, episodes: 12),
+            progress: 12,
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.COMPLETED,
-            media: Fragment$shortMedia(id: 4),
+            media: Fragment$shortMedia(id: 4, episodes: 12),
+            progress: 12,
           ),
         ],
       ),
@@ -134,7 +139,8 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.DROPPED,
-            media: Fragment$shortMedia(id: 5),
+            media: Fragment$shortMedia(id: 5, episodes: 12),
+            progress: 3,
           ),
         ],
       ),
@@ -142,7 +148,7 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PLANNING,
-            media: Fragment$shortMedia(id: 6),
+            media: Fragment$shortMedia(id: 6, episodes: 12),
           ),
         ],
       ),
@@ -150,11 +156,13 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PAUSED,
-            media: Fragment$shortMedia(id: 7),
+            media: Fragment$shortMedia(id: 7, episodes: 12),
+            progress: 6,
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PAUSED,
-            media: Fragment$shortMedia(id: 8),
+            media: Fragment$shortMedia(id: 8, episodes: 12),
+            progress: 7,
           ),
         ],
       ),
