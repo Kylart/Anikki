@@ -1,7 +1,5 @@
-on:
-  push:
-    branches:
-      - master
+name: Github Actions - Windows
+on: [push, pull_request]
 
 jobs:
   tests:
