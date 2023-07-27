@@ -190,7 +190,7 @@ void main() {
       });
 
       group('when showAdult property', () {
-        test('is on alone', () {
+        test('is on', () {
           final result = repository.filterEntries(
             [
               NewsEntry(
@@ -216,8 +216,40 @@ void main() {
             ),
           );
 
-          expect(result.length, 1);
+          expect(result.length, 2);
           expect(result.first.media.anilistInfo.id, 0);
+          expect(result.first.media.anilistInfo.isAdult, true);
+        });
+
+        test('is off', () {
+          final result = repository.filterEntries(
+            [
+              NewsEntry(
+                media: Media(
+                  anilistInfo: Fragment$shortMedia(id: 0, isAdult: true),
+                ),
+                airingAt: DateTime.now(),
+              ),
+              NewsEntry(
+                media: Media(
+                  anilistInfo: Fragment$shortMedia(id: 1, isAdult: false),
+                ),
+                airingAt: DateTime.now(),
+              ),
+            ],
+            const NewsOptions(
+              showAdult: false,
+              showOnlyJap: false,
+            ),
+            WatchListComplete(
+              username: username,
+              watchList: watchListMapMock,
+            ),
+          );
+
+          expect(result.length, 1);
+          expect(result.first.media.anilistInfo.id, 1);
+          expect(result.first.media.anilistInfo.isAdult, false);
         });
       });
 

@@ -44,8 +44,8 @@ class NewsRepository {
         }
       }
 
-      if (options.showAdult) {
-        included = included && entry.media.anilistInfo.isAdult == true;
+      if (!options.showAdult) {
+        included = included && entry.media.anilistInfo.isAdult == false;
       }
 
       if (options.showOnlyJap) {
