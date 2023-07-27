@@ -42,7 +42,7 @@ class EntryCardCover extends StatelessWidget {
             Opacity(
               opacity: 0.7,
               child: Image.asset(
-                'assets/images/placeholder.png',
+                'assets/images/placeholder.jpg',
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               ),

@@ -90,7 +90,7 @@ flutter:
 
   assets:
     - .env
-    - assets/images/placeholder.png
+    - assets/images/placeholder.jpg
     - assets/images/cover_placeholder.jpg
 
 dart_pre_commit:
