@@ -262,6 +262,7 @@ void main() {
                   anilistInfo: Fragment$shortMedia(
                     id: 0,
                     countryOfOrigin: 'JP',
+                    isAdult: false,
                   ),
                 ),
                 airingAt: DateTime.now(),
@@ -271,6 +272,7 @@ void main() {
                   anilistInfo: Fragment$shortMedia(
                     id: 1,
                     countryOfOrigin: 'KR',
+                    isAdult: false,
                   ),
                 ),
                 airingAt: DateTime.now(),
@@ -280,6 +282,7 @@ void main() {
                   anilistInfo: Fragment$shortMedia(
                     id: 1,
                     countryOfOrigin: 'CN',
+                    isAdult: false,
                   ),
                 ),
                 airingAt: DateTime.now(),
