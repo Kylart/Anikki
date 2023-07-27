@@ -41,9 +41,9 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  media_kit: ^1.0.2
+  media_kit: 1.0.2
   # For video rendering.
-  media_kit_video: ^1.0.2
+  media_kit_video: 1.0.2
   # Enables support for higher number of concurrent instances. Optional.
   media_kit_native_event_loop: ^1.0.6
   # Windows package for video (& audio) native libraries.
@@ -82,6 +82,8 @@ dev_dependencies:
   mocktail: ^0.3.0
   build_runner: ^2.4.6
   graphql_codegen: ^0.13.5
+  dart_pre_commit: ^5.2.0+1
+  git_hooks: ^1.0.1
 
 flutter:
   uses-material-design: true
@@ -90,3 +92,7 @@ flutter:
     - .env
     - assets/images/placeholder.png
     - assets/images/cover_placeholder.jpg
+
+dart_pre_commit:
+  outdated: false
+  pull-up-dependencies: false
