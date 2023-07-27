@@ -25,9 +25,12 @@ void main() {
 
       test('returns the right file when directory exists', () async {
         final result = await repository.getFilesInDirectory(path);
-        
+
         expect(result, isNotEmpty);
-        expect(result.firstWhereOrNull((element) => extension(element.path) == '.avi'), isNull);
+        expect(
+            result.firstWhereOrNull(
+                (element) => extension(element.path) == '.avi'),
+            isNull);
       });
     });
   });
