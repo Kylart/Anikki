@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:http/http.dart';
 import 'package:quiver/collection.dart';
 
@@ -11,19 +13,23 @@ class Nyaa {
   final String baseUrl = 'nyaa.si';
   final Client client = Client();
 
-  Map<String, List<NyaaTorrent>> results = LruMap(maximumSize: 10);
+  Map<String, List<NyaaTorrent>> resultsCache = LruMap(maximumSize: 10);
 
   // Should be enough for a few weeks of content.
   final int maxResults = 750;
 
   Future<List<NyaaTorrent>> search(String term) async {
-    if (results.containsKey(term) && results[term]!.isNotEmpty) {
-      return results[term]!;
+    if (resultsCache.containsKey(term) && resultsCache[term]!.isNotEmpty) {
+      return resultsCache[term]!;
     }
 
     final result = await _getAll(term: term);
 
-    results[term] = result;
+    resultsCache[term] = result;
+    Timer(
+      const Duration(minutes: 5),
+      () => resultsCache.remove(term),
+    );
 
     result.sort((a, b) => int.parse(b.seeders).compareTo(int.parse(a.seeders)));
 
