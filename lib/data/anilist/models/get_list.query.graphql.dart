@@ -273,6 +273,10 @@ const documentNodeQueryGetLists = DocumentNode(definitions: [
             name: NameNode(value: 'type'),
             value: EnumValueNode(name: NameNode(value: 'ANIME')),
           ),
+          ArgumentNode(
+            name: NameNode(value: 'sort'),
+            value: EnumValueNode(name: NameNode(value: 'UPDATED_TIME_DESC')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -325,6 +329,13 @@ const documentNodeQueryGetLists = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'private'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'updatedAt'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -924,6 +935,7 @@ class Query$GetLists$MediaListCollection$lists$entries {
     this.notes,
     this.repeat,
     this.private,
+    this.updatedAt,
     this.startedAt,
     this.completedAt,
     this.media,
@@ -938,6 +950,7 @@ class Query$GetLists$MediaListCollection$lists$entries {
     final l$notes = json['notes'];
     final l$repeat = json['repeat'];
     final l$private = json['private'];
+    final l$updatedAt = json['updatedAt'];
     final l$startedAt = json['startedAt'];
     final l$completedAt = json['completedAt'];
     final l$media = json['media'];
@@ -951,6 +964,7 @@ class Query$GetLists$MediaListCollection$lists$entries {
       notes: (l$notes as String?),
       repeat: (l$repeat as int?),
       private: (l$private as bool?),
+      updatedAt: (l$updatedAt as int?),
       startedAt: l$startedAt == null
           ? null
           : Query$GetLists$MediaListCollection$lists$entries$startedAt.fromJson(
@@ -978,6 +992,8 @@ class Query$GetLists$MediaListCollection$lists$entries {
 
   final bool? private;
 
+  final int? updatedAt;
+
   final Query$GetLists$MediaListCollection$lists$entries$startedAt? startedAt;
 
   final Query$GetLists$MediaListCollection$lists$entries$completedAt?
@@ -1002,6 +1018,8 @@ class Query$GetLists$MediaListCollection$lists$entries {
     _resultData['repeat'] = l$repeat;
     final l$private = private;
     _resultData['private'] = l$private;
+    final l$updatedAt = updatedAt;
+    _resultData['updatedAt'] = l$updatedAt;
     final l$startedAt = startedAt;
     _resultData['startedAt'] = l$startedAt?.toJson();
     final l$completedAt = completedAt;
@@ -1021,6 +1039,7 @@ class Query$GetLists$MediaListCollection$lists$entries {
     final l$notes = notes;
     final l$repeat = repeat;
     final l$private = private;
+    final l$updatedAt = updatedAt;
     final l$startedAt = startedAt;
     final l$completedAt = completedAt;
     final l$media = media;
@@ -1032,6 +1051,7 @@ class Query$GetLists$MediaListCollection$lists$entries {
       l$notes,
       l$repeat,
       l$private,
+      l$updatedAt,
       l$startedAt,
       l$completedAt,
       l$media,
@@ -1076,6 +1096,11 @@ class Query$GetLists$MediaListCollection$lists$entries {
     final l$private = private;
     final lOther$private = other.private;
     if (l$private != lOther$private) {
+      return false;
+    }
+    final l$updatedAt = updatedAt;
+    final lOther$updatedAt = other.updatedAt;
+    if (l$updatedAt != lOther$updatedAt) {
       return false;
     }
     final l$startedAt = startedAt;
@@ -1129,6 +1154,7 @@ abstract class CopyWith$Query$GetLists$MediaListCollection$lists$entries<TRes> {
     String? notes,
     int? repeat,
     bool? private,
+    int? updatedAt,
     Query$GetLists$MediaListCollection$lists$entries$startedAt? startedAt,
     Query$GetLists$MediaListCollection$lists$entries$completedAt? completedAt,
     Fragment$shortMedia? media,
@@ -1161,6 +1187,7 @@ class _CopyWithImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
     Object? notes = _undefined,
     Object? repeat = _undefined,
     Object? private = _undefined,
+    Object? updatedAt = _undefined,
     Object? startedAt = _undefined,
     Object? completedAt = _undefined,
     Object? media = _undefined,
@@ -1176,6 +1203,8 @@ class _CopyWithImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
         notes: notes == _undefined ? _instance.notes : (notes as String?),
         repeat: repeat == _undefined ? _instance.repeat : (repeat as int?),
         private: private == _undefined ? _instance.private : (private as bool?),
+        updatedAt:
+            updatedAt == _undefined ? _instance.updatedAt : (updatedAt as int?),
         startedAt: startedAt == _undefined
             ? _instance.startedAt
             : (startedAt
@@ -1232,6 +1261,7 @@ class _CopyWithStubImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
     String? notes,
     int? repeat,
     bool? private,
+    int? updatedAt,
     Query$GetLists$MediaListCollection$lists$entries$startedAt? startedAt,
     Query$GetLists$MediaListCollection$lists$entries$completedAt? completedAt,
     Fragment$shortMedia? media,

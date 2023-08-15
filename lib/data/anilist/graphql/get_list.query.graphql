@@ -1,5 +1,5 @@
 query GetLists ($username: String) {
-	MediaListCollection(userName: $username, type: ANIME) {
+	MediaListCollection(userName: $username, type: ANIME, sort: UPDATED_TIME_DESC) {
 		lists {
 			entries {
 				score
@@ -8,6 +8,7 @@ query GetLists ($username: String) {
 				notes
 				repeat
 				private
+				updatedAt
 				startedAt {
 					year
 					month

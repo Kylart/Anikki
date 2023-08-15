@@ -14,8 +14,17 @@ part 'info.dart';
 part 'list.dart';
 part 'schedule.dart';
 part 'search.dart';
+part 'trending.dart';
+part 'recommandations.dart';
 
 class Anilist extends AnilistClient
-    with AnilistAuth, AnilistInfo, AnilistList, AnilistSearch, AnilistSchedule {
+    with
+        AnilistAuth,
+        AnilistInfo,
+        AnilistList,
+        AnilistSearch,
+        AnilistSchedule,
+        AnilistTrending,
+        AnilistRecommandations {
   Anilist({required super.client});
 }

@@ -1,0 +1,16 @@
+query Recommendations ($page: Int) {
+	Page(page: $page) {
+		pageInfo {
+			hasNextPage
+			total
+		}
+    recommendations {
+      mediaRecommendation {
+        ...shortMedia
+      }
+      media {
+        ...shortMedia
+      }
+    }
+  }
+}

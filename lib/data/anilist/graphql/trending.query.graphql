@@ -1,0 +1,14 @@
+query Trending ($page: Int) {
+	Page(page: $page) {
+		pageInfo {
+			hasNextPage
+			total
+		}
+    mediaTrends {
+      trending
+      media {
+        ...shortMedia
+      }
+    }
+  }
+}

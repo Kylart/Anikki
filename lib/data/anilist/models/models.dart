@@ -8,3 +8,5 @@ export 'update_list_entry.mutation.graphql.dart';
 export 'viewer.query.graphql.dart';
 export 'search.query.graphql.dart';
 export 'schema.graphql.dart';
+export 'recommandations.query.graphql.dart';
+export 'trending.query.graphql.dart';
