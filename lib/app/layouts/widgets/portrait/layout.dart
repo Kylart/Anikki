@@ -1,3 +1,4 @@
+import 'package:anikki/app/home/view/home_view.dart';
 import 'package:anikki/app/library/view/library_page.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,6 @@ import 'package:anikki/app/layouts/widgets/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/app/search/search.dart';
 import 'package:anikki/app/settings/settings.dart';
 import 'package:anikki/core/models/user_list_enum.dart';
-import 'package:anikki/app/news/news.dart';
 import 'package:anikki/app/user_list/widgets/user_list_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,9 +37,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
               });
             },
             children: const [
-              NewsPage(
-                showOutline: false,
-              ),
+              HomeView(),
               Column(
                 children: [
                   UserListAppBar(
