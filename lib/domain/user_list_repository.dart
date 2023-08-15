@@ -37,26 +37,43 @@ class UserListRepository {
     );
   }
 
+  Future<List<AnilistListEntry>> getContinueList(String username) async {
+    final list = await getList(username);
+    final currentList = list[Enum$MediaListStatus.CURRENT] ?? [];
+
+    return currentList.where((element) {
+      final progress = element.progress ?? 0;
+      final nextEpisode = element.media?.nextAiringEpisode?.episode;
+      final nbEpisodes = element.media?.episodes ?? -1;
+
+      if (nextEpisode != null) {
+        return progress < nextEpisode - 1;
+      } else {
+        return progress < nbEpisodes;
+      }
+    }).toList();
+  }
+
   /// Returns whether the entry is planned to watch or in currently watching status
-  static bool isFollowed(WatchListComplete watchList, NewsEntry entry) {
+  static bool isFollowed(WatchListComplete watchList, Media entry) {
     return [...watchList.planning, ...watchList.current]
-        .where((element) => element.media?.id == entry.media.anilistInfo.id)
+        .where((element) => element.media?.id == entry.anilistInfo.id)
         .isNotEmpty;
   }
 
   /// Returns whether the entry is completed or watched
-  static bool isSeen(WatchListComplete watchList, NewsEntry entry) {
-    if (entry.episode == null) return false;
+  static bool isSeen(WatchListComplete watchList, Media entry) {
+    final currentEntry = watchList.current
+        .where((element) => element.media?.id == entry.anilistInfo.id)
+        .first;
 
-    final listEntry = watchList.current
-        .where((element) => element.media?.id == entry.media.anilistInfo.id);
+    final seen =
+        currentEntry.media?.nextAiringEpisode?.episode == currentEntry.progress;
 
-    final isCompleted = watchList.completed
-        .where((e) => e.media?.id == entry.media.anilistInfo.id)
+    final completed = watchList.completed
+        .where((e) => e.media?.id == entry.anilistInfo.id)
         .isNotEmpty;
 
-    return (listEntry.isNotEmpty &&
-            (listEntry.first.progress ?? -1) >= entry.episode!) ||
-        isCompleted;
+    return seen || completed;
   }
 }
