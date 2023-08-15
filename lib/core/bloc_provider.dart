@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
+import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
-import 'package:anikki/app/news/bloc/news_bloc.dart';
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
@@ -27,7 +27,6 @@ class AnikkiBlocProvider extends StatelessWidget {
     final files = Files();
 
     final localStorageRepository = LocalStorageRepository(anilist, files);
-    final newsRepository = NewsRepository(anilist);
     final torrentSearchRepository = TorrentSearchRepository(nyaa);
     final userListRepository = UserListRepository(anilist);
     final userRepository = UserRepository(anilist);
@@ -62,10 +61,7 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) {
-            return NewsBloc(newsRepository)
-              ..add(
-                NewsRequested(range: NewsBloc.initalDateRange),
-              );
+            return HomeBloc();
           },
         ),
       ],
