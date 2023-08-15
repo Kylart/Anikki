@@ -1,3 +1,5 @@
+import 'package:anikki/data/data.dart';
+
 export 'anikki_action.dart';
 
 export 'user_list_enum.dart';
@@ -21,3 +23,5 @@ export 'qbittorrent_settings.dart';
 export 'transmission_settings.dart';
 
 export 'torrent/models.dart';
+
+typedef AnilistListEntry = Query$GetLists$MediaListCollection$lists$entries;

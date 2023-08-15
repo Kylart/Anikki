@@ -17,6 +17,7 @@ class Media extends Equatable {
       anilistInfo.coverImage?.extraLarge ??
       anilistInfo.coverImage?.large ??
       anilistInfo.coverImage?.medium;
+  String? get bannerImage => anilistInfo.bannerImage;
 
   @override
   List<Object> get props => [
