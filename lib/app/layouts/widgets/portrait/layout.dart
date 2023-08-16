@@ -7,8 +7,6 @@ import 'package:anikki/app/anilist_watch_list/watch_list.dart';
 import 'package:anikki/app/layouts/widgets/portrait/anikki_navigation_bar.dart';
 import 'package:anikki/app/search/search.dart';
 import 'package:anikki/app/settings/settings.dart';
-import 'package:anikki/core/models/user_list_enum.dart';
-import 'package:anikki/app/user_list/widgets/user_list_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PortraitLayout extends StatefulWidget {
@@ -38,24 +36,8 @@ class _PortraitLayoutState extends State<PortraitLayout> {
             },
             children: const [
               HomeView(),
-              Column(
-                children: [
-                  UserListAppBar(
-                    userListType: UserListEnum.local,
-                  ),
-                  Expanded(
-                    child: LibraryPage(),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  UserListAppBar(
-                    userListType: UserListEnum.watchList,
-                  ),
-                  Expanded(child: WatchListView()),
-                ],
-              ),
+              LibraryPage(),
+              WatchListView(),
               SearchView(),
               SettingsView(),
             ],

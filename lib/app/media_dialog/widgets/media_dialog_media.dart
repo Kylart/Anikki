@@ -44,14 +44,12 @@ class MediaDialogMedia extends StatelessWidget {
                 subtitle: media.anilistInfo.title?.native == null
                     ? const SizedBox()
                     : Text(media.anilistInfo.title!.native!),
-                trailing: EntryTag(
-                    padding: EdgeInsets.zero,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(Icons.close),
-                    )),
+                trailing: IconButton.outlined(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.close),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),

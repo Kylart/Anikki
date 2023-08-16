@@ -9,7 +9,6 @@ class AnikkiIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       icon,
-      size: 18,
     );
   }
 }

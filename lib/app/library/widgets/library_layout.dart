@@ -8,7 +8,7 @@ import 'package:anikki/core/widgets/entry/entry_tile.dart';
 import 'package:anikki/app/library/widgets/library_card.dart';
 import 'package:anikki/core/widgets/list_view/custom_list_view.dart';
 import 'package:anikki/core/widgets/grid_view/custom_grid_view.dart';
-import 'package:anikki/app/user_list/shared/user_list_grid_delegate.dart';
+import 'package:anikki/core/helpers/user_list_grid_delegate.dart';
 
 class LibraryLayout extends StatelessWidget {
   const LibraryLayout({

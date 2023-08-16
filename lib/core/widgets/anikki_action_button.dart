@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/models/anikki_action.dart';
+import 'package:ionicons/ionicons.dart';
 
 class AnikkiActionButton extends StatelessWidget {
   const AnikkiActionButton({
     super.key,
     required this.actions,
-    this.icon = const AnikkiIcon(icon: Icons.settings),
+    this.icon = const AnikkiIcon(icon: Ionicons.settings_outline),
   });
 
   final List<AnikkiAction> actions;

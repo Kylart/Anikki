@@ -22,8 +22,8 @@ class _TorrentViewState extends State<TorrentView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
-      builder: (context, settingsStage) {
-        final settings = settingsStage.settings;
+      builder: (context, settingsState) {
+        final settings = settingsState.settings;
 
         BlocProvider.of<TorrentBloc>(context).add(
           TorrentSettingsUpdated(
@@ -36,52 +36,63 @@ class _TorrentViewState extends State<TorrentView> {
                 : null,
           ),
         );
-        return BlocBuilder<TorrentBloc, TorrentState>(
-          builder: (context, state) {
-            final torrentType = settings.torrentType;
 
-            switch (state.runtimeType) {
-              case TorrentLoaded:
-                final currentState = state as TorrentLoaded;
+        return LayoutCard(
+          child: Column(
+            children: [
+              AppBar(
+                title: Text(settingsState.settings.torrentType.title()),
+              ),
+              BlocBuilder<TorrentBloc, TorrentState>(
+                builder: (context, state) {
+                  final torrentType = settings.torrentType;
 
-                return LayoutCard(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TorrentAppBar(
-                        type: torrentType,
-                      ),
-                      Container(
-                        constraints: const BoxConstraints(
-                          maxHeight: 300,
+                  switch (state.runtimeType) {
+                    case TorrentLoaded:
+                      final currentState = state as TorrentLoaded;
+
+                      return LayoutCard(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TorrentAppBar(
+                              type: torrentType,
+                            ),
+                            Container(
+                              constraints: const BoxConstraints(
+                                maxHeight: 300,
+                              ),
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  final torrent =
+                                      currentState.torrents.elementAt(index);
+
+                                  return TorrentTile(torrent: torrent);
+                                },
+                                separatorBuilder: (context, index) =>
+                                    const Divider(
+                                  height: 1,
+                                ),
+                                itemCount: currentState.torrents.length,
+                              ),
+                            )
+                          ],
                         ),
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final torrent =
-                                currentState.torrents.elementAt(index);
+                      );
 
-                            return TorrentTile(torrent: torrent);
-                          },
-                          separatorBuilder: (context, index) => const Divider(
-                            height: 1,
-                          ),
-                          itemCount: currentState.torrents.length,
-                        ),
-                      )
-                    ],
-                  ),
-                );
+                    case TorrentCannotLoad:
+                      return TorrentCannotLoadWidget(type: torrentType);
 
-              case TorrentCannotLoad:
-                return TorrentCannotLoadWidget(type: torrentType);
-
-              case TorrentEmpty:
-              case TorrentInitial:
-              default:
-                return const SizedBox();
-            }
-          },
+                    case TorrentEmpty:
+                    case TorrentInitial:
+                    default:
+                      return const SizedBox();
+                  }
+                },
+              ),
+            ],
+          ),
         );
       },
     );
