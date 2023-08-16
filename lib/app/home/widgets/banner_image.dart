@@ -21,7 +21,7 @@ class BannerImage extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [Colors.black87, Colors.transparent],
         ).createShader(
-          Rect.fromLTRB(0, 0, rect.width, min(rect.height, 1000)),
+          Rect.fromLTRB(0, 0, rect.width, min(rect.height, 750)),
         );
       },
       blendMode: BlendMode.dstIn,
