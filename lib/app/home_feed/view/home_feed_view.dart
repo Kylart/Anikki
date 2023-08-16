@@ -55,6 +55,8 @@ class HomeFeedView extends StatelessWidget {
                   ))
                     HomeEntryCard(
                       media: entry,
+                      text: entry.anilistInfo.nextAiringEpisode?.episode
+                          .toString(),
                     ),
                 ],
               ),
