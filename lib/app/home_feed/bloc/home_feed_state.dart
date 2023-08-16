@@ -4,37 +4,50 @@ sealed class HomeFeedState extends Equatable {
   const HomeFeedState({
     this.entries = const [],
     this.range,
+    this.options = const HomeFeedOptions(),
   });
 
   final List<Media> entries;
   final DateTimeRange? range;
+  final HomeFeedOptions options;
 
   @override
   List<Object?> get props => [
         entries,
         range,
+        options,
       ];
 }
 
 final class HomeFeedInitial extends HomeFeedState {}
 
 final class HomeFeedLoading extends HomeFeedState {
-  const HomeFeedLoading({super.entries, super.range});
+  const HomeFeedLoading({
+    super.entries,
+    super.range,
+    super.options,
+  });
 
   @override
   List<Object?> get props => [
         entries,
         range,
+        options,
       ];
 }
 
 final class HomeFeedLoaded extends HomeFeedState {
-  const HomeFeedLoaded({super.entries, super.range});
+  const HomeFeedLoaded({
+    super.entries,
+    super.range,
+    super.options,
+  });
 
   @override
   List<Object?> get props => [
         entries,
         range,
+        options,
       ];
 }
 
@@ -42,6 +55,7 @@ final class HomeFeedFailed extends HomeFeedState {
   const HomeFeedFailed({
     super.entries,
     super.range,
+    super.options,
     required this.message,
   });
 
@@ -52,5 +66,6 @@ final class HomeFeedFailed extends HomeFeedState {
         entries,
         range,
         message,
+        options,
       ];
 }

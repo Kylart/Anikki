@@ -87,38 +87,34 @@ class AnikkiActionButton extends StatelessWidget {
         },
       );
     } else {
-      return SizedBox(
-        width: 35,
-        height: 35,
-        child: PopupMenuButton(
-          tooltip: '',
-          icon: icon,
-          padding: EdgeInsets.zero,
-          itemBuilder: (context) {
-            return actions
-                .map(
-                  (e) => (e.type == AnikkiActionType.action
-                      ? PopupMenuItem(
-                          enabled: !e.disabled,
-                          onTap: () => e.callback(context),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            hoverColor: Colors.transparent,
-                            onTap: () {
-                              Navigator.pop(context);
-                              e.callback(context);
-                            },
-                            dense: true,
-                            leading: AnikkiIcon(icon: e.icon),
-                            title: Text(e.label),
-                            trailing: e.trailing,
-                          ),
-                        )
-                      : const PopupMenuDivider()) as PopupMenuEntry,
-                )
-                .toList();
-          },
-        ),
+      return PopupMenuButton(
+        tooltip: '',
+        icon: icon,
+        padding: EdgeInsets.zero,
+        itemBuilder: (context) {
+          return actions
+              .map(
+                (e) => (e.type == AnikkiActionType.action
+                    ? PopupMenuItem(
+                        enabled: !e.disabled,
+                        onTap: () => e.callback(context),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          hoverColor: Colors.transparent,
+                          onTap: () {
+                            Navigator.pop(context);
+                            e.callback(context);
+                          },
+                          dense: true,
+                          leading: AnikkiIcon(icon: e.icon),
+                          title: Text(e.label),
+                          trailing: e.trailing,
+                        ),
+                      )
+                    : const PopupMenuDivider()) as PopupMenuEntry,
+              )
+              .toList();
+        },
       );
     }
   }

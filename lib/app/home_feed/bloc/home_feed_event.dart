@@ -8,3 +8,14 @@ sealed class HomeFeedEvent extends Equatable {
 }
 
 final class HomeFeedRefresh extends HomeFeedEvent {}
+
+class HomeFeedOptionsChanged extends HomeFeedEvent {
+  const HomeFeedOptionsChanged({required this.options});
+
+  final HomeFeedOptions options;
+
+  @override
+  List<Object> get props => [
+        options,
+      ];
+}

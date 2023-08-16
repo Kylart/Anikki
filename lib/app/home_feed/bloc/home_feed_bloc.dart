@@ -17,6 +17,7 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
     });
 
     on<HomeFeedRefresh>(_onRefresh);
+    on<HomeFeedOptionsChanged>(_onOptionChanged);
   }
 
   Future<void> _onRefresh(
@@ -27,6 +28,7 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
       emit(HomeFeedLoading(
         range: range,
         entries: state.entries,
+        options: state.options,
       ));
 
       final entries = await repository.getSchedule(range);
@@ -35,6 +37,7 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
         HomeFeedLoaded(
           entries: entries,
           range: range,
+          options: state.options,
         ),
       );
     } on AnilistGetScheduleException catch (e) {
@@ -43,6 +46,7 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
           message: e.cause,
           entries: state.entries,
           range: range,
+          options: state.options,
         ),
       );
     } catch (e) {
@@ -51,8 +55,22 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
           message: e.toString(),
           entries: state.entries,
           range: range,
+          options: state.options,
         ),
       );
     }
+  }
+
+  void _onOptionChanged(
+      HomeFeedOptionsChanged event, Emitter<HomeFeedState> emit) {
+    if (state is! HomeFeedLoaded) return;
+
+    emit(
+      HomeFeedLoaded(
+        range: state.range,
+        entries: state.entries,
+        options: event.options,
+      ),
+    );
   }
 }

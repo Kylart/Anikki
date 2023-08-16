@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
-import 'package:anikki/domain/domain.dart';
-import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 
 /// Repository to handle Feed related features
 class FeedRepository {
@@ -48,23 +46,10 @@ class FeedRepository {
   // Filter the given `entries` by applying the given `options`
   List<Media> filterEntries(
     List<Media> entries,
-    NewsOptions options,
-    WatchListComplete? watchList,
+    HomeFeedOptions options,
   ) {
     return entries.where((entry) {
       bool included = true;
-
-      if (watchList != null) {
-        if (options.showOnlyBookmarked) {
-          included = UserListRepository.isFollowed(watchList, entry);
-        }
-
-        if (options.showOnlyUnseen) {
-          included = included &&
-              UserListRepository.isFollowed(watchList, entry) &&
-              !UserListRepository.isSeen(watchList, entry);
-        }
-      }
 
       if (!options.showAdult) {
         included = included && entry.anilistInfo.isAdult == false;

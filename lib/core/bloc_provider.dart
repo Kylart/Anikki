@@ -1,6 +1,3 @@
-import 'package:anikki/app/search/bloc/search_bloc.dart';
-import 'package:anikki/data/data.dart';
-import 'package:anikki/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +11,10 @@ import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/app/home_feed/bloc/home_feed_bloc.dart';
+import 'package:anikki/app/search/bloc/search_bloc.dart';
+import 'package:anikki/data/data.dart';
+import 'package:anikki/domain/domain.dart';
 
 class AnikkiBlocProvider extends StatelessWidget {
   const AnikkiBlocProvider({super.key, required this.child});
@@ -32,6 +33,7 @@ class AnikkiBlocProvider extends StatelessWidget {
     final userListRepository = UserListRepository(anilist);
     final userRepository = UserRepository(anilist);
     const videoPlayerRepository = VideoPlayerRepository();
+    final feedRepository = FeedRepository(anilist);
 
     return MultiBlocProvider(
       providers: [
@@ -58,9 +60,13 @@ class AnikkiBlocProvider extends StatelessWidget {
           create: (context) => WatchListBloc(userListRepository),
         ),
         BlocProvider(
-          create: (context) {
-            return HomeBloc();
-          },
+          create: (context) => HomeBloc(),
+        ),
+        BlocProvider(
+          create: (context) => HomeFeedBloc(feedRepository)
+            ..add(
+              HomeFeedRefresh(),
+            ),
         ),
         BlocProvider(
           create: (context) => SearchBloc(animeSearchRepository),

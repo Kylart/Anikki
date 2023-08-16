@@ -14,7 +14,7 @@ export 'local_file.dart';
 export 'library_entry.dart';
 
 export 'news_entry.dart';
-export 'news_options.dart';
+export 'home_feed_options.dart';
 
 export 'search_result.dart';
 

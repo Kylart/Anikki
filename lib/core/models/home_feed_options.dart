@@ -2,17 +2,13 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class NewsOptions extends Equatable {
-  const NewsOptions({
-    this.showOnlyBookmarked = false,
-    this.showOnlyUnseen = false,
+class HomeFeedOptions extends Equatable {
+  const HomeFeedOptions({
     this.showAdult = false,
     this.showOnlyJap = true,
     this.autoRefresh = true,
   });
 
-  final bool showOnlyBookmarked;
-  final bool showOnlyUnseen;
   final bool showAdult;
   final bool showOnlyJap;
   final bool autoRefresh;
@@ -20,24 +16,18 @@ class NewsOptions extends Equatable {
   @override
   List<Object> get props {
     return [
-      showOnlyBookmarked,
-      showOnlyUnseen,
       showAdult,
       showOnlyJap,
       autoRefresh,
     ];
   }
 
-  NewsOptions copyWith({
-    bool? showOnlyBookmarked,
-    bool? showOnlyUnseen,
+  HomeFeedOptions copyWith({
     bool? showAdult,
     bool? showOnlyJap,
     bool? autoRefresh,
   }) {
-    return NewsOptions(
-      showOnlyBookmarked: showOnlyBookmarked ?? this.showOnlyBookmarked,
-      showOnlyUnseen: showOnlyUnseen ?? this.showOnlyUnseen,
+    return HomeFeedOptions(
       showAdult: showAdult ?? this.showAdult,
       showOnlyJap: showOnlyJap ?? this.showOnlyJap,
       autoRefresh: autoRefresh ?? this.autoRefresh,
@@ -46,18 +36,14 @@ class NewsOptions extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'showOnlyBookmarked': showOnlyBookmarked,
-      'showOnlySeen': showOnlyUnseen,
       'showAdult': showAdult,
       'showOnlyJap': showOnlyJap,
       'autoRefresh': autoRefresh,
     };
   }
 
-  factory NewsOptions.fromMap(Map<String, dynamic> map) {
-    return NewsOptions(
-      showOnlyBookmarked: map['showOnlyBookmarked'] as bool,
-      showOnlyUnseen: map['showOnlySeen'] as bool,
+  factory HomeFeedOptions.fromMap(Map<String, dynamic> map) {
+    return HomeFeedOptions(
       showAdult: map['showAdult'] as bool,
       showOnlyJap: map['showOnlyJap'] as bool,
       autoRefresh: map['autoRefresh'] as bool,
@@ -66,8 +52,8 @@ class NewsOptions extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory NewsOptions.fromJson(String source) =>
-      NewsOptions.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory HomeFeedOptions.fromJson(String source) =>
+      HomeFeedOptions.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;
