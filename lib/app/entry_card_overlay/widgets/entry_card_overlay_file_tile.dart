@@ -4,9 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
-import 'package:anikki/app/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 
 class EntryCardOverlayFileTile extends StatelessWidget {
   const EntryCardOverlayFileTile({
@@ -41,23 +39,12 @@ class EntryCardOverlayFileTile extends StatelessWidget {
           if (isSeen) const Icon(Icons.done),
           IconButton(
             onPressed: () {
-              /// Trick to get the original card context that should still exist
-              /// even when the overlay disapears.
-              final ctx = isPortrait(context)
-                  ? context
-                  : (BlocProvider.of<EntryCardOverlayBloc>(context).state
-                          as EntryCardOverlayActive)
-                      .key
-                      .currentContext;
-
-              if (ctx != null) {
-                BlocProvider.of<LibraryBloc>(context).add(
-                  LibraryFilePlayRequested(
-                    file: file,
-                    context: ctx,
-                  ),
-                );
-              }
+              BlocProvider.of<LibraryBloc>(context).add(
+                LibraryFilePlayRequested(
+                  file: file,
+                  context: context,
+                ),
+              );
             },
             icon: const Icon(Icons.play_circle_outline),
           ),

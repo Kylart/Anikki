@@ -9,7 +9,6 @@ import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
-import 'package:anikki/app/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
@@ -48,9 +47,6 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ConnectivityBloc(),
-        ),
-        BlocProvider(
-          create: (context) => EntryCardOverlayBloc(),
         ),
         BlocProvider(
           create: (context) => DownloaderBloc(torrentSearchRepository),

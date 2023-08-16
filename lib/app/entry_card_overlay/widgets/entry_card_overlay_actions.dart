@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:anikki/app/entry_card_overlay/shared/show.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,9 +9,6 @@ import 'package:simple_icons/simple_icons.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
-import 'package:anikki/app/entry_card_overlay/bloc/entry_card_overlay_bloc.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_media_portrait.dart';
-import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
 class EntryCardOverlayActions extends StatelessWidget {
   const EntryCardOverlayActions({
@@ -47,26 +45,7 @@ class EntryCardOverlayActions extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: IconButton(
             onPressed: () {
-              final layout = BlocProvider.of<LayoutBloc>(context).state;
-              if (layout is LayoutLandscape) {
-                BlocProvider.of<EntryCardOverlayBloc>(context).add(
-                  EntryCardOverlayRequested(
-                    media: media,
-                    key: key,
-                    isExpanded: true,
-                  ),
-                );
-              } else if (layout is LayoutPortrait) {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) {
-                      return EntryCardOverlayMediaPortrait(
-                        media: media,
-                      );
-                    },
-                  ),
-                );
-              }
+              showMediaDialog(context, media);
             },
             icon: Transform(
               alignment: Alignment.center,
