@@ -6,8 +6,8 @@ import 'package:path/path.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 
-class EntryCardOverlayFileTile extends StatelessWidget {
-  const EntryCardOverlayFileTile({
+class MediaDialogFileTile extends StatelessWidget {
+  const MediaDialogFileTile({
     super.key,
     required this.file,
     this.listEntry,

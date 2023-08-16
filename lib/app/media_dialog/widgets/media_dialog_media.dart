@@ -6,13 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_episodes.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_episodes.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_actions.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_trailer.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_actions.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_trailer.dart';
 
-class EntryCardOverlayMedia extends StatelessWidget {
-  const EntryCardOverlayMedia({
+class MediaDialogMedia extends StatelessWidget {
+  const MediaDialogMedia({
     super.key,
     required this.media,
   });
@@ -55,7 +55,7 @@ class EntryCardOverlayMedia extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: EntryCardOverlayActions(
+                child: MediaDialogActions(
                   media: media,
                   entry: libraryEntry,
                 ),
@@ -70,7 +70,7 @@ class EntryCardOverlayMedia extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Center(
-                      child: EntryCardOverlayTrailer(media: media),
+                      child: MediaDialogTrailer(media: media),
                     ),
                   ),
                 ),
@@ -93,7 +93,7 @@ class EntryCardOverlayMedia extends StatelessWidget {
                     ).toList(),
                   ),
                 ),
-              EntryCardOverlayEpisodes(
+              MediaDialogEpisodes(
                 media: media,
                 entry: libraryEntry,
               ),

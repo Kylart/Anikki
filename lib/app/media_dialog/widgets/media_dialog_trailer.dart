@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_video_player.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_video_player.dart';
 
-class EntryCardOverlayTrailer extends StatefulWidget {
-  const EntryCardOverlayTrailer({
+class MediaDialogTrailer extends StatefulWidget {
+  const MediaDialogTrailer({
     super.key,
     required this.media,
   });
@@ -13,11 +13,10 @@ class EntryCardOverlayTrailer extends StatefulWidget {
   final Media media;
 
   @override
-  State<EntryCardOverlayTrailer> createState() =>
-      _EntryCardOverlayTrailerState();
+  State<MediaDialogTrailer> createState() => _MediaDialogTrailerState();
 }
 
-class _EntryCardOverlayTrailerState extends State<EntryCardOverlayTrailer> {
+class _MediaDialogTrailerState extends State<MediaDialogTrailer> {
   String? get thumbnail => widget.media.anilistInfo.trailer?.thumbnail;
   String? get site => widget.media.anilistInfo.trailer?.site;
   String? get id => widget.media.anilistInfo.trailer?.id;
@@ -56,7 +55,7 @@ class _EntryCardOverlayTrailerState extends State<EntryCardOverlayTrailer> {
               )
             ],
           )
-        : EntryCardOverlayVideoPlayer(
+        : MediaDialogVideoPlayer(
             url: 'https://www.${site!}.com/watch?v=${id!}',
           );
   }

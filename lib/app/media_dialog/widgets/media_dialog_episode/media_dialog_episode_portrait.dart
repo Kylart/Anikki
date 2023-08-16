@@ -1,7 +1,7 @@
-part of 'entry_card_overlay_episode.dart';
+part of 'media_dialog_episode.dart';
 
-class EntryCardOverlayEpisodePortrait extends StatelessWidget {
-  const EntryCardOverlayEpisodePortrait({
+class MediaDialogEpisodePortrait extends StatelessWidget {
+  const MediaDialogEpisodePortrait({
     super.key,
     required this.episodeCover,
     required this.info,
@@ -54,13 +54,13 @@ class EntryCardOverlayEpisodePortrait extends StatelessWidget {
               ],
             )
           : null,
-      title: EntryCardOverlayEpisodeTitle(
+      title: MediaDialogEpisodeTitle(
         info: info,
         index: index,
         textAlign: TextAlign.start,
       ),
       trailing: aired
-          ? EntryCardOverlayEpisodeActions(
+          ? MediaDialogEpisodeActions(
               media: media,
               index: index,
               entry: entry,
@@ -76,7 +76,7 @@ class EntryCardOverlayEpisodePortrait extends StatelessWidget {
           : Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                EntryCardOverlayEpisodeCompleted(
+                MediaDialogEpisodeCompleted(
                   media: media,
                   index: index,
                 ),

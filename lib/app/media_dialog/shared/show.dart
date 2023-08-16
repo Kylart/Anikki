@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_media.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_media_portrait.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_media.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_media_portrait.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
 Future<void> showMediaDialog(BuildContext context, Media media) async {
@@ -16,7 +16,7 @@ Future<void> showMediaDialog(BuildContext context, Media media) async {
           shadowColor: Colors.transparent,
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
-          child: EntryCardOverlayMedia(
+          child: MediaDialogMedia(
             media: media,
           ),
         );
@@ -26,7 +26,7 @@ Future<void> showMediaDialog(BuildContext context, Media media) async {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (BuildContext context) {
-          return EntryCardOverlayMediaPortrait(
+          return MediaDialogMediaPortrait(
             media: media,
           );
         },

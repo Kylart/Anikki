@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/app/entry_card_overlay/shared/show.dart';
+import 'package:anikki/app/media_dialog/shared/show.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';

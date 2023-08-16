@@ -3,8 +3,8 @@ import 'package:anikki/core/external_media_provider/utils.dart';
 import 'package:anikki/app/video_player/view/video_player_view.dart';
 import 'package:flutter/material.dart';
 
-class EntryCardOverlayVideoPlayer extends StatefulWidget {
-  const EntryCardOverlayVideoPlayer({
+class MediaDialogVideoPlayer extends StatefulWidget {
+  const MediaDialogVideoPlayer({
     super.key,
     required this.url,
   });
@@ -12,12 +12,10 @@ class EntryCardOverlayVideoPlayer extends StatefulWidget {
   final String url;
 
   @override
-  State<EntryCardOverlayVideoPlayer> createState() =>
-      _EntryCardOverlayVideoPlayerState();
+  State<MediaDialogVideoPlayer> createState() => _MediaDialogVideoPlayerState();
 }
 
-class _EntryCardOverlayVideoPlayerState
-    extends State<EntryCardOverlayVideoPlayer> {
+class _MediaDialogVideoPlayerState extends State<MediaDialogVideoPlayer> {
   @override
   void initState() {
     ExternalMediaProvider.create();

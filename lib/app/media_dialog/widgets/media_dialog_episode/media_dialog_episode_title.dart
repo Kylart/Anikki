@@ -1,7 +1,7 @@
-part of 'entry_card_overlay_episode.dart';
+part of 'media_dialog_episode.dart';
 
-class EntryCardOverlayEpisodeTitle extends StatelessWidget {
-  const EntryCardOverlayEpisodeTitle({
+class MediaDialogEpisodeTitle extends StatelessWidget {
+  const MediaDialogEpisodeTitle({
     super.key,
     required this.info,
     required this.index,

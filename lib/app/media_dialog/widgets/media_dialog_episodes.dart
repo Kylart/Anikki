@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_episode/entry_card_overlay_episode.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_episode/media_dialog_episode.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
-class EntryCardOverlayEpisodes extends StatelessWidget {
-  const EntryCardOverlayEpisodes({
+class MediaDialogEpisodes extends StatelessWidget {
+  const MediaDialogEpisodes({
     super.key,
     required this.media,
     this.entry,
@@ -38,7 +38,7 @@ class EntryCardOverlayEpisodes extends StatelessWidget {
                 childAspectRatio: 0.75,
                 crossAxisSpacing: 0,
               ),
-              itemBuilder: (context, index) => EntryCardOverlayEpisode(
+              itemBuilder: (context, index) => MediaDialogEpisode(
                 index: numberOfEpisodes - index,
                 media: media,
                 entry: entry,
@@ -50,7 +50,7 @@ class EntryCardOverlayEpisodes extends StatelessWidget {
               physics: const ClampingScrollPhysics(),
               shrinkWrap: true,
               separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) => EntryCardOverlayEpisode(
+              itemBuilder: (context, index) => MediaDialogEpisode(
                 index: numberOfEpisodes - index,
                 media: media,
                 entry: entry,

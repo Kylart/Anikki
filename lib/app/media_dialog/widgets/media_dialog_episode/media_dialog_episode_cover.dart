@@ -1,7 +1,7 @@
-part of 'entry_card_overlay_episode.dart';
+part of 'media_dialog_episode.dart';
 
-class EntryCardOverlayEpisodeCover extends StatefulWidget {
-  const EntryCardOverlayEpisodeCover({
+class MediaDialogEpisodeCover extends StatefulWidget {
+  const MediaDialogEpisodeCover({
     super.key,
     this.episodeCover,
   });
@@ -9,12 +9,11 @@ class EntryCardOverlayEpisodeCover extends StatefulWidget {
   final String? episodeCover;
 
   @override
-  State<EntryCardOverlayEpisodeCover> createState() =>
-      _EntryCardOverlayEpisodeCoverState();
+  State<MediaDialogEpisodeCover> createState() =>
+      _MediaDialogEpisodeCoverState();
 }
 
-class _EntryCardOverlayEpisodeCoverState
-    extends State<EntryCardOverlayEpisodeCover> {
+class _MediaDialogEpisodeCoverState extends State<MediaDialogEpisodeCover> {
   bool isError = false;
 
   @override

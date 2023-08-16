@@ -5,13 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_episodes.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_episodes.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_actions.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_trailer.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_actions.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_trailer.dart';
 
-class EntryCardOverlayMediaPortrait extends StatelessWidget {
-  const EntryCardOverlayMediaPortrait({
+class MediaDialogMediaPortrait extends StatelessWidget {
+  const MediaDialogMediaPortrait({
     super.key,
     required this.media,
   });
@@ -49,7 +49,7 @@ class EntryCardOverlayMediaPortrait extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: EntryCardOverlayActions(
+                      child: MediaDialogActions(
                         media: media,
                         entry: libraryEntry,
                         reversed: true,
@@ -63,7 +63,7 @@ class EntryCardOverlayMediaPortrait extends StatelessWidget {
                         child: Center(
                           child: AspectRatio(
                             aspectRatio: 16 / 9,
-                            child: EntryCardOverlayTrailer(media: media),
+                            child: MediaDialogTrailer(media: media),
                           ),
                         ),
                       ),
@@ -87,7 +87,7 @@ class EntryCardOverlayMediaPortrait extends StatelessWidget {
                           ).toList(),
                         ),
                       ),
-                    EntryCardOverlayEpisodes(
+                    MediaDialogEpisodes(
                       media: media,
                       entry: libraryEntry,
                     ),

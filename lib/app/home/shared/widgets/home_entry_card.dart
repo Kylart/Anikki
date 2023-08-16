@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/app/entry_card_overlay/shared/show.dart';
+import 'package:anikki/app/media_dialog/shared/show.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/config/config.dart';
 import 'package:anikki/core/core.dart';

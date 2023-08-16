@@ -15,15 +15,15 @@ import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 
-part 'entry_card_overlay_episode_cover.dart';
-part 'entry_card_overlay_episode_completed.dart';
-part 'entry_card_overlay_episode_title.dart';
-part 'entry_card_overlay_episode_actions.dart';
-part 'entry_card_overlay_episode_portrait.dart';
-part 'entry_card_overlay_episode_landscape.dart';
+part 'media_dialog_episode_cover.dart';
+part 'media_dialog_episode_completed.dart';
+part 'media_dialog_episode_title.dart';
+part 'media_dialog_episode_actions.dart';
+part 'media_dialog_episode_portrait.dart';
+part 'media_dialog_episode_landscape.dart';
 
-class EntryCardOverlayEpisode extends StatelessWidget {
-  const EntryCardOverlayEpisode({
+class MediaDialogEpisode extends StatelessWidget {
+  const MediaDialogEpisode({
     super.key,
     required this.index,
     required this.media,
@@ -51,7 +51,7 @@ class EntryCardOverlayEpisode extends StatelessWidget {
     return BlocBuilder<LayoutBloc, LayoutState>(
       builder: (context, state) {
         if (state is LayoutLandscape) {
-          return EntryCardOverlayEpisodeLandscape(
+          return MediaDialogEpisodeLandscape(
             episodeCover: episodeCover,
             info: info,
             index: index,
@@ -61,7 +61,7 @@ class EntryCardOverlayEpisode extends StatelessWidget {
             entry: entry,
           );
         } else if (state is LayoutPortrait) {
-          return EntryCardOverlayEpisodePortrait(
+          return MediaDialogEpisodePortrait(
             episodeCover: episodeCover,
             info: info,
             index: index,

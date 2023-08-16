@@ -1,7 +1,7 @@
-part of 'entry_card_overlay_episode.dart';
+part of 'media_dialog_episode.dart';
 
-class EntryCardOverlayEpisodeLandscape extends StatelessWidget {
-  const EntryCardOverlayEpisodeLandscape({
+class MediaDialogEpisodeLandscape extends StatelessWidget {
+  const MediaDialogEpisodeLandscape({
     super.key,
     required this.episodeCover,
     required this.info,
@@ -48,10 +48,10 @@ class EntryCardOverlayEpisodeLandscape extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  EntryCardOverlayEpisodeCover(
+                  MediaDialogEpisodeCover(
                     episodeCover: episodeCover,
                   ),
-                  EntryCardOverlayEpisodeTitle(
+                  MediaDialogEpisodeTitle(
                     info: info,
                     index: index,
                   ),
@@ -61,7 +61,7 @@ class EntryCardOverlayEpisodeLandscape extends StatelessWidget {
                       icon: const Icon(Icons.next_plan_outlined),
                     )
                   else if (aired)
-                    EntryCardOverlayEpisodeActions(
+                    MediaDialogEpisodeActions(
                       media: media,
                       index: index,
                       entry: entry,
@@ -78,7 +78,7 @@ class EntryCardOverlayEpisodeLandscape extends StatelessWidget {
               Positioned(
                 top: 5,
                 right: 5,
-                child: EntryCardOverlayEpisodeCompleted(
+                child: MediaDialogEpisodeCompleted(
                   media: media,
                   index: index,
                 ),

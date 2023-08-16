@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_actions.dart';
-import 'package:anikki/app/entry_card_overlay/widgets/entry_card_overlay_trailer.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_actions.dart';
+import 'package:anikki/app/media_dialog/widgets/media_dialog_trailer.dart';
 
 class EntryTile extends StatefulWidget {
   const EntryTile({
@@ -132,7 +132,7 @@ class _EntryTileState<T> extends State<EntryTile> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              EntryCardOverlayActions(
+              MediaDialogActions(
                 media: media,
                 entry: widget.libraryEntry,
                 reversed: true,
@@ -145,7 +145,7 @@ class _EntryTileState<T> extends State<EntryTile> {
                   padding: const EdgeInsets.all(4.0),
                   child: AspectRatio(
                     aspectRatio: 16 / 9,
-                    child: EntryCardOverlayTrailer(media: media),
+                    child: MediaDialogTrailer(media: media),
                   ),
                 ),
             ],

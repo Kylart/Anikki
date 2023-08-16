@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:anikki/app/entry_card_overlay/shared/show.dart';
+import 'package:anikki/app/media_dialog/shared/show.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,8 +10,8 @@ import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 
-class EntryCardOverlayActions extends StatelessWidget {
-  const EntryCardOverlayActions({
+class MediaDialogActions extends StatelessWidget {
+  const MediaDialogActions({
     super.key,
     required this.media,
     this.entry,
