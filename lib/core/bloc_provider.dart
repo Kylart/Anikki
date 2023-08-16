@@ -11,6 +11,7 @@ import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/app/home_feed/bloc/home_feed_bloc.dart';
 import 'package:anikki/app/search/bloc/search_bloc.dart';
 import 'package:anikki/data/data.dart';
@@ -61,6 +62,9 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomeBloc(),
+        ),
+        BlocProvider(
+          create: (context) => HomeContinueBloc(userListRepository),
         ),
         BlocProvider(
           create: (context) => HomeFeedBloc(feedRepository)
