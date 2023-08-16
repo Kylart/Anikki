@@ -27,7 +27,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
             surfaceTintColor: Colors.transparent,
             shadowColor: Colors.transparent,
             alignment: Alignment.topCenter,
-            child: SearchPage(),
+            child: SearchView(),
           );
         },
       );

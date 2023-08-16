@@ -1,3 +1,4 @@
+import 'package:anikki/app/search/bloc/search_bloc.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class AnikkiBlocProvider extends StatelessWidget {
     final files = Files();
 
     final localStorageRepository = LocalStorageRepository(anilist, files);
+    final animeSearchRepository = AnimeInformationRepository(anilist, nyaa);
     final torrentSearchRepository = TorrentSearchRepository(nyaa);
     final userListRepository = UserListRepository(anilist);
     final userRepository = UserRepository(anilist);
@@ -63,6 +65,9 @@ class AnikkiBlocProvider extends StatelessWidget {
           create: (context) {
             return HomeBloc();
           },
+        ),
+        BlocProvider(
+          create: (context) => SearchBloc(animeSearchRepository),
         ),
       ],
       child: MultiBlocProvider(

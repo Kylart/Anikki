@@ -56,7 +56,7 @@ class _PortraitLayoutState extends State<PortraitLayout> {
                   Expanded(child: WatchListView()),
                 ],
               ),
-              SearchPage(),
+              SearchView(),
               SettingsView(),
             ],
           ),
