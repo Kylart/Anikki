@@ -9,7 +9,7 @@ class _HomeEntryCardText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EntryTag(
-      color: Colors.black26,
+      color: Colors.black54,
       outline: Colors.transparent,
       child: Text(
         text,

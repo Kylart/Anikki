@@ -6,9 +6,11 @@ class HomeEntrySectionTitle extends StatelessWidget {
   const HomeEntrySectionTitle({
     super.key,
     required this.text,
+    this.actions = const [],
   });
 
   final String text;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class HomeEntrySectionTitle extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
           child: Container(
             padding: const EdgeInsets.all(10.0),
             decoration: const BoxDecoration(
@@ -26,9 +28,27 @@ class HomeEntrySectionTitle extends StatelessWidget {
                 Radius.circular(12),
               ),
             ),
-            child: Text(
-              text,
-              style: Theme.of(context).textTheme.headlineSmall,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Text(
+                    text,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                if (actions.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Container(
+                      height: 36,
+                      width: 1,
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+                  ),
+                if (actions.isNotEmpty) ...actions,
+              ],
             ),
           ),
         ),
