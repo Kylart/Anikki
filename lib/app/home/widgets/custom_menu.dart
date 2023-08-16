@@ -82,7 +82,7 @@ class CustomMenu extends StatelessWidget {
                         final enabled =
                             settings.torrentType != TorrentType.none;
                         final name = enabled
-                            ? settings.torrentType.name
+                            ? settings.torrentType.title()
                             : 'Torrent features are disabled. Enable it in your settings!';
 
                         return IconButton(
