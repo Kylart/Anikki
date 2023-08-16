@@ -26,6 +26,7 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
     try {
       emit(HomeFeedLoading(
         range: range,
+        entries: state.entries,
       ));
 
       final entries = await repository.getSchedule(range);

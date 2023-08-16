@@ -1,8 +1,9 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/feed_repository.dart';
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 
 part 'home_more_event.dart';
 part 'home_more_state.dart';
@@ -21,7 +22,9 @@ class HomeMoreBloc extends Bloc<HomeMoreEvent, HomeMoreState> {
   Future<void> _onRefresh(
       HomeMoreRefresh event, Emitter<HomeMoreState> emit) async {
     try {
-      emit(const HomeMoreLoading());
+      emit(HomeMoreLoading(
+        entries: state.entries,
+      ));
 
       final entries = await repository.getRecommandations();
 

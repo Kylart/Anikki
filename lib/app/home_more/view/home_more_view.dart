@@ -1,7 +1,10 @@
-import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 
+import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
+import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
+import 'package:anikki/app/home/shared/widgets/home_section_title_loading_action.dart';
 import 'package:anikki/app/home_more/bloc/home_more_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_card.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view.dart';
@@ -13,29 +16,37 @@ class HomeMoreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeMoreBloc, HomeMoreState>(
       builder: (context, state) {
-        if (state is HomeMoreLoading && state.entries.isEmpty) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-        if (state.entries.isEmpty) return const SizedBox();
+        final loading = state is HomeMoreLoading;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const HomeEntrySectionTitle(
+            HomeEntrySectionTitle(
               text: 'Discover',
-            ),
-            HomeScrollView(
-              children: [
-                for (final entry in state.entries)
-                  HomeEntryCard(
-                    media: entry,
+              actions: [
+                if (loading)
+                  const HomeSectionTitleLoadingAction()
+                else
+                  IconButton(
+                    onPressed: () {
+                      BlocProvider.of<HomeMoreBloc>(context)
+                          .add(HomeMoreRefresh());
+                    },
+                    icon: const Icon(Ionicons.refresh_outline),
                   ),
               ],
             ),
+            if (state.entries.isNotEmpty)
+              HomeScrollView(
+                children: [
+                  for (final entry in state.entries)
+                    HomeEntryCard(
+                      media: entry,
+                    ),
+                ],
+              ),
+            if (loading && state.entries.isEmpty) const HomeScrollViewLoader(),
           ],
         );
       },
