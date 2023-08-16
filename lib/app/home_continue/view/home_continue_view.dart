@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section_title_warning.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
 import 'package:anikki/app/home/shared/widgets/home_section_title_loading_action.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_card.dart';
@@ -37,6 +38,7 @@ class _HomeContinueViewState extends State<HomeContinueView> {
       child: BlocBuilder<HomeContinueBloc, HomeContinueState>(
         builder: (context, state) {
           final loading = state is HomeContinueLoading;
+          final errored = state is HomeContinueError;
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,6 +57,10 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                       },
                       icon: const Icon(Ionicons.refresh_outline),
                     ),
+                  if (errored)
+                    HomeEntrySectionTitleWarning(
+                      message: state.message,
+                    ),
                 ],
               ),
               if (state.entries.isNotEmpty)
@@ -70,6 +76,8 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                   ],
                 ),
               if (loading && state.entries.isEmpty)
+                const HomeScrollViewLoader(),
+              if (errored && state.entries.isEmpty)
                 const HomeScrollViewLoader(),
             ],
           );

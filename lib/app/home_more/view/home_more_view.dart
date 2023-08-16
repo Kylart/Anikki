@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section_title_warning.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
 import 'package:anikki/app/home/shared/widgets/home_section_title_loading_action.dart';
 import 'package:anikki/app/home_more/bloc/home_more_bloc.dart';
@@ -17,6 +18,7 @@ class HomeMoreView extends StatelessWidget {
     return BlocBuilder<HomeMoreBloc, HomeMoreState>(
       builder: (context, state) {
         final loading = state is HomeMoreLoading;
+        final errored = state is HomeMoreFailed;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,6 +37,10 @@ class HomeMoreView extends StatelessWidget {
                     },
                     icon: const Icon(Ionicons.refresh_outline),
                   ),
+                if (errored)
+                  HomeEntrySectionTitleWarning(
+                    message: state.message,
+                  ),
               ],
             ),
             if (state.entries.isNotEmpty)
@@ -47,6 +53,7 @@ class HomeMoreView extends StatelessWidget {
                 ],
               ),
             if (loading && state.entries.isEmpty) const HomeScrollViewLoader(),
+            if (errored && state.entries.isEmpty) const HomeScrollViewLoader(),
           ],
         );
       },

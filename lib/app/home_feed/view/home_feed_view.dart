@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:anikki/app/home_feed/bloc/home_feed_bloc.dart';
 import 'package:anikki/app/home_feed/helpers/home_feed_options.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_card.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section_title_warning.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
@@ -21,6 +22,7 @@ class HomeFeedView extends StatelessWidget {
         final bloc = BlocProvider.of<HomeFeedBloc>(context);
         final loading = state is HomeFeedLoading;
         final loaded = state is HomeFeedLoaded;
+        final errored = state is HomeFeedFailed;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +44,11 @@ class HomeFeedView extends StatelessWidget {
                 if (loaded)
                   AnikkiActionButton(
                     actions: homeFeedOptions(loaded, bloc),
-                  )
+                  ),
+                if (errored)
+                  HomeEntrySectionTitleWarning(
+                    message: state.message,
+                  ),
               ],
             ),
             if (state.entries.isNotEmpty)
@@ -61,6 +67,7 @@ class HomeFeedView extends StatelessWidget {
                 ],
               ),
             if (loading && state.entries.isEmpty) const HomeScrollViewLoader(),
+            if (errored && state.entries.isEmpty) const HomeScrollViewLoader(),
           ],
         );
       },
