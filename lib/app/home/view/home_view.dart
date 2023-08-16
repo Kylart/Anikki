@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:anikki/app/home/widgets/animated_media_banner.dart';
+import 'package:anikki/app/home/widgets/custom_menu.dart';
 import 'package:anikki/app/home/widgets/home_search_bar.dart';
 import 'package:anikki/app/home_continue/home_continue.dart';
 import 'package:anikki/app/home_feed/home_feed.dart';
@@ -30,7 +31,7 @@ class HomeView extends StatelessWidget {
                   HomeSearchBar(),
                 ],
               ),
-              SizedBox(height: 24.0),
+              CustomMenu(),
               HomeContinuePage(),
               SizedBox(height: 24.0),
               HomeFeedPage(),
