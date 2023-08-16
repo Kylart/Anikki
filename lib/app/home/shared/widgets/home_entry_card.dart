@@ -95,12 +95,12 @@ class _HomeEntryCardState extends State<HomeEntryCard> {
                     endAngle: angle + (pi * 2),
                     tileMode: TileMode.mirror,
                     colors: const [
-                      Colors.white,
+                      Colors.white70,
                       Colors.black,
                       Colors.white,
                       Colors.white,
                       Colors.black,
-                      Colors.white,
+                      Colors.white70,
                     ],
                   )
                 : null,
