@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
-import 'package:anikki/app/torrent/widgets/torrent_app_bar.dart';
 import 'package:anikki/app/torrent/widgets/torrent_cannot_load.dart';
 import 'package:anikki/app/torrent/widgets/torrent_tile.dart';
 
@@ -51,34 +50,18 @@ class _TorrentViewState extends State<TorrentView> {
                     case TorrentLoaded:
                       final currentState = state as TorrentLoaded;
 
-                      return LayoutCard(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TorrentAppBar(
-                              type: torrentType,
-                            ),
-                            Container(
-                              constraints: const BoxConstraints(
-                                maxHeight: 300,
-                              ),
-                              child: ListView.separated(
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  final torrent =
-                                      currentState.torrents.elementAt(index);
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final torrent =
+                              currentState.torrents.elementAt(index);
 
-                                  return TorrentTile(torrent: torrent);
-                                },
-                                separatorBuilder: (context, index) =>
-                                    const Divider(
-                                  height: 1,
-                                ),
-                                itemCount: currentState.torrents.length,
-                              ),
-                            )
-                          ],
+                          return TorrentTile(torrent: torrent);
+                        },
+                        separatorBuilder: (context, index) => const Divider(
+                          height: 1,
                         ),
+                        itemCount: currentState.torrents.length,
                       );
 
                     case TorrentCannotLoad:
