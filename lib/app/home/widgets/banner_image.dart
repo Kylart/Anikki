@@ -12,16 +12,24 @@ class BannerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final placeholder = Image.asset('assets/images/cover_placeholder.jpg');
+    final placeholder = Image.asset(
+      'assets/images/cover_placeholder.jpg',
+      fit: BoxFit.fitWidth,
+      alignment: Alignment.topCenter,
+    );
 
     return ShaderMask(
       shaderCallback: (rect) {
         return const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.black87, Colors.transparent],
+          colors: [
+            Colors.black87,
+            Colors.black87,
+            Colors.transparent,
+          ],
         ).createShader(
-          Rect.fromLTRB(0, 0, rect.width, min(rect.height, 750)),
+          Rect.fromLTRB(0, 0, rect.width, min(rect.height, 500)),
         );
       },
       blendMode: BlendMode.dstIn,
@@ -29,7 +37,7 @@ class BannerImage extends StatelessWidget {
           ? placeholder
           : Image.network(
               url!,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
               alignment: Alignment.topCenter,
               errorBuilder: (context, error, stackTrace) {
                 return placeholder;
