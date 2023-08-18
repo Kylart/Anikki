@@ -3,9 +3,8 @@ import 'package:anikki/app/library/widgets/library_layout.dart';
 import 'package:anikki/app/library/widgets/library_card.dart';
 import 'package:anikki/core/helpers/desktop_hooks.dart';
 import 'package:anikki/app/layouts/widgets/portrait/anikki_navigation_bar.dart';
-import 'package:anikki/app/user_list/widgets/user_list_app_bar.dart';
-import 'package:anikki/app/user_list/widgets/user_list_layout_toggle.dart';
 import 'package:anikki/core/widgets/anikki_action_button.dart';
+import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -23,12 +22,18 @@ void main() {
       await tester.pumpAndSettle();
 
       if (isDesktop()) {
+        /// Opening Library dialog
+        final menuButton = find.byTooltip('Library');
+
+        await tester.tap(menuButton);
+        await tester.pumpAndSettle();
+
         /// Checking for existence of [LibraryPage].
         final library = find.byType(LibraryPage);
         expect(library, findsOneWidget);
 
         /// Checking [UserListAppBar]
-        final userListAppBar = find.byType(UserListAppBar);
+        final userListAppBar = find.byType(AppBar);
         expect(userListAppBar, findsOneWidget);
 
         /// Finding the Settings button and clicking on it
