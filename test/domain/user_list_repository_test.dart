@@ -127,10 +127,7 @@ void main() {
         expect(
           UserListRepository.isFollowed(
             watchList,
-            NewsEntry(
-              media: Media(anilistInfo: plannedEntriesMock.first.media),
-              airingAt: DateTime.now(),
-            ),
+            Media(anilistInfo: plannedEntriesMock.first.media),
           ),
           true,
         );
@@ -140,10 +137,7 @@ void main() {
         expect(
           UserListRepository.isFollowed(
             watchList,
-            NewsEntry(
-              media: Media(anilistInfo: currentEntriesMock.first.media),
-              airingAt: DateTime.now(),
-            ),
+            Media(anilistInfo: currentEntriesMock.first.media),
           ),
           true,
         );
@@ -153,10 +147,7 @@ void main() {
         expect(
           UserListRepository.isFollowed(
             watchList,
-            NewsEntry(
-              media: Media(anilistInfo: droppedEntriesMock.first.media),
-              airingAt: DateTime.now(),
-            ),
+            Media(anilistInfo: droppedEntriesMock.first.media),
           ),
           false,
         );
@@ -165,10 +156,7 @@ void main() {
         expect(
           UserListRepository.isFollowed(
             watchList,
-            NewsEntry(
-              media: Media(anilistInfo: completedEntriesMock.first.media),
-              airingAt: DateTime.now(),
-            ),
+            Media(anilistInfo: completedEntriesMock.first.media),
           ),
           false,
         );
@@ -178,10 +166,7 @@ void main() {
         expect(
           UserListRepository.isFollowed(
             watchList,
-            NewsEntry(
-              media: Media(anilistInfo: pausedEntriesMock.first.media),
-              airingAt: DateTime.now(),
-            ),
+            Media(anilistInfo: pausedEntriesMock.first.media),
           ),
           false,
         );
@@ -193,11 +178,7 @@ void main() {
         expect(
           UserListRepository.isSeen(
             watchList,
-            NewsEntry(
-              media: Media(anilistInfo: currentEntriesMock.first.media),
-              airingAt: DateTime.now(),
-              episode: currentEntriesMock.first.progress,
-            ),
+            Media(anilistInfo: currentEntriesMock.first.media),
           ),
           true,
         );
@@ -207,11 +188,7 @@ void main() {
         expect(
           UserListRepository.isSeen(
             watchList,
-            NewsEntry(
-              media: Media(anilistInfo: currentEntriesMock.first.media),
-              airingAt: DateTime.now(),
-              episode: currentEntriesMock.first.progress! + 1,
-            ),
+            Media(anilistInfo: currentEntriesMock.last.media),
           ),
           false,
         );
@@ -221,11 +198,7 @@ void main() {
         expect(
           UserListRepository.isSeen(
             watchList,
-            NewsEntry(
-              media: Media(anilistInfo: completedEntriesMock.first.media),
-              airingAt: DateTime.now(),
-              episode: 1,
-            ),
+            Media(anilistInfo: completedEntriesMock.first.media),
           ),
           true,
         );

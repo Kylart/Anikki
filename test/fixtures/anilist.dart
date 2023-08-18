@@ -111,12 +111,28 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.CURRENT,
-            media: Fragment$shortMedia(id: 1, episodes: 12, isAdult: false),
+            media: Fragment$shortMedia(
+              id: 1,
+              episodes: 12,
+              isAdult: false,
+              nextAiringEpisode: Fragment$shortMedia$nextAiringEpisode(
+                airingAt: 1,
+                episode: 3,
+              ),
+            ),
             progress: 2,
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.CURRENT,
-            media: Fragment$shortMedia(id: 2, episodes: 12, isAdult: false),
+            media: Fragment$shortMedia(
+              id: 2,
+              episodes: 12,
+              isAdult: false,
+              nextAiringEpisode: Fragment$shortMedia$nextAiringEpisode(
+                airingAt: 1,
+                episode: 6,
+              ),
+            ),
             progress: 4,
           ),
         ],

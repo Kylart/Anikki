@@ -1,6 +1,7 @@
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
+import 'package:collection/collection.dart';
 
 typedef UserWatchList = Map<Enum$MediaListStatus,
     List<Query$GetLists$MediaListCollection$lists$entries>>;
@@ -63,12 +64,13 @@ class UserListRepository {
 
   /// Returns whether the entry is completed or watched
   static bool isSeen(WatchListComplete watchList, Media entry) {
-    final currentEntry = watchList.current
-        .where((element) => element.media?.id == entry.anilistInfo.id)
-        .first;
+    final currentEntry = watchList.current.firstWhereOrNull(
+        (element) => element.media?.id == entry.anilistInfo.id);
 
-    final seen =
-        currentEntry.media?.nextAiringEpisode?.episode == currentEntry.progress;
+    final seen = currentEntry?.progress == null
+        ? false
+        : currentEntry?.media?.nextAiringEpisode?.episode ==
+            currentEntry!.progress! + 1;
 
     final completed = watchList.completed
         .where((e) => e.media?.id == entry.anilistInfo.id)
