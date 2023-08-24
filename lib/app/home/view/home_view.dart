@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/home/widgets/animated_media_banner.dart';
 import 'package:anikki/app/home/widgets/custom_menu.dart';
 import 'package:anikki/app/home/widgets/home_search_bar.dart';
@@ -12,31 +14,39 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
+    final isAuthenticated =
+        BlocProvider.of<AnilistAuthBloc>(context, listen: true).isConnected;
+
+    const gap = SizedBox(height: 24.0);
+
+    return Stack(
       alignment: Alignment.topCenter,
       children: [
-        AnimatedMediaBanner(),
+        const AnimatedMediaBanner(),
         SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 250,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   HomeSearchBar(),
                 ],
               ),
-              CustomMenu(),
-              HomeContinuePage(),
-              SizedBox(height: 24.0),
-              HomeFeedPage(),
-              SizedBox(height: 24.0),
-              HomeMorePage(),
+              const CustomMenu(),
+              if (isAuthenticated) ...[
+                const HomeContinuePage(),
+                gap,
+              ],
+              const HomeFeedPage(),
+              gap,
+              const HomeMorePage(),
+              gap,
             ],
           ),
         ),
