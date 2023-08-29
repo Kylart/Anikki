@@ -1,3 +1,4 @@
+import 'package:anikki/core/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
@@ -58,6 +59,8 @@ class _VideoPlayerViewState extends State<VideoPlayerView>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (isDesktop()) return;
+
     if (AppLifecycleState.resumed == state) {
       player.play();
     } else {
