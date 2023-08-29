@@ -689,10 +689,11 @@ packages:
   marqueer:
     dependency: "direct main"
     description:
-      name: marqueer
-      sha256: "15dcb57f7b8cd621eba9c45761d6a7997135e6ac219dd420fede254f828b84dd"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "26a624e88ab81efbadd326b037f1ddcdcee23ee7"
+      url: "https://github.com/Kylart/marqueer"
+    source: git
     version: "1.4.0"
   matcher:
     dependency: transitive

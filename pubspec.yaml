@@ -1,12 +1,12 @@
 name: anikki
 description: The ultimate anime companion.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0
 
 environment:
-  sdk: '>=3.0.0'
+  sdk: ">=3.0.0"
 
 dependencies:
   flutter:
@@ -69,7 +69,10 @@ dependencies:
   google_fonts: ^4.0.5
   flutter_animation_progress_bar: ^2.3.1
   screen_brightness: ^0.2.2
-  marqueer: ^1.4.0
+  marqueer:
+    git:
+      url: https://github.com/Kylart/marqueer
+      ref: main
   ionicons: ^0.2.2
 
 dev_dependencies:
