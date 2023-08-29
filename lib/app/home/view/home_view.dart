@@ -8,6 +8,7 @@ import 'package:anikki/app/home/widgets/home_search_bar.dart';
 import 'package:anikki/app/home_continue/home_continue.dart';
 import 'package:anikki/app/home_feed/home_feed.dart';
 import 'package:anikki/app/home_more/home_more.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -24,30 +25,38 @@ class HomeView extends StatelessWidget {
       children: [
         const AnimatedMediaBanner(),
         SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const SizedBox(
-                height: 250,
-              ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          child: BlocBuilder<LayoutBloc, LayoutState>(
+            builder: (context, state) {
+              final portrait = state is LayoutPortrait;
+
+              return Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  HomeSearchBar(),
+                  if (!portrait)
+                    const SizedBox(
+                      height: 250,
+                    ),
+                  if (!portrait)
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        HomeSearchBar(),
+                      ],
+                    ),
+                  const CustomMenu(),
+                  if (isAuthenticated) ...[
+                    const HomeContinuePage(),
+                    gap,
+                  ],
+                  const HomeFeedPage(),
+                  gap,
+                  const HomeMorePage(),
+                  gap,
                 ],
-              ),
-              const CustomMenu(),
-              if (isAuthenticated) ...[
-                const HomeContinuePage(),
-                gap,
-              ],
-              const HomeFeedPage(),
-              gap,
-              const HomeMorePage(),
-              gap,
-            ],
+              );
+            },
           ),
         ),
       ],

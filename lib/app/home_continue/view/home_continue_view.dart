@@ -20,69 +20,61 @@ class HomeContinueView extends StatefulWidget {
 }
 
 class _HomeContinueViewState extends State<HomeContinueView> {
-  String? username;
-
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AnilistAuthBloc, AnilistAuthState>(
-      listener: (context, state) {
-        if (state is AnilistAuthSuccess) {
-          setState(() {
-            username = state.me.name;
-            BlocProvider.of<HomeContinueBloc>(context).add(
-              HomeContinueRefresh(username!),
-            );
-          });
-        }
-      },
-      child: BlocBuilder<HomeContinueBloc, HomeContinueState>(
-        builder: (context, state) {
-          final loading = state is HomeContinueLoading;
-          final errored = state is HomeContinueError;
+    return BlocBuilder<AnilistAuthBloc, AnilistAuthState>(
+      builder: (context, anilistAuthState) {
+        return BlocBuilder<HomeContinueBloc, HomeContinueState>(
+          builder: (context, state) {
+            final loading = state is HomeContinueLoading;
+            final errored = state is HomeContinueError;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              HomeEntrySectionTitle(
-                text: 'Continue watching',
-                actions: [
-                  if (loading)
-                    const HomeSectionTitleLoadingAction()
-                  else
-                    IconButton(
-                      onPressed: () {
-                        BlocProvider.of<HomeContinueBloc>(context)
-                            .add(HomeContinueRefresh(username!));
-                      },
-                      icon: const Icon(Ionicons.refresh_outline),
-                    ),
-                  if (errored)
-                    HomeEntrySectionTitleWarning(
-                      message: state.message,
-                    ),
-                ],
-              ),
-              if (state.entries.isNotEmpty)
-                HomeScrollView(
-                  children: [
-                    for (final entry in state.entries)
-                      HomeEntryCard(
-                        media: Media(anilistInfo: entry.media),
-                        text: entry.progress != null
-                            ? (entry.progress! + 1).toString()
-                            : null,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                HomeEntrySectionTitle(
+                  text: 'Continue watching',
+                  actions: [
+                    if (loading)
+                      const HomeSectionTitleLoadingAction()
+                    else
+                      IconButton(
+                        onPressed: () {
+                          if (anilistAuthState is AnilistAuthSuccess) {
+                            BlocProvider.of<HomeContinueBloc>(context).add(
+                                HomeContinueRefresh(anilistAuthState.me.name));
+                          }
+                        },
+                        icon: const Icon(Ionicons.refresh_outline),
+                      ),
+                    if (errored)
+                      HomeEntrySectionTitleWarning(
+                        message: state.message,
                       ),
                   ],
                 ),
-              if (loading && state.entries.isEmpty)
-                const HomeScrollViewLoader(),
-              if (errored && state.entries.isEmpty)
-                const HomeScrollViewLoader(),
-            ],
-          );
-        },
-      ),
+                if (state.entries.isNotEmpty)
+                  HomeScrollView(
+                    children: [
+                      for (final entry in state.entries)
+                        HomeEntryCard(
+                          media: Media(anilistInfo: entry.media),
+                          text: entry.progress != null
+                              ? (entry.progress! + 1).toString()
+                              : null,
+                        ),
+                    ],
+                  ),
+                if (loading && state.entries.isEmpty)
+                  const HomeScrollViewLoader(),
+                if (errored && state.entries.isEmpty)
+                  const HomeScrollViewLoader(),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

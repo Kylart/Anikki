@@ -120,6 +120,12 @@ class AnikkiBlocProvider extends StatelessWidget {
                 username: connected ? state.me.name : null,
               ),
             );
+
+            if (connected) {
+              BlocProvider.of<HomeContinueBloc>(context).add(
+                HomeContinueRefresh(state.me.name),
+              );
+            }
           },
           child: child,
         ),
