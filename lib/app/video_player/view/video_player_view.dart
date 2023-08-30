@@ -34,7 +34,11 @@ class VideoPlayerView extends StatefulWidget {
 
 class _VideoPlayerViewState extends State<VideoPlayerView>
     with WidgetsBindingObserver {
-  final Player player = Player();
+  final Player player = Player(
+    configuration: const PlayerConfiguration(
+      libass: true,
+    ),
+  );
 
   int? get firstIndex =>
       widget.first == null ? null : widget.sources.indexOf(widget.first!.path);
