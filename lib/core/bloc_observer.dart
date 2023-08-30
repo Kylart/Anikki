@@ -13,6 +13,6 @@ class Observer extends BlocObserver {
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
 
-    logger.i('${bloc.runtimeType} $change', null, null);
+    logger.i('${bloc.runtimeType} $change');
   }
 }

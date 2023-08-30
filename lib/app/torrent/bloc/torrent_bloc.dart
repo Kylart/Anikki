@@ -22,7 +22,7 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
     on<TorrentEvent>((event, emit) {
       if (event is TorrentDataRequested) return;
 
-      logger.v('TorrentEvent: ${event.runtimeType}');
+      logger.t('TorrentEvent: ${event.runtimeType}');
     });
 
     on<TorrentSettingsUpdated>(_onSettingsUpdated);

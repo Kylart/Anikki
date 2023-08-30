@@ -16,7 +16,7 @@ class AnilistAuthBloc extends Bloc<AnilistAuthEvent, AnilistAuthState> {
 
   AnilistAuthBloc(this.repository) : super(AnilistAuthLoggedOut()) {
     on<AnilistAuthEvent>((event, emit) {
-      logger.v('AnilistAuth event: ${event.runtimeType}');
+      logger.t('AnilistAuth event: ${event.runtimeType}');
     });
 
     on<AnilistAuthLoginRequested>(_login);

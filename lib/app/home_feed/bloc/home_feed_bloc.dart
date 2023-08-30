@@ -13,7 +13,7 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
 
   HomeFeedBloc(this.repository) : super(HomeFeedInitial()) {
     on<HomeFeedEvent>((event, emit) {
-      logger.v('HomeFeedEvent: ${event.runtimeType}');
+      logger.t('HomeFeedEvent: ${event.runtimeType}');
     });
 
     on<HomeFeedRefresh>(_onRefresh);

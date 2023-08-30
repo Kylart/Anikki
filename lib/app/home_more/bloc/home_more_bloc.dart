@@ -13,7 +13,7 @@ class HomeMoreBloc extends Bloc<HomeMoreEvent, HomeMoreState> {
 
   HomeMoreBloc(this.repository) : super(HomeMoreInitial()) {
     on<HomeMoreEvent>((event, emit) {
-      logger.v('HomeMoreEvent: ${event.runtimeType}');
+      logger.t('HomeMoreEvent: ${event.runtimeType}');
     });
 
     on<HomeMoreRefresh>(_onRefresh);

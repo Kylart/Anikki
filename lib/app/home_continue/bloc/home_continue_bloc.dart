@@ -13,7 +13,7 @@ class HomeContinueBloc extends Bloc<HomeContinueEvent, HomeContinueState> {
 
   HomeContinueBloc(this.repository) : super(HomeContinueInitial()) {
     on<HomeContinueEvent>((event, emit) {
-      logger.v('HomeContinueEvent: ${event.runtimeType}');
+      logger.t('HomeContinueEvent: ${event.runtimeType}');
     });
 
     on<HomeContinueRefresh>(_onRefresh);

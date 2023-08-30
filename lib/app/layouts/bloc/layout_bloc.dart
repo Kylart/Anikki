@@ -11,7 +11,7 @@ part 'layout_state.dart';
 class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
   LayoutBloc() : super(LayoutInitial()) {
     on<LayoutEvent>((event, emit) {
-      logger.v('LayoutEvent event: ${event.runtimeType}');
+      logger.t('LayoutEvent event: ${event.runtimeType}');
     });
 
     on<LayoutSizeChanged>((event, emit) {

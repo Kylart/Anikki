@@ -17,7 +17,7 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
 
   DownloaderBloc(this.repository) : super(const DownloaderClose()) {
     on<DownloaderEvent>((event, emit) {
-      logger.v('Downloader Event: ${event.runtimeType}');
+      logger.t('Downloader Event: ${event.runtimeType}');
     });
 
     on<DownloaderRequested>(_onDownloaderRequest);

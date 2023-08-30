@@ -17,7 +17,7 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
     this.repository,
   ) : super(const WatchListInitial(username: null)) {
     on<WatchListEvent>((event, emit) {
-      logger.v('WatchList event: ${event.runtimeType}');
+      logger.t('WatchList event: ${event.runtimeType}');
     });
 
     on<WatchListRequested>(_onRequested);

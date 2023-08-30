@@ -8,7 +8,7 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeState()) {
     on<HomeEvent>((event, emit) {
-      logger.v('HomeEvent: ${event.runtimeType}');
+      logger.t('HomeEvent: ${event.runtimeType}');
     });
 
     on<HomeMediaChanged>((event, emit) {

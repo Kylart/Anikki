@@ -91,7 +91,7 @@ class LocalFile extends Equatable {
         media: Media(anilistInfo: info.values.first),
       );
     } catch (e) {
-      logger.v('Could not retrieve file media info for $path');
+      logger.t('Could not retrieve file media info for $path');
     }
 
     return tmpFile;
