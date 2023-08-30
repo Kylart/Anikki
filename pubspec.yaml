@@ -27,7 +27,6 @@ dependencies:
   url_launcher: ^6.1.12
   anitomy:
     path: packages/anitomy
-  wakelock_plus: ^1.1.1
   flutter_platform_widgets: ^3.3.5
   empty_widget: ^0.0.5
   flex_color_scheme: ^7.1.2

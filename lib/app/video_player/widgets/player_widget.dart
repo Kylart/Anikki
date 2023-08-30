@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
 
@@ -33,8 +32,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   void initState() {
     super.initState();
 
-    WakelockPlus.enable();
-
     controller = VideoController(widget.player);
 
     Future.microtask(() async {
@@ -55,9 +52,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   void dispose() {
-    /// Enabling the device to sleep again
-    WakelockPlus.disable();
-
     final playerState = widget.player.state;
 
     /// Trigger onVideoComplete
