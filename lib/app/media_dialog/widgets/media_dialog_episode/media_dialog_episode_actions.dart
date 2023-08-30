@@ -56,7 +56,7 @@ class MediaDialogEpisodeActions extends StatelessWidget {
             iconSize: 18.0,
             constraints: const BoxConstraints(),
             color: Colors.red,
-            icon: const Icon(Icons.delete_forever_rounded),
+            icon: const Icon(Ionicons.trash),
           )
         else
           IconButton(
@@ -71,7 +71,7 @@ class MediaDialogEpisodeActions extends StatelessWidget {
             },
             iconSize: 18.0,
             constraints: const BoxConstraints(),
-            icon: const Icon(Icons.file_download_outlined),
+            icon: const Icon(Ionicons.download_outline),
           ),
         if (info?.url != null && info?.site != null)
           Tooltip(

@@ -28,7 +28,9 @@ class _PlayerControlsFullscreenState extends State<PlayerControlsFullscreen> {
     return IconButton(
       onPressed: () => videoBloc.add(VideoPlayerToggleFullscreen()),
       icon: Icon(
-        videoBloc.state.fullscreen ? Icons.fullscreen_exit : Icons.fullscreen,
+        videoBloc.state.fullscreen
+            ? Ionicons.contract_outline
+            : Ionicons.expand_outline,
       ),
     );
   }

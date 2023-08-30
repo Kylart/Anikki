@@ -42,13 +42,13 @@ class PlayerControlsVolumeBar extends StatelessWidget {
                   ),
                 ),
                 if (snapshot.data! == 0)
-                  const Icon(Icons.volume_off)
+                  const Icon(Ionicons.volume_off_outline)
                 else if (snapshot.data! < 33)
-                  const Icon(Icons.volume_mute)
+                  const Icon(Ionicons.volume_low_outline)
                 else if (snapshot.data! < 66)
-                  const Icon(Icons.volume_down)
+                  const Icon(Ionicons.volume_medium_outline)
                 else
-                  const Icon(Icons.volume_up),
+                  const Icon(Ionicons.volume_high_outline),
               ],
             ),
           );

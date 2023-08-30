@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import 'package:anikki/core/core.dart';
@@ -35,7 +36,7 @@ class _SettingsViewState extends State<SettingsView> {
                   tiles: <SettingsTile>[
                     /// Theme
                     SettingsTile(
-                      leading: const Icon(Icons.format_paint),
+                      leading: const Icon(Ionicons.contrast_outline),
                       title: const Text('Theme'),
                       trailing: DropdownButton(
                         value: settingsBloc.state.settings.theme,
@@ -67,7 +68,8 @@ class _SettingsViewState extends State<SettingsView> {
                     tiles: <SettingsTile>[
                       /// Logout
                       SettingsTile(
-                        leading: const AnikkiIcon(icon: Icons.logout_outlined),
+                        leading:
+                            const AnikkiIcon(icon: Ionicons.log_out_outline),
                         title: const Text('Logout'),
                         description: const Text(
                             'Logout from Anilist. This will remove watch list related features.'),
@@ -82,7 +84,7 @@ class _SettingsViewState extends State<SettingsView> {
                   title: const Text('Torrent Client'),
                   tiles: [
                     SettingsTile(
-                      leading: const Icon(Icons.home_repair_service_outlined),
+                      leading: const Icon(Ionicons.logo_rss),
                       title: const Text('Torrent Client type'),
                       trailing: DropdownButton<TorrentType>(
                         value: settingsBloc.state.settings.torrentType,
@@ -109,8 +111,8 @@ class _SettingsViewState extends State<SettingsView> {
                         TorrentType.transmission) ...[
                       SettingsTile(
                         key: const Key('transmission-username'),
-                        leading: const AnikkiIcon(
-                            icon: Icons.account_circle_outlined),
+                        leading:
+                            const AnikkiIcon(icon: Ionicons.person_outline),
                         title: const Text('Username'),
                         trailing: SettingsTextField(
                           initialValue: settingsBloc
@@ -132,7 +134,7 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                       SettingsTile(
                         key: const Key('transmission-password'),
-                        leading: const AnikkiIcon(icon: Icons.password),
+                        leading: const AnikkiIcon(icon: Ionicons.key_outline),
                         title: const Text('Password'),
                         trailing: SettingsTextField(
                           initialValue: settingsBloc
@@ -155,7 +157,8 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                       SettingsTile(
                         key: const Key('transmission-port'),
-                        leading: const AnikkiIcon(icon: Icons.numbers),
+                        leading:
+                            const AnikkiIcon(icon: Ionicons.keypad_outline),
                         title: const Text('Port'),
                         trailing: SettingsTextField(
                           isNumber: true,
@@ -182,8 +185,8 @@ class _SettingsViewState extends State<SettingsView> {
                         TorrentType.qbittorrent) ...[
                       SettingsTile(
                         key: const Key('qbittorent-username'),
-                        leading: const AnikkiIcon(
-                            icon: Icons.account_circle_outlined),
+                        leading:
+                            const AnikkiIcon(icon: Ionicons.person_outline),
                         title: const Text('Username'),
                         trailing: SettingsTextField(
                           initialValue: settingsBloc
@@ -205,7 +208,7 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                       SettingsTile(
                         key: const Key('qbittorent-password'),
-                        leading: const AnikkiIcon(icon: Icons.password),
+                        leading: const AnikkiIcon(icon: Ionicons.key_outline),
                         title: const Text('Password'),
                         trailing: SettingsTextField(
                           initialValue: settingsBloc
@@ -228,7 +231,8 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                       SettingsTile(
                         key: const Key('qbittorent-port'),
-                        leading: const AnikkiIcon(icon: Icons.numbers),
+                        leading:
+                            const AnikkiIcon(icon: Ionicons.keypad_outline),
                         title: const Text('Port'),
                         trailing: SettingsTextField(
                           isNumber: true,

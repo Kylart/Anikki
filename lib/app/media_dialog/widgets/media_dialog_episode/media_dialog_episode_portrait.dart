@@ -45,7 +45,7 @@ class MediaDialogEpisodePortrait extends StatelessWidget {
                     child: EntryTag(
                       padding: EdgeInsets.all(4.0),
                       child: Icon(
-                        Icons.play_arrow_rounded,
+                        Ionicons.play,
                         size: 12,
                       ),
                     ),
@@ -69,8 +69,8 @@ class MediaDialogEpisodePortrait extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
             )
           : Icon(isNextAiringEpisode
-              ? Icons.access_time_outlined
-              : Icons.unpublished_outlined),
+              ? Ionicons.alarm_outline
+              : Ionicons.ban_outline),
       subtitle: isNextAiringEpisode
           ? const Text('Not aired yet')
           : Row(

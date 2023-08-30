@@ -40,10 +40,10 @@ class _MediaDialogEpisodeCoverState extends State<MediaDialogEpisodeCover> {
           ),
           child: const Center(
             child: EntryTag(
-              padding: EdgeInsets.all(4.0),
+              padding: EdgeInsets.all(12.0),
               child: Icon(
-                Icons.play_arrow_rounded,
-                size: 34,
+                Ionicons.play,
+                size: 24,
               ),
             ),
           ),

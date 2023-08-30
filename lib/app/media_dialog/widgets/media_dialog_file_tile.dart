@@ -1,6 +1,7 @@
 import 'package:anikki/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:path/path.dart';
 
 import 'package:anikki/core/core.dart';
@@ -30,13 +31,13 @@ class MediaDialogFileTile extends StatelessWidget {
             LibraryFileDeleteRequested(file),
           );
         },
-        icon: const Icon(Icons.delete_outline),
+        icon: const Icon(Ionicons.trash),
         color: Colors.red,
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (isSeen) const Icon(Icons.done),
+          if (isSeen) const Icon(Ionicons.checkmark_done_outline),
           IconButton(
             onPressed: () {
               BlocProvider.of<LibraryBloc>(context).add(
@@ -46,7 +47,7 @@ class MediaDialogFileTile extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.play_circle_outline),
+            icon: const Icon(Ionicons.play_circle_outline),
           ),
         ],
       ),

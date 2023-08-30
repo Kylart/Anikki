@@ -44,13 +44,13 @@ class PlayerControlsBrightnessBar extends StatelessWidget {
                   ),
                 ),
                 if (value == 0)
-                  const Icon(Icons.light_mode, size: 10)
+                  const Icon(Ionicons.sunny_outline, size: 10)
                 else if (value < 33)
-                  const Icon(Icons.light_mode, size: 12)
+                  const Icon(Ionicons.sunny_outline, size: 12)
                 else if (value < 66)
-                  const Icon(Icons.light_mode, size: 14)
+                  const Icon(Ionicons.sunny_outline, size: 14)
                 else
-                  const Icon(Icons.light_mode, size: 16),
+                  const Icon(Ionicons.sunny_outline, size: 16),
               ],
             ),
           );

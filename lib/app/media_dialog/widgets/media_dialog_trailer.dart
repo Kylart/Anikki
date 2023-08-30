@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
@@ -46,10 +47,11 @@ class _MediaDialogTrailerState extends State<MediaDialogTrailer> {
               Positioned.fill(
                 child: Center(
                   child: IconButton.filledTonal(
+                    padding: const EdgeInsets.all(12.0),
                     onPressed: () => setState(() {
                       showThumbnail = false;
                     }),
-                    icon: const Icon(Icons.play_arrow),
+                    icon: const Icon(Ionicons.play),
                   ),
                 ),
               )

@@ -1,9 +1,10 @@
 import 'dart:math';
 
 import 'package:anikki/app/media_dialog/shared/show.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:simple_icons/simple_icons.dart';
 
 import 'package:anikki/core/core.dart';
@@ -37,7 +38,7 @@ class MediaDialogActions extends StatelessWidget {
           media: media.anilistInfo,
           entry: entry,
         ),
-        icon: const Icon(Icons.play_arrow),
+        icon: const Icon(Ionicons.play),
         label: const Text('Play'),
       ),
       if (showExpand)
@@ -51,15 +52,15 @@ class MediaDialogActions extends StatelessWidget {
               alignment: Alignment.center,
               transform: Matrix4.rotationY(pi),
               child: const Icon(
-                CupertinoIcons.arrow_up_left_arrow_down_right,
+                Ionicons.expand_outline,
               ),
             ),
           ),
         ),
       const Spacer(),
-      EntryTag(
-        padding: EdgeInsets.zero,
-        child: IconButton(
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: IconButton.outlined(
           onPressed: () {
             BlocProvider.of<DownloaderBloc>(context).add(
               DownloaderRequested(
@@ -68,29 +69,29 @@ class MediaDialogActions extends StatelessWidget {
               ),
             );
           },
-          icon: const Icon(Icons.file_download_outlined),
+          icon: const AnikkiIcon(icon: Ionicons.download_outline),
         ),
       ),
       if (media.anilistInfo.siteUrl != null)
-        EntryTag(
-          padding: EdgeInsets.zero,
-          child: IconButton(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: IconButton.outlined(
             onPressed: () {
               openInBrowser(media.anilistInfo.siteUrl);
             },
-            icon: const Icon(SimpleIcons.anilist),
+            icon: const AnikkiIcon(icon: SimpleIcons.anilist),
           ),
         ),
       if (media.anilistInfo.idMal != null)
-        EntryTag(
-          padding: EdgeInsets.zero,
-          child: IconButton(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: IconButton.outlined(
             onPressed: () {
               if (media.anilistInfo.idMal == null) return;
               openInBrowser(
                   'https://myanimelist.net/anime/${media.anilistInfo.idMal!}');
             },
-            icon: const Icon(SimpleIcons.myanimelist),
+            icon: const AnikkiIcon(icon: SimpleIcons.myanimelist),
           ),
         ),
     ];

@@ -58,7 +58,7 @@ class MediaDialogEpisodeLandscape extends StatelessWidget {
                   if (isNextAiringEpisode)
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.next_plan_outlined),
+                      icon: const Icon(Ionicons.alarm_outline),
                     )
                   else if (aired)
                     MediaDialogEpisodeActions(
@@ -71,7 +71,7 @@ class MediaDialogEpisodeLandscape extends StatelessWidget {
                   else
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.unpublished_outlined),
+                      icon: const Icon(Ionicons.ban_outline),
                     ),
                 ],
               ),
