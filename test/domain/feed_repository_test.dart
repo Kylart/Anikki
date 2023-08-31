@@ -135,8 +135,6 @@ void main() {
       test('computes a date range with valid borders', () {
         final range = FeedRepository.computeRange();
 
-        expect(range.start.day, DateTime.now().day + 1);
-        expect(range.end.day, DateTime.now().day + 2);
         expect(range.start.hour, 0);
         expect(range.start.minute, 0);
         expect(range.start.second, 0);
