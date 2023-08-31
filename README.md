@@ -11,14 +11,15 @@
 
 ## Features
 
+* Netflix-like "Continue watching" for everything you are watching
+* Automatic anime watch list tracking. No need to know which episode was the last one you saw anymore.
 * Browse local anime files with Anilist information
-* Check what animes came out for a range of days (Yes, Korean and Hentais are included if you want to)
+* Check what animes are coming out in the next few days (Yes, Korean and Hentais are included if you want to)
 * Browse your watch list and watch anything from there
 * Download or play (almost) any anime on the fly
 * Embedded player (with [media_kit](https://github.com/alexmercerind/media_kit))
 * Search for any torrent on [nyaa.si](https://nyaa.si)
 * Search for any anime, staff or character information
-* Automatic anime watch list tracking. No need to know which episode was the last one you saw anymore.
 * Remote torrent client connection for [Transmission](https://transmissionbt.com) and [QBitTorrent](https://www.qbittorrent.org) (Only on landscape mode for now)
   * QBitTorrent is recommended for a smoother experience.
 * More to come?
