@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_section_title_warning.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section_container.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
 import 'package:anikki/app/home/shared/widgets/home_section_title_loading_action.dart';
 import 'package:anikki/app/home_more/bloc/home_more_bloc.dart';
@@ -20,41 +21,45 @@ class HomeMoreView extends StatelessWidget {
         final loading = state is HomeMoreLoading;
         final errored = state is HomeMoreFailed;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            HomeEntrySectionTitle(
-              text: 'Discover',
-              actions: [
-                if (loading)
-                  const HomeSectionTitleLoadingAction()
-                else
-                  IconButton(
-                    onPressed: () {
-                      BlocProvider.of<HomeMoreBloc>(context)
-                          .add(HomeMoreRefresh());
-                    },
-                    icon: const Icon(Ionicons.refresh_outline),
-                  ),
-                if (errored)
-                  HomeEntrySectionTitleWarning(
-                    message: state.message,
-                  ),
-              ],
-            ),
-            if (state.entries.isNotEmpty)
-              HomeScrollView(
-                children: [
-                  for (final entry in state.entries)
-                    HomeEntryCard(
-                      media: entry,
+        return HomeEntrySectionContainer(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              HomeEntrySectionTitle(
+                text: 'Discover',
+                actions: [
+                  if (loading)
+                    const HomeSectionTitleLoadingAction()
+                  else
+                    IconButton(
+                      onPressed: () {
+                        BlocProvider.of<HomeMoreBloc>(context)
+                            .add(HomeMoreRefresh());
+                      },
+                      icon: const Icon(Ionicons.refresh_outline),
+                    ),
+                  if (errored)
+                    HomeEntrySectionTitleWarning(
+                      message: state.message,
                     ),
                 ],
               ),
-            if (loading && state.entries.isEmpty) const HomeScrollViewLoader(),
-            if (errored && state.entries.isEmpty) const HomeScrollViewLoader(),
-          ],
+              if (state.entries.isNotEmpty)
+                HomeScrollView(
+                  children: [
+                    for (final entry in state.entries)
+                      HomeEntryCard(
+                        media: entry,
+                      ),
+                  ],
+                ),
+              if (loading && state.entries.isEmpty)
+                const HomeScrollViewLoader(),
+              if (errored && state.entries.isEmpty)
+                const HomeScrollViewLoader(),
+            ],
+          ),
         );
       },
     );

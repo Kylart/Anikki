@@ -6,6 +6,7 @@ import 'package:anikki/app/home_feed/bloc/home_feed_bloc.dart';
 import 'package:anikki/app/home_feed/helpers/home_feed_options.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_card.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_section_title_warning.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section_container.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
@@ -24,51 +25,55 @@ class HomeFeedView extends StatelessWidget {
         final loaded = state is HomeFeedLoaded;
         final errored = state is HomeFeedFailed;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            HomeEntrySectionTitle(
-              text: 'Coming out soon',
-              actions: [
-                if (loading)
-                  const HomeSectionTitleLoadingAction()
-                else
-                  IconButton(
-                    onPressed: () {
-                      BlocProvider.of<HomeFeedBloc>(context)
-                          .add(HomeFeedRefresh());
-                    },
-                    icon: const Icon(Ionicons.refresh_outline),
-                  ),
-                if (loaded)
-                  AnikkiActionButton(
-                    actions: homeFeedOptions(loaded, bloc),
-                  ),
-                if (errored)
-                  HomeEntrySectionTitleWarning(
-                    message: state.message,
-                  ),
-              ],
-            ),
-            if (state.entries.isNotEmpty)
-              HomeScrollView(
-                reverse: true,
-                children: [
-                  for (final entry in bloc.repository.filterEntries(
-                    state.entries,
-                    state.options,
-                  ))
-                    HomeEntryCard(
-                      media: entry,
-                      text: entry.anilistInfo.nextAiringEpisode?.episode
-                          .toString(),
+        return HomeEntrySectionContainer(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              HomeEntrySectionTitle(
+                text: 'Coming out soon',
+                actions: [
+                  if (loading)
+                    const HomeSectionTitleLoadingAction()
+                  else
+                    IconButton(
+                      onPressed: () {
+                        BlocProvider.of<HomeFeedBloc>(context)
+                            .add(HomeFeedRefresh());
+                      },
+                      icon: const Icon(Ionicons.refresh_outline),
+                    ),
+                  if (loaded)
+                    AnikkiActionButton(
+                      actions: homeFeedOptions(loaded, bloc),
+                    ),
+                  if (errored)
+                    HomeEntrySectionTitleWarning(
+                      message: state.message,
                     ),
                 ],
               ),
-            if (loading && state.entries.isEmpty) const HomeScrollViewLoader(),
-            if (errored && state.entries.isEmpty) const HomeScrollViewLoader(),
-          ],
+              if (state.entries.isNotEmpty)
+                HomeScrollView(
+                  reverse: true,
+                  children: [
+                    for (final entry in bloc.repository.filterEntries(
+                      state.entries,
+                      state.options,
+                    ))
+                      HomeEntryCard(
+                        media: entry,
+                        text: entry.anilistInfo.nextAiringEpisode?.episode
+                            .toString(),
+                      ),
+                  ],
+                ),
+              if (loading && state.entries.isEmpty)
+                const HomeScrollViewLoader(),
+              if (errored && state.entries.isEmpty)
+                const HomeScrollViewLoader(),
+            ],
+          ),
         );
       },
     );
