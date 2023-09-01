@@ -80,39 +80,5 @@ List<AnikkiAction> homeFeedOptions(
           },
         ),
       ),
-
-    /// Auto refresh
-    AnikkiAction(
-      callback: (_) {
-        bloc.add(
-          HomeFeedOptionsChanged(
-            options: bloc.state.options.copyWith(
-              autoRefresh: !bloc.state.options.autoRefresh,
-            ),
-          ),
-        );
-      },
-      icon: Ionicons.sync_outline,
-      label: 'Enable auto refresh',
-      trailing: BlocBuilder<HomeFeedBloc, HomeFeedState>(
-        builder: (context, state) {
-          return Transform.scale(
-            scale: 0.8,
-            child: PlatformSwitch(
-              value: state.options.autoRefresh,
-              onChanged: (bool value) {
-                bloc.add(
-                  HomeFeedOptionsChanged(
-                    options: state.options.copyWith(
-                      autoRefresh: value,
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        },
-      ),
-    ),
   ];
 }

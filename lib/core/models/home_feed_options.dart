@@ -6,31 +6,26 @@ class HomeFeedOptions extends Equatable {
   const HomeFeedOptions({
     this.showAdult = false,
     this.showOnlyJap = true,
-    this.autoRefresh = true,
   });
 
   final bool showAdult;
   final bool showOnlyJap;
-  final bool autoRefresh;
 
   @override
   List<Object> get props {
     return [
       showAdult,
       showOnlyJap,
-      autoRefresh,
     ];
   }
 
   HomeFeedOptions copyWith({
     bool? showAdult,
     bool? showOnlyJap,
-    bool? autoRefresh,
   }) {
     return HomeFeedOptions(
       showAdult: showAdult ?? this.showAdult,
       showOnlyJap: showOnlyJap ?? this.showOnlyJap,
-      autoRefresh: autoRefresh ?? this.autoRefresh,
     );
   }
 
@@ -38,7 +33,6 @@ class HomeFeedOptions extends Equatable {
     return <String, dynamic>{
       'showAdult': showAdult,
       'showOnlyJap': showOnlyJap,
-      'autoRefresh': autoRefresh,
     };
   }
 
@@ -46,7 +40,6 @@ class HomeFeedOptions extends Equatable {
     return HomeFeedOptions(
       showAdult: map['showAdult'] as bool,
       showOnlyJap: map['showOnlyJap'] as bool,
-      autoRefresh: map['autoRefresh'] as bool,
     );
   }
 
