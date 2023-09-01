@@ -10,7 +10,7 @@ import 'package:anikki/domain/domain.dart';
 part 'watch_list_event.dart';
 part 'watch_list_state.dart';
 
-class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
+class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
   final UserListRepository repository;
 
   WatchListBloc(
@@ -24,6 +24,15 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
     on<WatchListReset>(_onReset);
     on<WatchListWatched>(_onWatched);
     on<WatchListAuthUpdated>(_onAuthUpdated);
+
+    setUpAutoRefresh();
+  }
+
+  @override
+  void autoRefresh() {
+    if (state.username != null) {
+      add(WatchListRequested(username: state.username!));
+    }
   }
 
   void _onAuthUpdated(
@@ -115,9 +124,20 @@ class WatchListBloc extends Bloc<WatchListEvent, WatchListState> {
             backgroundColor: Colors.redAccent,
             content: ListTile(
               title: Text(e.cause),
-              subtitle: Text('Error was ${e.error}.'),
+              subtitle: Column(
+                children: [
+                  const Text(
+                      'Anikki will retry periodically until it succeeds.'),
+                  Text('Error was ${e.error}.'),
+                ],
+              ),
             ),
           ),
+        );
+
+        Timer(
+          const Duration(minutes: 5),
+          () => add(event),
         );
       }
     }

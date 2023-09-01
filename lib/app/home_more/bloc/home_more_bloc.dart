@@ -8,7 +8,7 @@ import 'package:anikki/domain/feed_repository.dart';
 part 'home_more_event.dart';
 part 'home_more_state.dart';
 
-class HomeMoreBloc extends Bloc<HomeMoreEvent, HomeMoreState> {
+class HomeMoreBloc extends AutoRefreshBloc<HomeMoreEvent, HomeMoreState> {
   final FeedRepository repository;
 
   HomeMoreBloc(this.repository) : super(HomeMoreInitial()) {
@@ -17,6 +17,13 @@ class HomeMoreBloc extends Bloc<HomeMoreEvent, HomeMoreState> {
     });
 
     on<HomeMoreRefresh>(_onRefresh);
+
+    setUpAutoRefresh();
+  }
+
+  @override
+  void autoRefresh() async {
+    add(HomeMoreRefresh());
   }
 
   Future<void> _onRefresh(
@@ -34,6 +41,13 @@ class HomeMoreBloc extends Bloc<HomeMoreEvent, HomeMoreState> {
         ),
       );
     } on AnilistGetTrendingException catch (e) {
+      emit(
+        HomeMoreFailed(
+          message: e.cause,
+          entries: state.entries,
+        ),
+      );
+    } on AnilistGetRecommandationsException catch (e) {
       emit(
         HomeMoreFailed(
           message: e.cause,

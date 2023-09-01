@@ -8,7 +8,8 @@ import 'package:anikki/domain/domain.dart';
 part 'home_continue_event.dart';
 part 'home_continue_state.dart';
 
-class HomeContinueBloc extends Bloc<HomeContinueEvent, HomeContinueState> {
+class HomeContinueBloc
+    extends AutoRefreshBloc<HomeContinueEvent, HomeContinueState> {
   final UserListRepository repository;
 
   HomeContinueBloc(this.repository) : super(HomeContinueInitial()) {
@@ -17,24 +18,38 @@ class HomeContinueBloc extends Bloc<HomeContinueEvent, HomeContinueState> {
     });
 
     on<HomeContinueRefresh>(_onRefresh);
+
+    setUpAutoRefresh();
+  }
+
+  @override
+  void autoRefresh() async {
+    add(HomeContinueRefresh(state.username));
   }
 
   Future<void> _onRefresh(
       HomeContinueRefresh event, Emitter<HomeContinueState> emit) async {
     try {
       emit(
-        HomeContinueLoading(entries: state.entries),
+        HomeContinueLoading(
+          entries: state.entries,
+          username: event.username,
+        ),
       );
 
       final entries = await repository.getContinueList(event.username);
 
       emit(
-        HomeContinueLoaded(entries: entries),
+        HomeContinueLoaded(
+          entries: entries,
+          username: event.username,
+        ),
       );
     } on AnilistGetListException catch (e) {
       emit(
         HomeContinueError(
           entries: state.entries,
+          username: event.username,
           message: e.error ?? e.cause,
         ),
       );
@@ -42,6 +57,7 @@ class HomeContinueBloc extends Bloc<HomeContinueEvent, HomeContinueState> {
       emit(
         HomeContinueError(
           entries: state.entries,
+          username: event.username,
           message: e.toString(),
         ),
       );

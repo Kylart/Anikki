@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 part 'home_feed_event.dart';
 part 'home_feed_state.dart';
 
-class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
+class HomeFeedBloc extends AutoRefreshBloc<HomeFeedEvent, HomeFeedState> {
   final FeedRepository repository;
 
   HomeFeedBloc(this.repository) : super(HomeFeedInitial()) {
@@ -18,6 +18,13 @@ class HomeFeedBloc extends Bloc<HomeFeedEvent, HomeFeedState> {
 
     on<HomeFeedRefresh>(_onRefresh);
     on<HomeFeedOptionsChanged>(_onOptionChanged);
+
+    setUpAutoRefresh();
+  }
+
+  @override
+  void autoRefresh() async {
+    add(HomeFeedRefresh());
   }
 
   Future<void> _onRefresh(
