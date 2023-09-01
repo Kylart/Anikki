@@ -12,16 +12,12 @@ import 'package:anikki/app/home/shared/widgets/home_entry_card.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+import 'package:anikki/app/home_start/shared/helpers/should_be_marquee.dart';
 import 'package:anikki/core/core.dart';
 
-class HomeStartView extends StatefulWidget {
+class HomeStartView extends StatelessWidget {
   const HomeStartView({super.key});
 
-  @override
-  State<HomeStartView> createState() => _HomeStartViewState();
-}
-
-class _HomeStartViewState extends State<HomeStartView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AnilistAuthBloc, AnilistAuthState>(
@@ -63,12 +59,11 @@ class _HomeStartViewState extends State<HomeStartView> {
                   if (state.entries.isNotEmpty)
                     BlocBuilder<LayoutBloc, LayoutState>(
                       builder: (context, layoutState) {
-                        final minNumberOfEntries =
-                            layoutState is LayoutLandscape ? 5 : 2;
-
                         return HomeScrollView(
-                          reverse: true,
-                          marquee: state.entries.length > minNumberOfEntries,
+                          marquee: shouldBeMarquee(
+                            layoutState,
+                            state.entries.length,
+                          ),
                           children: [
                             for (final entry in state.entries)
                               HomeEntryCard(

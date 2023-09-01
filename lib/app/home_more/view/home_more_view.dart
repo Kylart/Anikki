@@ -7,9 +7,12 @@ import 'package:anikki/app/home/shared/widgets/home_entry_section_title_warning.
 import 'package:anikki/app/home/shared/widgets/home_entry_section_container.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
 import 'package:anikki/app/home/shared/widgets/home_section_title_loading_action.dart';
-import 'package:anikki/app/home_more/bloc/home_more_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_entry_card.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view.dart';
+import 'package:anikki/app/home_more/bloc/home_more_bloc.dart';
+import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
+import 'package:anikki/app/home_start/shared/helpers/should_be_marquee.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
 class HomeMoreView extends StatelessWidget {
   const HomeMoreView({super.key});
@@ -46,13 +49,28 @@ class HomeMoreView extends StatelessWidget {
                 ],
               ),
               if (state.entries.isNotEmpty)
-                HomeScrollView(
-                  children: [
-                    for (final entry in state.entries)
-                      HomeEntryCard(
-                        media: entry,
-                      ),
-                  ],
+                BlocBuilder<LayoutBloc, LayoutState>(
+                  builder: (context, layoutState) {
+                    return BlocBuilder<HomeStartBloc, HomeStartState>(
+                      builder: (context, homeStartState) {
+                        return HomeScrollView(
+                          reverse: homeStartState is HomeStartEmpty ||
+                                  homeStartState is HomeStartInitial
+                              ? false
+                              : shouldBeMarquee(
+                                  layoutState,
+                                  homeStartState.entries.length,
+                                ),
+                          children: [
+                            for (final entry in state.entries)
+                              HomeEntryCard(
+                                media: entry,
+                              ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                 ),
               if (loading && state.entries.isEmpty)
                 const HomeScrollViewLoader(),
