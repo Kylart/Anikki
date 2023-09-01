@@ -1,3 +1,4 @@
+import 'package:anikki/app/home_start/home_start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,8 +18,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final isAuthenticated =
         BlocProvider.of<AnilistAuthBloc>(context, listen: true).isConnected;
-
-    const gap = SizedBox(height: 24.0);
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -46,14 +45,10 @@ class HomeView extends StatelessWidget {
                       ],
                     ),
                   const CustomMenu(),
-                  if (isAuthenticated) ...[
-                    const HomeContinuePage(),
-                    gap,
-                  ],
+                  if (isAuthenticated) const HomeContinuePage(),
                   const HomeFeedPage(),
-                  gap,
+                  if (isAuthenticated) const HomeStartPage(),
                   const HomeMorePage(),
-                  gap,
                 ],
               );
             },

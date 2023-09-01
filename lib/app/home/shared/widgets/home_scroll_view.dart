@@ -7,10 +7,12 @@ class HomeScrollView extends StatefulWidget {
     super.key,
     required this.children,
     this.reverse = false,
+    this.marquee = true,
   });
 
   final List<Widget> children;
   final bool reverse;
+  final bool marquee;
 
   @override
   State<HomeScrollView> createState() => _HomeScrollViewState();
@@ -27,6 +29,20 @@ class _HomeScrollViewState extends State<HomeScrollView> {
 
   @override
   Widget build(BuildContext context) {
+    final listView = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: widget.children,
+      ),
+    );
+
+    if (!widget.marquee) {
+      return SizedBox(
+        height: height,
+        child: listView,
+      );
+    }
+
     return MouseRegion(
       onEnter: (event) => setState(() {
         show = true;
@@ -48,12 +64,7 @@ class _HomeScrollViewState extends State<HomeScrollView> {
                   ? MarqueerDirection.ltr
                   : MarqueerDirection.rtl,
               restartAfterInteraction: true,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: widget.children,
-                ),
-              ),
+              child: listView,
             ),
           ),
           Positioned(

@@ -13,6 +13,7 @@ import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/app/home_feed/bloc/home_feed_bloc.dart';
+import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
 import 'package:anikki/app/search/bloc/search_bloc.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
@@ -65,6 +66,9 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomeContinueBloc(userListRepository),
+        ),
+        BlocProvider(
+          create: (context) => HomeStartBloc(userListRepository),
         ),
         BlocProvider(
           create: (context) => HomeFeedBloc(feedRepository)
@@ -124,6 +128,10 @@ class AnikkiBlocProvider extends StatelessWidget {
             if (connected) {
               BlocProvider.of<HomeContinueBloc>(context).add(
                 HomeContinueRefresh(state.me.name),
+              );
+
+              BlocProvider.of<HomeStartBloc>(context).add(
+                HomeStartRefresh(state.me.name),
               );
             }
           },
