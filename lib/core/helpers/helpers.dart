@@ -1,4 +1,5 @@
 export 'anilist/anilist_client.dart';
+export 'anilist/current_season.dart';
 
 export 'connectivity_bloc/connectivity_bloc.dart';
 

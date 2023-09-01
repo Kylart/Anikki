@@ -55,6 +55,22 @@ class UserListRepository {
     }).toList();
   }
 
+  Future<List<AnilistListEntry>> getStartList(String username) async {
+    final season = currentSeason();
+    final year = DateTime.now().year;
+    final watchList = await getList(username);
+    final planningList = watchList[Enum$MediaListStatus.PLANNING] ?? [];
+
+    final entries = planningList.where((element) {
+      return element.media?.season == season &&
+          element.media?.seasonYear == year &&
+          element.media?.nextAiringEpisode?.episode != 1 &&
+          element.progress == 0;
+    }).toList();
+
+    return entries;
+  }
+
   /// Returns whether the entry is planned to watch or in currently watching status
   static bool isFollowed(WatchListComplete watchList, Media entry) {
     return [...watchList.planning, ...watchList.current]

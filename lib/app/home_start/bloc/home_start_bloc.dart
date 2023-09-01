@@ -8,20 +8,6 @@ import 'package:anikki/domain/domain.dart';
 part 'home_start_event.dart';
 part 'home_start_state.dart';
 
-Enum$MediaSeason currentSeason() {
-  final month = DateTime.now().month;
-
-  if (month <= 3) {
-    return Enum$MediaSeason.WINTER;
-  } else if (month <= 6) {
-    return Enum$MediaSeason.SPRING;
-  } else if (month <= 9) {
-    return Enum$MediaSeason.SUMMER;
-  }
-
-  return Enum$MediaSeason.FALL;
-}
-
 class HomeStartBloc extends AutoRefreshBloc<HomeStartEvent, HomeStartState> {
   final UserListRepository repository;
 
@@ -50,17 +36,7 @@ class HomeStartBloc extends AutoRefreshBloc<HomeStartEvent, HomeStartState> {
         ),
       );
 
-      final season = currentSeason();
-      final year = DateTime.now().year;
-      final watchList = await repository.getList(event.username);
-      final entries =
-          watchList[Enum$MediaListStatus.PLANNING]?.where((element) {
-                return element.media?.season == season &&
-                    element.media?.seasonYear == year &&
-                    element.media?.nextAiringEpisode?.episode != 1 &&
-                    element.progress == 0;
-              }).toList() ??
-              [];
+      final entries = await repository.getStartList(event.username);
 
       if (entries.isEmpty) {
         emit(HomeStartEmpty(username: event.username));
