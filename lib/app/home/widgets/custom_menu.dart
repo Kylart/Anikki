@@ -22,6 +22,8 @@ class CustomMenu extends StatelessWidget {
 
         final settingsBloc =
             BlocProvider.of<SettingsBloc>(context, listen: true);
+        final connectivityBloc =
+            BlocProvider.of<ConnectivityBloc>(context, listen: true);
 
         void showPage(Widget page) {
           showDialog(
@@ -84,6 +86,15 @@ class CustomMenu extends StatelessWidget {
                         );
                       },
                     ),
+                    if (connectivityBloc.state is ConnectivityOffline)
+                      IconButton(
+                        onPressed: () {},
+                        tooltip: 'No internet connection',
+                        icon: Icon(
+                          Ionicons.warning_outline,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
                   ],
                 ),
               ),
