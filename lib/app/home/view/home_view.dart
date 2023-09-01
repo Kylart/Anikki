@@ -1,4 +1,3 @@
-import 'package:anikki/app/home_start/home_start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +8,7 @@ import 'package:anikki/app/home/widgets/home_search_bar.dart';
 import 'package:anikki/app/home_continue/home_continue.dart';
 import 'package:anikki/app/home_feed/home_feed.dart';
 import 'package:anikki/app/home_more/home_more.dart';
+import 'package:anikki/app/home_start/home_start.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
 class HomeView extends StatelessWidget {
