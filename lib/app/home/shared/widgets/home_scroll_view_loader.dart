@@ -13,8 +13,8 @@ class HomeScrollViewLoader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36.0),
           child: Shimmer.fromColors(
-            baseColor: Colors.grey.shade500,
-            highlightColor: Colors.white,
+            baseColor: Colors.grey.withOpacity(0.7),
+            highlightColor: Colors.white70,
             child: Container(
               height: 290,
               decoration: const BoxDecoration(
