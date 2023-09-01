@@ -6,12 +6,13 @@ class Fragment$media {
   Fragment$media({
     this.siteUrl,
     required this.id,
+    this.season,
+    this.seasonYear,
     this.title,
     this.coverImage,
     this.startDate,
     this.endDate,
     this.bannerImage,
-    this.season,
     this.description,
     this.type,
     this.format,
@@ -36,12 +37,13 @@ class Fragment$media {
   factory Fragment$media.fromJson(Map<String, dynamic> json) {
     final l$siteUrl = json['siteUrl'];
     final l$id = json['id'];
+    final l$season = json['season'];
+    final l$seasonYear = json['seasonYear'];
     final l$title = json['title'];
     final l$coverImage = json['coverImage'];
     final l$startDate = json['startDate'];
     final l$endDate = json['endDate'];
     final l$bannerImage = json['bannerImage'];
-    final l$season = json['season'];
     final l$description = json['description'];
     final l$type = json['type'];
     final l$format = json['format'];
@@ -64,6 +66,10 @@ class Fragment$media {
     return Fragment$media(
       siteUrl: (l$siteUrl as String?),
       id: (l$id as int),
+      season: l$season == null
+          ? null
+          : fromJson$Enum$MediaSeason((l$season as String)),
+      seasonYear: (l$seasonYear as int?),
       title: l$title == null
           ? null
           : Fragment$media$title.fromJson((l$title as Map<String, dynamic>)),
@@ -80,9 +86,6 @@ class Fragment$media {
           : Fragment$media$endDate.fromJson(
               (l$endDate as Map<String, dynamic>)),
       bannerImage: (l$bannerImage as String?),
-      season: l$season == null
-          ? null
-          : fromJson$Enum$MediaSeason((l$season as String)),
       description: (l$description as String?),
       type: l$type == null ? null : fromJson$Enum$MediaType((l$type as String)),
       format: l$format == null
@@ -126,6 +129,10 @@ class Fragment$media {
 
   final int id;
 
+  final Enum$MediaSeason? season;
+
+  final int? seasonYear;
+
   final Fragment$media$title? title;
 
   final Fragment$media$coverImage? coverImage;
@@ -135,8 +142,6 @@ class Fragment$media {
   final Fragment$media$endDate? endDate;
 
   final String? bannerImage;
-
-  final Enum$MediaSeason? season;
 
   final String? description;
 
@@ -182,6 +187,11 @@ class Fragment$media {
     _resultData['siteUrl'] = l$siteUrl;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$season = season;
+    _resultData['season'] =
+        l$season == null ? null : toJson$Enum$MediaSeason(l$season);
+    final l$seasonYear = seasonYear;
+    _resultData['seasonYear'] = l$seasonYear;
     final l$title = title;
     _resultData['title'] = l$title?.toJson();
     final l$coverImage = coverImage;
@@ -192,9 +202,6 @@ class Fragment$media {
     _resultData['endDate'] = l$endDate?.toJson();
     final l$bannerImage = bannerImage;
     _resultData['bannerImage'] = l$bannerImage;
-    final l$season = season;
-    _resultData['season'] =
-        l$season == null ? null : toJson$Enum$MediaSeason(l$season);
     final l$description = description;
     _resultData['description'] = l$description;
     final l$type = type;
@@ -242,12 +249,13 @@ class Fragment$media {
   int get hashCode {
     final l$siteUrl = siteUrl;
     final l$id = id;
+    final l$season = season;
+    final l$seasonYear = seasonYear;
     final l$title = title;
     final l$coverImage = coverImage;
     final l$startDate = startDate;
     final l$endDate = endDate;
     final l$bannerImage = bannerImage;
-    final l$season = season;
     final l$description = description;
     final l$type = type;
     final l$format = format;
@@ -270,12 +278,13 @@ class Fragment$media {
     return Object.hashAll([
       l$siteUrl,
       l$id,
+      l$season,
+      l$seasonYear,
       l$title,
       l$coverImage,
       l$startDate,
       l$endDate,
       l$bannerImage,
-      l$season,
       l$description,
       l$type,
       l$format,
@@ -316,6 +325,16 @@ class Fragment$media {
     if (l$id != lOther$id) {
       return false;
     }
+    final l$season = season;
+    final lOther$season = other.season;
+    if (l$season != lOther$season) {
+      return false;
+    }
+    final l$seasonYear = seasonYear;
+    final lOther$seasonYear = other.seasonYear;
+    if (l$seasonYear != lOther$seasonYear) {
+      return false;
+    }
     final l$title = title;
     final lOther$title = other.title;
     if (l$title != lOther$title) {
@@ -339,11 +358,6 @@ class Fragment$media {
     final l$bannerImage = bannerImage;
     final lOther$bannerImage = other.bannerImage;
     if (l$bannerImage != lOther$bannerImage) {
-      return false;
-    }
-    final l$season = season;
-    final lOther$season = other.season;
-    if (l$season != lOther$season) {
       return false;
     }
     final l$description = description;
@@ -487,12 +501,13 @@ abstract class CopyWith$Fragment$media<TRes> {
   TRes call({
     String? siteUrl,
     int? id,
+    Enum$MediaSeason? season,
+    int? seasonYear,
     Fragment$media$title? title,
     Fragment$media$coverImage? coverImage,
     Fragment$media$startDate? startDate,
     Fragment$media$endDate? endDate,
     String? bannerImage,
-    Enum$MediaSeason? season,
     String? description,
     Enum$MediaType? type,
     Enum$MediaFormat? format,
@@ -539,12 +554,13 @@ class _CopyWithImpl$Fragment$media<TRes>
   TRes call({
     Object? siteUrl = _undefined,
     Object? id = _undefined,
+    Object? season = _undefined,
+    Object? seasonYear = _undefined,
     Object? title = _undefined,
     Object? coverImage = _undefined,
     Object? startDate = _undefined,
     Object? endDate = _undefined,
     Object? bannerImage = _undefined,
-    Object? season = _undefined,
     Object? description = _undefined,
     Object? type = _undefined,
     Object? format = _undefined,
@@ -569,6 +585,12 @@ class _CopyWithImpl$Fragment$media<TRes>
         siteUrl:
             siteUrl == _undefined ? _instance.siteUrl : (siteUrl as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        season: season == _undefined
+            ? _instance.season
+            : (season as Enum$MediaSeason?),
+        seasonYear: seasonYear == _undefined
+            ? _instance.seasonYear
+            : (seasonYear as int?),
         title: title == _undefined
             ? _instance.title
             : (title as Fragment$media$title?),
@@ -584,9 +606,6 @@ class _CopyWithImpl$Fragment$media<TRes>
         bannerImage: bannerImage == _undefined
             ? _instance.bannerImage
             : (bannerImage as String?),
-        season: season == _undefined
-            ? _instance.season
-            : (season as Enum$MediaSeason?),
         description: description == _undefined
             ? _instance.description
             : (description as String?),
@@ -709,12 +728,13 @@ class _CopyWithStubImpl$Fragment$media<TRes>
   call({
     String? siteUrl,
     int? id,
+    Enum$MediaSeason? season,
+    int? seasonYear,
     Fragment$media$title? title,
     Fragment$media$coverImage? coverImage,
     Fragment$media$startDate? startDate,
     Fragment$media$endDate? endDate,
     String? bannerImage,
-    Enum$MediaSeason? season,
     String? description,
     Enum$MediaType? type,
     Enum$MediaFormat? format,
@@ -772,6 +792,20 @@ const fragmentDefinitionmedia = FragmentDefinitionNode(
     ),
     FieldNode(
       name: NameNode(value: 'id'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'season'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'seasonYear'),
       alias: null,
       arguments: [],
       directives: [],
@@ -3459,6 +3493,8 @@ class Fragment$shortMedia {
     required this.id,
     this.idMal,
     this.siteUrl,
+    this.season,
+    this.seasonYear,
     this.title,
     this.coverImage,
     this.trailer,
@@ -3482,6 +3518,8 @@ class Fragment$shortMedia {
     final l$id = json['id'];
     final l$idMal = json['idMal'];
     final l$siteUrl = json['siteUrl'];
+    final l$season = json['season'];
+    final l$seasonYear = json['seasonYear'];
     final l$title = json['title'];
     final l$coverImage = json['coverImage'];
     final l$trailer = json['trailer'];
@@ -3503,6 +3541,10 @@ class Fragment$shortMedia {
       id: (l$id as int),
       idMal: (l$idMal as int?),
       siteUrl: (l$siteUrl as String?),
+      season: l$season == null
+          ? null
+          : fromJson$Enum$MediaSeason((l$season as String)),
+      seasonYear: (l$seasonYear as int?),
       title: l$title == null
           ? null
           : Fragment$shortMedia$title.fromJson(
@@ -3557,6 +3599,10 @@ class Fragment$shortMedia {
 
   final String? siteUrl;
 
+  final Enum$MediaSeason? season;
+
+  final int? seasonYear;
+
   final Fragment$shortMedia$title? title;
 
   final Fragment$shortMedia$coverImage? coverImage;
@@ -3599,6 +3645,11 @@ class Fragment$shortMedia {
     _resultData['idMal'] = l$idMal;
     final l$siteUrl = siteUrl;
     _resultData['siteUrl'] = l$siteUrl;
+    final l$season = season;
+    _resultData['season'] =
+        l$season == null ? null : toJson$Enum$MediaSeason(l$season);
+    final l$seasonYear = seasonYear;
+    _resultData['seasonYear'] = l$seasonYear;
     final l$title = title;
     _resultData['title'] = l$title?.toJson();
     final l$coverImage = coverImage;
@@ -3644,6 +3695,8 @@ class Fragment$shortMedia {
     final l$id = id;
     final l$idMal = idMal;
     final l$siteUrl = siteUrl;
+    final l$season = season;
+    final l$seasonYear = seasonYear;
     final l$title = title;
     final l$coverImage = coverImage;
     final l$trailer = trailer;
@@ -3665,6 +3718,8 @@ class Fragment$shortMedia {
       l$id,
       l$idMal,
       l$siteUrl,
+      l$season,
+      l$seasonYear,
       l$title,
       l$coverImage,
       l$trailer,
@@ -3708,6 +3763,16 @@ class Fragment$shortMedia {
     final l$siteUrl = siteUrl;
     final lOther$siteUrl = other.siteUrl;
     if (l$siteUrl != lOther$siteUrl) {
+      return false;
+    }
+    final l$season = season;
+    final lOther$season = other.season;
+    if (l$season != lOther$season) {
+      return false;
+    }
+    final l$seasonYear = seasonYear;
+    final lOther$seasonYear = other.seasonYear;
+    if (l$seasonYear != lOther$seasonYear) {
       return false;
     }
     final l$title = title;
@@ -3853,6 +3918,8 @@ abstract class CopyWith$Fragment$shortMedia<TRes> {
     int? id,
     int? idMal,
     String? siteUrl,
+    Enum$MediaSeason? season,
+    int? seasonYear,
     Fragment$shortMedia$title? title,
     Fragment$shortMedia$coverImage? coverImage,
     Fragment$shortMedia$trailer? trailer,
@@ -3902,6 +3969,8 @@ class _CopyWithImpl$Fragment$shortMedia<TRes>
     Object? id = _undefined,
     Object? idMal = _undefined,
     Object? siteUrl = _undefined,
+    Object? season = _undefined,
+    Object? seasonYear = _undefined,
     Object? title = _undefined,
     Object? coverImage = _undefined,
     Object? trailer = _undefined,
@@ -3925,6 +3994,12 @@ class _CopyWithImpl$Fragment$shortMedia<TRes>
         idMal: idMal == _undefined ? _instance.idMal : (idMal as int?),
         siteUrl:
             siteUrl == _undefined ? _instance.siteUrl : (siteUrl as String?),
+        season: season == _undefined
+            ? _instance.season
+            : (season as Enum$MediaSeason?),
+        seasonYear: seasonYear == _undefined
+            ? _instance.seasonYear
+            : (seasonYear as int?),
         title: title == _undefined
             ? _instance.title
             : (title as Fragment$shortMedia$title?),
@@ -4048,6 +4123,8 @@ class _CopyWithStubImpl$Fragment$shortMedia<TRes>
     int? id,
     int? idMal,
     String? siteUrl,
+    Enum$MediaSeason? season,
+    int? seasonYear,
     Fragment$shortMedia$title? title,
     Fragment$shortMedia$coverImage? coverImage,
     Fragment$shortMedia$trailer? trailer,
@@ -4107,6 +4184,20 @@ const fragmentDefinitionshortMedia = FragmentDefinitionNode(
     ),
     FieldNode(
       name: NameNode(value: 'siteUrl'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'season'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'seasonYear'),
       alias: null,
       arguments: [],
       directives: [],

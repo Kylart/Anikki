@@ -1,6 +1,8 @@
 fragment media on Media {
   siteUrl
   id
+  season
+  seasonYear
   title {
     userPreferred
     romaji
@@ -77,6 +79,8 @@ fragment shortMedia on Media {
   id
   idMal
   siteUrl
+  season
+  seasonYear
   title {
     userPreferred
     romaji
