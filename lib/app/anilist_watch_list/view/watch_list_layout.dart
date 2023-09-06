@@ -8,7 +8,6 @@ import 'package:anikki/core/widgets/list_view/custom_list_view.dart';
 import 'package:anikki/core/widgets/grid_view/custom_grid_view.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/widgets/watch_list_card.dart';
-import 'package:anikki/core/helpers/user_list_grid_delegate.dart';
 
 class WatchListLayout extends StatelessWidget {
   const WatchListLayout({super.key, required this.entries});
