@@ -114,29 +114,7 @@ class AnikkiBlocProvider extends StatelessWidget {
             },
           ),
         ],
-        child: BlocListener<AnilistAuthBloc, AnilistAuthState>(
-          listener: (context, state) {
-            final connected = state is AnilistAuthSuccess;
-
-            BlocProvider.of<WatchListBloc>(context).add(
-              WatchListAuthUpdated(
-                connected: connected,
-                username: connected ? state.me.name : null,
-              ),
-            );
-
-            if (connected) {
-              BlocProvider.of<HomeContinueBloc>(context).add(
-                HomeContinueRefresh(state.me.name),
-              );
-
-              BlocProvider.of<HomeStartBloc>(context).add(
-                HomeStartRefresh(state.me.name),
-              );
-            }
-          },
-          child: child,
-        ),
+        child: child,
       ),
     );
   }
