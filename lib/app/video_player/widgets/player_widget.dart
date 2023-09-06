@@ -19,7 +19,7 @@ class PlayerWidget extends StatefulWidget {
   final int? firstIndex;
   final Playlist playlist;
 
-  final void Function(Media media) onVideoComplete;
+  final void Function(Media media, double progress) onVideoComplete;
 
   @override
   State<PlayerWidget> createState() => _PlayerWidgetState();
@@ -45,7 +45,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
         if (!completed) return;
 
         final playlist = widget.player.state.playlist;
-        widget.onVideoComplete(playlist.medias.elementAt(playlist.index));
+        widget.onVideoComplete(playlist.medias.elementAt(playlist.index), 1.0);
       });
     });
   }
@@ -56,10 +56,10 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
     /// Trigger onVideoComplete
     final playlist = playerState.playlist;
+    final progress =
+        playerState.position.inSeconds / playerState.duration.inSeconds;
 
-    if (playerState.position.inSeconds / playerState.duration.inSeconds > 0.5) {
-      widget.onVideoComplete(playlist.medias.elementAt(playlist.index));
-    }
+    widget.onVideoComplete(playlist.medias.elementAt(playlist.index), progress);
 
     widget.player.dispose();
 

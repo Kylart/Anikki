@@ -35,7 +35,7 @@ class _MediaDialogVideoPlayerState extends State<MediaDialogVideoPlayer> {
 
     return VideoPlayerView(
       sources: [media.toString()],
-      onVideoComplete: (_) {},
+      onVideoComplete: (_, __) {},
       forceSmallControls: true,
     );
   }

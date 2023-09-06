@@ -4,11 +4,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
-import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
+import 'package:anikki/domain/domain.dart';
 
 class StreamPlaceholder extends StatefulWidget {
   const StreamPlaceholder({
@@ -30,8 +29,6 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
     return BlocListener<TorrentBloc, TorrentState>(
       listener: (context, state) {
         final torrentBloc = BlocProvider.of<TorrentBloc>(context);
-        final watchListBloc = BlocProvider.of<WatchListBloc>(context);
-        final scaffold = ScaffoldMessenger.of(context);
 
         if (state is! TorrentLoaded) return;
 
@@ -54,28 +51,11 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
 
         if (torrent.progress < minProgress) return;
 
-        BlocProvider.of<VideoPlayerBloc>(context).add(
-          VideoPlayerPlayRequested(
-            context: context,
-            sources: [torrent.path],
-            onVideoComplete: (mkMedia) {
-              torrentBloc.add(
-                TorrentRemoveTorrent(torrent, true),
-              );
-
-              final entry = LocalFile(
-                path: mkMedia.uri,
-                media: widget.media,
-              );
-
-              watchListBloc.add(
-                WatchListWatched(
-                  entry: entry,
-                  scaffold: scaffold,
-                ),
-              );
-            },
-          ),
+        VideoPlayerRepository.startFileVideo(
+          context: context,
+          file: LocalFile(path: torrent.path),
+          playlist: [torrent.path],
+          torrent: torrent,
         );
 
         Navigator.of(context).pop();

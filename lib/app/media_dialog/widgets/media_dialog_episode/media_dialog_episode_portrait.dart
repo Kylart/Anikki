@@ -83,7 +83,7 @@ class MediaDialogEpisodePortrait extends StatelessWidget {
               ],
             ),
       onTap: () {
-        playAnyway(
+        VideoPlayerRepository.playAnyway(
           context: context,
           media: media.anilistInfo,
           entry: entry,

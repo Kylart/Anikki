@@ -1,7 +1,3 @@
-import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/data/data.dart';
-import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
@@ -13,6 +9,11 @@ import 'package:simple_icons/simple_icons.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card_completed.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
+import 'package:anikki/core/widgets/layout_card.dart';
+import 'package:anikki/data/data.dart';
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/domain/domain.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 

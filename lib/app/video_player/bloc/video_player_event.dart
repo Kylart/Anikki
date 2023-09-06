@@ -24,7 +24,7 @@ class VideoPlayerPlayRequested extends VideoPlayerEvent {
   /// Array of URLs.
   final List<String> sources;
 
-  final void Function(mk.Media media) onVideoComplete;
+  final void Function(mk.Media media, double progress) onVideoComplete;
 
   @override
   List<Object> get props => [

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:anikki/app/media_dialog/shared/show.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
+import 'package:anikki/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -33,7 +34,7 @@ class MediaDialogActions extends StatelessWidget {
       FilledButton.tonalIcon(
         style: FilledButton.styleFrom(
             side: BorderSide(color: Theme.of(context).colorScheme.outline)),
-        onPressed: () => playAnyway(
+        onPressed: () => VideoPlayerRepository.playAnyway(
           context: context,
           media: media.anilistInfo,
           entry: entry,

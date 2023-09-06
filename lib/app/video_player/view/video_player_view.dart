@@ -24,7 +24,7 @@ class VideoPlayerView extends StatefulWidget {
   /// Array of URLs.
   final List<String> sources;
 
-  final void Function(Media media) onVideoComplete;
+  final void Function(Media media, double progress) onVideoComplete;
 
   final bool forceSmallControls;
 

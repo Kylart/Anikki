@@ -34,7 +34,7 @@ class MediaDialogEpisodeLandscape extends StatelessWidget {
     return LayoutCard(
       child: InkWell(
         onTap: () {
-          playAnyway(
+          VideoPlayerRepository.playAnyway(
             context: context,
             media: media.anilistInfo,
             entry: entry,
