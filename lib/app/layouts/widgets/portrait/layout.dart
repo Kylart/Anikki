@@ -26,37 +26,38 @@ class _PortraitLayoutState extends State<PortraitLayout> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: PageView(
-            controller: pageController,
-            onPageChanged: (value) {
-              setState(() {
-                currentIndex = value;
-              });
-            },
-            children: const [
-              HomeView(),
-              LibraryPage(),
-              WatchListView(),
-              SearchView(),
-              SettingsView(),
-            ],
+        backgroundColor: Colors.transparent,
+        body: PageView(
+          controller: pageController,
+          onPageChanged: (value) {
+            setState(() {
+              currentIndex = value;
+            });
+          },
+          children: const [
+            HomeView(),
+            LibraryPage(),
+            WatchListView(),
+            SearchView(),
+            SettingsView(),
+          ],
+        ),
+        floatingActionButton: [
+          null,
+          FloatingActionButton(
+            onPressed: () async => BlocProvider.of<LibraryBloc>(context)
+                .add(const LibraryUpdateRequested()),
+            child: const Icon(Icons.folder_open_outlined),
           ),
-          floatingActionButton: [
-            null,
-            FloatingActionButton(
-              onPressed: () async => BlocProvider.of<LibraryBloc>(context)
-                  .add(const LibraryUpdateRequested()),
-              child: const Icon(Icons.folder_open_outlined),
-            ),
-            null,
-            null,
-            null,
-          ][currentIndex],
-          bottomNavigationBar: AnikkiNavigationBar(
-            index: currentIndex,
-            pageController: pageController,
-          )),
+          null,
+          null,
+          null,
+        ][currentIndex],
+        bottomNavigationBar: AnikkiNavigationBar(
+          index: currentIndex,
+          pageController: pageController,
+        ),
+      ),
     );
   }
 }

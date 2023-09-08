@@ -45,8 +45,8 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                           onPressed: () {
                             if (anilistAuthState is AnilistAuthSuccess) {
                               BlocProvider.of<HomeContinueBloc>(context).add(
-                                  HomeContinueRefresh(
-                                      anilistAuthState.me.name));
+                                HomeContinueRefresh(anilistAuthState.me.name),
+                              );
                             }
                           },
                           icon: const Icon(Ionicons.refresh_outline),
