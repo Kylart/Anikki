@@ -155,6 +155,9 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
   Future<void> _onFilePlayRequested(
       LibraryFilePlayRequested event, Emitter<LibraryState> emit) async {
-    await VideoPlayerRepository.playFile(event.file, event.context);
+    await VideoPlayerRepository.playFile(
+      file: event.file,
+      context: event.context,
+    );
   }
 }

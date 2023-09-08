@@ -15,12 +15,12 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
             settings ??
                 const Settings(
                   localDirectory: '',
-                  newsLayout: NewsLayouts.list,
                   userListLayouts: UserListLayouts.grid,
                   theme: ThemeMode.system,
                   torrentType: TorrentType.none,
                   transmissionSettings: TransmissionSettings(),
                   qBitTorrentSettings: QBitTorrentSettings(),
+                  videoPlayerSettings: VideoPlayerSettings(),
                 ),
           ),
         ) {

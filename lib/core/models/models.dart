@@ -21,6 +21,7 @@ export 'search_result.dart';
 export 'settings.dart';
 export 'qbittorrent_settings.dart';
 export 'transmission_settings.dart';
+export 'video_player_settings.dart';
 
 export 'torrent/models.dart';
 

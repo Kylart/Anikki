@@ -51,7 +51,7 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
 
         if (torrent.progress < minProgress) return;
 
-        VideoPlayerRepository.startFileVideo(
+        VideoPlayerRepository.playFile(
           context: context,
           file: LocalFile(path: torrent.path),
           playlist: [torrent.path],

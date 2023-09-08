@@ -16,42 +16,42 @@ enum UserListLayouts {
 }
 
 class Settings extends Equatable {
+  const Settings({
+    required this.localDirectory,
+    required this.userListLayouts,
+    required this.theme,
+    required this.torrentType,
+    required this.transmissionSettings,
+    required this.qBitTorrentSettings,
+    required this.videoPlayerSettings,
+  });
+
   final String localDirectory;
-  final NewsLayouts newsLayout;
   final UserListLayouts userListLayouts;
   final ThemeMode theme;
 
   final TorrentType torrentType;
   final TransmissionSettings transmissionSettings;
   final QBitTorrentSettings qBitTorrentSettings;
-
-  const Settings({
-    required this.localDirectory,
-    required this.newsLayout,
-    required this.userListLayouts,
-    required this.theme,
-    required this.torrentType,
-    required this.transmissionSettings,
-    required this.qBitTorrentSettings,
-  });
+  final VideoPlayerSettings videoPlayerSettings;
 
   Settings copyWith({
     String? localDirectory,
-    NewsLayouts? newsLayout,
     UserListLayouts? userListLayouts,
     ThemeMode? theme,
     TorrentType? torrentType,
     TransmissionSettings? transmissionSettings,
     QBitTorrentSettings? qBitTorrentSettings,
+    VideoPlayerSettings? videoPlayerSettings,
   }) {
     return Settings(
       localDirectory: localDirectory ?? this.localDirectory,
-      newsLayout: newsLayout ?? this.newsLayout,
       userListLayouts: userListLayouts ?? this.userListLayouts,
       theme: theme ?? this.theme,
       torrentType: torrentType ?? this.torrentType,
       transmissionSettings: transmissionSettings ?? this.transmissionSettings,
       qBitTorrentSettings: qBitTorrentSettings ?? this.qBitTorrentSettings,
+      videoPlayerSettings: videoPlayerSettings ?? this.videoPlayerSettings,
     );
   }
 
@@ -62,32 +62,30 @@ class Settings extends Equatable {
   List<Object> get props {
     return [
       localDirectory,
-      newsLayout,
       userListLayouts,
       theme,
       torrentType,
       transmissionSettings,
       qBitTorrentSettings,
+      videoPlayerSettings,
     ];
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'localDirectory': localDirectory,
-      'newsLayout': newsLayout.name,
       'userListLayouts': userListLayouts.name,
       'theme': theme.name,
       'torrentType': torrentType.name,
       'transmissionSettings': transmissionSettings.toMap(),
       'qBitTorrentSettings': qBitTorrentSettings.toMap(),
+      'videoPlayerSettings': videoPlayerSettings.toMap(),
     };
   }
 
   factory Settings.fromMap(Map<String, dynamic> map) {
     return Settings(
       localDirectory: map['localDirectory'] as String,
-      newsLayout:
-          NewsLayouts.values.where((e) => e.name == map['newsLayout']).first,
       userListLayouts: UserListLayouts.values
           .where((e) => e.name == map['userListLayouts'])
           .first,
@@ -98,6 +96,8 @@ class Settings extends Equatable {
           map['transmissionSettings'] as Map<String, dynamic>),
       qBitTorrentSettings: QBitTorrentSettings.fromMap(
           map['qBitTorrentSettings'] as Map<String, dynamic>),
+      videoPlayerSettings: VideoPlayerSettings.fromMap(
+          map['videoPlayerSettings'] as Map<String, dynamic>),
     );
   }
 

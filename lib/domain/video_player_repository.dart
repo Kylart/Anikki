@@ -10,6 +10,7 @@ import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
+import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/core/core.dart';
 
@@ -44,7 +45,7 @@ class VideoPlayerRepository {
     }
   }
 
-  static void startFileVideo({
+  static void _startFileVideo({
     required BuildContext context,
     required LocalFile file,
     List<String>? playlist,
@@ -86,12 +87,19 @@ class VideoPlayerRepository {
     );
   }
 
-  static Future<void> playFile(
-    LocalFile file,
-    BuildContext context, [
-    bool playOutside = false,
-  ]) async {
-    if (playOutside) {
+  static Future<void> playFile({
+    required BuildContext context,
+    required LocalFile file,
+    List<String>? playlist,
+    Media? media,
+    Torrent? torrent,
+  }) async {
+    final settings = BlocProvider.of<SettingsBloc>(context)
+        .state
+        .settings
+        .videoPlayerSettings;
+
+    if (!settings.inside) {
       BlocProvider.of<WatchListBloc>(context).add(
         WatchListWatched(
           entry: file,
@@ -104,13 +112,15 @@ class VideoPlayerRepository {
       await OpenAppFile.open(
           file.file.path.replaceAll('(', '\\(').replaceAll(')', '\\)'));
     } else {
-      final libraryState =
-          BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded;
+      final libraryState = BlocProvider.of<LibraryBloc>(context).state;
 
-      startFileVideo(
+      _startFileVideo(
         context: context,
         file: file,
-        playlist: libraryState.playlist,
+        playlist:
+            libraryState is LibraryLoaded ? libraryState.playlist : playlist,
+        media: media,
+        torrent: torrent,
       );
     }
   }
@@ -166,12 +176,13 @@ class VideoPlayerRepository {
     }
 
     if (file != null) {
-      return startFileVideo(
-        context: context,
+      playFile(
         file: file,
+        context: context,
         playlist: playlist?.toList(),
         media: Media(anilistInfo: media),
       );
+      return;
     }
 
     /// Could not find any file on disk for this entry.

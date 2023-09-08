@@ -88,6 +88,31 @@ class _SettingsViewState extends State<SettingsView> {
                         ],
                       ),
                     SettingsSection(
+                      title: const Text('Video Player'),
+                      tiles: <SettingsTile>[
+                        /// Play inside
+                        SettingsTile.switchTile(
+                          initialValue: settingsBloc
+                              .state.settings.videoPlayerSettings.inside,
+                          leading: const Icon(Ionicons.play_outline),
+                          title: const Text('Use Anikki video player'),
+                          onToggle: (value) {
+                            settingsBloc.add(
+                              SettingsUpdated(
+                                settingsBloc.state.settings.copyWith(
+                                  videoPlayerSettings: settingsBloc
+                                      .state.settings.videoPlayerSettings
+                                      .copyWith(
+                                    inside: value,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    SettingsSection(
                       title: const Text('Torrent Client'),
                       tiles: [
                         SettingsTile(
