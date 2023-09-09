@@ -18,9 +18,7 @@ class MediaDialogEpisodes extends StatelessWidget {
   final LibraryEntry? entry;
 
   int get numberOfEpisodes => max(
-        media.anilistInfo.episodes ??
-            media.anilistInfo.nextAiringEpisode?.episode ??
-            0,
+        media.numberOfEpisodes ?? 0,
         entry?.epMax ?? 0,
       );
 
