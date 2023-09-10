@@ -19,12 +19,14 @@ class _PlayerControlsSubtitlesState extends State<PlayerControlsSubtitles> {
     super.initState();
 
     widget.player.stream.tracks.listen((track) {
+      if (!mounted) return;
       setState(() {
         available = track.subtitle;
       });
     });
 
     widget.player.stream.track.listen((event) {
+      if (!mounted) return;
       setState(() {
         selected = event.subtitle;
       });

@@ -18,12 +18,14 @@ class _PlayerControlsAudiosState extends State<PlayerControlsAudios> {
     super.initState();
 
     widget.player.stream.tracks.listen((track) {
+      if (!mounted) return;
       setState(() {
         available = track.audio;
       });
     });
 
     widget.player.stream.track.listen((event) {
+      if (!mounted) return;
       setState(() {
         selected = event.audio;
       });
