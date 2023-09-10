@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/home/widgets/animated_media_banner.dart';
-import 'package:anikki/app/home/widgets/custom_menu.dart';
+import 'package:anikki/app/home/shared/widgets/custom_menu.dart';
 import 'package:anikki/app/home/widgets/home_search_bar.dart';
 import 'package:anikki/app/home_continue/home_continue.dart';
 import 'package:anikki/app/home_feed/home_feed.dart';
@@ -26,25 +26,25 @@ class HomeView extends StatelessWidget {
         SingleChildScrollView(
           child: BlocBuilder<LayoutBloc, LayoutState>(
             builder: (context, state) {
-              final portrait = state is LayoutPortrait;
+              final landscape = state is LayoutLandscape;
 
               return Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  if (!portrait)
+                  if (landscape) ...[
                     const SizedBox(
                       height: 250,
                     ),
-                  if (!portrait)
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         HomeSearchBar(),
                       ],
                     ),
-                  const CustomMenu(),
+                    const CustomMenu(),
+                  ],
                   if (isAuthenticated) const HomeContinuePage(),
                   const HomeFeedPage(),
                   if (isAuthenticated) const HomeStartPage(),
