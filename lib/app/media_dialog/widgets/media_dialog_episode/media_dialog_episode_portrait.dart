@@ -8,8 +8,9 @@ class MediaDialogEpisodePortrait extends StatelessWidget {
     required this.index,
     required this.isNextAiringEpisode,
     required this.aired,
-    required this.media,
     required this.entry,
+    this.media,
+    this.file,
   });
 
   final String? episodeCover;
@@ -17,15 +18,16 @@ class MediaDialogEpisodePortrait extends StatelessWidget {
   final int index;
   final bool isNextAiringEpisode;
   final bool aired;
-  final Media media;
+  final Media? media;
   final LibraryEntry? entry;
+  final LocalFile? file;
 
   @override
   Widget build(BuildContext context) {
-    LocalFile? localFile =
+    var localFile = file ??
         entry?.entries.firstWhereOrNull((element) => element.episode == index);
 
-    if (media.anilistInfo.format == Enum$MediaFormat.MOVIE &&
+    if (media?.anilistInfo.format == Enum$MediaFormat.MOVIE &&
         entry != null &&
         localFile == null) {
       localFile = entry?.entries.first;
@@ -76,16 +78,17 @@ class MediaDialogEpisodePortrait extends StatelessWidget {
           : Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                MediaDialogEpisodeCompleted(
-                  media: media,
-                  index: index,
-                ),
+                if (media != null)
+                  MediaDialogEpisodeCompleted(
+                    media: media!,
+                    index: index,
+                  ),
               ],
             ),
       onTap: () {
         VideoPlayerRepository.playAnyway(
           context: context,
-          media: media.anilistInfo,
+          media: media?.anilistInfo,
           entry: entry,
           episode: index,
         );

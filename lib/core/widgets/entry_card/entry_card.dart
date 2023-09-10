@@ -39,7 +39,7 @@ class _EntryCardState extends State<EntryCard> {
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
-            showMediaDialog(context, widget.media);
+            showMediaDialog(context, widget.media, widget.libraryEntry);
           },
           child: Column(
             children: [

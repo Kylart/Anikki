@@ -40,6 +40,14 @@ class _MediaDialogTrailerState extends State<MediaDialogTrailer> {
                     child: Image.network(
                       thumbnail!,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 80.0),
+                            child: Text('Could not load thumbnail'),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),

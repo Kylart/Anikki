@@ -16,90 +16,96 @@ class MediaDialogMedia extends StatelessWidget {
   const MediaDialogMedia({
     super.key,
     required this.media,
+    this.libraryEntry,
   });
 
   final Media media;
+  final LibraryEntry? libraryEntry;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LibraryBloc, LibraryState>(builder: (context, state) {
-      final isLoaded = state is LibraryLoaded;
+    return BlocBuilder<LibraryBloc, LibraryState>(
+      builder: (context, state) {
+        final isLoaded = state is LibraryLoaded;
 
-      final libraryEntry = isLoaded
-          ? state.entries.firstWhereOrNull(
-              (element) =>
-                  element.media?.anilistInfo.id == media.anilistInfo.id,
-            )
-          : null;
+        final entry = libraryEntry ??
+            (isLoaded
+                ? state.entries.firstWhereOrNull(
+                    (element) =>
+                        element.media?.anilistInfo.id == media.anilistInfo.id,
+                  )
+                : null);
 
-      return LayoutCard(
-        child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Column(
-            children: [
-              ListTile(
-                title: AutoSizeText(
-                  media.title ?? 'N/A',
-                  maxLines: 2,
-                ),
-                subtitle: media.anilistInfo.title?.native == null
-                    ? const SizedBox()
-                    : Text(media.anilistInfo.title!.native!),
-                trailing: IconButton.outlined(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Ionicons.close_outline),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: MediaDialogActions(
-                  media: media,
-                  entry: libraryEntry,
-                ),
-              ),
-              if (media.anilistInfo.trailer?.id != null &&
-                  media.anilistInfo.trailer?.site == 'youtube' &&
-                  media.anilistInfo.trailer?.thumbnail != null)
-                Container(
-                  constraints: const BoxConstraints(
-                    maxHeight: 600,
+        return LayoutCard(
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Column(
+              children: [
+                ListTile(
+                  title: AutoSizeText(
+                    media.title ?? entry?.entries.first.title ?? 'N/A',
+                    maxLines: 2,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Center(
-                      child: MediaDialogTrailer(media: media),
+                  subtitle: media.anilistInfo.title?.native == null
+                      ? const SizedBox()
+                      : Text(media.anilistInfo.title!.native!),
+                  trailing: IconButton.outlined(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Ionicons.close_outline),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: MediaDialogActions(
+                    media: media,
+                    entry: entry,
+                  ),
+                ),
+                if (media.anilistInfo.trailer?.id != null &&
+                    media.anilistInfo.trailer?.site == 'youtube' &&
+                    media.anilistInfo.trailer?.thumbnail != null)
+                  Container(
+                    constraints: const BoxConstraints(
+                      maxHeight: 600,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Center(
+                        child: MediaDialogTrailer(media: media),
+                      ),
                     ),
                   ),
-                ),
-              if (media.anilistInfo.genres != null &&
-                  media.anilistInfo.genres!.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    runSpacing: 4.0,
-                    spacing: 4.0,
-                    children: media.anilistInfo.genres!.whereType<String>().map(
-                      (genre) {
-                        return EntryTag(
-                          child: Text(
-                            genre,
-                          ),
-                        );
-                      },
-                    ).toList(),
+                if (media.anilistInfo.genres != null &&
+                    media.anilistInfo.genres!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4.0),
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      runSpacing: 4.0,
+                      spacing: 4.0,
+                      children:
+                          media.anilistInfo.genres!.whereType<String>().map(
+                        (genre) {
+                          return EntryTag(
+                            child: Text(
+                              genre,
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
                   ),
+                MediaDialogEpisodes(
+                  media: media,
+                  entry: entry,
                 ),
-              MediaDialogEpisodes(
-                media: media,
-                entry: libraryEntry,
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

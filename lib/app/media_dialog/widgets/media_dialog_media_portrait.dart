@@ -14,9 +14,11 @@ class MediaDialogMediaPortrait extends StatelessWidget {
   const MediaDialogMediaPortrait({
     super.key,
     required this.media,
+    this.libraryEntry,
   });
 
   final Media media;
+  final LibraryEntry? libraryEntry;
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +30,21 @@ class MediaDialogMediaPortrait extends StatelessWidget {
             builder: (context, state) {
               final isLoaded = state is LibraryLoaded;
 
-              final libraryEntry = isLoaded
-                  ? state.entries.firstWhereOrNull(
-                      (element) =>
-                          element.media?.anilistInfo.id == media.anilistInfo.id,
-                    )
-                  : null;
+              final entry = libraryEntry ??
+                  (isLoaded
+                      ? state.entries.firstWhereOrNull(
+                          (element) =>
+                              element.media?.anilistInfo.id ==
+                              media.anilistInfo.id,
+                        )
+                      : null);
 
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     ListTile(
                       title: AutoSizeText(
-                        media.title ?? 'N/A',
+                        media.title ?? entry?.entries.first.title ?? 'N/A',
                         maxLines: 2,
                       ),
                       subtitle: media.anilistInfo.title?.native == null
@@ -51,7 +55,7 @@ class MediaDialogMediaPortrait extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: MediaDialogActions(
                         media: media,
-                        entry: libraryEntry,
+                        entry: entry,
                         reversed: true,
                       ),
                     ),
@@ -89,7 +93,7 @@ class MediaDialogMediaPortrait extends StatelessWidget {
                       ),
                     MediaDialogEpisodes(
                       media: media,
-                      entry: libraryEntry,
+                      entry: entry,
                     ),
                   ],
                 ),

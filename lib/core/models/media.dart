@@ -12,6 +12,7 @@ class Media extends Equatable {
 
   late final Fragment$shortMedia anilistInfo;
 
+  bool get hasInfo => anilistInfo.id != 0;
   String? get title => anilistInfo.title?.userPreferred;
   String? get coverImage =>
       anilistInfo.coverImage?.extraLarge ??

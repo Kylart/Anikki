@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,31 +25,69 @@ class MediaDialogEpisodes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (numberOfEpisodes == 0) return const SizedBox();
+    const gridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(
+      maxCrossAxisExtent: 185,
+      childAspectRatio: 0.75,
+      crossAxisSpacing: 0,
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: BlocBuilder<LayoutBloc, LayoutState>(
         builder: (context, state) {
+          final hasInfo = media.anilistInfo.id != 0;
+
           if (state is LayoutLandscape) {
+            if (!hasInfo) {
+              return GridView(
+                physics: const ClampingScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: gridDelegate,
+                children: [
+                  for (final file in entry?.entries ?? [])
+                    MediaDialogEpisode(
+                      index: file.episode ?? 0,
+                      entry: entry,
+                      file: file,
+                    ),
+                ],
+              );
+            }
+
             return GridView.builder(
               itemCount: numberOfEpisodes,
               physics: const ClampingScrollPhysics(),
               shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 185,
-                childAspectRatio: 0.75,
-                crossAxisSpacing: 0,
-              ),
+              gridDelegate: gridDelegate,
               itemBuilder: (context, index) => MediaDialogEpisode(
                 index: numberOfEpisodes - index,
                 media: media,
                 entry: entry,
+                file: entry?.entries.firstWhereOrNull(
+                  (e) => e.episode == numberOfEpisodes - index,
+                ),
               ),
             );
           } else if (state is LayoutPortrait) {
+            if (!hasInfo) {
+              return ListView(
+                physics: const ClampingScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  for (final file in entry?.entries ?? []) ...[
+                    MediaDialogEpisode(
+                      index: file.episode ?? 0,
+                      entry: entry,
+                      file: file,
+                    ),
+                    const Divider(),
+                  ],
+                ],
+              );
+            }
+
             return ListView.separated(
-              itemCount: numberOfEpisodes,
+              itemCount: numberOfEpisodes == 0 ? entry?.entries.length ?? 0 : 0,
               physics: const ClampingScrollPhysics(),
               shrinkWrap: true,
               separatorBuilder: (context, index) => const Divider(),
@@ -56,6 +95,9 @@ class MediaDialogEpisodes extends StatelessWidget {
                 index: numberOfEpisodes - index,
                 media: media,
                 entry: entry,
+                file: entry?.entries.firstWhereOrNull(
+                  (e) => e.episode == numberOfEpisodes - index,
+                ),
               ),
             );
           }

@@ -3,15 +3,15 @@ part of 'media_dialog_episode.dart';
 class MediaDialogEpisodeActions extends StatelessWidget {
   const MediaDialogEpisodeActions({
     super.key,
-    required this.media,
     required this.index,
     required this.info,
+    this.media,
     this.entry,
     this.localFile,
     this.mainAxisSize = MainAxisSize.max,
   });
 
-  final Media media;
+  final Media? media;
   final int index;
   final LibraryEntry? entry;
   final Fragment$shortMedia$streamingEpisodes? info;
@@ -63,7 +63,7 @@ class MediaDialogEpisodeActions extends StatelessWidget {
             onPressed: () {
               BlocProvider.of<DownloaderBloc>(context).add(
                 DownloaderRequested(
-                  media: media.anilistInfo,
+                  media: media?.anilistInfo,
                   episode: index,
                   entry: entry,
                 ),

@@ -6,7 +6,11 @@ import 'package:anikki/app/media_dialog/widgets/media_dialog_media.dart';
 import 'package:anikki/app/media_dialog/widgets/media_dialog_media_portrait.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
-Future<void> showMediaDialog(BuildContext context, Media media) async {
+Future<void> showMediaDialog(
+  BuildContext context,
+  Media media, [
+  LibraryEntry? libraryEntry,
+]) async {
   final layout = BlocProvider.of<LayoutBloc>(context).state;
   if (layout is LayoutLandscape) {
     await showDialog(
@@ -18,6 +22,7 @@ Future<void> showMediaDialog(BuildContext context, Media media) async {
           surfaceTintColor: Colors.transparent,
           child: MediaDialogMedia(
             media: media,
+            libraryEntry: libraryEntry,
           ),
         );
       },
@@ -28,6 +33,7 @@ Future<void> showMediaDialog(BuildContext context, Media media) async {
         builder: (BuildContext context) {
           return MediaDialogMediaPortrait(
             media: media,
+            libraryEntry: libraryEntry,
           );
         },
       ),

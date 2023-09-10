@@ -28,24 +28,26 @@ class MediaDialogEpisode extends StatelessWidget {
   const MediaDialogEpisode({
     super.key,
     required this.index,
-    required this.media,
+    this.media,
     this.entry,
+    this.file,
   });
 
   final int index;
-  final Media media;
+  final Media? media;
   final LibraryEntry? entry;
+  final LocalFile? file;
 
   @override
   Widget build(BuildContext context) {
-    final info = media.anilistInfo.streamingEpisodes?.firstWhereOrNull(
+    final info = media?.anilistInfo.streamingEpisodes?.firstWhereOrNull(
       (element) =>
           element?.title != null &&
           element!.title!.startsWith('Episode $index'),
     );
-    final episodeCover = info?.thumbnail ?? media.coverImage;
+    final episodeCover = info?.thumbnail ?? media?.coverImage;
 
-    final nextAiringEpisode = media.anilistInfo.nextAiringEpisode;
+    final nextAiringEpisode = media?.anilistInfo.nextAiringEpisode;
     final aired = index <= (nextAiringEpisode?.episode ?? double.infinity);
     final isNextAiringEpisode =
         nextAiringEpisode != null && nextAiringEpisode.episode == index;
@@ -61,6 +63,7 @@ class MediaDialogEpisode extends StatelessWidget {
             aired: aired,
             media: media,
             entry: entry,
+            file: file,
           );
         } else if (state is LayoutPortrait) {
           return MediaDialogEpisodePortrait(
@@ -71,6 +74,7 @@ class MediaDialogEpisode extends StatelessWidget {
             aired: aired,
             media: media,
             entry: entry,
+            file: file,
           );
         }
 

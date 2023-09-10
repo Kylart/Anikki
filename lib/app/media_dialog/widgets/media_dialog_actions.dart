@@ -47,7 +47,7 @@ class MediaDialogActions extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: IconButton(
             onPressed: () {
-              showMediaDialog(context, media);
+              showMediaDialog(context, media, entry);
             },
             icon: Transform(
               alignment: Alignment.center,
