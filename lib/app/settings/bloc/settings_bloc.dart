@@ -36,8 +36,11 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
       getDownloadsDirectory().then(
         (downloadDir) {
           if (downloadDir != null) {
-            add(SettingsUpdated(
-                state.settings.copyWith(localDirectory: downloadDir.path)));
+            add(
+              SettingsUpdated(
+                state.settings.copyWith(localDirectory: downloadDir.path),
+              ),
+            );
           }
         },
       );

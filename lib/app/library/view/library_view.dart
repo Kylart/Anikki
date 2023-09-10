@@ -10,6 +10,7 @@ import 'package:anikki/core/widgets/anikki_action_button.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/core/widgets/error_tile.dart';
+import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/library/widgets/library_layout.dart';
@@ -29,8 +30,21 @@ class LibraryView extends StatelessWidget {
           AnikkiAction(
             icon: Ionicons.folder_open_outline,
             label: 'Change folder',
-            callback: (_) => BlocProvider.of<LibraryBloc>(context)
-                .add(const LibraryUpdateRequested()),
+            callback: (_) {
+              final settingsBloc = BlocProvider.of<SettingsBloc>(context);
+
+              BlocProvider.of<LibraryBloc>(context).add(
+                LibraryUpdateRequested(
+                  onUpdated: (path) => settingsBloc.add(
+                    SettingsUpdated(
+                      settingsBloc.state.settings.copyWith(
+                        localDirectory: path,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
           AnikkiAction(
             icon: Ionicons.open_outline,

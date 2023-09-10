@@ -4,16 +4,20 @@ abstract class LibraryEvent extends Equatable {
   const LibraryEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LibraryUpdateRequested extends LibraryEvent {
-  const LibraryUpdateRequested({this.path});
+  const LibraryUpdateRequested({this.path, this.onUpdated});
 
   final String? path;
+  final void Function(String path)? onUpdated;
 
   @override
-  List<Object> get props => [path ?? ''];
+  List<Object?> get props => [
+        path,
+        onUpdated,
+      ];
 }
 
 class LibraryFileDeleted extends LibraryEvent {

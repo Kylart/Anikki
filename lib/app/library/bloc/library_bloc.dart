@@ -89,6 +89,10 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         );
       }
 
+      if (event.onUpdated != null) {
+        event.onUpdated!(path);
+      }
+
       _setupWatcher(path);
     } catch (e) {
       emit(
