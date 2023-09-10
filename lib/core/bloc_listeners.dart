@@ -7,6 +7,10 @@ import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/downloader/helpers/show_downloader.dart';
 import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
+import 'package:anikki/app/settings/bloc/settings_bloc.dart';
+import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/domain/domain.dart';
 
 class BlocListeners extends StatelessWidget {
   const BlocListeners({
@@ -20,6 +24,41 @@ class BlocListeners extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
+        BlocListener<SettingsBloc, SettingsState>(
+          listener: (context, state) {
+            final settings = state.settings;
+
+            /// Torrent listener
+            final torrentBloc = BlocProvider.of<TorrentBloc>(context);
+
+            if (torrentBloc.repository is EmptyRepository &&
+                    settings.torrentType != TorrentType.none ||
+                torrentBloc.repository is TransmissionRepository &&
+                    settings.torrentType != TorrentType.transmission ||
+                torrentBloc.repository is QBitTorrentRepository &&
+                    settings.torrentType != TorrentType.qbittorrent) {
+              torrentBloc.add(
+                TorrentSettingsUpdated(
+                  transmissionSettings:
+                      settings.torrentType == TorrentType.transmission
+                          ? settings.transmissionSettings
+                          : null,
+                  qBitTorrentSettings:
+                      settings.torrentType == TorrentType.qbittorrent
+                          ? settings.qBitTorrentSettings
+                          : null,
+                ),
+              );
+            }
+          },
+        ),
+        BlocListener<ConnectivityBloc, ConnectivityState>(
+          listener: (context, state) {
+            BlocProvider.of<AnilistAuthBloc>(context).add(
+              AnilistAuthLoginRequested(),
+            );
+          },
+        ),
         BlocListener<DownloaderBloc, DownloaderState>(
           listener: (context, state) {
             switch (state.runtimeType) {

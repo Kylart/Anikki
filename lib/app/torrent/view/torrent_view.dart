@@ -24,18 +24,6 @@ class _TorrentViewState extends State<TorrentView> {
       builder: (context, settingsState) {
         final settings = settingsState.settings;
 
-        BlocProvider.of<TorrentBloc>(context).add(
-          TorrentSettingsUpdated(
-            transmissionSettings:
-                settings.torrentType == TorrentType.transmission
-                    ? settings.transmissionSettings
-                    : null,
-            qBitTorrentSettings: settings.torrentType == TorrentType.qbittorrent
-                ? settings.qBitTorrentSettings
-                : null,
-          ),
-        );
-
         return LayoutCard(
           child: Column(
             children: [
