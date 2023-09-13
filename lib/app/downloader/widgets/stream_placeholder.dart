@@ -53,9 +53,9 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
 
         VideoPlayerRepository.playFile(
           context: context,
-          file: LocalFile(path: torrent.path),
           playlist: [torrent.path],
           torrent: torrent,
+          media: widget.media,
         );
 
         Navigator.of(context).pop();

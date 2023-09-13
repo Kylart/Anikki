@@ -47,13 +47,14 @@ class VideoPlayerRepository {
 
   static void _startFileVideo({
     required BuildContext context,
-    required LocalFile file,
+    LocalFile? file,
     List<String>? playlist,
     Media? media,
     Torrent? torrent,
   }) {
     final videoBloc = BlocProvider.of<VideoPlayerBloc>(context);
     final watchListBloc = BlocProvider.of<WatchListBloc>(context);
+    final torrentBloc = BlocProvider.of<TorrentBloc>(context);
     final scaffold = ScaffoldMessenger.of(context);
 
     videoBloc.add(
@@ -63,12 +64,12 @@ class VideoPlayerRepository {
         sources: playlist ?? [],
         onVideoComplete: (mkMedia, progress) async {
           if (torrent != null) {
-            BlocProvider.of<TorrentBloc>(context).add(
+            torrentBloc.add(
               TorrentRemoveTorrent(torrent, true),
             );
           }
 
-          if (media == null && file.media == null) return;
+          if (media == null && file?.media == null) return;
           if (progress < kVideoMinCompletedProgress) return;
 
           watchListBloc.add(
@@ -89,17 +90,23 @@ class VideoPlayerRepository {
 
   static Future<void> playFile({
     required BuildContext context,
-    required LocalFile file,
+    LocalFile? file,
     List<String>? playlist,
     Media? media,
     Torrent? torrent,
   }) async {
+    assert(
+      file != null || (playlist != null && playlist.isNotEmpty),
+      'playFile must have file or a non-empty playlist',
+    );
+
     final settings = BlocProvider.of<SettingsBloc>(context)
         .state
         .settings
         .videoPlayerSettings;
 
     if (!settings.inside) {
+      file = file ?? LocalFile(path: playlist!.first);
       BlocProvider.of<WatchListBloc>(context).add(
         WatchListWatched(
           entry: file,
@@ -117,8 +124,8 @@ class VideoPlayerRepository {
       _startFileVideo(
         context: context,
         file: file,
-        playlist:
-            libraryState is LibraryLoaded ? libraryState.playlist : playlist,
+        playlist: playlist ??
+            (libraryState is LibraryLoaded ? libraryState.playlist : []),
         media: media,
         torrent: torrent,
       );
