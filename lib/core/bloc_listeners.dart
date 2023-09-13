@@ -54,6 +54,8 @@ class BlocListeners extends StatelessWidget {
         ),
         BlocListener<ConnectivityBloc, ConnectivityState>(
           listener: (context, state) {
+            if (state is! ConnectivityOnline) return;
+
             BlocProvider.of<AnilistAuthBloc>(context).add(
               AnilistAuthLoginRequested(),
             );
