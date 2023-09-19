@@ -24,6 +24,7 @@ class Settings extends Equatable {
     this.transmissionSettings = const TransmissionSettings(),
     this.qBitTorrentSettings = const QBitTorrentSettings(),
     this.videoPlayerSettings = const VideoPlayerSettings(),
+    this.streamSettings = const StreamSettings(),
   });
 
   final String localDirectory;
@@ -35,6 +36,8 @@ class Settings extends Equatable {
   final QBitTorrentSettings qBitTorrentSettings;
   final VideoPlayerSettings videoPlayerSettings;
 
+  final StreamSettings streamSettings;
+
   Settings copyWith({
     String? localDirectory,
     UserListLayouts? userListLayouts,
@@ -43,6 +46,7 @@ class Settings extends Equatable {
     TransmissionSettings? transmissionSettings,
     QBitTorrentSettings? qBitTorrentSettings,
     VideoPlayerSettings? videoPlayerSettings,
+    StreamSettings? streamSettings,
   }) {
     return Settings(
       localDirectory: localDirectory ?? this.localDirectory,
@@ -52,6 +56,7 @@ class Settings extends Equatable {
       transmissionSettings: transmissionSettings ?? this.transmissionSettings,
       qBitTorrentSettings: qBitTorrentSettings ?? this.qBitTorrentSettings,
       videoPlayerSettings: videoPlayerSettings ?? this.videoPlayerSettings,
+      streamSettings: streamSettings ?? this.streamSettings,
     );
   }
 
@@ -68,6 +73,7 @@ class Settings extends Equatable {
       transmissionSettings,
       qBitTorrentSettings,
       videoPlayerSettings,
+      streamSettings,
     ];
   }
 
@@ -80,6 +86,7 @@ class Settings extends Equatable {
       'transmissionSettings': transmissionSettings.toMap(),
       'qBitTorrentSettings': qBitTorrentSettings.toMap(),
       'videoPlayerSettings': videoPlayerSettings.toMap(),
+      'streamSettings': streamSettings.toMap(),
     };
   }
 
@@ -98,6 +105,8 @@ class Settings extends Equatable {
           map['qBitTorrentSettings'] as Map<String, dynamic>),
       videoPlayerSettings: VideoPlayerSettings.fromMap(
           map['videoPlayerSettings'] as Map<String, dynamic>),
+      streamSettings:
+          StreamSettings.fromMap(map['streamSettings'] as Map<String, dynamic>),
     );
   }
 

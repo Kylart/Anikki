@@ -19,6 +19,7 @@ export 'home_feed_options.dart';
 export 'search_result.dart';
 
 export 'settings.dart';
+export 'stream_settings.dart';
 export 'qbittorrent_settings.dart';
 export 'transmission_settings.dart';
 export 'video_player_settings.dart';
