@@ -8,8 +8,10 @@ class SearchViewContainer extends StatelessWidget {
   const SearchViewContainer({
     super.key,
     required this.child,
+    this.isEmpty = true,
   });
 
+  final bool isEmpty;
   final Widget child;
 
   @override
@@ -18,6 +20,7 @@ class SearchViewContainer extends StatelessWidget {
       final landscape = state is LayoutLandscape;
       if (landscape) {
         return LayoutCard(
+          transparent: isEmpty,
           child: Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: SizedBox(

@@ -22,6 +22,7 @@ class _SearchViewState extends State<SearchView> {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return SearchViewContainer(
+          isEmpty: state is SearchEmptyTerm,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
