@@ -1,15 +1,15 @@
 import 'dart:io';
 
-import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
-import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/anikki_action_button.dart';
+import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/core/widgets/error_tile.dart';
+import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
@@ -93,12 +93,9 @@ class LibraryView extends StatelessWidget {
                         );
 
                       case LibraryEmpty:
-                        return Center(
-                          child: EmptyWidget(
-                            packageImage: PackageImage.Image_2,
-                            title: 'No File',
-                            subTitle: 'Could not find any video.',
-                          ),
+                        return const EmptyWidget(
+                          title: 'No File',
+                          subtitle: 'Could not find any video',
                         );
 
                       case LibraryLoaded:

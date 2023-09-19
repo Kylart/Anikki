@@ -1,12 +1,12 @@
-import 'package:anikki/app/search/widgets/search_container.dart';
-import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/core/widgets/error_tile.dart';
+import 'package:anikki/app/search/widgets/search_container.dart';
 import 'package:anikki/app/search/widgets/anikki_search_bar.dart';
 import 'package:anikki/app/search/bloc/search_bloc.dart';
 import 'package:anikki/app/search/widgets/search_results.dart';
+import 'package:anikki/core/widgets/empty_widget.dart';
+import 'package:anikki/core/widgets/error_tile.dart';
 import 'package:anikki/core/widgets/loader.dart';
 
 class SearchView extends StatefulWidget {
@@ -22,8 +22,6 @@ class _SearchViewState extends State<SearchView> {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return SearchViewContainer(
-          isEmpty:
-              state is SearchSuccess ? state.isEmpty : state is SearchEmptyTerm,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -34,18 +32,16 @@ class _SearchViewState extends State<SearchView> {
                   child: Loader(),
                 ),
               if (state is SearchSuccess)
-                Expanded(
-                  child: state.isEmpty
-                      ? SizedBox(
-                          width: 300,
-                          child: EmptyWidget(
-                            title: 'Could not find anything...',
-                          ),
-                        )
-                      : SearchResults(
+                state.isEmpty
+                    ? const EmptyWidget(
+                        title: 'Could not find anything...',
+                        width: 300,
+                      )
+                    : Expanded(
+                        child: SearchResults(
                           state: state,
                         ),
-                ),
+                      ),
               if (state is SearchError)
                 ErrorTile(
                   description: state.message,
