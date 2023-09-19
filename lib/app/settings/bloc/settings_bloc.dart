@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -12,16 +11,7 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
   SettingsBloc([Settings? settings])
       : super(
           SettingsState(
-            settings ??
-                const Settings(
-                  localDirectory: '',
-                  userListLayouts: UserListLayouts.grid,
-                  theme: ThemeMode.system,
-                  torrentType: TorrentType.none,
-                  transmissionSettings: TransmissionSettings(),
-                  qBitTorrentSettings: QBitTorrentSettings(),
-                  videoPlayerSettings: VideoPlayerSettings(),
-                ),
+            settings ?? const Settings(),
           ),
         ) {
     on<SettingsEvent>((event, emit) {
@@ -48,7 +38,9 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
   }
 
   Future<void> _onUpdated(
-      SettingsUpdated event, Emitter<SettingsState> emit) async {
+    SettingsUpdated event,
+    Emitter<SettingsState> emit,
+  ) async {
     try {
       emit(SettingsState(event.settings));
     } catch (e) {
@@ -62,8 +54,15 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
   }
 
   void _onUpdateFailed(
-      SettingsUpdateFailed event, Emitter<SettingsState> emit) {
-    emit(SettingsError(event.settings, event.message));
+    SettingsUpdateFailed event,
+    Emitter<SettingsState> emit,
+  ) {
+    emit(
+      SettingsError(
+        event.settings,
+        event.message,
+      ),
+    );
   }
 
   @override

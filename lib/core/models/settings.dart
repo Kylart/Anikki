@@ -17,13 +17,13 @@ enum UserListLayouts {
 
 class Settings extends Equatable {
   const Settings({
-    required this.localDirectory,
-    required this.userListLayouts,
-    required this.theme,
-    required this.torrentType,
-    required this.transmissionSettings,
-    required this.qBitTorrentSettings,
-    required this.videoPlayerSettings,
+    this.localDirectory = '',
+    this.userListLayouts = UserListLayouts.grid,
+    this.theme = ThemeMode.system,
+    this.torrentType = TorrentType.none,
+    this.transmissionSettings = const TransmissionSettings(),
+    this.qBitTorrentSettings = const QBitTorrentSettings(),
+    this.videoPlayerSettings = const VideoPlayerSettings(),
   });
 
   final String localDirectory;
