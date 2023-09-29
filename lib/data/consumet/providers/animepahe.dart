@@ -1,13 +1,6 @@
 import 'dart:convert';
 
-import 'package:anikki/data/consumet/models/anime/anime.dart';
-
-class AnimepaheError {
-  const AnimepaheError([this.details]);
-
-  final AnimeProviderName name = AnimeProviderName.animepahe;
-  final String? details;
-}
+import 'package:anikki/data/consumet/models/models.dart';
 
 class AnimepaheProvider extends AnimeProvider {
   AnimepaheProvider({
@@ -24,7 +17,7 @@ class AnimepaheProvider extends AnimeProvider {
 
       return AnimeInfoResponse.fromMap(decodedResponse);
     } catch (e) {
-      throw AnimepaheError(e.toString());
+      throw AnimepaheError(details: e.toString());
     }
   }
 
@@ -39,7 +32,7 @@ class AnimepaheProvider extends AnimeProvider {
 
       return results ?? [];
     } catch (e) {
-      throw AnimepaheError(e.toString());
+      throw AnimepaheError(details: e.toString());
     }
   }
 
@@ -52,7 +45,7 @@ class AnimepaheProvider extends AnimeProvider {
 
       return AnimeWatchReponse.fromMap(decodedResponse);
     } catch (e) {
-      throw AnimepaheError(e.toString());
+      throw AnimepaheError(details: e.toString());
     }
   }
 }

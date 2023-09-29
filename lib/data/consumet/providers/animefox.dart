@@ -1,13 +1,6 @@
 import 'dart:convert';
 
-import 'package:anikki/data/consumet/models/anime/anime.dart';
-
-class AnimefoxError {
-  const AnimefoxError([this.details]);
-
-  final AnimeProviderName name = AnimeProviderName.animefox;
-  final String? details;
-}
+import 'package:anikki/data/consumet/models/models.dart';
 
 class AnimefoxProvider extends AnimeProvider {
   AnimefoxProvider({
@@ -24,7 +17,7 @@ class AnimefoxProvider extends AnimeProvider {
 
       return AnimeInfoResponse.fromMap(decodedResponse);
     } catch (e) {
-      throw AnimefoxError(e.toString());
+      throw AnimefoxError(details: e.toString());
     }
   }
 
@@ -39,7 +32,7 @@ class AnimefoxProvider extends AnimeProvider {
 
       return results ?? [];
     } catch (e) {
-      throw AnimefoxError(e.toString());
+      throw AnimefoxError(details: e.toString());
     }
   }
 
@@ -53,7 +46,7 @@ class AnimefoxProvider extends AnimeProvider {
 
       return AnimeWatchReponse.fromMap(decodedResponse);
     } catch (e) {
-      throw AnimefoxError(e.toString());
+      throw AnimefoxError(details: e.toString());
     }
   }
 }

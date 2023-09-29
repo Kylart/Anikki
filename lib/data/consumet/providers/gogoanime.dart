@@ -1,13 +1,6 @@
 import 'dart:convert';
 
-import 'package:anikki/data/consumet/models/anime/anime.dart';
-
-class GogoanimeError {
-  const GogoanimeError([this.details]);
-
-  final AnimeProviderName name = AnimeProviderName.gogoanime;
-  final String? details;
-}
+import 'package:anikki/data/consumet/models/models.dart';
 
 class GogoanimeProvider extends AnimeProvider {
   GogoanimeProvider({
@@ -24,7 +17,7 @@ class GogoanimeProvider extends AnimeProvider {
 
       return AnimeInfoResponse.fromMap(decodedResponse);
     } catch (e) {
-      throw GogoanimeError(e.toString());
+      throw GogoanimeError(details: e.toString());
     }
   }
 
@@ -39,7 +32,7 @@ class GogoanimeProvider extends AnimeProvider {
 
       return results ?? [];
     } catch (e) {
-      throw GogoanimeError(e.toString());
+      throw GogoanimeError(details: e.toString());
     }
   }
 
@@ -52,7 +45,7 @@ class GogoanimeProvider extends AnimeProvider {
 
       return AnimeWatchReponse.fromMap(decodedResponse);
     } catch (e) {
-      throw GogoanimeError(e.toString());
+      throw GogoanimeError(details: e.toString());
     }
   }
 }

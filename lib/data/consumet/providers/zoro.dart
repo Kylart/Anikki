@@ -1,13 +1,6 @@
 import 'dart:convert';
 
-import 'package:anikki/data/consumet/models/anime/anime.dart';
-
-class ZoroError {
-  const ZoroError([this.details]);
-
-  final AnimeProviderName name = AnimeProviderName.zoro;
-  final String? details;
-}
+import 'package:anikki/data/consumet/models/models.dart';
 
 class ZoroProvider extends AnimeProvider {
   ZoroProvider({
@@ -24,7 +17,7 @@ class ZoroProvider extends AnimeProvider {
 
       return AnimeInfoResponse.fromMap(decodedResponse);
     } catch (e) {
-      throw ZoroError(e.toString());
+      throw ZoroError(details: e.toString());
     }
   }
 
@@ -39,7 +32,7 @@ class ZoroProvider extends AnimeProvider {
 
       return results ?? [];
     } catch (e) {
-      throw ZoroError(e.toString());
+      throw ZoroError(details: e.toString());
     }
   }
 
@@ -53,7 +46,7 @@ class ZoroProvider extends AnimeProvider {
 
       return AnimeWatchReponse.fromMap(decodedResponse);
     } catch (e) {
-      throw ZoroError(e.toString());
+      throw ZoroError(details: e.toString());
     }
   }
 }

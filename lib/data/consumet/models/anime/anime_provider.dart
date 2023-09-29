@@ -9,6 +9,7 @@ enum AnimeProviderName {
   animepahe,
   gogoanime,
   zoro,
+  unknown,
 }
 
 abstract class AnimeProvider {
