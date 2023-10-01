@@ -4,7 +4,6 @@ import 'package:anikki/data/consumet/models/models.dart';
 
 class GogoanimeProvider extends AnimeProvider {
   GogoanimeProvider({
-    required super.client,
     super.providerName = AnimeProviderName.gogoanime,
   });
 

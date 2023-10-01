@@ -4,7 +4,6 @@ import 'package:anikki/data/consumet/models/models.dart';
 
 class AnimefoxProvider extends AnimeProvider {
   AnimefoxProvider({
-    required super.client,
     super.providerName = AnimeProviderName.animefox,
   });
 

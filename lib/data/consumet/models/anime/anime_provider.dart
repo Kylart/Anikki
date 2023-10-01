@@ -13,12 +13,11 @@ enum AnimeProviderName {
 }
 
 abstract class AnimeProvider {
-  const AnimeProvider({
-    required this.client,
+  AnimeProvider({
     required this.providerName,
   });
 
-  final Client client;
+  final Client client = Client();
   final AnimeProviderName providerName;
 
   String get baseUrl => 'https://api.consumet.org/anime/${providerName.name}';

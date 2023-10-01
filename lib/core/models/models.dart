@@ -2,6 +2,8 @@ import 'package:anikki/data/data.dart';
 
 export 'anikki_action.dart';
 
+export 'consumet_episode.dart';
+
 export 'user_list_enum.dart';
 
 export 'media.dart';
