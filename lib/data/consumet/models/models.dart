@@ -6,6 +6,7 @@ part 'anime_episode.dart';
 part 'anime_result.dart';
 part 'anime_source.dart';
 part 'extractor.dart';
+part 'anime_provider.dart';
 part 'video_source.dart';
 
 enum StreamingServers {

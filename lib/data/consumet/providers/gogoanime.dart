@@ -6,7 +6,7 @@ import '../models/models.dart';
 import '../utils/utils.dart';
 
 /// Adapted from `https://github.com/consumet/consumet.ts/blob/master/src/providers/anime/gogoanime.ts`
-class Gogoanime {
+class Gogoanime implements AnimeProvider {
   final baseUrl = 'https://gogoanimehd.io';
   final logo =
       'https://play-lh.googleusercontent.com/MaGEiAEhNHAJXcXKzqTNgxqRmhuKB1rCUgb15UrN_mWUNRnLpO5T1qja64oRasO7mn0';
@@ -14,6 +14,7 @@ class Gogoanime {
 
   final client = Client();
 
+  @override
   Future<List<AnimeResult>> search(String query) async {
     final List<AnimeResult> results = [];
 
@@ -50,6 +51,7 @@ class Gogoanime {
     return results;
   }
 
+  @override
   Future<List<AnimeEpisode>> fetchAnimeEpisodes(String id) async {
     if (!id.contains('gogoanime')) id = '$baseUrl/category/$id';
 
@@ -104,6 +106,7 @@ class Gogoanime {
     return episodes;
   }
 
+  @override
   Future<AnimeSource> fetchEpisodeSources(
     String episodeId, {
     StreamingServers server = StreamingServers.vidstreaming,

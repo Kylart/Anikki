@@ -2,17 +2,13 @@ import 'package:collection/collection.dart';
 import 'package:media_kit/media_kit.dart' as mk;
 
 import 'package:anikki/core/core.dart';
-import 'package:anikki/data/consumet/models/anime/anime_watch_reponse/source.dart';
 import 'package:anikki/data/data.dart';
 
 class ConsumetRepository {
   ConsumetRepository({List<AnimeProvider>? providers}) {
     this.providers = providers ??
         [
-          GogoanimeProvider(),
-          AnimefoxProvider(),
-          AnimepaheProvider(),
-          ZoroProvider(),
+          Gogoanime(),
         ];
   }
 
@@ -20,7 +16,7 @@ class ConsumetRepository {
   late final List<AnimeProvider> providers;
 
   /// Finds the best link in term of resolution or returns the first one.
-  Source? _getBestLink(List<Source> sources) {
+  VideoSource? _getBestLink(List<VideoSource> sources) {
     return sources.firstWhereOrNull((source) => source.quality == '1080p') ??
         sources.firstWhereOrNull((source) => source.quality == 'default') ??
         sources.firstWhereOrNull((source) => source.quality == '720p') ??
@@ -47,25 +43,24 @@ class ConsumetRepository {
 
     if (search.isEmpty || search.firstOrNull?.id == null) return results;
 
-    final info = await provider.info(search.first.id!);
-    final episodes = info.episodes
-            ?.where((ep) => ep.id != null && (ep.number ?? -1) >= minEpisode) ??
-        [];
+    final info = await provider.fetchAnimeEpisodes(search.first.id!);
+    final episodes =
+        info.where((ep) => ep.id != null && (ep.number ?? -1) >= minEpisode);
 
     for (final episode in episodes) {
-      final links = await provider.watch(episode.id!);
+      final links = await provider.fetchEpisodeSources(episode.id!);
+      final link = _getBestLink(links.sources);
 
-      if (links.sources == null) continue;
-
-      final link = _getBestLink(links.sources!);
-
-      if (link == null || link.url == null) continue;
+      if (link == null) continue;
 
       results.add(
         ConsumetEpisode(
           media: mk.Media(
-            link.url!,
-            httpHeaders: links.headers?.toMap() as Map<String, String>,
+            link.url,
+            httpHeaders: links.headers as Map<String, String>,
+            extras: {
+              'episodeNumber': episode.number,
+            },
           ),
           number: episode.number!.toInt(),
         ),
@@ -93,8 +88,8 @@ class ConsumetRepository {
         );
 
         if (results.isNotEmpty) break;
-      } on AnimeConsumetError catch (e) {
-        logger.e('Could not get links for $term', error: e);
+      } on NoEpisodeSourceException {
+        logger.e('Could not get links for $term');
       }
     }
 
