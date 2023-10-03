@@ -72,6 +72,7 @@ dependencies:
       url: https://github.com/Kylart/marqueer
       ref: main
   ionicons: ^0.2.2
+  encrypt: ^5.0.3
 
 dev_dependencies:
   flutter_test:
