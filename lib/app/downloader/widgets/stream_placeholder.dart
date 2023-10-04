@@ -24,42 +24,44 @@ class StreamPlaceholder extends StatefulWidget {
 }
 
 class _StreamPlaceholderState extends State<StreamPlaceholder> {
+  void onTorrentBlocChange(BuildContext context, TorrentState state) {
+    final torrentBloc = BlocProvider.of<TorrentBloc>(context);
+
+    if (state is! TorrentLoaded) return;
+
+    final hash = Uri.parse(widget.magnet).queryParameters['xt'];
+    final torrent = state.torrents.firstWhereOrNull(
+      (element) => Uri.parse(element.magnet).queryParameters['xt'] == hash,
+    );
+
+    if (torrent == null) return;
+
+    final file = File(torrent.path);
+
+    if (!file.existsSync()) return;
+
+    final minProgress = torrentBloc.isTransmission
+        ? 0.1
+        : torrentBloc.isQBitTorrent
+            ? 0.03
+            : 1;
+
+    if (torrent.progress < minProgress) return;
+
+    VideoPlayerRepository.playFile(
+      context: context,
+      playlist: [torrent.path],
+      torrent: torrent,
+      media: widget.media,
+    );
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<TorrentBloc, TorrentState>(
-      listener: (context, state) {
-        final torrentBloc = BlocProvider.of<TorrentBloc>(context);
-
-        if (state is! TorrentLoaded) return;
-
-        final hash = Uri.parse(widget.magnet).queryParameters['xt'];
-        final torrent = state.torrents.firstWhereOrNull(
-          (element) => Uri.parse(element.magnet).queryParameters['xt'] == hash,
-        );
-
-        if (torrent == null) return;
-
-        final file = File(torrent.path);
-
-        if (!file.existsSync()) return;
-
-        final minProgress = torrentBloc.isTransmission
-            ? 0.1
-            : torrentBloc.isQBitTorrent
-                ? 0.03
-                : 1;
-
-        if (torrent.progress < minProgress) return;
-
-        VideoPlayerRepository.playFile(
-          context: context,
-          playlist: [torrent.path],
-          torrent: torrent,
-          media: widget.media,
-        );
-
-        Navigator.of(context).pop();
-      },
+      listener: onTorrentBlocChange,
       child: LayoutCard(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -22,7 +22,7 @@ class VideoPlayerPlayRequested extends VideoPlayerEvent {
   final LocalFile? first;
 
   /// Array of URLs.
-  final List<String> sources;
+  final List<mk.Media> sources;
 
   final void Function(mk.Media media, double progress) onVideoComplete;
 

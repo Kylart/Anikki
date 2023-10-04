@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:media_kit/media_kit.dart';
+
 import 'package:anikki/core/external_media_provider/external_media_provider.dart';
 import 'package:anikki/core/external_media_provider/utils.dart';
 import 'package:anikki/app/video_player/view/video_player_view.dart';
-import 'package:flutter/material.dart';
 
 class MediaDialogVideoPlayer extends StatefulWidget {
   const MediaDialogVideoPlayer({
@@ -34,7 +36,7 @@ class _MediaDialogVideoPlayerState extends State<MediaDialogVideoPlayer> {
     final media = ExternalMedia.redirect(uri);
 
     return VideoPlayerView(
-      sources: [media.toString()],
+      sources: [Media(media.toString())],
       onVideoComplete: (_, __) {},
       forceSmallControls: true,
     );

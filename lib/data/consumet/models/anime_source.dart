@@ -7,7 +7,7 @@ class AnimeSource extends Equatable {
     required this.download,
   });
 
-  final Map<String, dynamic> headers;
+  final Map<String, String> headers;
   final List<VideoSource> sources;
   final String download;
 

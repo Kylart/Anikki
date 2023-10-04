@@ -15,6 +15,7 @@ import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/app/home_feed/bloc/home_feed_bloc.dart';
 import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
 import 'package:anikki/app/search/bloc/search_bloc.dart';
+import 'package:anikki/app/stream_handler/bloc/stream_handler_bloc.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 
@@ -36,6 +37,7 @@ class AnikkiBlocProvider extends StatelessWidget {
     final userRepository = UserRepository(anilist);
     const videoPlayerRepository = VideoPlayerRepository();
     final feedRepository = FeedRepository(anilist);
+    final consumetRepository = ConsumetRepository();
 
     return MultiBlocProvider(
       providers: [
@@ -54,6 +56,9 @@ class AnikkiBlocProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DownloaderBloc(torrentSearchRepository),
+        ),
+        BlocProvider(
+          create: (context) => StreamHandlerBloc(consumetRepository),
         ),
         BlocProvider(
           create: (context) => VideoPlayerBloc(videoPlayerRepository),

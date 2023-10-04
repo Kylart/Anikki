@@ -4,7 +4,7 @@ abstract class WatchListEvent extends Equatable {
   const WatchListEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class WatchListRequested extends WatchListEvent {
@@ -39,17 +39,27 @@ class WatchListAuthUpdated extends WatchListEvent {
 }
 
 class WatchListWatched extends WatchListEvent {
-  const WatchListWatched({
-    required this.entry,
+  WatchListWatched({
+    this.entry,
+    this.media,
+    this.episode,
     this.scaffold,
-  });
+  }) {
+    if (entry == null) {
+      assert(media != null && episode != null);
+    }
+  }
 
-  final LocalFile entry;
+  final LocalFile? entry;
+  final Media? media;
+  final int? episode;
   final ScaffoldMessengerState? scaffold;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         entry,
-        if (scaffold != null) scaffold!,
+        scaffold,
+        media,
+        episode,
       ];
 }

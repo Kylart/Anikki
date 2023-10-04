@@ -4,7 +4,7 @@ abstract class DownloaderEvent extends Equatable {
   const DownloaderEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class DownloaderClosed extends DownloaderEvent {
@@ -27,11 +27,11 @@ class DownloaderRequested extends DownloaderEvent {
   final bool isStreaming;
 
   @override
-  List<Object> get props => [
-        if (media != null) media!,
-        if (entry != null) entry!,
-        if (episode != null) episode!,
-        if (title != null) title!,
+  List<Object?> get props => [
+        media,
+        entry,
+        episode,
+        title,
         isStreaming,
       ];
 }
@@ -42,7 +42,7 @@ class DownloaderFiltered extends DownloaderEvent {
   final DownloaderFilter filter;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         filter,
       ];
 }

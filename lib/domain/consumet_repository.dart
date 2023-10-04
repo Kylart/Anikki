@@ -36,6 +36,7 @@ class ConsumetRepository {
     required AnimeProvider provider,
     required String term,
     required int minEpisode,
+    int maxLength = 100,
   }) async {
     final List<ConsumetEpisode> results = [];
 
@@ -48,6 +49,8 @@ class ConsumetRepository {
         info.where((ep) => ep.id != null && (ep.number ?? -1) >= minEpisode);
 
     for (final episode in episodes) {
+      if (results.length == maxLength) break;
+
       final links = await provider.fetchEpisodeSources(episode.id!);
       final link = _getBestLink(links.sources);
 
@@ -57,7 +60,7 @@ class ConsumetRepository {
         ConsumetEpisode(
           media: mk.Media(
             link.url,
-            httpHeaders: links.headers as Map<String, String>,
+            httpHeaders: links.headers,
             extras: {
               'episodeNumber': episode.number,
             },
@@ -76,6 +79,7 @@ class ConsumetRepository {
   Future<List<ConsumetEpisode>> getEpisodeLinks(
     String term, {
     int minEpisode = 0,
+    int maxLength = 100,
   }) async {
     List<ConsumetEpisode> results = [];
 
@@ -85,6 +89,7 @@ class ConsumetRepository {
           provider: provider,
           term: term,
           minEpisode: minEpisode,
+          maxLength: maxLength,
         );
 
         if (results.isNotEmpty) break;

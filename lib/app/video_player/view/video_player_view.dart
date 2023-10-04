@@ -1,4 +1,3 @@
-import 'package:anikki/core/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
@@ -22,7 +21,7 @@ class VideoPlayerView extends StatefulWidget {
   final core.LocalFile? first;
 
   /// Array of URLs.
-  final List<String> sources;
+  final List<Media> sources;
 
   final void Function(Media media, double progress) onVideoComplete;
 
@@ -40,12 +39,12 @@ class _VideoPlayerViewState extends State<VideoPlayerView>
     ),
   );
 
-  int? get firstIndex =>
-      widget.first == null ? null : widget.sources.indexOf(widget.first!.path);
+  int? get firstIndex => widget.first == null
+      ? null
+      : widget.sources.indexWhere((source) => source.uri == widget.first!.path);
 
   /// Actual playlist that the player will play
-  Playlist get playlist =>
-      Playlist(widget.sources.map((e) => Media(e)).toList());
+  Playlist get playlist => Playlist(widget.sources);
 
   @override
   void dispose() {
@@ -63,7 +62,7 @@ class _VideoPlayerViewState extends State<VideoPlayerView>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (isDesktop()) return;
+    if (core.isDesktop()) return;
 
     if (AppLifecycleState.resumed == state) {
       player.play();

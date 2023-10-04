@@ -8,6 +8,8 @@ import 'package:anikki/app/downloader/helpers/show_downloader.dart';
 import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
+import 'package:anikki/app/stream_handler/stream_handler.dart';
+import 'package:anikki/app/stream_handler/bloc/stream_handler_bloc.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/domain/domain.dart';
@@ -62,7 +64,7 @@ class BlocListeners extends StatelessWidget {
           },
         ),
         BlocListener<DownloaderBloc, DownloaderState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             switch (state.runtimeType) {
               case DownloaderShow:
                 if (!(state as DownloaderShow).alreadyShow) {
@@ -73,6 +75,25 @@ class BlocListeners extends StatelessWidget {
               default:
                 return;
             }
+          },
+        ),
+        BlocListener<StreamHandlerBloc, StreamHandlerState>(
+          listener: (context, state) async {
+            if (state is! StreamHandlerShowed) return;
+
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return Dialog(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  surfaceTintColor: Colors.transparent,
+                  child: StreamHandlerView(
+                    state: state,
+                  ),
+                );
+              },
+            );
           },
         ),
         BlocListener<AnilistAuthBloc, AnilistAuthState>(

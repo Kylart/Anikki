@@ -93,53 +93,51 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
     if (!state.connected) return;
 
     final entry = event.entry;
+    final media = event.media ?? entry!.media!;
+    final episode = event.episode ?? entry?.episode ?? 1;
 
-    if (entry.media?.anilistInfo.id != null) {
-      final episode = entry.episode ?? 1;
+    if (entry?.media?.anilistInfo.id == null && event.media == null) return;
 
-      try {
-        await repository.watchedEntry(
-          episode: episode,
-          media: entry.media!,
-        );
+    try {
+      await repository.watchedEntry(
+        episode: episode,
+        media: media,
+      );
 
-        event.scaffold?.showSnackBar(
-          SnackBar(
-            content: ListTile(
-              title: const Text('Anilist list updated!'),
-              subtitle:
-                  Text('Updated ${entry.media?.title} with episode $episode.'),
+      event.scaffold?.showSnackBar(
+        SnackBar(
+          content: ListTile(
+            title: const Text('Anilist list updated!'),
+            subtitle: Text('Updated ${media.title} with episode $episode.'),
+          ),
+        ),
+      );
+
+      add(
+        WatchListRequested(
+          username: state.username!,
+        ),
+      );
+    } on AnilistUpdateListException catch (e) {
+      event.scaffold?.showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent,
+          content: ListTile(
+            title: Text(e.cause),
+            subtitle: Column(
+              children: [
+                const Text('Anikki will retry periodically until it succeeds.'),
+                Text('Error was ${e.error}.'),
+              ],
             ),
           ),
-        );
+        ),
+      );
 
-        add(
-          WatchListRequested(
-            username: state.username!,
-          ),
-        );
-      } on AnilistUpdateListException catch (e) {
-        event.scaffold?.showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.redAccent,
-            content: ListTile(
-              title: Text(e.cause),
-              subtitle: Column(
-                children: [
-                  const Text(
-                      'Anikki will retry periodically until it succeeds.'),
-                  Text('Error was ${e.error}.'),
-                ],
-              ),
-            ),
-          ),
-        );
-
-        Timer(
-          const Duration(minutes: 5),
-          () => add(event),
-        );
-      }
+      Timer(
+        const Duration(minutes: 5),
+        () => add(event),
+      );
     }
   }
 }

@@ -2,15 +2,16 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:media_kit/media_kit.dart' as mk;
 import 'package:open_app_file/open_app_file.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
-import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
+import 'package:anikki/app/stream_handler/bloc/stream_handler_bloc.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/core/core.dart';
 
@@ -45,6 +46,38 @@ class VideoPlayerRepository {
     }
   }
 
+  static void startOnlinePlay({
+    required BuildContext context,
+    required List<mk.Media> playlist,
+    required Media media,
+  }) {
+    final videoBloc = BlocProvider.of<VideoPlayerBloc>(context);
+    final watchListBloc = BlocProvider.of<WatchListBloc>(context);
+    final scaffold = ScaffoldMessenger.of(context);
+
+    videoBloc.add(
+      VideoPlayerPlayRequested(
+        context: context,
+        sources: playlist,
+        onVideoComplete: (mkMedia, progress) {
+          if (progress < kVideoMinCompletedProgress) return;
+
+          final episode = mkMedia.extras?['episodeNumber'] as int?;
+
+          if (episode == null) return;
+
+          watchListBloc.add(
+            WatchListWatched(
+              media: media,
+              episode: episode,
+              scaffold: scaffold,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   static void _startFileVideo({
     required BuildContext context,
     LocalFile? file,
@@ -61,7 +94,7 @@ class VideoPlayerRepository {
       VideoPlayerPlayRequested(
         context: context,
         first: file,
-        sources: playlist ?? [],
+        sources: playlist?.map((e) => mk.Media(e)).toList() ?? [],
         onVideoComplete: (mkMedia, progress) async {
           if (torrent != null) {
             torrentBloc.add(
@@ -193,13 +226,18 @@ class VideoPlayerRepository {
     }
 
     /// Could not find any file on disk for this entry.
-    /// Opening stream window
-    BlocProvider.of<DownloaderBloc>(context).add(
-      DownloaderRequested(
-        media: media,
-        episode: progress != null ? progress + 1 : null,
+    /// Requesting stream
+    BlocProvider.of<StreamHandlerBloc>(context).add(
+      StreamHandlerShowRequested(
+        media: media ??
+            Fragment$shortMedia(
+              id: 0,
+              title: Fragment$shortMedia$title(
+                userPreferred: entry?.entries.first.title,
+              ),
+            ),
+        minEpisode: progress != null ? progress + 1 : null,
         entry: entry,
-        isStreaming: true,
       ),
     );
   }
