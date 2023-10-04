@@ -12,6 +12,7 @@
 ## Features
 
 * Netflix-like "Continue watching" for everything you are watching
+* Stream (almost) any anime using torrent or hosted videos
 * Automatic anime watch list tracking. No need to know which episode was the last one you saw anymore.
 * Browse local anime files with Anilist information
 * Check what animes are coming out in the next few days (Yes, Korean and Hentais are included if you want to)
@@ -21,7 +22,7 @@
 * Search for any torrent on [nyaa.si](https://nyaa.si)
 * Search for any anime, staff or character information
 * Remote torrent client connection for [Transmission](https://transmissionbt.com) and [QBitTorrent](https://www.qbittorrent.org) (Only on landscape mode for now)
-  * QBitTorrent is recommended for a smoother experience.
+  * QBitTorrent is recommended for a smoother streaming experience.
 * More to come?
 
 ## Building
