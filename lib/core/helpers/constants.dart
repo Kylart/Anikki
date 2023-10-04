@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kVideoMinCompletedProgress = 0.5;
+const kVideoMinCompletedProgress = 0.75;
 
 const userListGridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(
   maxCrossAxisExtent: 220,
