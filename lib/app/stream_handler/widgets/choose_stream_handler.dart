@@ -33,6 +33,13 @@ class ChooseStreamHandler extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const ListTile(
+              title: Text(
+                'Choose streaming method',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const Divider(),
             ListTile(
               title: const Text(
                 'Torrent',
@@ -66,6 +73,7 @@ class ChooseStreamHandler extends StatelessWidget {
                 );
               },
             ),
+            const Divider(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
