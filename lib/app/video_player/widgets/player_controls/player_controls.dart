@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
@@ -30,6 +31,7 @@ part 'player_controls_audios.dart';
 part 'player_controls_shortcuts.dart';
 part 'player_controls_volume_bar.dart';
 part 'player_controls_brightness_bar.dart';
+part 'player_controls_title.dart';
 part 'intents.dart';
 part 'actions.dart';
 
@@ -50,6 +52,7 @@ class PlayerControls extends StatelessWidget {
         child: PlayerControlsBackground(
           child: Column(
             children: [
+              PlayerControlsTitle(player: player),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: PlayerControlsProgress(player: player),

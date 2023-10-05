@@ -63,6 +63,7 @@ class ConsumetRepository {
             httpHeaders: links.headers,
             extras: {
               'episodeNumber': episode.number,
+              'title': '$term - Episode ${episode.number}'
             },
           ),
           number: episode.number!.toInt(),

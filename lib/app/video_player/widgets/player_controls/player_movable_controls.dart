@@ -14,7 +14,7 @@ class PlayerMovableControls extends StatefulWidget {
 
 class _PlayerMovableControlsState extends State<PlayerMovableControls> {
   double width = 700;
-  double height = 90;
+  double height = 120;
 
   double x = 0;
   double y = 0;
@@ -71,12 +71,16 @@ class _PlayerMovableControlsState extends State<PlayerMovableControls> {
                 ),
                 height: height,
                 width: width,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0,
-                    vertical: 4.0,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 24.0,
+                      right: 24.0,
+                      bottom: 4.0,
+                      top: 8.0,
+                    ),
+                    child: widget.child,
                   ),
-                  child: widget.child,
                 ),
               ),
             ),

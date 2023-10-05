@@ -81,6 +81,8 @@ class VideoPlayerRepository {
   static void _startFileVideo({
     required BuildContext context,
     LocalFile? file,
+
+    /// TODO: Update this to use a list of [mk.Media]s
     List<String>? playlist,
     Media? media,
     Torrent? torrent,
@@ -94,7 +96,20 @@ class VideoPlayerRepository {
       VideoPlayerPlayRequested(
         context: context,
         first: file,
-        sources: playlist?.map((e) => mk.Media(e)).toList() ?? [],
+        sources: playlist?.map((e) {
+              final file = LocalFile(path: e);
+
+              return mk.Media(
+                e,
+                extras: {
+                  'title': [
+                    media?.title ?? file.title ?? e,
+                    if (file.episode != null) 'Episode ${file.episode!}'
+                  ].join(' - '),
+                },
+              );
+            }).toList() ??
+            [],
         onVideoComplete: (mkMedia, progress) async {
           if (torrent != null) {
             torrentBloc.add(
