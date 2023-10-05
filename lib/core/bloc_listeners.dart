@@ -81,6 +81,9 @@ class BlocListeners extends StatelessWidget {
           listener: (context, state) async {
             if (state is! StreamHandlerShowed) return;
 
+            final streamHandlerBloc =
+                BlocProvider.of<StreamHandlerBloc>(context);
+
             await showDialog(
               context: context,
               builder: (context) {
@@ -93,6 +96,13 @@ class BlocListeners extends StatelessWidget {
                   ),
                 );
               },
+            );
+
+            streamHandlerBloc.add(
+              StreamHandlerCloseRequested(
+                media: state.media,
+                minEpisode: state.minEpisode,
+              ),
             );
           },
         ),
