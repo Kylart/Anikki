@@ -1,0 +1,20 @@
+display_name: Anikki
+package_name: com.kylart.anikki
+maintainer:
+  name: Kylart
+  email: kylart.dev@gmail.com
+co_authors:
+  - name: Kylart
+    email: kylart.dev@gmail.com
+priority: optional
+essential: false
+# icon: jinrui.png
+
+keywords:
+  - Anime
+  - Companion
+
+generic_name: Anime Application
+
+categories:
+  - Media

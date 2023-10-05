@@ -1,0 +1,283 @@
+name: Github Actions
+on: [push, pull_request]
+
+jobs:
+  windows-tests:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: "Config"
+        run: flutter config --enable-windows-desktop
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Debug build"
+        run: flutter build windows --debug
+
+      - name: "Test"
+        run: flutter test
+
+  windows-build:
+    needs: windows-tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: "Config"
+        run: flutter config --enable-windows-desktop
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Setup build tools"
+        run: dart pub global activate flutter_distributor
+  
+      - name: "Release build"
+        run: flutter_distributor package --platform windows --targets exe
+  
+      - name: "Setup build"
+        run: dart bin/build_windows.dart
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Windows
+          path: dist
+          retention-days: 5
+
+  linux-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Install Ninja
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev mpv libmpv-dev
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Config"
+        run: flutter config --enable-linux-desktop
+
+      - name: "Debug build"
+        run: flutter build linux --debug
+
+      - name: "Test"
+        run: flutter test
+
+  # linux-build:
+  #   needs: linux-tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         submodules: "true"
+
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: "stable"
+  #         cache: true
+
+  #     - name: "Config"
+  #       run: flutter config --enable-linux-desktop
+
+  #     - name: Install Dependencies
+  #       run: |
+  #         sudo apt-get update -y
+  #         sudo apt-get install -y ninja-build libgtk-3-dev mpv libmpv-dev locate
+  #         wget -O appimagetool "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+  #         chmod +x appimagetool
+
+  #     - name: Env setup
+  #       run: |
+  #         touch .env
+  #         echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+  #         cat .env
+
+  #     - name: "Setup build tools"
+  #       run: dart pub global activate flutter_distributor
+  
+  #     - name: "Release build - AppImage"
+  #       run: flutter_distributor package --platform linux --targets appimage
+
+  #     - name: "Release build - deb"
+  #       run: flutter_distributor package --platform linux --targets deb
+
+  #     - name: 'Upload Artifact'
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Linux
+  #         path: dist
+  #         retention-days: 5
+
+  linux-android-build:
+    needs: linux-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Install Ninja
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev mpv libmpv-dev
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Setup build tools"
+        run: dart pub global activate flutter_distributor
+    
+      - name: "Release build - apk"
+        run: flutter_distributor package --platform android --targets apk
+
+      - name: "Release build - aab"
+        run: flutter_distributor package --platform android --targets aab
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Android
+          path: dist
+          retention-days: 5
+
+  macos-tests:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Config"
+        run: flutter config --enable-macos-desktop
+
+      - name: "Debug build"
+        run: flutter build macos --debug
+
+      - name: "Test"
+        run: flutter test
+
+  macos-build:
+    needs: macos-tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Config"
+        run: flutter config --enable-macos-desktop
+
+      - name: "Setup build tools"
+        run: |
+          dart pub global activate flutter_distributor
+          npm install -g appdmg
+
+      - name: "Release build"
+        run: flutter_distributor package --platform macos --targets dmg
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Macos
+          path: dist
+          retention-days: 5
+
+  ios-build:
+    needs: macos-tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
+
+      - name: "Release build"
+        run: flutter build ios --release --no-codesign
+
+      - run: 7z a anikki_ios_arm64.7z build/ios/iphoneos/Runner.app
+      - uses: actions/upload-artifact@v3
+        with:
+          name: iOS
+          path: anikki_ios_arm64.7z
+          retention-days: 5

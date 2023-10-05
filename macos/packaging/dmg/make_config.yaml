@@ -1,0 +1,11 @@
+title: Anikki
+background: "background.jpg"
+contents:
+  - x: 508
+    y: 150
+    type: link
+    path: "/Applications"
+  - x: 192
+    y: 150
+    type: file
+    path: Anikki.app

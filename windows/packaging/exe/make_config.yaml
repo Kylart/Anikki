@@ -1,0 +1,10 @@
+# The value of AppId uniquely identifies this application.
+# Do not use the same AppId value in installers for other applications.
+app_id: f1d0e1a9-0df2-4727-b78a-dfe96010b205
+publisher: Kylart
+publisher_url: https://github.com/Kylart/anikki
+display_name: Anikki
+create_desktop_icon: true
+install_dir_name: Anikki
+locales:
+  - en

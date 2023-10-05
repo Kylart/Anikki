@@ -52,3 +52,4 @@ test/resources/others/*
 !test/resources/others/.gitkeep
 
 node_modules
+dist
