@@ -66,13 +66,15 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
     try {
       final term = Media(anilistInfo: event.media).title;
 
-      if (term == null) throw Exception('No name could be found.');
+      if (term == null) throw 'No name could be found.';
 
       final sources = await repository.getEpisodeLinks(
         term,
         minEpisode: event.minEpisode ?? 0,
         maxLength: 10,
       );
+
+      if (sources.isEmpty) throw 'Could not find any hosted video.';
 
       emit(
         StreamHandlerSuccess(
