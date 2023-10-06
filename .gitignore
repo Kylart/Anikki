@@ -53,3 +53,6 @@ test/resources/others/*
 
 node_modules
 dist
+
+# Detective @https://detective.dev
+detective_connect.txt

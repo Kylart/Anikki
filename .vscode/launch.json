@@ -7,7 +7,10 @@
     {
       "name": "anikki",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": [
+        "--vmservice-out-file=detective_connect.txt",
+      ]
     },
     {
       "name": "anikki (profile mode)",
