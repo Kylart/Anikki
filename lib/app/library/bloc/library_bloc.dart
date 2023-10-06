@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/domain/domain.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:media_kit/media_kit.dart' as mk;
 import 'package:path/path.dart';
 import 'package:watcher/watcher.dart';
+
+import 'package:anikki/core/core.dart';
+import 'package:anikki/domain/domain.dart';
 
 part 'library_event.dart';
 part 'library_state.dart';
@@ -160,8 +162,8 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   Future<void> _onFilePlayRequested(
       LibraryFilePlayRequested event, Emitter<LibraryState> emit) async {
     await VideoPlayerRepository.playFile(
-      file: event.file,
       context: event.context,
+      file: event.file,
     );
   }
 }

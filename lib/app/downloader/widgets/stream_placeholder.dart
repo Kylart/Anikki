@@ -50,7 +50,14 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
 
     VideoPlayerRepository.playFile(
       context: context,
-      playlist: [torrent.path],
+      playlist: [
+        convertToMkMedia(
+          LocalFile(
+            path: torrent.path,
+            media: widget.media,
+          ),
+        ),
+      ],
       torrent: torrent,
       media: widget.media,
     );

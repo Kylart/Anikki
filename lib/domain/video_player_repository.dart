@@ -80,10 +80,8 @@ class VideoPlayerRepository {
 
   static void _startFileVideo({
     required BuildContext context,
+    required List<mk.Media> playlist,
     LocalFile? file,
-
-    /// TODO: Update this to use a list of [mk.Media]s
-    List<String>? playlist,
     Media? media,
     Torrent? torrent,
   }) {
@@ -96,20 +94,7 @@ class VideoPlayerRepository {
       VideoPlayerPlayRequested(
         context: context,
         first: file,
-        sources: playlist?.map((e) {
-              final file = LocalFile(path: e);
-
-              return mk.Media(
-                e,
-                extras: {
-                  'title': [
-                    media?.title ?? file.title ?? e,
-                    if (file.episode != null) 'Episode ${file.episode!}'
-                  ].join(' - '),
-                },
-              );
-            }).toList() ??
-            [],
+        sources: playlist,
         onVideoComplete: (mkMedia, progress) async {
           if (torrent != null) {
             torrentBloc.add(
@@ -138,42 +123,44 @@ class VideoPlayerRepository {
 
   static Future<void> playFile({
     required BuildContext context,
+    List<mk.Media> playlist = const [],
     LocalFile? file,
-    List<String>? playlist,
     Media? media,
     Torrent? torrent,
   }) async {
-    assert(
-      file != null || (playlist != null && playlist.isNotEmpty),
-      'playFile must have file or a non-empty playlist',
-    );
-
     final settings = BlocProvider.of<SettingsBloc>(context)
         .state
         .settings
         .videoPlayerSettings;
 
     if (!settings.inside) {
-      file = file ?? LocalFile(path: playlist!.first);
-      BlocProvider.of<WatchListBloc>(context).add(
-        WatchListWatched(
-          entry: file,
-          scaffold: ScaffoldMessenger.of(context),
-        ),
-      );
+      final path = file?.path ?? playlist.first.uri;
+
+      if (file != null) {
+        BlocProvider.of<WatchListBloc>(context).add(
+          WatchListWatched(
+            entry: file,
+            scaffold: ScaffoldMessenger.of(context),
+          ),
+        );
+      }
 
       /// We need to escape the brackets because they are not escaped properly
       /// by OpenAppFile.;
       await OpenAppFile.open(
-          file.file.path.replaceAll('(', '\\(').replaceAll(')', '\\)'));
+        path.replaceAll('(', '\\(').replaceAll(')', '\\)'),
+      );
     } else {
-      final libraryState = BlocProvider.of<LibraryBloc>(context).state;
+      if (playlist.isEmpty) {
+        playlist =
+            (BlocProvider.of<LibraryBloc>(context).state as LibraryLoaded)
+                .playlist;
+      }
 
       _startFileVideo(
         context: context,
         file: file,
-        playlist: playlist ??
-            (libraryState is LibraryLoaded ? libraryState.playlist : []),
+        playlist: playlist,
         media: media,
         torrent: torrent,
       );
@@ -202,17 +189,8 @@ class VideoPlayerRepository {
     }
 
     final playlist = library is LibraryLoaded
-        ? library.entries.fold<List<String>>(
-            [],
-            (previousValue, element) => [
-              ...previousValue,
-
-              /// Taking `reversed` because the entries of a `LibraryEntry` are sorted descendingly
-              /// and we want the next eposide to be the (N + 1)th.
-              ...element.entries.reversed.map((e) => e.path),
-            ],
-          )
-        : entry?.entries.reversed.map((e) => e.path);
+        ? library.playlist
+        : entry?.entries.reversed.map(convertToMkMedia).toList();
 
     final watchListEntry = watchList is WatchListComplete
         ? watchList.current
@@ -234,7 +212,7 @@ class VideoPlayerRepository {
       playFile(
         file: file,
         context: context,
-        playlist: playlist?.toList(),
+        playlist: playlist ?? [convertToMkMedia(file)],
         media: Media(anilistInfo: media),
       );
       return;

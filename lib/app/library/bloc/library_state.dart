@@ -26,14 +26,14 @@ class LibraryLoaded extends LibraryState {
 
   final List<LibraryEntry> entries;
 
-  List<String> get playlist => entries.fold<List<String>>(
+  List<mk.Media> get playlist => entries.fold<List<mk.Media>>(
         [],
         (previousValue, element) => [
           ...previousValue,
 
           /// Taking `reversed` becasue the entries of a `LibraryEntry` are sorted descendingly
           /// and we want the next eposide to be the (N + 1)th.
-          ...element.entries.reversed.map((e) => e.path),
+          ...element.entries.reversed.map(convertToMkMedia),
         ],
       );
 
