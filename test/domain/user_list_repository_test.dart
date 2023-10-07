@@ -19,7 +19,7 @@ void main() {
 
     final watchList = WatchListComplete(
       username: username,
-      watchList: watchListMapMock,
+      watchList: watchListClassMock,
     );
 
     group('watchedEntry method', () {
@@ -87,7 +87,7 @@ void main() {
           anilist = MockAnilist();
           when(
             () => anilist.getWatchLists(username, useCache: false),
-          ).thenAnswer((_) async => watchListMapMock);
+          ).thenAnswer((_) async => watchListClassMock);
 
           repository = UserListRepository(anilist);
         });
@@ -95,7 +95,7 @@ void main() {
         test('succeeds', () async {
           final result = await repository.getList(username);
 
-          expect(result, watchListMapMock);
+          expect(result, watchListClassMock);
         });
       });
 

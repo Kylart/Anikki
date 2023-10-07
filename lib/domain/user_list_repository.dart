@@ -31,7 +31,7 @@ class UserListRepository {
   }
 
   /// Returns the watch lists of the user at `username`
-  Future<UserWatchList> getList(String username) async {
+  Future<AnilistWatchList> getList(String username) async {
     return await anilist.getWatchLists(
       username,
       useCache: false,
@@ -40,7 +40,7 @@ class UserListRepository {
 
   Future<List<AnilistListEntry>> getContinueList(String username) async {
     final list = await getList(username);
-    final currentList = list[Enum$MediaListStatus.CURRENT] ?? [];
+    final currentList = list.current;
 
     return currentList.where((element) {
       final progress = element.progress ?? 0;
@@ -59,7 +59,7 @@ class UserListRepository {
     final season = currentSeason();
     final year = DateTime.now().year;
     final watchList = await getList(username);
-    final planningList = watchList[Enum$MediaListStatus.PLANNING] ?? [];
+    final planningList = watchList.planning;
 
     final entries = planningList.where((element) {
       return element.media?.season == season &&

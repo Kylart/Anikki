@@ -1,3 +1,7 @@
+import 'package:equatable/equatable.dart';
+
+import 'get_list.query.graphql.dart';
+
 export 'search_part.dart';
 
 export 'airing_schedule.query.graphql.dart';
@@ -10,3 +14,5 @@ export 'search.query.graphql.dart';
 export 'schema.graphql.dart';
 export 'recommandations.query.graphql.dart';
 export 'trending.query.graphql.dart';
+
+part 'anilist_watch_list.dart';

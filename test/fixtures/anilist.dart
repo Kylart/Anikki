@@ -232,14 +232,14 @@ final pausedEntriesMock = watchListMock.MediaListCollection?.lists
         .toList() ??
     [];
 
-final Map<Enum$MediaListStatus,
-    List<Query$GetLists$MediaListCollection$lists$entries>> watchListMapMock = {
-  Enum$MediaListStatus.COMPLETED: completedEntriesMock,
-  Enum$MediaListStatus.CURRENT: currentEntriesMock,
-  Enum$MediaListStatus.DROPPED: droppedEntriesMock,
-  Enum$MediaListStatus.PLANNING: plannedEntriesMock,
-  Enum$MediaListStatus.PAUSED: pausedEntriesMock,
-};
+final watchListClassMock = AnilistWatchList(
+  completed: completedEntriesMock,
+  current: currentEntriesMock,
+  dropped: droppedEntriesMock,
+  planning: plannedEntriesMock,
+  paused: pausedEntriesMock,
+  repeating: const [],
+);
 
 final watchListUpdateMock = Mutation$UpdateEntry(
   SaveMediaListEntry: Mutation$UpdateEntry$SaveMediaListEntry(id: 1),

@@ -178,7 +178,7 @@ void main() {
         final lists = await anilist.getWatchLists('Hello');
 
         expect(
-          lists[Enum$MediaListStatus.COMPLETED],
+          lists.completed,
           allOf(
             [
               isNotNull,
@@ -188,7 +188,7 @@ void main() {
           ),
         );
         expect(
-          lists[Enum$MediaListStatus.CURRENT],
+          lists.current,
           allOf(
             [
               isNotNull,
@@ -198,25 +198,25 @@ void main() {
           ),
         );
         expect(
-          lists[Enum$MediaListStatus.DROPPED],
+          lists.dropped,
           allOf(
             [isNotNull, isEmpty],
           ),
         );
         expect(
-          lists[Enum$MediaListStatus.PAUSED],
+          lists.paused,
           allOf(
             [isNotNull, isEmpty],
           ),
         );
         expect(
-          lists[Enum$MediaListStatus.PLANNING],
+          lists.planning,
           allOf(
             [isNotNull, isEmpty],
           ),
         );
         expect(
-          lists[Enum$MediaListStatus.REPEATING],
+          lists.repeating,
           allOf(
             [isNotNull, isEmpty],
           ),

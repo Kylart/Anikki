@@ -142,11 +142,39 @@ class _WatchListViewState extends State<WatchListView>
                                   .where(
                                       (element) => element.name != '\$unknown')
                                   .map(
-                                    (status) => WatchListLayout(
-                                      entries: entries[status] ?? [],
-                                    ),
-                                  )
-                                  .toList(),
+                                (status) {
+                                  late final List<AnilistWatchListEntry>
+                                      statusEntries;
+
+                                  switch (status) {
+                                    case Enum$MediaListStatus.CURRENT:
+                                      statusEntries = entries.current;
+                                      break;
+                                    case Enum$MediaListStatus.PLANNING:
+                                      statusEntries = entries.planning;
+                                      break;
+                                    case Enum$MediaListStatus.COMPLETED:
+                                      statusEntries = entries.completed;
+                                      break;
+                                    case Enum$MediaListStatus.DROPPED:
+                                      statusEntries = entries.dropped;
+                                      break;
+                                    case Enum$MediaListStatus.PAUSED:
+                                      statusEntries = entries.paused;
+                                      break;
+                                    case Enum$MediaListStatus.REPEATING:
+                                      statusEntries = entries.repeating;
+                                      break;
+                                    default:
+                                      statusEntries = const [];
+                                      break;
+                                  }
+
+                                  return WatchListLayout(
+                                    entries: statusEntries,
+                                  );
+                                },
+                              ).toList(),
                             ),
                           ),
                         ],

@@ -49,21 +49,14 @@ class WatchListComplete extends WatchListState {
     super.connected,
   });
 
-  final Map<Enum$MediaListStatus,
-      List<Query$GetLists$MediaListCollection$lists$entries>> watchList;
+  final AnilistWatchList watchList;
 
-  List<Query$GetLists$MediaListCollection$lists$entries> get current =>
-      watchList[Enum$MediaListStatus.CURRENT] ?? [];
-  List<Query$GetLists$MediaListCollection$lists$entries> get completed =>
-      watchList[Enum$MediaListStatus.COMPLETED] ?? [];
-  List<Query$GetLists$MediaListCollection$lists$entries> get dropped =>
-      watchList[Enum$MediaListStatus.DROPPED] ?? [];
-  List<Query$GetLists$MediaListCollection$lists$entries> get paused =>
-      watchList[Enum$MediaListStatus.PAUSED] ?? [];
-  List<Query$GetLists$MediaListCollection$lists$entries> get planning =>
-      watchList[Enum$MediaListStatus.PLANNING] ?? [];
-  List<Query$GetLists$MediaListCollection$lists$entries> get repeating =>
-      watchList[Enum$MediaListStatus.REPEATING] ?? [];
+  List<AnilistWatchListEntry> get current => watchList.current;
+  List<AnilistWatchListEntry> get completed => watchList.completed;
+  List<AnilistWatchListEntry> get dropped => watchList.dropped;
+  List<AnilistWatchListEntry> get paused => watchList.paused;
+  List<AnilistWatchListEntry> get planning => watchList.planning;
+  List<AnilistWatchListEntry> get repeating => watchList.repeating;
 
   @override
   List<Object?> get props => [

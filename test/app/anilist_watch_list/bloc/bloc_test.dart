@@ -97,7 +97,7 @@ void main() {
           repository = UserListRepositoryMock();
 
           when(() => repository.getList(username))
-              .thenAnswer((_) async => watchListMapMock);
+              .thenAnswer((_) async => watchListClassMock);
 
           bloc = WatchListBloc(repository);
         },
@@ -162,7 +162,7 @@ void main() {
         build: () => bloc,
         seed: () => const WatchListComplete(
           username: username,
-          watchList: {},
+          watchList: AnilistWatchList(),
           connected: true,
         ),
         act: (bloc) => bloc.add(
@@ -185,7 +185,7 @@ void main() {
           ).thenAnswer((_) async {});
 
           when(() => repository.getList(username))
-              .thenAnswer((_) async => watchListMapMock);
+              .thenAnswer((_) async => watchListClassMock);
 
           bloc = WatchListBloc(repository);
         },
@@ -196,7 +196,7 @@ void main() {
         build: () => bloc,
         seed: () => const WatchListComplete(
           username: username,
-          watchList: {},
+          watchList: AnilistWatchList(),
           connected: true,
         ),
         act: (bloc) => bloc.add(
@@ -224,7 +224,7 @@ void main() {
         build: () => bloc,
         seed: () => const WatchListComplete(
           username: username,
-          watchList: {},
+          watchList: AnilistWatchList(),
           connected: false,
         ),
         act: (bloc) => bloc.add(
@@ -245,7 +245,7 @@ void main() {
         build: () => bloc,
         seed: () => const WatchListComplete(
           username: username,
-          watchList: {},
+          watchList: AnilistWatchList(),
           connected: false,
         ),
         act: (bloc) => bloc.add(
@@ -271,7 +271,7 @@ void main() {
         build: () => bloc,
         seed: () => const WatchListComplete(
           username: username,
-          watchList: {},
+          watchList: AnilistWatchList(),
           connected: false,
         ),
         act: (bloc) => bloc.add(
@@ -348,7 +348,7 @@ void main() {
           repository = UserListRepositoryMock();
 
           when(() => repository.getList(username))
-              .thenAnswer((_) async => watchListMapMock);
+              .thenAnswer((_) async => watchListClassMock);
 
           bloc = WatchListBloc(repository);
         },

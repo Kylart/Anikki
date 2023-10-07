@@ -30,20 +30,12 @@ mixin AnilistList on AnilistClient {
     }
   }
 
-  Future<
-          Map<Enum$MediaListStatus,
-              List<Query$GetLists$MediaListCollection$lists$entries>>>
-      getWatchLists(String username, {bool useCache = true}) async {
+  Future<AnilistWatchList> getWatchLists(
+    String username, {
+    bool useCache = true,
+  }) async {
     try {
-      Map<Enum$MediaListStatus,
-          List<Query$GetLists$MediaListCollection$lists$entries>> watchList = {
-        Enum$MediaListStatus.COMPLETED: [],
-        Enum$MediaListStatus.CURRENT: [],
-        Enum$MediaListStatus.DROPPED: [],
-        Enum$MediaListStatus.PAUSED: [],
-        Enum$MediaListStatus.PLANNING: [],
-        Enum$MediaListStatus.REPEATING: [],
-      };
+      var watchList = const AnilistWatchList();
 
       final result = await client.query$GetLists(
         Options$Query$GetLists(
@@ -61,10 +53,52 @@ mixin AnilistList on AnilistClient {
         final status = list?.entries?.first?.status;
         if (status == null) continue;
 
-        watchList[status] = list?.entries
-                ?.whereType<Query$GetLists$MediaListCollection$lists$entries>()
-                .toList() ??
-            [];
+        switch (status) {
+          case Enum$MediaListStatus.CURRENT:
+            watchList = watchList.copyWith(
+              current:
+                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
+                      [],
+            );
+            break;
+          case Enum$MediaListStatus.PLANNING:
+            watchList = watchList.copyWith(
+              planning:
+                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
+                      [],
+            );
+            break;
+          case Enum$MediaListStatus.COMPLETED:
+            watchList = watchList.copyWith(
+              completed:
+                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
+                      [],
+            );
+            break;
+          case Enum$MediaListStatus.DROPPED:
+            watchList = watchList.copyWith(
+              dropped:
+                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
+                      [],
+            );
+            break;
+          case Enum$MediaListStatus.PAUSED:
+            watchList = watchList.copyWith(
+              paused:
+                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
+                      [],
+            );
+            break;
+          case Enum$MediaListStatus.REPEATING:
+            watchList = watchList.copyWith(
+              repeating:
+                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
+                      [],
+            );
+            break;
+          default:
+            break;
+        }
       }
 
       return watchList;
