@@ -8,7 +8,7 @@ co_authors:
     email: kylart.dev@gmail.com
 priority: optional
 essential: false
-# icon: jinrui.png
+icon: assets/images/jinrui.png
 
 keywords:
   - Anime
@@ -18,3 +18,13 @@ generic_name: Anime Application
 
 categories:
   - Media
+
+section: x11
+installed_size: 6604
+
+postinstall_scripts:
+  - echo "Installed."
+postuninstall_scripts:
+  - echo "Successfully uninstalled"
+
+startup_notify: false

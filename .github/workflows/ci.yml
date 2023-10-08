@@ -96,50 +96,57 @@ jobs:
       - name: "Test"
         run: flutter test
 
-  # linux-build:
-  #   needs: linux-tests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         submodules: "true"
+  linux-build:
+    needs: linux-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "true"
 
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: "stable"
-  #         cache: true
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
-  #     - name: "Config"
-  #       run: flutter config --enable-linux-desktop
+      - name: "Config"
+        run: flutter config --enable-linux-desktop
 
-  #     - name: Install Dependencies
-  #       run: |
-  #         sudo apt-get update -y
-  #         sudo apt-get install -y ninja-build libgtk-3-dev mpv libmpv-dev locate
-  #         wget -O appimagetool "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
-  #         chmod +x appimagetool
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev mpv libmpv-dev locate
+          wget -O appimagetool "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+          chmod +x appimagetool
 
-  #     - name: Env setup
-  #       run: |
-  #         touch .env
-  #         echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
-  #         cat .env
+      - name: Env setup
+        run: |
+          touch .env
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          cat .env
 
-  #     - name: "Setup build tools"
-  #       run: dart pub global activate flutter_distributor
+      - name: "Setup build tools"
+        run: dart pub global activate flutter_distributor
   
-  #     - name: "Release build - AppImage"
-  #       run: flutter_distributor package --platform linux --targets appimage
+      # - name: "Release build - AppImage"
+      #   run: flutter_distributor package --platform linux --targets appimage
 
-  #     - name: "Release build - deb"
-  #       run: flutter_distributor package --platform linux --targets deb
+      # - name: 'Upload Artifact'
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: Linux - AppImage
+      #     path: dist
+      #     retention-days: 5
+          
+      - name: "Release build - deb"
+        run: flutter_distributor package --platform linux --targets deb
 
-  #     - name: 'Upload Artifact'
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: Linux
-  #         path: dist
-  #         retention-days: 5
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Linux - deb
+          path: dist
+          retention-days: 5
 
   linux-android-build:
     needs: linux-tests
