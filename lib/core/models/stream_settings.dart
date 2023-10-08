@@ -26,7 +26,7 @@ extension StreamRequestTypeTitle on StreamRequestType {
 
 class StreamSettings extends Equatable {
   const StreamSettings({
-    this.streamRequestType = StreamRequestType.choose,
+    this.streamRequestType = StreamRequestType.online,
   });
 
   final StreamRequestType streamRequestType;
