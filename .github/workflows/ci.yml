@@ -56,9 +56,6 @@ jobs:
   
       - name: "Release build"
         run: flutter_distributor package --platform windows --targets exe
-  
-      - name: "Setup build"
-        run: dart bin/build_windows.dart
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
