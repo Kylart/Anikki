@@ -19,8 +19,7 @@ jobs:
 
       - name: Env setup
         run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
           cat .env
 
       - name: "Debug build"
@@ -47,8 +46,7 @@ jobs:
 
       - name: Env setup
         run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
           cat .env
 
       - name: "Setup build tools"
@@ -83,8 +81,7 @@ jobs:
 
       - name: Env setup
         run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
           cat .env
 
       - name: "Config"
@@ -121,8 +118,7 @@ jobs:
 
       - name: Env setup
         run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
           cat .env
 
       - name: "Setup build tools"
@@ -173,8 +169,7 @@ jobs:
 
       - name: Env setup
         run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
           cat .env
 
       - name: "Setup build tools"
@@ -207,8 +202,7 @@ jobs:
 
       - name: Env setup
         run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
           cat .env
 
       - name: "Config"
@@ -235,8 +229,7 @@ jobs:
 
       - name: Env setup
         run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
           cat .env
 
       - name: "Config"
@@ -272,8 +265,7 @@ jobs:
 
       - name: Env setup
         run: |
-          touch .env
-          echo "ANILIST_ID=${{ secrets.ANILIST_ID }} >> .env"
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
           cat .env
 
       - name: "Release build"
