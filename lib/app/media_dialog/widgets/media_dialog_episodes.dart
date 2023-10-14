@@ -87,7 +87,7 @@ class MediaDialogEpisodes extends StatelessWidget {
             }
 
             return ListView.separated(
-              itemCount: numberOfEpisodes == 0 ? entry?.entries.length ?? 0 : 0,
+              itemCount: numberOfEpisodes,
               physics: const ClampingScrollPhysics(),
               shrinkWrap: true,
               separatorBuilder: (context, index) => const Divider(),
