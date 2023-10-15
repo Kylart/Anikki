@@ -1,5 +1,6 @@
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -10,6 +11,7 @@ import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/settings/widgets/settings_text_field.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
+import 'package:yaml/yaml.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -41,6 +43,23 @@ class _SettingsViewState extends State<SettingsView> {
                     SettingsSection(
                       title: const Text('General'),
                       tiles: <SettingsTile>[
+                        SettingsTile(
+                          leading: const Icon(Ionicons.build_outline),
+                          title: const Text('Version'),
+                          trailing: FutureBuilder(
+                            future: rootBundle.loadString('pubspec.yaml'),
+                            builder: (context, data) {
+                              if (!data.hasData || data.data == null) {
+                                return const SizedBox();
+                              }
+
+                              final yaml = loadYaml(data.data!);
+
+                              return Text(' v${yaml['version']}');
+                            },
+                          ),
+                        ),
+
                         /// Theme
                         SettingsTile(
                           leading: const Icon(Ionicons.contrast_outline),
