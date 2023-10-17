@@ -1,4 +1,3 @@
-import 'package:anikki/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +27,7 @@ class _TorrentViewState extends State<TorrentView> {
           child: Column(
             children: [
               AppBar(
-                title: Text(settingsState.settings.torrentType.title()),
+                title: Text(settingsState.settings.torrentType.title),
               ),
               BlocBuilder<TorrentBloc, TorrentState>(
                 builder: (context, state) {

@@ -4,24 +4,13 @@ import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
 enum StreamRequestType {
-  online,
-  torrent,
-  choose,
-}
+  online('Online'),
+  torrent('Torrent'),
+  choose('Let me choose');
 
-extension StreamRequestTypeTitle on StreamRequestType {
-  String title() {
-    switch (this) {
-      case StreamRequestType.online:
-        return 'Online';
+  final String title;
 
-      case StreamRequestType.torrent:
-        return 'Torrent';
-
-      case StreamRequestType.choose:
-        return 'Let me choose';
-    }
-  }
+  const StreamRequestType(this.title);
 }
 
 class StreamSettings extends Equatable {

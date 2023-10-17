@@ -71,7 +71,7 @@ class CustomMenu extends StatelessWidget {
           settingsBloc.state.settings.torrentType != TorrentType.none)
         Page(
           widget: const TorrentView(),
-          name: settingsBloc.state.settings.torrentType.title(),
+          name: settingsBloc.state.settings.torrentType.title,
           icon: Ionicons.cloud_download_outline,
         ),
       if (portrait)

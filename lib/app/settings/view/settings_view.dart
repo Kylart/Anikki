@@ -144,7 +144,7 @@ class _SettingsViewState extends State<SettingsView> {
                             items: StreamRequestType.values
                                 .map((type) => DropdownMenuItem(
                                       value: type,
-                                      child: Text(type.title()),
+                                      child: Text(type.title),
                                     ))
                                 .toList(),
                             onChanged: (value) {
@@ -177,7 +177,7 @@ class _SettingsViewState extends State<SettingsView> {
                             items: TorrentType.values
                                 .map((type) => DropdownMenuItem(
                                       value: type,
-                                      child: Text(type.title()),
+                                      child: Text(type.title),
                                     ))
                                 .toList(),
                             onChanged: (value) {

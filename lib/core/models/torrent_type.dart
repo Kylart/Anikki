@@ -1,20 +1,9 @@
 enum TorrentType {
-  transmission,
-  qbittorrent,
-  none,
-}
+  transmission('Transmission'),
+  qbittorrent('QBitTorrent'),
+  none('None');
 
-extension TorrentTypeName on TorrentType {
-  String title() {
-    switch (this) {
-      case TorrentType.qbittorrent:
-        return 'QBitTorrent';
+  final String title;
 
-      case TorrentType.transmission:
-        return 'Transmission';
-
-      case TorrentType.none:
-        return 'None';
-    }
-  }
+  const TorrentType(this.title);
 }

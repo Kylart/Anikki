@@ -25,9 +25,9 @@ class _TorrentCannotLoadState extends State<TorrentCannotLoadWidget> {
       child: LayoutCard(
         child: ListTile(
           dense: true,
-          title: Text('Could not find ${widget.type.title()} instance'),
+          title: Text('Could not find ${widget.type.title} instance'),
           subtitle: Text(
-            'Are you sure your ${widget.type.title()} is running and accepting connections?',
+            'Are you sure your ${widget.type.title} is running and accepting connections?',
           ),
           trailing: IconButton(
             onPressed: () => setState(() {
