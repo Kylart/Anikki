@@ -39,9 +39,10 @@ class _VideoPlayerViewState extends State<VideoPlayerView>
     ),
   );
 
-  int? get firstIndex => widget.first == null
+  Media? get firstMedia => widget.first != null ? Media(widget.first!.path) : null;
+  int? get firstIndex => firstMedia == null
       ? null
-      : widget.sources.indexWhere((source) => source.uri == widget.first!.path);
+      : widget.sources.indexWhere((source) => source == firstMedia!);
 
   /// Actual playlist that the player will play
   Playlist get playlist => Playlist(widget.sources);
