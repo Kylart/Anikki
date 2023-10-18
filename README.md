@@ -89,3 +89,6 @@ Any contribution is appreciated.
 MIT License
 
 Copyright © 2022 & onwards, Kylart <kylart.dev@gmail.com>
+
+## Credits
+[App icon by Freepik](https://www.freepik.com/free-vector/hand-drawn-kitsune-logo-template_27596778.htm#query=anime%20logo%20collection&position=8&from_view=search&track=ais)

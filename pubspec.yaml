@@ -86,6 +86,7 @@ dev_dependencies:
   graphql_codegen: ^0.13.7
   dart_pre_commit: ^5.2.0+1
   git_hooks: ^1.0.1
+  flutter_launcher_icons: "^0.13.1"
 
 flutter:
   uses-material-design: true
@@ -100,3 +101,19 @@ flutter:
 dart_pre_commit:
   outdated: false
   pull-up-dependencies: false
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#ffffff"
+  # Help here https://www.youtube.com/watch?v=eMHbgIgJyUQ
+  adaptive_icon_foreground: "assets/icon_foreground.png"
+  windows:
+    generate: true
+    image_path: "assets/logo.png"
+    icon_size: 256 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/logo.png"
