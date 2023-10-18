@@ -7,6 +7,7 @@ Future<void> setUpDesktop() async {
   await windowManager.ensureInitialized();
 
   WindowOptions windowOptions = WindowOptions(
+    title: 'Anikki',
     backgroundColor: Colors.transparent,
     titleBarStyle:
         Platform.isMacOS ? TitleBarStyle.hidden : TitleBarStyle.normal,
