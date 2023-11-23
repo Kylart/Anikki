@@ -116,6 +116,7 @@ class _HomeEntryCardState extends State<HomeEntryCard> {
                 children: [
                   _HomeEntryCardCover(
                     glossy: hovered,
+                    color: widget.media.anilistInfo.coverImage?.color,
                     url: widget.media.coverImage,
                   ),
                   if (widget.text != null)
