@@ -136,7 +136,7 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
 
       Timer(
         const Duration(minutes: 5),
-        () => add(event),
+        () => add(event.copy()),
       );
     }
   }

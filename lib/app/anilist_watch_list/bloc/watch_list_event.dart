@@ -44,6 +44,7 @@ class WatchListWatched extends WatchListEvent {
     this.media,
     this.episode,
     this.scaffold,
+    this.counter = 0,
   }) {
     if (entry == null) {
       assert(media != null && episode != null);
@@ -54,9 +55,21 @@ class WatchListWatched extends WatchListEvent {
   final Media? media;
   final int? episode;
   final ScaffoldMessengerState? scaffold;
+  final int counter;
+
+  WatchListWatched copy() {
+    return WatchListWatched(
+      counter: counter + 1,
+      entry: entry,
+      episode: episode,
+      scaffold: scaffold,
+      media: media,
+    );
+  }
 
   @override
   List<Object?> get props => [
+        counter,
         entry,
         scaffold,
         media,

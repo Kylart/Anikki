@@ -30,8 +30,8 @@ class MediaDialogEpisodeActions extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) => PlatformAlertDialog(
-                  title:
-                      Text('Do you really want to delete ${localFile!.path}'),
+                  title: Text(
+                      'Do you really want to delete ${basename(localFile!.path)}'),
                   actions: [
                     TextButton(
                       onPressed: () {
