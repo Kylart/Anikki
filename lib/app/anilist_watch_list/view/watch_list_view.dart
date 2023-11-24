@@ -108,11 +108,11 @@ class _WatchListViewState extends State<WatchListView>
                 child: BlocBuilder<WatchListBloc, WatchListState>(
                     builder: (context, state) {
                   switch (state.runtimeType) {
-                    case WatchListInitial:
+                    case const (WatchListInitial):
                       return const Center(child: AnilistAuthView());
-                    case WatchListLoading:
+                    case const (WatchListLoading):
                       return const Loader();
-                    case WatchListComplete:
+                    case const (WatchListComplete):
                       final entries = (state as WatchListComplete).watchList;
 
                       return Column(
@@ -180,7 +180,7 @@ class _WatchListViewState extends State<WatchListView>
                         ],
                       );
 
-                    case WatchListError:
+                    case const (WatchListError):
                       final message = (state as WatchListError).message;
                       return ErrorTile(
                         title: 'Could not retrieve watch list.',

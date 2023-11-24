@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+const borderRadius = BorderRadius.all(
+  Radius.circular(20),
+);
+
 class LayoutCard extends StatelessWidget {
   const LayoutCard({
     super.key,
@@ -10,10 +14,6 @@ class LayoutCard extends StatelessWidget {
   final Widget child;
   final bool transparent;
 
-  final borderRadius = const BorderRadius.all(
-    Radius.circular(20),
-  );
-
   @override
   Widget build(BuildContext context) {
     final color = transparent ? Colors.transparent : null;
@@ -23,7 +23,7 @@ class LayoutCard extends StatelessWidget {
       shadowColor: color,
       surfaceTintColor: color,
       elevation: 0,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: borderRadius,
       ),
       child: Container(

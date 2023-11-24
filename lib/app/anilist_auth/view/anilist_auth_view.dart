@@ -57,7 +57,7 @@ class _AnilistAuthViewState extends State<AnilistAuthView> {
     return BlocBuilder<AnilistAuthBloc, AnilistAuthState>(
       builder: (context, state) {
         switch (state.runtimeType) {
-          case AnilistAuthLoggedOut:
+          case const (AnilistAuthLoggedOut):
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -75,7 +75,7 @@ class _AnilistAuthViewState extends State<AnilistAuthView> {
                 ),
               ],
             );
-          case AnilistAuthError:
+          case const (AnilistAuthError):
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -94,7 +94,7 @@ class _AnilistAuthViewState extends State<AnilistAuthView> {
               ],
             );
 
-          case AnilistAuthSuccess:
+          case const (AnilistAuthSuccess):
           default:
             return const SizedBox();
         }

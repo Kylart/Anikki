@@ -7,8 +7,8 @@ import 'package:anikki/core/widgets/macos_title_bar.dart';
 
 class LandscapeLayout extends StatelessWidget {
   const LandscapeLayout({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

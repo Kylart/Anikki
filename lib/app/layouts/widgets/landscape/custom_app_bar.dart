@@ -8,8 +8,8 @@ import 'package:anikki/app/search/search.dart';
 
 class CustomAppBar extends StatefulWidget {
   const CustomAppBar({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();

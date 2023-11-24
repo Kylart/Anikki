@@ -14,7 +14,7 @@ import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:yaml/yaml.dart';
 
 class SettingsView extends StatefulWidget {
-  const SettingsView({Key? key}) : super(key: key);
+  const SettingsView({super.key});
 
   @override
   State<SettingsView> createState() => _SettingsViewState();

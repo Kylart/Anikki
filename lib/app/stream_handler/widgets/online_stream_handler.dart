@@ -58,14 +58,14 @@ class _OnlineStreamHandlerState extends State<OnlineStreamHandler> {
       },
       builder: (context, state) {
         switch (state.runtimeType) {
-          case StreamHandlerError:
+          case const (StreamHandlerError):
             return LayoutCard(
               child: ListTile(
                 title: const Text('Something went wrong. Please try again'),
                 subtitle: Text((state as StreamHandlerError).error),
               ),
             );
-          case StreamHandlerLoading:
+          case const (StreamHandlerLoading):
           default:
             return LayoutCard(
               child: Padding(

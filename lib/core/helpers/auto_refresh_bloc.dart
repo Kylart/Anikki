@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class AutoRefreshBloc<Event, State> extends Bloc<Event, State> {
-  AutoRefreshBloc(State initialState) : super(initialState);
+  AutoRefreshBloc(super.initialState);
 
   FutureOr<void> autoRefresh();
 

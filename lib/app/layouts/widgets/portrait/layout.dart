@@ -9,8 +9,8 @@ import 'package:anikki/app/settings/settings.dart';
 
 class PortraitLayout extends StatefulWidget {
   const PortraitLayout({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<PortraitLayout> createState() => _PortraitLayoutState();

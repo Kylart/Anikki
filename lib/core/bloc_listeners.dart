@@ -66,7 +66,7 @@ class BlocListeners extends StatelessWidget {
         BlocListener<DownloaderBloc, DownloaderState>(
           listener: (context, state) async {
             switch (state.runtimeType) {
-              case DownloaderShow:
+              case const (DownloaderShow):
                 if (!(state as DownloaderShow).alreadyShow) {
                   showDownloader(context, state.term);
                 }

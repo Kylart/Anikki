@@ -19,9 +19,9 @@ class LayoutView extends StatelessWidget {
             );
 
             switch (state.runtimeType) {
-              case LayoutLandscape:
+              case const (LayoutLandscape):
                 return const LandscapeLayout();
-              case LayoutPortrait:
+              case const (LayoutPortrait):
                 return const PortraitLayout();
               default:
                 return const SizedBox();

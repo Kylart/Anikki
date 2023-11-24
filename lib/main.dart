@@ -17,8 +17,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
 
-  Paint.enableDithering = true;
-
   final storageDirectory =
       kDebugMode || Platform.environment.containsKey('FLUTTER_TEST')
           ? await getTemporaryDirectory()

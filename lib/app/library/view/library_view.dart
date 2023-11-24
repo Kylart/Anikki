@@ -83,22 +83,22 @@ class LibraryView extends StatelessWidget {
                 child: BlocBuilder<LibraryBloc, LibraryState>(
                   builder: (context, state) {
                     switch (state.runtimeType) {
-                      case LibraryLoading:
+                      case const (LibraryLoading):
                         return const Loader();
 
-                      case LibraryError:
+                      case const (LibraryError):
                         return ErrorTile(
                           title: 'Could not load your files at ${state.path}',
                           description: (state as LibraryError).message,
                         );
 
-                      case LibraryEmpty:
+                      case const (LibraryEmpty):
                         return const EmptyWidget(
                           title: 'No File',
                           subtitle: 'Could not find any video',
                         );
 
-                      case LibraryLoaded:
+                      case const (LibraryLoaded):
                         final loadedState = (state as LibraryLoaded);
                         return LibraryLayout(
                           entries: loadedState.entries,

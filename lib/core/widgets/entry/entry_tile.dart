@@ -104,7 +104,7 @@ class _EntryTileState<T> extends State<EntryTile> {
                           ),
                         );
                       },
-                    ).toList(),
+                    ),
 
                   if (widget.showBookmark)
                     EntryTag(

@@ -34,7 +34,7 @@ class _TorrentViewState extends State<TorrentView> {
                   final torrentType = settings.torrentType;
 
                   switch (state.runtimeType) {
-                    case TorrentLoaded:
+                    case const (TorrentLoaded):
                       final currentState = state as TorrentLoaded;
 
                       return ListView.separated(
@@ -51,11 +51,11 @@ class _TorrentViewState extends State<TorrentView> {
                         itemCount: currentState.torrents.length,
                       );
 
-                    case TorrentCannotLoad:
+                    case const (TorrentCannotLoad):
                       return TorrentCannotLoadWidget(type: torrentType);
 
-                    case TorrentEmpty:
-                    case TorrentInitial:
+                    case const (TorrentEmpty):
+                    case const (TorrentInitial):
                     default:
                       return const SizedBox();
                   }

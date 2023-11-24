@@ -18,7 +18,7 @@ class DownloaderView extends StatelessWidget {
     return BlocBuilder<DownloaderBloc, DownloaderState>(
       builder: (context, state) {
         switch (state.runtimeType) {
-          case DownloaderError:
+          case const (DownloaderError):
             final currentState = state as DownloaderError;
 
             return ErrorTile(
@@ -26,10 +26,10 @@ class DownloaderView extends StatelessWidget {
               description: currentState.message,
             );
 
-          case DownloaderLoading:
+          case const (DownloaderLoading):
             return const Loader();
 
-          case DownloaderSuccess:
+          case const (DownloaderSuccess):
             final bloc = BlocProvider.of<DownloaderBloc>(context);
 
             final currentState = state as DownloaderSuccess;
@@ -172,7 +172,7 @@ class DownloaderView extends StatelessWidget {
               ),
             );
 
-          case DownloaderClose:
+          case const (DownloaderClose):
           default:
             return const SizedBox();
         }
