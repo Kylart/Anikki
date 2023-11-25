@@ -80,7 +80,7 @@ class Anitomy {
     if (Platform.isWindows) {
       if (isTest) {
         return DynamicLibrary.open(p.canonicalize(
-            p.join(r'build\windows\runner\Debug', '$_libName.dll')));
+            p.join(r'build\windows\x64\runner\Debug', '$_libName.dll')));
       }
 
       return DynamicLibrary.open('$_libName.dll');
