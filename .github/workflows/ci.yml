@@ -238,6 +238,7 @@ jobs:
       - name: "Setup build tools"
         run: |
           dart pub global activate flutter_distributor
+          python3 -m pip install setuptools
           npm install -g appdmg
 
       - name: "Release build"
