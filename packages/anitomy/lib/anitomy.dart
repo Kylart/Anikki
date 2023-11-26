@@ -78,9 +78,18 @@ class Anitomy {
       return DynamicLibrary.open('lib$_libName.so');
     }
     if (Platform.isWindows) {
+      late final String arch;
+      final winArch = Platform.environment['PROCESSOR_ARCHITECTURE'];
+
+      if (winArch == 'ARM64') {
+        arch = 'arm64';
+      } else {
+        arch = 'x64';
+      }
+
       if (isTest) {
         return DynamicLibrary.open(p.canonicalize(
-            p.join(r'build\windows\x64\runner\Debug', '$_libName.dll')));
+            p.join(r'build\windows', arch, r'runner\Debug', '$_libName.dll')));
       }
 
       return DynamicLibrary.open('$_libName.dll');
