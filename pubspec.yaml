@@ -105,15 +105,15 @@ dart_pre_commit:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/logo.png"
+  image_path: "assets/rectangle_logo.png"
   min_sdk_android: 21
-  adaptive_icon_background: "#ffffff"
+  adaptive_icon_background: "#9dd4fd"
   # Help here https://www.youtube.com/watch?v=eMHbgIgJyUQ
   adaptive_icon_foreground: "assets/icon_foreground.png"
   windows:
     generate: true
-    image_path: "assets/logo.png"
+    image_path: "assets/circle_logo.png"
     icon_size: 256 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/logo.png"
+    image_path: "assets/rectangle_logo.png"
