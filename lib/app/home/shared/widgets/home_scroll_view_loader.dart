@@ -9,8 +9,9 @@ class HomeScrollViewLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HomeScrollView(
-      children: [
-        Padding(
+      children: List.generate(
+        10,
+        (index) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36.0),
           child: Shimmer.fromColors(
             baseColor: Colors.grey.withOpacity(0.7),
@@ -28,8 +29,8 @@ class HomeScrollViewLoader extends StatelessWidget {
               ),
             ),
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 }
