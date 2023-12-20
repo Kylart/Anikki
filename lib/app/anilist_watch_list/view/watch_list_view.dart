@@ -113,7 +113,7 @@ class _WatchListViewState extends State<WatchListView>
                     case const (WatchListLoading):
                       return const Loader();
                     case const (WatchListComplete):
-                      final entries = (state as WatchListComplete).watchList;
+                      final entries = state.watchList;
 
                       return Column(
                         children: [

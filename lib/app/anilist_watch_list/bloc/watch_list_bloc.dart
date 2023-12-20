@@ -55,7 +55,12 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
       WatchListRequested event, Emitter<WatchListState> emit) async {
     final username = event.username;
 
-    emit(WatchListLoading(username: username));
+    emit(
+      WatchListLoading(
+        username: username,
+        watchList: state.watchList,
+      ),
+    );
 
     try {
       final watchList = await repository.getList(
@@ -73,6 +78,7 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
       emit(
         WatchListError(
           username: username,
+          watchList: state.watchList,
           message: e.error ?? 'Something went wrong...',
           connected: state.connected,
         ),
@@ -82,6 +88,7 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
         WatchListError(
           username: username,
           message: e.toString(),
+          watchList: state.watchList,
           connected: state.connected,
         ),
       );

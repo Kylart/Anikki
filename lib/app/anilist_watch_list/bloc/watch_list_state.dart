@@ -3,52 +3,12 @@ part of 'watch_list_bloc.dart';
 abstract class WatchListState extends Equatable {
   const WatchListState({
     required this.username,
+    required this.watchList,
     this.connected = false,
   });
 
   final String? username;
   final bool connected;
-
-  @override
-  List<Object?> get props => [
-        username,
-        connected,
-      ];
-}
-
-class WatchListInitial extends WatchListState {
-  const WatchListInitial({
-    required super.username,
-    super.connected,
-  });
-
-  @override
-  List<Object?> get props => [
-        username,
-        connected,
-      ];
-}
-
-class WatchListLoading extends WatchListState {
-  const WatchListLoading({
-    required super.username,
-    super.connected,
-  });
-
-  @override
-  List<Object?> get props => [
-        username,
-        connected,
-      ];
-}
-
-class WatchListComplete extends WatchListState {
-  const WatchListComplete({
-    required super.username,
-    required this.watchList,
-    super.connected,
-  });
-
   final AnilistWatchList watchList;
 
   List<AnilistWatchListEntry> get current => watchList.current;
@@ -61,8 +21,8 @@ class WatchListComplete extends WatchListState {
   @override
   List<Object?> get props => [
         username,
-        watchList,
         connected,
+        watchList,
       ];
 
   @override
@@ -80,18 +40,45 @@ class WatchListComplete extends WatchListState {
   }
 }
 
+class WatchListInitial extends WatchListState {
+  const WatchListInitial({
+    required super.username,
+    super.watchList = const AnilistWatchList(),
+    super.connected,
+  });
+}
+
+class WatchListLoading extends WatchListState {
+  const WatchListLoading({
+    required super.username,
+    super.watchList = const AnilistWatchList(),
+    super.connected,
+  });
+}
+
+class WatchListComplete extends WatchListState {
+  const WatchListComplete({
+    required super.username,
+    required super.watchList,
+    super.connected,
+  });
+}
+
 class WatchListError extends WatchListState {
   const WatchListError({
     required super.username,
     required this.message,
+    super.watchList = const AnilistWatchList(),
     super.connected,
   });
 
   final String message;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
+        username,
         message,
         connected,
+        watchList,
       ];
 }

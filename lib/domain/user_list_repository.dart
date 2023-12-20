@@ -72,14 +72,14 @@ class UserListRepository {
   }
 
   /// Returns whether the entry is planned to watch or in currently watching status
-  static bool isFollowed(WatchListComplete watchList, Media entry) {
+  static bool isFollowed(WatchListState watchList, Media entry) {
     return [...watchList.planning, ...watchList.current]
         .where((element) => element.media?.id == entry.anilistInfo.id)
         .isNotEmpty;
   }
 
   /// Returns whether the entry is completed or watched
-  static bool isSeen(WatchListComplete watchList, Media entry) {
+  static bool isSeen(WatchListState watchList, Media entry) {
     final currentEntry = watchList.current.firstWhereOrNull(
         (element) => element.media?.id == entry.anilistInfo.id);
 

@@ -14,8 +14,6 @@ class MediaDialogEpisodeCompleted extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WatchListBloc, WatchListState>(
       builder: (context, state) {
-        if (state is! WatchListComplete) return const SizedBox();
-
         final completedEntry = state.completed.firstWhereOrNull(
             (element) => element.media?.id == media.anilistInfo.id);
         final currentEntry = state.current.firstWhereOrNull(
