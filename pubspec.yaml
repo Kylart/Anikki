@@ -37,7 +37,7 @@ dependencies:
   open_app_file: ^4.0.2
   path: ^1.8.3
   path_provider: ^2.1.1
-  protocol_handler: ^0.1.5
+  protocol_handler: ^0.1.6
   quiver: ^3.2.1
   screen_brightness: ^0.2.2+1
   url_launcher: ^6.1.14

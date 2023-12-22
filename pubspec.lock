@@ -1019,10 +1019,10 @@ packages:
     dependency: "direct main"
     description:
       name: protocol_handler
-      sha256: be85285f5cdc2541bb5ae5368f1c9924eeaae8d28e74c7235b7cd2c02521d760
+      sha256: fb1882bd6cf767114f46b4708d1794fcd662e0a9b9b4512519adeaff3f931d7d
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.6"
   provider:
     dependency: transitive
     description:
