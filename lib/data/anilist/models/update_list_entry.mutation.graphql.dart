@@ -88,18 +88,28 @@ class Variables$Mutation$UpdateEntry {
   Map<String, dynamic> _$data;
 
   int? get mediaId => (_$data['mediaId'] as int?);
+
   Enum$MediaListStatus? get status =>
       (_$data['status'] as Enum$MediaListStatus?);
+
   double? get score => (_$data['score'] as double?);
+
   int? get progress => (_$data['progress'] as int?);
+
   int? get repeat => (_$data['repeat'] as int?);
+
   bool? get private => (_$data['private'] as bool?);
+
   String? get notes => (_$data['notes'] as String?);
+
   bool? get hiddenFromStatusLists => (_$data['hiddenFromStatusLists'] as bool?);
+
   Input$FuzzyDateInput? get startedAt =>
       (_$data['startedAt'] as Input$FuzzyDateInput?);
+
   Input$FuzzyDateInput? get completedAt =>
       (_$data['completedAt'] as Input$FuzzyDateInput?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('mediaId')) {
@@ -151,6 +161,7 @@ class Variables$Mutation$UpdateEntry {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -475,6 +486,7 @@ class _CopyWithImpl$Mutation$UpdateEntry<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Mutation$UpdateEntry$SaveMediaListEntry<TRes>
       get SaveMediaListEntry {
     final local$SaveMediaListEntry = _instance.SaveMediaListEntry;
@@ -497,6 +509,7 @@ class _CopyWithStubImpl$Mutation$UpdateEntry<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Mutation$UpdateEntry$SaveMediaListEntry<TRes>
       get SaveMediaListEntry =>
           CopyWith$Mutation$UpdateEntry$SaveMediaListEntry.stub(_res);

@@ -22,6 +22,7 @@ class Variables$Query$Trending {
   Map<String, dynamic> _$data;
 
   int? get page => (_$data['page'] as int?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('page')) {
@@ -36,6 +37,7 @@ class Variables$Query$Trending {
         this,
         (i) => i,
       );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -214,6 +216,7 @@ class _CopyWithImpl$Query$Trending<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Trending$Page<TRes> get Page {
     final local$Page = _instance.Page;
     return local$Page == null
@@ -233,6 +236,7 @@ class _CopyWithStubImpl$Query$Trending<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Trending$Page<TRes> get Page =>
       CopyWith$Query$Trending$Page.stub(_res);
 }
@@ -641,6 +645,7 @@ class _CopyWithImpl$Query$Trending$Page<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Trending$Page$pageInfo<TRes> get pageInfo {
     final local$pageInfo = _instance.pageInfo;
     return local$pageInfo == null
@@ -676,8 +681,10 @@ class _CopyWithStubImpl$Query$Trending$Page<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Trending$Page$pageInfo<TRes> get pageInfo =>
       CopyWith$Query$Trending$Page$pageInfo.stub(_res);
+
   mediaTrends(_fn) => _res;
 }
 
@@ -956,6 +963,7 @@ class _CopyWithImpl$Query$Trending$Page$mediaTrends<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Fragment$shortMedia<TRes> get media {
     final local$media = _instance.media;
     return local$media == null
@@ -976,6 +984,7 @@ class _CopyWithStubImpl$Query$Trending$Page$mediaTrends<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Fragment$shortMedia<TRes> get media =>
       CopyWith$Fragment$shortMedia.stub(_res);
 }

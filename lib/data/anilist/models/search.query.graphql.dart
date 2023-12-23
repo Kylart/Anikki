@@ -22,6 +22,7 @@ class Variables$Query$Search {
   Map<String, dynamic> _$data;
 
   String? get search => (_$data['search'] as String?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('search')) {
@@ -36,6 +37,7 @@ class Variables$Query$Search {
         this,
         (i) => i,
       );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -256,6 +258,7 @@ class _CopyWithImpl$Query$Search<TRes> implements CopyWith$Query$Search<TRes> {
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Search$anime<TRes> get anime {
     final local$anime = _instance.anime;
     return local$anime == null
@@ -292,10 +295,13 @@ class _CopyWithStubImpl$Query$Search<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Search$anime<TRes> get anime =>
       CopyWith$Query$Search$anime.stub(_res);
+
   CopyWith$Query$Search$characters<TRes> get characters =>
       CopyWith$Query$Search$characters.stub(_res);
+
   CopyWith$Query$Search$staff<TRes> get staff =>
       CopyWith$Query$Search$staff.stub(_res);
 }
@@ -960,6 +966,7 @@ class _CopyWithImpl$Query$Search$anime<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Search$anime$pageInfo<TRes> get pageInfo {
     final local$pageInfo = _instance.pageInfo;
     return local$pageInfo == null
@@ -993,8 +1000,10 @@ class _CopyWithStubImpl$Query$Search$anime<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Search$anime$pageInfo<TRes> get pageInfo =>
       CopyWith$Query$Search$anime$pageInfo.stub(_res);
+
   results(_fn) => _res;
 }
 
@@ -1275,6 +1284,7 @@ class _CopyWithImpl$Query$Search$characters<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Search$characters$pageInfo<TRes> get pageInfo {
     final local$pageInfo = _instance.pageInfo;
     return local$pageInfo == null
@@ -1310,8 +1320,10 @@ class _CopyWithStubImpl$Query$Search$characters<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Search$characters$pageInfo<TRes> get pageInfo =>
       CopyWith$Query$Search$characters$pageInfo.stub(_res);
+
   results(_fn) => _res;
 }
 
@@ -1629,6 +1641,7 @@ class _CopyWithImpl$Query$Search$characters$results<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Search$characters$results$name<TRes> get name {
     final local$name = _instance.name;
     return local$name == null
@@ -1661,8 +1674,10 @@ class _CopyWithStubImpl$Query$Search$characters$results<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Search$characters$results$name<TRes> get name =>
       CopyWith$Query$Search$characters$results$name.stub(_res);
+
   CopyWith$Query$Search$characters$results$image<TRes> get image =>
       CopyWith$Query$Search$characters$results$image.stub(_res);
 }
@@ -2106,6 +2121,7 @@ class _CopyWithImpl$Query$Search$staff<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Search$staff$pageInfo<TRes> get pageInfo {
     final local$pageInfo = _instance.pageInfo;
     return local$pageInfo == null
@@ -2141,8 +2157,10 @@ class _CopyWithStubImpl$Query$Search$staff<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Search$staff$pageInfo<TRes> get pageInfo =>
       CopyWith$Query$Search$staff$pageInfo.stub(_res);
+
   results(_fn) => _res;
 }
 
@@ -2476,6 +2494,7 @@ class _CopyWithImpl$Query$Search$staff$results<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Search$staff$results$name<TRes> get name {
     final local$name = _instance.name;
     return local$name == null
@@ -2508,8 +2527,10 @@ class _CopyWithStubImpl$Query$Search$staff$results<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Search$staff$results$name<TRes> get name =>
       CopyWith$Query$Search$staff$results$name.stub(_res);
+
   CopyWith$Query$Search$staff$results$image<TRes> get image =>
       CopyWith$Query$Search$staff$results$image.stub(_res);
 }

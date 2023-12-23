@@ -110,6 +110,7 @@ class _CopyWithImpl$Query$Viewer<TRes> implements CopyWith$Query$Viewer<TRes> {
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Viewer$Viewer<TRes> get Viewer {
     final local$Viewer = _instance.Viewer;
     return local$Viewer == null
@@ -129,6 +130,7 @@ class _CopyWithStubImpl$Query$Viewer<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Viewer$Viewer<TRes> get Viewer =>
       CopyWith$Query$Viewer$Viewer.stub(_res);
 }
@@ -558,6 +560,7 @@ class _CopyWithImpl$Query$Viewer$Viewer<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Viewer$Viewer$avatar<TRes> get avatar {
     final local$avatar = _instance.avatar;
     return local$avatar == null
@@ -590,8 +593,10 @@ class _CopyWithStubImpl$Query$Viewer$Viewer<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Viewer$Viewer$avatar<TRes> get avatar =>
       CopyWith$Query$Viewer$Viewer$avatar.stub(_res);
+
   CopyWith$Query$Viewer$Viewer$options<TRes> get options =>
       CopyWith$Query$Viewer$Viewer$options.stub(_res);
 }

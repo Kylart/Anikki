@@ -24,6 +24,7 @@ class Variables$Query$GetLists {
   Map<String, dynamic> _$data;
 
   String? get username => (_$data['username'] as String?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('username')) {
@@ -38,6 +39,7 @@ class Variables$Query$GetLists {
         this,
         (i) => i,
       );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -220,6 +222,7 @@ class _CopyWithImpl$Query$GetLists<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$GetLists$MediaListCollection<TRes> get MediaListCollection {
     final local$MediaListCollection = _instance.MediaListCollection;
     return local$MediaListCollection == null
@@ -240,6 +243,7 @@ class _CopyWithStubImpl$Query$GetLists<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$GetLists$MediaListCollection<TRes> get MediaListCollection =>
       CopyWith$Query$GetLists$MediaListCollection.stub(_res);
 }
@@ -734,6 +738,7 @@ class _CopyWithImpl$Query$GetLists$MediaListCollection<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   TRes lists(
           Iterable<Query$GetLists$MediaListCollection$lists?>? Function(
                   Iterable<
@@ -760,6 +765,7 @@ class _CopyWithStubImpl$Query$GetLists$MediaListCollection<TRes>
     String? $__typename,
   }) =>
       _res;
+
   lists(_fn) => _res;
 }
 
@@ -898,6 +904,7 @@ class _CopyWithImpl$Query$GetLists$MediaListCollection$lists<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   TRes entries(
           Iterable<Query$GetLists$MediaListCollection$lists$entries?>? Function(
                   Iterable<
@@ -924,6 +931,7 @@ class _CopyWithStubImpl$Query$GetLists$MediaListCollection$lists<TRes>
     String? $__typename,
   }) =>
       _res;
+
   entries(_fn) => _res;
 }
 
@@ -1220,6 +1228,7 @@ class _CopyWithImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$GetLists$MediaListCollection$lists$entries$startedAt<TRes>
       get startedAt {
     final local$startedAt = _instance.startedAt;
@@ -1268,14 +1277,17 @@ class _CopyWithStubImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$GetLists$MediaListCollection$lists$entries$startedAt<TRes>
       get startedAt =>
           CopyWith$Query$GetLists$MediaListCollection$lists$entries$startedAt
               .stub(_res);
+
   CopyWith$Query$GetLists$MediaListCollection$lists$entries$completedAt<TRes>
       get completedAt =>
           CopyWith$Query$GetLists$MediaListCollection$lists$entries$completedAt
               .stub(_res);
+
   CopyWith$Fragment$shortMedia<TRes> get media =>
       CopyWith$Fragment$shortMedia.stub(_res);
 }

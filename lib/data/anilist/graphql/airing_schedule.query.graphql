@@ -4,7 +4,7 @@ query AiringSchedule ($start: Int, $end: Int, $page: Int) {
 			hasNextPage
 			total
 		}
-		airingSchedules(airingAt_greater: $start, airingAt_lesser: $end) {
+		airingSchedules(airingAt_greater: $start, airingAt_lesser: $end, sort: TIME_DESC) {
 			id
 			episode
 			airingAt

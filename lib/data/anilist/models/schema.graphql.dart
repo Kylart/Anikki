@@ -32,8 +32,11 @@ class Input$AiringScheduleInput {
   Map<String, dynamic> _$data;
 
   int? get airingAt => (_$data['airingAt'] as int?);
+
   int? get episode => (_$data['episode'] as int?);
+
   int? get timeUntilAiring => (_$data['timeUntilAiring'] as int?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('airingAt')) {
@@ -56,6 +59,7 @@ class Input$AiringScheduleInput {
         this,
         (i) => i,
       );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -192,7 +196,9 @@ class Input$AniChartHighlightInput {
   Map<String, dynamic> _$data;
 
   int? get mediaId => (_$data['mediaId'] as int?);
+
   String? get highlight => (_$data['highlight'] as String?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('mediaId')) {
@@ -211,6 +217,7 @@ class Input$AniChartHighlightInput {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -361,12 +368,18 @@ class Input$CharacterNameInput {
   Map<String, dynamic> _$data;
 
   String? get first => (_$data['first'] as String?);
+
   String? get middle => (_$data['middle'] as String?);
+
   String? get last => (_$data['last'] as String?);
+
   String? get native => (_$data['native'] as String?);
+
   List<String?>? get alternative => (_$data['alternative'] as List<String?>?);
+
   List<String?>? get alternativeSpoiler =>
       (_$data['alternativeSpoiler'] as List<String?>?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('first')) {
@@ -402,6 +415,7 @@ class Input$CharacterNameInput {
         this,
         (i) => i,
       );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -617,8 +631,11 @@ class Input$FuzzyDateInput {
   Map<String, dynamic> _$data;
 
   int? get year => (_$data['year'] as int?);
+
   int? get month => (_$data['month'] as int?);
+
   int? get day => (_$data['day'] as int?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('year')) {
@@ -641,6 +658,7 @@ class Input$FuzzyDateInput {
         this,
         (i) => i,
       );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -775,7 +793,9 @@ class Input$ListActivityOptionInput {
   Map<String, dynamic> _$data;
 
   bool? get disabled => (_$data['disabled'] as bool?);
+
   Enum$MediaListStatus? get type => (_$data['type'] as Enum$MediaListStatus?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('disabled')) {
@@ -795,6 +815,7 @@ class Input$ListActivityOptionInput {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -915,8 +936,11 @@ class Input$MediaExternalLinkInput {
   Map<String, dynamic> _$data;
 
   int get id => (_$data['id'] as int);
+
   String get url => (_$data['url'] as String);
+
   String get site => (_$data['site'] as String);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$id = id;
@@ -933,6 +957,7 @@ class Input$MediaExternalLinkInput {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -1092,14 +1117,20 @@ class Input$MediaListOptionsInput {
   Map<String, dynamic> _$data;
 
   List<String?>? get sectionOrder => (_$data['sectionOrder'] as List<String?>?);
+
   bool? get splitCompletedSectionByFormat =>
       (_$data['splitCompletedSectionByFormat'] as bool?);
+
   List<String?>? get customLists => (_$data['customLists'] as List<String?>?);
+
   List<String?>? get advancedScoring =>
       (_$data['advancedScoring'] as List<String?>?);
+
   bool? get advancedScoringEnabled =>
       (_$data['advancedScoringEnabled'] as bool?);
+
   String? get theme => (_$data['theme'] as String?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('sectionOrder')) {
@@ -1136,6 +1167,7 @@ class Input$MediaListOptionsInput {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -1379,8 +1411,11 @@ class Input$MediaTitleInput {
   Map<String, dynamic> _$data;
 
   String? get romaji => (_$data['romaji'] as String?);
+
   String? get english => (_$data['english'] as String?);
+
   String? get native => (_$data['native'] as String?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('romaji')) {
@@ -1403,6 +1438,7 @@ class Input$MediaTitleInput {
         this,
         (i) => i,
       );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -1537,7 +1573,9 @@ class Input$NotificationOptionInput {
   Map<String, dynamic> _$data;
 
   Enum$NotificationType? get type => (_$data['type'] as Enum$NotificationType?);
+
   bool? get enabled => (_$data['enabled'] as bool?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('type')) {
@@ -1557,6 +1595,7 @@ class Input$NotificationOptionInput {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -1696,10 +1735,15 @@ class Input$StaffNameInput {
   Map<String, dynamic> _$data;
 
   String? get first => (_$data['first'] as String?);
+
   String? get middle => (_$data['middle'] as String?);
+
   String? get last => (_$data['last'] as String?);
+
   String? get native => (_$data['native'] as String?);
+
   List<String?>? get alternative => (_$data['alternative'] as List<String?>?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('first')) {
@@ -1730,6 +1774,7 @@ class Input$StaffNameInput {
         this,
         (i) => i,
       );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {

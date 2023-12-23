@@ -23,6 +23,7 @@ class Variables$Query$Recommendations {
   Map<String, dynamic> _$data;
 
   int? get page => (_$data['page'] as int?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('page')) {
@@ -37,6 +38,7 @@ class Variables$Query$Recommendations {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -217,6 +219,7 @@ class _CopyWithImpl$Query$Recommendations<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Recommendations$Page<TRes> get Page {
     final local$Page = _instance.Page;
     return local$Page == null
@@ -236,6 +239,7 @@ class _CopyWithStubImpl$Query$Recommendations<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Recommendations$Page<TRes> get Page =>
       CopyWith$Query$Recommendations$Page.stub(_res);
 }
@@ -663,6 +667,7 @@ class _CopyWithImpl$Query$Recommendations$Page<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$Recommendations$Page$pageInfo<TRes> get pageInfo {
     final local$pageInfo = _instance.pageInfo;
     return local$pageInfo == null
@@ -698,8 +703,10 @@ class _CopyWithStubImpl$Query$Recommendations$Page<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$Recommendations$Page$pageInfo<TRes> get pageInfo =>
       CopyWith$Query$Recommendations$Page$pageInfo.stub(_res);
+
   recommendations(_fn) => _res;
 }
 
@@ -986,6 +993,7 @@ class _CopyWithImpl$Query$Recommendations$Page$recommendations<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Fragment$shortMedia<TRes> get mediaRecommendation {
     final local$mediaRecommendation = _instance.mediaRecommendation;
     return local$mediaRecommendation == null
@@ -1014,8 +1022,10 @@ class _CopyWithStubImpl$Query$Recommendations$Page$recommendations<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Fragment$shortMedia<TRes> get mediaRecommendation =>
       CopyWith$Fragment$shortMedia.stub(_res);
+
   CopyWith$Fragment$shortMedia<TRes> get media =>
       CopyWith$Fragment$shortMedia.stub(_res);
 }

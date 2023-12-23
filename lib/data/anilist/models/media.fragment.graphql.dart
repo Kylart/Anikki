@@ -655,6 +655,7 @@ class _CopyWithImpl$Fragment$media<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Fragment$media$title<TRes> get title {
     final local$title = _instance.title;
     return local$title == null
@@ -756,20 +757,28 @@ class _CopyWithStubImpl$Fragment$media<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Fragment$media$title<TRes> get title =>
       CopyWith$Fragment$media$title.stub(_res);
+
   CopyWith$Fragment$media$coverImage<TRes> get coverImage =>
       CopyWith$Fragment$media$coverImage.stub(_res);
+
   CopyWith$Fragment$media$startDate<TRes> get startDate =>
       CopyWith$Fragment$media$startDate.stub(_res);
+
   CopyWith$Fragment$media$endDate<TRes> get endDate =>
       CopyWith$Fragment$media$endDate.stub(_res);
+
   CopyWith$Fragment$media$mediaListEntry<TRes> get mediaListEntry =>
       CopyWith$Fragment$media$mediaListEntry.stub(_res);
+
   CopyWith$Fragment$media$nextAiringEpisode<TRes> get nextAiringEpisode =>
       CopyWith$Fragment$media$nextAiringEpisode.stub(_res);
+
   CopyWith$Fragment$media$studios<TRes> get studios =>
       CopyWith$Fragment$media$studios.stub(_res);
+
   CopyWith$Fragment$media$relations<TRes> get relations =>
       CopyWith$Fragment$media$relations.stub(_res);
 }
@@ -2494,6 +2503,7 @@ class _CopyWithImpl$Fragment$media$studios<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   TRes edges(
           Iterable<Fragment$media$studios$edges?>? Function(
                   Iterable<
@@ -2520,6 +2530,7 @@ class _CopyWithStubImpl$Fragment$media$studios<TRes>
     String? $__typename,
   }) =>
       _res;
+
   edges(_fn) => _res;
 }
 
@@ -2656,6 +2667,7 @@ class _CopyWithImpl$Fragment$media$studios$edges<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Fragment$media$studios$edges$node<TRes> get node {
     final local$node = _instance.node;
     return local$node == null
@@ -2677,6 +2689,7 @@ class _CopyWithStubImpl$Fragment$media$studios$edges<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Fragment$media$studios$edges$node<TRes> get node =>
       CopyWith$Fragment$media$studios$edges$node.stub(_res);
 }
@@ -2957,6 +2970,7 @@ class _CopyWithImpl$Fragment$media$relations<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   TRes edges(
           Iterable<Fragment$media$relations$edges?>? Function(
                   Iterable<
@@ -2983,6 +2997,7 @@ class _CopyWithStubImpl$Fragment$media$relations<TRes>
     String? $__typename,
   }) =>
       _res;
+
   edges(_fn) => _res;
 }
 
@@ -3123,6 +3138,7 @@ class _CopyWithImpl$Fragment$media$relations$edges<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Fragment$media$relations$edges$node<TRes> get node {
     final local$node = _instance.node;
     return local$node == null
@@ -3144,6 +3160,7 @@ class _CopyWithStubImpl$Fragment$media$relations$edges<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Fragment$media$relations$edges$node<TRes> get node =>
       CopyWith$Fragment$media$relations$edges$node.stub(_res);
 }
@@ -3299,6 +3316,7 @@ class _CopyWithImpl$Fragment$media$relations$edges$node<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Fragment$media$relations$edges$node$title<TRes> get title {
     final local$title = _instance.title;
     return local$title == null
@@ -3322,6 +3340,7 @@ class _CopyWithStubImpl$Fragment$media$relations$edges$node<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Fragment$media$relations$edges$node$title<TRes> get title =>
       CopyWith$Fragment$media$relations$edges$node$title.stub(_res);
 }
@@ -4050,6 +4069,7 @@ class _CopyWithImpl$Fragment$shortMedia<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Fragment$shortMedia$title<TRes> get title {
     final local$title = _instance.title;
     return local$title == null
@@ -4088,6 +4108,7 @@ class _CopyWithImpl$Fragment$shortMedia<TRes>
                       e,
                       (i) => i,
                     )))?.toList());
+
   CopyWith$Fragment$shortMedia$nextAiringEpisode<TRes> get nextAiringEpisode {
     final local$nextAiringEpisode = _instance.nextAiringEpisode;
     return local$nextAiringEpisode == null
@@ -4144,17 +4165,24 @@ class _CopyWithStubImpl$Fragment$shortMedia<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Fragment$shortMedia$title<TRes> get title =>
       CopyWith$Fragment$shortMedia$title.stub(_res);
+
   CopyWith$Fragment$shortMedia$coverImage<TRes> get coverImage =>
       CopyWith$Fragment$shortMedia$coverImage.stub(_res);
+
   CopyWith$Fragment$shortMedia$trailer<TRes> get trailer =>
       CopyWith$Fragment$shortMedia$trailer.stub(_res);
+
   streamingEpisodes(_fn) => _res;
+
   CopyWith$Fragment$shortMedia$nextAiringEpisode<TRes> get nextAiringEpisode =>
       CopyWith$Fragment$shortMedia$nextAiringEpisode.stub(_res);
+
   CopyWith$Fragment$shortMedia$studios<TRes> get studios =>
       CopyWith$Fragment$shortMedia$studios.stub(_res);
+
   CopyWith$Fragment$shortMedia$startDate<TRes> get startDate =>
       CopyWith$Fragment$shortMedia$startDate.stub(_res);
 }
@@ -5566,6 +5594,7 @@ class _CopyWithImpl$Fragment$shortMedia$studios<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   TRes nodes(
           Iterable<Fragment$shortMedia$studios$nodes?>? Function(
                   Iterable<
@@ -5592,6 +5621,7 @@ class _CopyWithStubImpl$Fragment$shortMedia$studios<TRes>
     String? $__typename,
   }) =>
       _res;
+
   nodes(_fn) => _res;
 }
 

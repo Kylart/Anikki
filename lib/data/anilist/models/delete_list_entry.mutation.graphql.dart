@@ -22,6 +22,7 @@ class Variables$Mutation$DeleteEntry {
   Map<String, dynamic> _$data;
 
   int? get mediaId => (_$data['mediaId'] as int?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('mediaId')) {
@@ -36,6 +37,7 @@ class Variables$Mutation$DeleteEntry {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -219,6 +221,7 @@ class _CopyWithImpl$Mutation$DeleteEntry<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Mutation$DeleteEntry$DeleteMediaListEntry<TRes>
       get DeleteMediaListEntry {
     final local$DeleteMediaListEntry = _instance.DeleteMediaListEntry;
@@ -241,6 +244,7 @@ class _CopyWithStubImpl$Mutation$DeleteEntry<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Mutation$DeleteEntry$DeleteMediaListEntry<TRes>
       get DeleteMediaListEntry =>
           CopyWith$Mutation$DeleteEntry$DeleteMediaListEntry.stub(_res);

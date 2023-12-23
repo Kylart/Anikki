@@ -37,8 +37,11 @@ class Variables$Query$AiringSchedule {
   Map<String, dynamic> _$data;
 
   int? get start => (_$data['start'] as int?);
+
   int? get end => (_$data['end'] as int?);
+
   int? get page => (_$data['page'] as int?);
+
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('start')) {
@@ -61,6 +64,7 @@ class Variables$Query$AiringSchedule {
             this,
             (i) => i,
           );
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
@@ -278,6 +282,7 @@ class _CopyWithImpl$Query$AiringSchedule<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$AiringSchedule$Page<TRes> get Page {
     final local$Page = _instance.Page;
     return local$Page == null
@@ -297,6 +302,7 @@ class _CopyWithStubImpl$Query$AiringSchedule<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$AiringSchedule$Page<TRes> get Page =>
       CopyWith$Query$AiringSchedule$Page.stub(_res);
 }
@@ -387,6 +393,10 @@ const documentNodeQueryAiringSchedule = DocumentNode(definitions: [
               ArgumentNode(
                 name: NameNode(value: 'airingAt_lesser'),
                 value: VariableNode(name: NameNode(value: 'end')),
+              ),
+              ArgumentNode(
+                name: NameNode(value: 'sort'),
+                value: EnumValueNode(name: NameNode(value: 'TIME_DESC')),
               ),
             ],
             directives: [],
@@ -752,6 +762,7 @@ class _CopyWithImpl$Query$AiringSchedule$Page<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Query$AiringSchedule$Page$pageInfo<TRes> get pageInfo {
     final local$pageInfo = _instance.pageInfo;
     return local$pageInfo == null
@@ -787,8 +798,10 @@ class _CopyWithStubImpl$Query$AiringSchedule$Page<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Query$AiringSchedule$Page$pageInfo<TRes> get pageInfo =>
       CopyWith$Query$AiringSchedule$Page$pageInfo.stub(_res);
+
   airingSchedules(_fn) => _res;
 }
 
@@ -1107,6 +1120,7 @@ class _CopyWithImpl$Query$AiringSchedule$Page$airingSchedules<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+
   CopyWith$Fragment$shortMedia<TRes> get media {
     final local$media = _instance.media;
     return local$media == null
@@ -1129,6 +1143,7 @@ class _CopyWithStubImpl$Query$AiringSchedule$Page$airingSchedules<TRes>
     String? $__typename,
   }) =>
       _res;
+
   CopyWith$Fragment$shortMedia<TRes> get media =>
       CopyWith$Fragment$shortMedia.stub(_res);
 }
