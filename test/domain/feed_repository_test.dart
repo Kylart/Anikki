@@ -31,8 +31,9 @@ void main() {
     group('getSchedule method', () {
       setUp(() {
         anilist = MockAnilist();
-        when(() => anilist.getSchedule(range))
-            .thenAnswer((_) async => scheduleMock);
+        when(
+          () => anilist.getSchedule(range),
+        ).thenAnswer((_) async => scheduleMock);
 
         repository = FeedRepository(anilist);
       });
@@ -41,8 +42,14 @@ void main() {
         final entries = await repository.getSchedule(range);
 
         expect(entries.length, scheduleMock.length);
-        expect(entries.first, Media(anilistInfo: scheduleMock.first.media));
-        expect(entries.last, Media(anilistInfo: scheduleMock.last.media));
+        expect(
+          entries.first,
+          scheduleMock.first,
+        );
+        expect(
+          entries.last,
+          scheduleMock.last,
+        );
       });
     });
 
@@ -56,11 +63,23 @@ void main() {
         test('is on', () {
           final result = repository.filterEntries(
             [
-              Media(
-                anilistInfo: Fragment$shortMedia(id: 0, isAdult: true),
+              Query$AiringSchedule$Page$airingSchedules(
+                id: 0,
+                airingAt: 0,
+                episode: 1,
+                media: Fragment$shortMedia(
+                  id: 0,
+                  isAdult: true,
+                ),
               ),
-              Media(
-                anilistInfo: Fragment$shortMedia(id: 1, isAdult: false),
+              Query$AiringSchedule$Page$airingSchedules(
+                id: 1,
+                airingAt: 0,
+                episode: 1,
+                media: Fragment$shortMedia(
+                  id: 0,
+                  isAdult: false,
+                ),
               ),
             ],
             const HomeFeedOptions(
@@ -70,18 +89,30 @@ void main() {
           );
 
           expect(result.length, 2);
-          expect(result.first.anilistInfo.id, 0);
-          expect(result.first.anilistInfo.isAdult, true);
+          expect(result.first.id, 0);
+          expect(result.first.media?.isAdult, true);
         });
 
         test('is off', () {
           final result = repository.filterEntries(
             [
-              Media(
-                anilistInfo: Fragment$shortMedia(id: 0, isAdult: true),
+              Query$AiringSchedule$Page$airingSchedules(
+                id: 0,
+                airingAt: 0,
+                episode: 1,
+                media: Fragment$shortMedia(
+                  id: 0,
+                  isAdult: true,
+                ),
               ),
-              Media(
-                anilistInfo: Fragment$shortMedia(id: 1, isAdult: false),
+              Query$AiringSchedule$Page$airingSchedules(
+                id: 1,
+                airingAt: 0,
+                episode: 1,
+                media: Fragment$shortMedia(
+                  id: 0,
+                  isAdult: false,
+                ),
               ),
             ],
             const HomeFeedOptions(
@@ -91,8 +122,8 @@ void main() {
           );
 
           expect(result.length, 1);
-          expect(result.first.anilistInfo.id, 1);
-          expect(result.first.anilistInfo.isAdult, false);
+          expect(result.first.id, 1);
+          expect(result.first.media?.isAdult, false);
         });
       });
 
@@ -100,33 +131,39 @@ void main() {
         test('is on alone', () {
           final result = repository.filterEntries(
             [
-              Media(
-                anilistInfo: Fragment$shortMedia(
+              Query$AiringSchedule$Page$airingSchedules(
+                id: 0,
+                airingAt: 0,
+                episode: 1,
+                media: Fragment$shortMedia(
                   id: 0,
+                  isAdult: false,
                   countryOfOrigin: 'JP',
-                  isAdult: false,
                 ),
               ),
-              Media(
-                anilistInfo: Fragment$shortMedia(
-                  id: 1,
+              Query$AiringSchedule$Page$airingSchedules(
+                id: 1,
+                airingAt: 0,
+                episode: 1,
+                media: Fragment$shortMedia(
+                  id: 0,
+                  isAdult: false,
                   countryOfOrigin: 'KR',
-                  isAdult: false,
                 ),
               ),
-              Media(
-                anilistInfo: Fragment$shortMedia(
-                  id: 1,
-                  countryOfOrigin: 'CN',
-                  isAdult: false,
-                ),
+              Query$AiringSchedule$Page$airingSchedules(
+                id: 2,
+                airingAt: 0,
+                episode: 1,
+                media: Fragment$shortMedia(
+                    id: 0, isAdult: false, countryOfOrigin: 'CN'),
               ),
             ],
             const HomeFeedOptions(),
           );
 
           expect(result.length, 1);
-          expect(result.first.anilistInfo.id, 0);
+          expect(result.first.id, 0);
         });
       });
     });

@@ -7,7 +7,7 @@ sealed class HomeFeedState extends Equatable {
     this.options = const HomeFeedOptions(),
   });
 
-  final List<Media> entries;
+  final List<Query$AiringSchedule$Page$airingSchedules> entries;
   final DateTimeRange? range;
   final HomeFeedOptions options;
 

@@ -41,7 +41,11 @@ class _HomeViewState extends State<HomeView> {
           .state
           .entries
           .map((e) => Media(anilistInfo: e.media)),
-      ...BlocProvider.of<HomeFeedBloc>(context).state.entries,
+      ...BlocProvider.of<HomeFeedBloc>(context).state.entries.map(
+            (e) => Media(
+              anilistInfo: e.media,
+            ),
+          ),
     ].where(
       (element) => element.bannerImage != null,
     );

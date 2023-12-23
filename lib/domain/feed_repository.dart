@@ -11,14 +11,9 @@ class FeedRepository {
   final Anilist anilist;
 
   /// Returns the release schedule for the given `range`
-  Future<List<Media>> getSchedule(DateTimeRange range) async {
-    final entries = await anilist.getSchedule(range);
-
-    return entries
-        .map(
-          (e) => Media(anilistInfo: e.media),
-        )
-        .toList();
+  Future<List<Query$AiringSchedule$Page$airingSchedules>> getSchedule(
+      DateTimeRange range) async {
+    return await anilist.getSchedule(range);
   }
 
   /// Returns the trending entries
@@ -44,19 +39,19 @@ class FeedRepository {
   }
 
   // Filter the given `entries` by applying the given `options`
-  List<Media> filterEntries(
-    List<Media> entries,
+  List<Query$AiringSchedule$Page$airingSchedules> filterEntries(
+    List<Query$AiringSchedule$Page$airingSchedules> entries,
     HomeFeedOptions options,
   ) {
     return entries.where((entry) {
       bool included = true;
 
       if (!options.showAdult) {
-        included = included && entry.anilistInfo.isAdult == false;
+        included = included && entry.media?.isAdult == false;
       }
 
       if (options.showOnlyJap) {
-        included = included && entry.anilistInfo.countryOfOrigin == 'JP';
+        included = included && entry.media?.countryOfOrigin == 'JP';
       }
 
       return included;

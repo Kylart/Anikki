@@ -1,3 +1,4 @@
+import 'package:anikki/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -62,9 +63,8 @@ class HomeFeedView extends StatelessWidget {
                       state.options,
                     ))
                       HomeEntryCard(
-                        media: entry,
-                        text: entry.anilistInfo.nextAiringEpisode?.episode
-                            .toString(),
+                        media: Media(anilistInfo: entry.media),
+                        text: entry.episode.toString(),
                       ),
                   ],
                 ),
