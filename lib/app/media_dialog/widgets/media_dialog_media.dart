@@ -66,17 +66,7 @@ class MediaDialogMedia extends StatelessWidget {
                 if (media.anilistInfo.trailer?.id != null &&
                     media.anilistInfo.trailer?.site == 'youtube' &&
                     media.anilistInfo.trailer?.thumbnail != null)
-                  Container(
-                    constraints: const BoxConstraints(
-                      maxHeight: 600,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Center(
-                        child: MediaDialogTrailer(media: media),
-                      ),
-                    ),
-                  ),
+                  MediaDialogTrailer(media: media),
                 if (media.anilistInfo.genres != null &&
                     media.anilistInfo.genres!.isNotEmpty)
                   Padding(

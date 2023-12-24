@@ -24,49 +24,59 @@ class _MediaDialogTrailerState extends State<MediaDialogTrailer> {
 
   bool showThumbnail = true;
 
+  Widget get videoThumbnail => Stack(
+        children: [
+          Positioned.fill(
+            child: LayoutCard(
+              child: Image.network(
+                thumbnail!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 80.0),
+                      child: Text('Could not load thumbnail'),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Center(
+              child: IconButton.filledTonal(
+                padding: const EdgeInsets.all(12.0),
+                onPressed: () => setState(() {
+                  showThumbnail = false;
+                }),
+                icon: const Icon(Ionicons.play),
+              ),
+            ),
+          )
+        ],
+      );
+
   @override
   Widget build(BuildContext context) {
     if (thumbnail == null || id == null || site != 'youtube') {
       return const SizedBox();
     }
 
-    return showThumbnail
-        ? Stack(
-            children: [
-              Center(
-                child: LayoutCard(
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Image.network(
-                      thumbnail!,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 80.0),
-                            child: Text('Could not load thumbnail'),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+    return Container(
+      constraints: const BoxConstraints(
+        maxHeight: 600,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: showThumbnail
+              ? videoThumbnail
+              : MediaDialogVideoPlayer(
+                  url: 'https://www.${site!}.com/watch?v=${id!}',
                 ),
-              ),
-              Positioned.fill(
-                child: Center(
-                  child: IconButton.filledTonal(
-                    padding: const EdgeInsets.all(12.0),
-                    onPressed: () => setState(() {
-                      showThumbnail = false;
-                    }),
-                    icon: const Icon(Ionicons.play),
-                  ),
-                ),
-              )
-            ],
-          )
-        : MediaDialogVideoPlayer(
-            url: 'https://www.${site!}.com/watch?v=${id!}',
-          );
+        ),
+      ),
+    );
   }
 }

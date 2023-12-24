@@ -141,13 +141,7 @@ class _EntryTileState<T> extends State<EntryTile> {
               if (media.anilistInfo.trailer?.id != null &&
                   media.anilistInfo.trailer?.site == 'youtube' &&
                   media.anilistInfo.trailer?.thumbnail != null)
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: MediaDialogTrailer(media: media),
-                  ),
-                ),
+                MediaDialogTrailer(media: media),
             ],
           )
         ],
