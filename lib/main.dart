@@ -45,7 +45,7 @@ void main() async {
 
   runApp(
     DevicePreview(
-      enabled: !kReleaseMode,
+      enabled: Platform.environment['DEVICE_PREVIEW'] == 'on',
       //// Providers are above [Anikki] instead of inside it, so that tests
       //// can use [Anikki] while mocking the providers
       builder: (context) => const AnikkiBlocProvider(
