@@ -4,8 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:anikki/core/helpers/logger.dart';
-
 part 'connectivity_event.dart';
 part 'connectivity_state.dart';
 
@@ -16,8 +14,6 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
 
   ConnectivityBloc() : super(ConnectivityUnknown()) {
     on<ConnectivityEvent>((event, emit) {
-      logger.info('Connectivity event: $event');
-
       emit(event.isConnected ? ConnectivityOnline() : ConnectivityOffline());
     });
 
