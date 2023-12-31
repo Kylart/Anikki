@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -43,10 +44,13 @@ void main() async {
   );
 
   runApp(
-    //// Providers are above [Anikki] instead of inside it, so that tests
-    //// can use [Anikki] while mocking the providers
-    const AnikkiBlocProvider(
-      child: Anikki(),
+    DevicePreview(
+      enabled: !kReleaseMode,
+      //// Providers are above [Anikki] instead of inside it, so that tests
+      //// can use [Anikki] while mocking the providers
+      builder: (context) => const AnikkiBlocProvider(
+        child: Anikki(),
+      ),
     ),
   );
 }
