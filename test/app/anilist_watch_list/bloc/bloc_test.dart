@@ -1,7 +1,6 @@
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 import 'package:collection/collection.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -13,9 +12,6 @@ import '../../../fixtures/anilist.dart';
 class UserListRepositoryMock extends Mock implements UserListRepository {}
 
 void main() {
-  /// Shuts off logging except for errors
-  Logger.level = Level.error;
-
   group('unit test: WatchList Bloc', () {
     late WatchListBloc bloc;
     late UserListRepositoryMock repository;

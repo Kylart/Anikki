@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:anikki/domain/domain.dart';
@@ -7,9 +6,6 @@ import 'package:anikki/domain/domain.dart';
 import '../fixtures/anilist.dart';
 
 void main() {
-  /// Shuts off logging except for errors
-  Logger.level = Level.error;
-
   group('unit test: UserRepository', () {
     late MockAnilist anilist;
     late UserRepository repository;

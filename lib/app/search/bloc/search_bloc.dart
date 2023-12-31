@@ -15,7 +15,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   SearchBloc(this.repository) : super(const SearchEmptyTerm()) {
     on<SearchEvent>((event, emit) {
-      logger.t('Search Event: ${event.runtimeType}');
+      logger.info('Search Event: ${event.runtimeType}');
     });
 
     on<SearchRequested>(_onSearchRequested);

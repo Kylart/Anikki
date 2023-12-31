@@ -16,7 +16,7 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
 
   ConnectivityBloc() : super(ConnectivityUnknown()) {
     on<ConnectivityEvent>((event, emit) {
-      logger.t('Connectivity event: $event');
+      logger.info('Connectivity event: $event');
 
       emit(event.isConnected ? ConnectivityOnline() : ConnectivityOffline());
     });

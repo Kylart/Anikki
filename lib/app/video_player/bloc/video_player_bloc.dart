@@ -24,7 +24,7 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
         ) {
     on<VideoPlayerEvent>((event, emit) {
       if (event.runtimeType != VideoPlayerResetShowTimer) {
-        logger.t('Video Player event: ${event.runtimeType}');
+        logger.info('Video Player event: ${event.runtimeType}');
       }
     });
 

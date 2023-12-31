@@ -2,7 +2,6 @@ import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:anikki/core/core.dart';
@@ -15,9 +14,6 @@ class TorrentSearchRepositoryMock extends Mock
     implements TorrentSearchRepository {}
 
 void main() {
-  /// Shuts off logging except for errors
-  Logger.level = Level.error;
-
   group('unit test: Downloader Bloc', () {
     late DownloaderBloc bloc;
     late TorrentSearchRepositoryMock repository;

@@ -9,6 +9,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   protocol_handler
   screen_brightness_windows
   screen_retriever
+  share_plus
   url_launcher_windows
   window_manager
 )

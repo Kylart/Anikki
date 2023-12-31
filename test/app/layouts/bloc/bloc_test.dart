@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
@@ -7,9 +6,6 @@ import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
 
 void main() {
-  /// Shuts off logging except for errors
-  Logger.level = Level.error;
-
   group('unit test: Layout Bloc', () {
     blocTest(
       'emits [LayoutLandscape] when [LayoutSizeChanged] is added with big size',

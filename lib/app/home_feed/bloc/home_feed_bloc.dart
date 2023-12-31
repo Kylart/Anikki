@@ -13,7 +13,7 @@ class HomeFeedBloc extends AutoRefreshBloc<HomeFeedEvent, HomeFeedState> {
 
   HomeFeedBloc(this.repository) : super(HomeFeedInitial()) {
     on<HomeFeedEvent>((event, emit) {
-      logger.t('HomeFeedEvent: ${event.runtimeType}');
+      logger.info('HomeFeedEvent: ${event.runtimeType}');
     });
 
     on<HomeFeedRefresh>(_onRefresh);

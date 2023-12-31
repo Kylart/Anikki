@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
 
@@ -11,9 +10,6 @@ import '../../../helpers/init_hive.dart';
 import '../../../helpers/init_hydrated_storage.dart';
 
 void main() {
-  /// Shuts off logging except for errors
-  Logger.level = Level.error;
-
   initHive();
   initHydratedStorage();
 

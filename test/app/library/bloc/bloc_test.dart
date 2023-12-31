@@ -1,4 +1,3 @@
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -21,9 +20,6 @@ class MockLocalFile extends Mock implements LocalFile {}
 void main() async {
   initHive();
   initHydratedStorage();
-
-  /// Shuts off logging except for errors
-  Logger.level = Level.error;
 
   group('unit test: Library Bloc', () {
     late LibraryBloc bloc;

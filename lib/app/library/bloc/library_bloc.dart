@@ -23,7 +23,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
 
   LibraryBloc(this.repository) : super(const LibraryInitial()) {
     on<LibraryEvent>((event, emit) {
-      logger.t('Library event: ${event.runtimeType}');
+      logger.info('Library event: ${event.runtimeType}');
     });
 
     on<LibraryUpdateRequested>(_onUpdateRequested);

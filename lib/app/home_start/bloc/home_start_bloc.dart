@@ -13,7 +13,7 @@ class HomeStartBloc extends AutoRefreshBloc<HomeStartEvent, HomeStartState> {
 
   HomeStartBloc(this.repository) : super(HomeStartInitial()) {
     on<HomeStartEvent>((event, emit) {
-      logger.t('HomeStartEvent: ${event.runtimeType}');
+      logger.info('HomeStartEvent: ${event.runtimeType}');
     });
 
     on<HomeStartRefresh>(_onRefresh);

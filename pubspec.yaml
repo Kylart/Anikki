@@ -40,6 +40,10 @@ dependencies:
   protocol_handler: ^0.1.6
   quiver: ^3.2.1
   screen_brightness: ^0.2.2+1
+  talker: ^3.2.0
+  talker_flutter: ^3.6.0
+  talker_logger: ^3.1.0
+  talker_bloc_logger: ^2.4.0
   url_launcher: ^6.1.14
   watcher: ^1.1.0
   window_manager: ^0.3.6
@@ -57,7 +61,6 @@ dependencies:
   flutter_platform_widgets: ^6.0.2
   flutter_staggered_animations: ^1.1.1
   google_fonts: ^6.1.0
-  logger: ^2.0.2
   marqueer:
     git:
       url: https://github.com/Kylart/marqueer

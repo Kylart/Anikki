@@ -14,7 +14,7 @@ class HomeContinueBloc
 
   HomeContinueBloc(this.repository) : super(HomeContinueInitial()) {
     on<HomeContinueEvent>((event, emit) {
-      logger.t('HomeContinueEvent: ${event.runtimeType}');
+      logger.info('HomeContinueEvent: ${event.runtimeType}');
     });
 
     on<HomeContinueRefresh>(_onRefresh);

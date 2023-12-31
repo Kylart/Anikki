@@ -13,7 +13,7 @@ class HomeMoreBloc extends AutoRefreshBloc<HomeMoreEvent, HomeMoreState> {
 
   HomeMoreBloc(this.repository) : super(HomeMoreInitial()) {
     on<HomeMoreEvent>((event, emit) {
-      logger.t('HomeMoreEvent: ${event.runtimeType}');
+      logger.info('HomeMoreEvent: ${event.runtimeType}');
     });
 
     on<HomeMoreRefresh>(_onRefresh);

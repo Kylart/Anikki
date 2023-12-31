@@ -18,7 +18,7 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
           ),
         ) {
     on<StreamHandlerEvent>((event, emit) {
-      logger.t('StreamHandler Event: ${event.runtimeType}');
+      logger.info('StreamHandler Event: ${event.runtimeType}');
     });
 
     on<StreamHandlerShowRequested>(_onShowRequested);

@@ -56,7 +56,7 @@ class _LoggingActionDispatcher extends ActionDispatcher {
     covariant Intent intent, [
     BuildContext? context,
   ]) {
-    logger.i('Action invoked: $action($intent)');
+    logger.info('Action invoked: $action($intent)');
     super.invokeAction(action, intent, context);
 
     return null;

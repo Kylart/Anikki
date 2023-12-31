@@ -11,6 +11,7 @@ import 'package:protocol_handler/protocol_handler.dart';
 
 import 'package:anikki/anikki.dart';
 import 'package:anikki/core/core.dart';
+import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 
 void main() async {
   /// Flutter hooks
@@ -37,7 +38,7 @@ void main() async {
   ]);
 
   /// Bloc init hooks
-  Bloc.observer = const Observer();
+  Bloc.observer = TalkerBlocObserver();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: storageDirectory,
   );

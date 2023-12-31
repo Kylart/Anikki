@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -14,8 +13,6 @@ import '../../../helpers/init_hive.dart';
 class UserRepositoryMock extends Mock implements UserRepository {}
 
 void main() {
-  /// Shuts off logging except for errors
-  Logger.level = Level.error;
 
   initHive();
 

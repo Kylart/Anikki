@@ -1,7 +1,9 @@
-import 'package:logger/logger.dart';
+import 'dart:io';
 
-final logger = Logger(
-  printer: PrettyPrinter(
-    methodCount: 0,
-  ),
+import 'package:talker_flutter/talker_flutter.dart';
+
+final logger = Talker(
+  settings: TalkerSettings(
+    useConsoleLogs: !Platform.environment.containsKey('FLUTTER_TEST')
+  )
 );

@@ -95,7 +95,7 @@ class ConsumetRepository {
 
         if (results.isNotEmpty) break;
       } on NoEpisodeSourceException {
-        logger.e('Could not get links for $term');
+        logger.error('Could not get links for $term');
       }
     }
 

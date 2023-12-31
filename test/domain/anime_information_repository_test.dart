@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:anikki/data/data.dart';
@@ -10,9 +9,6 @@ import '../fixtures/files.dart';
 import '../fixtures/nyaa.dart';
 
 void main() {
-  /// Shuts off logging except for errors
-  Logger.level = Level.error;
-
   group('unit test: AnimeInformationRepository', () {
     late MockAnilist anilist;
     late MockNyaa nyaa;
