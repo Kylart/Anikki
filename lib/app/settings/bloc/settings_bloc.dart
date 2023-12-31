@@ -14,10 +14,6 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
             settings ?? const Settings(),
           ),
         ) {
-    on<SettingsEvent>((event, emit) {
-      logger.info('Settings event: ${event.runtimeType}');
-    });
-
     on<SettingsUpdated>(_onUpdated);
     on<SettingsUpdateFailed>(_onUpdateFailed);
 

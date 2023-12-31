@@ -17,10 +17,6 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
             media: Fragment$shortMedia(id: 0),
           ),
         ) {
-    on<StreamHandlerEvent>((event, emit) {
-      logger.info('StreamHandler Event: ${event.runtimeType}');
-    });
-
     on<StreamHandlerShowRequested>(_onShowRequested);
     on<StreamHandlerCloseRequested>(_onCloseRequested);
     on<StreamHandlerRequested>(_onRequested);

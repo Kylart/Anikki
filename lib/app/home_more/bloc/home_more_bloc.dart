@@ -12,10 +12,6 @@ class HomeMoreBloc extends AutoRefreshBloc<HomeMoreEvent, HomeMoreState> {
   final FeedRepository repository;
 
   HomeMoreBloc(this.repository) : super(HomeMoreInitial()) {
-    on<HomeMoreEvent>((event, emit) {
-      logger.info('HomeMoreEvent: ${event.runtimeType}');
-    });
-
     on<HomeMoreRefresh>(_onRefresh);
 
     setUpAutoRefresh();

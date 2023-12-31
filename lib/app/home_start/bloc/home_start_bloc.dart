@@ -12,10 +12,6 @@ class HomeStartBloc extends AutoRefreshBloc<HomeStartEvent, HomeStartState> {
   final UserListRepository repository;
 
   HomeStartBloc(this.repository) : super(HomeStartInitial()) {
-    on<HomeStartEvent>((event, emit) {
-      logger.info('HomeStartEvent: ${event.runtimeType}');
-    });
-
     on<HomeStartRefresh>(_onRefresh);
 
     setUpAutoRefresh();

@@ -19,12 +19,6 @@ class TorrentBloc extends Bloc<TorrentEvent, TorrentState> {
   bool get isEmpty => repository is EmptyRepository;
 
   TorrentBloc(this.repository) : super(TorrentInitial()) {
-    on<TorrentEvent>((event, emit) {
-      if (event is TorrentDataRequested) return;
-
-      logger.info('TorrentEvent: ${event.runtimeType}');
-    });
-
     on<TorrentSettingsUpdated>(_onSettingsUpdated);
     on<TorrentDataRequested>(_onDataRequested);
     on<TorrentPauseTorrent>(_onPauseTorrent);

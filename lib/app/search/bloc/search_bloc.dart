@@ -14,10 +14,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final AnimeInformationRepository repository;
 
   SearchBloc(this.repository) : super(const SearchEmptyTerm()) {
-    on<SearchEvent>((event, emit) {
-      logger.info('Search Event: ${event.runtimeType}');
-    });
-
     on<SearchRequested>(_onSearchRequested);
   }
 

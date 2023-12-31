@@ -22,12 +22,6 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
       : super(
           const VideoPlayerState(),
         ) {
-    on<VideoPlayerEvent>((event, emit) {
-      if (event.runtimeType != VideoPlayerResetShowTimer) {
-        logger.info('Video Player event: ${event.runtimeType}');
-      }
-    });
-
     on<VideoPlayerPlayRequested>((event, emit) {
       Navigator.of(event.context).push(
         FadeOverlay(

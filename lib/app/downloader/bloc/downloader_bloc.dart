@@ -16,10 +16,6 @@ class DownloaderBloc extends Bloc<DownloaderEvent, DownloaderState> {
   DownloaderFilter filter = const DownloaderFilter();
 
   DownloaderBloc(this.repository) : super(const DownloaderClose()) {
-    on<DownloaderEvent>((event, emit) {
-      logger.info('Downloader Event: ${event.runtimeType}');
-    });
-
     on<DownloaderRequested>(_onDownloaderRequest);
     on<DownloaderClosed>(_onDownloaderClose);
     on<DownloaderFiltered>(_onDownloaderFilter);

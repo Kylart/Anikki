@@ -13,10 +13,6 @@ class HomeContinueBloc
   final UserListRepository repository;
 
   HomeContinueBloc(this.repository) : super(HomeContinueInitial()) {
-    on<HomeContinueEvent>((event, emit) {
-      logger.info('HomeContinueEvent: ${event.runtimeType}');
-    });
-
     on<HomeContinueRefresh>(_onRefresh);
 
     setUpAutoRefresh();

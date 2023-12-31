@@ -4,8 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
-import 'package:anikki/core/core.dart';
-
 part 'anilist_auth_event.dart';
 part 'anilist_auth_state.dart';
 
@@ -15,10 +13,6 @@ class AnilistAuthBloc extends Bloc<AnilistAuthEvent, AnilistAuthState> {
   bool get isConnected => state.runtimeType == AnilistAuthSuccess;
 
   AnilistAuthBloc(this.repository) : super(AnilistAuthLoggedOut()) {
-    on<AnilistAuthEvent>((event, emit) {
-      logger.info('AnilistAuth event: ${event.runtimeType}');
-    });
-
     on<AnilistAuthLoginRequested>(_login);
     on<AnilistAuthLogoutRequested>(_logout);
   }

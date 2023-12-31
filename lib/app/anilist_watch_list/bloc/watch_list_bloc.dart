@@ -16,10 +16,6 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
   WatchListBloc(
     this.repository,
   ) : super(const WatchListInitial(username: null)) {
-    on<WatchListEvent>((event, emit) {
-      logger.info('WatchList event: ${event.runtimeType}');
-    });
-
     on<WatchListRequested>(_onRequested);
     on<WatchListReset>(_onReset);
     on<WatchListWatched>(_onWatched);

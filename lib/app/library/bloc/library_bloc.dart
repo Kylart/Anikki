@@ -22,10 +22,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   final LocalStorageRepository repository;
 
   LibraryBloc(this.repository) : super(const LibraryInitial()) {
-    on<LibraryEvent>((event, emit) {
-      logger.info('Library event: ${event.runtimeType}');
-    });
-
     on<LibraryUpdateRequested>(_onUpdateRequested);
     on<LibraryFileDeleted>(_onFileDeleted);
     on<LibraryFileAdded>(_onFileAdded);
