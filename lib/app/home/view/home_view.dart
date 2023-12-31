@@ -32,6 +32,7 @@ class _HomeViewState extends State<HomeView> {
 
   void updateBackgroundMedia() {
     final homeBloc = BlocProvider.of<HomeBloc>(context);
+    final homeFeedBloc = BlocProvider.of<HomeFeedBloc>(context);
     final entries = <Media>[
       ...BlocProvider.of<HomeContinueBloc>(context)
           .state
@@ -41,14 +42,24 @@ class _HomeViewState extends State<HomeView> {
           .state
           .entries
           .map((e) => Media(anilistInfo: e.media)),
-      ...BlocProvider.of<HomeFeedBloc>(context).state.entries.map(
-            (e) => Media(
-              anilistInfo: e.media,
-            ),
-          ),
-    ].where(
-      (element) => element.bannerImage != null,
-    );
+      ...homeFeedBloc.state.entries.map(
+        (e) => Media(
+          anilistInfo: e.media,
+        ),
+      ),
+    ]
+        .where(
+          (element) =>
+              element.bannerImage != null &&
+              (homeFeedBloc.state.options.showAdult
+                  ? true
+                  : element.anilistInfo.isAdult == false) &&
+              (homeFeedBloc.state.options.showOnlyJap
+                  ? element.anilistInfo.countryOfOrigin == 'JP'
+                  : true),
+        )
+        .toSet()
+        .toList();
 
     if (entries.isEmpty) return;
 
