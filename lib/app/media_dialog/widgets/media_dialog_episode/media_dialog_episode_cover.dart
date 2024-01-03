@@ -38,15 +38,6 @@ class _MediaDialogEpisodeCoverState extends State<MediaDialogEpisodeCover> {
               },
             ),
           ),
-          child: const Center(
-            child: EntryTag(
-              padding: EdgeInsets.all(12.0),
-              child: Icon(
-                Ionicons.play,
-                size: 24,
-              ),
-            ),
-          ),
         ),
       );
     } else {

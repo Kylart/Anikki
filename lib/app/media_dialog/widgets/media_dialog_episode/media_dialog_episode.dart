@@ -31,13 +31,14 @@ class MediaDialogEpisode extends StatelessWidget {
     this.entry,
     LocalFile? file,
   }) {
-    this.file = file ??
-        entry?.entries.firstWhereOrNull((element) => element.episode == index);
-
     if (media?.anilistInfo.format == Enum$MediaFormat.MOVIE &&
         entry != null &&
-        this.file == null) {
+        file == null) {
       this.file = entry?.entries.first;
+    } else {
+      this.file = file ??
+          entry?.entries
+              .firstWhereOrNull((element) => element.episode == index);
     }
   }
 
@@ -53,19 +54,33 @@ class MediaDialogEpisode extends StatelessWidget {
   /// Specific [LocalFile] for this episode. Useful for non-numbered episodes (movies, OVAs)
   late final LocalFile? file;
 
-  Fragment$shortMedia$streamingEpisodes? get info =>
-      media?.anilistInfo.streamingEpisodes?.firstWhereOrNull(
-        (element) =>
-            element?.title != null &&
-            element!.title!.startsWith('Episode $index'),
-      );
+  Fragment$shortMedia$streamingEpisodes? get info {
+    final episodes = media?.anilistInfo.streamingEpisodes;
+    if (episodes == null) return null;
+
+    var reversed = true;
+
+    /// Sometimes episodes are in reversed orders and sometimes not so this is to try
+    /// and guess it the list is ordered or not
+    if (episodes.length > 1) {
+      final first = episodes.first!;
+      final second = episodes.elementAt(1)!;
+
+      if (first.title != null && second.title != null) {
+        reversed = (int.tryParse(first.title!.split(' ')[1]) ?? 1) >
+            (int.tryParse(second.title!.split(' ')[1]) ?? 0);
+      }
+    }
+
+    return (reversed ? episodes.reversed : episodes).elementAtOrNull(index - 1);
+  }
 
   String? get episodeCover => info?.thumbnail ?? media?.coverImage;
 
   Fragment$shortMedia$nextAiringEpisode? get nextAiringEpisode =>
       media?.anilistInfo.nextAiringEpisode;
 
-  bool get aired => index <= (nextAiringEpisode?.episode ?? double.infinity);
+  bool get aired => index < (nextAiringEpisode?.episode ?? double.infinity);
 
   bool get isNextAiringEpisode => nextAiringEpisode?.episode == index;
 
@@ -94,7 +109,7 @@ class MediaDialogEpisode extends StatelessWidget {
           case const (LayoutLandscape):
             return LayoutCard(
               child: InkWell(
-                onTap: () => play(context),
+                onTap: () => aired || file != null ? play(context) : null,
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Stack(
@@ -120,6 +135,7 @@ class MediaDialogEpisode extends StatelessWidget {
                               entry: entry,
                               localFile: file,
                               info: info,
+                              onPlay: play,
                             )
                           else
                             IconButton(
@@ -182,6 +198,7 @@ class MediaDialogEpisode extends StatelessWidget {
                       localFile: file,
                       info: info,
                       mainAxisSize: MainAxisSize.min,
+                      onPlay: play,
                     )
                   : Icon(
                       isNextAiringEpisode
@@ -203,14 +220,7 @@ class MediaDialogEpisode extends StatelessWidget {
                           ),
                       ],
                     ),
-              onTap: () {
-                VideoPlayerRepository.playAnyway(
-                  context: context,
-                  media: media?.anilistInfo,
-                  entry: entry,
-                  episode: index,
-                );
-              },
+              onTap: () => aired || file != null ? play(context) : null,
             );
         }
       },

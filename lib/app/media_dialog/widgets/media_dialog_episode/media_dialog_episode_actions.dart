@@ -5,6 +5,7 @@ class MediaDialogEpisodeActions extends StatelessWidget {
     super.key,
     required this.index,
     required this.info,
+    this.onPlay,
     this.media,
     this.entry,
     this.localFile,
@@ -17,6 +18,7 @@ class MediaDialogEpisodeActions extends StatelessWidget {
   final Fragment$shortMedia$streamingEpisodes? info;
   final MainAxisSize mainAxisSize;
   final LocalFile? localFile;
+  final void Function(BuildContext context)? onPlay;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +88,16 @@ class MediaDialogEpisodeActions extends StatelessWidget {
                 SimpleIcons.crunchyroll,
                 color: Color(0xFFF47521),
               ),
+            ),
+          ),
+        if (onPlay != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: IconButton.filledTonal(
+              onPressed: () => onPlay!(context),
+              icon: const Icon(Ionicons.play),
+              iconSize: 22.0,
+              constraints: const BoxConstraints(),
             ),
           ),
       ],
