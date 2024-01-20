@@ -66,7 +66,7 @@ class _HomeEntryCardState extends State<HomeEntryCard> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 36.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: GestureDetector(
         onTap: () => showMediaDialog(context, widget.media),
         child: MouseRegion(
