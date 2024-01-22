@@ -21,7 +21,10 @@ class PlayerControlsTitle extends StatelessWidget {
             horizontal: 8.0,
             vertical: 4.0,
           ),
-          child: AutoSizeText(title),
+          child: AutoSizeText(
+            title,
+            maxLines: 1,
+          ),
         );
       },
     );

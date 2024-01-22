@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
@@ -101,20 +100,22 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
 
     if (entry?.media?.anilistInfo.id == null && event.media == null) return;
 
+    final currentState = state;
+
     try {
       await repository.watchedEntry(
         episode: episode,
         media: media,
       );
 
-      event.scaffold?.showSnackBar(
-        SnackBar(
-          content: ListTile(
-            title: const Text('Anilist list updated!'),
-            subtitle: Text('Updated ${media.title} with episode $episode.'),
-          ),
+      emit(
+        WatchListNotify(
+          username: state.username,
+          title: 'Anilist list updated!',
+          description: 'Updated ${media.title} with episode $episode.',
         ),
       );
+      emit(currentState);
 
       add(
         WatchListRequested(
@@ -122,20 +123,16 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
         ),
       );
     } on AnilistUpdateListException catch (e) {
-      event.scaffold?.showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.redAccent,
-          content: ListTile(
-            title: Text(e.cause),
-            subtitle: Column(
-              children: [
-                const Text('Anikki will retry periodically until it succeeds.'),
-                Text('Error was ${e.error}.'),
-              ],
-            ),
-          ),
-        ),
+      logger.error('Could not update anilsit list', e);
+
+      emit(
+        WatchListNotify(
+            username: state.username,
+            title: 'Could not update Anilist list',
+            description: 'Anikki will retry periodically until it succeeds.',
+            isError: true),
       );
+      emit(currentState);
 
       Timer(
         const Duration(minutes: 5),

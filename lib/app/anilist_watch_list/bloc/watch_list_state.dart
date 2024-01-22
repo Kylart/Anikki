@@ -64,6 +64,31 @@ class WatchListComplete extends WatchListState {
   });
 }
 
+class WatchListNotify extends WatchListState {
+  const WatchListNotify({
+    required super.username,
+    required this.title,
+    super.watchList = const AnilistWatchList(),
+    super.connected,
+    this.description,
+    this.isError = false,
+  });
+
+  final String title;
+  final String? description;
+  final bool isError;
+
+  @override
+  List<Object?> get props => [
+        username,
+        title,
+        description,
+        isError,
+        connected,
+        watchList,
+      ];
+}
+
 class WatchListError extends WatchListState {
   const WatchListError({
     required super.username,

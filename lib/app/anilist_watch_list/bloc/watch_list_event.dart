@@ -43,7 +43,6 @@ class WatchListWatched extends WatchListEvent {
     this.entry,
     this.media,
     this.episode,
-    this.scaffold,
   }) {
     if (entry == null) {
       assert(media != null && episode != null);
@@ -53,12 +52,10 @@ class WatchListWatched extends WatchListEvent {
   final LocalFile? entry;
   final Media? media;
   final int? episode;
-  final ScaffoldMessengerState? scaffold;
 
   @override
   List<Object?> get props => [
         entry,
-        scaffold,
         media,
         episode,
       ];

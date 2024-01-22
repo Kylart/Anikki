@@ -53,7 +53,6 @@ class VideoPlayerRepository {
   }) {
     final videoBloc = BlocProvider.of<VideoPlayerBloc>(context);
     final watchListBloc = BlocProvider.of<WatchListBloc>(context);
-    final scaffold = ScaffoldMessenger.of(context);
 
     videoBloc.add(
       VideoPlayerPlayRequested(
@@ -70,7 +69,6 @@ class VideoPlayerRepository {
             WatchListWatched(
               media: media,
               episode: episode,
-              scaffold: scaffold,
             ),
           );
         },
@@ -88,7 +86,6 @@ class VideoPlayerRepository {
     final videoBloc = BlocProvider.of<VideoPlayerBloc>(context);
     final watchListBloc = BlocProvider.of<WatchListBloc>(context);
     final torrentBloc = BlocProvider.of<TorrentBloc>(context);
-    final scaffold = ScaffoldMessenger.of(context);
 
     videoBloc.add(
       VideoPlayerPlayRequested(
@@ -113,7 +110,6 @@ class VideoPlayerRepository {
                       path: mkMedia.uri,
                       media: media,
                     ),
-              scaffold: scaffold,
             ),
           );
         },
@@ -140,7 +136,6 @@ class VideoPlayerRepository {
         BlocProvider.of<WatchListBloc>(context).add(
           WatchListWatched(
             entry: file,
-            scaffold: ScaffoldMessenger.of(context),
           ),
         );
       }

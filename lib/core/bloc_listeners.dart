@@ -1,3 +1,4 @@
+import 'package:anikki/core/helpers/notify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -126,6 +127,17 @@ class BlocListeners extends StatelessWidget {
                 HomeStartRefresh(state.me.name),
               );
             }
+          },
+        ),
+        BlocListener<WatchListBloc, WatchListState>(
+          listener: (context, state) {
+            if (state is! WatchListNotify) return;
+
+            context.notify(
+              message: state.title,
+              descritpion: state.description,
+              isError: state.isError,
+            );
           },
         ),
       ],
