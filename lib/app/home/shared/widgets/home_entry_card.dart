@@ -37,6 +37,11 @@ class _HomeEntryCardState extends State<HomeEntryCard>
   /// Keep track of hovering state
   bool hovered = false;
 
+  /// If the current home media is this card's media
+  bool isCurrentHomeMedia = false;
+
+  bool get shouldAnimate => isDesktop() ? hovered : isCurrentHomeMedia;
+
   late AnimationController scaleController;
   late Animation animation;
 
@@ -69,10 +74,20 @@ class _HomeEntryCardState extends State<HomeEntryCard>
 
   @override
   Widget build(BuildContext context) {
-    void changeMedia() {
-      BlocProvider.of<HomeBloc>(context).add(
-        HomeMediaChanged(widget.media),
-      );
+    final homeBloc = BlocProvider.of<HomeBloc>(context, listen: true);
+
+    if (!isDesktop()) {
+      final currentHomeMedia = homeBloc.state.media;
+
+      setState(() {
+        isCurrentHomeMedia = currentHomeMedia == widget.media;
+
+        if (isCurrentHomeMedia) {
+          scaleController.forward();
+        } else {
+          scaleController.reverse();
+        }
+      });
     }
 
     return Padding(
@@ -82,7 +97,10 @@ class _HomeEntryCardState extends State<HomeEntryCard>
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (event) {
-            changeMedia();
+            homeBloc.add(
+              HomeMediaChanged(widget.media),
+            );
+
             setState(() {
               hovered = true;
               scaleController.forward();
@@ -96,7 +114,7 @@ class _HomeEntryCardState extends State<HomeEntryCard>
           child: _HomeEntryCardScaleAnimation(
             controller: animation,
             child: _HomeEntryCardBackgroundSweepAnimation(
-              enabled: hovered,
+              enabled: shouldAnimate,
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(
                   Radius.circular(12),

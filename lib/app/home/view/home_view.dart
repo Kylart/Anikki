@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -76,7 +75,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
 
-    if (Platform.isIOS || Platform.isAndroid) {
+    if (!isDesktop()) {
       interval = Timer.periodic(
         const Duration(seconds: 10),
         (timer) => updateBackgroundMedia(),
