@@ -1,9 +1,10 @@
-import 'package:anikki/app/home_start/shared/helpers/should_be_marquee.dart';
-import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:marqueer/marqueer.dart';
+
+import 'package:anikki/app/home_start/shared/helpers/should_be_marquee.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
 class HomeScrollView extends StatefulWidget {
   const HomeScrollView({
@@ -24,6 +25,7 @@ class _HomeScrollViewState extends State<HomeScrollView> {
 
   final buttonWidth = 50.0;
   final duration = const Duration(milliseconds: 150);
+  final verticalPaddingValue = 18.0;
 
   final controller = MarqueerController();
 
@@ -32,9 +34,12 @@ class _HomeScrollViewState extends State<HomeScrollView> {
     return BlocBuilder<LayoutBloc, LayoutState>(
         builder: (context, layoutState) {
       final marquee = shouldBeMarquee(layoutState, widget.children.length);
-      final height = MediaQuery.of(context).size.height < 1000 ? 250.0 : 300.0;
+      final height =
+          (MediaQuery.of(context).size.height < 1000 ? 250.0 : 300.0) +
+              verticalPaddingValue * 2;
 
       final listView = SingleChildScrollView(
+        padding: EdgeInsets.symmetric(vertical: verticalPaddingValue),
         scrollDirection: Axis.horizontal,
         child: Row(
           children: widget.children,
@@ -73,8 +78,9 @@ class _HomeScrollViewState extends State<HomeScrollView> {
               ),
             ),
             Positioned(
+              top: verticalPaddingValue,
               right: 0,
-              height: height,
+              height: height - verticalPaddingValue * 2,
               width: buttonWidth,
               child: AnimatedOpacity(
                 opacity: show ? 1 : 0,
@@ -93,7 +99,8 @@ class _HomeScrollViewState extends State<HomeScrollView> {
               ),
             ),
             Positioned(
-              height: height,
+              top: verticalPaddingValue,
+              height: height - verticalPaddingValue * 2,
               width: buttonWidth,
               child: AnimatedOpacity(
                 opacity: show ? 1 : 0,

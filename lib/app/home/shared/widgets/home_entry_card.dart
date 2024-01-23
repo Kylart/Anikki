@@ -4,13 +4,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/app/media_dialog/shared/show.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
+import 'package:anikki/app/media_dialog/shared/show.dart';
 import 'package:anikki/config/config.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 
+part 'home_entry_card_background_sweep_animation.dart';
 part 'home_entry_card_cover.dart';
+part 'home_entry_card_scale_animation.dart';
 part 'home_entry_card_text.dart';
 
 class HomeEntryCard extends StatefulWidget {
@@ -27,33 +29,41 @@ class HomeEntryCard extends StatefulWidget {
   State<HomeEntryCard> createState() => _HomeEntryCardState();
 }
 
-class _HomeEntryCardState extends State<HomeEntryCard> {
+class _HomeEntryCardState extends State<HomeEntryCard>
+    with SingleTickerProviderStateMixin {
   /// Interval for outline animation
   Timer? interval;
-
-  /// Angle used for the outlined gradient animation
-  double angle = 0.0;
 
   /// Keep track of hovering state
   bool hovered = false;
 
-  void setUpInterval() {
-    interval = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      setState(() {
-        angle += pi / 20;
+  late AnimationController scaleController;
+  late Animation animation;
 
-        if (angle >= pi * 2) angle = 0.0;
-      });
-    });
-  }
+  @override
+  void initState() {
+    super.initState();
 
-  void closeInterval() {
-    interval?.cancel();
+    scaleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      reverseDuration: const Duration(milliseconds: 250),
+    );
+
+    animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: scaleController,
+        curve: Curves.decelerate,
+      ),
+    );
   }
 
   @override
   void dispose() {
-    interval?.cancel();
+    scaleController.dispose();
     super.dispose();
   }
 
@@ -75,59 +85,39 @@ class _HomeEntryCardState extends State<HomeEntryCard> {
             changeMedia();
             setState(() {
               hovered = true;
-              setUpInterval();
+              scaleController.forward();
             });
           },
           onExit: (event) {
-            setState(() {
-              hovered = false;
-              closeInterval();
-            });
+            scaleController
+                .reverse()
+                .then((value) => setState(() => hovered = false));
           },
-          child: Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            padding: hovered ? const EdgeInsets.all(1.0) : null,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(12),
-              ),
-              gradient: hovered
-                  ? SweepGradient(
-                      startAngle: angle,
-                      endAngle: angle + (pi * 2),
-                      tileMode: TileMode.mirror,
-                      colors: const [
-                        Colors.white70,
-                        Colors.black,
-                        Colors.white,
-                        Colors.white,
-                        Colors.black,
-                        Colors.white70,
-                      ],
-                    )
-                  : null,
-            ),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(12),
-              ),
-              child: Stack(
-                children: [
-                  _HomeEntryCardCover(
-                    glossy: hovered,
-                    color: widget.media.anilistInfo.coverImage?.color,
-                    url: widget.media.coverImage,
-                  ),
-                  if (widget.text != null)
-                    Positioned(
-                      right: 10,
-                      bottom: 10,
-                      child: _HomeEntryCardText(
-                        text: widget.text!,
-                      ),
+          child: _HomeEntryCardScaleAnimation(
+            controller: animation,
+            child: _HomeEntryCardBackgroundSweepAnimation(
+              enabled: hovered,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(12),
+                ),
+                child: Stack(
+                  children: [
+                    _HomeEntryCardCover(
+                      animation: animation,
+                      color: widget.media.anilistInfo.coverImage?.color,
+                      url: widget.media.coverImage,
                     ),
-                ],
+                    if (widget.text != null)
+                      Positioned(
+                        right: 10,
+                        bottom: 10,
+                        child: _HomeEntryCardText(
+                          text: widget.text!,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

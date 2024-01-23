@@ -3,7 +3,7 @@ part of 'home_entry_card.dart';
 class _HomeEntryCardCover extends StatelessWidget {
   _HomeEntryCardCover({
     required this.url,
-    this.glossy = false,
+    required this.animation,
     String? color,
   }) {
     this.color = color ?? '#0d0d0d';
@@ -15,8 +15,7 @@ class _HomeEntryCardCover extends StatelessWidget {
   /// The URL of the image to use for this cover
   final String? url;
 
-  /// Whether to apply a glossy effect shader on the image
-  final bool glossy;
+  final Animation animation;
 
   Color get hexColor {
     final buffer = StringBuffer();
@@ -24,6 +23,8 @@ class _HomeEntryCardCover extends StatelessWidget {
     buffer.write(color.replaceFirst('#', ''));
     return Color(int.parse(buffer.toString(), radix: 16));
   }
+
+  double get translationValue => animation.value * 150;
 
   @override
   Widget build(BuildContext context) {
@@ -47,22 +48,24 @@ class _HomeEntryCardCover extends StatelessWidget {
             fit: BoxFit.cover,
           );
 
-    if (!glossy) return image;
-
     return ShaderMask(
       blendMode: BlendMode.lighten,
       shaderCallback: (rect) {
         return const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomCenter,
+          begin: Alignment.topRight,
+          end: Alignment(-0.8, 1),
           colors: [
+            Colors.white60,
             Colors.transparent,
-            Colors.white12,
-            Colors.white12,
-            Colors.transparent
+            Colors.transparent,
           ],
         ).createShader(
-          Rect.fromLTRB(0, 0, rect.width, rect.height),
+          Rect.fromLTRB(
+            0,
+            0,
+            rect.width - translationValue,
+            rect.height + translationValue,
+          ),
         );
       },
       child: image,
