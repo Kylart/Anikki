@@ -167,6 +167,8 @@ void main() {
           ),
         ),
         expect: () => [
+          isA<WatchListNotify>(),
+          isA<WatchListComplete>(),
           const WatchListLoading(username: username),
           isA<WatchListComplete>()
         ],
@@ -200,7 +202,14 @@ void main() {
             entry: localFileMock,
           ),
         ),
-        expect: () => [],
+        expect: () => [
+          isA<WatchListNotify>().having(
+            (p0) => p0.isError,
+            'with an error notification',
+            isTrue,
+          ),
+          isA<WatchListComplete>(),
+        ],
         setUp: () {
           repository = UserListRepositoryMock();
 
