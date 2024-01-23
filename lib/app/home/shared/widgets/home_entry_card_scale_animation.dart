@@ -9,8 +9,8 @@ class _HomeEntryCardScaleAnimation extends StatelessWidget {
   final Widget child;
   final Animation controller;
 
-  double get scaleValue => controller.value * 0.07 + 1;
-  double get tiltValue => controller.value * -1.5;
+  double get scaleValue => controller.value * 0.09 + 1;
+  double get tiltValue => controller.value * -1.1;
 
   @override
   Widget build(BuildContext context) {
