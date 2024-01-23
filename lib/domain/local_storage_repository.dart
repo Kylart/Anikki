@@ -142,7 +142,7 @@ class LocalStorageRepository {
 
       return results;
     } on AnilistGetInfoException {
-      logger.info('Could not retrieve file media info.');
+      logger.warning('Could not retrieve file media info.');
       return files;
     }
   }

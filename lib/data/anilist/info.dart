@@ -41,6 +41,8 @@ mixin AnilistInfo on AnilistClient {
       }
 
       if (interval != -1) {
+        // Anilist rate limit is at 90 req / min. This makes 5 * 60 / 4 = 75 queries per minute.
+        await Future.delayed(const Duration(seconds: 4));
         currentIndex += interval;
       } else {
         break;
