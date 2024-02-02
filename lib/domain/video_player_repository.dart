@@ -187,10 +187,8 @@ class VideoPlayerRepository {
         ? library.playlist
         : entry?.entries.reversed.map(convertToMkMedia).toList();
 
-    final watchListEntry = watchList is WatchListComplete
-        ? watchList.current
-            .firstWhereOrNull((element) => element.media?.id == media?.id)
-        : null;
+    final watchListEntry = watchList.current
+        .firstWhereOrNull((element) => element.media?.id == media?.id);
 
     if (watchListEntry != null) {
       progress ??= watchListEntry.progress;
