@@ -31,7 +31,9 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
   }
 
   void _onAuthUpdated(
-      WatchListAuthUpdated event, Emitter<WatchListState> emit) {
+    WatchListAuthUpdated event,
+    Emitter<WatchListState> emit,
+  ) {
     if (event.connected) {
       add(WatchListRequested(username: event.username!));
     } else {
@@ -127,10 +129,11 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
 
       emit(
         WatchListNotify(
-            username: state.username,
-            title: 'Could not update Anilist list',
-            description: 'Anikki will retry periodically until it succeeds.',
-            isError: true),
+          username: state.username,
+          title: 'Could not update Anilist list',
+          description: 'Anikki will retry periodically until it succeeds.',
+          isError: true,
+        ),
       );
       emit(currentState);
 

@@ -2,19 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:marqueer/marqueer.dart';
+import 'package:shimmer/shimmer.dart';
 
-import 'package:anikki/app/home_start/shared/helpers/should_be_marquee.dart';
+import 'package:anikki/app/home/shared/helpers/should_be_marquee.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+
+part 'home_scroll_view_loader.dart';
 
 class HomeScrollView extends StatefulWidget {
   const HomeScrollView({
     super.key,
     required this.children,
     this.reverse = false,
+    this.loading = false,
   });
 
+  /// Widgets to display
   final List<Widget> children;
+
+  /// If need be, marquee will be reversed
   final bool reverse;
+
+  /// Will display [HomeScrollViewLoader] if set to `true`
+  final bool loading;
 
   @override
   State<HomeScrollView> createState() => _HomeScrollViewState();
@@ -31,6 +41,8 @@ class _HomeScrollViewState extends State<HomeScrollView> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.loading) return const _HomeScrollViewLoader();
+
     return BlocBuilder<LayoutBloc, LayoutState>(
         builder: (context, layoutState) {
       final marquee = shouldBeMarquee(layoutState, widget.children.length);

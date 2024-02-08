@@ -3,14 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section_title_warning.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section_container.dart';
-import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_card/home_entry_card.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_container.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title_warning.dart';
+import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view.dart';
 import 'package:anikki/app/home/shared/widgets/home_section_title_loading_action.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_card.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
-import 'package:anikki/app/home/shared/widgets/home_scroll_view.dart';
+import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/core/core.dart';
 
 class HomeContinueView extends StatefulWidget {
@@ -57,22 +56,18 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                         ),
                     ],
                   ),
-                  if (state.entries.isNotEmpty)
-                    HomeScrollView(
-                      children: [
-                        for (final entry in state.entries)
-                          HomeEntryCard(
-                            media: Media(anilistInfo: entry.media),
-                            text: entry.progress != null
-                                ? (entry.progress! + 1).toString()
-                                : null,
-                          ),
-                      ],
-                    ),
-                  if (loading && state.entries.isEmpty)
-                    const HomeScrollViewLoader(),
-                  if (errored && state.entries.isEmpty)
-                    const HomeScrollViewLoader(),
+                  HomeScrollView(
+                    loading: state.entries.isEmpty && (loading || errored),
+                    children: [
+                      for (final entry in state.entries)
+                        HomeEntryCard(
+                          media: Media(anilistInfo: entry.media),
+                          text: entry.progress != null
+                              ? (entry.progress! + 1).toString()
+                              : null,
+                        ),
+                    ],
+                  ),
                 ],
               ),
             );

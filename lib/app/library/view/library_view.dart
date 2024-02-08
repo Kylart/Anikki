@@ -8,7 +8,7 @@ import 'package:anikki/core/widgets/anikki_action_button.dart';
 import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/core/widgets/loader.dart';
-import 'package:anikki/core/widgets/error_tile.dart';
+import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
@@ -87,7 +87,7 @@ class LibraryView extends StatelessWidget {
                         return const Loader();
 
                       case const (LibraryError):
-                        return ErrorTile(
+                        return CustomErrorWidget(
                           title: 'Could not load your files at ${state.path}',
                           description: (state as LibraryError).message,
                         );

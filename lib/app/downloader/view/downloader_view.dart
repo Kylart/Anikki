@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-import 'package:anikki/app/downloader/widgets/widgets.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/app/downloader/widgets/widgets.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
-import 'package:anikki/core/widgets/error_tile.dart';
 import 'package:anikki/core/widgets/empty_widget.dart';
+import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/data/data.dart';
 
@@ -21,7 +21,7 @@ class DownloaderView extends StatelessWidget {
           case const (DownloaderError):
             final currentState = state as DownloaderError;
 
-            return ErrorTile(
+            return CustomErrorWidget(
               title: 'Could not find results for ${currentState.term}',
               description: currentState.message,
             );

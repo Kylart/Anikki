@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
+part of 'home_scroll_view.dart';
 
-import 'package:anikki/app/home/shared/widgets/home_scroll_view.dart';
-
-class HomeScrollViewLoader extends StatelessWidget {
-  const HomeScrollViewLoader({super.key});
+class _HomeScrollViewLoader extends StatelessWidget {
+  const _HomeScrollViewLoader();
 
   @override
   Widget build(BuildContext context) {

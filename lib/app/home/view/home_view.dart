@@ -118,7 +118,7 @@ class _HomeViewState extends State<HomeView> {
                         HomeSearchBar(),
                       ],
                     ),
-                    const CustomMenu(),
+                    CustomMenu(),
                   ],
                   if (isAuthenticated) const HomeContinuePage(),
                   const HomeFeedPage(),

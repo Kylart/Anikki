@@ -3,14 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section_title_warning.dart';
-import 'package:anikki/app/home/shared/widgets/home_scroll_view_loader.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_card/home_entry_card.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_container.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title_warning.dart';
+import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view.dart';
 import 'package:anikki/app/home/shared/widgets/home_section_title_loading_action.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section_container.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_card.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section_title.dart';
-import 'package:anikki/app/home/shared/widgets/home_scroll_view.dart';
+import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
 
@@ -55,23 +54,19 @@ class HomeStartView extends StatelessWidget {
                         ),
                     ],
                   ),
-                  if (state.entries.isNotEmpty)
-                    BlocBuilder<LayoutBloc, LayoutState>(
-                      builder: (context, layoutState) {
-                        return HomeScrollView(
-                          children: [
-                            for (final entry in state.entries)
-                              HomeEntryCard(
-                                media: Media(anilistInfo: entry.media),
-                              ),
-                          ],
-                        );
-                      },
-                    ),
-                  if (loading && state.entries.isEmpty)
-                    const HomeScrollViewLoader(),
-                  if (errored && state.entries.isEmpty)
-                    const HomeScrollViewLoader(),
+                  BlocBuilder<LayoutBloc, LayoutState>(
+                    builder: (context, layoutState) {
+                      return HomeScrollView(
+                        loading: state.entries.isEmpty && (loading || errored),
+                        children: [
+                          for (final entry in state.entries)
+                            HomeEntryCard(
+                              media: Media(anilistInfo: entry.media),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
             );

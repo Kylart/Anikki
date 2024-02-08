@@ -42,7 +42,10 @@ class MediaDialogEpisode extends StatelessWidget {
     }
   }
 
-  /// Index of the entry in its respective [LibraryEntry]
+  /// Index to use as episode number. If there is any [Media] info available, this will
+  /// be the episode number. Otherwise, it will be the index of the [LocalFile] in its
+  /// [LibraryEntry].
+  /// This index starts at 1 when there is [Media] information, 0 otherwise.
   final int index;
 
   /// [Media] for this episode
@@ -54,26 +57,11 @@ class MediaDialogEpisode extends StatelessWidget {
   /// Specific [LocalFile] for this episode. Useful for non-numbered episodes (movies, OVAs)
   late final LocalFile? file;
 
-  Fragment$shortMedia$streamingEpisodes? get info {
-    final episodes = media?.anilistInfo.streamingEpisodes;
-    if (episodes == null) return null;
-
-    var reversed = true;
-
-    /// Sometimes episodes are in reversed orders and sometimes not so this is to try
-    /// and guess it the list is ordered or not
-    if (episodes.length > 1) {
-      final first = episodes.first!;
-      final second = episodes.elementAt(1)!;
-
-      if (first.title != null && second.title != null) {
-        reversed = (int.tryParse(first.title!.split(' ')[1]) ?? 1) >
-            (int.tryParse(second.title!.split(' ')[1]) ?? 0);
-      }
-    }
-
-    return (reversed ? episodes.reversed : episodes).elementAtOrNull(index - 1);
-  }
+  Fragment$shortMedia$streamingEpisodes? get info =>
+      media?.anilistInfo.streamingEpisodes?.firstWhereOrNull(
+        (element) =>
+            element?.title?.split(' - ').firstOrNull == 'Episode $index',
+      );
 
   String? get episodeCover => info?.thumbnail ?? media?.coverImage;
 

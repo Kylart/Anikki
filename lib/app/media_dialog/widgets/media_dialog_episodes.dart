@@ -33,78 +33,74 @@ class MediaDialogEpisodes extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: BlocBuilder<LayoutBloc, LayoutState>(
-        builder: (context, state) {
-          final hasInfo = media.anilistInfo.id != 0;
+      child: BlocBuilder<LayoutBloc, LayoutState>(builder: (context, state) {
+        final hasInfo = media.anilistInfo.id != 0;
 
-          if (state is LayoutLandscape) {
-            if (!hasInfo) {
-              return GridView(
-                physics: const ClampingScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: gridDelegate,
-                children: [
-                  for (final file in entry?.entries ?? [])
-                    MediaDialogEpisode(
-                      index: file.episode ?? 0,
-                      entry: entry,
-                      file: file,
-                    ),
-                ],
-              );
-            }
-
-            return GridView.builder(
-              itemCount: numberOfEpisodes,
+        if (state is LayoutLandscape) {
+          if (!hasInfo) {
+            return GridView(
               physics: const ClampingScrollPhysics(),
               shrinkWrap: true,
               gridDelegate: gridDelegate,
-              itemBuilder: (context, index) => MediaDialogEpisode(
-                index: numberOfEpisodes - index,
-                media: media,
-                entry: entry,
-                file: entry?.entries.firstWhereOrNull(
-                  (e) => e.episode == numberOfEpisodes - index,
-                ),
-              ),
-            );
-          } else if (state is LayoutPortrait) {
-            if (!hasInfo) {
-              return ListView(
-                physics: const ClampingScrollPhysics(),
-                shrinkWrap: true,
-                children: [
-                  for (final file in entry?.entries ?? []) ...[
-                    MediaDialogEpisode(
-                      index: file.episode ?? 0,
-                      entry: entry,
-                      file: file,
-                    ),
-                    const Divider(),
-                  ],
-                ],
-              );
-            }
-
-            return ListView.separated(
-              itemCount: numberOfEpisodes,
-              physics: const ClampingScrollPhysics(),
-              shrinkWrap: true,
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) => MediaDialogEpisode(
-                index: numberOfEpisodes - index,
-                media: media,
-                entry: entry,
-                file: entry?.entries.firstWhereOrNull(
-                  (e) => e.episode == numberOfEpisodes - index,
-                ),
-              ),
+              children: [
+                for (final file in entry?.entries ?? [])
+                  MediaDialogEpisode(
+                    index: file.episode ?? 0,
+                    entry: entry,
+                    file: file,
+                  ),
+              ],
             );
           }
 
-          return const SizedBox();
-        },
-      ),
+          return GridView.builder(
+            itemCount: numberOfEpisodes,
+            physics: const ClampingScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: gridDelegate,
+            itemBuilder: (context, index) => MediaDialogEpisode(
+              index: numberOfEpisodes - index,
+              media: media,
+              entry: entry,
+              file: entry?.entries.firstWhereOrNull(
+                (e) => e.episode == numberOfEpisodes - index,
+              ),
+            ),
+          );
+        }
+
+        if (!hasInfo) {
+          return ListView(
+            physics: const ClampingScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              for (final file in entry?.entries ?? []) ...[
+                MediaDialogEpisode(
+                  index: file.episode ?? 0,
+                  entry: entry,
+                  file: file,
+                ),
+                const Divider(),
+              ],
+            ],
+          );
+        }
+
+        return ListView.separated(
+          itemCount: numberOfEpisodes,
+          physics: const ClampingScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const Divider(),
+          itemBuilder: (context, index) => MediaDialogEpisode(
+            index: numberOfEpisodes - index,
+            media: media,
+            entry: entry,
+            file: entry?.entries.firstWhereOrNull(
+              (e) => e.episode == numberOfEpisodes - index,
+            ),
+          ),
+        );
+      }),
     );
   }
 }

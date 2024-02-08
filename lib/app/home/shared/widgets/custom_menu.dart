@@ -3,41 +3,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
-import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/watch_list.dart';
+import 'package:anikki/app/home/shared/widgets/not_connected_icon.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/view/library_view.dart';
-import 'package:anikki/app/settings/settings.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
+import 'package:anikki/app/settings/settings.dart';
 import 'package:anikki/app/torrent/torrent.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 
-class Page extends Equatable {
-  const Page({
-    required this.widget,
+class _Page extends Equatable {
+  const _Page({
+    required this.child,
     required this.name,
     required this.icon,
+    this.error,
   });
 
-  final Widget widget;
+  final Widget child;
   final String name;
   final IconData icon;
+  final String? error;
 
   @override
   List<Object?> get props => [
-        widget,
+        child,
         name,
         icon,
+        error,
       ];
 }
 
 class CustomMenu extends StatelessWidget {
-  const CustomMenu({
+  CustomMenu({
     super.key,
     this.pageController,
     this.index,
-  });
+  }) {
+    if (pageController != null) assert(index != null);
+    if (index != null) assert(pageController != null);
+  }
 
   final PageController? pageController;
   final int? index;
@@ -46,48 +53,49 @@ class CustomMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final portrait = BlocProvider.of<LayoutBloc>(context, listen: true).state
         is LayoutPortrait;
-    final settingsBloc = BlocProvider.of<SettingsBloc>(context, listen: true);
-    final connectivityBloc =
-        BlocProvider.of<ConnectivityBloc>(context, listen: true);
+    final settings =
+        BlocProvider.of<SettingsBloc>(context, listen: true).state.settings;
+    final connected = BlocProvider.of<ConnectivityBloc>(context, listen: true)
+        .state is ConnectivityOnline;
+    final watchListState =
+        BlocProvider.of<WatchListBloc>(context, listen: true).state;
 
     final pages = [
       if (portrait)
-        const Page(
-          widget: SizedBox(),
+        const _Page(
+          child: SizedBox(),
           name: 'Home',
           icon: Ionicons.home_outline,
         ),
-      const Page(
-        widget: LibraryView(),
+      const _Page(
+        child: LibraryView(),
         name: 'Library',
         icon: Ionicons.folder_outline,
       ),
-      const Page(
-        widget: WatchListView(),
+      _Page(
+        child: const WatchListView(),
         name: 'Watch Lists',
         icon: Ionicons.library_outline,
+        error: watchListState is WatchListError ? watchListState.message : null,
       ),
-      if (!portrait &&
-          settingsBloc.state.settings.torrentType != TorrentType.none)
-        Page(
-          widget: const TorrentView(),
-          name: settingsBloc.state.settings.torrentType.title,
+      if (settings.torrentType != TorrentType.none)
+        _Page(
+          child: const TorrentView(),
+          name: settings.torrentType.title,
           icon: Ionicons.cloud_download_outline,
         ),
       if (portrait)
-        const Page(
-          widget: SizedBox(),
+        const _Page(
+          child: SizedBox(),
           name: 'Search',
           icon: Ionicons.search_outline,
         ),
-      const Page(
-        widget: SettingsView(),
+      const _Page(
+        child: SettingsView(),
         name: 'Settings',
         icon: Ionicons.settings_outline,
       ),
     ];
-
-    final currentPage = index == null ? null : pages.elementAt(index!);
 
     void showPage(String name) {
       final pageIndex = pages.indexWhere((p) => p.name == name);
@@ -102,7 +110,7 @@ class CustomMenu extends StatelessWidget {
             shadowColor: Colors.transparent,
             backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
-            child: page.widget,
+            child: page.child,
           ),
         );
       }
@@ -118,45 +126,22 @@ class CustomMenu extends StatelessWidget {
               spacing: 12.0,
               children: [
                 for (final page in pages)
-                  IconButton(
-                    tooltip: page.name,
-                    icon: Icon(page.icon),
-                    onPressed: () => showPage(page.name),
-                    color: page == currentPage
-                        ? Theme.of(context).colorScheme.primary
-                        : null,
-                  ),
-                if (connectivityBloc.state is ConnectivityOffline)
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const Dialog(
-                          shadowColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          surfaceTintColor: Colors.transparent,
-                          child: LayoutCard(
-                              child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Cannot connect to the Internet.\n\nAnikki will reconnect automatically whenever possible.',
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          )),
-                        ),
-                      );
-                    },
-                    tooltip: 'No internet connection',
-                    icon: Icon(
+                  Badge(
+                    isLabelVisible: page.error != null,
+                    label: const Icon(
                       Ionicons.warning_outline,
-                      color: Theme.of(context).colorScheme.error,
+                      size: 8,
+                    ),
+                    child: IconButton(
+                      tooltip: page.error ?? page.name,
+                      icon: Icon(page.icon),
+                      onPressed: () => showPage(page.name),
+                      color: index != null && page == pages.elementAt(index!)
+                          ? Theme.of(context).colorScheme.primary
+                          : null,
                     ),
                   ),
+                if (!connected) const NotConnectedIcon()
               ],
             ),
           ),

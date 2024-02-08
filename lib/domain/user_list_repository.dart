@@ -1,7 +1,8 @@
+import 'package:collection/collection.dart';
+
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
-import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
-import 'package:collection/collection.dart';
 
 typedef UserWatchList = Map<Enum$MediaListStatus,
     List<Query$GetLists$MediaListCollection$lists$entries>>;

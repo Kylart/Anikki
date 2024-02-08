@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/app/search/widgets/search_container.dart';
-import 'package:anikki/app/search/widgets/anikki_search_bar.dart';
 import 'package:anikki/app/search/bloc/search_bloc.dart';
+import 'package:anikki/app/search/widgets/anikki_search_bar.dart';
+import 'package:anikki/app/search/widgets/search_container.dart';
 import 'package:anikki/app/search/widgets/search_results.dart';
 import 'package:anikki/core/widgets/empty_widget.dart';
-import 'package:anikki/core/widgets/error_tile.dart';
+import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/loader.dart';
 
 class SearchView extends StatefulWidget {
@@ -44,7 +44,7 @@ class _SearchViewState extends State<SearchView> {
                         ),
                       ),
               if (state is SearchError)
-                ErrorTile(
+                CustomErrorWidget(
                   description: state.message,
                 ),
             ],

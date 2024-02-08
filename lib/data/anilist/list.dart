@@ -44,10 +44,7 @@ mixin AnilistList on AnilistClient {
         ),
       );
 
-      if (result.parsedData?.MediaListCollection?.lists == null) {
-        throw result.exception?.graphqlErrors[0].message ??
-            'Could not retrieve list';
-      }
+      if (result.hasException) throw result.exception!;
 
       for (final list in result.parsedData!.MediaListCollection!.lists!) {
         final status = list?.entries?.first?.status;
@@ -103,7 +100,10 @@ mixin AnilistList on AnilistClient {
 
       return watchList;
     } catch (e) {
-      throw AnilistGetListException(error: e.toString());
+      logger.warning('getWatchList error', e);
+      throw AnilistGetListException(
+        error: 'Something went wrong while retrieing watch lsit information',
+      );
     }
   }
 }
