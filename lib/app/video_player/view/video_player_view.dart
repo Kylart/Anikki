@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
 
-import 'package:anikki/core/core.dart' as core;
 import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
-import 'package:anikki/app/video_player/widgets/player_widget.dart';
 import 'package:anikki/app/video_player/widgets/player_controls/player_controls.dart';
+import 'package:anikki/app/video_player/widgets/player_widget.dart';
+import 'package:anikki/core/core.dart' as core;
 
 class VideoPlayerView extends StatefulWidget {
   const VideoPlayerView({
@@ -39,7 +39,8 @@ class _VideoPlayerViewState extends State<VideoPlayerView>
     ),
   );
 
-  Media? get firstMedia => widget.first != null ? Media(widget.first!.path) : null;
+  Media? get firstMedia =>
+      widget.first != null ? Media(widget.first!.path) : null;
   int? get firstIndex => firstMedia == null
       ? null
       : widget.sources.indexWhere((source) => source == firstMedia!);
@@ -87,9 +88,10 @@ class _VideoPlayerViewState extends State<VideoPlayerView>
               ),
             ),
             Positioned.fill(
-              child: widget.forceSmallControls
-                  ? PlayerControlsReduced(player: player)
-                  : PlayerControls(player: player),
+              child: PlayerControls(
+                smallControls: widget.forceSmallControls,
+                player: player,
+              ),
             ),
           ],
         );

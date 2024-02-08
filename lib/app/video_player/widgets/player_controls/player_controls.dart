@@ -12,36 +12,43 @@ import 'package:media_kit/media_kit.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
 
+part 'actions.dart';
+part 'intents.dart';
+part 'player_controls_audios.dart';
 part 'player_controls_background.dart';
+part 'player_controls_brightness_bar.dart';
+part 'player_controls_fullscreen.dart';
+part 'player_controls_play_pause.dart';
+part 'player_controls_playback.dart';
+part 'player_controls_progress.dart';
+part 'player_controls_shortcuts.dart';
+part 'player_controls_stop.dart';
+part 'player_controls_subtitles.dart';
+part 'player_controls_title.dart';
+part 'player_controls_volume.dart';
+part 'player_controls_volume_bar.dart';
+part 'player_cursor_handler.dart';
 part 'player_movable_controls.dart';
 part 'player_non_movable_controls.dart';
-part 'player_cursor_handler.dart';
-part 'player_controls_stop.dart';
-part 'player_controls_volume.dart';
-part 'player_controls_progress.dart';
-part 'player_controls_fullscreen.dart';
-part 'player_controls_playback.dart';
-part 'player_controls_play_pause.dart';
-part 'player_controls_subtitles.dart';
-part 'player_controls_audios.dart';
-part 'player_controls_shortcuts.dart';
-part 'player_controls_volume_bar.dart';
-part 'player_controls_brightness_bar.dart';
-part 'player_controls_title.dart';
-part 'intents.dart';
-part 'actions.dart';
 
 class PlayerControls extends StatelessWidget {
-  const PlayerControls({super.key, required this.player});
+  const PlayerControls({
+    super.key,
+    required this.player,
+    this.smallControls = false,
+  });
 
   final Player player;
+  final bool smallControls;
 
   @override
   Widget build(BuildContext context) {
+    if (smallControls) return _PlayerControlsReduced(player: player);
+
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 600;
 
@@ -83,9 +90,8 @@ class PlayerControls extends StatelessWidget {
   }
 }
 
-class PlayerControlsReduced extends StatelessWidget {
-  const PlayerControlsReduced({
-    super.key,
+class _PlayerControlsReduced extends StatelessWidget {
+  const _PlayerControlsReduced({
     required this.player,
   });
 
