@@ -16,7 +16,7 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - protocol_handler (0.0.1):
+  - protocol_handler_macos (0.0.1):
     - FlutterMacOS
   - ReachabilitySwift (5.0.0)
   - screen_brightness_macos (0.1.0):
@@ -44,7 +44,7 @@ DEPENDENCIES:
   - media_kit_video (from `Flutter/ephemeral/.symlinks/plugins/media_kit_video/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
-  - protocol_handler (from `Flutter/ephemeral/.symlinks/plugins/protocol_handler/macos`)
+  - protocol_handler_macos (from `Flutter/ephemeral/.symlinks/plugins/protocol_handler_macos/macos`)
   - screen_brightness_macos (from `Flutter/ephemeral/.symlinks/plugins/screen_brightness_macos/macos`)
   - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
   - share_plus (from `Flutter/ephemeral/.symlinks/plugins/share_plus/macos`)
@@ -74,8 +74,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
-  protocol_handler:
-    :path: Flutter/ephemeral/.symlinks/plugins/protocol_handler/macos
+  protocol_handler_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/protocol_handler_macos/macos
   screen_brightness_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/screen_brightness_macos/macos
   screen_retriever:
@@ -100,7 +100,7 @@ SPEC CHECKSUMS:
   media_kit_video: c75b07f14d59706c775778e4dd47dd027de8d1e5
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  protocol_handler: 587e1caf6c0b92ce351ab14081968dae49cb8cc6
+  protocol_handler_macos: d10a6c01d6373389ffd2278013ab4c47ed6d6daa
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   screen_brightness_macos: 2d6d3af2165592d9a55ffcd95b7550970e41ebda
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
