@@ -5,38 +5,47 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Synonyms extends StatelessWidget {
-  Synonyms({
+  const Synonyms({
     super.key,
     required this.state,
-    required this.onSelected,
-  }) {
-    synonyms = {
-      /// Anitomy parsed name
-      state.entry?.entries.first.title,
+  });
 
-      /// Full english name
-      state.media?.title?.english,
+  List<String> get synonyms => {
+        /// Anitomy parsed name
+        state.entry?.entries.first.title,
 
-      /// Native name (probably in Japanese)
-      state.media?.title?.native,
+        /// Full english name
+        state.media?.title?.english,
 
-      /// Romaji name
-      state.media?.title?.romaji,
+        /// Native name (probably in Japanese)
+        state.media?.title?.native,
 
-      /// All the other synonyms
-      ...(state.media?.synonyms?.whereType<String>().toList() ?? []),
-    }.whereType<String>().toList();
-  }
+        /// Romaji name
+        state.media?.title?.romaji,
 
-  late final List<String> synonyms;
+        /// All the other synonyms
+        ...(state.media?.synonyms?.whereType<String>().toList() ?? []),
+      }.whereType<String>().toList();
 
   final DownloaderSuccess state;
-  final void Function(String? value) onSelected;
 
   @override
   Widget build(BuildContext context) {
+    void onSelected(value) {
+      BlocProvider.of<DownloaderBloc>(context).add(
+        DownloaderRequested(
+          media: state.media,
+          entry: state.entry,
+          title: value,
+          isStreaming: state.isStreaming,
+          episode: state.episode,
+        ),
+      );
+    }
+
     if (isLandscape(context)) {
       return DropdownMenu(
         inputDecorationTheme: const InputDecorationTheme(

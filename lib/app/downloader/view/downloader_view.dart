@@ -9,6 +9,7 @@ import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/data/data.dart';
+import 'package:ionicons/ionicons.dart';
 
 class DownloaderView extends StatelessWidget {
   const DownloaderView({super.key});
@@ -111,34 +112,14 @@ class DownloaderView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      DownloaderMore(
-                        onChanged: (value) {
-                          bloc.add(
-                            DownloaderFiltered(
-                              bloc.filter.copyWith(
-                                more: value,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                      const DownloaderMore(),
                       Synonyms(
                         state: currentState,
-                        onSelected: (value) {
-                          bloc.add(
-                            DownloaderRequested(
-                              media: currentState.media,
-                              entry: currentState.entry,
-                              title: value,
-                              isStreaming: currentState.isStreaming,
-                            ),
-                          );
-                        },
                       ),
                       SegmentedButton(
                         multiSelectionEnabled: true,
                         emptySelectionAllowed: true,
-                        selectedIcon: const Icon(Icons.done),
+                        selectedIcon: const Icon(Ionicons.checkmark_outline),
                         segments: Quality.values
                             .map((e) =>
                                 ButtonSegment(value: e, label: Text(e.value)))

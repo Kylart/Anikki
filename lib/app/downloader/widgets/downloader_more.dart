@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 
 class DownloaderMore extends StatefulWidget {
   const DownloaderMore({
     super.key,
-    required this.onChanged,
   });
-
-  final void Function(String? value) onChanged;
 
   @override
   State<DownloaderMore> createState() => _DownloaderMoreState();
@@ -19,7 +19,15 @@ class _DownloaderMoreState extends State<DownloaderMore> {
   void initState() {
     super.initState();
     _controller.addListener(() {
-      widget.onChanged(_controller.value.text);
+      final bloc = BlocProvider.of<DownloaderBloc>(context);
+
+      bloc.add(
+        DownloaderFiltered(
+          bloc.filter.copyWith(
+            more: _controller.value.text,
+          ),
+        ),
+      );
     });
   }
 
