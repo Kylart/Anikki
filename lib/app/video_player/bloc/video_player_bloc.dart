@@ -34,6 +34,14 @@ class VideoPlayerBloc extends Bloc<VideoPlayerEvent, VideoPlayerState> {
       );
     });
 
+    on<VideoPlayerClosed>((event, emit) {
+      emit(
+        state.copyWith(
+          fullscreen: false,
+        ),
+      );
+    });
+
     on<VideoPlayerDisplayTapped>((event, emit) {
       emit(state.copyWith(
         hideControls: !state.hideControls,

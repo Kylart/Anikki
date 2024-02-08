@@ -34,7 +34,9 @@ class VideoPlayerPlayRequested extends VideoPlayerEvent {
       ];
 }
 
-class VideoPlayerClosed extends VideoPlayerEvent {}
+class VideoPlayerClosed extends VideoPlayerEvent {
+  const VideoPlayerClosed();
+}
 
 class VideoPlayerResetShowTimer extends VideoPlayerEvent {}
 

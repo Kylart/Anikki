@@ -29,6 +29,10 @@ class ExitAction extends PlayerAction<ExitIntent> {
 
   @override
   void invoke(covariant ExitIntent intent) {
+    BlocProvider.of<VideoPlayerBloc>(intent.context).add(
+      const VideoPlayerClosed(),
+    );
+
     final nav = Navigator.of(intent.context);
     nav.pop();
   }
