@@ -20,6 +20,7 @@ class HomeMoreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeMoreBloc, HomeMoreState>(
       builder: (context, state) {
+        final initial = state is HomeMoreInitial;
         final loading = state is HomeMoreLoading;
         final errored = state is HomeMoreFailed;
 
@@ -52,7 +53,8 @@ class HomeMoreView extends StatelessWidget {
                   return BlocBuilder<HomeStartBloc, HomeStartState>(
                     builder: (context, homeStartState) {
                       return HomeScrollView(
-                        loading: state.entries.isEmpty && (loading || errored),
+                        loading: state.entries.isEmpty &&
+                            (loading || errored || initial),
                         reverse: homeStartState is HomeStartEmpty ||
                                 homeStartState is HomeStartInitial
                             ? false

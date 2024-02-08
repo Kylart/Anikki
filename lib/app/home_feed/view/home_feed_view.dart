@@ -21,6 +21,7 @@ class HomeFeedView extends StatelessWidget {
     return BlocBuilder<HomeFeedBloc, HomeFeedState>(
       builder: (context, state) {
         final bloc = BlocProvider.of<HomeFeedBloc>(context);
+        final initial = state is HomeFeedInitial;
         final loading = state is HomeFeedLoading;
         final loaded = state is HomeFeedLoaded;
         final errored = state is HomeFeedFailed;
@@ -55,7 +56,8 @@ class HomeFeedView extends StatelessWidget {
               ),
               HomeScrollView(
                 reverse: true,
-                loading: state.entries.isEmpty && (loading || errored),
+                loading:
+                    state.entries.isEmpty && (loading || errored || initial),
                 children: [
                   for (final entry in bloc.repository.filterEntries(
                     state.entries,

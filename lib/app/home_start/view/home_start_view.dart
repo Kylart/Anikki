@@ -22,6 +22,7 @@ class HomeStartView extends StatelessWidget {
       builder: (context, anilistAuthState) {
         return BlocBuilder<HomeStartBloc, HomeStartState>(
           builder: (context, state) {
+            final initial = state is HomeStartInitial;
             final empty = state is HomeStartEmpty;
             final loading = state is HomeStartLoading;
             final errored = state is HomeStartError;
@@ -57,7 +58,8 @@ class HomeStartView extends StatelessWidget {
                   BlocBuilder<LayoutBloc, LayoutState>(
                     builder: (context, layoutState) {
                       return HomeScrollView(
-                        loading: state.entries.isEmpty && (loading || errored),
+                        loading: state.entries.isEmpty &&
+                            (loading || errored || initial),
                         children: [
                           for (final entry in state.entries)
                             HomeEntryCard(

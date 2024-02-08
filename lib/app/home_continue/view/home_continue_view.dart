@@ -26,6 +26,7 @@ class _HomeContinueViewState extends State<HomeContinueView> {
       builder: (context, anilistAuthState) {
         return BlocBuilder<HomeContinueBloc, HomeContinueState>(
           builder: (context, state) {
+            final initial = state is HomeContinueInitial;
             final loading = state is HomeContinueLoading;
             final errored = state is HomeContinueError;
 
@@ -57,7 +58,8 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                     ],
                   ),
                   HomeScrollView(
-                    loading: state.entries.isEmpty && (loading || errored),
+                    loading: state.entries.isEmpty &&
+                        (loading || errored || initial),
                     children: [
                       for (final entry in state.entries)
                         HomeEntryCard(
