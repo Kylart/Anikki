@@ -1,7 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'video_player_bloc.dart';
 
-class VideoPlayerState extends Equatable {
+final class VideoPlayerState extends Equatable {
   const VideoPlayerState({
     this.hideControls = false,
     this.displayTapped = false,

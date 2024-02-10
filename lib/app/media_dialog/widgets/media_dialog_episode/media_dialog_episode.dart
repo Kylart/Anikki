@@ -92,125 +92,119 @@ class MediaDialogEpisode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LayoutBloc, LayoutState>(
-      builder: (context, state) {
-        switch (state.runtimeType) {
-          case const (LayoutLandscape):
-            return LayoutCard(
-              child: InkWell(
-                onTap: () => aired || file != null ? play(context) : null,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Stack(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MediaDialogEpisodeCover(
-                            episodeCover: episodeCover,
-                          ),
-                          MediaDialogEpisodeTitle(
+      builder: (context, state) => switch (state) {
+        LayoutLandscape() => LayoutCard(
+            child: InkWell(
+              onTap: () => aired || file != null ? play(context) : null,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Stack(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MediaDialogEpisodeCover(
+                          episodeCover: episodeCover,
+                        ),
+                        MediaDialogEpisodeTitle(
+                          info: info,
+                          index: index,
+                        ),
+                        if (isNextAiringEpisode)
+                          EpisodeTimerCountdown(
+                            airingAt: nextAiringEpisode!.airingAt,
+                          )
+                        else if (aired)
+                          MediaDialogEpisodeActions(
+                            media: media,
+                            index: index,
+                            entry: entry,
+                            localFile: file,
                             info: info,
-                            index: index,
+                            onPlay: play,
+                          )
+                        else
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Ionicons.ban_outline),
                           ),
-                          if (isNextAiringEpisode)
-                            EpisodeTimerCountdown(
-                              airingAt: nextAiringEpisode!.airingAt,
-                            )
-                          else if (aired)
-                            MediaDialogEpisodeActions(
-                              media: media,
-                              index: index,
-                              entry: entry,
-                              localFile: file,
-                              info: info,
-                              onPlay: play,
-                            )
-                          else
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Ionicons.ban_outline),
-                            ),
-                        ],
+                      ],
+                    ),
+                    if (media != null)
+                      Positioned(
+                        top: 5,
+                        right: 5,
+                        child: MediaDialogEpisodeCompleted(
+                          media: media!,
+                          index: index,
+                        ),
                       ),
-                      if (media != null)
-                        Positioned(
-                          top: 5,
-                          right: 5,
-                          child: MediaDialogEpisodeCompleted(
-                            media: media!,
-                            index: index,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        LayoutPortrait() => ListTile(
+            leading: episodeCover != null
+                ? Stack(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: (episodeCover == null
+                            ? const AssetImage(
+                                'assets/images/cover_placeholder.jpg')
+                            : NetworkImage(episodeCover!)) as ImageProvider,
+                      ),
+                      const Positioned.fill(
+                        child: Center(
+                          child: EntryTag(
+                            padding: EdgeInsets.all(4.0),
+                            child: Icon(
+                              Ionicons.play,
+                              size: 12,
+                            ),
                           ),
+                        ),
+                      ),
+                    ],
+                  )
+                : null,
+            title: MediaDialogEpisodeTitle(
+              info: info,
+              index: index,
+              textAlign: TextAlign.start,
+            ),
+            trailing: aired
+                ? MediaDialogEpisodeActions(
+                    media: media,
+                    index: index,
+                    entry: entry,
+                    localFile: file,
+                    info: info,
+                    mainAxisSize: MainAxisSize.min,
+                    onPlay: play,
+                  )
+                : Icon(
+                    isNextAiringEpisode
+                        ? Ionicons.alarm_outline
+                        : Ionicons.ban_outline,
+                  ),
+            subtitle: isNextAiringEpisode
+                ? EpisodeTimerCountdown(
+                    airingAt: nextAiringEpisode!.airingAt,
+                    textAlign: TextAlign.left,
+                  )
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (media != null)
+                        MediaDialogEpisodeCompleted(
+                          media: media!,
+                          index: index,
                         ),
                     ],
                   ),
-                ),
-              ),
-            );
-
-          case const (LayoutPortrait):
-          default:
-            return ListTile(
-              leading: episodeCover != null
-                  ? Stack(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: (episodeCover == null
-                              ? const AssetImage(
-                                  'assets/images/cover_placeholder.jpg')
-                              : NetworkImage(episodeCover!)) as ImageProvider,
-                        ),
-                        const Positioned.fill(
-                          child: Center(
-                            child: EntryTag(
-                              padding: EdgeInsets.all(4.0),
-                              child: Icon(
-                                Ionicons.play,
-                                size: 12,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : null,
-              title: MediaDialogEpisodeTitle(
-                info: info,
-                index: index,
-                textAlign: TextAlign.start,
-              ),
-              trailing: aired
-                  ? MediaDialogEpisodeActions(
-                      media: media,
-                      index: index,
-                      entry: entry,
-                      localFile: file,
-                      info: info,
-                      mainAxisSize: MainAxisSize.min,
-                      onPlay: play,
-                    )
-                  : Icon(
-                      isNextAiringEpisode
-                          ? Ionicons.alarm_outline
-                          : Ionicons.ban_outline,
-                    ),
-              subtitle: isNextAiringEpisode
-                  ? EpisodeTimerCountdown(
-                      airingAt: nextAiringEpisode!.airingAt,
-                      textAlign: TextAlign.left,
-                    )
-                  : Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (media != null)
-                          MediaDialogEpisodeCompleted(
-                            media: media!,
-                            index: index,
-                          ),
-                      ],
-                    ),
-              onTap: () => aired || file != null ? play(context) : null,
-            );
-        }
+            onTap: () => aired || file != null ? play(context) : null,
+          ),
       },
     );
   }

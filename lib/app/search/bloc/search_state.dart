@@ -1,6 +1,6 @@
 part of 'search_bloc.dart';
 
-abstract class SearchState extends Equatable {
+sealed class SearchState extends Equatable {
   const SearchState([this.term = '']);
 
   final String term;
@@ -11,15 +11,15 @@ abstract class SearchState extends Equatable {
       ];
 }
 
-class SearchEmptyTerm extends SearchState {
+final class SearchEmptyTerm extends SearchState {
   const SearchEmptyTerm();
 }
 
-class SearchLoading extends SearchState {
+final class SearchLoading extends SearchState {
   const SearchLoading(super.term);
 }
 
-class SearchSuccess extends SearchState {
+final class SearchSuccess extends SearchState {
   const SearchSuccess(super.term, this.result);
 
   final SearchResult result;
@@ -41,7 +41,7 @@ class SearchSuccess extends SearchState {
       ];
 }
 
-class SearchError extends SearchState {
+final class SearchError extends SearchState {
   const SearchError(super.term, this.message);
 
   final String message;

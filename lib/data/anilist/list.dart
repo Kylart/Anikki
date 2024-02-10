@@ -50,52 +50,21 @@ mixin AnilistList on AnilistClient {
         final status = list?.entries?.first?.status;
         if (status == null) continue;
 
-        switch (status) {
-          case Enum$MediaListStatus.CURRENT:
-            watchList = watchList.copyWith(
-              current:
-                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
-                      [],
-            );
-            break;
-          case Enum$MediaListStatus.PLANNING:
-            watchList = watchList.copyWith(
-              planning:
-                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
-                      [],
-            );
-            break;
-          case Enum$MediaListStatus.COMPLETED:
-            watchList = watchList.copyWith(
-              completed:
-                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
-                      [],
-            );
-            break;
-          case Enum$MediaListStatus.DROPPED:
-            watchList = watchList.copyWith(
-              dropped:
-                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
-                      [],
-            );
-            break;
-          case Enum$MediaListStatus.PAUSED:
-            watchList = watchList.copyWith(
-              paused:
-                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
-                      [],
-            );
-            break;
-          case Enum$MediaListStatus.REPEATING:
-            watchList = watchList.copyWith(
-              repeating:
-                  list?.entries?.whereType<AnilistWatchListEntry>().toList() ??
-                      [],
-            );
-            break;
-          default:
-            break;
-        }
+        final entries =
+            list?.entries?.whereType<AnilistWatchListEntry>().toList() ?? [];
+
+        watchList = switch (status) {
+          Enum$MediaListStatus.CURRENT => watchList.copyWith(current: entries),
+          Enum$MediaListStatus.PLANNING =>
+            watchList.copyWith(planning: entries),
+          Enum$MediaListStatus.COMPLETED =>
+            watchList.copyWith(completed: entries),
+          Enum$MediaListStatus.DROPPED => watchList.copyWith(dropped: entries),
+          Enum$MediaListStatus.PAUSED => watchList.copyWith(paused: entries),
+          Enum$MediaListStatus.REPEATING =>
+            watchList.copyWith(repeating: entries),
+          Enum$MediaListStatus.$unknown => watchList,
+        };
       }
 
       return watchList;

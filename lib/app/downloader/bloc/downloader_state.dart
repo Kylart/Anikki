@@ -1,17 +1,17 @@
 part of 'downloader_bloc.dart';
 
-abstract class DownloaderState extends Equatable {
+sealed class DownloaderState extends Equatable {
   const DownloaderState();
 
   @override
   List<Object> get props => [];
 }
 
-class DownloaderClose extends DownloaderState {
+final class DownloaderClose extends DownloaderState {
   const DownloaderClose();
 }
 
-class DownloaderShow extends DownloaderState {
+final class DownloaderShow extends DownloaderState {
   const DownloaderShow(this.term, [this.alreadyShow = false]);
 
   final String term;
@@ -24,7 +24,7 @@ class DownloaderShow extends DownloaderState {
       ];
 }
 
-class DownloaderLoading extends DownloaderState {
+final class DownloaderLoading extends DownloaderState {
   const DownloaderLoading(this.term);
 
   final String term;
@@ -35,7 +35,7 @@ class DownloaderLoading extends DownloaderState {
       ];
 }
 
-class DownloaderError extends DownloaderState {
+final class DownloaderError extends DownloaderState {
   const DownloaderError({required this.term, required this.message});
 
   final String message;
@@ -48,7 +48,7 @@ class DownloaderError extends DownloaderState {
       ];
 }
 
-class DownloaderSuccess extends DownloaderState {
+final class DownloaderSuccess extends DownloaderState {
   const DownloaderSuccess({
     required this.term,
     required this.torrents,

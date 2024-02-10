@@ -55,49 +55,42 @@ class _AnilistAuthViewState extends State<AnilistAuthView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AnilistAuthBloc, AnilistAuthState>(
-      builder: (context, state) {
-        switch (state.runtimeType) {
-          case const (AnilistAuthLoggedOut):
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'You are not logged into Anilist.',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
+      builder: (context, state) => switch (state) {
+        AnilistAuthLoggedOut() => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'You are not logged into Anilist.',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                OutlinedButton.icon(
-                  onPressed: () => login(context),
-                  label: const Text('Log In'),
-                  icon: const Icon(SimpleIcons.anilist),
+              ),
+              OutlinedButton.icon(
+                onPressed: () => login(context),
+                label: const Text('Log In'),
+                icon: const Icon(SimpleIcons.anilist),
+              ),
+            ],
+          ),
+        AnilistAuthError() => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Could not log you into Anilist',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-              ],
-            );
-          case const (AnilistAuthError):
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Could not log you into Anilist',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                OutlinedButton.icon(
-                  onPressed: () => login(context),
-                  label: const Text('Retry'),
-                  icon: const Icon(SimpleIcons.anilist),
-                ),
-              ],
-            );
-
-          case const (AnilistAuthSuccess):
-          default:
-            return const SizedBox();
-        }
+              ),
+              OutlinedButton.icon(
+                onPressed: () => login(context),
+                label: const Text('Retry'),
+                icon: const Icon(SimpleIcons.anilist),
+              ),
+            ],
+          ),
+        _ => const SizedBox(),
       },
     );
   }

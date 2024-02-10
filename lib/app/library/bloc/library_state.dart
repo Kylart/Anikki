@@ -1,7 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'library_bloc.dart';
 
-abstract class LibraryState extends Equatable {
+sealed class LibraryState extends Equatable {
   const LibraryState({required this.path});
 
   final String path;
@@ -10,18 +9,18 @@ abstract class LibraryState extends Equatable {
   List<Object> get props => [path];
 }
 
-class LibraryInitial extends LibraryState {
+final class LibraryInitial extends LibraryState {
   const LibraryInitial({super.path = ''});
 }
 
-class LibraryLoading extends LibraryState {
+final class LibraryLoading extends LibraryState {
   const LibraryLoading({required super.path});
 
   @override
   List<Object> get props => [path];
 }
 
-class LibraryLoaded extends LibraryState {
+final class LibraryLoaded extends LibraryState {
   final int id;
 
   final List<LibraryEntry> entries;
@@ -58,11 +57,11 @@ class LibraryLoaded extends LibraryState {
   }
 }
 
-class LibraryEmpty extends LibraryState {
+final class LibraryEmpty extends LibraryState {
   const LibraryEmpty({required super.path});
 }
 
-class LibraryError extends LibraryState {
+final class LibraryError extends LibraryState {
   const LibraryError({required this.message, required super.path});
 
   final String message;

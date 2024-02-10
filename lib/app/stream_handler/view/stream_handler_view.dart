@@ -32,20 +32,16 @@ class _StreamHandlerViewState extends State<StreamHandlerView> {
             .streamSettings
             .streamRequestType;
 
-    switch (type) {
-      case StreamRequestType.torrent:
-        return TorrentStreamHandler(
+    return switch (type) {
+      StreamRequestType.torrent => TorrentStreamHandler(
           state: widget.state,
-        );
-      case StreamRequestType.online:
-        return OnlineStreamHandler(
+        ),
+      StreamRequestType.online => OnlineStreamHandler(
           state: widget.state,
-        );
-      case StreamRequestType.choose:
-      default:
-        return ChooseStreamHandler(
+        ),
+      StreamRequestType.choose => ChooseStreamHandler(
           state: widget.state,
-        );
-    }
+        ),
+    };
   }
 }

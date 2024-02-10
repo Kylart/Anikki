@@ -1,3 +1,4 @@
+import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,64 +8,47 @@ import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/app/torrent/widgets/torrent_cannot_load.dart';
 import 'package:anikki/app/torrent/widgets/torrent_tile.dart';
 
-class TorrentView extends StatefulWidget {
+class TorrentView extends StatelessWidget {
   const TorrentView({super.key});
-
-  @override
-  State<TorrentView> createState() => _TorrentViewState();
-}
-
-class _TorrentViewState extends State<TorrentView> {
-  bool dismissed = false;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
-      builder: (context, settingsState) {
-        final settings = settingsState.settings;
+      builder: (context, settingsState) => LayoutCard(
+        child: Column(
+          children: [
+            AppBar(
+              title: Text(settingsState.settings.torrentType.title),
+            ),
+            BlocBuilder<TorrentBloc, TorrentState>(
+              builder: (context, state) => switch (state) {
+                TorrentLoaded() => ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final torrent = state.torrents.elementAt(index);
 
-        return LayoutCard(
-          child: Column(
-            children: [
-              AppBar(
-                title: Text(settingsState.settings.torrentType.title),
-              ),
-              BlocBuilder<TorrentBloc, TorrentState>(
-                builder: (context, state) {
-                  final torrentType = settings.torrentType;
-
-                  switch (state.runtimeType) {
-                    case const (TorrentLoaded):
-                      final currentState = state as TorrentLoaded;
-
-                      return ListView.separated(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final torrent =
-                              currentState.torrents.elementAt(index);
-
-                          return TorrentTile(torrent: torrent);
-                        },
-                        separatorBuilder: (context, index) => const Divider(
-                          height: 1,
-                        ),
-                        itemCount: currentState.torrents.length,
-                      );
-
-                    case const (TorrentCannotLoad):
-                      return TorrentCannotLoadWidget(type: torrentType);
-
-                    case const (TorrentEmpty):
-                    case const (TorrentInitial):
-                    default:
-                      return const SizedBox();
-                  }
-                },
-              ),
-            ],
-          ),
-        );
-      },
+                      return TorrentTile(torrent: torrent);
+                    },
+                    separatorBuilder: (context, index) => const Divider(
+                      height: 1,
+                    ),
+                    itemCount: state.torrents.length,
+                  ),
+                TorrentCannotLoad() => TorrentCannotLoadWidget(
+                    type: settingsState.settings.torrentType,
+                  ),
+                TorrentUnauthorized() => CustomErrorWidget(
+                    title:
+                        'Could not authenticate on ${settingsState.settings.torrentType.title}',
+                    description:
+                        'Are you sure you entered the right credentials? If yes, please close Anikki and restart it in a few minutes.',
+                  ),
+                TorrentEmpty() || TorrentInitial() => const SizedBox(),
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

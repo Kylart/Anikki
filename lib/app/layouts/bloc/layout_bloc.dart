@@ -8,7 +8,7 @@ part 'layout_event.dart';
 part 'layout_state.dart';
 
 class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
-  LayoutBloc() : super(LayoutInitial()) {
+  LayoutBloc() : super(LayoutLandscape()) {
     on<LayoutSizeChanged>((event, emit) {
       if (event.constraints.maxWidth >= kWidthBreakpoint) {
         emit(LayoutLandscape());

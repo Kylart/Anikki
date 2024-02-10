@@ -5,12 +5,12 @@ import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
 const kWidthBreakpoint = 800;
 
-bool isPortrait(BuildContext context) {
-  return BlocProvider.of<LayoutBloc>(context).state.runtimeType ==
-      LayoutPortrait;
-}
+extension LayoutState on BuildContext {
+  /// Is `true` when layout bloc is in [LayoutPortrait] state
+  bool get portrait =>
+      BlocProvider.of<LayoutBloc>(this).state is LayoutPortrait;
 
-bool isLandscape(BuildContext context) {
-  return BlocProvider.of<LayoutBloc>(context).state.runtimeType ==
-      LayoutLandscape;
+  /// Is `true` when layout bloc is in [LayoutLandscape] state
+  bool get landscape =>
+      BlocProvider.of<LayoutBloc>(this).state is LayoutLandscape;
 }

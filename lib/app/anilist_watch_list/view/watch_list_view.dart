@@ -15,31 +15,10 @@ import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
 import 'package:anikki/data/data.dart';
 
-class WatchListView extends StatefulWidget {
+part 'watch_list_complete_view.dart';
+
+class WatchListView extends StatelessWidget {
   const WatchListView({super.key});
-
-  @override
-  State<WatchListView> createState() => _WatchListViewState();
-}
-
-class _WatchListViewState extends State<WatchListView>
-    with SingleTickerProviderStateMixin {
-  late TabController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(
-      vsync: this,
-      length: Enum$MediaListStatus.values.length - 1,
-    );
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,88 +85,19 @@ class _WatchListViewState extends State<WatchListView>
                 ),
               Expanded(
                 child: BlocBuilder<WatchListBloc, WatchListState>(
-                  builder: (context, state) {
-                    if (state is WatchListError) {
-                      return Center(
+                  builder: (context, state) => switch (state) {
+                    WatchListError() => Center(
                         child: CustomErrorWidget(
                           title: 'Could not load Watch list',
                           description: state.message,
                         ),
-                      );
-                    }
-
-                    if (state is WatchListInitial) {
-                      return const Center(
+                      ),
+                    WatchListInitial() => const Center(
                         child: AnilistAuthView(),
-                      );
-                    }
-
-                    if (state is WatchListLoading) return const Loader();
-
-                    final entries = state.watchList;
-
-                    return Column(
-                      children: [
-                        TabBar(
-                          isScrollable: MediaQuery.of(context).size.width < 600,
-                          dividerColor: Colors.transparent,
-                          indicatorSize: TabBarIndicatorSize.label,
-                          indicatorWeight: 1.0,
-                          splashBorderRadius:
-                              const BorderRadius.all(Radius.circular(40)),
-                          tabs: Enum$MediaListStatus.values
-                              .where((element) => element.name != '\$unknown')
-                              .map(
-                                (e) => Tab(
-                                  text: e.name.capitalize(),
-                                ),
-                              )
-                              .toList(),
-                          controller: controller,
-                        ),
-                        Expanded(
-                          child: TabBarView(
-                            controller: controller,
-                            children: Enum$MediaListStatus.values
-                                .where((element) => element.name != '\$unknown')
-                                .map(
-                              (status) {
-                                late final List<AnilistWatchListEntry>
-                                    statusEntries;
-
-                                switch (status) {
-                                  case Enum$MediaListStatus.CURRENT:
-                                    statusEntries = entries.current;
-                                    break;
-                                  case Enum$MediaListStatus.PLANNING:
-                                    statusEntries = entries.planning;
-                                    break;
-                                  case Enum$MediaListStatus.COMPLETED:
-                                    statusEntries = entries.completed;
-                                    break;
-                                  case Enum$MediaListStatus.DROPPED:
-                                    statusEntries = entries.dropped;
-                                    break;
-                                  case Enum$MediaListStatus.PAUSED:
-                                    statusEntries = entries.paused;
-                                    break;
-                                  case Enum$MediaListStatus.REPEATING:
-                                    statusEntries = entries.repeating;
-                                    break;
-                                  default:
-                                    statusEntries = const [];
-                                    break;
-                                }
-
-                                return WatchListLayout(
-                                  entries: statusEntries,
-                                );
-                              },
-                            ).toList(),
-                          ),
-                        ),
-                      ],
-                    );
+                      ),
+                    WatchListLoading() => const Loader(),
+                    WatchListComplete() => _WatchListCompleteView(state),
+                    WatchListNotify() => const SizedBox(),
                   },
                 ),
               ),

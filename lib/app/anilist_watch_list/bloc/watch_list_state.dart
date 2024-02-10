@@ -1,6 +1,6 @@
 part of 'watch_list_bloc.dart';
 
-abstract class WatchListState extends Equatable {
+sealed class WatchListState extends Equatable {
   const WatchListState({
     required this.username,
     required this.watchList,
@@ -40,7 +40,7 @@ abstract class WatchListState extends Equatable {
   }
 }
 
-class WatchListInitial extends WatchListState {
+final class WatchListInitial extends WatchListState {
   const WatchListInitial({
     required super.username,
     super.watchList = const AnilistWatchList(),
@@ -48,7 +48,7 @@ class WatchListInitial extends WatchListState {
   });
 }
 
-class WatchListLoading extends WatchListState {
+final class WatchListLoading extends WatchListState {
   const WatchListLoading({
     required super.username,
     super.watchList = const AnilistWatchList(),
@@ -56,7 +56,7 @@ class WatchListLoading extends WatchListState {
   });
 }
 
-class WatchListComplete extends WatchListState {
+final class WatchListComplete extends WatchListState {
   const WatchListComplete({
     required super.username,
     required super.watchList,
@@ -64,7 +64,7 @@ class WatchListComplete extends WatchListState {
   });
 }
 
-class WatchListNotify extends WatchListState {
+final class WatchListNotify extends WatchListState {
   const WatchListNotify({
     required super.username,
     required this.title,
@@ -89,7 +89,7 @@ class WatchListNotify extends WatchListState {
       ];
 }
 
-class WatchListError extends WatchListState {
+final class WatchListError extends WatchListState {
   const WatchListError({
     required super.username,
     required this.message,

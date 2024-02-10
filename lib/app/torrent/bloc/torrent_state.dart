@@ -1,19 +1,19 @@
 part of 'torrent_bloc.dart';
 
-abstract class TorrentState extends Equatable {
+sealed class TorrentState extends Equatable {
   const TorrentState();
 
   @override
   List<Object> get props => [];
 }
 
-class TorrentInitial extends TorrentState {}
+final class TorrentInitial extends TorrentState {}
 
-class TorrentUnauthorized extends TorrentState {}
+final class TorrentUnauthorized extends TorrentState {}
 
-class TorrentEmpty extends TorrentState {}
+final class TorrentEmpty extends TorrentState {}
 
-class TorrentLoaded extends TorrentState {
+final class TorrentLoaded extends TorrentState {
   const TorrentLoaded(this.torrents);
 
   final List<Torrent> torrents;
@@ -22,4 +22,4 @@ class TorrentLoaded extends TorrentState {
   List<Object> get props => [torrents];
 }
 
-class TorrentCannotLoad extends TorrentState {}
+final class TorrentCannotLoad extends TorrentState {}

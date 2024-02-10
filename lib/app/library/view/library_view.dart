@@ -81,32 +81,19 @@ class LibraryView extends StatelessWidget {
                 ),
               Expanded(
                 child: BlocBuilder<LibraryBloc, LibraryState>(
-                  builder: (context, state) {
-                    switch (state.runtimeType) {
-                      case const (LibraryLoading):
-                        return const Loader();
-
-                      case const (LibraryError):
-                        return CustomErrorWidget(
-                          title: 'Could not load your files at ${state.path}',
-                          description: (state as LibraryError).message,
-                        );
-
-                      case const (LibraryEmpty):
-                        return const EmptyWidget(
-                          title: 'No File',
-                          subtitle: 'Could not find any video',
-                        );
-
-                      case const (LibraryLoaded):
-                        final loadedState = (state as LibraryLoaded);
-                        return LibraryLayout(
-                          entries: loadedState.entries,
-                        );
-
-                      default:
-                        return const SizedBox();
-                    }
+                  builder: (context, state) => switch (state) {
+                    LibraryLoading() || LibraryInitial() => const Loader(),
+                    LibraryError() => CustomErrorWidget(
+                        title: 'Could not load your files at ${state.path}',
+                        description: state.message,
+                      ),
+                    LibraryEmpty() => const EmptyWidget(
+                        title: 'No File',
+                        subtitle: 'Could not find any video',
+                      ),
+                    LibraryLoaded() => LibraryLayout(
+                        entries: state.entries,
+                      ),
                   },
                 ),
               ),
