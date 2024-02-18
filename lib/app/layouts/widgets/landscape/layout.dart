@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,9 +70,7 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.fastEaseInToSlowEaseOut,
                         height: double.infinity,
-                        width: state.drawerMedia != null
-                            ? min(500, MediaQuery.of(context).size.width / 3.5)
-                            : 0,
+                        width: state.drawerMedia != null ? 500 : 0,
                         child: Material(
                           color: Colors.transparent,
                           elevation: 20,
