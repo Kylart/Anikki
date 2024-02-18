@@ -7,10 +7,12 @@ class HomeEntrySectionTitle extends StatelessWidget {
     super.key,
     required this.text,
     this.actions = const [],
+    this.backgroundColor = Colors.black26,
   });
 
   final String text;
   final List<Widget> actions;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,9 @@ class HomeEntrySectionTitle extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
           child: Container(
             padding: const EdgeInsets.all(10.0),
-            decoration: const BoxDecoration(
-              color: Colors.black26,
-              borderRadius: BorderRadius.all(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: const BorderRadius.all(
                 Radius.circular(12),
               ),
             ),

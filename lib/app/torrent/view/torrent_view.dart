@@ -1,3 +1,4 @@
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,10 +17,19 @@ class TorrentView extends StatelessWidget {
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, settingsState) => Column(
         children: [
-          if (context.landscape)
-            AppBar(
-              title: Text(settingsState.settings.torrentType.title),
+          if (context.landscape) ...[
+            Row(
+              children: [
+                HomeEntrySectionTitle(
+                  backgroundColor: Colors.transparent,
+                  text: settingsState.settings.torrentType.title,
+                ),
+              ],
             ),
+            const Divider(
+              height: 1,
+            ),
+          ],
           BlocBuilder<TorrentBloc, TorrentState>(
             builder: (context, state) => switch (state) {
               TorrentLoaded() => ListView.separated(

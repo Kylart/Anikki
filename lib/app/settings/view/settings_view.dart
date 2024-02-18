@@ -1,3 +1,4 @@
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -25,10 +26,19 @@ class _SettingsViewState extends State<SettingsView> {
 
         return Column(
           children: [
-            if (!portrait)
-              AppBar(
-                title: const Text('Settings'),
+            if (!portrait) ...const [
+              Row(
+                children: [
+                  HomeEntrySectionTitle(
+                    backgroundColor: Colors.transparent,
+                    text: 'Settings',
+                  ),
+                ],
               ),
+              Divider(
+                height: 1,
+              ),
+            ],
             Expanded(
               child: SettingsList(
                 sections: [

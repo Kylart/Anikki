@@ -1,3 +1,4 @@
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -21,6 +22,9 @@ class WatchListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final connected = BlocProvider.of<AnilistAuthBloc>(context, listen: true)
+        .state is AnilistAuthSuccess;
+
     final actions = [
       const UserListLayoutToggle(),
       Container(
@@ -38,30 +42,21 @@ class WatchListView extends StatelessWidget {
           icon: const AnikkiIcon(icon: Ionicons.refresh_outline),
         ),
       ),
-      BlocBuilder<AnilistAuthBloc, AnilistAuthState>(
-        builder: (context, state) {
-          if (state is! AnilistAuthSuccess) return const SizedBox();
-
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Tooltip(
-              message: 'Logout of Anilist',
-              child: IconButton(
-                onPressed: () async {
-                  BlocProvider.of<AnilistAuthBloc>(context)
-                      .add(AnilistAuthLogoutRequested());
-
-                  if (BlocProvider.of<LayoutBloc>(context).state
-                      is LayoutLandscape) {
-                    Navigator.of(context).pop();
-                  }
-                },
-                icon: const AnikkiIcon(icon: Ionicons.log_out_outline),
-              ),
+      if (connected)
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Tooltip(
+            message: 'Logout of Anilist',
+            child: IconButton(
+              onPressed: () async {
+                BlocProvider.of<AnilistAuthBloc>(context).add(
+                  AnilistAuthLogoutRequested(),
+                );
+              },
+              icon: const AnikkiIcon(icon: Ionicons.log_out_outline),
             ),
-          );
-        },
-      ),
+          ),
+        ),
     ];
 
     return BlocBuilder<LayoutBloc, LayoutState>(
@@ -76,9 +71,18 @@ class WatchListView extends StatelessWidget {
                 children: actions,
               )
             else
-              AppBar(
-                title: const Text('Watch Lists'),
-                actions: actions,
+              Row(
+                children: [
+                  HomeEntrySectionTitle(
+                    backgroundColor: Colors.transparent,
+                    text: 'Watch Lists',
+                    actions: actions,
+                  ),
+                ],
+              ),
+            if (!portrait)
+              const Divider(
+                height: 1,
               ),
             Expanded(
               child: BlocBuilder<WatchListBloc, WatchListState>(

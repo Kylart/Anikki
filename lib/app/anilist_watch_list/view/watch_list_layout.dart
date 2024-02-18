@@ -27,7 +27,6 @@ class WatchListLayout extends StatelessWidget {
             gridDelegate: userListGridDelegate,
             builder: (entry, index) => WatchListCard(
               entry: entry,
-              heroTag: 'list-${entry.media?.id}',
             ),
           )
         : CustomListView(

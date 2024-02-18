@@ -1,4 +1,3 @@
-import 'package:anikki/app/layouts/widgets/landscape/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -8,6 +7,7 @@ import 'package:anikki/app/anilist_watch_list/watch_list.dart';
 import 'package:anikki/app/home/view/home_view.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
+import 'package:anikki/app/layouts/widgets/landscape/layout.dart';
 import 'package:anikki/app/layouts/widgets/portrait/layout.dart';
 import 'package:anikki/app/library/library.dart';
 import 'package:anikki/app/search/view/search_view.dart';

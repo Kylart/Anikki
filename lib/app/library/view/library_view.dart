@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -69,12 +70,21 @@ class LibraryView extends StatelessWidget {
                 ],
               )
             else
-              AppBar(
-                title: const Text('Library'),
-                actions: [
-                  const UserListLayoutToggle(),
-                  actionButton,
+              Row(
+                children: [
+                  HomeEntrySectionTitle(
+                    backgroundColor: Colors.transparent,
+                    text: 'Watch Lists',
+                    actions: [
+                      const UserListLayoutToggle(),
+                      actionButton,
+                    ],
+                  ),
                 ],
+              ),
+            if (!portrait)
+              const Divider(
+                height: 1,
               ),
             Expanded(
               child: BlocBuilder<LibraryBloc, LibraryState>(

@@ -47,6 +47,7 @@ class AnikkiNavigationRail extends StatelessWidget {
               selectedIcon: page.selectedIcon,
               selected: index == currentIndex,
               title: page.name,
+              error: page.error,
               onPressed: () => onPageChanged(index),
             ),
         ],

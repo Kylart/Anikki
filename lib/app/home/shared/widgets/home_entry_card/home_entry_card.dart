@@ -19,10 +19,12 @@ class HomeEntryCard extends StatefulWidget {
   const HomeEntryCard({
     super.key,
     required this.media,
+    this.libraryEntry,
     this.text,
   });
 
   final Media media;
+  final LibraryEntry? libraryEntry;
   final String? text;
 
   @override
@@ -93,7 +95,11 @@ class _HomeEntryCardState extends State<HomeEntryCard>
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: GestureDetector(
-        onTap: () => showMediaDialog(context, widget.media),
+        onTap: () => showMediaDialog(
+          context,
+          widget.media,
+          widget.libraryEntry,
+        ),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (event) {

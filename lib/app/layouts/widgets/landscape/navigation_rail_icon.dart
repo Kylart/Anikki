@@ -7,6 +7,7 @@ class AnikkiNavigationRailIcon extends StatelessWidget {
     required this.selectedIcon,
     required this.selected,
     required this.onPressed,
+    this.error,
     this.title,
   });
 
@@ -22,6 +23,9 @@ class AnikkiNavigationRailIcon extends StatelessWidget {
   /// Text to display under the icon. If `null`, no text is displayed
   final String? title;
 
+  /// If not null, will display a badge for error
+  final String? error;
+
   /// Method to call when Icon is tapped
   final void Function() onPressed;
 
@@ -35,10 +39,20 @@ class AnikkiNavigationRailIcon extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              selected ? selectedIcon : icon,
-              size: 24,
-              color: selected ? Theme.of(context).colorScheme.primary : null,
+            TooltipVisibility(
+              visible: error != null,
+              child: Tooltip(
+                message: error ?? '',
+                child: Badge(
+                  isLabelVisible: error != null,
+                  child: Icon(
+                    selected ? selectedIcon : icon,
+                    size: 24,
+                    color:
+                        selected ? Theme.of(context).colorScheme.primary : null,
+                  ),
+                ),
+              ),
             ),
             const SizedBox(
               height: 5,
