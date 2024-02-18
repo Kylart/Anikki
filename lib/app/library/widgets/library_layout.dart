@@ -28,14 +28,9 @@ class LibraryLayout extends StatelessWidget {
         ? CustomGridView(
             entries: entries,
             gridDelegate: userListGridDelegate,
-            builder: (entry, index) {
-              final heroTag = 'library-${entry.entries.first.path}';
-
-              return LibraryCard(
-                entry: entry,
-                heroTag: heroTag,
-              );
-            },
+            builder: (entry, index) => LibraryCard(
+              entry: entry,
+            ),
           )
         : CustomListView(
             entries: entries,

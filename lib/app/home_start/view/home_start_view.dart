@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_card/home_entry_card.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_container.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
-import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title_warning.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view.dart';
-import 'package:anikki/app/home/shared/widgets/home_section_title_loading_action.dart';
 import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/entry_card/entry_card.dart';
+import 'package:anikki/core/widgets/section/section_container.dart';
+import 'package:anikki/core/widgets/section/section_title.dart';
+import 'package:anikki/core/widgets/section/section_title_loading_action.dart';
+import 'package:anikki/core/widgets/section/section_title_warning.dart';
 
 class HomeStartView extends StatelessWidget {
   const HomeStartView({super.key});
@@ -29,16 +29,16 @@ class HomeStartView extends StatelessWidget {
 
             if (empty) return const SizedBox();
 
-            return HomeEntrySectionContainer(
+            return SectionContainer(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  HomeEntrySectionTitle(
+                  SectionTitle(
                     text: 'Start watching',
                     actions: [
                       if (loading)
-                        const HomeSectionTitleLoadingAction()
+                        const SectionTitleLoadingAction()
                       else
                         IconButton(
                           onPressed: () {
@@ -50,7 +50,7 @@ class HomeStartView extends StatelessWidget {
                           icon: const Icon(Ionicons.refresh_outline),
                         ),
                       if (errored)
-                        HomeEntrySectionTitleWarning(
+                        SectionTitleWarning(
                           message: state.message,
                         ),
                     ],

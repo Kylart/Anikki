@@ -18,7 +18,7 @@ class NotConnectedIcon extends StatelessWidget {
       },
       tooltip: 'No internet connection',
       icon: Icon(
-        Ionicons.warning_outline,
+        Ionicons.cloud_offline_outline,
         color: Theme.of(context).colorScheme.error,
       ),
     );

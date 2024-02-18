@@ -1,69 +1,152 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/media_dialog/shared/show.dart';
-import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+import 'package:anikki/config/config.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/core/widgets/entry_card/entry_card_cover.dart';
+import 'package:anikki/core/widgets/entry/entry_tag.dart';
 
-class EntryCard extends StatefulWidget {
-  const EntryCard({
+part 'entry_card_background_sweep_animation.dart';
+part 'entry_card_cover.dart';
+part 'entry_card_scale_animation.dart';
+part 'entry_card_text.dart';
+
+class HomeEntryCard extends StatefulWidget {
+  const HomeEntryCard({
     super.key,
     required this.media,
-    required this.cover,
     this.libraryEntry,
+    this.text,
   });
 
-  /// [Media] this entry card is about
   final Media media;
-
-  /// [LibraryEntry] for this card if any
   final LibraryEntry? libraryEntry;
-
-  /// Cover to use for this card
-  final EntryCardCover cover;
+  final String? text;
 
   @override
-  State<EntryCard> createState() => _EntryCardState();
+  State<HomeEntryCard> createState() => _HomeEntryCardState();
 }
 
-class _EntryCardState extends State<EntryCard> {
-  String get title =>
-      widget.media.title ?? widget.libraryEntry?.entries.first.title ?? 'N/A';
+class _HomeEntryCardState extends State<HomeEntryCard>
+    with SingleTickerProviderStateMixin {
+  /// Interval for outline animation
+  Timer? interval;
 
-  String? get coverImage => widget.media.coverImage;
+  /// Keep track of hovering state
+  bool hovered = false;
+
+  /// If the current home media is this card's media
+  bool isCurrentHomeMedia = false;
+
+  bool get shouldAnimate => isDesktop() ? hovered : isCurrentHomeMedia;
+
+  late AnimationController scaleController;
+  late Animation animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    scaleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      reverseDuration: const Duration(milliseconds: 250),
+    );
+
+    animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: scaleController,
+        curve: Curves.decelerate,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    scaleController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LayoutBloc, LayoutState>(
-      builder: (context, state) {
-        return GestureDetector(
-          onTap: () {
-            showMediaDialog(context, widget.media, widget.libraryEntry);
+    final homeBloc = BlocProvider.of<HomeBloc>(context, listen: true);
+
+    if (!isDesktop()) {
+      final currentHomeMedia = homeBloc.state.bannerMedia;
+
+      setState(() {
+        isCurrentHomeMedia = currentHomeMedia == widget.media;
+
+        if (isCurrentHomeMedia) {
+          scaleController.forward();
+        } else {
+          scaleController.reverse();
+        }
+      });
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: GestureDetector(
+        onTap: () => showMediaDialog(
+          context,
+          widget.media,
+          widget.libraryEntry,
+        ),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (event) {
+            homeBloc.add(
+              HomeBannerMediaChanged(widget.media),
+            );
+
+            setState(() {
+              hovered = true;
+              scaleController.forward();
+            });
           },
-          child: Column(
-            children: [
-              Expanded(child: widget.cover),
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                title: Tooltip(
-                  message: title,
-                  child: Opacity(
-                    opacity: 0.8,
-                    child: Text(
-                      '$title\n',
-                      style: Theme.of(context).textTheme.titleSmall,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+          onExit: (event) {
+            scaleController
+                .reverse()
+                .then((value) => setState(() => hovered = false));
+          },
+          child: _HomeEntryCardScaleAnimation(
+            controller: animation,
+            child: _EntryCardBackgroundSweepAnimation(
+              enabled: shouldAnimate,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(12),
+                ),
+                child: Stack(
+                  children: [
+                    _HomeEntryCardCover(
+                      animation: animation,
+                      color: widget.media.anilistInfo.coverImage?.color,
+                      url: widget.media.coverImage,
                     ),
-                  ),
+                    if (widget.text != null)
+                      Positioned(
+                        right: 10,
+                        bottom: 10,
+                        child: _HomeEntryCardText(
+                          text: widget.text!,
+                        ),
+                      ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

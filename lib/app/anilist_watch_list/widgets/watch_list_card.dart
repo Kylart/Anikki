@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/app/home/shared/widgets/home_entry_card/home_entry_card.dart';
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/entry_card/entry_card.dart';
 import 'package:anikki/data/data.dart';
 
 class WatchListCard extends StatelessWidget {

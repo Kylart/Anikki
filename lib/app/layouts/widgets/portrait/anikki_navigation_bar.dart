@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import 'package:anikki/app/home/shared/widgets/not_connected_icon.dart';
+import 'package:anikki/app/layouts/widgets/portrait/not_connected_icon.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 

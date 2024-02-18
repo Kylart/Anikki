@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeEntrySectionContainer extends StatelessWidget {
-  const HomeEntrySectionContainer({
+class SectionContainer extends StatelessWidget {
+  const SectionContainer({
     super.key,
     required this.child,
   });

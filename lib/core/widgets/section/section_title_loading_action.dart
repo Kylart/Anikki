@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeSectionTitleLoadingAction extends StatelessWidget {
-  const HomeSectionTitleLoadingAction({super.key});
+class SectionTitleLoadingAction extends StatelessWidget {
+  const SectionTitleLoadingAction({super.key});
 
   @override
   Widget build(BuildContext context) {

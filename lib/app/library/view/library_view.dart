@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
+import 'package:anikki/core/widgets/section/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -49,7 +49,7 @@ class LibraryView extends StatelessWidget {
           AnikkiAction(
             icon: Ionicons.open_outline,
             label: Platform.isMacOS ? 'Open in Finder' : 'Open in Explorer',
-            callback: (context) async => openFolderInExplorer(context),
+            callback: (context) => openFolderInExplorer(context),
           ),
         ],
       ),
@@ -72,9 +72,9 @@ class LibraryView extends StatelessWidget {
             else
               Row(
                 children: [
-                  HomeEntrySectionTitle(
+                  SectionTitle(
                     backgroundColor: Colors.transparent,
-                    text: 'Watch Lists',
+                    text: 'Library',
                     actions: [
                       const UserListLayoutToggle(),
                       actionButton,

@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class HomeEntrySectionTitle extends StatelessWidget {
-  const HomeEntrySectionTitle({
+class SectionTitle extends StatelessWidget {
+  const SectionTitle({
     super.key,
     required this.text,
     this.actions = const [],

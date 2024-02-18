@@ -1,7 +1,7 @@
-part of 'home_entry_card.dart';
+part of 'entry_card.dart';
 
-class _HomeEntryCardBackgroundSweepAnimation extends StatefulWidget {
-  const _HomeEntryCardBackgroundSweepAnimation({
+class _EntryCardBackgroundSweepAnimation extends StatefulWidget {
+  const _EntryCardBackgroundSweepAnimation({
     required this.child,
     required this.enabled,
   });
@@ -10,12 +10,12 @@ class _HomeEntryCardBackgroundSweepAnimation extends StatefulWidget {
   final bool enabled;
 
   @override
-  State<_HomeEntryCardBackgroundSweepAnimation> createState() =>
+  State<_EntryCardBackgroundSweepAnimation> createState() =>
       _BackgroundSweepAnimationState();
 }
 
 class _BackgroundSweepAnimationState
-    extends State<_HomeEntryCardBackgroundSweepAnimation>
+    extends State<_EntryCardBackgroundSweepAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
 

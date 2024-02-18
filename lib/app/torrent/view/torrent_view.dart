@@ -1,4 +1,4 @@
-import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
+import 'package:anikki/core/widgets/section/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +20,7 @@ class TorrentView extends StatelessWidget {
           if (context.landscape) ...[
             Row(
               children: [
-                HomeEntrySectionTitle(
+                SectionTitle(
                   backgroundColor: Colors.transparent,
                   text: settingsState.settings.torrentType.title,
                 ),

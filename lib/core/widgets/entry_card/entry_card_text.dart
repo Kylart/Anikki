@@ -1,4 +1,4 @@
-part of 'home_entry_card.dart';
+part of 'entry_card.dart';
 
 class _HomeEntryCardText extends StatelessWidget {
   const _HomeEntryCardText({required this.text});

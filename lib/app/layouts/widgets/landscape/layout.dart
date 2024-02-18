@@ -46,6 +46,7 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                         pages: widget.pages,
                         currentIndex: currentIndex,
                         onPageChanged: widget.onPageChanged,
+                        connected: widget.connected,
                       ),
                       const VerticalDivider(
                         width: 1,

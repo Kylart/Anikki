@@ -1,4 +1,4 @@
-part of 'home_entry_card.dart';
+part of 'entry_card.dart';
 
 class _HomeEntryCardScaleAnimation extends StatelessWidget {
   const _HomeEntryCardScaleAnimation({

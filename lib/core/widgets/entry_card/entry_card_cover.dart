@@ -1,86 +1,75 @@
-import 'package:anikki/config/config.dart';
-import 'package:flutter/material.dart';
+part of 'entry_card.dart';
 
-import 'package:anikki/core/widgets/entry_card/entry_card_bookmark.dart';
-import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/core/widgets/entry_card/entry_card_completed.dart';
+class _HomeEntryCardCover extends StatelessWidget {
+  _HomeEntryCardCover({
+    required this.url,
+    required this.animation,
+    String? color,
+  }) {
+    this.color = color ?? '#0d0d0d';
+  }
 
-class EntryCardCover extends StatelessWidget {
-  const EntryCardCover({
-    super.key,
-    this.coverImage,
-    this.episode,
-    this.showBookmark = false,
-    this.showDone = false,
-  });
+  /// Color used when loading the image from `url`
+  late final String color;
 
-  final String? coverImage;
-  final String? episode;
-  final bool showBookmark;
-  final bool showDone;
+  /// The URL of the image to use for this cover
+  final String? url;
+
+  final Animation animation;
+
+  Color get hexColor {
+    final buffer = StringBuffer();
+    if (color.length == 6 || color.length == 7) buffer.write('ff');
+    buffer.write(color.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  double get translationValue => animation.value * 150;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.outline,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          /// Cover image or placeholder image
-          if (coverImage != null)
-            Image.network(
-              coverImage!,
-              fit: BoxFit.fill,
-            )
-          else
-            Opacity(
-              opacity: 0.7,
-              child: Image.asset(
-                'assets/images/placeholder.jpg',
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              ),
-            ),
+    final image = url != null
+        ? Image.network(
+            url!,
+            fit: BoxFit.cover,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
 
-          /// Show only if followed
-          if (showBookmark)
-            const Positioned(
-              right: 10,
-              top: 10,
-              child: EntryCardBookmark(),
-            ),
-
-          /// Show if entry has been seen
-          if (showDone)
-            const Positioned(
-              right: 10,
-              top: 10,
-              child: EntryCardCompleted(),
-            ),
-
-          /// Show episode
-          if (episode != null)
-            Positioned(
-              right: 10,
-              bottom: 10,
-              child: EntryTag(
-                color: Colors.black26,
-                outline: Colors.transparent,
-                child: Text(
-                  episode!,
-                  style: TextStyle(
-                    color: darkTheme.textTheme.bodyMedium?.color,
-                  ),
+              return Container(
+                color: hexColor,
+                child: const AspectRatio(
+                  aspectRatio: 11 / 16,
                 ),
-              ),
-            ),
-        ],
+              );
+            },
+          )
+        : Image.asset(
+            'assets/images/placeholder.jpg',
+            fit: BoxFit.cover,
+          );
+
+    return ShaderMask(
+      blendMode: BlendMode.lighten,
+      shaderCallback: (rect) {
+        return const LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment(-0.8, 1),
+          colors: [
+            Colors.white60,
+            Colors.transparent,
+            Colors.transparent,
+          ],
+        ).createShader(
+          Rect.fromLTRB(
+            0,
+            0,
+            rect.width - translationValue,
+            rect.height + translationValue,
+          ),
+        );
+      },
+      child: Container(
+        child: image,
       ),
     );
   }

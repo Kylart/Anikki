@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/app/layouts/widgets/landscape/navigation_rail_icon.dart';
 import 'package:anikki/app/search/view/search_view.dart';
+import 'package:anikki/core/helpers/notify.dart';
 
 class AnikkiNavigationRail extends StatelessWidget {
   const AnikkiNavigationRail({
@@ -11,11 +12,13 @@ class AnikkiNavigationRail extends StatelessWidget {
     required this.pages,
     required this.onPageChanged,
     required this.currentIndex,
+    this.connected = false,
   });
 
   final List<AnikkiPage> pages;
   final void Function(int index) onPageChanged;
   final int currentIndex;
+  final bool connected;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,19 @@ class AnikkiNavigationRail extends StatelessWidget {
               },
             ),
           ),
+          if (!connected)
+            AnikkiNavigationRailIcon(
+              icon: Ionicons.cloud_offline_outline,
+              selectedIcon: Ionicons.cloud_offline_outline,
+              selected: false,
+              onPressed: () => context.notify(
+                message: 'Cannot connect to the Internet',
+                descritpion:
+                    'Anikki will reconnect automatically whenever possible.',
+                isError: true,
+              ),
+              error: 'Cannot connect to the Internet',
+            ),
           const Spacer(),
           for (final (index, page) in pages.indexed)
             AnikkiNavigationRailIcon(

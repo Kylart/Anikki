@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-class HomeEntrySectionTitleWarning extends StatelessWidget {
-  const HomeEntrySectionTitleWarning({
+class SectionTitleWarning extends StatelessWidget {
+  const SectionTitleWarning({
     super.key,
     required this.message,
   });

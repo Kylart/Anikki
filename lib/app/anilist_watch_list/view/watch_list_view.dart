@@ -1,4 +1,3 @@
-import 'package:anikki/app/home/shared/widgets/home_entry_section/home_entry_section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -12,6 +11,7 @@ import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/loader.dart';
+import 'package:anikki/core/widgets/section/section_title.dart';
 import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
 import 'package:anikki/data/data.dart';
 
@@ -73,7 +73,7 @@ class WatchListView extends StatelessWidget {
             else
               Row(
                 children: [
-                  HomeEntrySectionTitle(
+                  SectionTitle(
                     backgroundColor: Colors.transparent,
                     text: 'Watch Lists',
                     actions: actions,
