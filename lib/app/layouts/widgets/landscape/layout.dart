@@ -70,10 +70,12 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.fastEaseInToSlowEaseOut,
+                        height: double.infinity,
                         width: state.drawerMedia != null
                             ? min(500, MediaQuery.of(context).size.width / 3.5)
                             : 0,
                         child: Material(
+                          color: Colors.transparent,
                           elevation: 20,
                           child: state.drawerMedia != null
                               ? MediaDetails(
