@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/app/home/bloc/home_bloc.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/app/media_dialog/widgets/media_dialog_media_portrait.dart';
 import 'package:anikki/core/core.dart';
@@ -12,8 +12,8 @@ Future<void> showMediaDialog(
   LibraryEntry? libraryEntry,
 ]) async {
   if (context.landscape) {
-    BlocProvider.of<HomeBloc>(context).add(
-      HomeDrawerMediaChanged(
+    BlocProvider.of<LayoutBloc>(context).add(
+      LayoutDrawerMediaChanged(
         media,
         libraryEntry,
       ),

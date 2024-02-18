@@ -15,7 +15,7 @@ void main() {
           BoxConstraints(maxWidth: kWidthBreakpoint * 2),
         ),
       ),
-      expect: () => [LayoutLandscape()],
+      expect: () => [const LayoutLandscape()],
     );
 
     blocTest(
@@ -26,7 +26,7 @@ void main() {
           BoxConstraints(maxWidth: kWidthBreakpoint - 20),
         ),
       ),
-      expect: () => [LayoutPortrait()],
+      expect: () => [const LayoutPortrait()],
     );
   });
 }

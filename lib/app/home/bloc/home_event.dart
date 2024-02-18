@@ -17,19 +17,3 @@ final class HomeBannerMediaChanged extends HomeEvent {
         media,
       ];
 }
-
-final class HomeDrawerMediaChanged extends HomeEvent {
-  const HomeDrawerMediaChanged([
-    this.media,
-    this.libraryEntry,
-  ]);
-
-  final Media? media;
-  final LibraryEntry? libraryEntry;
-
-  @override
-  List<Object?> get props => [
-        media,
-        libraryEntry,
-      ];
-}

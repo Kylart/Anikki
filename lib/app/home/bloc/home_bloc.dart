@@ -14,15 +14,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     });
-
-    on<HomeDrawerMediaChanged>((event, emit) {
-      emit(
-        HomeState(
-          bannerMedia: state.bannerMedia,
-          drawerMedia: event.media,
-          drawerLibraryEntry: event.libraryEntry,
-        ),
-      );
-    });
   }
 }

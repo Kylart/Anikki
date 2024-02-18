@@ -17,12 +17,30 @@ class AnikkiSearchBar extends StatefulWidget {
 
 class _AnikkiSearchBarState extends State<AnikkiSearchBar> {
   final controller = TextEditingController();
+  late String text;
+
+  bool get hasText => text.isNotEmpty;
 
   Timer? _debounce;
+
+  void updateText() {
+    setState(() {
+      text = controller.text;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(updateText);
+
+    updateText();
+  }
 
   @override
   void dispose() {
     _debounce?.cancel();
+    controller.removeListener(updateText);
     super.dispose();
   }
 
@@ -33,7 +51,9 @@ class _AnikkiSearchBarState extends State<AnikkiSearchBar> {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(40)),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+          filter: !hasText
+              ? ImageFilter.blur(sigmaX: 40, sigmaY: 40)
+              : ImageFilter.blur(),
           child: TextField(
             controller: controller,
             autofocus: true,

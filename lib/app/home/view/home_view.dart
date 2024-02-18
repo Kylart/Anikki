@@ -23,24 +23,3 @@ class HomeView extends StatelessWidget {
     );
   }
 }
-
-// if (state.drawerMedia != null)
-//   const VerticalDivider(
-//     width: 1,
-//   ),
-// AnimatedContainer(
-//   duration: const Duration(milliseconds: 500),
-//   curve: Curves.fastEaseInToSlowEaseOut,
-//   width: state.drawerMedia != null
-//       ? min(500, MediaQuery.of(context).size.width / 3.5)
-//       : 0,
-//   child: Material(
-//     elevation: 20,
-//     child: state.drawerMedia != null
-//         ? MediaDialogMedia(
-//             media: state.drawerMedia!,
-//             libraryEntry: state.drawerLibraryEntry,
-//           )
-//         : const SizedBox(),
-//   ),
-// ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
-import 'package:anikki/app/home/bloc/home_bloc.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/media_dialog/widgets/media_dialog_actions.dart';
 import 'package:anikki/app/media_dialog/widgets/media_dialog_episodes.dart';
@@ -49,8 +49,8 @@ class MediaDialogMedia extends StatelessWidget {
                     : Text(media.anilistInfo.title!.native!),
                 trailing: IconButton.outlined(
                   onPressed: () {
-                    BlocProvider.of<HomeBloc>(context).add(
-                      const HomeDrawerMediaChanged(),
+                    BlocProvider.of<LayoutBloc>(context).add(
+                      const LayoutDrawerMediaChanged(),
                     );
                   },
                   icon: const Icon(Ionicons.chevron_forward_outline),
