@@ -75,21 +75,6 @@ class MediaDialogEpisodeActions extends StatelessWidget {
             constraints: const BoxConstraints(),
             icon: const Icon(Ionicons.download_outline),
           ),
-        if (info?.url != null && info?.site != null)
-          Tooltip(
-            message: 'See on ${info!.site}',
-            child: IconButton(
-              iconSize: 18.0,
-              constraints: const BoxConstraints(),
-              onPressed: () {
-                openInBrowser(info?.url);
-              },
-              icon: const Icon(
-                SimpleIcons.crunchyroll,
-                color: Color(0xFFF47521),
-              ),
-            ),
-          ),
         if (onPlay != null)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),

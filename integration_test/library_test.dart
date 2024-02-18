@@ -29,7 +29,7 @@ void main() {
         await tester.pumpAndSettle();
 
         /// Checking for existence of [LibraryPage].
-        final library = find.byType(LibraryPage);
+        final library = find.byType(LibraryView);
         expect(library, findsOneWidget);
 
         /// Checking [UserListAppBar]
@@ -60,7 +60,7 @@ void main() {
         await tester.pumpAndSettle();
 
         /// Checking for existence of [LibraryPage].
-        final library = find.byType(LibraryPage);
+        final library = find.byType(LibraryView);
         expect(library, findsOneWidget);
 
         /// Finds Change folder button

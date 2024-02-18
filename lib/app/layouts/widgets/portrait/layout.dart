@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/app/anilist_watch_list/watch_list.dart';
-import 'package:anikki/app/home/view/home_view.dart';
+import 'package:anikki/app/layouts/shared/helpers/page.dart';
 import 'package:anikki/app/layouts/widgets/portrait/anikki_navigation_bar.dart';
-import 'package:anikki/app/library/view/library_page.dart';
-import 'package:anikki/app/search/search.dart';
-import 'package:anikki/app/settings/settings.dart';
+import 'package:anikki/core/helpers/connectivity_bloc/connectivity_bloc.dart';
 
 class PortraitLayout extends StatefulWidget {
   const PortraitLayout({
     super.key,
+    required this.pageController,
+    required this.pages,
+    required this.onPageChanged,
+    required this.connected,
   });
+
+  final PageController pageController;
+  final List<AnikkiPage> pages;
+  final void Function(int index) onPageChanged;
+  final bool connected;
 
   @override
   State<PortraitLayout> createState() => _PortraitLayoutState();
@@ -18,33 +25,38 @@ class PortraitLayout extends StatefulWidget {
 
 class _PortraitLayoutState extends State<PortraitLayout> {
   int currentIndex = 0;
-  PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
+    final connected = BlocProvider.of<ConnectivityBloc>(context, listen: true)
+        .state is ConnectivityOnline;
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black38,
         body: Stack(
           children: [
-            PageView(
-              controller: pageController,
-              onPageChanged: (value) {
-                setState(() {
-                  currentIndex = value;
-                });
-              },
-              children: const [
-                HomeView(),
-                LibraryPage(),
-                WatchListView(),
-                SearchView(),
-                SettingsView(),
-              ],
+            Positioned.fill(
+              child: PageView(
+                controller: widget.pageController,
+                onPageChanged: (value) {
+                  setState(() {
+                    currentIndex = value;
+                  });
+                },
+                children: widget.pages.map((page) => page.child).toList(),
+              ),
             ),
-            AnikkiNavigationBar(
-              index: currentIndex,
-              pageController: pageController,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AnikkiNavigationBar(
+                  currentIndex: currentIndex,
+                  pages: widget.pages,
+                  onPageChanged: widget.onPageChanged,
+                  connected: connected,
+                ),
+              ],
             ),
           ],
         ),

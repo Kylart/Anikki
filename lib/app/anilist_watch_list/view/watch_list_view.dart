@@ -10,7 +10,6 @@ import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
-import 'package:anikki/core/widgets/layout_card.dart';
 import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
 import 'package:anikki/data/data.dart';
@@ -69,40 +68,37 @@ class WatchListView extends StatelessWidget {
       builder: (context, state) {
         final portrait = state is LayoutPortrait;
 
-        return LayoutCard(
-          transparent: portrait,
-          child: Column(
-            children: [
-              if (portrait)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: actions,
-                )
-              else
-                AppBar(
-                  title: const Text('Watch Lists'),
-                  actions: actions,
-                ),
-              Expanded(
-                child: BlocBuilder<WatchListBloc, WatchListState>(
-                  builder: (context, state) => switch (state) {
-                    WatchListError() => Center(
-                        child: CustomErrorWidget(
-                          title: 'Could not load Watch list',
-                          description: state.message,
-                        ),
-                      ),
-                    WatchListInitial() => const Center(
-                        child: AnilistAuthView(),
-                      ),
-                    WatchListLoading() => const Loader(),
-                    WatchListComplete() => _WatchListCompleteView(state),
-                    WatchListNotify() => const SizedBox(),
-                  },
-                ),
+        return Column(
+          children: [
+            if (portrait)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: actions,
+              )
+            else
+              AppBar(
+                title: const Text('Watch Lists'),
+                actions: actions,
               ),
-            ],
-          ),
+            Expanded(
+              child: BlocBuilder<WatchListBloc, WatchListState>(
+                builder: (context, state) => switch (state) {
+                  WatchListError() => Center(
+                      child: CustomErrorWidget(
+                        title: 'Could not load Watch list',
+                        description: state.message,
+                      ),
+                    ),
+                  WatchListInitial() => const Center(
+                      child: AnilistAuthView(),
+                    ),
+                  WatchListLoading() => const Loader(),
+                  WatchListComplete() => _WatchListCompleteView(state),
+                  WatchListNotify() => const SizedBox(),
+                },
+              ),
+            ),
+          ],
         );
       },
     );

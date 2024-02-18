@@ -25,49 +25,10 @@ class MediaDialogEpisodes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const gridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 185,
-      childAspectRatio: 0.75,
-      crossAxisSpacing: 0,
-    );
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: BlocBuilder<LayoutBloc, LayoutState>(builder: (context, state) {
         final hasInfo = media.anilistInfo.id != 0;
-
-        if (state is LayoutLandscape) {
-          if (!hasInfo) {
-            return GridView(
-              physics: const ClampingScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: gridDelegate,
-              children: [
-                for (final file in entry?.entries ?? [])
-                  MediaDialogEpisode(
-                    index: file.episode ?? 0,
-                    entry: entry,
-                    file: file,
-                  ),
-              ],
-            );
-          }
-
-          return GridView.builder(
-            itemCount: numberOfEpisodes,
-            physics: const ClampingScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: gridDelegate,
-            itemBuilder: (context, index) => MediaDialogEpisode(
-              index: numberOfEpisodes - index,
-              media: media,
-              entry: entry,
-              file: entry?.entries.firstWhereOrNull(
-                (e) => e.episode == numberOfEpisodes - index,
-              ),
-            ),
-          );
-        }
 
         if (!hasInfo) {
           return ListView(

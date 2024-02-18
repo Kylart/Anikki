@@ -1,27 +1,24 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:simple_icons/simple_icons.dart';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/core/widgets/entry_card/entry_card_completed.dart';
-import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/core/widgets/episode_timer_countdown.dart';
-import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/data/data.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
-import 'package:anikki/domain/domain.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/entry/entry_tag.dart';
+import 'package:anikki/core/widgets/episode_timer_countdown.dart';
+import 'package:anikki/data/data.dart';
+import 'package:anikki/domain/domain.dart';
 
-part 'media_dialog_episode_cover.dart';
-part 'media_dialog_episode_completed.dart';
-part 'media_dialog_episode_title.dart';
 part 'media_dialog_episode_actions.dart';
+part 'media_dialog_episode_completed.dart';
+part 'media_dialog_episode_cover.dart';
+part 'media_dialog_episode_title.dart';
 
 class MediaDialogEpisode extends StatelessWidget {
   MediaDialogEpisode({
@@ -92,120 +89,49 @@ class MediaDialogEpisode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LayoutBloc, LayoutState>(
-      builder: (context, state) => switch (state) {
-        LayoutLandscape() => LayoutCard(
-            child: InkWell(
-              onTap: () => aired || file != null ? play(context) : null,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Stack(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MediaDialogEpisodeCover(
-                          episodeCover: episodeCover,
-                        ),
-                        MediaDialogEpisodeTitle(
-                          info: info,
-                          index: index,
-                        ),
-                        if (isNextAiringEpisode)
-                          EpisodeTimerCountdown(
-                            airingAt: nextAiringEpisode!.airingAt,
-                          )
-                        else if (aired)
-                          MediaDialogEpisodeActions(
-                            media: media,
-                            index: index,
-                            entry: entry,
-                            localFile: file,
-                            info: info,
-                            onPlay: play,
-                          )
-                        else
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Ionicons.ban_outline),
-                          ),
-                      ],
-                    ),
-                    if (media != null)
-                      Positioned(
-                        top: 5,
-                        right: 5,
-                        child: MediaDialogEpisodeCompleted(
-                          media: media!,
-                          index: index,
-                        ),
-                      ),
-                  ],
+      builder: (context, state) => ListTile(
+        leading: episodeCover != null
+            ? Badge(
+                alignment: const Alignment(0.2, -0.9),
+                backgroundColor: Colors.transparent,
+                label: media != null
+                    ? MediaDialogEpisodeCompleted(
+                        media: media!,
+                        index: index,
+                      )
+                    : null,
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: (episodeCover == null
+                      ? const AssetImage('assets/images/cover_placeholder.jpg')
+                      : NetworkImage(episodeCover!)) as ImageProvider,
                 ),
-              ),
-            ),
-          ),
-        LayoutPortrait() => ListTile(
-            leading: episodeCover != null
-                ? Stack(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: (episodeCover == null
-                            ? const AssetImage(
-                                'assets/images/cover_placeholder.jpg')
-                            : NetworkImage(episodeCover!)) as ImageProvider,
-                      ),
-                      const Positioned.fill(
-                        child: Center(
-                          child: EntryTag(
-                            padding: EdgeInsets.all(4.0),
-                            child: Icon(
-                              Ionicons.play,
-                              size: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                : null,
-            title: MediaDialogEpisodeTitle(
-              info: info,
-              index: index,
-              textAlign: TextAlign.start,
-            ),
-            trailing: aired
-                ? MediaDialogEpisodeActions(
-                    media: media,
-                    index: index,
-                    entry: entry,
-                    localFile: file,
-                    info: info,
-                    mainAxisSize: MainAxisSize.min,
-                    onPlay: play,
-                  )
-                : Icon(
-                    isNextAiringEpisode
-                        ? Ionicons.alarm_outline
-                        : Ionicons.ban_outline,
-                  ),
-            subtitle: isNextAiringEpisode
-                ? EpisodeTimerCountdown(
-                    airingAt: nextAiringEpisode!.airingAt,
-                    textAlign: TextAlign.left,
-                  )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (media != null)
-                        MediaDialogEpisodeCompleted(
-                          media: media!,
-                          index: index,
-                        ),
-                    ],
-                  ),
-            onTap: () => aired || file != null ? play(context) : null,
-          ),
-      },
+              )
+            : null,
+        title: MediaDialogEpisodeTitle(
+          info: info,
+          index: index,
+          textAlign: TextAlign.start,
+        ),
+        trailing: aired
+            ? MediaDialogEpisodeActions(
+                media: media,
+                index: index,
+                entry: entry,
+                localFile: file,
+                info: info,
+                mainAxisSize: MainAxisSize.min,
+                onPlay: play,
+              )
+            : null,
+        subtitle: isNextAiringEpisode
+            ? EpisodeTimerCountdown(
+                airingAt: nextAiringEpisode!.airingAt,
+                textAlign: TextAlign.left,
+              )
+            : null,
+        onTap: () => aired || file != null ? play(context) : null,
+      ),
     );
   }
 }

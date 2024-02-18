@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
+
 class BannerImage extends StatelessWidget {
   const BannerImage({
     super.key,
@@ -29,7 +31,15 @@ class BannerImage extends StatelessWidget {
             Colors.transparent,
           ],
         ).createShader(
-          Rect.fromLTRB(0, 0, rect.width, min(rect.height, 500)),
+          Rect.fromLTRB(
+            0,
+            0,
+            rect.width,
+            min(
+              rect.height,
+              context.portrait ? double.infinity : 500,
+            ),
+          ),
         );
       },
       blendMode: BlendMode.dstIn,

@@ -23,7 +23,7 @@ class HomeEntrySectionTitle extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(10.0),
             decoration: const BoxDecoration(
-              color: Colors.white10,
+              color: Colors.black26,
               borderRadius: BorderRadius.all(
                 Radius.circular(12),
               ),

@@ -1,3 +1,4 @@
+import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/watch_list.dart';
 import 'package:anikki/app/home/shared/widgets/not_connected_icon.dart';
-import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/view/library_view.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/settings/settings.dart';
@@ -51,8 +51,6 @@ class CustomMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final portrait = BlocProvider.of<LayoutBloc>(context, listen: true).state
-        is LayoutPortrait;
     final settings =
         BlocProvider.of<SettingsBloc>(context, listen: true).state.settings;
     final connected = BlocProvider.of<ConnectivityBloc>(context, listen: true)
@@ -61,12 +59,11 @@ class CustomMenu extends StatelessWidget {
         BlocProvider.of<WatchListBloc>(context, listen: true).state;
 
     final pages = [
-      if (portrait)
-        const _Page(
-          child: SizedBox(),
-          name: 'Home',
-          icon: Ionicons.home_outline,
-        ),
+      const _Page(
+        child: SizedBox(),
+        name: 'Home',
+        icon: Ionicons.home_outline,
+      ),
       const _Page(
         child: LibraryView(),
         name: 'Library',
@@ -84,7 +81,7 @@ class CustomMenu extends StatelessWidget {
           name: settings.torrentType.title,
           icon: Ionicons.cloud_download_outline,
         ),
-      if (portrait)
+      if (context.portrait)
         const _Page(
           child: SizedBox(),
           name: 'Search',
@@ -104,7 +101,8 @@ class CustomMenu extends StatelessWidget {
       if (pageController != null) {
         pageController?.jumpToPage(pageIndex);
       } else {
-        showDialog(
+        showAdaptiveDialog(
+          barrierDismissible: true,
           context: context,
           builder: (context) => Dialog(
             shadowColor: Colors.transparent,
@@ -122,6 +120,7 @@ class CustomMenu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           EntryTag(
+            color: Theme.of(context).colorScheme.background.withOpacity(0.3),
             child: Wrap(
               spacing: 12.0,
               children: [

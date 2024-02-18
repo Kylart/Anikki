@@ -24,8 +24,15 @@ class MediaDialogEpisodeCompleted extends StatelessWidget {
 
         if (!seen) return const SizedBox();
 
-        return const EntryCardCompleted(
-          dense: true,
+        return const EntryTag(
+          color: Colors.black45,
+          padding: EdgeInsets.all(2.0),
+          outline: Colors.transparent,
+          child: Icon(
+            Ionicons.checkmark_outline,
+            color: Colors.green,
+            size: 12.0,
+          ),
         );
       },
     );

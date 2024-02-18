@@ -2,21 +2,32 @@ part of 'home_bloc.dart';
 
 final class HomeState extends Equatable {
   const HomeState({
-    this.media,
+    this.bannerMedia,
+    this.drawerMedia,
+    this.drawerLibraryEntry,
   });
 
-  final Media? media;
+  final Media? bannerMedia;
+
+  final Media? drawerMedia;
+  final LibraryEntry? drawerLibraryEntry;
 
   @override
   List<Object?> get props => [
-        media,
+        bannerMedia,
+        drawerMedia,
+        drawerLibraryEntry,
       ];
 
   HomeState copyWith({
-    Media? media,
+    Media? bannerMedia,
+    Media? drawerMedia,
+    LibraryEntry? drawerLibraryEntry,
   }) {
     return HomeState(
-      media: media ?? this.media,
+      bannerMedia: bannerMedia ?? this.bannerMedia,
+      drawerMedia: drawerMedia ?? this.drawerMedia,
+      drawerLibraryEntry: drawerLibraryEntry ?? this.drawerLibraryEntry,
     );
   }
 }

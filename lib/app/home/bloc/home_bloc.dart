@@ -7,8 +7,22 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeState()) {
-    on<HomeMediaChanged>((event, emit) {
-      emit(state.copyWith(media: event.media));
+    on<HomeBannerMediaChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          bannerMedia: event.media,
+        ),
+      );
+    });
+
+    on<HomeDrawerMediaChanged>((event, emit) {
+      emit(
+        HomeState(
+          bannerMedia: state.bannerMedia,
+          drawerMedia: event.media,
+          drawerLibraryEntry: event.libraryEntry,
+        ),
+      );
     });
   }
 }
