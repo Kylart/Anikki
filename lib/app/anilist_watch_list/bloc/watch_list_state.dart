@@ -18,6 +18,9 @@ sealed class WatchListState extends Equatable {
   List<AnilistWatchListEntry> get planning => watchList.planning;
   List<AnilistWatchListEntry> get repeating => watchList.repeating;
 
+  bool get isEmpty => watchList == const AnilistWatchList();
+  bool get isNotEmpty => !isEmpty;
+
   @override
   List<Object?> get props => [
         username,

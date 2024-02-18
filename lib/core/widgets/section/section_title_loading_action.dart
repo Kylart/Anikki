@@ -6,7 +6,7 @@ class SectionTitleLoadingAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 4.0),
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: SizedBox(
         height: 20,
         width: 20,

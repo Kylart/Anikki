@@ -3,7 +3,7 @@ part of 'watch_list_view.dart';
 class _WatchListCompleteView extends StatefulWidget {
   const _WatchListCompleteView(this.state);
 
-  final WatchListComplete state;
+  final WatchListState state;
 
   @override
   State<_WatchListCompleteView> createState() => _WatchListCompleteViewState();

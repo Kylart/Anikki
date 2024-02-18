@@ -12,6 +12,7 @@ import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/loader.dart';
 import 'package:anikki/core/widgets/section/section_title.dart';
+import 'package:anikki/core/widgets/section/section_title_loading_action.dart';
 import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
 import 'package:anikki/data/data.dart';
 
@@ -25,84 +26,92 @@ class WatchListView extends StatelessWidget {
     final connected = BlocProvider.of<AnilistAuthBloc>(context, listen: true)
         .state is AnilistAuthSuccess;
 
-    final actions = [
-      const UserListLayoutToggle(),
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: IconButton(
-          onPressed: () async {
-            final state = BlocProvider.of<AnilistAuthBloc>(context).state;
-
-            if (state is AnilistAuthSuccess) {
-              BlocProvider.of<WatchListBloc>(context).add(
-                WatchListRequested(username: state.me.name),
-              );
-            }
-          },
-          icon: const AnikkiIcon(icon: Ionicons.refresh_outline),
-        ),
-      ),
-      if (connected)
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Tooltip(
-            message: 'Logout of Anilist',
-            child: IconButton(
-              onPressed: () async {
-                BlocProvider.of<AnilistAuthBloc>(context).add(
-                  AnilistAuthLogoutRequested(),
-                );
-              },
-              icon: const AnikkiIcon(icon: Ionicons.log_out_outline),
-            ),
-          ),
-        ),
-    ];
-
     return BlocBuilder<LayoutBloc, LayoutState>(
       builder: (context, state) {
         final portrait = state is LayoutPortrait;
 
-        return Column(
-          children: [
-            if (portrait)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: actions,
-              )
-            else
-              Row(
-                children: [
-                  SectionTitle(
-                    backgroundColor: Colors.transparent,
-                    text: 'Watch Lists',
-                    actions: actions,
+        return BlocBuilder<WatchListBloc, WatchListState>(
+          builder: (context, state) {
+            final initial = state is WatchListInitial;
+            final errored = state is WatchListError;
+            final loading = state is WatchListLoading;
+
+            final actions = [
+              const UserListLayoutToggle(),
+              if (loading)
+                const SectionTitleLoadingAction()
+              else
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: IconButton(
+                    onPressed: () async {
+                      final state =
+                          BlocProvider.of<AnilistAuthBloc>(context).state;
+
+                      if (state is AnilistAuthSuccess) {
+                        BlocProvider.of<WatchListBloc>(context).add(
+                          WatchListRequested(username: state.me.name),
+                        );
+                      }
+                    },
+                    icon: const AnikkiIcon(icon: Ionicons.refresh_outline),
+                  ),
+                ),
+              if (connected)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Tooltip(
+                    message: 'Logout of Anilist',
+                    child: IconButton(
+                      onPressed: () async {
+                        BlocProvider.of<AnilistAuthBloc>(context).add(
+                          AnilistAuthLogoutRequested(),
+                        );
+                      },
+                      icon: const AnikkiIcon(icon: Ionicons.log_out_outline),
+                    ),
+                  ),
+                ),
+            ];
+
+            return Column(
+              children: [
+                if (portrait)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: actions,
+                  )
+                else ...[
+                  Row(
+                    children: [
+                      SectionTitle(
+                        backgroundColor: Colors.transparent,
+                        text: 'Watch Lists',
+                        actions: actions,
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    height: 1,
                   ),
                 ],
-              ),
-            if (!portrait)
-              const Divider(
-                height: 1,
-              ),
-            Expanded(
-              child: BlocBuilder<WatchListBloc, WatchListState>(
-                builder: (context, state) => switch (state) {
-                  WatchListError() => Center(
-                      child: CustomErrorWidget(
-                        title: 'Could not load Watch list',
-                        description: state.message,
-                      ),
-                    ),
-                  WatchListInitial() => const Center(
-                      child: AnilistAuthView(),
-                    ),
-                  WatchListLoading() => const Loader(),
-                  WatchListComplete() => _WatchListCompleteView(state),
-                  WatchListNotify() => const SizedBox(),
-                },
-              ),
-            ),
-          ],
+                if (initial)
+                  const Center(
+                    child: AnilistAuthView(),
+                  ),
+                if (!loading && errored && state.isEmpty)
+                  CustomErrorWidget(
+                    title: 'Could not load Watch list',
+                    description: state.message,
+                  ),
+                if (!errored && loading && state.isEmpty) const Loader(),
+                if (state.isNotEmpty)
+                  Expanded(
+                    child: _WatchListCompleteView(state),
+                  ),
+              ],
+            );
+          },
         );
       },
     );
