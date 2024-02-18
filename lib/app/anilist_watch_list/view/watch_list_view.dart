@@ -96,15 +96,22 @@ class WatchListView extends StatelessWidget {
                   ),
                 ],
                 if (initial)
-                  const Center(
-                    child: AnilistAuthView(),
+                  const Expanded(
+                    child: Center(
+                      child: AnilistAuthView(),
+                    ),
                   ),
                 if (!loading && errored && state.isEmpty)
-                  CustomErrorWidget(
-                    title: 'Could not load Watch list',
-                    description: state.message,
+                  Expanded(
+                    child: CustomErrorWidget(
+                      title: 'Could not load Watch list',
+                      description: state.message,
+                    ),
                   ),
-                if (!errored && loading && state.isEmpty) const Loader(),
+                if (!errored && loading && state.isEmpty)
+                  const Expanded(
+                    child: Loader(),
+                  ),
                 if (state.isNotEmpty)
                   Expanded(
                     child: _WatchListCompleteView(state),
