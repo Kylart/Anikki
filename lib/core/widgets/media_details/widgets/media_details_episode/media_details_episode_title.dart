@@ -1,7 +1,7 @@
-part of 'media_dialog_episode.dart';
+part of 'media_details_episode.dart';
 
-class MediaDialogEpisodeTitle extends StatelessWidget {
-  const MediaDialogEpisodeTitle({
+class MediaDetailsEpisodeTitle extends StatelessWidget {
+  const MediaDetailsEpisodeTitle({
     super.key,
     required this.info,
     required this.index,

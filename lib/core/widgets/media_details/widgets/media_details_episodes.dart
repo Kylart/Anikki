@@ -4,12 +4,12 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/app/media_dialog/widgets/media_dialog_episode/media_dialog_episode.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/media_details/widgets/media_details_episode/media_details_episode.dart';
 
-class MediaDialogEpisodes extends StatelessWidget {
-  const MediaDialogEpisodes({
+class MediaDetailsEpisodes extends StatelessWidget {
+  const MediaDetailsEpisodes({
     super.key,
     required this.media,
     this.entry,
@@ -36,7 +36,7 @@ class MediaDialogEpisodes extends StatelessWidget {
             shrinkWrap: true,
             children: [
               for (final file in entry?.entries ?? []) ...[
-                MediaDialogEpisode(
+                MediaDetailsEpisode(
                   index: file.episode ?? 0,
                   entry: entry,
                   file: file,
@@ -52,7 +52,7 @@ class MediaDialogEpisodes extends StatelessWidget {
           physics: const ClampingScrollPhysics(),
           shrinkWrap: true,
           separatorBuilder: (context, index) => const Divider(),
-          itemBuilder: (context, index) => MediaDialogEpisode(
+          itemBuilder: (context, index) => MediaDetailsEpisode(
             index: numberOfEpisodes - index,
             media: media,
             entry: entry,

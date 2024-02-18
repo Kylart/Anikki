@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/app/media_dialog/widgets/media_dialog_actions.dart';
-import 'package:anikki/app/media_dialog/widgets/media_dialog_trailer.dart';
+import 'package:anikki/core/widgets/media_details/widgets/media_details_actions.dart';
+import 'package:anikki/core/widgets/media_details/widgets/media_details_trailer.dart';
 
 class EntryTile extends StatefulWidget {
   const EntryTile({
@@ -132,7 +132,7 @@ class _EntryTileState<T> extends State<EntryTile> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              MediaDialogActions(
+              MediaDetailsActions(
                 media: media,
                 entry: widget.libraryEntry,
                 reversed: true,
@@ -141,7 +141,7 @@ class _EntryTileState<T> extends State<EntryTile> {
               if (media.anilistInfo.trailer?.id != null &&
                   media.anilistInfo.trailer?.site == 'youtube' &&
                   media.anilistInfo.trailer?.thumbnail != null)
-                MediaDialogTrailer(media: media),
+                MediaDetailsTrailer(media: media),
             ],
           )
         ],

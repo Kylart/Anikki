@@ -49,7 +49,7 @@ class LibraryView extends StatelessWidget {
           AnikkiAction(
             icon: Ionicons.open_outline,
             label: Platform.isMacOS ? 'Open in Finder' : 'Open in Explorer',
-            callback: (context) => openFolderInExplorer(context),
+            callback: openFolderInExplorer,
           ),
         ],
       ),

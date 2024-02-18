@@ -1,7 +1,7 @@
-part of 'media_dialog_episode.dart';
+part of 'media_details_episode.dart';
 
-class MediaDialogEpisodeCover extends StatefulWidget {
-  const MediaDialogEpisodeCover({
+class MediaDetailsEpisodeCover extends StatefulWidget {
+  const MediaDetailsEpisodeCover({
     super.key,
     this.episodeCover,
   });
@@ -9,11 +9,11 @@ class MediaDialogEpisodeCover extends StatefulWidget {
   final String? episodeCover;
 
   @override
-  State<MediaDialogEpisodeCover> createState() =>
-      _MediaDialogEpisodeCoverState();
+  State<MediaDetailsEpisodeCover> createState() =>
+      _MediaDetailsEpisodeCoverState();
 }
 
-class _MediaDialogEpisodeCoverState extends State<MediaDialogEpisodeCover> {
+class _MediaDetailsEpisodeCoverState extends State<MediaDetailsEpisodeCover> {
   bool isError = false;
 
   @override

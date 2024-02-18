@@ -5,8 +5,8 @@ import 'package:anikki/core/external_media_provider/external_media_provider.dart
 import 'package:anikki/core/external_media_provider/utils.dart';
 import 'package:anikki/app/video_player/view/video_player_view.dart';
 
-class MediaDialogVideoPlayer extends StatefulWidget {
-  const MediaDialogVideoPlayer({
+class MediaDetailsVideoPlayer extends StatefulWidget {
+  const MediaDetailsVideoPlayer({
     super.key,
     required this.url,
   });
@@ -14,10 +14,11 @@ class MediaDialogVideoPlayer extends StatefulWidget {
   final String url;
 
   @override
-  State<MediaDialogVideoPlayer> createState() => _MediaDialogVideoPlayerState();
+  State<MediaDetailsVideoPlayer> createState() =>
+      _MediaDetailsVideoPlayerState();
 }
 
-class _MediaDialogVideoPlayerState extends State<MediaDialogVideoPlayer> {
+class _MediaDetailsVideoPlayerState extends State<MediaDetailsVideoPlayer> {
   @override
   void initState() {
     ExternalMediaProvider.create();

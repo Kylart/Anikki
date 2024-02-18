@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
-import 'package:anikki/app/media_dialog/widgets/media_dialog_media.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/page.dart';
 import 'package:anikki/app/layouts/widgets/landscape/navigation_rail.dart';
 import 'package:anikki/core/widgets/macos_title_bar.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:anikki/core/widgets/media_details/widgets/media_details.dart';
 
 class LandscapeLayout extends StatefulWidget {
   const LandscapeLayout({
@@ -76,7 +76,7 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                         child: Material(
                           elevation: 20,
                           child: state.drawerMedia != null
-                              ? MediaDialogMedia(
+                              ? MediaDetails(
                                   media: state.drawerMedia!,
                                   libraryEntry: state.drawerLibraryEntry,
                                 )

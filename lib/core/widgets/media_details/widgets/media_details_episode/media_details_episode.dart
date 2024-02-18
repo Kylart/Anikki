@@ -15,13 +15,13 @@ import 'package:anikki/core/widgets/episode_timer_countdown.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 
-part 'media_dialog_episode_actions.dart';
-part 'media_dialog_episode_completed.dart';
-part 'media_dialog_episode_cover.dart';
-part 'media_dialog_episode_title.dart';
+part 'media_details_episode_actions.dart';
+part 'media_details_episode_completed.dart';
+part 'media_details_episode_cover.dart';
+part 'media_details_episode_title.dart';
 
-class MediaDialogEpisode extends StatelessWidget {
-  MediaDialogEpisode({
+class MediaDetailsEpisode extends StatelessWidget {
+  MediaDetailsEpisode({
     super.key,
     required this.index,
     this.media,
@@ -95,7 +95,7 @@ class MediaDialogEpisode extends StatelessWidget {
                 alignment: const Alignment(0.2, -0.9),
                 backgroundColor: Colors.transparent,
                 label: media != null
-                    ? MediaDialogEpisodeCompleted(
+                    ? MediaDetailsEpisodeCompleted(
                         media: media!,
                         index: index,
                       )
@@ -108,13 +108,13 @@ class MediaDialogEpisode extends StatelessWidget {
                 ),
               )
             : null,
-        title: MediaDialogEpisodeTitle(
+        title: MediaDetailsEpisodeTitle(
           info: info,
           index: index,
           textAlign: TextAlign.start,
         ),
         trailing: aired
-            ? MediaDialogEpisodeActions(
+            ? MediaDetailsEpisodeActions(
                 media: media,
                 index: index,
                 entry: entry,

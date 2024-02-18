@@ -3,10 +3,10 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/app/media_dialog/widgets/media_dialog_video_player.dart';
+import 'package:anikki/core/widgets/media_details/widgets/media_details_video_player.dart';
 
-class MediaDialogTrailer extends StatefulWidget {
-  const MediaDialogTrailer({
+class MediaDetailsTrailer extends StatefulWidget {
+  const MediaDetailsTrailer({
     super.key,
     required this.media,
   });
@@ -14,10 +14,10 @@ class MediaDialogTrailer extends StatefulWidget {
   final Media media;
 
   @override
-  State<MediaDialogTrailer> createState() => _MediaDialogTrailerState();
+  State<MediaDetailsTrailer> createState() => _MediaDetailsTrailerState();
 }
 
-class _MediaDialogTrailerState extends State<MediaDialogTrailer> {
+class _MediaDetailsTrailerState extends State<MediaDetailsTrailer> {
   String? get thumbnail => widget.media.anilistInfo.trailer?.thumbnail;
   String? get site => widget.media.anilistInfo.trailer?.site;
   String? get id => widget.media.anilistInfo.trailer?.id;
@@ -72,7 +72,7 @@ class _MediaDialogTrailerState extends State<MediaDialogTrailer> {
           aspectRatio: 16 / 9,
           child: showThumbnail
               ? videoThumbnail
-              : MediaDialogVideoPlayer(
+              : MediaDetailsVideoPlayer(
                   url: 'https://www.${site!}.com/watch?v=${id!}',
                 ),
         ),

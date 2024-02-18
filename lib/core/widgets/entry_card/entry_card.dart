@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/home/bloc/home_bloc.dart';
-import 'package:anikki/app/media_dialog/shared/show.dart';
 import 'package:anikki/config/config.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
+import 'package:anikki/core/widgets/media_details/show.dart';
 
 part 'entry_card_background_sweep_animation.dart';
 part 'entry_card_cover.dart';

@@ -6,14 +6,14 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
-import 'package:anikki/app/media_dialog/widgets/media_dialog_actions.dart';
-import 'package:anikki/app/media_dialog/widgets/media_dialog_episodes.dart';
-import 'package:anikki/app/media_dialog/widgets/media_dialog_trailer.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
+import 'package:anikki/core/widgets/media_details/widgets/media_details_actions.dart';
+import 'package:anikki/core/widgets/media_details/widgets/media_details_episodes.dart';
+import 'package:anikki/core/widgets/media_details/widgets/media_details_trailer.dart';
 
-class MediaDialogMedia extends StatelessWidget {
-  const MediaDialogMedia({
+class MediaDetails extends StatelessWidget {
+  const MediaDetails({
     super.key,
     required this.media,
     this.libraryEntry,
@@ -58,7 +58,7 @@ class MediaDialogMedia extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: MediaDialogActions(
+                child: MediaDetailsActions(
                   media: media,
                   entry: entry,
                 ),
@@ -66,7 +66,7 @@ class MediaDialogMedia extends StatelessWidget {
               if (media.anilistInfo.trailer?.id != null &&
                   media.anilistInfo.trailer?.site == 'youtube' &&
                   media.anilistInfo.trailer?.thumbnail != null)
-                MediaDialogTrailer(
+                MediaDetailsTrailer(
                   key: ValueKey(media.anilistInfo.id),
                   media: media,
                 ),
@@ -89,7 +89,7 @@ class MediaDialogMedia extends StatelessWidget {
                     ).toList(),
                   ),
                 ),
-              MediaDialogEpisodes(
+              MediaDetailsEpisodes(
                 media: media,
                 entry: entry,
               ),
