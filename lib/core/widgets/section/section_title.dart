@@ -7,7 +7,7 @@ class SectionTitle extends StatelessWidget {
     super.key,
     required this.text,
     this.actions = const [],
-    this.backgroundColor = Colors.black26,
+    this.backgroundColor = Colors.white12,
   });
 
   final String text;
