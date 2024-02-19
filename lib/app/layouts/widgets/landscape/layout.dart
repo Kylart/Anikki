@@ -75,9 +75,51 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                           color: Colors.transparent,
                           elevation: 20,
                           child: state.drawerMedia != null
-                              ? MediaDetails(
-                                  media: state.drawerMedia!,
-                                  libraryEntry: state.drawerLibraryEntry,
+                              ? AnimatedSwitcher(
+                                  layoutBuilder:
+                                      (currentChild, previousChildren) {
+                                    return Stack(
+                                      fit: StackFit.passthrough,
+                                      alignment: Alignment.topCenter,
+                                      children: <Widget>[
+                                        Row(
+                                          children: previousChildren
+                                              .map(
+                                                (e) => Expanded(child: e),
+                                              )
+                                              .toList(),
+                                        ),
+                                        if (currentChild != null)
+                                          Column(
+                                            children: [
+                                              Expanded(child: currentChild),
+                                            ],
+                                          ),
+                                      ],
+                                    );
+                                  },
+                                  transitionBuilder: (
+                                    Widget child,
+                                    Animation<double> animation,
+                                  ) {
+                                    return SlideTransition(
+                                      position: Tween(
+                                        begin: const Offset(1.0, 0.0),
+                                        end: const Offset(0.0, 0.0),
+                                      ).animate(animation),
+                                      child: child,
+                                    );
+                                  },
+                                  duration: const Duration(milliseconds: 300),
+                                  switchInCurve: Curves.easeIn,
+                                  switchOutCurve: Curves.fastOutSlowIn,
+                                  child: MediaDetails(
+                                    key: ValueKey(
+                                      state.drawerMedia!.anilistInfo.id,
+                                    ),
+                                    media: state.drawerMedia!,
+                                    libraryEntry: state.drawerLibraryEntry,
+                                  ),
                                 )
                               : const SizedBox(),
                         ),

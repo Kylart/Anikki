@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
@@ -27,41 +28,53 @@ class MediaDetailsEpisodes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: BlocBuilder<LayoutBloc, LayoutState>(builder: (context, state) {
-        final hasInfo = media.anilistInfo.id != 0;
+      child: BlocBuilder<LayoutBloc, LayoutState>(
+        builder: (context, state) {
+          final hasInfo = media.anilistInfo.id != 0;
 
-        if (!hasInfo) {
-          return ListView(
-            physics: const ClampingScrollPhysics(),
-            shrinkWrap: true,
-            children: [
-              for (final file in entry?.entries ?? []) ...[
-                MediaDetailsEpisode(
-                  index: file.episode ?? 0,
-                  entry: entry,
-                  file: file,
-                ),
-                const Divider(),
+          if (!hasInfo) {
+            return ListView(
+              physics: const ClampingScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                for (final file in entry?.entries ?? []) ...[
+                  MediaDetailsEpisode(
+                    index: file.episode ?? 0,
+                    entry: entry,
+                    file: file,
+                  ),
+                  const Divider(),
+                ],
               ],
-            ],
-          );
-        }
+            );
+          }
 
-        return ListView.separated(
-          itemCount: numberOfEpisodes,
-          physics: const ClampingScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (context, index) => const Divider(),
-          itemBuilder: (context, index) => MediaDetailsEpisode(
-            index: numberOfEpisodes - index,
-            media: media,
-            entry: entry,
-            file: entry?.entries.firstWhereOrNull(
-              (e) => e.episode == numberOfEpisodes - index,
+          return AnimationLimiter(
+            child: ListView.separated(
+              itemCount: numberOfEpisodes,
+              physics: const ClampingScrollPhysics(),
+              shrinkWrap: true,
+              separatorBuilder: (context, index) => const Divider(),
+              itemBuilder: (context, index) =>
+                  AnimationConfiguration.staggeredList(
+                position: index,
+                child: FadeInAnimation(
+                  child: SlideAnimation(
+                    child: MediaDetailsEpisode(
+                      index: numberOfEpisodes - index,
+                      media: media,
+                      entry: entry,
+                      file: entry?.entries.firstWhereOrNull(
+                        (e) => e.episode == numberOfEpisodes - index,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
