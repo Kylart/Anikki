@@ -102,17 +102,18 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                                     Widget child,
                                     Animation<double> animation,
                                   ) {
-                                    return SlideTransition(
-                                      position: Tween(
-                                        begin: const Offset(1.0, 0.0),
-                                        end: const Offset(0.0, 0.0),
-                                      ).animate(animation),
-                                      child: child,
+                                    return FadeTransition(
+                                      opacity: animation,
+                                      child: SlideTransition(
+                                        position: Tween(
+                                          begin: const Offset(1.0, 0.0),
+                                          end: const Offset(0.0, 0.0),
+                                        ).animate(animation),
+                                        child: child,
+                                      ),
                                     );
                                   },
-                                  duration: const Duration(milliseconds: 300),
-                                  switchInCurve: Curves.easeIn,
-                                  switchOutCurve: Curves.fastOutSlowIn,
+                                  duration: const Duration(milliseconds: 350),
                                   child: MediaDetails(
                                     key: ValueKey(
                                       state.drawerMedia!.anilistInfo.id,
