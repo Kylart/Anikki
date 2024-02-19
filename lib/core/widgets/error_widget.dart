@@ -23,7 +23,10 @@ class CustomErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset('assets/images/angry_gabriel.png'),
+          Image.asset(
+            'assets/images/angry_gabriel.png',
+            height: height * 3 / 4,
+          ),
           Center(
             child: ListTile(
               title: Text(

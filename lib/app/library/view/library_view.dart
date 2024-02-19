@@ -60,6 +60,7 @@ class LibraryView extends StatelessWidget {
         final portrait = state is LayoutPortrait;
 
         return Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             if (portrait)
               Row(
@@ -69,7 +70,7 @@ class LibraryView extends StatelessWidget {
                   actionButton,
                 ],
               )
-            else
+            else ...[
               Row(
                 children: [
                   SectionTitle(
@@ -82,21 +83,25 @@ class LibraryView extends StatelessWidget {
                   ),
                 ],
               ),
-            if (!portrait)
               const Divider(
                 height: 1,
               ),
+            ],
             Expanded(
               child: BlocBuilder<LibraryBloc, LibraryState>(
                 builder: (context, state) => switch (state) {
                   LibraryLoading() || LibraryInitial() => const Loader(),
-                  LibraryError() => CustomErrorWidget(
-                      title: 'Could not load your files at ${state.path}',
-                      description: state.message,
+                  LibraryError() => Center(
+                      child: CustomErrorWidget(
+                        title: 'Could not load your files at ${state.path}',
+                        description: state.message,
+                      ),
                     ),
-                  LibraryEmpty() => const EmptyWidget(
-                      title: 'No File',
-                      subtitle: 'Could not find any video',
+                  LibraryEmpty() => const Center(
+                      child: EmptyWidget(
+                        title: 'No File',
+                        subtitle: 'Could not find any video',
+                      ),
                     ),
                   LibraryLoaded() => LibraryLayout(
                       entries: state.entries,

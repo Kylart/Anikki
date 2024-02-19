@@ -22,7 +22,10 @@ class EmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset('assets/images/jinrui.png'),
+          Image.asset(
+            'assets/images/jinrui.png',
+            height: height * 3 / 4,
+          ),
           Center(
             child: ListTile(
               title: Text(
