@@ -1,3 +1,4 @@
+import 'package:anikki/app/home/shared/widgets/home_scroll_view/random_play_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -48,6 +49,10 @@ class HomeStartView extends StatelessWidget {
                             }
                           },
                           icon: const Icon(Ionicons.refresh_outline),
+                        ),
+                      if (state.entries.isNotEmpty)
+                        RandomPlayButton(
+                          entries: state.entries,
                         ),
                       if (errored)
                         SectionTitleWarning(

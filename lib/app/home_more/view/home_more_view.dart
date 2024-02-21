@@ -1,3 +1,5 @@
+import 'package:anikki/app/home/shared/widgets/home_scroll_view/random_play_button.dart';
+import 'package:anikki/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -41,6 +43,15 @@ class HomeMoreView extends StatelessWidget {
                             .add(HomeMoreRefresh());
                       },
                       icon: const Icon(Ionicons.refresh_outline),
+                    ),
+                  if (state.entries.isNotEmpty)
+                    RandomPlayButton(
+                      entries: [
+                        for (final media in state.entries)
+                          Query$GetLists$MediaListCollection$lists$entries(
+                            media: media.anilistInfo,
+                          ),
+                      ],
                     ),
                   if (errored)
                     SectionTitleWarning(

@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view.dart';
+import 'package:anikki/app/home/shared/widgets/home_scroll_view/random_play_button.dart';
 import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry_card/entry_card.dart';
@@ -50,6 +51,10 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                             }
                           },
                           icon: const Icon(Ionicons.refresh_outline),
+                        ),
+                      if (state.entries.isNotEmpty)
+                        RandomPlayButton(
+                          entries: state.entries,
                         ),
                       if (errored)
                         SectionTitleWarning(

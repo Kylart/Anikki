@@ -1,4 +1,3 @@
-import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +5,9 @@ import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/downloader/helpers/show_downloader.dart';
+import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
+import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
+import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/stream_handler/bloc/stream_handler_bloc.dart';
 import 'package:anikki/app/stream_handler/stream_handler.dart';
@@ -113,6 +115,16 @@ class BlocListeners extends StatelessWidget {
         ),
         BlocListener<WatchListBloc, WatchListState>(
           listener: (context, state) {
+            if (state is WatchListComplete && state.username != null) {
+              BlocProvider.of<HomeContinueBloc>(context).add(
+                HomeContinueRefresh(state.username!),
+              );
+
+              BlocProvider.of<HomeStartBloc>(context).add(
+                HomeStartRefresh(state.username!),
+              );
+            }
+
             if (state is! WatchListNotify) return;
 
             context.notify(
