@@ -1,3 +1,4 @@
+import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,41 +57,35 @@ class _OnlineStreamHandlerState extends State<OnlineStreamHandler> {
           media: Media(anilistInfo: state.media),
         );
       },
-      builder: (context, state) {
-        switch (state.runtimeType) {
-          case const (StreamHandlerError):
-            return LayoutCard(
-              child: ListTile(
-                title: const Text('Something went wrong. Please try again'),
-                subtitle: Text((state as StreamHandlerError).error),
+      builder: (context, state) => LayoutCard(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: switch (state) {
+            StreamHandlerError() => CustomErrorWidget(
+                height: 300,
+                title: 'Something went wrong, please try again later.',
+                description: state.error,
               ),
-            );
-          case const (StreamHandlerLoading):
-          default:
-            return LayoutCard(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('Retrieving the best videos...'),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    const CircularProgressIndicator(),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    TextButton(
-                      onPressed: () => close(context),
-                      child: const Text('Cancel'),
-                    ),
-                  ],
-                ),
+            _ => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Retrieving the best videos...'),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const CircularProgressIndicator(),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextButton(
+                    onPressed: () => close(context),
+                    child: const Text('Cancel'),
+                  ),
+                ],
               ),
-            );
-        }
-      },
+          },
+        ),
+      ),
     );
   }
 }

@@ -50,14 +50,14 @@ final class StreamHandlerShowed extends StreamHandlerState {
       ];
 }
 
-class StreamHandlerLoading extends StreamHandlerState {
+final class StreamHandlerLoading extends StreamHandlerState {
   const StreamHandlerLoading({
     required super.media,
     super.minEpisode = 0,
   });
 }
 
-class StreamHandlerSuccess extends StreamHandlerState {
+final class StreamHandlerSuccess extends StreamHandlerState {
   const StreamHandlerSuccess({
     required super.media,
     super.minEpisode = 0,
@@ -74,7 +74,7 @@ class StreamHandlerSuccess extends StreamHandlerState {
       ];
 }
 
-class StreamHandlerError extends StreamHandlerState {
+final class StreamHandlerError extends StreamHandlerState {
   const StreamHandlerError({
     required super.media,
     required this.error,
