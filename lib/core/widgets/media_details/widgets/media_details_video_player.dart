@@ -41,14 +41,23 @@ class _MediaDetailsVideoPlayerState extends State<MediaDetailsVideoPlayer> {
       children: [
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.80,
-          child: VideoPlayerView(
-            sources: [Media(media.toString())],
-            onVideoComplete: (_, __) {},
-            forceSmallControls: true,
+          child: ClipRRect(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+              ),
+              child: VideoPlayerView(
+                sources: [Media(media.toString())],
+                onVideoComplete: (_, __) {},
+                forceSmallControls: true,
+              ),
+            ),
           ),
         ),
         Positioned(
-          top: 20,
+          top: 10,
           right: 10,
           child: IconButton.filledTonal(
             onPressed: () => Navigator.of(context).pop(),
