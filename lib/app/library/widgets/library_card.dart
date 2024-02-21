@@ -14,28 +14,14 @@ class LibraryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Container(
-            constraints: BoxConstraints(
-              maxHeight: userListGridDelegate.maxCrossAxisExtent /
-                      userListGridDelegate.childAspectRatio -
-                  32,
-            ),
-            child: HomeEntryCard(
-              media: entry.media == null
-                  ? Media(anilistInfo: Fragment$shortMedia(id: 0))
-                  : entry.media!,
-              libraryEntry: entry,
-              text: entry.entries.length == 1
-                  ? entry.epMax?.toString()
-                  : '${entry.epMin ?? '?'} ~ ${entry.epMax ?? '?'}',
-            ),
-          ),
-        ),
-      ],
+    return EntryCard(
+      media: entry.media == null
+          ? Media(anilistInfo: Fragment$shortMedia(id: 0))
+          : entry.media!,
+      libraryEntry: entry,
+      text: entry.entries.length == 1
+          ? entry.epMax?.toString()
+          : '${entry.epMin ?? '?'} ~ ${entry.epMax ?? '?'}',
     );
   }
 }

@@ -62,7 +62,7 @@ class HomeStartView extends StatelessWidget {
                             (loading || errored || initial),
                         children: [
                           for (final entry in state.entries)
-                            HomeEntryCard(
+                            EntryCard(
                               media: Media(anilistInfo: entry.media),
                             ),
                         ],

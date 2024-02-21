@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:anikki/app/home/shared/helpers/scroll_view_height.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,8 +16,8 @@ part 'entry_card_cover.dart';
 part 'entry_card_scale_animation.dart';
 part 'entry_card_text.dart';
 
-class HomeEntryCard extends StatefulWidget {
-  const HomeEntryCard({
+class EntryCard extends StatefulWidget {
+  const EntryCard({
     super.key,
     required this.media,
     this.libraryEntry,
@@ -28,10 +29,10 @@ class HomeEntryCard extends StatefulWidget {
   final String? text;
 
   @override
-  State<HomeEntryCard> createState() => _HomeEntryCardState();
+  State<EntryCard> createState() => _EntryCardState();
 }
 
-class _HomeEntryCardState extends State<HomeEntryCard>
+class _EntryCardState extends State<EntryCard>
     with SingleTickerProviderStateMixin {
   /// Interval for outline animation
   Timer? interval;
@@ -93,7 +94,7 @@ class _HomeEntryCardState extends State<HomeEntryCard>
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      padding: const EdgeInsets.all(12.0),
       child: GestureDetector(
         onTap: () => showMediaDialog(
           context,
@@ -117,7 +118,7 @@ class _HomeEntryCardState extends State<HomeEntryCard>
                 .reverse()
                 .then((value) => setState(() => hovered = false));
           },
-          child: _HomeEntryCardScaleAnimation(
+          child: _EntryCardScaleAnimation(
             controller: animation,
             child: _EntryCardBackgroundSweepAnimation(
               enabled: shouldAnimate,
@@ -125,22 +126,29 @@ class _HomeEntryCardState extends State<HomeEntryCard>
                 borderRadius: const BorderRadius.all(
                   Radius.circular(12),
                 ),
-                child: Stack(
-                  children: [
-                    _HomeEntryCardCover(
-                      animation: animation,
-                      color: widget.media.anilistInfo.coverImage?.color,
-                      url: widget.media.coverImage,
-                    ),
-                    if (widget.text != null)
-                      Positioned(
-                        right: 10,
-                        bottom: 10,
-                        child: _HomeEntryCardText(
-                          text: widget.text!,
+                child: LimitedBox(
+                  maxWidth: getScrollViewHeight(context) *
+                          userListGridDelegate.childAspectRatio -
+                      (kHomeScrollViewPaddingValue * 2),
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: _EntryCardCover(
+                          animation: animation,
+                          color: widget.media.anilistInfo.coverImage?.color,
+                          url: widget.media.coverImage,
                         ),
                       ),
-                  ],
+                      if (widget.text != null)
+                        Positioned(
+                          right: 10,
+                          bottom: 10,
+                          child: _EntryCardText(
+                            text: widget.text!,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),

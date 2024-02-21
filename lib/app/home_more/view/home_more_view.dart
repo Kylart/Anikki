@@ -64,7 +64,7 @@ class HomeMoreView extends StatelessWidget {
                               ),
                         children: [
                           for (final entry in state.entries)
-                            HomeEntryCard(
+                            EntryCard(
                               media: entry,
                             ),
                         ],

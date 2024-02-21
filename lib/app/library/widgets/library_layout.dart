@@ -25,11 +25,17 @@ class LibraryLayout extends StatelessWidget {
         .userListLayouts;
 
     return layout == UserListLayouts.grid
-        ? CustomGridView(
-            entries: entries,
-            gridDelegate: userListGridDelegate,
-            builder: (entry, index) => LibraryCard(
-              entry: entry,
+        ? Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 16.0,
+            ),
+            child: CustomGridView(
+              entries: entries,
+              gridDelegate: userListGridDelegate,
+              builder: (entry, index) => LibraryCard(
+                entry: entry,
+              ),
             ),
           )
         : CustomListView(

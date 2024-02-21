@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:marqueer/marqueer.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:anikki/app/home/shared/helpers/scroll_view_height.dart';
 import 'package:anikki/app/home/shared/helpers/should_be_marquee.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 
@@ -35,7 +36,6 @@ class _HomeScrollViewState extends State<HomeScrollView> {
 
   final buttonWidth = 50.0;
   final duration = const Duration(milliseconds: 150);
-  final verticalPaddingValue = 18.0;
 
   final controller = MarqueerController();
 
@@ -46,12 +46,12 @@ class _HomeScrollViewState extends State<HomeScrollView> {
     return BlocBuilder<LayoutBloc, LayoutState>(
         builder: (context, layoutState) {
       final marquee = shouldBeMarquee(layoutState, widget.children.length);
-      final height =
-          (MediaQuery.of(context).size.height < 1000 ? 250.0 : 300.0) +
-              verticalPaddingValue * 2;
+      final height = getScrollViewHeight(context);
 
       final listView = SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: verticalPaddingValue),
+        padding: const EdgeInsets.symmetric(
+          vertical: kHomeScrollViewPaddingValue / 2 - 2,
+        ),
         scrollDirection: Axis.horizontal,
         child: Row(
           children: widget.children,
@@ -90,9 +90,9 @@ class _HomeScrollViewState extends State<HomeScrollView> {
               ),
             ),
             Positioned(
-              top: verticalPaddingValue,
+              top: kHomeScrollViewPaddingValue,
               right: 0,
-              height: height - verticalPaddingValue * 2,
+              height: height,
               width: buttonWidth,
               child: AnimatedOpacity(
                 opacity: show ? 1 : 0,
@@ -111,8 +111,8 @@ class _HomeScrollViewState extends State<HomeScrollView> {
               ),
             ),
             Positioned(
-              top: verticalPaddingValue,
-              height: height - verticalPaddingValue * 2,
+              top: kHomeScrollViewPaddingValue,
+              height: height,
               width: buttonWidth,
               child: AnimatedOpacity(
                 opacity: show ? 1 : 0,

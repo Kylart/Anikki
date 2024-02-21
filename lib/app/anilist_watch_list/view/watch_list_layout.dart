@@ -24,7 +24,10 @@ class WatchListLayout extends StatelessWidget {
     return layout == UserListLayouts.grid
         ? CustomGridView(
             entries: entries,
-            gridDelegate: userListGridDelegate,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: userListGridDelegate.maxCrossAxisExtent,
+              childAspectRatio: userListGridDelegate.childAspectRatio,
+            ),
             builder: (entry, index) => WatchListCard(
               entry: entry,
             ),

@@ -1,7 +1,7 @@
 part of 'entry_card.dart';
 
-class _HomeEntryCardCover extends StatelessWidget {
-  _HomeEntryCardCover({
+class _EntryCardCover extends StatelessWidget {
+  _EntryCardCover({
     required this.url,
     required this.animation,
     String? color,

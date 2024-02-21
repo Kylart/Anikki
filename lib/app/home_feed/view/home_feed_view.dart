@@ -63,7 +63,7 @@ class HomeFeedView extends StatelessWidget {
                     state.entries,
                     state.options,
                   ))
-                    HomeEntryCard(
+                    EntryCard(
                       media: Media(anilistInfo: entry.media),
                       text: entry.episode.toString(),
                     ),

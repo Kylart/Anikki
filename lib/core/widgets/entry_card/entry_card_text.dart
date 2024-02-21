@@ -1,7 +1,7 @@
 part of 'entry_card.dart';
 
-class _HomeEntryCardText extends StatelessWidget {
-  const _HomeEntryCardText({required this.text});
+class _EntryCardText extends StatelessWidget {
+  const _EntryCardText({required this.text});
 
   /// Text to display
   final String text;

@@ -62,7 +62,7 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                         (loading || errored || initial),
                     children: [
                       for (final entry in state.entries)
-                        HomeEntryCard(
+                        EntryCard(
                           media: Media(anilistInfo: entry.media),
                           text: entry.progress != null
                               ? (entry.progress! + 1).toString()
