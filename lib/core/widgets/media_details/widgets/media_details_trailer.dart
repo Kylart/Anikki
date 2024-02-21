@@ -22,40 +22,6 @@ class _MediaDetailsTrailerState extends State<MediaDetailsTrailer> {
   String? get site => widget.media.anilistInfo.trailer?.site;
   String? get id => widget.media.anilistInfo.trailer?.id;
 
-  bool showThumbnail = true;
-
-  Widget get videoThumbnail => Stack(
-        children: [
-          Positioned.fill(
-            child: LayoutCard(
-              child: Image.network(
-                thumbnail!,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 80.0),
-                      child: Text('Could not load thumbnail'),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          Positioned.fill(
-            child: Center(
-              child: IconButton.filledTonal(
-                padding: const EdgeInsets.all(12.0),
-                onPressed: () => setState(() {
-                  showThumbnail = false;
-                }),
-                icon: const Icon(Ionicons.play),
-              ),
-            ),
-          )
-        ],
-      );
-
   @override
   Widget build(BuildContext context) {
     if (thumbnail == null || id == null || site != 'youtube') {
@@ -69,13 +35,46 @@ class _MediaDetailsTrailerState extends State<MediaDetailsTrailer> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: showThumbnail
-              ? videoThumbnail
-              : MediaDetailsVideoPlayer(
-                  url: 'https://www.${site!}.com/watch?v=${id!}',
+            aspectRatio: 16 / 9,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: LayoutCard(
+                    child: Image.network(
+                      thumbnail!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 80.0),
+                            child: Text('Could not load thumbnail'),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
-        ),
+                Positioned.fill(
+                  child: Center(
+                    child: IconButton.filledTonal(
+                      padding: const EdgeInsets.all(12.0),
+                      onPressed: () {
+                        showAdaptiveDialog(
+                          barrierDismissible: true,
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: MediaDetailsVideoPlayer(
+                              url: 'https://www.${site!}.com/watch?v=${id!}',
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Ionicons.play),
+                    ),
+                  ),
+                )
+              ],
+            )),
       ),
     );
   }
