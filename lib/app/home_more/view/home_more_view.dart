@@ -32,7 +32,7 @@ class HomeMoreView extends StatelessWidget {
               SectionTitle(
                 text: 'Discover',
                 actions: [
-                  if (loading)
+                  if (loading || initial)
                     const SectionTitleLoadingAction()
                   else
                     IconButton(

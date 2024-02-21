@@ -34,7 +34,7 @@ class HomeFeedView extends StatelessWidget {
               SectionTitle(
                 text: 'Coming out soon',
                 actions: [
-                  if (loading)
+                  if (loading || initial)
                     const SectionTitleLoadingAction()
                   else
                     IconButton(

@@ -38,7 +38,7 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                   SectionTitle(
                     text: 'Continue watching',
                     actions: [
-                      if (loading)
+                      if (loading || initial)
                         const SectionTitleLoadingAction()
                       else
                         IconButton(

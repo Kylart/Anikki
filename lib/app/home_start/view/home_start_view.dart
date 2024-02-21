@@ -37,7 +37,7 @@ class HomeStartView extends StatelessWidget {
                   SectionTitle(
                     text: 'Start watching',
                     actions: [
-                      if (loading)
+                      if (loading || initial)
                         const SectionTitleLoadingAction()
                       else
                         IconButton(
