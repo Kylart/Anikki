@@ -58,7 +58,7 @@ class _LayoutViewState extends State<LayoutView> {
               AnikkiPage(
                 name: 'Library',
                 icon: Ionicons.folder_outline,
-                selectedIcon: Ionicons.folder,
+                selectedIcon: Ionicons.folder_open,
                 child: const LibraryView(),
               ),
               AnikkiPage(
