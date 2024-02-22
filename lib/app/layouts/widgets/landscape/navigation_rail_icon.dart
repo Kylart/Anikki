@@ -34,7 +34,7 @@ class AnikkiNavigationRailIcon extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        width: 80,
+        width: 70,
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +47,7 @@ class AnikkiNavigationRailIcon extends StatelessWidget {
                   isLabelVisible: error != null,
                   child: Icon(
                     selected ? selectedIcon : icon,
-                    size: 24,
+                    size: 16,
                     color:
                         selected ? Theme.of(context).colorScheme.primary : null,
                   ),
@@ -60,7 +60,9 @@ class AnikkiNavigationRailIcon extends StatelessWidget {
             if (title != null)
               Text(
                 title!,
+                maxLines: 1,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      fontSize: 9,
                       color: selected
                           ? Theme.of(context).colorScheme.primary
                           : null,
