@@ -88,8 +88,9 @@ class ChooseStreamHandler extends StatelessWidget {
                       );
                     },
                     child: const Icon(
-                      Ionicons.wifi_outline,
+                      Ionicons.globe_outline,
                       size: 72,
+                      color: Color.fromARGB(255, 0, 210, 0),
                     ),
                   ),
                 ],
