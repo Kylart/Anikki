@@ -1,3 +1,4 @@
+import 'package:anikki/core/widgets/custom_app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -73,8 +74,11 @@ class _LayoutViewState extends State<LayoutView> {
               if (settings.torrentType != TorrentType.none)
                 AnikkiPage(
                   name: settings.torrentType.title,
-                  icon: Ionicons.cloud_download_outline,
-                  selectedIcon: Ionicons.cloud_download,
+                  icon: switch (settings.torrentType) {
+                    TorrentType.transmission => CustomIcons.transmission,
+                    TorrentType.qbittorrent => CustomIcons.qbittorrent,
+                    TorrentType.none => throw UnimplementedError(),
+                  },
                   child: const TorrentView(),
                 ),
               if (portrait)
