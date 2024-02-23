@@ -8,6 +8,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/media_details/widgets/media_details_episode/media_details_episode.dart';
+import 'package:anikki/core/widgets/paginated.dart';
 
 class MediaDetailsEpisodes extends StatelessWidget {
   const MediaDetailsEpisodes({
@@ -49,29 +50,55 @@ class MediaDetailsEpisodes extends StatelessWidget {
             );
           }
 
-          return AnimationLimiter(
-            child: ListView.separated(
-              itemCount: numberOfEpisodes,
-              physics: const ClampingScrollPhysics(),
-              shrinkWrap: true,
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) =>
-                  AnimationConfiguration.staggeredList(
-                position: index,
-                child: FadeInAnimation(
-                  child: SlideAnimation(
-                    child: MediaDetailsEpisode(
-                      index: numberOfEpisodes - index,
-                      media: media,
-                      entry: entry,
-                      file: entry?.entries.firstWhereOrNull(
-                        (e) => e.episode == numberOfEpisodes - index,
-                      ),
-                    ),
-                  ),
+          final maxPage = (numberOfEpisodes / kPaginatedPerPage).ceil();
+          final initialPage =
+              media.anilistInfo.nextAiringEpisode?.episode != null
+                  ? maxPage -
+                      ((media.anilistInfo.nextAiringEpisode!.episode - 1) /
+                              kPaginatedPerPage)
+                          .ceil() -
+                      1
+                  : 0;
+
+          return Paginated(
+            numberOfEntries: numberOfEpisodes,
+            initialPage: max(initialPage, 0),
+            pageBuilder: (context, page) {
+              return AnimationLimiter(
+                child: ListView.builder(
+                  itemCount: kPaginatedPerPage,
+                  physics: const ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final currentIndex =
+                        numberOfEpisodes - index - (page * kPaginatedPerPage);
+
+                    if (currentIndex < 1) return const SizedBox();
+
+                    return Column(
+                      children: [
+                        const Divider(),
+                        AnimationConfiguration.staggeredList(
+                          position: index,
+                          child: FadeInAnimation(
+                            child: SlideAnimation(
+                              child: MediaDetailsEpisode(
+                                index: currentIndex,
+                                media: media,
+                                entry: entry,
+                                file: entry?.entries.firstWhereOrNull(
+                                  (e) => e.episode == currentIndex,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
-              ),
-            ),
+              );
+            },
           );
         },
       ),
