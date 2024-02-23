@@ -18,7 +18,6 @@ dependencies:
   ionicons: ^0.2.2
   # https://simpleicons.org
   simple_icons: ^10.1.3
-  flutter_svg: ^1.0.2
 
   ## Bloc
   bloc: ^8.1.3
@@ -96,6 +95,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  fonts:
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/CustomIcons.ttf
+
   assets:
     - pubspec.yaml
     - .env
@@ -103,8 +107,6 @@ flutter:
     - assets/images/cover_placeholder.jpg
     - assets/images/jinrui.png
     - assets/images/angry_gabriel.png
-    - assets/icons/transmission.svg
-    - assets/icons/qbittorrent.svg
 
 dart_pre_commit:
   outdated: false
