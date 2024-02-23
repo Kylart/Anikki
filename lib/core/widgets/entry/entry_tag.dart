@@ -6,7 +6,7 @@ class EntryTag extends StatelessWidget {
   const EntryTag({
     super.key,
     required this.child,
-    this.color = Colors.transparent,
+    this.color,
     this.outline,
     this.padding = const EdgeInsets.only(
       top: 5.0,
@@ -17,7 +17,7 @@ class EntryTag extends StatelessWidget {
   });
 
   final Widget child;
-  final Color color;
+  final Color? color;
   final Color? outline;
   final EdgeInsetsGeometry padding;
 
@@ -31,7 +31,8 @@ class EntryTag extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
           child: Container(
             decoration: BoxDecoration(
-              color: color,
+              color: color ??
+                  Theme.of(context).colorScheme.background.withOpacity(0.5),
               border: Border.all(
                 color: outline == null
                     ? Theme.of(context).colorScheme.outline
