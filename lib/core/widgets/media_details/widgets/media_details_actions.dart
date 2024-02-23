@@ -41,7 +41,7 @@ class MediaDetailsActions extends StatelessWidget {
           entry: entry,
         ),
         icon: const Icon(Ionicons.play),
-        label: const Text('Play'),
+        label: const Text('Watch'),
       ),
       if (showExpand)
         EntryTag(
