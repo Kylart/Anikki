@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,9 +39,8 @@ class MediaDetails extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: AutoSizeText(
+                title: Text(
                   media.title ?? entry?.entries.first.title ?? 'N/A',
-                  maxLines: 2,
                 ),
                 subtitle: media.anilistInfo.title?.native == null
                     ? const SizedBox()
