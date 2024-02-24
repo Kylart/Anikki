@@ -1,9 +1,8 @@
 <h1 align="center">Anikki</h1>
 
 <p align="center">
-  <img src="assets/anikki_android.png" height="300" />
   <img src="assets/anikki_desktop.png" height="300" />
-  <img src="assets/anikki_ios.png" height="300" /> 
+  <img src="assets/anikki_mobile.png" height="300" /> 
 </p>
 
 
