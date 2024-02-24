@@ -47,5 +47,15 @@ class StreamHandlerRequested extends StreamHandlerEvent {
   const StreamHandlerRequested({
     required super.media,
     super.minEpisode = 0,
+    this.videoType,
   });
+
+  final SubOrDub? videoType;
+
+  @override
+  List<Object?> get props => [
+        media,
+        minEpisode,
+        videoType,
+      ];
 }

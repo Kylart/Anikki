@@ -1,6 +1,8 @@
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 
+import 'package:anikki/core/core.dart';
+
 import '../extractors/extractors.dart';
 import '../models/models.dart';
 import '../utils/utils.dart';
@@ -15,12 +17,15 @@ class Gogoanime implements AnimeProvider {
   final client = Client();
 
   @override
-  Future<List<AnimeResult>> search(String query) async {
+  Future<List<AnimeResult>> search(
+    String query, {
+    bool dubbed = false,
+  }) async {
     final List<AnimeResult> results = [];
 
     final res = await client.get(
       Uri.parse(
-        '$baseUrl/search.html?keyword=${Uri.encodeComponent(query)}&page=1',
+        '$baseUrl/search.html?keyword=${Uri.encodeComponent(dubbed ? '$query (Dub)' : query)}&page=1',
       ),
     );
 
@@ -145,9 +150,8 @@ class Gogoanime implements AnimeProvider {
 
     if (uri == null) throw NoEpisodeSourceException;
 
-    switch (server) {
-      case StreamingServers.streamsb:
-        return AnimeSource(
+    return switch (server) {
+      StreamingServers.streamsb => AnimeSource(
           headers: {
             'Referer': uri.toString(),
             'watchsb': 'streamsb',
@@ -155,17 +159,14 @@ class Gogoanime implements AnimeProvider {
           },
           sources: await StreamSB().extract(uri),
           download: 'https://gogohd.net/download?${uri.query}',
-        );
-
-      case StreamingServers.gogocdn:
-      default:
-        return AnimeSource(
+        ),
+      StreamingServers.gogocdn || _ => AnimeSource(
           headers: {
             'Referer': uri.toString(),
           },
           sources: await GogoCDN().extract(uri),
           download: 'https://gogohd.net/download?${uri.query}',
-        );
-    }
+        )
+    };
   }
 }

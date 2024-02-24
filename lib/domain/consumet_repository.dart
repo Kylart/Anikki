@@ -37,10 +37,14 @@ class ConsumetRepository {
     required String term,
     required int minEpisode,
     int maxLength = 100,
+    bool dubbed = false,
   }) async {
     final List<ConsumetEpisode> results = [];
 
-    final search = await provider.search(term);
+    final search = await provider.search(
+      term,
+      dubbed: dubbed,
+    );
 
     if (search.isEmpty || search.firstOrNull?.id == null) return results;
 
@@ -79,6 +83,7 @@ class ConsumetRepository {
   /// `minEpisode` and all those that come after.
   Future<List<ConsumetEpisode>> getEpisodeLinks(
     String term, {
+    bool dubbed = false,
     int minEpisode = 0,
     int maxLength = 100,
   }) async {
@@ -91,6 +96,7 @@ class ConsumetRepository {
           term: term,
           minEpisode: minEpisode,
           maxLength: maxLength,
+          dubbed: dubbed,
         );
 
         if (results.isNotEmpty) break;

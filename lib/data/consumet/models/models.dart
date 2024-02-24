@@ -1,3 +1,4 @@
+import 'package:anikki/core/core.dart';
 import 'package:equatable/equatable.dart';
 
 export 'exceptions/exceptions.dart';
@@ -28,9 +29,4 @@ enum StreamingServers {
   streamhub,
   streamwish,
   vidmoly,
-}
-
-enum SubOrDub {
-  sub,
-  dub,
 }

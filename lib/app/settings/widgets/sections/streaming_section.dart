@@ -38,6 +38,41 @@ class StreamingSection extends AbstractSettingsSection {
             },
           ),
         ),
+        if ([
+          StreamRequestType.online,
+          StreamRequestType.choose,
+        ].contains(
+          settingsBloc.state.settings.streamSettings.streamRequestType,
+        ))
+          SettingsTile(
+            leading: const Icon(Ionicons.film_outline),
+            title: const Text('Online video type'),
+            description:
+                const Text('This setting will only apply for online streaming'),
+            trailing: DropdownButton<SubOrDub>(
+              value: settingsBloc.state.settings.streamSettings.videoType,
+              items: SubOrDub.values
+                  .map((type) => DropdownMenuItem(
+                        value: type,
+                        child: Text(type.title),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                if (value == null) return;
+
+                settingsBloc.add(
+                  SettingsUpdated(
+                    settingsBloc.state.settings.copyWith(
+                      streamSettings:
+                          settingsBloc.state.settings.streamSettings.copyWith(
+                        videoType: value,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
       ],
     );
   }

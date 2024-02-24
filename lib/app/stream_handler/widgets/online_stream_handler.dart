@@ -1,3 +1,4 @@
+import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,10 +25,14 @@ class _OnlineStreamHandlerState extends State<OnlineStreamHandler> {
   void initState() {
     super.initState();
 
+    final settings =
+        BlocProvider.of<SettingsBloc>(context).state.settings.streamSettings;
+
     BlocProvider.of<StreamHandlerBloc>(context).add(
       StreamHandlerRequested(
         media: widget.state.media,
         minEpisode: widget.state.minEpisode,
+        videoType: settings.videoType,
       ),
     );
   }

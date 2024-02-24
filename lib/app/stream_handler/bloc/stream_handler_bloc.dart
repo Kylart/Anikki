@@ -32,6 +32,7 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
         entry: event.entry,
         minEpisode: event.minEpisode,
         type: event.type,
+        videoType: state.videoType,
       ),
     );
   }
@@ -56,6 +57,7 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
       StreamHandlerLoading(
         media: event.media,
         minEpisode: event.minEpisode,
+        videoType: state.videoType,
       ),
     );
 
@@ -68,6 +70,7 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
         term,
         minEpisode: event.minEpisode ?? 0,
         maxLength: 10,
+        dubbed: event.videoType == SubOrDub.dub,
       );
 
       if (sources.isEmpty) throw 'Could not find any hosted video.';
@@ -77,6 +80,7 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
           media: event.media,
           sources: sources,
           minEpisode: event.minEpisode,
+          videoType: event.videoType,
         ),
       );
     } catch (e) {
@@ -85,6 +89,7 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
           media: event.media,
           error: e.toString(),
           minEpisode: event.minEpisode,
+          videoType: event.videoType,
         ),
       );
     }

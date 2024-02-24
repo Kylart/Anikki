@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
+import 'package:anikki/core/core.dart';
+
 enum StreamRequestType {
   online('Online'),
   torrent('Torrent'),
@@ -16,21 +18,26 @@ enum StreamRequestType {
 class StreamSettings extends Equatable {
   const StreamSettings({
     this.streamRequestType = StreamRequestType.online,
+    this.videoType = SubOrDub.sub,
   });
 
   final StreamRequestType streamRequestType;
+  final SubOrDub videoType;
 
   StreamSettings copyWith({
     StreamRequestType? streamRequestType,
+    SubOrDub? videoType,
   }) {
     return StreamSettings(
       streamRequestType: streamRequestType ?? this.streamRequestType,
+      videoType: videoType ?? this.videoType,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'streamRequestType': streamRequestType.toString(),
+      'videoType': videoType.toString(),
     };
   }
 
@@ -40,6 +47,10 @@ class StreamSettings extends Equatable {
             (element) => element.toString() == map['streamRequestType'],
           ) ??
           StreamRequestType.choose,
+      videoType: SubOrDub.values.firstWhereOrNull(
+            (element) => element.toString() == map['videoType'],
+          ) ??
+          SubOrDub.sub,
     );
   }
 
@@ -52,7 +63,5 @@ class StreamSettings extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        streamRequestType,
-      ];
+  List<Object> get props => [streamRequestType, videoType];
 }
