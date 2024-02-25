@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anikki/app/layouts/widgets/landscape/drawer_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -66,64 +67,17 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                         const VerticalDivider(
                           width: 1,
                         ),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.fastEaseInToSlowEaseOut,
-                        height: double.infinity,
-                        width: state.drawerMedia != null ? 500 : 0,
-                        child: Material(
-                          color: Colors.transparent,
-                          elevation: 20,
-                          child: state.drawerMedia != null
-                              ? AnimatedSwitcher(
-                                  layoutBuilder:
-                                      (currentChild, previousChildren) {
-                                    return Stack(
-                                      fit: StackFit.passthrough,
-                                      alignment: Alignment.topCenter,
-                                      children: <Widget>[
-                                        Row(
-                                          children: previousChildren
-                                              .map(
-                                                (e) => Expanded(child: e),
-                                              )
-                                              .toList(),
-                                        ),
-                                        if (currentChild != null)
-                                          Column(
-                                            children: [
-                                              Expanded(child: currentChild),
-                                            ],
-                                          ),
-                                      ],
-                                    );
-                                  },
-                                  transitionBuilder: (
-                                    Widget child,
-                                    Animation<double> animation,
-                                  ) {
-                                    return FadeTransition(
-                                      opacity: animation,
-                                      child: SlideTransition(
-                                        position: Tween(
-                                          begin: const Offset(1.0, 0.0),
-                                          end: const Offset(0.0, 0.0),
-                                        ).animate(animation),
-                                        child: child,
-                                      ),
-                                    );
-                                  },
-                                  duration: const Duration(milliseconds: 350),
-                                  child: MediaDetails(
-                                    key: ValueKey(
-                                      state.drawerMedia!.anilistInfo.id,
-                                    ),
-                                    media: state.drawerMedia!,
-                                    libraryEntry: state.drawerLibraryEntry,
-                                  ),
-                                )
-                              : const SizedBox(),
-                        ),
+                      DrawerContainer(
+                        open: state.drawerMedia != null,
+                        child: state.drawerMedia != null
+                            ? MediaDetails(
+                                key: ValueKey(
+                                  state.drawerMedia!.anilistInfo.id,
+                                ),
+                                media: state.drawerMedia!,
+                                libraryEntry: state.drawerLibraryEntry,
+                              )
+                            : const SizedBox(),
                       ),
                     ],
                   ),
