@@ -12,7 +12,7 @@ class Gogoanime implements AnimeProvider {
   final baseUrl = 'https://anitaku.to';
   final logo =
       'https://play-lh.googleusercontent.com/MaGEiAEhNHAJXcXKzqTNgxqRmhuKB1rCUgb15UrN_mWUNRnLpO5T1qja64oRasO7mn0';
-  final ajaxUrl = 'https://ajax.gogo-load.com';
+  final ajaxUrl = 'https://ajax.gogocdn.net';
 
   final client = Client();
 
