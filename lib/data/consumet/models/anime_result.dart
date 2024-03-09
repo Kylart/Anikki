@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'models.dart';
 
 class AnimeResult extends Equatable {
@@ -23,4 +24,18 @@ class AnimeResult extends Equatable {
 
   @override
   bool get stringify => true;
+
+  AnimeResult copyWith({
+    String? id,
+    String? title,
+    String? url,
+    SubOrDub? subOrDub,
+  }) {
+    return AnimeResult(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      url: url ?? this.url,
+      subOrDub: subOrDub ?? this.subOrDub,
+    );
+  }
 }

@@ -9,7 +9,7 @@ abstract class AnimeProvider {
   Future<List<AnimeEpisode>> fetchAnimeEpisodes(String id);
 
   Future<AnimeSource> fetchEpisodeSources(
-    String episodeId, {
+    AnimeEpisode episode, {
     StreamingServers server = StreamingServers.vidstreaming,
   });
 }

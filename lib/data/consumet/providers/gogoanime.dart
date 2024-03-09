@@ -97,7 +97,7 @@ class Gogoanime implements AnimeProvider {
         .querySelectorAll('#episode_related > li')
         .map(
           (el) => AnimeEpisode(
-            id: el.querySelector('a')?.attributes['href']?.split('/')[1],
+            id: el.querySelector('a')?.attributes['href']?.split('/')[1] ?? '',
             number: int.tryParse(
                 el.querySelector('div.name')?.text.replaceAll('EP ', '') ?? ''),
             url:
@@ -113,10 +113,10 @@ class Gogoanime implements AnimeProvider {
 
   @override
   Future<AnimeSource> fetchEpisodeSources(
-    String episodeId, {
+    AnimeEpisode episode, {
     StreamingServers server = StreamingServers.vidstreaming,
   }) async {
-    final res = await client.get(Uri.parse('$baseUrl/$episodeId'));
+    final res = await client.get(Uri.parse('$baseUrl/${episode.id}'));
     final document = parse(res.body);
 
     Uri? uri;

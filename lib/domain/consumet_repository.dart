@@ -8,6 +8,7 @@ class ConsumetRepository {
   ConsumetRepository({List<AnimeProvider>? providers}) {
     this.providers = providers ??
         [
+          Zoro(),
           Gogoanime(),
         ];
   }
@@ -49,13 +50,12 @@ class ConsumetRepository {
     if (search.isEmpty || search.firstOrNull?.id == null) return results;
 
     final info = await provider.fetchAnimeEpisodes(search.first.id!);
-    final episodes =
-        info.where((ep) => ep.id != null && (ep.number ?? -1) >= minEpisode);
+    final episodes = info.where((ep) => (ep.number ?? -1) >= minEpisode);
 
     for (final episode in episodes) {
       if (results.length == maxLength) break;
 
-      final links = await provider.fetchEpisodeSources(episode.id!);
+      final links = await provider.fetchEpisodeSources(episode);
       final link = _getBestLink(links.sources);
 
       if (link == null) continue;
@@ -102,6 +102,11 @@ class ConsumetRepository {
         if (results.isNotEmpty) break;
       } on NoEpisodeSourceException {
         logger.error('Could not get links for $term');
+      } catch (e) {
+        logger.error(
+          'Unexpected error when retrieving episode links with $provider',
+          e,
+        );
       }
     }
 
