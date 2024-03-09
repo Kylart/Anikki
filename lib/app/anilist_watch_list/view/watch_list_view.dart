@@ -85,7 +85,6 @@ class WatchListView extends StatelessWidget {
                   Row(
                     children: [
                       SectionTitle(
-                        backgroundColor: Colors.transparent,
                         text: 'Watch Lists',
                         actions: actions,
                       ),

@@ -7,12 +7,12 @@ class SectionTitle extends StatelessWidget {
     super.key,
     required this.text,
     this.actions = const [],
-    this.backgroundColor = Colors.white12,
+    this.frosted = false,
   });
 
   final String text;
   final List<Widget> actions;
-  final Color backgroundColor;
+  final bool frosted;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +21,13 @@ class SectionTitle extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+          filter: frosted
+              ? ImageFilter.blur(sigmaX: 40, sigmaY: 40)
+              : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
           child: Container(
             padding: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
-              color: backgroundColor,
+              color: Theme.of(context).colorScheme.background.withOpacity(0.5),
               borderRadius: const BorderRadius.all(
                 Radius.circular(12),
               ),

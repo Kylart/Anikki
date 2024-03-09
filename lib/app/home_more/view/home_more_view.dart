@@ -32,6 +32,7 @@ class HomeMoreView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SectionTitle(
+                frosted: true,
                 text: 'Discover',
                 actions: [
                   if (loading || initial)

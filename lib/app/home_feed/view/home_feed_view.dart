@@ -32,6 +32,7 @@ class HomeFeedView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SectionTitle(
+                frosted: true,
                 text: 'Coming out soon',
                 actions: [
                   if (loading || initial)

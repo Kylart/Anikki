@@ -38,7 +38,11 @@ class LibraryView extends StatelessWidget {
                   onUpdated: (path) => settingsBloc.add(
                     SettingsUpdated(
                       settingsBloc.state.settings.copyWith(
-                        localDirectory: path,
+                        librarySettings: settingsBloc
+                            .state.settings.librarySettings
+                            .copyWith(
+                          path: path,
+                        ),
                       ),
                     ),
                   ),
@@ -74,7 +78,6 @@ class LibraryView extends StatelessWidget {
               Row(
                 children: [
                   SectionTitle(
-                    backgroundColor: Colors.transparent,
                     text: 'Library',
                     actions: [
                       const UserListLayoutToggle(),

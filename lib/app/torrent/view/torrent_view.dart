@@ -21,7 +21,6 @@ class TorrentView extends StatelessWidget {
             Row(
               children: [
                 SectionTitle(
-                  backgroundColor: Colors.transparent,
                   text: settingsState.settings.torrentType.title,
                 ),
               ],

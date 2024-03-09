@@ -30,7 +30,6 @@ class _SettingsViewState extends State<SettingsView> {
               Row(
                 children: [
                   SectionTitle(
-                    backgroundColor: Colors.transparent,
                     text: 'Settings',
                   ),
                 ],

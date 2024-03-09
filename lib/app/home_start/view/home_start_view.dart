@@ -36,6 +36,7 @@ class HomeStartView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SectionTitle(
+                    frosted: true,
                     text: 'Start watching',
                     actions: [
                       if (loading || initial)

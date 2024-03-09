@@ -37,6 +37,7 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SectionTitle(
+                    frosted: true,
                     text: 'Continue watching',
                     actions: [
                       if (loading || initial)
