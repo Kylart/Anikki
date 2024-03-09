@@ -40,7 +40,7 @@ class _BackgroundSweepAnimationState
       animation: controller,
       builder: (context, child) => Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        padding: widget.enabled ? const EdgeInsets.all(1.0) : null,
+        padding: const EdgeInsets.all(1.0),
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           borderRadius: const BorderRadius.all(
