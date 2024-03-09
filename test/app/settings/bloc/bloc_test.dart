@@ -16,10 +16,11 @@ void main() {
   group('unit test: Settings Bloc', () {
     late SettingsBloc bloc;
     const settings = Settings(
-      localDirectory: path,
+      isFirstLaunch: false,
       userListLayouts: UserListLayouts.grid,
       theme: ThemeMode.system,
       torrentType: TorrentType.none,
+      librarySettings: LibrarySettings(path: path),
       transmissionSettings: TransmissionSettings(),
       qBitTorrentSettings: QBitTorrentSettings(),
       videoPlayerSettings: VideoPlayerSettings(),

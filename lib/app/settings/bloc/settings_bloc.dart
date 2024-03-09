@@ -18,13 +18,17 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     on<SettingsUpdateFailed>(_onUpdateFailed);
 
     /// Default to downloads directory if no directory
-    if (state.settings.localDirectory.isEmpty) {
+    if (state.settings.librarySettings.path.isEmpty) {
       getDownloadsDirectory().then(
         (downloadDir) {
           if (downloadDir != null) {
             add(
               SettingsUpdated(
-                state.settings.copyWith(localDirectory: downloadDir.path),
+                state.settings.copyWith(
+                  librarySettings: state.settings.librarySettings.copyWith(
+                    path: downloadDir.path,
+                  ),
+                ),
               ),
             );
           }

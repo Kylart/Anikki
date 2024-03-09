@@ -5,6 +5,7 @@ export 'consumet_episode.dart';
 export 'downloader_filter.dart';
 export 'home_feed_options.dart';
 export 'library_entry.dart';
+export 'library_settings.dart';
 export 'local_file.dart';
 export 'media.dart';
 export 'news_entry.dart';

@@ -93,7 +93,7 @@ class AnikkiBlocProvider extends StatelessWidget {
               return LibraryBloc(localStorageRepository)
                 ..add(
                   LibraryUpdateRequested(
-                    path: settingsBloc.state.settings.localDirectory,
+                    path: settingsBloc.state.settings.librarySettings.path,
                   ),
                 );
             },

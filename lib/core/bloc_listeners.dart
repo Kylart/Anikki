@@ -142,7 +142,10 @@ class BlocListeners extends StatelessWidget {
               settingsBloc.add(
                 SettingsUpdated(
                   settingsBloc.state.settings.copyWith(
-                    localDirectory: state.path,
+                    librarySettings:
+                        settingsBloc.state.settings.librarySettings.copyWith(
+                      path: state.path,
+                    ),
                   ),
                 ),
               );

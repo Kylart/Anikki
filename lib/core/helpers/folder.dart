@@ -5,8 +5,11 @@ import 'package:open_app_file/open_app_file.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 
 Future<void> openFolderInExplorer(BuildContext context) async {
-  final path =
-      BlocProvider.of<SettingsBloc>(context).state.settings.localDirectory;
+  final path = BlocProvider.of<SettingsBloc>(context)
+      .state
+      .settings
+      .librarySettings
+      .path;
 
   OpenAppFile.open(path);
 }
