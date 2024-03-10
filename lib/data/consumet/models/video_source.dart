@@ -7,6 +7,7 @@ class VideoSource extends Equatable {
     this.isM3U8,
     this.isDASH,
     this.size,
+    this.subtitles,
   });
 
   final String url;
@@ -14,6 +15,7 @@ class VideoSource extends Equatable {
   final bool? isM3U8;
   final bool? isDASH;
   final double? size;
+  final List<VideoSubtitle>? subtitles;
 
   @override
   List<Object?> get props {
@@ -23,6 +25,7 @@ class VideoSource extends Equatable {
       isM3U8,
       isDASH,
       size,
+      subtitles,
     ];
   }
 

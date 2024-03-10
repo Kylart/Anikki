@@ -13,8 +13,9 @@ import 'package:screen_brightness/screen_brightness.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:anikki/app/video_player/bloc/video_player_bloc.dart';
-import 'package:anikki/core/core.dart';
+import 'package:anikki/core/core.dart' hide Media;
 import 'package:anikki/core/widgets/layout_card.dart';
+import 'package:anikki/data/data.dart';
 
 part 'actions.dart';
 part 'intents.dart';

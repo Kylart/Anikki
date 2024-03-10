@@ -9,6 +9,7 @@ part 'anime_source.dart';
 part 'extractor.dart';
 part 'anime_provider.dart';
 part 'video_source.dart';
+part 'video_subtitle.dart';
 
 enum StreamingServers {
   asianload,

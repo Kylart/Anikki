@@ -8,8 +8,8 @@ class ConsumetRepository {
   ConsumetRepository({List<AnimeProvider>? providers}) {
     this.providers = providers ??
         [
-          Zoro(),
           Gogoanime(),
+          Zoro(),
         ];
   }
 
@@ -67,7 +67,8 @@ class ConsumetRepository {
             httpHeaders: links.headers,
             extras: {
               'episodeNumber': episode.number,
-              'title': '$term - Episode ${episode.number}'
+              'title': '$term - Episode ${episode.number}',
+              'subtitles': link.subtitles,
             },
           ),
           number: episode.number!.toInt(),

@@ -14,15 +14,54 @@ class _PlayerControlsSubtitlesState extends State<PlayerControlsSubtitles> {
   List<SubtitleTrack>? available;
   SubtitleTrack? selected;
 
+  final loadedMediaSubtitles = <Media>[];
+
+  Future<void> loadMediaSubtitles(Playlist playlist) async {
+    final currentMedia = playlist.medias.elementAt(
+      playlist.index,
+    );
+
+    final currentMediaSubtitles = currentMedia.extras?['subtitles'];
+
+    if (currentMediaSubtitles == null) return;
+
+    if (loadedMediaSubtitles.contains(currentMedia)) return;
+
+    for (final subtitle in currentMediaSubtitles as List<VideoSubtitle>) {
+      await widget.player.setSubtitleTrack(
+        SubtitleTrack.uri(
+          subtitle.url,
+          title: subtitle.id,
+          language: subtitle.lang.substring(0, 2).toLowerCase(),
+        ),
+      );
+    }
+
+    await widget.player.setSubtitleTrack(
+      widget.player.state.tracks.subtitle.first,
+    );
+
+    loadedMediaSubtitles.add(currentMedia);
+  }
+
   @override
   void initState() {
     super.initState();
 
+    widget.player.stream.duration.listen((duration) {
+      if (duration == Duration.zero) return;
+
+      loadMediaSubtitles(widget.player.state.playlist);
+    });
+
     widget.player.stream.tracks.listen((track) {
       if (!mounted) return;
-      setState(() {
-        available = track.subtitle;
-      });
+
+      if (track.subtitle.isNotEmpty) {
+        setState(() {
+          available = track.subtitle;
+        });
+      }
     });
 
     widget.player.stream.track.listen((event) {

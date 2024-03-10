@@ -31,6 +31,18 @@ class MegaCloud extends Extractor {
 
     final srcData = json.decode(res.body);
 
+    final subtitles = (srcData['tracks'] as List)
+        .mapIndexed(
+          (index, s) => VideoSubtitle(
+            url: s['file']!,
+            id: s['label'],
+            lang: s['label'] ?? 'Thumbnails',
+            isDefault: s['label'] != null && index == 0,
+          ),
+        )
+        .where((element) => element.lang != 'Thumbnails')
+        .toList();
+
     final encryptedString = srcData['sources'];
     if (srcData['encrypted'] && encryptedString is List) {
       return encryptedString
@@ -38,6 +50,7 @@ class MegaCloud extends Extractor {
             (e) => VideoSource(
               url: e['file'],
               isM3U8: e['file'].toString().contains('.m3u8'),
+              subtitles: subtitles,
             ),
           )
           .toList();
@@ -61,6 +74,7 @@ class MegaCloud extends Extractor {
           (e) => VideoSource(
             url: e['file'],
             isM3U8: e['file'].toString().contains('.m3u8'),
+            subtitles: subtitles,
           ),
         )
         .toList();
