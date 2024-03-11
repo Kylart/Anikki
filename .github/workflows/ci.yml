@@ -5,7 +5,7 @@ jobs:
   windows-tests:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: "true"
 
@@ -32,7 +32,7 @@ jobs:
     needs: windows-tests
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: "true"
 
@@ -56,7 +56,7 @@ jobs:
         run: flutter_distributor package --platform windows --targets exe --artifact-name=anikki_setup.exe
 
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Windows
           path: dist
@@ -65,7 +65,7 @@ jobs:
   linux-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: "true"
 
@@ -97,7 +97,7 @@ jobs:
     needs: linux-tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: "true"
 
@@ -128,7 +128,7 @@ jobs:
       #   run: flutter_distributor package --platform linux --targets appimage
 
       # - name: 'Upload Artifact'
-      #   uses: actions/upload-artifact@v3
+      #   uses: actions/upload-artifact@v4
       #   with:
       #     name: Linux - AppImage
       #     path: dist
@@ -138,7 +138,7 @@ jobs:
         run: flutter_distributor package --platform linux --targets deb --artifact-name=anikki.deb
 
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Linux - deb
           path: dist
@@ -148,11 +148,11 @@ jobs:
     needs: linux-tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: "true"
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: "zulu"
           java-version: "17"
@@ -182,7 +182,7 @@ jobs:
         run: flutter_distributor package --platform android --targets aab --artifact-name=anikki.aab
 
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Android
           path: dist
@@ -191,7 +191,7 @@ jobs:
   macos-tests:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: "true"
 
@@ -218,7 +218,7 @@ jobs:
     needs: macos-tests
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: "true"
 
@@ -245,7 +245,7 @@ jobs:
         run: flutter_distributor package --platform macos --targets dmg --artifact-name=anikki.dmg
 
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Macos
           path: dist
@@ -255,7 +255,7 @@ jobs:
     needs: macos-tests
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: "true"
 
@@ -273,7 +273,7 @@ jobs:
         run: flutter build ios --release --no-codesign
 
       - run: 7z a anikki_ios_arm64.7z build/ios/iphoneos/Runner.app
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: iOS
           path: anikki_ios_arm64.7z
@@ -284,7 +284,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     needs: [windows-build, linux-build, macos-build, linux-android-build, ios-build]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Download all artifacts
         uses: actions/download-artifact@v3
