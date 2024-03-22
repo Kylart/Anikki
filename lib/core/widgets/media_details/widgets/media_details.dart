@@ -101,7 +101,7 @@ class MediaDetails extends StatelessWidget {
                     '<div style="text-align: justify">${media.anilistInfo.description!}</div>',
                   ),
                 ),
-                const Divider(height: 1),
+                const Divider(),
               ],
               MediaDetailsEpisodes(
                 media: media,
