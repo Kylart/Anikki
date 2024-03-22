@@ -14,12 +14,14 @@ class EntryTag extends StatelessWidget {
       left: 10.0,
       right: 10.0,
     ),
+    this.blurLevel = 40.0,
   });
 
   final Widget child;
   final Color? color;
   final Color? outline;
   final EdgeInsetsGeometry padding;
+  final double blurLevel;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class EntryTag extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(40)),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+          filter: ImageFilter.blur(sigmaX: blurLevel, sigmaY: blurLevel),
           child: Container(
             decoration: BoxDecoration(
               color: color ??

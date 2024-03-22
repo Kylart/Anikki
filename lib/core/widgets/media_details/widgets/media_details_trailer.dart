@@ -32,50 +32,47 @@ class _MediaDetailsTrailerState extends State<MediaDetailsTrailer> {
       constraints: const BoxConstraints(
         maxHeight: 600,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: LayoutCard(
-                    child: Image.network(
-                      thumbnail!,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 80.0),
-                            child: Text('Could not load thumbnail'),
-                          ),
-                        );
-                      },
-                    ),
+      child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: LayoutCard(
+                  child: Image.network(
+                    thumbnail!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 80.0),
+                          child: Text('Could not load thumbnail'),
+                        ),
+                      );
+                    },
                   ),
                 ),
-                Positioned.fill(
-                  child: Center(
-                    child: IconButton.filledTonal(
-                      padding: const EdgeInsets.all(12.0),
-                      onPressed: () {
-                        showAdaptiveDialog(
-                          barrierDismissible: true,
-                          context: context,
-                          builder: (context) => Dialog(
-                            child: MediaDetailsVideoPlayer(
-                              url: 'https://www.${site!}.com/watch?v=${id!}',
-                            ),
+              ),
+              Positioned.fill(
+                child: Center(
+                  child: IconButton.filledTonal(
+                    padding: const EdgeInsets.all(12.0),
+                    onPressed: () {
+                      showAdaptiveDialog(
+                        barrierDismissible: true,
+                        context: context,
+                        builder: (context) => Dialog(
+                          child: MediaDetailsVideoPlayer(
+                            url: 'https://www.${site!}.com/watch?v=${id!}',
                           ),
-                        );
-                      },
-                      icon: const Icon(Ionicons.play),
-                    ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Ionicons.play),
                   ),
-                )
-              ],
-            )),
-      ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }

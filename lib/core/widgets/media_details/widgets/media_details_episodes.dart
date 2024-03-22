@@ -27,81 +27,73 @@ class MediaDetailsEpisodes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: BlocBuilder<LayoutBloc, LayoutState>(
-        builder: (context, state) {
-          final hasInfo = media.anilistInfo.id != 0;
+    return BlocBuilder<LayoutBloc, LayoutState>(
+      builder: (context, state) {
+        final hasInfo = media.anilistInfo.id != 0;
 
-          if (!hasInfo) {
-            return ListView(
-              physics: const ClampingScrollPhysics(),
-              shrinkWrap: true,
-              children: [
-                for (final file in entry?.entries ?? []) ...[
-                  MediaDetailsEpisode(
-                    index: file.episode ?? 0,
-                    entry: entry,
-                    file: file,
-                  ),
-                  const Divider(),
-                ],
+        if (!hasInfo) {
+          return ListView(
+            physics: const ClampingScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              for (final file in entry?.entries ?? []) ...[
+                MediaDetailsEpisode(
+                  index: file.episode ?? 0,
+                  entry: entry,
+                  file: file,
+                ),
+                const Divider(),
               ],
-            );
-          }
+            ],
+          );
+        }
 
-          final maxPage = (numberOfEpisodes / kPaginatedPerPage).ceil();
-          final initialPage =
-              media.anilistInfo.nextAiringEpisode?.episode != null
-                  ? maxPage -
-                      ((media.anilistInfo.nextAiringEpisode!.episode - 1) /
-                              kPaginatedPerPage)
-                          .ceil() -
-                      1
-                  : 0;
+        final maxPage = (numberOfEpisodes / kPaginatedPerPage).ceil();
+        final initialPage = media.anilistInfo.nextAiringEpisode?.episode != null
+            ? maxPage -
+                ((media.anilistInfo.nextAiringEpisode!.episode - 1) /
+                        kPaginatedPerPage)
+                    .ceil() -
+                1
+            : 0;
 
-          return Paginated(
-            numberOfEntries: numberOfEpisodes,
-            initialPage: max(initialPage, 0),
-            pageBuilder: (context, page) {
-              return AnimationLimiter(
-                child: ListView.builder(
-                  itemCount: kPaginatedPerPage,
-                  physics: const ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    final currentIndex =
-                        numberOfEpisodes - index - (page * kPaginatedPerPage);
+        return Paginated(
+          numberOfEntries: numberOfEpisodes,
+          initialPage: max(initialPage, 0),
+          pageBuilder: (context, page) {
+            return AnimationLimiter(
+              child: ListView.separated(
+                itemCount: kPaginatedPerPage,
+                physics: const ClampingScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (context, index) => const Divider(),
+                itemBuilder: (context, index) {
+                  final currentIndex =
+                      numberOfEpisodes - index - (page * kPaginatedPerPage);
 
-                    if (currentIndex < 1) return const SizedBox();
+                  if (currentIndex < 1) return const SizedBox();
 
-                    return Column(
-                      children: [
-                        const Divider(),
-                        AnimationConfiguration.staggeredList(
-                          position: index,
-                          child: FadeInAnimation(
-                            child: SlideAnimation(
-                              child: MediaDetailsEpisode(
-                                index: currentIndex,
-                                media: media,
-                                entry: entry,
-                                file: entry?.entries.firstWhereOrNull(
-                                  (e) => e.episode == currentIndex,
-                                ),
-                              ),
-                            ),
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: FadeInAnimation(
+                      child: SlideAnimation(
+                        child: MediaDetailsEpisode(
+                          index: currentIndex,
+                          media: media,
+                          entry: entry,
+                          file: entry?.entries.firstWhereOrNull(
+                            (e) => e.episode == currentIndex,
                           ),
                         ),
-                      ],
-                    );
-                  },
-                ),
-              );
-            },
-          );
-        },
-      ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

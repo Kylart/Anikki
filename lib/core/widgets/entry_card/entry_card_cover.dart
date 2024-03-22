@@ -17,13 +17,6 @@ class _EntryCardCover extends StatelessWidget {
 
   final Animation animation;
 
-  Color get hexColor {
-    final buffer = StringBuffer();
-    if (color.length == 6 || color.length == 7) buffer.write('ff');
-    buffer.write(color.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
-  }
-
   double get translationValue => animation.value * 150;
 
   @override
@@ -36,7 +29,7 @@ class _EntryCardCover extends StatelessWidget {
               if (loadingProgress == null) return child;
 
               return Container(
-                color: hexColor,
+                color: hexToColor(color),
                 child: const AspectRatio(
                   aspectRatio: 11 / 16,
                 ),
