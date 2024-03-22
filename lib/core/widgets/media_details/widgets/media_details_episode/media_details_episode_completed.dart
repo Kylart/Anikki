@@ -17,7 +17,11 @@ class MediaDetailsEpisodeCompleted extends StatelessWidget {
         final completedEntry = state.completed.firstWhereOrNull(
             (element) => element.media?.id == media.anilistInfo.id);
         final currentEntry = state.current.firstWhereOrNull(
-            (element) => element.media?.id == media.anilistInfo.id);
+                (element) => element.media?.id == media.anilistInfo.id) ??
+            state.paused.firstWhereOrNull(
+                (element) => element.media?.id == media.anilistInfo.id) ??
+            state.dropped.firstWhereOrNull(
+                (element) => element.media?.id == media.anilistInfo.id);
 
         final seen =
             completedEntry != null || (currentEntry?.progress ?? -1) >= index;
