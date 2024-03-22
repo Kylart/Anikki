@@ -62,11 +62,10 @@ class MediaDetailsEpisodes extends StatelessWidget {
           initialPage: max(initialPage, 0),
           pageBuilder: (context, page) {
             return AnimationLimiter(
-              child: ListView.separated(
+              child: ListView.builder(
                 itemCount: kPaginatedPerPage,
                 physics: const ClampingScrollPhysics(),
                 shrinkWrap: true,
-                separatorBuilder: (context, index) => const Divider(),
                 itemBuilder: (context, index) {
                   final currentIndex =
                       numberOfEpisodes - index - (page * kPaginatedPerPage);
@@ -77,13 +76,18 @@ class MediaDetailsEpisodes extends StatelessWidget {
                     position: index,
                     child: FadeInAnimation(
                       child: SlideAnimation(
-                        child: MediaDetailsEpisode(
-                          index: currentIndex,
-                          media: media,
-                          entry: entry,
-                          file: entry?.entries.firstWhereOrNull(
-                            (e) => e.episode == currentIndex,
-                          ),
+                        child: Column(
+                          children: [
+                            MediaDetailsEpisode(
+                              index: currentIndex,
+                              media: media,
+                              entry: entry,
+                              file: entry?.entries.firstWhereOrNull(
+                                (e) => e.episode == currentIndex,
+                              ),
+                            ),
+                            const Divider(),
+                          ],
                         ),
                       ),
                     ),
