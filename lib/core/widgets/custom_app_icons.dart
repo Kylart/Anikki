@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Generated using https://www.fluttericon.com
 class CustomIcons {
   CustomIcons._();
 
