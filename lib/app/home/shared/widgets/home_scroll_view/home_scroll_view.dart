@@ -90,9 +90,9 @@ class _HomeScrollViewState extends State<HomeScrollView> {
               ),
             ),
             Positioned(
-              top: kHomeScrollViewPaddingValue,
+              top: kHomeScrollViewPaddingValue + 2,
               right: 0,
-              height: height,
+              height: height - (kHomeScrollViewPaddingValue + 2) * 2,
               width: buttonWidth,
               child: AnimatedOpacity(
                 opacity: show ? 1 : 0,
@@ -111,8 +111,8 @@ class _HomeScrollViewState extends State<HomeScrollView> {
               ),
             ),
             Positioned(
-              top: kHomeScrollViewPaddingValue,
-              height: height,
+              top: kHomeScrollViewPaddingValue + 2,
+              height: height - (kHomeScrollViewPaddingValue + 2) * 2,
               width: buttonWidth,
               child: AnimatedOpacity(
                 opacity: show ? 1 : 0,
