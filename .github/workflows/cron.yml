@@ -1,0 +1,39 @@
+# https://docs.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events
+name: Cron tests
+on:
+  schedule:
+    # Triggers the workflow every day at 5:30 and 17:30 UTC
+    # https://crontab.cronhub.io/
+    - cron: '0 12 * * *'
+
+jobs:
+  linux-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "true"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Install Ninja
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev mpv libmpv-dev
+
+      - name: Env setup
+        run: |
+          echo "ANILIST_ID=${{ secrets.ANILIST_ID }}" > .env
+          cat .env
+
+      - name: "Config"
+        run: flutter config --enable-linux-desktop
+
+      - name: "Debug build"
+        run: flutter build linux --debug
+
+      - name: "Test"
+        run: flutter test
