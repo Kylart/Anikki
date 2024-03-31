@@ -2,7 +2,7 @@
 name: Cron tests
 on:
   schedule:
-    # Triggers the workflow every day at 5:30 and 17:30 UTC
+    # Triggers the workflow every day at 12:00 UTC
     # https://crontab.cronhub.io/
     - cron: '0 12 * * *'
 

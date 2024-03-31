@@ -21,11 +21,9 @@ class MediaDetailsGenres extends StatelessWidget {
       children: genres!.map(
         (genre) {
           return EntryTag(
-            blurLevel: 5,
-            color: color != null ? hexToColor(color!).withOpacity(0.3) : null,
-            child: Text(
-              genre,
-            ),
+            blurLevel: 0,
+            color: Colors.transparent,
+            child: Text(genre),
           );
         },
       ).toList(),
