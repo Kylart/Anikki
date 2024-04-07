@@ -42,6 +42,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       await widget.player.play();
 
       widget.player.stream.completed.listen((completed) {
+        if (widget.player.state.duration == Duration.zero) return;
         if (!completed) return;
 
         final playlist = widget.player.state.playlist;
