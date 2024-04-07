@@ -1,6 +1,6 @@
-class AnilistGetRecommandationsException implements Exception {
+class AnilistGetRecommendationsException implements Exception {
   final String cause = 'Could not retrieve recommandations from Anilist';
   String? error;
 
-  AnilistGetRecommandationsException({this.error});
+  AnilistGetRecommendationsException({this.error});
 }

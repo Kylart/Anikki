@@ -29,7 +29,7 @@ class FeedRepository {
 
   /// Returns recommended entries
   Future<List<Media>> getRecommandations() async {
-    final entries = await anilist.getRecommandations();
+    final entries = await anilist.getRecommendations();
 
     return entries
         .map(

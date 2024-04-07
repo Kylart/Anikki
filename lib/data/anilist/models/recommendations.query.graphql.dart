@@ -304,7 +304,12 @@ const documentNodeQueryRecommendations = DocumentNode(definitions: [
           FieldNode(
             name: NameNode(value: 'recommendations'),
             alias: null,
-            arguments: [],
+            arguments: [
+              ArgumentNode(
+                name: NameNode(value: 'onList'),
+                value: BooleanValueNode(value: true),
+              )
+            ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(

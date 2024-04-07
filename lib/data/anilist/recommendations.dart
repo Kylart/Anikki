@@ -1,8 +1,8 @@
 part of 'anilist.dart';
 
-mixin AnilistRecommandations on AnilistClient {
+mixin AnilistRecommendations on AnilistClient {
   Future<List<Query$Recommendations$Page$recommendations>>
-      getRecommandations() async {
+      getRecommendations() async {
     try {
       final result = await client.query$Recommendations(
         Options$Query$Recommendations(
@@ -13,8 +13,9 @@ mixin AnilistRecommandations on AnilistClient {
       );
 
       if (result.hasException) {
-        throw AnilistGetRecommandationsException(
-            error: result.exception.toString());
+        throw AnilistGetRecommendationsException(
+          error: result.exception.toString(),
+        );
       }
 
       return result.parsedData?.Page?.recommendations
@@ -22,7 +23,7 @@ mixin AnilistRecommandations on AnilistClient {
               .toList() ??
           [];
     } catch (e) {
-      throw AnilistGetRecommandationsException(error: e.toString());
+      throw AnilistGetRecommendationsException(error: e.toString());
     }
   }
 }

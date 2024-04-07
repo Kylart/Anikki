@@ -43,7 +43,7 @@ class HomeMoreBloc extends AutoRefreshBloc<HomeMoreEvent, HomeMoreState> {
           entries: state.entries,
         ),
       );
-    } on AnilistGetRecommandationsException catch (e) {
+    } on AnilistGetRecommendationsException catch (e) {
       emit(
         HomeMoreFailed(
           message: e.cause,
