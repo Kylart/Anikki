@@ -194,8 +194,10 @@ class VideoPlayerRepository {
       progress ??= watchListEntry.progress;
     }
 
-    file = entry?.entries
-        .firstWhereOrNull((element) => element.episode == (progress ?? 0) + 1);
+    file = entry?.entries.firstWhereOrNull(
+          (element) => element.episode == (progress ?? 0) + 1,
+        ) ??
+        entry?.entries.firstOrNull;
 
     if (media?.format == Enum$MediaFormat.MOVIE) {
       file = entry?.entries.first;
