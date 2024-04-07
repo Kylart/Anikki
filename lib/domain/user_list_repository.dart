@@ -35,7 +35,7 @@ class UserListRepository {
   Future<AnilistWatchList> getList(String username) async {
     return await anilist.getWatchLists(
       username,
-      useCache: false,
+      useCache: true,
     );
   }
 
