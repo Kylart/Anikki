@@ -60,14 +60,16 @@ class UserListRepository {
     final year = DateTime.now().year;
     final planningList = watchList.planning;
 
-    final entries = planningList.where((element) {
+    final seasonEntries = planningList.where((element) {
       return element.media?.season == season &&
           element.media?.seasonYear == year &&
           element.media?.nextAiringEpisode?.episode != 1 &&
           element.progress == 0;
     }).toList();
 
-    return entries;
+    if (seasonEntries.isNotEmpty) return seasonEntries;
+
+    return watchList.planning;
   }
 
   /// Returns whether the entry is planned to watch or in currently watching status
