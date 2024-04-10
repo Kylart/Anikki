@@ -1,25 +1,18 @@
-import 'package:anikki/data/data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/core.dart';
+import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 
 part 'home_start_event.dart';
 part 'home_start_state.dart';
 
-class HomeStartBloc extends AutoRefreshBloc<HomeStartEvent, HomeStartState> {
+class HomeStartBloc extends Bloc<HomeStartEvent, HomeStartState> {
   final UserListRepository repository;
 
   HomeStartBloc(this.repository) : super(HomeStartInitial()) {
     on<HomeStartRefresh>(_onRefresh);
-
-    setUpAutoRefresh();
-  }
-
-  @override
-  void autoRefresh() async {
-    add(HomeStartRefresh(state.username));
   }
 
   Future<void> _onRefresh(
@@ -28,19 +21,17 @@ class HomeStartBloc extends AutoRefreshBloc<HomeStartEvent, HomeStartState> {
       emit(
         HomeStartLoading(
           entries: state.entries,
-          username: event.username,
         ),
       );
 
-      final entries = await repository.getStartList(event.username);
+      final entries = repository.getStartList(event.watchList);
 
       if (entries.isEmpty) {
-        emit(HomeStartEmpty(username: event.username));
+        emit(const HomeStartEmpty());
       } else {
         emit(
           HomeStartLoaded(
             entries: entries,
-            username: event.username,
           ),
         );
       }
@@ -48,7 +39,6 @@ class HomeStartBloc extends AutoRefreshBloc<HomeStartEvent, HomeStartState> {
       emit(
         HomeStartError(
           entries: state.entries,
-          username: event.username,
           message: e.error ?? e.cause,
         ),
       );
@@ -56,7 +46,6 @@ class HomeStartBloc extends AutoRefreshBloc<HomeStartEvent, HomeStartState> {
       emit(
         HomeStartError(
           entries: state.entries,
-          username: event.username,
           message: e.toString(),
         ),
       );

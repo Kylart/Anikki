@@ -117,11 +117,11 @@ class BlocListeners extends StatelessWidget {
           listener: (context, state) {
             if (state is WatchListComplete && state.username != null) {
               BlocProvider.of<HomeContinueBloc>(context).add(
-                HomeContinueRefresh(state.username!),
+                HomeContinueRefresh(state.watchList),
               );
 
               BlocProvider.of<HomeStartBloc>(context).add(
-                HomeStartRefresh(state.username!),
+                HomeStartRefresh(state.watchList),
               );
             }
 

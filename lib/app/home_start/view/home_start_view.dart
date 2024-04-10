@@ -1,10 +1,11 @@
-import 'package:anikki/app/home/shared/widgets/home_scroll_view/random_play_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view.dart';
+import 'package:anikki/app/home/shared/widgets/home_scroll_view/random_play_button.dart';
 import 'package:anikki/app/home_start/bloc/home_start_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
@@ -23,9 +24,13 @@ class HomeStartView extends StatelessWidget {
       builder: (context, anilistAuthState) {
         return BlocBuilder<HomeStartBloc, HomeStartState>(
           builder: (context, state) {
+            final watchListBloc =
+                BlocProvider.of<WatchListBloc>(context, listen: true);
+
             final initial = state is HomeStartInitial;
             final empty = state is HomeStartEmpty;
-            final loading = state is HomeStartLoading;
+            final loading = state is HomeStartLoading ||
+                watchListBloc.state is WatchListLoading;
             final errored = state is HomeStartError;
 
             if (empty) return const SizedBox();
@@ -45,8 +50,11 @@ class HomeStartView extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             if (anilistAuthState is AnilistAuthSuccess) {
-                              BlocProvider.of<HomeStartBloc>(context).add(
-                                  HomeStartRefresh(anilistAuthState.me.name));
+                              watchListBloc.add(
+                                WatchListRequested(
+                                  username: anilistAuthState.me.name,
+                                ),
+                              );
                             }
                           },
                           icon: const Icon(Ionicons.refresh_outline),

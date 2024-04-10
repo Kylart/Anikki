@@ -3,37 +3,33 @@ part of 'home_start_bloc.dart';
 sealed class HomeStartState extends Equatable {
   const HomeStartState({
     this.entries = const [],
-    this.username = '',
   });
 
   final List<AnilistListEntry> entries;
-  final String username;
 
   @override
   List<Object> get props => [
         entries,
-        username,
       ];
 }
 
 final class HomeStartInitial extends HomeStartState {}
 
 final class HomeStartLoading extends HomeStartState {
-  const HomeStartLoading({super.entries, super.username});
+  const HomeStartLoading({super.entries});
 }
 
 final class HomeStartLoaded extends HomeStartState {
-  const HomeStartLoaded({super.entries, super.username});
+  const HomeStartLoaded({super.entries});
 }
 
 final class HomeStartEmpty extends HomeStartState {
-  const HomeStartEmpty({super.username});
+  const HomeStartEmpty({super.entries = const []});
 }
 
 final class HomeStartError extends HomeStartState {
   const HomeStartError({
     super.entries,
-    super.username,
     required this.message,
   });
 
@@ -43,6 +39,5 @@ final class HomeStartError extends HomeStartState {
   List<Object> get props => [
         entries,
         message,
-        username,
       ];
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/random_play_button.dart';
 import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
@@ -27,9 +28,15 @@ class _HomeContinueViewState extends State<HomeContinueView> {
       builder: (context, anilistAuthState) {
         return BlocBuilder<HomeContinueBloc, HomeContinueState>(
           builder: (context, state) {
+            final watchListBloc = BlocProvider.of<WatchListBloc>(
+              context,
+              listen: true,
+            );
+
             final initial = state is HomeContinueInitial;
-            final loading = state is HomeContinueLoading;
             final errored = state is HomeContinueError;
+            final loading = state is HomeContinueLoading ||
+                watchListBloc.state is WatchListLoading;
 
             return SectionContainer(
               child: Column(
@@ -46,8 +53,10 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                         IconButton(
                           onPressed: () {
                             if (anilistAuthState is AnilistAuthSuccess) {
-                              BlocProvider.of<HomeContinueBloc>(context).add(
-                                HomeContinueRefresh(anilistAuthState.me.name),
+                              watchListBloc.add(
+                                WatchListRequested(
+                                  username: anilistAuthState.me.name,
+                                ),
                               );
                             }
                           },

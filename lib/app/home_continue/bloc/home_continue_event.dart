@@ -4,16 +4,16 @@ sealed class HomeContinueEvent extends Equatable {
   const HomeContinueEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 final class HomeContinueRefresh extends HomeContinueEvent {
-  const HomeContinueRefresh(this.username);
+  const HomeContinueRefresh(this.watchList);
 
-  final String username;
+  final AnilistWatchList watchList;
 
   @override
-  List<Object> get props => [
-        username,
+  List<Object?> get props => [
+        watchList,
       ];
 }

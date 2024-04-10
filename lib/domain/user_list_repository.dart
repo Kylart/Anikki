@@ -35,31 +35,29 @@ class UserListRepository {
   Future<AnilistWatchList> getList(String username) async {
     return await anilist.getWatchLists(
       username,
-      useCache: true,
+      useCache: false,
     );
   }
 
-  Future<List<AnilistListEntry>> getContinueList(String username) async {
-    final list = await getList(username);
-    final currentList = list.current;
-
-    return currentList.where((element) {
+  List<AnilistListEntry> getContinueList(
+    AnilistWatchList watchList,
+  ) {
+    return watchList.current.where((element) {
       final progress = element.progress ?? 0;
       final nextEpisode = element.media?.nextAiringEpisode?.episode;
       final nbEpisodes = element.media?.episodes ?? -1;
 
-      if (nextEpisode != null) {
-        return progress < nextEpisode - 1;
-      } else {
-        return progress < nbEpisodes;
-      }
+      return nextEpisode != null
+          ? progress < nextEpisode - 1
+          : progress < nbEpisodes;
     }).toList();
   }
 
-  Future<List<AnilistListEntry>> getStartList(String username) async {
+  List<AnilistListEntry> getStartList(
+    AnilistWatchList watchList,
+  ) {
     final season = currentSeason();
     final year = DateTime.now().year;
-    final watchList = await getList(username);
     final planningList = watchList.planning;
 
     final entries = planningList.where((element) {
