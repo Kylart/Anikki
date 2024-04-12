@@ -1,6 +1,3 @@
-import 'package:collection/collection.dart';
-
-import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
 
@@ -70,29 +67,5 @@ class UserListRepository {
     if (seasonEntries.isNotEmpty) return seasonEntries;
 
     return watchList.planning;
-  }
-
-  /// Returns whether the entry is planned to watch or in currently watching status
-  static bool isFollowed(WatchListState watchList, Media entry) {
-    return [...watchList.planning, ...watchList.current]
-        .where((element) => element.media?.id == entry.anilistInfo.id)
-        .isNotEmpty;
-  }
-
-  /// Returns whether the entry is completed or watched
-  static bool isSeen(WatchListState watchList, Media entry) {
-    final currentEntry = watchList.current.firstWhereOrNull(
-        (element) => element.media?.id == entry.anilistInfo.id);
-
-    final seen = currentEntry?.progress == null
-        ? false
-        : currentEntry?.media?.nextAiringEpisode?.episode ==
-            currentEntry!.progress! + 1;
-
-    final completed = watchList.completed
-        .where((e) => e.media?.id == entry.anilistInfo.id)
-        .isNotEmpty;
-
-    return seen || completed;
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 
@@ -12,11 +10,6 @@ void main() {
   group('unit test: UserListRepository', () {
     late MockAnilist anilist;
     late UserListRepository repository;
-
-    final watchList = WatchListComplete(
-      username: username,
-      watchList: watchListClassMock,
-    );
 
     group('watchedEntry method', () {
       group('when API succeeds', () {
@@ -115,89 +108,6 @@ void main() {
             expect(e, exception);
           }
         });
-      });
-    });
-
-    group('isFollowed method', () {
-      test('returns true only for planned entry', () {
-        expect(
-          UserListRepository.isFollowed(
-            watchList,
-            Media(anilistInfo: plannedEntriesMock.first.media),
-          ),
-          true,
-        );
-      });
-
-      test('returns true only for current entry', () {
-        expect(
-          UserListRepository.isFollowed(
-            watchList,
-            Media(anilistInfo: currentEntriesMock.first.media),
-          ),
-          true,
-        );
-      });
-
-      test('returns false only for dropped entry', () {
-        expect(
-          UserListRepository.isFollowed(
-            watchList,
-            Media(anilistInfo: droppedEntriesMock.first.media),
-          ),
-          false,
-        );
-      });
-      test('returns false only for completed entry', () {
-        expect(
-          UserListRepository.isFollowed(
-            watchList,
-            Media(anilistInfo: completedEntriesMock.first.media),
-          ),
-          false,
-        );
-      });
-
-      test('returns false only for paused entry', () {
-        expect(
-          UserListRepository.isFollowed(
-            watchList,
-            Media(anilistInfo: pausedEntriesMock.first.media),
-          ),
-          false,
-        );
-      });
-    });
-
-    group('isSeen method', () {
-      test('returns true for watched entries', () {
-        expect(
-          UserListRepository.isSeen(
-            watchList,
-            Media(anilistInfo: currentEntriesMock.first.media),
-          ),
-          true,
-        );
-      });
-
-      test('returns false for unwatched entries', () {
-        expect(
-          UserListRepository.isSeen(
-            watchList,
-            Media(anilistInfo: currentEntriesMock.last.media),
-          ),
-          false,
-        );
-      });
-
-      test('returns true for completed entries', () {
-        expect(
-          UserListRepository.isSeen(
-            watchList,
-            Media(anilistInfo: completedEntriesMock.first.media),
-          ),
-          true,
-        );
       });
     });
   });
