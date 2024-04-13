@@ -10,6 +10,7 @@ import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/core/widgets/episode_timer_countdown.dart';
 import 'package:anikki/data/data.dart';

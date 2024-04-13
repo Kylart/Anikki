@@ -1,3 +1,4 @@
+import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -187,8 +188,9 @@ class VideoPlayerRepository {
         ? library.playlist
         : entry?.entries.reversed.map(convertToMkMedia).toList();
 
-    final watchListEntry = watchList.current
-        .firstWhereOrNull((element) => element.media?.id == media?.id);
+    final watchListEntry = media != null
+        ? AnilistUtils.getCurrentEntry(watchList, Media(anilistInfo: media))
+        : null;
 
     if (watchListEntry != null) {
       progress ??= watchListEntry.progress;
