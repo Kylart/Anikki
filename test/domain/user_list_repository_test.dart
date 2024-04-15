@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:anikki/data/data.dart';
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/data/anilist/anilist.dart';
 import 'package:anikki/domain/domain.dart';
 
 import '../fixtures/anilist.dart';
@@ -19,7 +20,7 @@ void main() {
             () => anilist.updateEntry(
               episode: 1,
               mediaId: shortMediaMock.id,
-              status: Enum$MediaListStatus.CURRENT,
+              status: null,
             ),
           ).thenAnswer((_) async {});
 
@@ -35,11 +36,25 @@ void main() {
         });
 
         test('succeeds when episode is 1', () async {
-          await repository.watchedEntry(episode: 1, media: anilistMediaMock);
+          await repository.watchedEntry(
+            episode: 1,
+            media: anilistMediaMock,
+            state: const WatchListComplete(
+              username: username,
+              watchList: AnilistWatchList(),
+            ),
+          );
         });
 
         test('succeeds when episode is not 1', () async {
-          await repository.watchedEntry(episode: 2, media: anilistMediaMock);
+          await repository.watchedEntry(
+            episode: 2,
+            media: anilistMediaMock,
+            state: const WatchListComplete(
+              username: username,
+              watchList: AnilistWatchList(),
+            ),
+          );
         });
       });
 
@@ -52,7 +67,7 @@ void main() {
             () => anilist.updateEntry(
               episode: 1,
               mediaId: shortMediaMock.id,
-              status: Enum$MediaListStatus.CURRENT,
+              status: null,
             ),
           ).thenThrow(exception);
 
@@ -61,7 +76,14 @@ void main() {
 
         test('fails with the same exception', () async {
           try {
-            await repository.watchedEntry(episode: 1, media: anilistMediaMock);
+            await repository.watchedEntry(
+              episode: 1,
+              media: anilistMediaMock,
+              state: const WatchListComplete(
+                username: username,
+                watchList: AnilistWatchList(),
+              ),
+            );
             fail('Expected exception');
           } on Exception catch (e) {
             expect(e, exception);

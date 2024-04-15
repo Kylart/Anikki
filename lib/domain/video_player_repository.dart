@@ -170,7 +170,7 @@ class VideoPlayerRepository {
     int? episode,
   }) {
     final library = BlocProvider.of<LibraryBloc>(context).state;
-    final watchList = BlocProvider.of<WatchListBloc>(context).state;
+    final watchListState = BlocProvider.of<WatchListBloc>(context).state;
 
     int? progress;
     LocalFile? file;
@@ -189,7 +189,10 @@ class VideoPlayerRepository {
         : entry?.entries.reversed.map(convertToMkMedia).toList();
 
     final watchListEntry = media != null
-        ? AnilistUtils.getCurrentEntry(watchList, Media(anilistInfo: media))
+        ? AnilistUtils.getCurrentEntry(
+            watchListState.watchList,
+            Media(anilistInfo: media),
+          )
         : null;
 
     if (watchListEntry != null) {

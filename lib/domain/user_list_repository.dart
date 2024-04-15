@@ -1,4 +1,6 @@
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/data/data.dart';
 
 typedef UserWatchList = Map<Enum$MediaListStatus,
@@ -11,20 +13,39 @@ class UserListRepository {
   /// The [Anilist] object to use to interact with Anilist.
   final Anilist anilist;
 
+  Enum$MediaListStatus? _getWatchedEntryStatus(
+    WatchListState state,
+    Media media,
+    int episode,
+  ) {
+    Enum$MediaListStatus? status;
+
+    final isCompleted =
+        AnilistUtils.getCompletedEntry(state.watchList, media) != null;
+    final isPlanning = AnilistUtils.getListEntry(state.planning, media) != null;
+
+    if (isCompleted && episode == 1) {
+      status = Enum$MediaListStatus.REPEATING;
+    } else if (isPlanning && episode == 1) {
+      status = Enum$MediaListStatus.CURRENT;
+    }
+
+    return status;
+  }
+
   /// Mark a [Media] as watched for the given episode.
   /// If `episode == 1`, will set the status of the entry to `Current`.
   Future<void> watchedEntry({
     required int episode,
     required Media media,
+    required WatchListState state,
   }) async {
     if (media.anilistInfo.id == 0) return;
 
     await anilist.updateEntry(
       episode: episode,
       mediaId: media.anilistInfo.id,
-      status: episode == 1 && media.anilistInfo.episodes != 1
-          ? Enum$MediaListStatus.CURRENT
-          : null,
+      status: _getWatchedEntryStatus(state, media, episode),
     );
   }
 

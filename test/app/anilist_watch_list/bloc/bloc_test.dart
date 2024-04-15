@@ -153,14 +153,16 @@ void main() {
     });
 
     group('on [WatchListWatched]', () {
+      WatchListState makeSeedState(bool connected) => WatchListComplete(
+            username: username,
+            watchList: const AnilistWatchList(),
+            connected: connected,
+          );
+
       blocTest<WatchListBloc, WatchListState>(
         'emits [WatchListLoading, WatchListComplete] when [WatchListWatched] is added',
         build: () => bloc,
-        seed: () => const WatchListComplete(
-          username: username,
-          watchList: AnilistWatchList(),
-          connected: true,
-        ),
+        seed: () => makeSeedState(true),
         act: (bloc) => bloc.add(
           WatchListWatched(
             entry: localFileMock,
@@ -179,6 +181,7 @@ void main() {
             () => repository.watchedEntry(
               episode: localFileMock.episode!,
               media: localFileMock.media!,
+              state: makeSeedState(true),
             ),
           ).thenAnswer((_) async {});
 
@@ -192,11 +195,7 @@ void main() {
       blocTest<WatchListBloc, WatchListState>(
         'emits [] when [WatchListWatched] is added but fails',
         build: () => bloc,
-        seed: () => const WatchListComplete(
-          username: username,
-          watchList: AnilistWatchList(),
-          connected: true,
-        ),
+        seed: () => makeSeedState(true),
         act: (bloc) => bloc.add(
           WatchListWatched(
             entry: localFileMock,
@@ -217,6 +216,7 @@ void main() {
             () => repository.watchedEntry(
               episode: localFileMock.episode!,
               media: localFileMock.media!,
+              state: makeSeedState(true),
             ),
           ).thenThrow(AnilistUpdateListException(error: 'error'));
 
@@ -227,11 +227,7 @@ void main() {
       blocTest<WatchListBloc, WatchListState>(
         'emits [] when [WatchListWatched] is added but app is not connected',
         build: () => bloc,
-        seed: () => const WatchListComplete(
-          username: username,
-          watchList: AnilistWatchList(),
-          connected: false,
-        ),
+        seed: () => makeSeedState(false),
         act: (bloc) => bloc.add(
           WatchListWatched(
             entry: localFileMock,

@@ -18,8 +18,14 @@ class MediaDetailsEpisodeCompleted extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WatchListBloc, WatchListState>(
       builder: (context, state) {
-        final completedEntry = AnilistUtils.getCompletedEntry(state, media);
-        final currentEntry = AnilistUtils.getCurrentEntry(state, media);
+        final completedEntry = AnilistUtils.getCompletedEntry(
+          state.watchList,
+          media,
+        );
+        final currentEntry = AnilistUtils.getCurrentEntry(
+          state.watchList,
+          media,
+        );
 
         final seen =
             completedEntry != null || (currentEntry?.progress ?? -1) >= index;

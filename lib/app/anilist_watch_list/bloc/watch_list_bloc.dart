@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -108,6 +109,7 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
       await repository.watchedEntry(
         episode: episode,
         media: media,
+        state: state,
       );
 
       emit(
