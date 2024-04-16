@@ -8,7 +8,7 @@ void main() {
   group('unit test: Consumet providers', () {
     final providers = [
       Gogoanime(),
-      // Zoro(),
+      Zoro(),
     ];
 
     late List<AnimeResult> searchResult;

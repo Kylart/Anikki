@@ -81,9 +81,10 @@ class MegaCloud extends Extractor {
   }
 
   List<int> _extractVariables(String text) {
-    final match = RegExp(r"const \w{1,2}=new URLSearchParams.+?;(?=function)")
-        .firstMatch(text);
-    final allVars = match?[0];
+    final match = RegExp(
+      r"\w{1,2}=new URLSearchParams.+?;(?=function)",
+    ).allMatches(text).last;
+    final allVars = match[0];
 
     if (allVars == null) throw 'No variable found';
 
