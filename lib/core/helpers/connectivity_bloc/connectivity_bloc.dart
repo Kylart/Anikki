@@ -8,7 +8,7 @@ part 'connectivity_event.dart';
 part 'connectivity_state.dart';
 
 class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
-  StreamSubscription<ConnectivityResult>? subscription;
+  StreamSubscription<List<ConnectivityResult>>? subscription;
 
   bool get isOnline => state is ConnectivityOnline;
 
@@ -19,18 +19,20 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
 
     subscription = Connectivity()
         .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      switch (result) {
-        case ConnectivityResult.wifi:
-        case ConnectivityResult.ethernet:
-        case ConnectivityResult.mobile:
-        case ConnectivityResult.vpn:
-        case ConnectivityResult.other:
-          add(const ConnectivityEvent(true));
-          break;
-        case ConnectivityResult.bluetooth:
-        case ConnectivityResult.none:
-          add(const ConnectivityEvent(false));
+        .listen((List<ConnectivityResult> results) {
+      if (results.any(
+        (result) => [
+          ConnectivityResult.wifi,
+          ConnectivityResult.ethernet,
+          ConnectivityResult.mobile,
+          ConnectivityResult.vpn,
+          ConnectivityResult.other,
+        ].contains(result),
+      )) {
+        add(const ConnectivityEvent(true));
+      } else if (results.length == 1 &&
+          results.first == ConnectivityResult.none) {
+        add(const ConnectivityEvent(false));
       }
     });
   }
