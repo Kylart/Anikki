@@ -2,6 +2,7 @@ import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/data/data.dart';
+import 'package:collection/collection.dart';
 
 typedef UserWatchList = Map<Enum$MediaListStatus,
     List<Query$GetLists$MediaListCollection$lists$entries>>;
@@ -60,15 +61,25 @@ class UserListRepository {
   List<AnilistListEntry> getContinueList(
     AnilistWatchList watchList,
   ) {
-    return watchList.current.where((element) {
-      final progress = element.progress ?? 0;
-      final nextEpisode = element.media?.nextAiringEpisode?.episode;
-      final nbEpisodes = element.media?.episodes ?? -1;
+    return {
+      ...watchList.current,
+      ...watchList.repeating,
+    }
+        .where(
+          (element) {
+            final progress = element.progress ?? 0;
+            final nextEpisode = element.media?.nextAiringEpisode?.episode;
+            final nbEpisodes = element.media?.episodes ?? -1;
 
-      return nextEpisode != null
-          ? progress < nextEpisode - 1
-          : progress < nbEpisodes;
-    }).toList();
+            return nextEpisode != null
+                ? progress < nextEpisode - 1
+                : progress < nbEpisodes;
+          },
+        )
+        .sorted(
+          (a, b) => (b.updatedAt ?? 0).compareTo(a.updatedAt ?? 0),
+        )
+        .toList();
   }
 
   List<AnilistListEntry> getStartList(
