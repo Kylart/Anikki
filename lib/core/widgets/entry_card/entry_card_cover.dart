@@ -18,6 +18,12 @@ class _EntryCardCover extends StatelessWidget {
   final Animation animation;
 
   double get translationValue => animation.value * 150;
+  Widget get colorContainer => Container(
+        color: hexToColor(color),
+        child: const AspectRatio(
+          aspectRatio: 11 / 16,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +31,8 @@ class _EntryCardCover extends StatelessWidget {
         ? Image.network(
             url!,
             fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-
-              return Container(
-                color: hexToColor(color),
-                child: const AspectRatio(
-                  aspectRatio: 11 / 16,
-                ),
-              );
-            },
+            errorBuilder: (context, error, stackTrace) => colorContainer,
+            loadingBuilder: (context, child, loadingProgress) => colorContainer,
           )
         : Image.asset(
             'assets/images/placeholder.jpg',
