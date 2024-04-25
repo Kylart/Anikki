@@ -21,6 +21,7 @@ class DrawerContainer extends StatelessWidget {
         color: Colors.transparent,
         elevation: 20,
         child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 350),
           layoutBuilder: (currentChild, previousChildren) {
             return Stack(
               fit: StackFit.passthrough,
@@ -48,16 +49,9 @@ class DrawerContainer extends StatelessWidget {
           ) {
             return FadeTransition(
               opacity: animation,
-              child: SlideTransition(
-                position: Tween(
-                  begin: const Offset(1.0, 0.0),
-                  end: const Offset(0.0, 0.0),
-                ).animate(animation),
-                child: child,
-              ),
+              child: child,
             );
           },
-          duration: const Duration(milliseconds: 350),
           child: child,
         ),
       ),
