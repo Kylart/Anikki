@@ -27,38 +27,8 @@ class MediaDetailsEpisodeActions extends StatelessWidget {
       mainAxisSize: mainAxisSize,
       children: [
         if (localFile != null)
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => PlatformAlertDialog(
-                  title:
-                      Text('Do you really want to delete ${localFile!.path}'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Nevermind'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        BlocProvider.of<LibraryBloc>(context).add(
-                          LibraryFileDeleteRequested(localFile!),
-                        );
-
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Yes!'),
-                    ),
-                  ],
-                ),
-              );
-            },
-            iconSize: 18.0,
-            constraints: const BoxConstraints(),
-            color: Colors.red,
-            icon: const Icon(Ionicons.trash),
+          MediaDetailsEpisodeActionDelete(
+            file: localFile!,
           )
         else
           IconButton(
