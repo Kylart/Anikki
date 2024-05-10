@@ -4,6 +4,7 @@ export 'auto_refresh_bloc.dart';
 export 'capitalize.dart';
 export 'connectivity_bloc/connectivity_bloc.dart';
 export 'constants.dart';
+export 'context_extensions.dart';
 export 'convert_to_mk_media.dart';
 export 'desktop_hooks.dart';
 export 'errors/library_directory_does_not_exist_exception.dart';
