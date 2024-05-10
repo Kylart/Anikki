@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:marqueer/marqueer.dart';
-import 'package:shimmer/shimmer.dart';
 
 import 'package:anikki/app/home/shared/helpers/scroll_view_height.dart';
 import 'package:anikki/app/home/shared/helpers/should_be_marquee.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+import 'package:anikki/core/widgets/loader_tile.dart';
 
 part 'home_scroll_view_loader.dart';
 
