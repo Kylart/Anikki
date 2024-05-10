@@ -2,8 +2,8 @@ PODS:
   - anitomy (0.0.1):
     - FlutterMacOS
   - connectivity_plus (0.0.1):
+    - Flutter
     - FlutterMacOS
-    - ReachabilitySwift
   - FlutterMacOS (1.0.0)
   - media_kit_libs_macos_video (1.0.4):
     - FlutterMacOS
@@ -18,7 +18,6 @@ PODS:
     - FlutterMacOS
   - protocol_handler_macos (0.0.1):
     - FlutterMacOS
-  - ReachabilitySwift (5.0.0)
   - screen_brightness_macos (0.1.0):
     - FlutterMacOS
   - screen_retriever (0.0.1):
@@ -37,7 +36,7 @@ PODS:
 
 DEPENDENCIES:
   - anitomy (from `Flutter/ephemeral/.symlinks/plugins/anitomy/macos`)
-  - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos`)
+  - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/darwin`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - media_kit_libs_macos_video (from `Flutter/ephemeral/.symlinks/plugins/media_kit_libs_macos_video/macos`)
   - media_kit_native_event_loop (from `Flutter/ephemeral/.symlinks/plugins/media_kit_native_event_loop/macos`)
@@ -53,15 +52,11 @@ DEPENDENCIES:
   - wakelock_plus (from `Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
 
-SPEC REPOS:
-  trunk:
-    - ReachabilitySwift
-
 EXTERNAL SOURCES:
   anitomy:
     :path: Flutter/ephemeral/.symlinks/plugins/anitomy/macos
   connectivity_plus:
-    :path: Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos
+    :path: Flutter/ephemeral/.symlinks/plugins/connectivity_plus/darwin
   FlutterMacOS:
     :path: Flutter/ephemeral
   media_kit_libs_macos_video:
@@ -93,18 +88,17 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   anitomy: 90836e048aeb699d56094545e5a5fe9adf84550b
-  connectivity_plus: 18d3c32514c886e046de60e9c13895109866c747
+  connectivity_plus: ddd7f30999e1faaef5967c23d5b6d503d10434db
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   media_kit_libs_macos_video: b3e2bbec2eef97c285f2b1baa7963c67c753fb82
   media_kit_native_event_loop: 81fd5b45192b72f8b5b69eaf5b540f45777eb8d5
   media_kit_video: c75b07f14d59706c775778e4dd47dd027de8d1e5
   package_info_plus: 02d7a575e80f194102bef286361c6c326e4c29ce
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   protocol_handler_macos: d10a6c01d6373389ffd2278013ab4c47ed6d6daa
-  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   screen_brightness_macos: 2d6d3af2165592d9a55ffcd95b7550970e41ebda
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
-  share_plus: 76dd39142738f7a68dd57b05093b5e8193f220f7
+  share_plus: 36537c04ce0c3e3f5bd297ce4318b6d5ee5fd6cf
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   url_launcher_macos: d2691c7dd33ed713bf3544850a623080ec693d95
   wakelock_plus: 4783562c9a43d209c458cb9b30692134af456269
