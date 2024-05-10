@@ -57,6 +57,7 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
       WatchListLoading(
         username: username,
         watchList: state.watchList,
+        connected: state.connected,
       ),
     );
 
