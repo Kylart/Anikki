@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+import 'package:anikki/app/media_details/widgets/media_details_episode/media_details_episode.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/core/widgets/media_details/widgets/media_details_episode/media_details_episode.dart';
 import 'package:anikki/core/widgets/paginated.dart';
 
 class MediaDetailsEpisodes extends StatelessWidget {

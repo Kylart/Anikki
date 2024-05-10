@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:anikki/app/layouts/widgets/landscape/drawer_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/page.dart';
+import 'package:anikki/app/layouts/widgets/landscape/drawer_container.dart';
 import 'package:anikki/app/layouts/widgets/landscape/navigation_rail.dart';
+import 'package:anikki/app/media_details/widgets/media_details.dart';
 import 'package:anikki/core/widgets/macos_title_bar.dart';
-import 'package:anikki/core/widgets/media_details/widgets/media_details.dart';
 
 class LandscapeLayout extends StatefulWidget {
   const LandscapeLayout({

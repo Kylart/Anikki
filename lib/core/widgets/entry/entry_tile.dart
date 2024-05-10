@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
+import 'package:anikki/app/media_details/widgets/media_details_actions.dart';
+import 'package:anikki/app/media_details/widgets/media_details_trailer.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
-import 'package:anikki/core/widgets/media_details/widgets/media_details_actions.dart';
-import 'package:anikki/core/widgets/media_details/widgets/media_details_trailer.dart';
 
 class EntryTile extends StatefulWidget {
   const EntryTile({

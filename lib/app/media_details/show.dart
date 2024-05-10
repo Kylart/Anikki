@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
+import 'package:anikki/app/media_details/widgets/media_details_media_portrait.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/core/widgets/media_details/widgets/media_details_media_portrait.dart';
 
 Future<void> showMediaDialog(
   BuildContext context,

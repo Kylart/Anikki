@@ -1,16 +1,16 @@
 import 'dart:math';
 
-import 'package:anikki/core/widgets/media_details/show.dart';
-import 'package:anikki/core/widgets/anikki_icon.dart';
-import 'package:anikki/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:simple_icons/simple_icons.dart';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/app/media_details/show.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/anikki_icon.dart';
+import 'package:anikki/core/widgets/entry/entry_tag.dart';
+import 'package:anikki/domain/domain.dart';
 
 class MediaDetailsActions extends StatelessWidget {
   const MediaDetailsActions({

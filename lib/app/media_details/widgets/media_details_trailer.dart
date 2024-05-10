@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
+import 'package:anikki/app/media_details/widgets/media_details_video_player.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/core/widgets/media_details/widgets/media_details_video_player.dart';
 
 class MediaDetailsTrailer extends StatefulWidget {
   const MediaDetailsTrailer({
