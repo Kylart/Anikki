@@ -21,7 +21,7 @@ class AnikkiNavigationRail extends StatelessWidget {
   final bool connected;
 
   final iconSize = 20.0;
-  final verticalPadding = 14.0;
+  final verticalPadding = 18.0;
   final horizontalPadding = 14.0;
 
   @override
