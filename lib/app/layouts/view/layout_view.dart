@@ -1,4 +1,3 @@
-import 'package:anikki/core/widgets/custom_app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -17,6 +16,7 @@ import 'package:anikki/app/settings/view/settings_view.dart';
 import 'package:anikki/app/torrent/torrent.dart';
 import 'package:anikki/core/helpers/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anikki/core/models/torrent_type.dart';
+import 'package:anikki/core/widgets/custom_app_icons.dart';
 
 class LayoutView extends StatefulWidget {
   const LayoutView({super.key});
