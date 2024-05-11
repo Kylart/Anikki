@@ -32,7 +32,6 @@ class _EntryCardCover extends StatelessWidget {
             url!,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) => colorContainer,
-            loadingBuilder: (context, child, loadingProgress) => colorContainer,
           )
         : Image.asset(
             'assets/images/placeholder.jpg',
