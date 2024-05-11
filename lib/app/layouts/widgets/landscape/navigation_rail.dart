@@ -44,7 +44,10 @@ class AnikkiNavigationRail extends StatelessWidget {
                   horizontal: horizontalPadding,
                 ),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .secondaryContainer
+                      .withOpacity(0.3),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(12.0),
                   ),
