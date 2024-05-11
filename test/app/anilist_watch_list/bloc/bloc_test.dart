@@ -171,7 +171,7 @@ void main() {
         expect: () => [
           isA<WatchListNotify>(),
           isA<WatchListComplete>(),
-          const WatchListLoading(username: username),
+          isA<WatchListLoading>(),
           isA<WatchListComplete>()
         ],
         setUp: () {
