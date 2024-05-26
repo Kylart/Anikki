@@ -27,7 +27,7 @@ class AnikkiNavigationBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           EntryTag(
-            color: Theme.of(context).colorScheme.background.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
             child: Wrap(
               spacing: 12.0,
               children: [

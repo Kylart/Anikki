@@ -68,7 +68,7 @@ class _AnikkiNavigationRailIconState extends State<AnikkiNavigationRailIcon> {
                   surfaceTintColor: Colors.transparent,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(12.0)),
                       border: Border.all(

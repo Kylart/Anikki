@@ -34,7 +34,7 @@ class EntryTag extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: color ??
-                  Theme.of(context).colorScheme.background.withOpacity(0.5),
+                  Theme.of(context).colorScheme.surface.withOpacity(0.5),
               border: Border.all(
                 color: outline == null
                     ? Theme.of(context).colorScheme.outline
