@@ -13,17 +13,6 @@
       ]
     },
     {
-      "name": "anikki with device preview",
-      "request": "launch",
-      "type": "dart",
-      "args": [
-        "--vmservice-out-file=detective_connect.txt",
-      ],
-      "env": {
-        "DEVICE_PREVIEW": "on"
-      }
-    },
-    {
       "name": "anikki (profile mode)",
       "request": "launch",
       "type": "dart",
