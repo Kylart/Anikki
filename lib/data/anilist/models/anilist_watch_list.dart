@@ -47,4 +47,18 @@ class AnilistWatchList extends Equatable {
         planning,
         repeating,
       ];
+
+  @override
+  String toString() {
+    return [
+      'AnilistWatchList(',
+      '${completed.length} completed entries,',
+      '${current.length} current entries,',
+      '${dropped.length} completed entries,',
+      '${paused.length} completed entries,',
+      '${planning.length} planning entries,',
+      '${repeating.length} repeating entries',
+      ')',
+    ].join('');
+  }
 }
