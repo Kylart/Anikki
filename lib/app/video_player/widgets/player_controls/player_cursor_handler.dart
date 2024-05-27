@@ -43,11 +43,10 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
   ///
   /// A drag event should be ignore when not in the `kDragIgnorePercent` of the
   /// device.
-  bool _shouldIgnoreDrag(BuildContext context, DragUpdateDetails details) {
+  bool _shouldIgnoreDrag(BuildContext context, Offset position) {
     if (isDesktop()) return true;
 
     final screenSize = MediaQuery.of(context).size;
-    final position = details.globalPosition;
 
     return !(
         // Height top
@@ -123,7 +122,7 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
         }
       },
       onHorizontalDragUpdate: (details) {
-        if (_shouldIgnoreDrag(context, details)) return;
+        if (_shouldIgnoreDrag(context, details.globalPosition)) return;
 
         var value = details.delta.dx * 750;
 
@@ -134,6 +133,8 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
         });
       },
       onHorizontalDragEnd: (details) {
+        if (_shouldIgnoreDrag(context, details.globalPosition)) return;
+
         widget.player.seek(
           widget.player.state.position + seekDuration,
         );
@@ -143,7 +144,7 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
         });
       },
       onVerticalDragUpdate: (details) async {
-        if (_shouldIgnoreDrag(context, details)) return;
+        if (_shouldIgnoreDrag(context, details.globalPosition)) return;
 
         final delta = details.primaryDelta?.ceilToDouble() ?? 0;
 
