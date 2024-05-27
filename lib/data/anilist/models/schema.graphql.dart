@@ -1924,7 +1924,17 @@ class _CopyWithStubImpl$Input$StaffNameInput<TRes>
       _res;
 }
 
-enum Enum$ActivitySort { ID, ID_DESC, PINNED, $unknown }
+enum Enum$ActivitySort {
+  ID,
+  ID_DESC,
+  PINNED,
+  $unknown;
+
+  factory Enum$ActivitySort.fromJson(String value) =>
+      fromJson$Enum$ActivitySort(value);
+
+  String toJson() => toJson$Enum$ActivitySort(this);
+}
 
 String toJson$Enum$ActivitySort(Enum$ActivitySort e) {
   switch (e) {
@@ -1958,7 +1968,12 @@ enum Enum$ActivityType {
   MANGA_LIST,
   MESSAGE,
   MEDIA_LIST,
-  $unknown
+  $unknown;
+
+  factory Enum$ActivityType.fromJson(String value) =>
+      fromJson$Enum$ActivityType(value);
+
+  String toJson() => toJson$Enum$ActivityType(this);
 }
 
 String toJson$Enum$ActivityType(Enum$ActivityType e) {
@@ -2004,7 +2019,12 @@ enum Enum$AiringSort {
   TIME_DESC,
   EPISODE,
   EPISODE_DESC,
-  $unknown
+  $unknown;
+
+  factory Enum$AiringSort.fromJson(String value) =>
+      fromJson$Enum$AiringSort(value);
+
+  String toJson() => toJson$Enum$AiringSort(this);
 }
 
 String toJson$Enum$AiringSort(Enum$AiringSort e) {
@@ -2053,7 +2073,17 @@ Enum$AiringSort fromJson$Enum$AiringSort(String value) {
   }
 }
 
-enum Enum$CharacterRole { MAIN, SUPPORTING, BACKGROUND, $unknown }
+enum Enum$CharacterRole {
+  MAIN,
+  SUPPORTING,
+  BACKGROUND,
+  $unknown;
+
+  factory Enum$CharacterRole.fromJson(String value) =>
+      fromJson$Enum$CharacterRole(value);
+
+  String toJson() => toJson$Enum$CharacterRole(this);
+}
 
 String toJson$Enum$CharacterRole(Enum$CharacterRole e) {
   switch (e) {
@@ -2090,7 +2120,12 @@ enum Enum$CharacterSort {
   FAVOURITES,
   FAVOURITES_DESC,
   RELEVANCE,
-  $unknown
+  $unknown;
+
+  factory Enum$CharacterSort.fromJson(String value) =>
+      fromJson$Enum$CharacterSort(value);
+
+  String toJson() => toJson$Enum$CharacterSort(this);
 }
 
 String toJson$Enum$CharacterSort(Enum$CharacterSort e) {
@@ -2139,7 +2174,17 @@ Enum$CharacterSort fromJson$Enum$CharacterSort(String value) {
   }
 }
 
-enum Enum$ExternalLinkMediaType { ANIME, MANGA, STAFF, $unknown }
+enum Enum$ExternalLinkMediaType {
+  ANIME,
+  MANGA,
+  STAFF,
+  $unknown;
+
+  factory Enum$ExternalLinkMediaType.fromJson(String value) =>
+      fromJson$Enum$ExternalLinkMediaType(value);
+
+  String toJson() => toJson$Enum$ExternalLinkMediaType(this);
+}
 
 String toJson$Enum$ExternalLinkMediaType(Enum$ExternalLinkMediaType e) {
   switch (e) {
@@ -2167,7 +2212,17 @@ Enum$ExternalLinkMediaType fromJson$Enum$ExternalLinkMediaType(String value) {
   }
 }
 
-enum Enum$ExternalLinkType { INFO, STREAMING, SOCIAL, $unknown }
+enum Enum$ExternalLinkType {
+  INFO,
+  STREAMING,
+  SOCIAL,
+  $unknown;
+
+  factory Enum$ExternalLinkType.fromJson(String value) =>
+      fromJson$Enum$ExternalLinkType(value);
+
+  String toJson() => toJson$Enum$ExternalLinkType(this);
+}
 
 String toJson$Enum$ExternalLinkType(Enum$ExternalLinkType e) {
   switch (e) {
@@ -2200,7 +2255,12 @@ enum Enum$LikeableType {
   THREAD_COMMENT,
   ACTIVITY,
   ACTIVITY_REPLY,
-  $unknown
+  $unknown;
+
+  factory Enum$LikeableType.fromJson(String value) =>
+      fromJson$Enum$LikeableType(value);
+
+  String toJson() => toJson$Enum$LikeableType(this);
 }
 
 String toJson$Enum$LikeableType(Enum$LikeableType e) {
@@ -2244,7 +2304,12 @@ enum Enum$MediaFormat {
   MANGA,
   NOVEL,
   ONE_SHOT,
-  $unknown
+  $unknown;
+
+  factory Enum$MediaFormat.fromJson(String value) =>
+      fromJson$Enum$MediaFormat(value);
+
+  String toJson() => toJson$Enum$MediaFormat(this);
 }
 
 String toJson$Enum$MediaFormat(Enum$MediaFormat e) {
@@ -2332,7 +2397,12 @@ enum Enum$MediaListSort {
   MEDIA_TITLE_NATIVE_DESC,
   MEDIA_POPULARITY,
   MEDIA_POPULARITY_DESC,
-  $unknown
+  $unknown;
+
+  factory Enum$MediaListSort.fromJson(String value) =>
+      fromJson$Enum$MediaListSort(value);
+
+  String toJson() => toJson$Enum$MediaListSort(this);
 }
 
 String toJson$Enum$MediaListSort(Enum$MediaListSort e) {
@@ -2476,7 +2546,12 @@ enum Enum$MediaListStatus {
   DROPPED,
   PAUSED,
   REPEATING,
-  $unknown
+  $unknown;
+
+  factory Enum$MediaListStatus.fromJson(String value) =>
+      fromJson$Enum$MediaListStatus(value);
+
+  String toJson() => toJson$Enum$MediaListStatus(this);
 }
 
 String toJson$Enum$MediaListStatus(Enum$MediaListStatus e) {
@@ -2517,7 +2592,16 @@ Enum$MediaListStatus fromJson$Enum$MediaListStatus(String value) {
   }
 }
 
-enum Enum$MediaRankType { RATED, POPULAR, $unknown }
+enum Enum$MediaRankType {
+  RATED,
+  POPULAR,
+  $unknown;
+
+  factory Enum$MediaRankType.fromJson(String value) =>
+      fromJson$Enum$MediaRankType(value);
+
+  String toJson() => toJson$Enum$MediaRankType(this);
+}
 
 String toJson$Enum$MediaRankType(Enum$MediaRankType e) {
   switch (e) {
@@ -2555,7 +2639,12 @@ enum Enum$MediaRelation {
   SOURCE,
   COMPILATION,
   CONTAINS,
-  $unknown
+  $unknown;
+
+  factory Enum$MediaRelation.fromJson(String value) =>
+      fromJson$Enum$MediaRelation(value);
+
+  String toJson() => toJson$Enum$MediaRelation(this);
 }
 
 String toJson$Enum$MediaRelation(Enum$MediaRelation e) {
@@ -2624,7 +2713,18 @@ Enum$MediaRelation fromJson$Enum$MediaRelation(String value) {
   }
 }
 
-enum Enum$MediaSeason { WINTER, SPRING, SUMMER, FALL, $unknown }
+enum Enum$MediaSeason {
+  WINTER,
+  SPRING,
+  SUMMER,
+  FALL,
+  $unknown;
+
+  factory Enum$MediaSeason.fromJson(String value) =>
+      fromJson$Enum$MediaSeason(value);
+
+  String toJson() => toJson$Enum$MediaSeason(this);
+}
 
 String toJson$Enum$MediaSeason(Enum$MediaSeason e) {
   switch (e) {
@@ -2694,7 +2794,12 @@ enum Enum$MediaSort {
   SEARCH_MATCH,
   FAVOURITES,
   FAVOURITES_DESC,
-  $unknown
+  $unknown;
+
+  factory Enum$MediaSort.fromJson(String value) =>
+      fromJson$Enum$MediaSort(value);
+
+  String toJson() => toJson$Enum$MediaSort(this);
 }
 
 String toJson$Enum$MediaSort(Enum$MediaSort e) {
@@ -2875,7 +2980,12 @@ enum Enum$MediaSource {
   COMIC,
   MULTIMEDIA_PROJECT,
   PICTURE_BOOK,
-  $unknown
+  $unknown;
+
+  factory Enum$MediaSource.fromJson(String value) =>
+      fromJson$Enum$MediaSource(value);
+
+  String toJson() => toJson$Enum$MediaSource(this);
 }
 
 String toJson$Enum$MediaSource(Enum$MediaSource e) {
@@ -2958,7 +3068,12 @@ enum Enum$MediaStatus {
   NOT_YET_RELEASED,
   CANCELLED,
   HIATUS,
-  $unknown
+  $unknown;
+
+  factory Enum$MediaStatus.fromJson(String value) =>
+      fromJson$Enum$MediaStatus(value);
+
+  String toJson() => toJson$Enum$MediaStatus(this);
 }
 
 String toJson$Enum$MediaStatus(Enum$MediaStatus e) {
@@ -3010,7 +3125,12 @@ enum Enum$MediaTrendSort {
   TRENDING_DESC,
   EPISODE,
   EPISODE_DESC,
-  $unknown
+  $unknown;
+
+  factory Enum$MediaTrendSort.fromJson(String value) =>
+      fromJson$Enum$MediaTrendSort(value);
+
+  String toJson() => toJson$Enum$MediaTrendSort(this);
 }
 
 String toJson$Enum$MediaTrendSort(Enum$MediaTrendSort e) {
@@ -3083,7 +3203,16 @@ Enum$MediaTrendSort fromJson$Enum$MediaTrendSort(String value) {
   }
 }
 
-enum Enum$MediaType { ANIME, MANGA, $unknown }
+enum Enum$MediaType {
+  ANIME,
+  MANGA,
+  $unknown;
+
+  factory Enum$MediaType.fromJson(String value) =>
+      fromJson$Enum$MediaType(value);
+
+  String toJson() => toJson$Enum$MediaType(this);
+}
 
 String toJson$Enum$MediaType(Enum$MediaType e) {
   switch (e) {
@@ -3116,7 +3245,12 @@ enum Enum$ModActionType {
   REPORT,
   RESET,
   ANON,
-  $unknown
+  $unknown;
+
+  factory Enum$ModActionType.fromJson(String value) =>
+      fromJson$Enum$ModActionType(value);
+
+  String toJson() => toJson$Enum$ModActionType(this);
 }
 
 String toJson$Enum$ModActionType(Enum$ModActionType e) {
@@ -3179,7 +3313,13 @@ enum Enum$ModRole {
   LEAD_SOCIAL_MEDIA,
   SOCIAL_MEDIA,
   RETIRED,
-  $unknown
+  CHARACTER_DATA,
+  STAFF_DATA,
+  $unknown;
+
+  factory Enum$ModRole.fromJson(String value) => fromJson$Enum$ModRole(value);
+
+  String toJson() => toJson$Enum$ModRole(this);
 }
 
 String toJson$Enum$ModRole(Enum$ModRole e) {
@@ -3210,6 +3350,10 @@ String toJson$Enum$ModRole(Enum$ModRole e) {
       return r'SOCIAL_MEDIA';
     case Enum$ModRole.RETIRED:
       return r'RETIRED';
+    case Enum$ModRole.CHARACTER_DATA:
+      return r'CHARACTER_DATA';
+    case Enum$ModRole.STAFF_DATA:
+      return r'STAFF_DATA';
     case Enum$ModRole.$unknown:
       return r'$unknown';
   }
@@ -3243,6 +3387,10 @@ Enum$ModRole fromJson$Enum$ModRole(String value) {
       return Enum$ModRole.SOCIAL_MEDIA;
     case r'RETIRED':
       return Enum$ModRole.RETIRED;
+    case r'CHARACTER_DATA':
+      return Enum$ModRole.CHARACTER_DATA;
+    case r'STAFF_DATA':
+      return Enum$ModRole.STAFF_DATA;
     default:
       return Enum$ModRole.$unknown;
   }
@@ -3266,7 +3414,12 @@ enum Enum$NotificationType {
   MEDIA_DATA_CHANGE,
   MEDIA_MERGE,
   MEDIA_DELETION,
-  $unknown
+  $unknown;
+
+  factory Enum$NotificationType.fromJson(String value) =>
+      fromJson$Enum$NotificationType(value);
+
+  String toJson() => toJson$Enum$NotificationType(this);
 }
 
 String toJson$Enum$NotificationType(Enum$NotificationType e) {
@@ -3351,7 +3504,17 @@ Enum$NotificationType fromJson$Enum$NotificationType(String value) {
   }
 }
 
-enum Enum$RecommendationRating { NO_RATING, RATE_UP, RATE_DOWN, $unknown }
+enum Enum$RecommendationRating {
+  NO_RATING,
+  RATE_UP,
+  RATE_DOWN,
+  $unknown;
+
+  factory Enum$RecommendationRating.fromJson(String value) =>
+      fromJson$Enum$RecommendationRating(value);
+
+  String toJson() => toJson$Enum$RecommendationRating(this);
+}
 
 String toJson$Enum$RecommendationRating(Enum$RecommendationRating e) {
   switch (e) {
@@ -3379,7 +3542,18 @@ Enum$RecommendationRating fromJson$Enum$RecommendationRating(String value) {
   }
 }
 
-enum Enum$RecommendationSort { ID, ID_DESC, RATING, RATING_DESC, $unknown }
+enum Enum$RecommendationSort {
+  ID,
+  ID_DESC,
+  RATING,
+  RATING_DESC,
+  $unknown;
+
+  factory Enum$RecommendationSort.fromJson(String value) =>
+      fromJson$Enum$RecommendationSort(value);
+
+  String toJson() => toJson$Enum$RecommendationSort(this);
+}
 
 String toJson$Enum$RecommendationSort(Enum$RecommendationSort e) {
   switch (e) {
@@ -3411,7 +3585,17 @@ Enum$RecommendationSort fromJson$Enum$RecommendationSort(String value) {
   }
 }
 
-enum Enum$ReviewRating { NO_VOTE, UP_VOTE, DOWN_VOTE, $unknown }
+enum Enum$ReviewRating {
+  NO_VOTE,
+  UP_VOTE,
+  DOWN_VOTE,
+  $unknown;
+
+  factory Enum$ReviewRating.fromJson(String value) =>
+      fromJson$Enum$ReviewRating(value);
+
+  String toJson() => toJson$Enum$ReviewRating(this);
+}
 
 String toJson$Enum$ReviewRating(Enum$ReviewRating e) {
   switch (e) {
@@ -3450,7 +3634,12 @@ enum Enum$ReviewSort {
   CREATED_AT_DESC,
   UPDATED_AT,
   UPDATED_AT_DESC,
-  $unknown
+  $unknown;
+
+  factory Enum$ReviewSort.fromJson(String value) =>
+      fromJson$Enum$ReviewSort(value);
+
+  String toJson() => toJson$Enum$ReviewSort(this);
 }
 
 String toJson$Enum$ReviewSort(Enum$ReviewSort e) {
@@ -3507,7 +3696,16 @@ Enum$ReviewSort fromJson$Enum$ReviewSort(String value) {
   }
 }
 
-enum Enum$RevisionHistoryAction { CREATE, EDIT, $unknown }
+enum Enum$RevisionHistoryAction {
+  CREATE,
+  EDIT,
+  $unknown;
+
+  factory Enum$RevisionHistoryAction.fromJson(String value) =>
+      fromJson$Enum$RevisionHistoryAction(value);
+
+  String toJson() => toJson$Enum$RevisionHistoryAction(this);
+}
 
 String toJson$Enum$RevisionHistoryAction(Enum$RevisionHistoryAction e) {
   switch (e) {
@@ -3537,7 +3735,12 @@ enum Enum$ScoreFormat {
   POINT_10,
   POINT_5,
   POINT_3,
-  $unknown
+  $unknown;
+
+  factory Enum$ScoreFormat.fromJson(String value) =>
+      fromJson$Enum$ScoreFormat(value);
+
+  String toJson() => toJson$Enum$ScoreFormat(this);
 }
 
 String toJson$Enum$ScoreFormat(Enum$ScoreFormat e) {
@@ -3581,7 +3784,12 @@ enum Enum$SiteTrendSort {
   COUNT_DESC,
   CHANGE,
   CHANGE_DESC,
-  $unknown
+  $unknown;
+
+  factory Enum$SiteTrendSort.fromJson(String value) =>
+      fromJson$Enum$SiteTrendSort(value);
+
+  String toJson() => toJson$Enum$SiteTrendSort(this);
 }
 
 String toJson$Enum$SiteTrendSort(Enum$SiteTrendSort e) {
@@ -3633,7 +3841,12 @@ enum Enum$StaffLanguage {
   GERMAN,
   HEBREW,
   HUNGARIAN,
-  $unknown
+  $unknown;
+
+  factory Enum$StaffLanguage.fromJson(String value) =>
+      fromJson$Enum$StaffLanguage(value);
+
+  String toJson() => toJson$Enum$StaffLanguage(this);
 }
 
 String toJson$Enum$StaffLanguage(Enum$StaffLanguage e) {
@@ -3701,7 +3914,12 @@ enum Enum$StaffSort {
   FAVOURITES,
   FAVOURITES_DESC,
   RELEVANCE,
-  $unknown
+  $unknown;
+
+  factory Enum$StaffSort.fromJson(String value) =>
+      fromJson$Enum$StaffSort(value);
+
+  String toJson() => toJson$Enum$StaffSort(this);
 }
 
 String toJson$Enum$StaffSort(Enum$StaffSort e) {
@@ -3766,7 +3984,12 @@ enum Enum$StudioSort {
   SEARCH_MATCH,
   FAVOURITES,
   FAVOURITES_DESC,
-  $unknown
+  $unknown;
+
+  factory Enum$StudioSort.fromJson(String value) =>
+      fromJson$Enum$StudioSort(value);
+
+  String toJson() => toJson$Enum$StudioSort(this);
 }
 
 String toJson$Enum$StudioSort(Enum$StudioSort e) {
@@ -3811,7 +4034,16 @@ Enum$StudioSort fromJson$Enum$StudioSort(String value) {
   }
 }
 
-enum Enum$SubmissionSort { ID, ID_DESC, $unknown }
+enum Enum$SubmissionSort {
+  ID,
+  ID_DESC,
+  $unknown;
+
+  factory Enum$SubmissionSort.fromJson(String value) =>
+      fromJson$Enum$SubmissionSort(value);
+
+  String toJson() => toJson$Enum$SubmissionSort(this);
+}
 
 String toJson$Enum$SubmissionSort(Enum$SubmissionSort e) {
   switch (e) {
@@ -3840,7 +4072,12 @@ enum Enum$SubmissionStatus {
   REJECTED,
   PARTIALLY_ACCEPTED,
   ACCEPTED,
-  $unknown
+  $unknown;
+
+  factory Enum$SubmissionStatus.fromJson(String value) =>
+      fromJson$Enum$SubmissionStatus(value);
+
+  String toJson() => toJson$Enum$SubmissionStatus(this);
 }
 
 String toJson$Enum$SubmissionStatus(Enum$SubmissionStatus e) {
@@ -3873,7 +4110,16 @@ Enum$SubmissionStatus fromJson$Enum$SubmissionStatus(String value) {
   }
 }
 
-enum Enum$ThreadCommentSort { ID, ID_DESC, $unknown }
+enum Enum$ThreadCommentSort {
+  ID,
+  ID_DESC,
+  $unknown;
+
+  factory Enum$ThreadCommentSort.fromJson(String value) =>
+      fromJson$Enum$ThreadCommentSort(value);
+
+  String toJson() => toJson$Enum$ThreadCommentSort(this);
+}
 
 String toJson$Enum$ThreadCommentSort(Enum$ThreadCommentSort e) {
   switch (e) {
@@ -3914,7 +4160,12 @@ enum Enum$ThreadSort {
   VIEW_COUNT_DESC,
   IS_STICKY,
   SEARCH_MATCH,
-  $unknown
+  $unknown;
+
+  factory Enum$ThreadSort.fromJson(String value) =>
+      fromJson$Enum$ThreadSort(value);
+
+  String toJson() => toJson$Enum$ThreadSort(this);
 }
 
 String toJson$Enum$ThreadSort(Enum$ThreadSort e) {
@@ -4005,7 +4256,11 @@ enum Enum$UserSort {
   CHAPTERS_READ,
   CHAPTERS_READ_DESC,
   SEARCH_MATCH,
-  $unknown
+  $unknown;
+
+  factory Enum$UserSort.fromJson(String value) => fromJson$Enum$UserSort(value);
+
+  String toJson() => toJson$Enum$UserSort(this);
 }
 
 String toJson$Enum$UserSort(Enum$UserSort e) {
@@ -4058,7 +4313,17 @@ Enum$UserSort fromJson$Enum$UserSort(String value) {
   }
 }
 
-enum Enum$UserStaffNameLanguage { ROMAJI_WESTERN, ROMAJI, NATIVE, $unknown }
+enum Enum$UserStaffNameLanguage {
+  ROMAJI_WESTERN,
+  ROMAJI,
+  NATIVE,
+  $unknown;
+
+  factory Enum$UserStaffNameLanguage.fromJson(String value) =>
+      fromJson$Enum$UserStaffNameLanguage(value);
+
+  String toJson() => toJson$Enum$UserStaffNameLanguage(this);
+}
 
 String toJson$Enum$UserStaffNameLanguage(Enum$UserStaffNameLanguage e) {
   switch (e) {
@@ -4095,7 +4360,12 @@ enum Enum$UserStatisticsSort {
   PROGRESS_DESC,
   MEAN_SCORE,
   MEAN_SCORE_DESC,
-  $unknown
+  $unknown;
+
+  factory Enum$UserStatisticsSort.fromJson(String value) =>
+      fromJson$Enum$UserStatisticsSort(value);
+
+  String toJson() => toJson$Enum$UserStatisticsSort(this);
 }
 
 String toJson$Enum$UserStatisticsSort(Enum$UserStatisticsSort e) {
@@ -4151,7 +4421,12 @@ enum Enum$UserTitleLanguage {
   ROMAJI_STYLISED,
   ENGLISH_STYLISED,
   NATIVE_STYLISED,
-  $unknown
+  $unknown;
+
+  factory Enum$UserTitleLanguage.fromJson(String value) =>
+      fromJson$Enum$UserTitleLanguage(value);
+
+  String toJson() => toJson$Enum$UserTitleLanguage(this);
 }
 
 String toJson$Enum$UserTitleLanguage(Enum$UserTitleLanguage e) {
@@ -4201,7 +4476,12 @@ enum Enum$__TypeKind {
   INPUT_OBJECT,
   LIST,
   NON_NULL,
-  $unknown
+  $unknown;
+
+  factory Enum$__TypeKind.fromJson(String value) =>
+      fromJson$Enum$__TypeKind(value);
+
+  String toJson() => toJson$Enum$__TypeKind(this);
 }
 
 String toJson$Enum$__TypeKind(Enum$__TypeKind e) {
@@ -4270,7 +4550,12 @@ enum Enum$__DirectiveLocation {
   ENUM_VALUE,
   INPUT_OBJECT,
   INPUT_FIELD_DEFINITION,
-  $unknown
+  $unknown;
+
+  factory Enum$__DirectiveLocation.fromJson(String value) =>
+      fromJson$Enum$__DirectiveLocation(value);
+
+  String toJson() => toJson$Enum$__DirectiveLocation(this);
 }
 
 String toJson$Enum$__DirectiveLocation(Enum$__DirectiveLocation e) {

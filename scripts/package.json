@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "gen:schema:anilist": "get-graphql-schema https://graphql.anilist.co > ../lib/core/providers/anilist/graphql/schema.graphql",
+    "gen:schema:anilist": "get-graphql-schema https://graphql.anilist.co > ../lib/data/anilist/graphql/schema.graphql",
     "dist:install": "dart pub global activate flutter_distributor",
     "dist": "cd .. && flutter_distributor release --name installer",
     "generate:icons": "flutter pub run flutter_launcher_icons"
