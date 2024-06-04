@@ -114,6 +114,10 @@ class _AnikkiNavigationRailIconState extends State<AnikkiNavigationRailIcon> {
     return Badge(
       isLabelVisible: widget.error != null,
       child: InkWell(
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         onTap: widget.onPressed,
         child: MouseRegion(
           onEnter: (event) => showOverlay(),
