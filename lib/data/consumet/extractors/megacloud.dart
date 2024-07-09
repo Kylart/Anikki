@@ -44,7 +44,7 @@ class MegaCloud extends Extractor {
         .toList();
 
     final encryptedString = srcData['sources'];
-    if (srcData['encrypted'] && encryptedString is List) {
+    if (!srcData['encrypted'] && encryptedString is List) {
       return encryptedString
           .map(
             (e) => VideoSource(
@@ -80,83 +80,62 @@ class MegaCloud extends Extractor {
         .toList();
   }
 
-  List<int> _extractVariables(String text) {
-    final match = RegExp(
-      r"\w{1,2}=new URLSearchParams.+?;(?=function)",
-    ).allMatches(text).elementAt(1);
-    final allVars = match[0];
+  String _matchingKey(String value, String script) {
+    final regex = RegExp(',$value=((?:0x)?([0-9a-fA-F]+))');
+    final match = regex.firstMatch(script);
+    if (match != null) {
+      return match.group(1)!.replaceFirst(RegExp(r'^0x'), '');
+    } else {
+      throw Exception('Failed to match the key');
+    }
+  }
 
-    if (allVars == null) throw 'No variable found';
+  List<List<int>> _extractVariables(String text) {
+    final regex = RegExp(
+        r"case\s*0x[0-9a-f]+:(?![^;]*=partKey)\s*\w+\s*=\s*(\w+)\s*,\s*\w+\s*=\s*(\w+);");
+    final matches = regex.allMatches(text);
 
-    return allVars
-        .substring(0, allVars.length - 1)
-        .split('=')
-        .slice(1)
-        .map((pair) => int.tryParse(pair.split(',').elementAt(0)))
-        .whereType<int>()
+    final vars = matches
+        .map((match) {
+          final matchKey1 = _matchingKey(match.group(1)!, text);
+          final matchKey2 = _matchingKey(match.group(2)!, text);
+
+          try {
+            return [
+              int.parse(matchKey1, radix: 16),
+              int.parse(matchKey2, radix: 16)
+            ];
+          } catch (e) {
+            return <int>[];
+          }
+        })
+        .where((pair) => pair.isNotEmpty)
         .toList();
+
+    return vars;
   }
 
   (String secret, String encryptedSource) _getSecret(
     String encryptedString,
-    List<int> values,
+    List<List<int>> values,
   ) {
-    var secret = '';
-    var encryptedSource = encryptedString;
-    var totalInc = 0;
+    String secret = "";
+    String encryptedSource = "";
+    List<String> encryptedSourceArray = encryptedString.split("");
+    int currentIndex = 0;
 
-    for (int i = 0; i < values[0]; i++) {
-      int? start, inc;
+    for (List<int> index in values) {
+      int start = index[0] + currentIndex;
+      int end = start + index[1];
 
-      switch (i) {
-        case 0:
-          start = values[2];
-          inc = values[1];
-          break;
-        case 1:
-          start = values[4];
-          inc = values[3];
-          break;
-        case 2:
-          start = values[6];
-          inc = values[5];
-          break;
-        case 3:
-          start = values[8];
-          inc = values[7];
-          break;
-        case 4:
-          start = values[10];
-          inc = values[9];
-          break;
-        case 5:
-          start = values[12];
-          inc = values[11];
-          break;
-        case 6:
-          start = values[14];
-          inc = values[13];
-          break;
-        case 7:
-          start = values[16];
-          inc = values[15];
-          break;
-        case 8:
-          start = values[18];
-          inc = values[17];
-          break;
+      for (int i = start; i < end; i++) {
+        secret += encryptedString[i];
+        encryptedSourceArray[i] = "";
       }
-
-      final from = start! + totalInc;
-      final to = from + inc!;
-
-      secret += encryptedString.substring(from, to);
-      encryptedSource = encryptedSource.replaceFirst(
-        encryptedString.substring(from, to),
-        '',
-      );
-      totalInc += inc;
+      currentIndex += index[1];
     }
+
+    encryptedSource = encryptedSourceArray.join("");
 
     return (
       secret,
