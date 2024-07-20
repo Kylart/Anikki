@@ -61,7 +61,7 @@ dependencies:
   flutter_animation_progress_bar: ^2.3.1
   flutter_platform_widgets: ^7.0.0
   flutter_staggered_animations: ^1.1.1
-  flutter_widget_from_html_core: ^0.14.11
+  flutter_widget_from_html_core: ^0.15.1
   google_fonts: ^6.2.1
   marqueer:
     git:
