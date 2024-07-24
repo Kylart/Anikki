@@ -1,14 +1,23 @@
 part of 'home_scroll_view.dart';
 
-class _HomeScrollViewLoader extends StatelessWidget {
-  const _HomeScrollViewLoader();
+class HomeScrollViewLoader extends StatelessWidget {
+  const HomeScrollViewLoader({
+    super.key,
+    this.scrollController,
+  });
+
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
-    return HomeScrollView(
-      children: List.generate(
-        10,
-        (index) => const LoaderTile(),
+    return SingleChildScrollView(
+      controller: scrollController,
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(
+          10,
+          (index) => const HomeScrollViewLoaderTile(),
+        ),
       ),
     );
   }

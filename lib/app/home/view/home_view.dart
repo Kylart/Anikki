@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/home/bloc/home_bloc.dart';
-import 'package:anikki/app/home/widgets/animated_media_banner.dart';
-import 'package:anikki/app/home/widgets/home_content.dart';
+import 'package:anikki/app/home_continue/view/home_continue_page.dart';
+import 'package:anikki/app/home_start/home_start.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -12,11 +12,32 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        return const Stack(
-          alignment: Alignment.topCenter,
+        return const Row(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            AnimatedMediaBanner(),
-            HomeContent(),
+            Flexible(
+              flex: 3,
+              fit: FlexFit.tight,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    HomeContinuePage(),
+                    HomeStartPage(),
+                  ],
+                ),
+              ),
+            ),
+            VerticalDivider(
+              width: 1,
+            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: Text('Right'),
+            ),
           ],
         );
       },

@@ -54,20 +54,23 @@ class _MediaDetailsTrailerState extends State<MediaDetailsTrailer> {
               ),
               Positioned.fill(
                 child: Center(
-                  child: IconButton.filledTonal(
-                    padding: const EdgeInsets.all(12.0),
-                    onPressed: () {
-                      showAdaptiveDialog(
-                        barrierDismissible: true,
-                        context: context,
-                        builder: (context) => Dialog(
-                          child: MediaDetailsVideoPlayer(
-                            url: 'https://www.${site!}.com/watch?v=${id!}',
+                  child: Opacity(
+                    opacity: 0.7,
+                    child: IconButton.filledTonal(
+                      padding: const EdgeInsets.all(12.0),
+                      onPressed: () {
+                        showAdaptiveDialog(
+                          barrierDismissible: true,
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: MediaDetailsVideoPlayer(
+                              url: 'https://www.${site!}.com/watch?v=${id!}',
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Ionicons.play),
+                        );
+                      },
+                      icon: const Icon(Ionicons.play),
+                    ),
                   ),
                 ),
               )

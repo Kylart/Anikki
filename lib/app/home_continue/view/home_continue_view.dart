@@ -6,9 +6,10 @@ import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/random_play_button.dart';
+import 'package:anikki/app/home/widgets/home_entry.dart';
 import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/core/widgets/entry_card/entry_card.dart';
+import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/section/section_container.dart';
 import 'package:anikki/core/widgets/section/section_title.dart';
 import 'package:anikki/core/widgets/section/section_title_loading_action.dart';
@@ -46,6 +47,8 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                   SectionTitle(
                     frosted: true,
                     text: 'Continue watching',
+                    color:
+                        context.colorScheme.primaryContainer.withOpacity(0.2),
                     actions: [
                       if (loading || initial)
                         const SectionTitleLoadingAction()
@@ -72,19 +75,24 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                         ),
                     ],
                   ),
-                  HomeScrollView(
-                    loading: state.entries.isEmpty &&
-                        (loading || errored || initial),
-                    children: [
-                      for (final entry in state.entries)
-                        EntryCard(
-                          media: Media(anilistInfo: entry.media),
-                          text: entry.progress != null
-                              ? (entry.progress! + 1).toString()
-                              : null,
-                        ),
-                    ],
-                  ),
+                  if (errored)
+                    Center(
+                      child: CustomErrorWidget(
+                        height: HomeScrollView.getHeight(context),
+                        title: state.message,
+                      ),
+                    )
+                  else
+                    HomeScrollView(
+                      loading: state.entries.isEmpty && (loading || initial),
+                      medias: state.entries
+                          .map((e) => Media(anilistInfo: e.media))
+                          .toList(),
+                      builder: (media, expanded) => HomeEntry(
+                        media: media,
+                        expanded: expanded,
+                      ),
+                    ),
                 ],
               ),
             );

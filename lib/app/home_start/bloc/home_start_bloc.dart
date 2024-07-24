@@ -9,9 +9,13 @@ part 'home_start_event.dart';
 part 'home_start_state.dart';
 
 class HomeStartBloc extends Bloc<HomeStartEvent, HomeStartState> {
-  final UserListRepository repository;
+  final UserListRepository userListRepository;
+  final FeedRepository feedRepository;
 
-  HomeStartBloc(this.repository) : super(HomeStartInitial()) {
+  HomeStartBloc({
+    required this.userListRepository,
+    required this.feedRepository,
+  }) : super(HomeStartInitial()) {
     on<HomeStartRefresh>(_onRefresh);
   }
 
@@ -24,9 +28,19 @@ class HomeStartBloc extends Bloc<HomeStartEvent, HomeStartState> {
         ),
       );
 
-      final entries = repository.getStartList(event.watchList);
+      final entries = userListRepository.getStartList(event.watchList);
 
       if (entries.isEmpty) {
+        final backupEntries = await feedRepository.getRecommandations();
+
+        if (backupEntries.isNotEmpty) {
+          emit(
+            HomeStartLoaded(
+              entries: entries,
+            ),
+          );
+        }
+
         emit(const HomeStartEmpty());
       } else {
         emit(

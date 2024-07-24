@@ -8,6 +8,7 @@ class Fragment$media {
     required this.id,
     this.season,
     this.seasonYear,
+    this.status,
     this.title,
     this.coverImage,
     this.startDate,
@@ -16,7 +17,6 @@ class Fragment$media {
     this.description,
     this.type,
     this.format,
-    this.status,
     this.episodes,
     this.duration,
     this.chapters,
@@ -39,6 +39,7 @@ class Fragment$media {
     final l$id = json['id'];
     final l$season = json['season'];
     final l$seasonYear = json['seasonYear'];
+    final l$status = json['status'];
     final l$title = json['title'];
     final l$coverImage = json['coverImage'];
     final l$startDate = json['startDate'];
@@ -47,7 +48,6 @@ class Fragment$media {
     final l$description = json['description'];
     final l$type = json['type'];
     final l$format = json['format'];
-    final l$status = json['status'];
     final l$episodes = json['episodes'];
     final l$duration = json['duration'];
     final l$chapters = json['chapters'];
@@ -70,6 +70,9 @@ class Fragment$media {
           ? null
           : fromJson$Enum$MediaSeason((l$season as String)),
       seasonYear: (l$seasonYear as int?),
+      status: l$status == null
+          ? null
+          : fromJson$Enum$MediaStatus((l$status as String)),
       title: l$title == null
           ? null
           : Fragment$media$title.fromJson((l$title as Map<String, dynamic>)),
@@ -91,9 +94,6 @@ class Fragment$media {
       format: l$format == null
           ? null
           : fromJson$Enum$MediaFormat((l$format as String)),
-      status: l$status == null
-          ? null
-          : fromJson$Enum$MediaStatus((l$status as String)),
       episodes: (l$episodes as int?),
       duration: (l$duration as int?),
       chapters: (l$chapters as int?),
@@ -133,6 +133,8 @@ class Fragment$media {
 
   final int? seasonYear;
 
+  final Enum$MediaStatus? status;
+
   final Fragment$media$title? title;
 
   final Fragment$media$coverImage? coverImage;
@@ -148,8 +150,6 @@ class Fragment$media {
   final Enum$MediaType? type;
 
   final Enum$MediaFormat? format;
-
-  final Enum$MediaStatus? status;
 
   final int? episodes;
 
@@ -192,6 +192,9 @@ class Fragment$media {
         l$season == null ? null : toJson$Enum$MediaSeason(l$season);
     final l$seasonYear = seasonYear;
     _resultData['seasonYear'] = l$seasonYear;
+    final l$status = status;
+    _resultData['status'] =
+        l$status == null ? null : toJson$Enum$MediaStatus(l$status);
     final l$title = title;
     _resultData['title'] = l$title?.toJson();
     final l$coverImage = coverImage;
@@ -209,9 +212,6 @@ class Fragment$media {
     final l$format = format;
     _resultData['format'] =
         l$format == null ? null : toJson$Enum$MediaFormat(l$format);
-    final l$status = status;
-    _resultData['status'] =
-        l$status == null ? null : toJson$Enum$MediaStatus(l$status);
     final l$episodes = episodes;
     _resultData['episodes'] = l$episodes;
     final l$duration = duration;
@@ -251,6 +251,7 @@ class Fragment$media {
     final l$id = id;
     final l$season = season;
     final l$seasonYear = seasonYear;
+    final l$status = status;
     final l$title = title;
     final l$coverImage = coverImage;
     final l$startDate = startDate;
@@ -259,7 +260,6 @@ class Fragment$media {
     final l$description = description;
     final l$type = type;
     final l$format = format;
-    final l$status = status;
     final l$episodes = episodes;
     final l$duration = duration;
     final l$chapters = chapters;
@@ -280,6 +280,7 @@ class Fragment$media {
       l$id,
       l$season,
       l$seasonYear,
+      l$status,
       l$title,
       l$coverImage,
       l$startDate,
@@ -288,7 +289,6 @@ class Fragment$media {
       l$description,
       l$type,
       l$format,
-      l$status,
       l$episodes,
       l$duration,
       l$chapters,
@@ -335,6 +335,11 @@ class Fragment$media {
     if (l$seasonYear != lOther$seasonYear) {
       return false;
     }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
     final l$title = title;
     final lOther$title = other.title;
     if (l$title != lOther$title) {
@@ -373,11 +378,6 @@ class Fragment$media {
     final l$format = format;
     final lOther$format = other.format;
     if (l$format != lOther$format) {
-      return false;
-    }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
       return false;
     }
     final l$episodes = episodes;
@@ -503,6 +503,7 @@ abstract class CopyWith$Fragment$media<TRes> {
     int? id,
     Enum$MediaSeason? season,
     int? seasonYear,
+    Enum$MediaStatus? status,
     Fragment$media$title? title,
     Fragment$media$coverImage? coverImage,
     Fragment$media$startDate? startDate,
@@ -511,7 +512,6 @@ abstract class CopyWith$Fragment$media<TRes> {
     String? description,
     Enum$MediaType? type,
     Enum$MediaFormat? format,
-    Enum$MediaStatus? status,
     int? episodes,
     int? duration,
     int? chapters,
@@ -556,6 +556,7 @@ class _CopyWithImpl$Fragment$media<TRes>
     Object? id = _undefined,
     Object? season = _undefined,
     Object? seasonYear = _undefined,
+    Object? status = _undefined,
     Object? title = _undefined,
     Object? coverImage = _undefined,
     Object? startDate = _undefined,
@@ -564,7 +565,6 @@ class _CopyWithImpl$Fragment$media<TRes>
     Object? description = _undefined,
     Object? type = _undefined,
     Object? format = _undefined,
-    Object? status = _undefined,
     Object? episodes = _undefined,
     Object? duration = _undefined,
     Object? chapters = _undefined,
@@ -591,6 +591,9 @@ class _CopyWithImpl$Fragment$media<TRes>
         seasonYear: seasonYear == _undefined
             ? _instance.seasonYear
             : (seasonYear as int?),
+        status: status == _undefined
+            ? _instance.status
+            : (status as Enum$MediaStatus?),
         title: title == _undefined
             ? _instance.title
             : (title as Fragment$media$title?),
@@ -613,9 +616,6 @@ class _CopyWithImpl$Fragment$media<TRes>
         format: format == _undefined
             ? _instance.format
             : (format as Enum$MediaFormat?),
-        status: status == _undefined
-            ? _instance.status
-            : (status as Enum$MediaStatus?),
         episodes:
             episodes == _undefined ? _instance.episodes : (episodes as int?),
         duration:
@@ -731,6 +731,7 @@ class _CopyWithStubImpl$Fragment$media<TRes>
     int? id,
     Enum$MediaSeason? season,
     int? seasonYear,
+    Enum$MediaStatus? status,
     Fragment$media$title? title,
     Fragment$media$coverImage? coverImage,
     Fragment$media$startDate? startDate,
@@ -739,7 +740,6 @@ class _CopyWithStubImpl$Fragment$media<TRes>
     String? description,
     Enum$MediaType? type,
     Enum$MediaFormat? format,
-    Enum$MediaStatus? status,
     int? episodes,
     int? duration,
     int? chapters,
@@ -815,6 +815,13 @@ const fragmentDefinitionmedia = FragmentDefinitionNode(
     ),
     FieldNode(
       name: NameNode(value: 'seasonYear'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'status'),
       alias: null,
       arguments: [],
       directives: [],
@@ -3514,6 +3521,7 @@ class Fragment$shortMedia {
     this.siteUrl,
     this.season,
     this.seasonYear,
+    this.status,
     this.title,
     this.coverImage,
     this.trailer,
@@ -3539,6 +3547,7 @@ class Fragment$shortMedia {
     final l$siteUrl = json['siteUrl'];
     final l$season = json['season'];
     final l$seasonYear = json['seasonYear'];
+    final l$status = json['status'];
     final l$title = json['title'];
     final l$coverImage = json['coverImage'];
     final l$trailer = json['trailer'];
@@ -3564,6 +3573,9 @@ class Fragment$shortMedia {
           ? null
           : fromJson$Enum$MediaSeason((l$season as String)),
       seasonYear: (l$seasonYear as int?),
+      status: l$status == null
+          ? null
+          : fromJson$Enum$MediaStatus((l$status as String)),
       title: l$title == null
           ? null
           : Fragment$shortMedia$title.fromJson(
@@ -3622,6 +3634,8 @@ class Fragment$shortMedia {
 
   final int? seasonYear;
 
+  final Enum$MediaStatus? status;
+
   final Fragment$shortMedia$title? title;
 
   final Fragment$shortMedia$coverImage? coverImage;
@@ -3669,6 +3683,9 @@ class Fragment$shortMedia {
         l$season == null ? null : toJson$Enum$MediaSeason(l$season);
     final l$seasonYear = seasonYear;
     _resultData['seasonYear'] = l$seasonYear;
+    final l$status = status;
+    _resultData['status'] =
+        l$status == null ? null : toJson$Enum$MediaStatus(l$status);
     final l$title = title;
     _resultData['title'] = l$title?.toJson();
     final l$coverImage = coverImage;
@@ -3716,6 +3733,7 @@ class Fragment$shortMedia {
     final l$siteUrl = siteUrl;
     final l$season = season;
     final l$seasonYear = seasonYear;
+    final l$status = status;
     final l$title = title;
     final l$coverImage = coverImage;
     final l$trailer = trailer;
@@ -3739,6 +3757,7 @@ class Fragment$shortMedia {
       l$siteUrl,
       l$season,
       l$seasonYear,
+      l$status,
       l$title,
       l$coverImage,
       l$trailer,
@@ -3792,6 +3811,11 @@ class Fragment$shortMedia {
     final l$seasonYear = seasonYear;
     final lOther$seasonYear = other.seasonYear;
     if (l$seasonYear != lOther$seasonYear) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
       return false;
     }
     final l$title = title;
@@ -3939,6 +3963,7 @@ abstract class CopyWith$Fragment$shortMedia<TRes> {
     String? siteUrl,
     Enum$MediaSeason? season,
     int? seasonYear,
+    Enum$MediaStatus? status,
     Fragment$shortMedia$title? title,
     Fragment$shortMedia$coverImage? coverImage,
     Fragment$shortMedia$trailer? trailer,
@@ -3990,6 +4015,7 @@ class _CopyWithImpl$Fragment$shortMedia<TRes>
     Object? siteUrl = _undefined,
     Object? season = _undefined,
     Object? seasonYear = _undefined,
+    Object? status = _undefined,
     Object? title = _undefined,
     Object? coverImage = _undefined,
     Object? trailer = _undefined,
@@ -4019,6 +4045,9 @@ class _CopyWithImpl$Fragment$shortMedia<TRes>
         seasonYear: seasonYear == _undefined
             ? _instance.seasonYear
             : (seasonYear as int?),
+        status: status == _undefined
+            ? _instance.status
+            : (status as Enum$MediaStatus?),
         title: title == _undefined
             ? _instance.title
             : (title as Fragment$shortMedia$title?),
@@ -4146,6 +4175,7 @@ class _CopyWithStubImpl$Fragment$shortMedia<TRes>
     String? siteUrl,
     Enum$MediaSeason? season,
     int? seasonYear,
+    Enum$MediaStatus? status,
     Fragment$shortMedia$title? title,
     Fragment$shortMedia$coverImage? coverImage,
     Fragment$shortMedia$trailer? trailer,
@@ -4226,6 +4256,13 @@ const fragmentDefinitionshortMedia = FragmentDefinitionNode(
     ),
     FieldNode(
       name: NameNode(value: 'seasonYear'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'status'),
       alias: null,
       arguments: [],
       directives: [],
