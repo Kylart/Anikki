@@ -2,6 +2,7 @@ part of 'home_entry.dart';
 
 class _HomeEntryExpanded extends StatelessWidget {
   const _HomeEntryExpanded({
+    super.key,
     required this.media,
     this.customTags = const [],
   });

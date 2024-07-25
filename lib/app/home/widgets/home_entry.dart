@@ -89,6 +89,7 @@ class HomeEntry extends StatelessWidget {
         },
         child: expanded
             ? _HomeEntryExpanded(
+                key: colouredKey,
                 media: media,
                 customTags: customTags,
               )
