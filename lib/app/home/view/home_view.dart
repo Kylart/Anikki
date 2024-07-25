@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/home/bloc/home_bloc.dart';
-import 'package:anikki/app/home_continue/view/home_continue_page.dart';
-import 'package:anikki/app/home_start/home_start.dart';
+import 'package:anikki/app/home/features/home_continue/view/home_continue_page.dart';
+import 'package:anikki/app/home/features/home_start/home_start.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});

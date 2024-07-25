@@ -4,10 +4,9 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/app/home/features/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view.dart';
 import 'package:anikki/app/home/shared/widgets/home_scroll_view/random_play_button.dart';
-import 'package:anikki/app/home/widgets/home_entry.dart';
-import 'package:anikki/app/home_continue/bloc/home_continue_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/section/section_container.dart';
@@ -88,10 +87,7 @@ class _HomeContinueViewState extends State<HomeContinueView> {
                       medias: state.entries
                           .map((e) => Media(anilistInfo: e.media))
                           .toList(),
-                      builder: (media, expanded) => HomeEntry(
-                        media: media,
-                        expanded: expanded,
-                      ),
+                      // customTagsBuilder: (media) => ,
                     ),
                 ],
               ),
