@@ -19,14 +19,17 @@ class HomeEntry extends StatelessWidget {
     required this.media,
     required this.expanded,
     this.customTags = const [],
+    this.onExpanded,
   });
 
   final Media media;
   final bool expanded;
   final List<String> customTags;
+  final void Function(GlobalObjectKey key)? onExpanded;
 
   static get grayscaledKey => const ValueKey('grayscaled');
   static get colouredKey => const ValueKey('coloured');
+  GlobalObjectKey get _key => GlobalObjectKey(media.anilistInfo.id);
 
   final animationDuration = const Duration(milliseconds: 300);
 
@@ -36,6 +39,8 @@ class HomeEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
+      key: _key,
+      onEnd: onExpanded != null ? () => onExpanded!(_key) : null,
       duration: animationDuration,
       width: expanded
           ? HomeScrollView.getHeight(context) * expandedAspectRatio

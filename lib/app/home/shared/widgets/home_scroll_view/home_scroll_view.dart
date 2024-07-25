@@ -8,6 +8,7 @@ import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view
 import 'package:anikki/app/home/widgets/home_entry.dart';
 import 'package:anikki/core/core.dart';
 
+part 'home_scroll_view_content.dart';
 part 'home_scroll_view_loader.dart';
 
 class HomeScrollView extends StatefulWidget {
@@ -35,8 +36,6 @@ class HomeScrollView extends StatefulWidget {
 }
 
 class _HomeScrollViewState extends State<HomeScrollView> {
-  int? currentlyHoveredId;
-
   late final ScrollController scrollController;
 
   final scrollAnimationDuration = const Duration(milliseconds: 500);
@@ -55,10 +54,12 @@ class _HomeScrollViewState extends State<HomeScrollView> {
     super.dispose();
   }
 
-  Future<void> setCurrentlyExpandedEntry(int? id) async {
-    setState(() {
-      currentlyHoveredId = id;
-    });
+  void moveTo(double value) {
+    scrollController.animateTo(
+      value,
+      duration: scrollAnimationDuration,
+      curve: scrollAnimationCurve,
+    );
   }
 
   @override
@@ -70,13 +71,9 @@ class _HomeScrollViewState extends State<HomeScrollView> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: IconButton(
-              onPressed: () {
-                scrollController.animateTo(
-                  max(scrollController.offset - scrollAnimationOffset, 0),
-                  duration: scrollAnimationDuration,
-                  curve: scrollAnimationCurve,
-                );
-              },
+              onPressed: () => moveTo(
+                max(scrollController.offset - scrollAnimationOffset, 0),
+              ),
               icon: const Icon(Ionicons.chevron_back),
             ),
           ),
@@ -88,41 +85,10 @@ class _HomeScrollViewState extends State<HomeScrollView> {
                 : SingleChildScrollView(
                     controller: scrollController,
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (final (index, media) in widget.medias!.indexed)
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: index == 0 ? 0 : 32.0,
-                            ),
-                            child: InkWell(
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () => setCurrentlyExpandedEntry(
-                                media.anilistInfo.id == currentlyHoveredId
-                                    ? null
-                                    : media.anilistInfo.id,
-                              ),
-                              child: MouseRegion(
-                                onEnter: (event) => setCurrentlyExpandedEntry(
-                                  media.anilistInfo.id,
-                                ),
-                                onExit: (event) =>
-                                    setCurrentlyExpandedEntry(null),
-                                child: HomeEntry(
-                                  media: media,
-                                  expanded: currentlyHoveredId ==
-                                      media.anilistInfo.id,
-                                  customTags: widget.customTagsBuilder != null
-                                      ? widget.customTagsBuilder!(media)
-                                      : const [],
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
+                    child: _HomeScrollViewContent(
+                      medias: widget.medias!,
+                      scrollController: scrollController,
+                      customTagsBuilder: widget.customTagsBuilder,
                     ),
                   ),
           ),
@@ -135,15 +101,13 @@ class _HomeScrollViewState extends State<HomeScrollView> {
                 final nonExpandedWidth =
                     height * HomeEntry.nonExpandedAspectRatio;
 
-                scrollController.animateTo(
+                moveTo(
                   min(
                     scrollController.offset + scrollAnimationOffset,
                     scrollController.position.maxScrollExtent +
                         expandedWidth -
                         nonExpandedWidth,
                   ),
-                  duration: scrollAnimationDuration,
-                  curve: scrollAnimationCurve,
                 );
               },
               icon: const Icon(Ionicons.chevron_forward),
