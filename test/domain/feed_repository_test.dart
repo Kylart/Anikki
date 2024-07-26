@@ -77,7 +77,7 @@ void main() {
                   isAdult: false,
                 ),
               ),
-            ],
+            ].map((e) => Media(anilistInfo: e.media)).toList(),
             const HomeFeedOptions(
               showAdult: true,
               showOnlyJap: false,
@@ -85,8 +85,8 @@ void main() {
           );
 
           expect(result.length, 2);
-          expect(result.first.id, 0);
-          expect(result.first.media?.isAdult, true);
+          expect(result.first.anilistInfo.id, 0);
+          expect(result.first.anilistInfo.isAdult, true);
         });
 
         test('is off', () {
@@ -110,7 +110,7 @@ void main() {
                   isAdult: false,
                 ),
               ),
-            ],
+            ].map((e) => Media(anilistInfo: e.media)).toList(),
             const HomeFeedOptions(
               showAdult: false,
               showOnlyJap: false,
@@ -118,8 +118,8 @@ void main() {
           );
 
           expect(result.length, 1);
-          expect(result.first.id, 1);
-          expect(result.first.media?.isAdult, false);
+          expect(result.first.anilistInfo.id, 1);
+          expect(result.first.anilistInfo.isAdult, false);
         });
       });
 
@@ -154,12 +154,12 @@ void main() {
                 media: Fragment$shortMedia(
                     id: 0, isAdult: false, countryOfOrigin: 'CN'),
               ),
-            ],
+            ].map((e) => Media(anilistInfo: e.media)).toList(),
             const HomeFeedOptions(),
           );
 
           expect(result.length, 1);
-          expect(result.first.id, 0);
+          expect(result.first.anilistInfo.id, 0);
         });
       });
     });

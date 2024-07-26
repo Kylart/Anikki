@@ -1460,6 +1460,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
+  timelines_plus:
+    dependency: "direct main"
+    description:
+      name: timelines_plus
+      sha256: ad0d97a0ee21942ee749c603b117794eb97cc6788f0cadc7d76cf1bbb2c26fca
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   timing:
     dependency: transitive
     description:

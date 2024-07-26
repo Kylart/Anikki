@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:anikki/app/home/features/home_timelines/models/models.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
 
@@ -11,9 +12,41 @@ class FeedRepository {
   final Anilist anilist;
 
   /// Returns the release schedule for the given `range`
-  Future<List<Query$AiringSchedule$Page$airingSchedules>> getSchedule(
-      DateTimeRange range) async {
-    return await anilist.getSchedule(range);
+  Future<List<TimelineEntry>> getSchedule(
+    DateTimeRange range, {
+    List<int>? ids,
+  }) async {
+    late final List<TimelineEntry> result;
+
+    if (ids != null) {
+      final entries = await anilist.getScheduleFromIds(range, ids);
+
+      result = entries
+          .map(
+            (entry) => TimelineEntry(
+              type: TimelineType.feed,
+              timestamp: entry.airingAt * 1000,
+              media: Media(anilistInfo: entry.media),
+              description: 'Episode ${entry.episode}',
+            ),
+          )
+          .toList();
+    } else {
+      final entries = await anilist.getSchedule(range);
+
+      result = entries
+          .map(
+            (entry) => TimelineEntry(
+              type: TimelineType.feed,
+              timestamp: entry.airingAt * 1000,
+              media: Media(anilistInfo: entry.media),
+              description: 'Episode ${entry.episode}',
+            ),
+          )
+          .toList();
+    }
+
+    return result.reversed.toList();
   }
 
   /// Returns the trending entries
@@ -39,19 +72,19 @@ class FeedRepository {
   }
 
   // Filter the given `entries` by applying the given `options`
-  List<Query$AiringSchedule$Page$airingSchedules> filterEntries(
-    List<Query$AiringSchedule$Page$airingSchedules> entries,
+  List<Media> filterEntries(
+    List<Media> entries,
     HomeFeedOptions options,
   ) {
     return entries.where((entry) {
       bool included = true;
 
       if (!options.showAdult) {
-        included = included && entry.media?.isAdult == false;
+        included = included && entry.anilistInfo.isAdult == false;
       }
 
       if (options.showOnlyJap) {
-        included = included && entry.media?.countryOfOrigin == 'JP';
+        included = included && entry.anilistInfo.countryOfOrigin == 'JP';
       }
 
       return included;

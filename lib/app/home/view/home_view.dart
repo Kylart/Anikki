@@ -1,3 +1,4 @@
+import 'package:anikki/app/home/features/home_timelines/home_timelines.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +37,7 @@ class HomeView extends StatelessWidget {
             Flexible(
               flex: 1,
               fit: FlexFit.tight,
-              child: Text('Right'),
+              child: HomeTimelinesView(),
             ),
           ],
         );

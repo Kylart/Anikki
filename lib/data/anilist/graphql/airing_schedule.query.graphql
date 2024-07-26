@@ -14,3 +14,20 @@ query AiringSchedule ($start: Int, $end: Int, $page: Int) {
     }
   }
 }
+
+query AiringScheduleWithIds ($start: Int, $end: Int, $page: Int, $ids: [Int]) {
+	Page(page: $page) {
+		pageInfo {
+			hasNextPage
+			total
+		}
+		airingSchedules(mediaId_in: $ids, airingAt_greater: $start, airingAt_lesser: $end, sort: TIME_DESC) {
+			id
+			episode
+			airingAt
+			media {
+        ...shortMedia
+      }
+    }
+  }
+}
