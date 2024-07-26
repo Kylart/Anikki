@@ -9,6 +9,7 @@ export 'convert_to_mk_media.dart';
 export 'desktop_hooks.dart';
 export 'errors/library_directory_does_not_exist_exception.dart';
 export 'folder.dart';
+export 'format_duration.dart';
 export 'hex_color.dart';
 export 'logger.dart';
 export 'open_in_browser.dart';

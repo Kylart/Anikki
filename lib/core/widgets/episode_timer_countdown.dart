@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:anikki/core/core.dart';
+
 class EpisodeTimerCountdown extends StatefulWidget {
   const EpisodeTimerCountdown({
     super.key,
@@ -28,44 +30,6 @@ class _EpisodeTimerCountdownState extends State<EpisodeTimerCountdown> {
   String get timeUntilDateLabel => timeUntilDate.isNegative
       ? 'Aired!'
       : 'Airing in ${formatDuration(timeUntilDate)}';
-
-  String formatDuration(Duration duration) {
-    var result = '';
-
-    final hasDays = duration.inDays != 0;
-    final days = duration.inDays;
-    final dayTag = days == 1 ? 'day' : 'days';
-
-    final hours = duration.inHours % 24;
-    final hasHours = hours != 0;
-    final hourTag = hours == 1 ? 'hour' : 'hours';
-
-    final minutes = duration.inMinutes.remainder(60);
-    final hasMinutes = minutes != 0;
-    const minuteTag = 'min';
-
-    if (hasDays) {
-      result += '$days $dayTag';
-
-      if (hasHours) {
-        result += ', $hours $hourTag';
-      }
-
-      return result;
-    }
-
-    if (hasHours) {
-      result += '$hours $hourTag';
-
-      if (hasMinutes) {
-        result += ', $minutes $minuteTag';
-      }
-
-      return result;
-    }
-
-    return '$minutes $minuteTag';
-  }
 
   @override
   void initState() {
