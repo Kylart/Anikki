@@ -47,7 +47,7 @@ class _HomeEntryExpanded extends StatelessWidget {
                 ),
                 const Spacer(),
                 SizedBox(
-                  height: HomeScrollView.getHeight(context) / 2,
+                  height: HomeScrollView.getHeight(context) / 2.2,
                   child: MediaDetailsTrailer(media: media),
                 ),
                 const Spacer(),
