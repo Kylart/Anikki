@@ -25,7 +25,7 @@ class HomeImage extends StatelessWidget {
             ? NetworkImage(
                 media.coverImage!,
               )
-            : const AssetImage('assets/images/cover_placeholder.jpg'),
+            : const AssetImage('assets/images/placeholder.jpg'),
       ),
     );
   }
