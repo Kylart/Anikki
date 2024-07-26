@@ -38,6 +38,7 @@ class AnikkiBlocProvider extends StatelessWidget {
     const videoPlayerRepository = VideoPlayerRepository();
     final feedRepository = FeedRepository(anilist);
     final consumetRepository = ConsumetRepository();
+    final userInformationRepository = UserInformationRepository(anilist);
 
     return MultiBlocProvider(
       providers: [
@@ -73,7 +74,10 @@ class AnikkiBlocProvider extends StatelessWidget {
           create: (context) => HomeContinueBloc(userListRepository),
         ),
         BlocProvider(
-          create: (context) => HomeTimelinesBloc(feedRepository),
+          create: (context) => HomeTimelinesBloc(
+            feedRepository: feedRepository,
+            userInformationRepository: userInformationRepository,
+          ),
         ),
         BlocProvider(
           create: (context) => HomeStartBloc(

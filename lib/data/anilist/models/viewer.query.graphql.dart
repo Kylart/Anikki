@@ -149,6 +149,13 @@ const documentNodeQueryViewer = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -370,6 +377,7 @@ extension ClientExtension$Query$Viewer on graphql.GraphQLClient {
 
 class Query$Viewer$Viewer {
   Query$Viewer$Viewer({
+    required this.id,
     required this.name,
     this.avatar,
     this.bannerImage,
@@ -379,6 +387,7 @@ class Query$Viewer$Viewer {
   });
 
   factory Query$Viewer$Viewer.fromJson(Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$name = json['name'];
     final l$avatar = json['avatar'];
     final l$bannerImage = json['bannerImage'];
@@ -386,6 +395,7 @@ class Query$Viewer$Viewer {
     final l$options = json['options'];
     final l$$__typename = json['__typename'];
     return Query$Viewer$Viewer(
+      id: (l$id as int),
       name: (l$name as String),
       avatar: l$avatar == null
           ? null
@@ -401,6 +411,8 @@ class Query$Viewer$Viewer {
     );
   }
 
+  final int id;
+
   final String name;
 
   final Query$Viewer$Viewer$avatar? avatar;
@@ -415,6 +427,8 @@ class Query$Viewer$Viewer {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$avatar = avatar;
@@ -432,6 +446,7 @@ class Query$Viewer$Viewer {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$name = name;
     final l$avatar = avatar;
     final l$bannerImage = bannerImage;
@@ -439,6 +454,7 @@ class Query$Viewer$Viewer {
     final l$options = options;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$name,
       l$avatar,
       l$bannerImage,
@@ -454,6 +470,11 @@ class Query$Viewer$Viewer {
       return true;
     }
     if (!(other is Query$Viewer$Viewer) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$name = name;
@@ -508,6 +529,7 @@ abstract class CopyWith$Query$Viewer$Viewer<TRes> {
       _CopyWithStubImpl$Query$Viewer$Viewer;
 
   TRes call({
+    int? id,
     String? name,
     Query$Viewer$Viewer$avatar? avatar,
     String? bannerImage,
@@ -533,6 +555,7 @@ class _CopyWithImpl$Query$Viewer$Viewer<TRes>
   static const _undefined = <dynamic, dynamic>{};
 
   TRes call({
+    Object? id = _undefined,
     Object? name = _undefined,
     Object? avatar = _undefined,
     Object? bannerImage = _undefined,
@@ -541,6 +564,7 @@ class _CopyWithImpl$Query$Viewer$Viewer<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$Viewer$Viewer(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -585,6 +609,7 @@ class _CopyWithStubImpl$Query$Viewer$Viewer<TRes>
   TRes _res;
 
   call({
+    int? id,
     String? name,
     Query$Viewer$Viewer$avatar? avatar,
     String? bannerImage,

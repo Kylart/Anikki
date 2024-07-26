@@ -34,10 +34,10 @@ class HomeTimelineContent extends StatelessWidget {
                     entry.timestamp,
                   );
 
-                  final day = airingTime.day;
-                  final month = '0${airingTime.month}';
-                  final hour = airingTime.hour + 1;
-                  final minutes = '${airingTime.minute}0'.substring(0, 2);
+                  final day = airingTime.day.toString().padLeft(2, '0');
+                  final month = airingTime.month.toString().padLeft(2, '0');
+                  final hour = (airingTime.hour + 1).toString().padLeft(2, '0');
+                  final minutes = airingTime.minute.toString().padLeft(2, '0');
 
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,

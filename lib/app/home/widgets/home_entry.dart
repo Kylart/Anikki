@@ -50,8 +50,9 @@ class HomeEntry extends StatelessWidget {
         color: context.colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(expanded ? 12.0 : 0)),
         border: Border.all(
-            color: expanded ? context.colorScheme.outline : Colors.transparent,
-            strokeAlign: BorderSide.strokeAlignCenter),
+          color: expanded ? context.colorScheme.outline : Colors.transparent,
+          strokeAlign: BorderSide.strokeAlignCenter,
+        ),
       ),
       child: AnimatedSwitcher(
         duration: animationDuration,

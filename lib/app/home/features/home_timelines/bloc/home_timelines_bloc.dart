@@ -12,9 +12,12 @@ part 'home_timelines_state.dart';
 
 class HomeTimelinesBloc extends Bloc<HomeTimelinesEvent, HomeTimelinesState> {
   final FeedRepository feedRepository;
+  final UserInformationRepository userInformationRepository;
 
-  HomeTimelinesBloc(this.feedRepository)
-      : super(const HomeTimelinesInitial(type: TimelineType.feed)) {
+  HomeTimelinesBloc({
+    required this.feedRepository,
+    required this.userInformationRepository,
+  }) : super(const HomeTimelinesInitial(type: TimelineType.feed)) {
     on<HomeTimelinesRefresh>(_onRefresh);
     on<HomeTimelinesTypeChange>(_onTimelineTypeChange);
   }
@@ -31,24 +34,31 @@ class HomeTimelinesBloc extends Bloc<HomeTimelinesEvent, HomeTimelinesState> {
     );
 
     try {
-      final schedule = await feedRepository.getSchedule(
-        FeedRepository.computeRange(),
-        ids: event.watchList == null
-            ? null
-            : <AnilistListEntry>[
-                ...(event.watchList?.current ?? []),
-                ...(event.watchList?.planning) ?? [],
-              ]
-                .where((entry) => entry.media != null)
-                .map((entry) => entry.media!.id)
-                .toList(),
-      );
+      final [
+        schedule,
+        activities,
+      ] = await Future.wait([
+        feedRepository.getSchedule(
+          FeedRepository.computeRange(),
+          ids: event.watchList == null
+              ? null
+              : <AnilistListEntry>[
+                  ...(event.watchList?.current ?? []),
+                  ...(event.watchList?.planning) ?? [],
+                ]
+                  .where((entry) => entry.media != null)
+                  .map((entry) => entry.media!.id)
+                  .toList(),
+        ),
+        userInformationRepository.getActivities(event.userId),
+      ]);
 
       emit(
         HomeTimelinesLoaded(
           type: state.type,
           entries: <TimelineEntry>{
             ...schedule,
+            ...activities,
           }.toList(),
         ),
       );

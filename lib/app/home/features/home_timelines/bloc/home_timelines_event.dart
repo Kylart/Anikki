@@ -8,8 +8,13 @@ sealed class HomeTimelinesEvent extends Equatable {
 }
 
 final class HomeTimelinesRefresh extends HomeTimelinesEvent {
-  const HomeTimelinesRefresh({this.watchList, this.dateTimeRange});
+  const HomeTimelinesRefresh({
+    required this.userId,
+    this.watchList,
+    this.dateTimeRange,
+  });
 
+  final int userId;
   final DateTimeRange? dateTimeRange;
   final AnilistWatchList? watchList;
 

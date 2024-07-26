@@ -126,6 +126,10 @@ class BlocListeners extends StatelessWidget {
               );
               BlocProvider.of<HomeTimelinesBloc>(context).add(
                 HomeTimelinesRefresh(
+                  userId: (BlocProvider.of<AnilistAuthBloc>(context).state
+                          as AnilistAuthSuccess)
+                      .me
+                      .id,
                   watchList: state.watchList,
                 ),
               );

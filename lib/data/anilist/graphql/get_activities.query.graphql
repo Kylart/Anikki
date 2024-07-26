@@ -1,0 +1,23 @@
+query GetActivities ($userId: Int, $page: Int) {
+  Page(page: $page) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    activities(userId: $userId, type_in: [ANIME_LIST], sort: ID_DESC) {
+      ... on ListActivity {
+        id
+        type
+        status
+        progress
+        createdAt
+        media {
+          ...shortMedia
+        }
+      }
+    }
+  }
+}

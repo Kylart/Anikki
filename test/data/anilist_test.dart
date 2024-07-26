@@ -117,7 +117,7 @@ void main() {
         final result = generateMockQuery<Query$Viewer>(mockGraphQLClient);
         when(() => result.hasException).thenReturn(false);
         when(() => result.parsedData).thenReturn(Query$Viewer(
-          Viewer: Query$Viewer$Viewer(name: name),
+          Viewer: Query$Viewer$Viewer(name: name, id: 0),
         ));
 
         final anilist = Anilist(client: mockGraphQLClient);

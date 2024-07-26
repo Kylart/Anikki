@@ -10,6 +10,7 @@ import 'utils/hash.dart';
 export 'exceptions/exceptions.dart';
 export 'models/models.dart';
 
+part 'actvities.dart';
 part 'anilist_client.dart';
 part 'auth.dart';
 part 'info.dart';
@@ -27,6 +28,7 @@ class Anilist extends AnilistClient
         AnilistSearch,
         AnilistSchedule,
         AnilistTrending,
-        AnilistRecommendations {
+        AnilistRecommendations,
+        AnilistActivities {
   Anilist({required super.client});
 }
