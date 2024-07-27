@@ -23,7 +23,6 @@ class HomeTimelinesTitle extends StatelessWidget {
               isSelected: [
                 state.type == TimelineType.feed,
                 state.type == TimelineType.history,
-                state.type == TimelineType.notifications,
               ],
               children: const [
                 Padding(
@@ -36,11 +35,6 @@ class HomeTimelinesTitle extends StatelessWidget {
                       EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                   child: Icon(Ionicons.calendar_outline),
                 ),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                  child: Icon(Ionicons.notifications_outline),
-                ),
               ],
               onPressed: (index) {
                 BlocProvider.of<HomeTimelinesBloc>(context).add(
@@ -48,7 +42,6 @@ class HomeTimelinesTitle extends StatelessWidget {
                     switch (index) {
                       0 => TimelineType.feed,
                       1 => TimelineType.history,
-                      2 => TimelineType.notifications,
                       _ => throw UnimplementedError(),
                     },
                   ),

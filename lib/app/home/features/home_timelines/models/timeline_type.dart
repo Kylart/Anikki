@@ -1,7 +1,6 @@
 enum TimelineType {
   feed('Coming up'),
-  history('History'),
-  notifications('Notifications');
+  history('History');
 
   final String title;
 

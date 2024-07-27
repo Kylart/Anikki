@@ -68,12 +68,6 @@ class HomeTimelineContent extends StatelessWidget {
                                 child: Text(entry.description!),
                               ),
                             ),
-                          TimelineType.notifications => Center(
-                              child: EntryTag(
-                                blurLevel: 0,
-                                child: Text(entry.description!),
-                              ),
-                            ),
                         },
                 );
               },
