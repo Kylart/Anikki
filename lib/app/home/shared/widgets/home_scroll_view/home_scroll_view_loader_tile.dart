@@ -17,8 +17,8 @@ class HomeScrollViewLoaderTile extends StatelessWidget {
         highlightColor: context.colorScheme.inverseSurface.withOpacity(0.8),
         child: Container(
           height: HomeScrollView.getHeight(context),
-          width: HomeScrollView.getHeight(context) *
-              HomeEntry.nonExpandedAspectRatio,
+          width:
+              HomeScrollView.getHeight(context) * HomeEntry.expandedAspectRatio,
           decoration: BoxDecoration(
             color: context.colorScheme.inverseSurface,
             borderRadius: const BorderRadius.all(

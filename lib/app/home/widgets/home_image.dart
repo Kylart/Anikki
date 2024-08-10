@@ -16,7 +16,7 @@ class HomeImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColorFiltered(
       colorFilter: ColorFilter.mode(
-        grayscaled ? Colors.grey.withOpacity(0.7) : Colors.transparent,
+        grayscaled ? Colors.grey.withOpacity(0.4) : Colors.transparent,
         BlendMode.saturation,
       ),
       child: Image(

@@ -43,6 +43,7 @@ class _AnilistAuthViewState extends State<AnilistAuthView> {
 
       if (mounted) {
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (context) => const ConnectedDialog(),
         );
