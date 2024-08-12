@@ -23,14 +23,8 @@ class _AnikkiState extends State<Anikki>
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Anikki',
-
-      /// This theme was made for FlexColorScheme version 6.1.1. Make sure
-      /// you use same or higher version, but still same major version. If
-      /// you use a lower version, some properties may not be supported. In
-      /// that case you can also remove them after copying the theme to your app.
-      theme: lightTheme,
-      darkTheme: darkTheme,
-
+      theme: ThemeData.from(colorScheme: lightTheme),
+      darkTheme: ThemeData.from(colorScheme: darkTheme),
       themeMode: BlocProvider.of<SettingsBloc>(context, listen: true)
           .state
           .settings
