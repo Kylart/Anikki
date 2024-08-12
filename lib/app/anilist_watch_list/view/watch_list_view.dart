@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:anikki/app/anilist_auth/anilist_auth.dart';
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/app/anilist_auth/shared/helpers/logout.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/view/watch_list_layout.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
@@ -63,11 +64,7 @@ class WatchListView extends StatelessWidget {
                   child: Tooltip(
                     message: 'Logout of Anilist',
                     child: IconButton(
-                      onPressed: () async {
-                        BlocProvider.of<AnilistAuthBloc>(context).add(
-                          AnilistAuthLogoutRequested(),
-                        );
-                      },
+                      onPressed: () => logoutFromAnilist(context),
                       icon: const AnikkiIcon(icon: Ionicons.log_out_outline),
                     ),
                   ),
