@@ -1,12 +1,20 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:simple_icons/simple_icons.dart';
 
+import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
+import 'package:anikki/app/anilist_auth/shared/helpers/login.dart';
+import 'package:anikki/app/anilist_auth/shared/helpers/logout.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
-import 'package:anikki/app/layouts/widgets/landscape/navigation_rail_icon.dart';
 import 'package:anikki/app/search/view/search_view.dart';
-import 'package:anikki/core/helpers/notify.dart';
+import 'package:anikki/core/core.dart';
 
-class AnikkiNavigationRail extends StatelessWidget {
+part 'navigation_rail_item.dart';
+
+class AnikkiNavigationRail extends StatefulWidget {
   const AnikkiNavigationRail({
     super.key,
     required this.pages,
@@ -20,104 +28,162 @@ class AnikkiNavigationRail extends StatelessWidget {
   final int currentIndex;
   final bool connected;
 
-  final iconSize = 20.0;
-  final verticalPadding = 18.0;
-  final horizontalPadding = 14.0;
+  @override
+  State<AnikkiNavigationRail> createState() => _AnikkiNavigationRailState();
+}
+
+class _AnikkiNavigationRailState extends State<AnikkiNavigationRail> {
+  final expandedWidth = 250.0;
+  final nonExpandedWidth = 70.0;
+
+  bool expanded = false;
+
+  Widget get gap => const SizedBox(
+        height: 24.0,
+      );
+
+  _NavigationRailItem get titleItem => _NavigationRailItem(
+        expanded: expanded,
+        text: 'Anikki',
+        imageUrl: 'assets/logo.png',
+        isTitle: true,
+      );
+
+  Iterable<_NavigationRailItem> get pages => widget.pages.mapIndexed(
+        (index, page) => _NavigationRailItem(
+          expanded: expanded,
+          text: page.name,
+          selected: index == widget.currentIndex,
+          icon: index == widget.currentIndex ? page.selectedIcon : page.icon,
+          onClick: () {
+            widget.onPageChanged(index);
+          },
+        ),
+      );
+
+  List<_NavigationRailItem> get actionItems => [
+        _NavigationRailItem(
+          expanded: expanded,
+          icon: HugeIcons.strokeRoundedSearch01,
+          text: 'Search',
+          onClick: () => showDialog(
+            context: context,
+            builder: (context) {
+              return const Dialog(
+                backgroundColor: Colors.transparent,
+                surfaceTintColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                alignment: Alignment.topCenter,
+                child: SearchView(),
+              );
+            },
+          ),
+        ),
+        _NavigationRailItem(
+          expanded: expanded,
+          icon: HugeIcons.strokeRoundedCalendar03,
+          text: 'Agenda',
+        ),
+        _NavigationRailItem(
+          expanded: expanded,
+          icon: HugeIcons.strokeRoundedClock04,
+          text: 'History',
+        ),
+      ];
+
+  List<_NavigationRailItem> get externalLinkItems => [
+        _NavigationRailItem(
+          expanded: expanded,
+          icon: SimpleIcons.anilist,
+          text: 'AniList',
+          onClick: () => openInBrowser('https://anilist.co'),
+        ),
+        _NavigationRailItem(
+          expanded: expanded,
+          icon: SimpleIcons.myanimelist,
+          text: 'MyAnimeList',
+          onClick: () => openInBrowser('https://myanimelist.net'),
+        ),
+      ];
+
+  List<Widget> makeAccountItems(BuildContext context) => [
+        BlocBuilder<AnilistAuthBloc, AnilistAuthState>(
+          builder: (context, state) => state is AnilistAuthSuccess
+              ? _NavigationRailItem(
+                  expanded: expanded,
+                  icon: HugeIcons.strokeRoundedLogout02,
+                  text: 'Logout',
+                  onClick: () => logoutFromAnilist(context),
+                )
+              : const SizedBox(),
+        ),
+        BlocBuilder<AnilistAuthBloc, AnilistAuthState>(
+          builder: (context, state) => state is AnilistAuthSuccess
+              ? _NavigationRailItem(
+                  expanded: expanded,
+                  imageUrl: state.me.avatar?.large ?? state.me.avatar?.medium,
+                  text: state.me.name,
+                )
+              : _NavigationRailItem(
+                  expanded: expanded,
+                  icon: SimpleIcons.anilist,
+                  text: 'Login with Anilist',
+                  onClick: () => loginToAnilist(context),
+                ),
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: const Alignment(0.0, -0.92),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8.0,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: (iconSize + verticalPadding) * (pages.length + 1) +
-                  verticalPadding,
-              width: iconSize + (horizontalPadding * 2),
+    return MouseRegion(
+      onEnter: (event) => setState(() {
+        expanded = true;
+      }),
+      onHover: (event) => setState(() {
+        expanded = true;
+      }),
+      onExit: (event) => setState(() {
+        expanded = false;
+      }),
+      child: AnimatedContainer(
+        duration: 200.ms,
+        width: expanded ? expandedWidth : nonExpandedWidth,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32.0),
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
+                width: double.infinity,
+                constraints: constraints.copyWith(
+                  minHeight: constraints.maxHeight,
+                  maxHeight: double.infinity,
                 ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .secondaryContainer
-                      .withOpacity(0.3),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(12.0),
+                child: IntrinsicHeight(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          titleItem,
+                          gap,
+                          ...pages,
+                          gap,
+                          ...actionItems,
+                          gap,
+                          ...externalLinkItems,
+                          gap,
+                        ],
+                      ),
+                      Column(
+                        children: makeAccountItems(context),
+                      ),
+                    ],
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: verticalPadding,
-                      ),
-                      child: AnikkiNavigationRailIcon(
-                        iconSize: iconSize,
-                        icon: Ionicons.search_outline,
-                        selectedIcon: Ionicons.search_outline,
-                        selected: false,
-                        title: 'Search',
-                        onPressed: () => showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const Dialog(
-                              backgroundColor: Colors.transparent,
-                              surfaceTintColor: Colors.transparent,
-                              shadowColor: Colors.transparent,
-                              alignment: Alignment.topCenter,
-                              child: SearchView(),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    for (final (index, page) in pages.indexed)
-                      Padding(
-                        padding: EdgeInsets.only(bottom: verticalPadding),
-                        child: AnikkiNavigationRailIcon(
-                          icon: page.icon,
-                          selectedIcon: page.selectedIcon,
-                          iconSize: iconSize,
-                          selected: index == currentIndex,
-                          title: page.name,
-                          error: page.error,
-                          onPressed: () => onPageChanged(index),
-                        ),
-                      ),
-                  ],
                 ),
               ),
             ),
-            if (!connected)
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: verticalPadding,
-                ),
-                child: Opacity(
-                  opacity: 0.7,
-                  child: AnikkiNavigationRailIcon(
-                    iconSize: iconSize,
-                    icon: Ionicons.cloud_offline_outline,
-                    selectedIcon: Ionicons.cloud_offline_outline,
-                    selected: false,
-                    title: 'Cannot connect to the Internet',
-                    onPressed: () => context.notify(
-                      message: 'Cannot connect to the Internet',
-                      descritpion:
-                          'Anikki will reconnect automatically whenever possible.',
-                      isError: true,
-                    ),
-                  ),
-                ),
-              ),
-          ],
+          ),
         ),
       ),
     );

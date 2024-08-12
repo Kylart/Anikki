@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/watch_list.dart';
@@ -15,8 +15,6 @@ import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/settings/view/settings_view.dart';
 import 'package:anikki/app/torrent/torrent.dart';
 import 'package:anikki/core/helpers/connectivity_bloc/connectivity_bloc.dart';
-import 'package:anikki/core/models/torrent_type.dart';
-import 'package:anikki/core/widgets/custom_app_icons.dart';
 
 class LayoutView extends StatefulWidget {
   const LayoutView({super.key});
@@ -52,46 +50,41 @@ class _LayoutViewState extends State<LayoutView> {
             final pages = [
               AnikkiPage(
                 name: 'Home',
-                icon: Ionicons.home_outline,
-                selectedIcon: Ionicons.home,
+                icon: HugeIcons.strokeRoundedHome07,
+                selectedIcon: HugeIcons.strokeRoundedHome07,
                 child: const HomeView(),
               ),
               AnikkiPage(
                 name: 'Library',
-                icon: Ionicons.folder_outline,
-                selectedIcon: Ionicons.folder_open,
+                icon: HugeIcons.strokeRoundedFolder01,
+                selectedIcon: HugeIcons.strokeRoundedFolderLibrary,
                 child: const LibraryView(),
               ),
               AnikkiPage(
                 name: 'Watch Lists',
-                icon: Ionicons.library_outline,
-                selectedIcon: Ionicons.library,
+                icon: HugeIcons.strokeRoundedCheckList,
+                selectedIcon: HugeIcons.strokeRoundedCheckList,
                 error: watchListState is WatchListError
                     ? watchListState.message
                     : null,
                 child: const WatchListView(),
               ),
-              if (settings.torrentType != TorrentType.none)
-                AnikkiPage(
-                  name: settings.torrentType.title,
-                  icon: switch (settings.torrentType) {
-                    TorrentType.transmission => CustomIcons.transmission,
-                    TorrentType.qbittorrent => CustomIcons.qbittorrent,
-                    TorrentType.none => throw UnimplementedError(),
-                  },
-                  child: const TorrentView(),
-                ),
+              AnikkiPage(
+                name: settings.torrentType.title,
+                icon: HugeIcons.strokeRoundedCloudDownload,
+                child: const TorrentView(),
+              ),
               if (portrait)
                 AnikkiPage(
                   name: 'Search',
-                  icon: Ionicons.search_outline,
-                  selectedIcon: Ionicons.search,
+                  icon: HugeIcons.strokeRoundedSearch01,
+                  selectedIcon: HugeIcons.strokeRoundedSearch01,
                   child: const SearchView(),
                 ),
               AnikkiPage(
                 name: 'Settings',
-                icon: Ionicons.settings_outline,
-                selectedIcon: Ionicons.settings,
+                icon: HugeIcons.strokeRoundedSettings01,
+                selectedIcon: HugeIcons.strokeRoundedSettings02,
                 child: const SettingsView(),
               ),
             ];
