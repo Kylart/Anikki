@@ -14,7 +14,7 @@ class _EntryCardText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          color: darkTheme.textTheme.bodyMedium?.color,
+          color: context.colorScheme.onPrimary,
         ),
       ),
     );
