@@ -95,13 +95,13 @@ class _AnikkiNavigationRailState extends State<AnikkiNavigationRail> {
         _NavigationRailItem(
           expanded: expanded,
           icon: SimpleIcons.anilist,
-          text: 'AniList',
+          text: 'Go to AniList',
           onClick: () => openInBrowser('https://anilist.co'),
         ),
         _NavigationRailItem(
           expanded: expanded,
           icon: SimpleIcons.myanimelist,
-          text: 'MyAnimeList',
+          text: 'Go to MyAnimeList',
           onClick: () => openInBrowser('https://myanimelist.net'),
         ),
       ];
