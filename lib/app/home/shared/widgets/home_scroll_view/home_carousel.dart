@@ -8,30 +8,29 @@ import 'package:super_sliver_list/super_sliver_list.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/core/core.dart';
 
-class HomeScrollView extends StatefulWidget {
-  const HomeScrollView({
+class HomeCarousel extends StatefulWidget {
+  const HomeCarousel({
     super.key,
-    required this.entries,
+    required this.medias,
   });
 
-  final List<AnilistListEntry> entries;
+  final List<Media> medias;
 
   @override
-  State<HomeScrollView> createState() => _HomeScrollViewState();
+  State<HomeCarousel> createState() => _HomeCarouselState();
 }
 
-class _HomeScrollViewState extends State<HomeScrollView> {
+class _HomeCarouselState extends State<HomeCarousel> {
   Timer? timer;
   late final ScrollController scrollController;
   final listController = ListController();
 
-  final toNextDuration = const Duration(seconds: 5);
+  final toNextDuration = const Duration(seconds: 15);
   final itemAnimationDuration = const Duration(milliseconds: 300);
 
   int currentIndex = 0;
-  int get currentEntryIndex => currentIndex % widget.entries.length;
-  AnilistListEntry get currentEntry =>
-      widget.entries.elementAt(currentEntryIndex);
+  int get currentMediaIndex => currentIndex % widget.medias.length;
+  Media get currentMedia => widget.medias.elementAt(currentMediaIndex);
 
   @override
   void initState() {
@@ -65,9 +64,10 @@ class _HomeScrollViewState extends State<HomeScrollView> {
     final homeBloc = BlocProvider.of<HomeBloc>(context);
 
     currentIndex = max(
-      widget.entries.indexWhere(
+      widget.medias.indexWhere(
         (element) =>
-            element.media?.id == homeBloc.state.currentMedia?.anilistInfo.id,
+            element.anilistInfo.id ==
+            homeBloc.state.currentMedia?.anilistInfo.id,
       ),
       0,
     );
@@ -75,9 +75,7 @@ class _HomeScrollViewState extends State<HomeScrollView> {
 
   void updateCurrentMedia() {
     BlocProvider.of<HomeBloc>(context).add(
-      HomeCurrentMediaChanged(
-        Media(anilistInfo: currentEntry.media),
-      ),
+      HomeCurrentMediaChanged(currentMedia),
     );
   }
 
@@ -109,8 +107,8 @@ class _HomeScrollViewState extends State<HomeScrollView> {
         controller: scrollController,
         itemCount: 10000000,
         itemBuilder: (context, index) {
-          final i = index % widget.entries.length;
-          final entry = widget.entries.elementAt(i);
+          final i = index % widget.medias.length;
+          final media = widget.medias.elementAt(i);
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -126,7 +124,7 @@ class _HomeScrollViewState extends State<HomeScrollView> {
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: NetworkImage(
-                      entry.media?.coverImage?.extraLarge ?? '',
+                      media.coverImage ?? '',
                     ),
                   ),
                 ),
