@@ -79,7 +79,7 @@ class _EntryCardState extends State<EntryCard>
     final homeBloc = BlocProvider.of<HomeBloc>(context, listen: true);
 
     if (!isDesktop()) {
-      final currentHomeMedia = homeBloc.state.bannerMedia;
+      final currentHomeMedia = homeBloc.state.currentMedia;
 
       setState(() {
         isCurrentHomeMedia = currentHomeMedia == widget.media;
@@ -104,7 +104,7 @@ class _EntryCardState extends State<EntryCard>
           cursor: SystemMouseCursors.click,
           onEnter: (event) {
             homeBloc.add(
-              HomeBannerMediaChanged(widget.media),
+              HomeCurrentMediaChanged(widget.media),
             );
 
             setState(() {

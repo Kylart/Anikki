@@ -1,98 +1,142 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel_widget/flutter_carousel_widget.dart' as fc;
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:super_sliver_list/super_sliver_list.dart';
 
-import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_scroll_view_loader_tile.dart';
-import 'package:anikki/app/home/widgets/home_entry.dart';
+import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/core/core.dart';
 
-part 'home_scroll_view_loader.dart';
-
 class HomeScrollView extends StatefulWidget {
-  HomeScrollView({
+  const HomeScrollView({
     super.key,
-    this.medias,
-    this.loading = false,
-    this.customTagsBuilder,
-  }) {
-    if (!loading) assert(medias != null);
-  }
+    required this.entries,
+  });
 
-  final List<Media>? medias;
-  final bool loading;
-  final List<String> Function(Media media)? customTagsBuilder;
-
-  static double getHeight(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
-    return max(screenSize.height / 2.5, 400);
-  }
+  final List<AnilistListEntry> entries;
 
   @override
   State<HomeScrollView> createState() => _HomeScrollViewState();
 }
 
 class _HomeScrollViewState extends State<HomeScrollView> {
-  final fc.CarouselController carouselController = fc.CarouselController();
+  Timer? timer;
+  late final ScrollController scrollController;
+  final listController = ListController();
 
-  final scrollAnimationDuration = const Duration(milliseconds: 500);
-  final scrollAnimationCurve = Curves.decelerate;
-  final scrollAnimationOffset = 500;
+  final toNextDuration = const Duration(seconds: 5);
+  final itemAnimationDuration = const Duration(milliseconds: 300);
+
+  int currentIndex = 0;
+  int get currentEntryIndex => currentIndex % widget.entries.length;
+  AnilistListEntry get currentEntry =>
+      widget.entries.elementAt(currentEntryIndex);
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    setInitialIndex();
+    updateCurrentMedia();
+
+    timer = Timer.periodic(
+      toNextDuration,
+      (_) {
+        setState(() {
+          currentIndex++;
+
+          goToItem(currentIndex);
+          updateCurrentMedia();
+        });
+      },
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void setInitialIndex() {
+    final homeBloc = BlocProvider.of<HomeBloc>(context);
+
+    currentIndex = max(
+      widget.entries.indexWhere(
+        (element) =>
+            element.media?.id == homeBloc.state.currentMedia?.anilistInfo.id,
+      ),
+      0,
+    );
+  }
+
+  void updateCurrentMedia() {
+    BlocProvider.of<HomeBloc>(context).add(
+      HomeCurrentMediaChanged(
+        Media(anilistInfo: currentEntry.media),
+      ),
+    );
+  }
+
+  void goToItem(int index) {
+    listController.animateToItem(
+      curve: (estimatedDistance) => Curves.linear,
+      duration: (estimatedDistance) => itemAnimationDuration,
+      index: currentIndex,
+      scrollController: scrollController,
+      alignment: 0.0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: HomeScrollView.getHeight(context),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: IconButton(
-              onPressed: carouselController.previousPage,
-              icon: const Icon(Ionicons.chevron_back),
-            ),
-          ),
-          Expanded(
-            child: widget.loading
-                ? const HomeScrollViewLoader()
-                : fc.FlutterCarousel.builder(
-                    itemCount: widget.medias!.length,
-                    options: fc.CarouselOptions(
-                      controller: carouselController,
-                      allowImplicitScrolling: true,
-                      height: HomeScrollView.getHeight(context),
-                      showIndicator: true,
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: true,
-                      autoPlayAnimationDuration:
-                          const Duration(milliseconds: 500),
-                      viewportFraction: 0.7,
-                      slideIndicator: fc.CircularWaveSlideIndicator(),
-                      floatingIndicator: false,
+    final screenSize = MediaQuery.of(context).size;
+    final height = max(screenSize.height / 2.5, 300).toDouble();
+    final width = max(screenSize.width / 1.8, 500).toDouble();
+
+    return Positioned(
+      right: 0,
+      bottom: 0,
+      width: width,
+      height: height,
+      child: SuperListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        listController: listController,
+        controller: scrollController,
+        itemCount: 10000000,
+        itemBuilder: (context, index) {
+          final i = index % widget.entries.length;
+          final entry = widget.entries.elementAt(i);
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: AnimatedContainer(
+                duration: itemAnimationDuration,
+                constraints: BoxConstraints(
+                  maxHeight: index == currentIndex ? height : height / 1.5,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(
+                      entry.media?.coverImage?.extraLarge ?? '',
                     ),
-                    itemBuilder: (context, index, realIndex) {
-                      return HomeEntry(
-                        media: widget.medias!.elementAt(index),
-                        customTags: widget.customTagsBuilder != null
-                            ? widget.customTagsBuilder!(
-                                widget.medias!.elementAt(index))
-                            : const [],
-                        onExpanded: (key) {},
-                      );
-                    },
                   ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: IconButton(
-              onPressed: carouselController.nextPage,
-              icon: const Icon(Ionicons.chevron_forward),
+                ),
+                child: const AspectRatio(
+                  aspectRatio: 9 / 14,
+                ),
+              ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

@@ -5,9 +5,7 @@ import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/downloader/helpers/show_downloader.dart';
-import 'package:anikki/app/home/features/home_continue/bloc/home_continue_bloc.dart';
-import 'package:anikki/app/home/features/home_start/bloc/home_start_bloc.dart';
-import 'package:anikki/app/home/features/home_timelines/bloc/home_timelines_bloc.dart';
+import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/stream_handler/bloc/stream_handler_bloc.dart';
@@ -117,21 +115,8 @@ class BlocListeners extends StatelessWidget {
         BlocListener<WatchListBloc, WatchListState>(
           listener: (context, state) {
             if (state is WatchListComplete && state.username != null) {
-              BlocProvider.of<HomeContinueBloc>(context).add(
-                HomeContinueRefresh(state.watchList),
-              );
-
-              BlocProvider.of<HomeStartBloc>(context).add(
-                HomeStartRefresh(state.watchList),
-              );
-              BlocProvider.of<HomeTimelinesBloc>(context).add(
-                HomeTimelinesRefresh(
-                  userId: (BlocProvider.of<AnilistAuthBloc>(context).state
-                          as AnilistAuthSuccess)
-                      .me
-                      .id,
-                  watchList: state.watchList,
-                ),
+              BlocProvider.of<HomeBloc>(context).add(
+                HomeRefreshed(state.watchList),
               );
             }
 
