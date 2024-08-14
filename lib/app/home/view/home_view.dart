@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
-import 'package:anikki/app/home/shared/widgets/home_scroll_view/home_carousel.dart';
+import 'package:anikki/app/home/shared/widgets/home_carousel.dart/home_carousel.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 
