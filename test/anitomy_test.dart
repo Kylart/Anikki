@@ -83,4 +83,30 @@ void main() {
       parser2.dispose();
     });
   });
+
+  group('Can parse season successfully', () {
+    const seasonNames = [
+      'Mahoutsukai no Yome SEASON 2 Part 2',
+      '[Oshi no Ko] 2nd Season',
+      'Tensei Shitara Slime Datta Ken 3rd Season',
+      'Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e 3rd Season',
+    ];
+
+    const expectResults = [
+      2,
+      2,
+      3,
+      3,
+    ];
+
+    for (final (index, name) in seasonNames.indexed) {
+      test('for $name', () {
+        final parser = Anitomy(inputString: name);
+        expect(
+          parser.season,
+          equals(expectResults.elementAt(index)),
+        );
+      });
+    }
+  });
 }

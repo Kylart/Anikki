@@ -55,3 +55,12 @@ extern "C" char *get_release_group (void *ptr) {
 
   return to_string(anitomy_release_group);
 }
+
+extern "C" char *get_season (void *ptr) {
+  auto typed_ptr = static_cast<anitomy::Anitomy *>(ptr);
+
+  const auto &elements = typed_ptr->elements();
+  const auto anitomy_season = elements.get(anitomy::kElementAnimeSeason);
+
+  return to_string(anitomy_season);
+}

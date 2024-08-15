@@ -13,6 +13,8 @@ typedef NativeGetEpisode = Pointer<Utf8> Function(Pointer<Void> str);
 
 typedef NativeGetReleaseGroup = Pointer<Utf8> Function(Pointer<Void> str);
 
+typedef NativeGetSeason = Pointer<Utf8> Function(Pointer<Void> str);
+
 /// Offers a user friendly interface to use the native anitomy library.
 /// The C++ code can be found in the `lib` folder or at `https://github.com/erengy/anitomy`.
 ///
@@ -127,11 +129,22 @@ class Anitomy {
     return releaseGroup.isEmpty ? null : releaseGroup;
   }
 
+  int? get season {
+    final NativeGetSeason getSeason = library
+        .lookup<NativeFunction<NativeGetSeason>>('get_season')
+        .asFunction();
+
+    final season = getSeason(anitomyPtr).toDartString();
+
+    return season.isEmpty ? null : int.tryParse(season);
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'releaseGroup': releaseGroup,
       'title': title,
       'episode': episode,
+      'season': season,
     };
   }
 }
