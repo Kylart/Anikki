@@ -216,6 +216,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  colorize:
+    dependency: transitive
+    description:
+      name: colorize
+      sha256: "584746cd6ba1cba0633b6720f494fe6f9601c4170f0666c1579d2aa2a61071ba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   connectivity_plus:
     dependency: "direct main"
     description:
@@ -320,6 +328,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.1"
+  dio:
+    dependency: transitive
+    description:
+      name: dio
+      sha256: "0dfb6b6a1979dac1c1245e17cef824d7b452ea29bd33d3467269f9bef3715fb0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.6.0"
+  dio_web_adapter:
+    dependency: transitive
+    description:
+      name: dio_web_adapter
+      sha256: "33259a9276d6cea88774a0000cfae0d861003497755969c92faa223108620dc8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   encrypt:
     dependency: "direct main"
     description:
@@ -1500,6 +1524,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  tmdb_api:
+    dependency: "direct main"
+    description:
+      name: tmdb_api
+      sha256: d0db63d044dcc104731610b68f496d7a672dde70b5261f6272c8dfba2d4489d7
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   typed_data:
     dependency: transitive
     description:
