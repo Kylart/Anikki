@@ -8,6 +8,7 @@ export 'library_entry.dart';
 export 'library_settings.dart';
 export 'local_file.dart';
 export 'media.dart';
+export 'media_list_entry.dart';
 export 'news_entry.dart';
 export 'qbittorrent_settings.dart';
 export 'search_result.dart';
