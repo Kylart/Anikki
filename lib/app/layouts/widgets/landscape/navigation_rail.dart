@@ -104,6 +104,12 @@ class _AnikkiNavigationRailState extends State<AnikkiNavigationRail> {
           text: 'Go to MyAnimeList',
           onClick: () => openInBrowser('https://myanimelist.net'),
         ),
+        _NavigationRailItem(
+          expanded: expanded,
+          icon: SimpleIcons.themoviedatabase,
+          text: 'Go to TMDB',
+          onClick: () => openInBrowser('https://www.themoviedb.org/'),
+        ),
       ];
 
   List<Widget> makeAccountItems(BuildContext context) => [
