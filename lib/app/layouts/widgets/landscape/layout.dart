@@ -53,6 +53,7 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                         ),
                         Expanded(
                           child: Container(
+                            clipBehavior: Clip.hardEdge,
                             decoration: BoxDecoration(
                               color: context.colorScheme.surface,
                               borderRadius: const BorderRadius.only(

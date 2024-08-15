@@ -1,10 +1,10 @@
+import 'package:anikki/app/home/widgets/background_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_carousel.dart/home_carousel.dart';
-import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 
 class HomeView extends StatefulWidget {
@@ -39,19 +39,20 @@ class _HomeViewState extends State<HomeView> {
           );
         }
 
+        final media = state.currentMedia;
+
         return Stack(
           children: [
-            if (state.currentMedia != null)
+            if (media != null)
               Positioned.fill(
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: Text(state.currentMedia!.title ?? ''),
-                ),
+                child: HomeBackgroundImage(media: media),
               ),
             if (state.entries.isNotEmpty)
               HomeCarousel(
                 medias: (state.entries)
-                    .map((e) => Media(anilistInfo: e.media))
+                    .map(
+                      (e) => e.media,
+                    )
                     .toList(),
               ),
           ],

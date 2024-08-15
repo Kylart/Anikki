@@ -1,18 +1,22 @@
+import 'package:collection/collection.dart';
+
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/data/data.dart';
-import 'package:collection/collection.dart';
-
-typedef UserWatchList = Map<Enum$MediaListStatus,
-    List<Query$GetLists$MediaListCollection$lists$entries>>;
 
 /// Repository that handles user anime list on providers (for now only Anilist)
 class UserListRepository {
-  const UserListRepository(this.anilist);
+  const UserListRepository({
+    required this.anilist,
+    required this.tmdb,
+  });
 
   /// The [Anilist] object to use to interact with Anilist.
   final Anilist anilist;
+
+  /// The [TMDB] object to use to interact with TMDB.
+  final Tmdb tmdb;
 
   Enum$MediaListStatus? _getWatchedEntryStatus(
     WatchListState state,
@@ -58,46 +62,59 @@ class UserListRepository {
     );
   }
 
-  List<AnilistListEntry> getContinueList(
+  Future<List<MediaListEntry>> getContinueList(
     AnilistWatchList watchList,
-  ) {
-    return {
+  ) async {
+    final anilistEntries = {
       ...watchList.current,
       ...watchList.repeating,
-    }
-        .where(
-          (element) {
-            final progress = element.progress ?? 0;
-            final nextEpisode = element.media?.nextAiringEpisode?.episode;
-            final nbEpisodes = element.media?.episodes ?? -1;
+    }.where(
+      (element) {
+        final progress = element.progress ?? 0;
+        final nextEpisode = element.media?.nextAiringEpisode?.episode;
+        final nbEpisodes = element.media?.episodes ?? -1;
 
-            return nextEpisode != null
-                ? progress < nextEpisode - 1
-                : progress < nbEpisodes;
-          },
-        )
-        .sorted(
-          (a, b) => (b.updatedAt ?? 0).compareTo(a.updatedAt ?? 0),
-        )
-        .toList();
+        return nextEpisode != null
+            ? progress < nextEpisode - 1
+            : progress < nbEpisodes;
+      },
+    ).sorted(
+      (a, b) => (b.updatedAt ?? 0).compareTo(a.updatedAt ?? 0),
+    );
+
+    return [
+      for (final entry in anilistEntries)
+        MediaListEntry(
+          updatedAt: entry.updatedAt,
+          progress: entry.progress,
+          media: await tmdb.hydrateMediaWithTmdb(
+            Media(anilistInfo: entry.media),
+          ),
+        ),
+    ];
   }
 
-  List<AnilistListEntry> getStartList(
+  List<MediaListEntry> getStartList(
     AnilistWatchList watchList,
   ) {
     final season = currentSeason();
     final year = DateTime.now().year;
     final planningList = watchList.planning;
 
-    final seasonEntries = planningList.where((element) {
-      return element.media?.season == season &&
-          element.media?.seasonYear == year &&
-          element.media?.nextAiringEpisode?.episode != 1 &&
-          element.progress == 0;
-    }).toList();
+    final seasonEntries = planningList
+        .where((element) {
+          return element.media?.season == season &&
+              element.media?.seasonYear == year &&
+              element.media?.nextAiringEpisode?.episode != 1 &&
+              element.progress == 0;
+        })
+        .map((element) => MediaListEntry.fromAnilistListEntry(element))
+        .toList();
 
     if (seasonEntries.isNotEmpty) return seasonEntries;
 
-    return watchList.planning;
+    return watchList.planning
+        .map((element) => MediaListEntry.fromAnilistListEntry(element))
+        .toList();
   }
 }

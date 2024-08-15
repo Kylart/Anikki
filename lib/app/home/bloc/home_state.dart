@@ -8,7 +8,7 @@ final class HomeState extends Equatable {
   });
 
   final Media? currentMedia;
-  final List<AnilistListEntry> entries;
+  final List<MediaListEntry> entries;
   final List<Media> medias;
 
   @override
@@ -29,7 +29,7 @@ final class HomeState extends Equatable {
 
   HomeState copyWith({
     Media? currentMedia,
-    List<AnilistListEntry>? entries,
+    List<MediaListEntry>? entries,
     List<Media>? medias,
   }) {
     return HomeState(

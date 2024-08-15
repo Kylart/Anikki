@@ -26,11 +26,15 @@ class AnikkiBlocProvider extends StatelessWidget {
     final anilist = Anilist(client: getAnilistClient());
     final nyaa = Nyaa();
     final files = Files();
+    final tmdb = Tmdb();
 
     final localStorageRepository = LocalStorageRepository(anilist, files);
     final animeSearchRepository = AnimeInformationRepository(anilist, nyaa);
     final torrentSearchRepository = TorrentSearchRepository(nyaa);
-    final userListRepository = UserListRepository(anilist);
+    final userListRepository = UserListRepository(
+      anilist: anilist,
+      tmdb: tmdb,
+    );
     final userRepository = UserRepository(anilist);
     const videoPlayerRepository = VideoPlayerRepository();
     final feedRepository = FeedRepository(anilist);

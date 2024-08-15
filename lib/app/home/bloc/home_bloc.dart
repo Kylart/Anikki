@@ -27,8 +27,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _onRefresh(HomeRefreshed event, Emitter<HomeState> emit) async {
-    late final List<Media>? medias;
-    late final List<AnilistWatchListEntry>? entries;
+    List<Media>? medias;
+    List<MediaListEntry>? entries;
 
     try {
       emit(
@@ -40,10 +40,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       medias = await feedRepository.getTrending();
       entries = event.watchList != null
-          ? [
-              ...userListRepository.getContinueList(event.watchList!),
-            ]
-          : const <AnilistWatchListEntry>[];
+          ? await userListRepository.getContinueList(event.watchList!)
+          : const <MediaListEntry>[];
 
       emit(
         HomeLoaded(
