@@ -37,15 +37,6 @@ class _HomeCarouselContainer extends StatelessWidget {
           child: child,
         ),
       ),
-    )
-        .animate()
-        .fadeIn(
-          duration: 500.ms,
-        )
-        .slideX(
-          duration: 500.ms,
-          end: 0,
-          begin: 0.5,
-        );
+    );
   }
 }

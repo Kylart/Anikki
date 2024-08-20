@@ -33,6 +33,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeLoading(
           entries: state.entries,
+          currentMedia: state.currentMedia,
         ),
       );
 
@@ -47,6 +48,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeLoaded(
           entries: entries,
+          currentMedia: state.currentMedia,
         ),
       );
     } on AnilistGetListException catch (e) {
@@ -60,6 +62,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeError(
           entries: entries ?? state.entries,
+          currentMedia: state.currentMedia,
           message: e.error ?? e.cause,
         ),
       );
@@ -67,6 +70,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeError(
           entries: entries ?? state.entries,
+          currentMedia: state.currentMedia,
           message: e.toString(),
         ),
       );

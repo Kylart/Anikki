@@ -60,3 +60,16 @@ class WatchListWatched extends WatchListEvent {
         episode,
       ];
 }
+
+class WatchListToggleFavourite extends WatchListEvent {
+  const WatchListToggleFavourite({
+    required this.mediaId,
+  });
+
+  final int mediaId;
+
+  @override
+  List<Object?> get props => [
+        mediaId,
+      ];
+}

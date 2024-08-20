@@ -6,4 +6,5 @@ export 'anilist_get_schedule_exception.dart';
 export 'anilist_get_trending_exception.dart';
 export 'anilist_not_connected_exception.dart';
 export 'anilist_search_exception.dart';
+export 'anilist_toggle_favourite_exception.dart';
 export 'anilist_update_list_exception.dart';

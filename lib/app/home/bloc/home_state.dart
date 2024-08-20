@@ -39,18 +39,21 @@ final class HomeInitial extends HomeState {}
 final class HomeLoading extends HomeState {
   const HomeLoading({
     super.entries,
+    super.currentMedia,
   });
 }
 
 final class HomeLoaded extends HomeState {
   const HomeLoaded({
     super.entries,
+    super.currentMedia,
   });
 }
 
 final class HomeError extends HomeState {
   const HomeError({
     super.entries,
+    super.currentMedia,
     required this.message,
   });
 

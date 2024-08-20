@@ -117,4 +117,41 @@ class UserListRepository {
         .map((element) => MediaListEntry.fromAnilistListEntry(element))
         .toList();
   }
+
+  Future<AnilistWatchList> toggleFavourite(
+    AnilistWatchList watchList,
+    int mediaId,
+  ) async {
+    try {
+      await anilist.toggleFavourite(mediaId: mediaId);
+
+      AnilistWatchListEntry updateFavourite(AnilistWatchListEntry entry) {
+        if (entry.media?.id == mediaId) {
+          return entry.copyWith(
+            media: entry.media?.copyWith(
+                isFavourite: entry.media?.isFavourite == null
+                    ? true
+                    : !entry.media!.isFavourite),
+          );
+        }
+
+        return entry;
+      }
+
+      return watchList.copyWith(
+        completed: watchList.completed.map(updateFavourite).toList(),
+        current: watchList.current.map(updateFavourite).toList(),
+        dropped: watchList.dropped.map(updateFavourite).toList(),
+        paused: watchList.paused.map(updateFavourite).toList(),
+        planning: watchList.planning.map(updateFavourite).toList(),
+        repeating: watchList.repeating.map(updateFavourite).toList(),
+      );
+    } on AnilistToggleFavouriteException {
+      rethrow;
+    } catch (e) {
+      throw AnilistToggleFavouriteException(
+        error: e.toString(),
+      );
+    }
+  }
 }

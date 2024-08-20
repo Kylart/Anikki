@@ -4,6 +4,7 @@ import 'get_list.query.graphql.dart';
 
 export 'airing_schedule.query.graphql.dart';
 export 'delete_list_entry.mutation.graphql.dart';
+export 'favourite_entry.mutation.graphql.dart';
 export 'get_activities.query.graphql.dart';
 export 'get_list.query.graphql.dart';
 export 'media.fragment.graphql.dart';

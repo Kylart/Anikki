@@ -30,6 +30,24 @@ mixin AnilistList on AnilistClient {
     }
   }
 
+  Future<void> toggleFavourite({
+    required int mediaId,
+  }) async {
+    try {
+      await client.mutate$ToggleFavourite(
+        Options$Mutation$ToggleFavourite(
+          variables: Variables$Mutation$ToggleFavourite(
+            animeId: mediaId,
+          ),
+        ),
+      );
+    } on GraphQLError catch (e) {
+      throw AnilistToggleFavouriteException(error: e.message);
+    } on OperationException catch (e) {
+      throw AnilistToggleFavouriteException(error: e.toString());
+    }
+  }
+
   Future<AnilistWatchList> getWatchLists(
     String username, {
     bool useCache = true,

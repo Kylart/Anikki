@@ -1,0 +1,7 @@
+mutation ToggleFavourite (
+	$animeId: Int
+) {
+	ToggleFavourite(
+    animeId: $animeId
+	) {}
+} 

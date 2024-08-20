@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/home/shared/widgets/home_carousel.dart/home_carousel.dart';
 import 'package:anikki/app/home/widgets/background_image.dart';
@@ -21,15 +21,9 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        final watchListBloc = BlocProvider.of<WatchListBloc>(
-          context,
-          listen: true,
-        );
-
         final initial = state is HomeInitial;
         final errored = state is HomeError;
-        final loading =
-            state is HomeLoading || watchListBloc.state is WatchListLoading;
+        final loading = state is HomeLoading;
 
         if (initial) return const Text('Loading');
         if (loading && state.entries.isEmpty) return const Text('Loading');
@@ -41,8 +35,6 @@ class _HomeViewState extends State<HomeView> {
           );
         }
 
-        final media = state.currentMedia;
-
         final screenSize = MediaQuery.of(context).size;
         final carouselSize = Size(
           max(screenSize.width / 1.8, 500).toDouble(),
@@ -51,9 +43,9 @@ class _HomeViewState extends State<HomeView> {
 
         return Stack(
           children: [
-            if (media != null)
+            if (state.currentMedia != null)
               Positioned.fill(
-                child: HomeBackgroundImage(media: media),
+                child: HomeBackgroundImage(media: state.currentMedia!),
               ),
 
             /// TODO: Implement actions and main title widget
@@ -72,7 +64,16 @@ class _HomeViewState extends State<HomeView> {
                   width: carouselSize.width,
                   entries: state.entries,
                 ),
-              ),
+              )
+                  .animate()
+                  .fadeIn(
+                    duration: 500.ms,
+                  )
+                  .slideX(
+                    duration: 500.ms,
+                    end: 0,
+                    begin: 0.5,
+                  ),
           ],
         );
       },

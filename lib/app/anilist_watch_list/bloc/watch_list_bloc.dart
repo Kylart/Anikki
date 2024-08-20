@@ -20,6 +20,7 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
     on<WatchListReset>(_onReset);
     on<WatchListWatched>(_onWatched);
     on<WatchListAuthUpdated>(_onAuthUpdated);
+    on<WatchListToggleFavourite>(_onToggleFavourite);
 
     setUpAutoRefresh();
   }
@@ -144,6 +145,42 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
         const Duration(minutes: 5),
         () => add(event),
       );
+    }
+  }
+
+  Future<void> _onToggleFavourite(
+    WatchListToggleFavourite event,
+    Emitter<WatchListState> emit,
+  ) async {
+    if (!state.connected || state is! WatchListComplete) return;
+
+    final currentState = state;
+
+    try {
+      final updatedWatchList = await repository.toggleFavourite(
+        state.watchList,
+        event.mediaId,
+      );
+
+      emit(
+        WatchListComplete(
+          username: state.username,
+          connected: state.connected,
+          watchList: updatedWatchList,
+        ),
+      );
+    } on AnilistToggleFavouriteException catch (e) {
+      logger.error(e.cause, e.error);
+
+      emit(
+        WatchListNotify(
+          username: state.username,
+          title: e.cause,
+          description: 'Please retry later',
+          isError: true,
+        ),
+      );
+      emit(currentState);
     }
   }
 }

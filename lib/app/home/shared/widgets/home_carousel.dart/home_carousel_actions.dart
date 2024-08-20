@@ -36,7 +36,11 @@ class _HomeCarouselActions extends StatelessWidget {
           width: 8.0,
         ),
         FilledButton(
-          onPressed: () {},
+          onPressed: () {
+            BlocProvider.of<WatchListBloc>(context).add(
+              WatchListToggleFavourite(mediaId: media.anilistInfo.id),
+            );
+          },
           child: Icon(
             media.anilistInfo.isFavourite == true
                 ? Icons.favorite
