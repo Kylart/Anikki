@@ -4,11 +4,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/core/core.dart';
 
@@ -39,7 +39,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
 
   Timer? timer;
   late final ScrollController scrollController;
-  final listController = ListController();
+  late final ListController listController;
 
   final toNextDuration = const Duration(seconds: 15);
   final itemAnimationDuration = const Duration(milliseconds: 300);
@@ -52,13 +52,16 @@ class _HomeCarouselState extends State<HomeCarousel> {
   @override
   void initState() {
     scrollController = ScrollController();
+    listController = ListController();
     setInitialIndex();
     updateCurrentMedia();
     setTimer();
 
-    SchedulerBinding.instance.addPostFrameCallback(
-      (_) => goToItem(currentIndex),
-    );
+    if (currentIndex != 0) {
+      SchedulerBinding.instance.addPostFrameCallback(
+        (_) => goToItem(currentIndex),
+      );
+    }
 
     super.initState();
   }
@@ -66,6 +69,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
   @override
   void dispose() {
     scrollController.dispose();
+    listController.dispose();
     timer?.cancel();
     super.dispose();
   }
@@ -100,6 +104,8 @@ class _HomeCarouselState extends State<HomeCarousel> {
   }
 
   void goToItem(int index, {bool resetTimer = false}) {
+    if (!mounted) return;
+
     if (resetTimer) {
       timer?.cancel();
       setTimer();
@@ -107,7 +113,10 @@ class _HomeCarouselState extends State<HomeCarousel> {
 
     setState(() {
       currentIndex = max(index, 0);
+      updateCurrentMedia();
     });
+
+    if (!listController.isAttached) return;
 
     listController.animateToItem(
       curve: (estimatedDistance) => Curves.linear,
@@ -116,8 +125,6 @@ class _HomeCarouselState extends State<HomeCarousel> {
       scrollController: scrollController,
       alignment: 0.0,
     );
-
-    updateCurrentMedia();
   }
 
   Size get cardSize => Size(widget.width, widget.height);
