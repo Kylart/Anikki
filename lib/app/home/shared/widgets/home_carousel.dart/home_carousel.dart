@@ -139,17 +139,15 @@ class _HomeCarouselState extends State<HomeCarousel> {
                 final i = index % widget.entries.length;
                 final entry = widget.entries.elementAt(i);
 
-                return InkWell(
-                  onTap: () => goToItem(index),
-                  child: _HomeCarouselImage(
-                    realIndex: index,
-                    currentIndex: currentIndex,
-                    itemAnimationDuration: itemAnimationDuration,
-                    cardSize: cardSize,
-                    reducedHeight: reducedHeight,
-                    itemAspectRatio: itemAspectRatio,
-                    entry: entry,
-                  ),
+                return _HomeCarouselImage(
+                  goToItem: goToItem,
+                  realIndex: index,
+                  currentIndex: currentIndex,
+                  itemAnimationDuration: itemAnimationDuration,
+                  cardSize: cardSize,
+                  reducedHeight: reducedHeight,
+                  itemAspectRatio: itemAspectRatio,
+                  entry: entry,
                 );
               },
             ),

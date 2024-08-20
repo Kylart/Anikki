@@ -9,6 +9,7 @@ class _HomeCarouselImage extends StatelessWidget {
     required this.reducedHeight,
     required this.entry,
     required this.itemAspectRatio,
+    required this.goToItem,
   });
 
   final int currentIndex;
@@ -18,6 +19,7 @@ class _HomeCarouselImage extends StatelessWidget {
   final double reducedHeight;
   final MediaListEntry entry;
   final double itemAspectRatio;
+  final void Function(int index, {bool resetTimer}) goToItem;
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +44,11 @@ class _HomeCarouselImage extends StatelessWidget {
               ),
             ),
           ),
-          child: AspectRatio(
-            aspectRatio: itemAspectRatio,
+          child: InkWell(
+            onTap: () => goToItem(realIndex),
+            child: AspectRatio(
+              aspectRatio: itemAspectRatio,
+            ),
           ),
         ),
       ),
