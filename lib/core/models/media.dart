@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
+import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/data/tmdb/models/models.dart';
 
@@ -10,7 +11,7 @@ class Media extends Equatable {
     Fragment$shortMedia? anilistInfo,
     this.tmdbInfo,
   }) {
-    this.anilistInfo = anilistInfo ?? Fragment$shortMedia(id: 0);
+    this.anilistInfo = anilistInfo ?? AnilistUtils.getEmptyMedia();
   }
 
   late final Fragment$shortMedia anilistInfo;

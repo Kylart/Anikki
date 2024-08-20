@@ -29,4 +29,16 @@ class AnilistUtils {
   ) {
     return AnilistUtils.getListEntry(watchList.completed, media);
   }
+
+  static Fragment$shortMedia getEmptyMedia({
+    int id = 0,
+    String? title,
+  }) =>
+      Fragment$shortMedia(
+        id: id,
+        isFavourite: false,
+        title: title == null
+            ? null
+            : Fragment$shortMedia$title(userPreferred: title),
+      );
 }

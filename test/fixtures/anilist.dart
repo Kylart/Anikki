@@ -1,3 +1,4 @@
+import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:graphql/client.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -61,6 +62,7 @@ final viewerMock = Query$Viewer(
 final shortMediaMock = Fragment$shortMedia(
   id: 20,
   episodes: 12,
+  isFavourite: false,
   title: Fragment$shortMedia$title(
     userPreferred: 'Sakura Trick',
   ),
@@ -88,15 +90,13 @@ final airingScheduleMock = Query$AiringSchedule(
         id: 1,
         episode: 4,
         airingAt: 0,
-        media: Fragment$shortMedia(
-          id: 20,
-        ),
+        media: AnilistUtils.getEmptyMedia(id: 20),
       ),
       Query$AiringSchedule$Page$airingSchedules(
         id: 2,
         episode: 5,
         airingAt: 0,
-        media: Fragment$shortMedia(
+        media: AnilistUtils.getEmptyMedia(
           id: 21,
         ),
       ),
@@ -115,6 +115,7 @@ final watchListMock = Query$GetLists(
               id: 1,
               episodes: 12,
               isAdult: false,
+              isFavourite: false,
               nextAiringEpisode: Fragment$shortMedia$nextAiringEpisode(
                 airingAt: 1,
                 episode: 3,
@@ -128,6 +129,7 @@ final watchListMock = Query$GetLists(
               id: 2,
               episodes: 12,
               isAdult: false,
+              isFavourite: false,
               nextAiringEpisode: Fragment$shortMedia$nextAiringEpisode(
                 airingAt: 1,
                 episode: 6,
@@ -141,12 +143,22 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.COMPLETED,
-            media: Fragment$shortMedia(id: 3, episodes: 12, isAdult: false),
+            media: Fragment$shortMedia(
+              id: 3,
+              episodes: 12,
+              isAdult: false,
+              isFavourite: false,
+            ),
             progress: 12,
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.COMPLETED,
-            media: Fragment$shortMedia(id: 4, episodes: 12, isAdult: false),
+            media: Fragment$shortMedia(
+              id: 4,
+              episodes: 12,
+              isAdult: false,
+              isFavourite: false,
+            ),
             progress: 12,
           ),
         ],
@@ -155,7 +167,12 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.DROPPED,
-            media: Fragment$shortMedia(id: 5, episodes: 12, isAdult: false),
+            media: Fragment$shortMedia(
+              id: 5,
+              episodes: 12,
+              isAdult: false,
+              isFavourite: false,
+            ),
             progress: 3,
           ),
         ],
@@ -164,7 +181,12 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PLANNING,
-            media: Fragment$shortMedia(id: 6, episodes: 12, isAdult: false),
+            media: Fragment$shortMedia(
+              id: 6,
+              episodes: 12,
+              isAdult: false,
+              isFavourite: false,
+            ),
           ),
         ],
       ),
@@ -172,12 +194,22 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PAUSED,
-            media: Fragment$shortMedia(id: 7, episodes: 12, isAdult: false),
+            media: Fragment$shortMedia(
+              id: 7,
+              episodes: 12,
+              isAdult: false,
+              isFavourite: false,
+            ),
             progress: 6,
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PAUSED,
-            media: Fragment$shortMedia(id: 8, episodes: 12, isAdult: false),
+            media: Fragment$shortMedia(
+              id: 8,
+              episodes: 12,
+              isAdult: false,
+              isFavourite: false,
+            ),
             progress: 7,
           ),
         ],

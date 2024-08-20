@@ -3522,7 +3522,7 @@ class Fragment$shortMedia {
     this.season,
     this.seasonYear,
     this.status,
-    this.isFavourite,
+    required this.isFavourite,
     this.title,
     this.coverImage,
     this.trailer,
@@ -3578,7 +3578,7 @@ class Fragment$shortMedia {
       status: l$status == null
           ? null
           : fromJson$Enum$MediaStatus((l$status as String)),
-      isFavourite: (l$isFavourite as bool?),
+      isFavourite: (l$isFavourite as bool),
       title: l$title == null
           ? null
           : Fragment$shortMedia$title.fromJson(
@@ -3639,7 +3639,7 @@ class Fragment$shortMedia {
 
   final Enum$MediaStatus? status;
 
-  final bool? isFavourite;
+  final bool isFavourite;
 
   final Fragment$shortMedia$title? title;
 

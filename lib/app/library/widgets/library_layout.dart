@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/data/data.dart';
-import 'package:anikki/app/settings/bloc/settings_bloc.dart';
-import 'package:anikki/core/widgets/entry/entry_tile.dart';
 import 'package:anikki/app/library/widgets/library_card.dart';
-import 'package:anikki/core/widgets/list_view/custom_list_view.dart';
+import 'package:anikki/app/settings/bloc/settings_bloc.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
+import 'package:anikki/core/widgets/entry/entry_tile.dart';
 import 'package:anikki/core/widgets/grid_view/custom_grid_view.dart';
+import 'package:anikki/core/widgets/list_view/custom_list_view.dart';
 
 class LibraryLayout extends StatelessWidget {
   const LibraryLayout({
@@ -43,7 +43,7 @@ class LibraryLayout extends StatelessWidget {
             builder: (context, entry) {
               return EntryTile(
                 media: entry.media == null
-                    ? Media(anilistInfo: Fragment$shortMedia(id: 0))
+                    ? Media(anilistInfo: AnilistUtils.getEmptyMedia())
                     : entry.media!,
                 subtitle: entry.entries.length == 1
                     ? Text(

@@ -223,11 +223,8 @@ class VideoPlayerRepository {
     BlocProvider.of<StreamHandlerBloc>(context).add(
       StreamHandlerShowRequested(
         media: media ??
-            Fragment$shortMedia(
-              id: 0,
-              title: Fragment$shortMedia$title(
-                userPreferred: entry?.entries.first.title,
-              ),
+            AnilistUtils.getEmptyMedia(
+              title: entry?.entries.first.title,
             ),
         minEpisode: progress != null ? progress + 1 : null,
         entry: entry,

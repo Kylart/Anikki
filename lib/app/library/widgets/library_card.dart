@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:anikki/core/widgets/entry_card/entry_card.dart';
 import 'package:anikki/core/core.dart';
-import 'package:anikki/data/data.dart';
+import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
+import 'package:anikki/core/widgets/entry_card/entry_card.dart';
 
 class LibraryCard extends StatelessWidget {
   const LibraryCard({
@@ -16,7 +16,7 @@ class LibraryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return EntryCard(
       media: entry.media == null
-          ? Media(anilistInfo: Fragment$shortMedia(id: 0))
+          ? Media(anilistInfo: AnilistUtils.getEmptyMedia())
           : entry.media!,
       libraryEntry: entry,
       text: entry.entries.length == 1

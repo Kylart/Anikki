@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 
@@ -14,7 +15,7 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
   StreamHandlerBloc(this.repository)
       : super(
           StreamHandlerInitial(
-            media: Fragment$shortMedia(id: 0),
+            media: AnilistUtils.getEmptyMedia(),
           ),
         ) {
     on<StreamHandlerShowRequested>(_onShowRequested);
