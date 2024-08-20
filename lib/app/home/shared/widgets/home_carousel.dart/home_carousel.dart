@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -13,14 +14,19 @@ import 'package:anikki/core/core.dart';
 
 part 'home_carousel_navigation.dart';
 part 'home_carousel_title.dart';
+part 'home_carousel_actions.dart';
 
 class HomeCarousel extends StatefulWidget {
   const HomeCarousel({
     super.key,
     required this.medias,
+    required this.height,
+    required this.width,
   });
 
   final List<Media> medias;
+  final double width;
+  final double height;
 
   @override
   State<HomeCarousel> createState() => _HomeCarouselState();
@@ -46,6 +52,10 @@ class _HomeCarouselState extends State<HomeCarousel> {
     setInitialIndex();
     updateCurrentMedia();
     setTimer();
+
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) => goToItem(currentIndex),
+    );
 
     super.initState();
   }
@@ -107,56 +117,52 @@ class _HomeCarouselState extends State<HomeCarousel> {
     updateCurrentMedia();
   }
 
+  Size get cardSize => Size(widget.width, widget.height);
+  double get reducedHeight => cardSize.height / 1.3;
+
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final height = max(screenSize.height / 2.5, 300).toDouble();
-    final width = max(screenSize.width / 1.8, 500).toDouble();
-
-    return Positioned(
-      right: 0,
-      bottom: 0,
-      width: width,
-      height: height,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(8.0),
-          bottomLeft: Radius.circular(8.0),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  context.colorScheme.surface.withOpacity(0.2),
-                  context.colorScheme.surface.withOpacity(0.1),
-                ],
-              ),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8.0),
-                bottomLeft: Radius.circular(8.0),
-              ),
-              border: Border.all(
-                color: context.colorScheme.outline.withOpacity(0.1),
-              ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(8.0),
+        bottomLeft: Radius.circular(8.0),
+      ),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                context.colorScheme.surface.withOpacity(0.2),
+                context.colorScheme.surface.withOpacity(0.1),
+              ],
             ),
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: SuperListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    listController: listController,
-                    controller: scrollController,
-                    itemCount: 10000000,
-                    itemBuilder: (context, index) {
-                      final i = index % widget.medias.length;
-                      final media = widget.medias.elementAt(i);
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              bottomLeft: Radius.circular(8.0),
+            ),
+            border: Border.all(
+              color: context.colorScheme.outline.withOpacity(0.1),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: SuperListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  listController: listController,
+                  controller: scrollController,
+                  itemCount: 10000000,
+                  itemBuilder: (context, index) {
+                    final i = index % widget.medias.length;
+                    final media = widget.medias.elementAt(i);
 
-                      return Padding(
+                    return InkWell(
+                      onTap: () => goToItem(index),
+                      child: Padding(
                         padding: index == currentIndex
                             ? const EdgeInsets.only(right: 12.0)
                             : const EdgeInsets.symmetric(horizontal: 12.0),
@@ -165,8 +171,9 @@ class _HomeCarouselState extends State<HomeCarousel> {
                           child: AnimatedContainer(
                             duration: itemAnimationDuration,
                             constraints: BoxConstraints(
-                              maxHeight:
-                                  index == currentIndex ? height : height / 1.5,
+                              maxHeight: index == currentIndex
+                                  ? cardSize.height
+                                  : reducedHeight,
                             ),
                             decoration: BoxDecoration(
                               borderRadius:
@@ -183,19 +190,30 @@ class _HomeCarouselState extends State<HomeCarousel> {
                             ),
                           ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
-                Positioned(
-                  top: 0,
-                  left: height * itemAspectRatio + 12,
-                  width: width - (height * itemAspectRatio + 12),
+              ),
+              Positioned(
+                top: 0,
+                left: cardSize.height * itemAspectRatio + 12,
+                width:
+                    cardSize.width - (cardSize.height * itemAspectRatio + 12),
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxHeight: cardSize.height - reducedHeight,
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 4.0),
+                    padding: const EdgeInsets.only(
+                      right: 12.0,
+                      left: 12.0,
+                      top: 4.0,
+                      bottom: 16.0,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -220,22 +238,27 @@ class _HomeCarouselState extends State<HomeCarousel> {
                             ),
                           ],
                         ),
+                        _HomeCarouselActions(
+                          media: currentMedia,
+                          numberOfItems: widget.medias.length,
+                          goToItem: goToItem,
+                        ),
                       ],
                     ),
                   ),
                 ),
-              ],
-            )
-                .animate()
-                .fadeIn(
-                  duration: 500.ms,
-                )
-                .slideX(
-                  duration: 500.ms,
-                  end: 0,
-                  begin: 0.5,
-                ),
-          ),
+              ),
+            ],
+          )
+              .animate()
+              .fadeIn(
+                duration: 500.ms,
+              )
+              .slideX(
+                duration: 500.ms,
+                end: 0,
+                begin: 0.5,
+              ),
         ),
       ),
     );
