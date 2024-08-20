@@ -12,9 +12,11 @@ import 'package:super_sliver_list/super_sliver_list.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/core/core.dart';
 
+part 'home_carousel_actions.dart';
+part 'home_carousel_container.dart';
+part 'home_carousel_image.dart';
 part 'home_carousel_navigation.dart';
 part 'home_carousel_title.dart';
-part 'home_carousel_actions.dart';
 
 class HomeCarousel extends StatefulWidget {
   const HomeCarousel({
@@ -123,144 +125,88 @@ class _HomeCarouselState extends State<HomeCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(8.0),
-        bottomLeft: Radius.circular(8.0),
-      ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                context.colorScheme.surface.withOpacity(0.2),
-                context.colorScheme.surface.withOpacity(0.1),
-              ],
-            ),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(8.0),
-              bottomLeft: Radius.circular(8.0),
-            ),
-            border: Border.all(
-              color: context.colorScheme.outline.withOpacity(0.1),
+    return _HomeCarouselContainer(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: SuperListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              listController: listController,
+              controller: scrollController,
+              itemCount: 10000000,
+              itemBuilder: (context, index) {
+                final i = index % widget.entries.length;
+                final entry = widget.entries.elementAt(i);
+
+                return InkWell(
+                  onTap: () => goToItem(index),
+                  child: _HomeCarouselImage(
+                    realIndex: index,
+                    currentIndex: currentIndex,
+                    itemAnimationDuration: itemAnimationDuration,
+                    cardSize: cardSize,
+                    reducedHeight: reducedHeight,
+                    itemAspectRatio: itemAspectRatio,
+                    entry: entry,
+                  ),
+                );
+              },
             ),
           ),
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: SuperListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  listController: listController,
-                  controller: scrollController,
-                  itemCount: 10000000,
-                  itemBuilder: (context, index) {
-                    final i = index % widget.entries.length;
-                    final entry = widget.entries.elementAt(i);
-
-                    return InkWell(
-                      onTap: () => goToItem(index),
-                      child: Padding(
-                        padding: index == currentIndex
-                            ? const EdgeInsets.only(right: 12.0)
-                            : const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: AnimatedContainer(
-                            duration: itemAnimationDuration,
-                            constraints: BoxConstraints(
-                              maxHeight: index == currentIndex
-                                  ? cardSize.height
-                                  : reducedHeight,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8.0)),
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: NetworkImage(
-                                  entry.media.coverImage ?? '',
-                                ),
-                              ),
-                            ),
-                            child: AspectRatio(
-                              aspectRatio: itemAspectRatio,
-                            ),
+          Positioned(
+            top: 0,
+            left: cardSize.height * itemAspectRatio + 12,
+            width: cardSize.width - (cardSize.height * itemAspectRatio + 12),
+            child: Container(
+              constraints: BoxConstraints(
+                maxHeight: cardSize.height - reducedHeight,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 12.0,
+                  left: 12.0,
+                  top: 4.0,
+                  bottom: 16.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: _HomeCarouselTitle(
+                            currentMedia: currentEntry.media,
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: cardSize.height * itemAspectRatio + 12,
-                width:
-                    cardSize.width - (cardSize.height * itemAspectRatio + 12),
-                child: Container(
-                  constraints: BoxConstraints(
-                    maxHeight: cardSize.height - reducedHeight,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      right: 12.0,
-                      left: 12.0,
-                      top: 4.0,
-                      bottom: 16.0,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: _HomeCarouselTitle(
-                                currentMedia: currentEntry.media,
-                              ),
-                            ),
-                            _HomeCarouselNavigation(
-                              text:
-                                  '${currentMediaIndex + 1} / ${widget.entries.length}',
-                              onNext: () => goToItem(
-                                currentIndex + 1,
-                                resetTimer: true,
-                              ),
-                              onPrevious: () => goToItem(
-                                currentIndex - 1,
-                                resetTimer: true,
-                              ),
-                            ),
-                          ],
-                        ),
-                        _HomeCarouselActions(
-                          media: currentEntry.media,
-                          numberOfItems: widget.entries.length,
-                          goToItem: goToItem,
+                        _HomeCarouselNavigation(
+                          text:
+                              '${currentMediaIndex + 1} / ${widget.entries.length}',
+                          onNext: () => goToItem(
+                            currentIndex + 1,
+                            resetTimer: true,
+                          ),
+                          onPrevious: () => goToItem(
+                            currentIndex - 1,
+                            resetTimer: true,
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                    _HomeCarouselActions(
+                      media: currentEntry.media,
+                      numberOfItems: widget.entries.length,
+                      goToItem: goToItem,
+                    ),
+                  ],
                 ),
               ),
-            ],
-          )
-              .animate()
-              .fadeIn(
-                duration: 500.ms,
-              )
-              .slideX(
-                duration: 500.ms,
-                end: 0,
-                begin: 0.5,
-              ),
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
