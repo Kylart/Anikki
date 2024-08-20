@@ -3522,6 +3522,7 @@ class Fragment$shortMedia {
     this.season,
     this.seasonYear,
     this.status,
+    this.isFavourite,
     this.title,
     this.coverImage,
     this.trailer,
@@ -3548,6 +3549,7 @@ class Fragment$shortMedia {
     final l$season = json['season'];
     final l$seasonYear = json['seasonYear'];
     final l$status = json['status'];
+    final l$isFavourite = json['isFavourite'];
     final l$title = json['title'];
     final l$coverImage = json['coverImage'];
     final l$trailer = json['trailer'];
@@ -3576,6 +3578,7 @@ class Fragment$shortMedia {
       status: l$status == null
           ? null
           : fromJson$Enum$MediaStatus((l$status as String)),
+      isFavourite: (l$isFavourite as bool?),
       title: l$title == null
           ? null
           : Fragment$shortMedia$title.fromJson(
@@ -3636,6 +3639,8 @@ class Fragment$shortMedia {
 
   final Enum$MediaStatus? status;
 
+  final bool? isFavourite;
+
   final Fragment$shortMedia$title? title;
 
   final Fragment$shortMedia$coverImage? coverImage;
@@ -3686,6 +3691,8 @@ class Fragment$shortMedia {
     final l$status = status;
     _resultData['status'] =
         l$status == null ? null : toJson$Enum$MediaStatus(l$status);
+    final l$isFavourite = isFavourite;
+    _resultData['isFavourite'] = l$isFavourite;
     final l$title = title;
     _resultData['title'] = l$title?.toJson();
     final l$coverImage = coverImage;
@@ -3734,6 +3741,7 @@ class Fragment$shortMedia {
     final l$season = season;
     final l$seasonYear = seasonYear;
     final l$status = status;
+    final l$isFavourite = isFavourite;
     final l$title = title;
     final l$coverImage = coverImage;
     final l$trailer = trailer;
@@ -3758,6 +3766,7 @@ class Fragment$shortMedia {
       l$season,
       l$seasonYear,
       l$status,
+      l$isFavourite,
       l$title,
       l$coverImage,
       l$trailer,
@@ -3816,6 +3825,11 @@ class Fragment$shortMedia {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$isFavourite = isFavourite;
+    final lOther$isFavourite = other.isFavourite;
+    if (l$isFavourite != lOther$isFavourite) {
       return false;
     }
     final l$title = title;
@@ -3964,6 +3978,7 @@ abstract class CopyWith$Fragment$shortMedia<TRes> {
     Enum$MediaSeason? season,
     int? seasonYear,
     Enum$MediaStatus? status,
+    bool? isFavourite,
     Fragment$shortMedia$title? title,
     Fragment$shortMedia$coverImage? coverImage,
     Fragment$shortMedia$trailer? trailer,
@@ -4016,6 +4031,7 @@ class _CopyWithImpl$Fragment$shortMedia<TRes>
     Object? season = _undefined,
     Object? seasonYear = _undefined,
     Object? status = _undefined,
+    Object? isFavourite = _undefined,
     Object? title = _undefined,
     Object? coverImage = _undefined,
     Object? trailer = _undefined,
@@ -4048,6 +4064,9 @@ class _CopyWithImpl$Fragment$shortMedia<TRes>
         status: status == _undefined
             ? _instance.status
             : (status as Enum$MediaStatus?),
+        isFavourite: isFavourite == _undefined || isFavourite == null
+            ? _instance.isFavourite
+            : (isFavourite as bool),
         title: title == _undefined
             ? _instance.title
             : (title as Fragment$shortMedia$title?),
@@ -4176,6 +4195,7 @@ class _CopyWithStubImpl$Fragment$shortMedia<TRes>
     Enum$MediaSeason? season,
     int? seasonYear,
     Enum$MediaStatus? status,
+    bool? isFavourite,
     Fragment$shortMedia$title? title,
     Fragment$shortMedia$coverImage? coverImage,
     Fragment$shortMedia$trailer? trailer,
@@ -4263,6 +4283,13 @@ const fragmentDefinitionshortMedia = FragmentDefinitionNode(
     ),
     FieldNode(
       name: NameNode(value: 'status'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'isFavourite'),
       alias: null,
       arguments: [],
       directives: [],

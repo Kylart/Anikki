@@ -83,6 +83,7 @@ fragment shortMedia on Media {
   season
   seasonYear
   status
+  isFavourite
   title {
     userPreferred
     romaji
