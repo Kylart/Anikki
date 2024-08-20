@@ -9,14 +9,14 @@ class HomeBackgroundImage extends StatelessWidget {
 
   final Media media;
 
-  String? getBackgroundImage() {
+  String? get backgroundImage {
     final images = media.tmdbInfo?.images?.backdrops;
 
-    if (images == null || images.isEmpty) {
-      return media.bannerImage;
+    if (images != null && images.isNotEmpty) {
+      return 'https://image.tmdb.org/t/p/original${images.first.filePath}';
     }
 
-    return 'https://image.tmdb.org/t/p/original${images.first.filePath}';
+    return media.bannerImage ?? media.coverImage;
   }
 
   @override
@@ -44,11 +44,13 @@ class HomeBackgroundImage extends StatelessWidget {
           ],
         );
       },
-      child: Image.network(
-        key: ValueKey(media.title),
-        getBackgroundImage()!,
-        fit: BoxFit.cover,
-      ),
+      child: backgroundImage != null
+          ? Image.network(
+              key: ValueKey(media.title),
+              backgroundImage!,
+              fit: BoxFit.cover,
+            )
+          : const SizedBox(),
     );
   }
 }
