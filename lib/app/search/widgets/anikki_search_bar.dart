@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/search/bloc/search_bloc.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class AnikkiSearchBar extends StatefulWidget {
   const AnikkiSearchBar({super.key});
@@ -16,6 +16,8 @@ class AnikkiSearchBar extends StatefulWidget {
 }
 
 class _AnikkiSearchBarState extends State<AnikkiSearchBar> {
+  final borderRadius = const BorderRadius.all(Radius.circular(40));
+
   final controller = TextEditingController();
   late String text;
 
@@ -49,7 +51,7 @@ class _AnikkiSearchBarState extends State<AnikkiSearchBar> {
     return Container(
       constraints: const BoxConstraints(maxWidth: 700),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(40)),
+        borderRadius: borderRadius,
         child: BackdropFilter(
           filter: !hasText
               ? ImageFilter.blur(sigmaX: 40, sigmaY: 40)
@@ -79,6 +81,9 @@ class _AnikkiSearchBarState extends State<AnikkiSearchBar> {
               );
             },
             decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: borderRadius,
+              ),
               fillColor: Colors.transparent,
               hoverColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -94,10 +99,7 @@ class _AnikkiSearchBarState extends State<AnikkiSearchBar> {
                   BlocProvider.of<SearchBloc>(context)
                       .add(const SearchRequested(''));
                 },
-                icon: const Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Icon(Ionicons.close_outline),
-                ),
+                icon: const Icon(HugeIcons.strokeRoundedCancel01),
               ),
             ),
           ),
