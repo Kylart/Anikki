@@ -37,7 +37,10 @@ class AnikkiBlocProvider extends StatelessWidget {
     );
     final userRepository = UserRepository(anilist);
     const videoPlayerRepository = VideoPlayerRepository();
-    final feedRepository = FeedRepository(anilist);
+    final feedRepository = FeedRepository(
+      anilist: anilist,
+      tmdb: tmdb,
+    );
     final consumetRepository = ConsumetRepository();
 
     return MultiBlocProvider(

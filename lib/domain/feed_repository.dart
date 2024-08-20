@@ -6,10 +6,16 @@ import 'package:anikki/data/data.dart';
 
 /// Repository to handle Feed related features
 class FeedRepository {
-  const FeedRepository(this.anilist);
+  const FeedRepository({
+    required this.anilist,
+    required this.tmdb,
+  });
 
   /// The [Anilist] API to use for this repository
   final Anilist anilist;
+
+  /// The [TMDB] object to use to interact with TMDB.
+  final Tmdb tmdb;
 
   /// Returns the release schedule for the given `range`
   Future<List<TimelineEntry>> getSchedule(
@@ -53,11 +59,12 @@ class FeedRepository {
   Future<List<Media>> getTrending() async {
     final entries = await anilist.getTrending();
 
-    return entries
-        .map(
-          (e) => Media(anilistInfo: e.media),
-        )
-        .toList();
+    return [
+      for (final entry in entries)
+        await tmdb.hydrateMediaWithTmdb(
+          Media(anilistInfo: entry.media),
+        ),
+    ];
   }
 
   /// Returns recommended entries

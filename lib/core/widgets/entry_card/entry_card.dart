@@ -103,10 +103,6 @@ class _EntryCardState extends State<EntryCard>
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (event) {
-            homeBloc.add(
-              HomeCurrentMediaChanged(widget.media),
-            );
-
             setState(() {
               hovered = true;
               scaleController.forward();

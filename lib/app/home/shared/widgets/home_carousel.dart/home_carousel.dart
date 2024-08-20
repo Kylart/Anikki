@@ -19,12 +19,12 @@ part 'home_carousel_actions.dart';
 class HomeCarousel extends StatefulWidget {
   const HomeCarousel({
     super.key,
-    required this.medias,
+    required this.entries,
     required this.height,
     required this.width,
   });
 
-  final List<Media> medias;
+  final List<MediaListEntry> entries;
   final double width;
   final double height;
 
@@ -43,8 +43,9 @@ class _HomeCarouselState extends State<HomeCarousel> {
   final itemAnimationDuration = const Duration(milliseconds: 300);
 
   int currentIndex = 0;
-  int get currentMediaIndex => currentIndex % widget.medias.length;
-  Media get currentMedia => widget.medias.elementAt(currentMediaIndex);
+  int get currentMediaIndex => currentIndex % widget.entries.length;
+  MediaListEntry get currentEntry =>
+      widget.entries.elementAt(currentMediaIndex);
 
   @override
   void initState() {
@@ -81,9 +82,9 @@ class _HomeCarouselState extends State<HomeCarousel> {
     final homeBloc = BlocProvider.of<HomeBloc>(context);
 
     currentIndex = max(
-      widget.medias.indexWhere(
+      widget.entries.indexWhere(
         (element) =>
-            element.anilistInfo.id ==
+            element.media.anilistInfo.id ==
             homeBloc.state.currentMedia?.anilistInfo.id,
       ),
       0,
@@ -92,7 +93,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
 
   void updateCurrentMedia() {
     BlocProvider.of<HomeBloc>(context).add(
-      HomeCurrentMediaChanged(currentMedia),
+      HomeCurrentMediaChanged(currentEntry),
     );
   }
 
@@ -157,8 +158,8 @@ class _HomeCarouselState extends State<HomeCarousel> {
                   controller: scrollController,
                   itemCount: 10000000,
                   itemBuilder: (context, index) {
-                    final i = index % widget.medias.length;
-                    final media = widget.medias.elementAt(i);
+                    final i = index % widget.entries.length;
+                    final entry = widget.entries.elementAt(i);
 
                     return InkWell(
                       onTap: () => goToItem(index),
@@ -181,7 +182,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
                               image: DecorationImage(
                                 fit: BoxFit.fill,
                                 image: NetworkImage(
-                                  media.coverImage ?? '',
+                                  entry.media.coverImage ?? '',
                                 ),
                               ),
                             ),
@@ -221,12 +222,12 @@ class _HomeCarouselState extends State<HomeCarousel> {
                           children: [
                             Flexible(
                               child: _HomeCarouselTitle(
-                                currentMedia: currentMedia,
+                                currentMedia: currentEntry.media,
                               ),
                             ),
                             _HomeCarouselNavigation(
                               text:
-                                  '${currentMediaIndex + 1} / ${widget.medias.length}',
+                                  '${currentMediaIndex + 1} / ${widget.entries.length}',
                               onNext: () => goToItem(
                                 currentIndex + 1,
                                 resetTimer: true,
@@ -239,8 +240,8 @@ class _HomeCarouselState extends State<HomeCarousel> {
                           ],
                         ),
                         _HomeCarouselActions(
-                          media: currentMedia,
-                          numberOfItems: widget.medias.length,
+                          media: currentEntry.media,
+                          numberOfItems: widget.entries.length,
                           goToItem: goToItem,
                         ),
                       ],

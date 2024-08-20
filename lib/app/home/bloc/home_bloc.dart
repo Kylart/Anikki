@@ -18,7 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeCurrentMediaChanged>((event, emit) {
       emit(
         state.copyWith(
-          currentMedia: event.media,
+          currentMedia: event.entry?.media,
         ),
       );
     });
@@ -27,33 +27,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _onRefresh(HomeRefreshed event, Emitter<HomeState> emit) async {
-    List<Media>? medias;
     List<MediaListEntry>? entries;
 
     try {
       emit(
         HomeLoading(
           entries: state.entries,
-          medias: state.medias,
         ),
       );
 
-      medias = await feedRepository.getTrending();
       entries = event.watchList != null
           ? await userListRepository.getContinueList(event.watchList!)
-          : const <MediaListEntry>[];
+          : (await feedRepository.getTrending())
+              .map(
+                (media) => MediaListEntry(media: media, progress: null),
+              )
+              .toList();
 
       emit(
         HomeLoaded(
           entries: entries,
-          medias: medias,
         ),
       );
     } on AnilistGetListException catch (e) {
       emit(
         HomeError(
           entries: state.entries,
-          medias: medias ?? state.medias,
           message: e.error ?? e.cause,
         ),
       );
@@ -61,7 +60,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeError(
           entries: entries ?? state.entries,
-          medias: state.medias,
           message: e.error ?? e.cause,
         ),
       );
@@ -69,7 +67,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeError(
           entries: entries ?? state.entries,
-          medias: medias ?? state.medias,
           message: e.toString(),
         ),
       );

@@ -8,13 +8,13 @@ sealed class HomeEvent extends Equatable {
 }
 
 final class HomeCurrentMediaChanged extends HomeEvent {
-  const HomeCurrentMediaChanged(this.media);
+  const HomeCurrentMediaChanged(this.entry);
 
-  final Media? media;
+  final MediaListEntry? entry;
 
   @override
   List<Object?> get props => [
-        media,
+        entry,
       ];
 }
 
