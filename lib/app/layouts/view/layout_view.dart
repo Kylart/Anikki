@@ -90,7 +90,11 @@ class _LayoutViewState extends State<LayoutView> {
             ];
 
             void updatePage(int index) {
-              pageController.jumpToPage(index);
+              pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.decelerate,
+              );
             }
 
             return SafeArea(
