@@ -76,6 +76,7 @@ mixin AnilistInfo on AnilistClient {
         id
         siteUrl
         idMal
+        isFavourite
         title {
           userPreferred
           romaji
