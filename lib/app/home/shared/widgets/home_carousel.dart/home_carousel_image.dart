@@ -21,10 +21,14 @@ class _HomeCarouselImage extends StatelessWidget {
   final double itemAspectRatio;
   final void Function(int index, {bool resetTimer}) goToItem;
 
+  final radius = const Radius.circular(8.0);
+
+  bool get expanded => realIndex == currentIndex;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: realIndex == currentIndex
+      padding: expanded
           ? const EdgeInsets.only(right: 12.0)
           : const EdgeInsets.symmetric(horizontal: 12.0),
       child: Align(
@@ -32,11 +36,16 @@ class _HomeCarouselImage extends StatelessWidget {
         child: AnimatedContainer(
           duration: itemAnimationDuration,
           constraints: BoxConstraints(
-            maxHeight:
-                realIndex == currentIndex ? cardSize.height : reducedHeight,
+            maxHeight: expanded ? cardSize.height : reducedHeight,
           ),
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+            borderRadius: expanded
+                ? BorderRadius.only(
+                    topLeft: radius,
+                    topRight: radius,
+                    bottomRight: radius,
+                  )
+                : BorderRadius.all(radius),
             image: DecorationImage(
               fit: BoxFit.fill,
               image: NetworkImage(

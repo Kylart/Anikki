@@ -7,12 +7,15 @@ class _HomeCarouselContainer extends StatelessWidget {
 
   final Widget child;
 
+  BorderSide _getBorder(BuildContext context) => BorderSide(
+        color: context.colorScheme.outline.withOpacity(0.1),
+      );
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(8.0),
-        bottomLeft: Radius.circular(8.0),
       ),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -30,8 +33,9 @@ class _HomeCarouselContainer extends StatelessWidget {
               topLeft: Radius.circular(8.0),
               bottomLeft: Radius.circular(8.0),
             ),
-            border: Border.all(
-              color: context.colorScheme.outline.withOpacity(0.1),
+            border: Border(
+              top: _getBorder(context),
+              left: _getBorder(context),
             ),
           ),
           child: child,
