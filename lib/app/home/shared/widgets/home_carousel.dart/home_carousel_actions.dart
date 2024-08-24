@@ -27,6 +27,8 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
     });
   }
 
+  bool get isFavourite => widget.media.anilistInfo.isFavourite == true;
+
   Widget _buildLoader(BuildContext context) => Container(
         padding: const EdgeInsets.all(2.0),
         width: 24,
@@ -62,60 +64,64 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
           const SizedBox(
             width: 8.0,
           ),
-          FilledButton(
-            onPressed: () {
-              if (isRemoveEntryLoading) return;
+          Tooltip(
+            message: 'Move to Dropped list',
+            child: FilledButton(
+              onPressed: () {
+                if (isRemoveEntryLoading) return;
 
-              setState(() {
-                isRemoveEntryLoading = true;
-              });
+                setState(() {
+                  isRemoveEntryLoading = true;
+                });
 
-              BlocProvider.of<WatchListBloc>(context).add(
-                WatchListRemoveMedia(
-                  widget.media.anilistInfo.id,
+                BlocProvider.of<WatchListBloc>(context).add(
+                  WatchListRemoveMedia(
+                    widget.media.anilistInfo.id,
+                  ),
+                );
+              },
+              child: AnimatedCrossFade(
+                firstChild: _buildLoader(context),
+                secondChild: const Icon(
+                  HugeIcons.strokeRoundedBookmarkMinus01,
                 ),
-              );
-            },
-            child: AnimatedCrossFade(
-              firstChild: _buildLoader(context),
-              secondChild: const Icon(
-                HugeIcons.strokeRoundedBookmarkMinus01,
+                crossFadeState: isRemoveEntryLoading
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 200),
               ),
-              crossFadeState: isRemoveEntryLoading
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              duration: const Duration(milliseconds: 200),
             ),
           ),
           const SizedBox(
             width: 8.0,
           ),
-          FilledButton(
-            onPressed: () {
-              if (isToggleFavouriteLoading) return;
+          Tooltip(
+            message: isFavourite ? 'Remove from favourite' : 'Add to favourite',
+            child: FilledButton(
+              onPressed: () {
+                if (isToggleFavouriteLoading) return;
 
-              isToggleFavouriteLoading = true;
+                isToggleFavouriteLoading = true;
 
-              BlocProvider.of<WatchListBloc>(context).add(
-                WatchListToggleFavourite(
-                  mediaId: widget.media.anilistInfo.id,
+                BlocProvider.of<WatchListBloc>(context).add(
+                  WatchListToggleFavourite(
+                    mediaId: widget.media.anilistInfo.id,
+                  ),
+                );
+              },
+              child: AnimatedCrossFade(
+                firstChild: _buildLoader(context),
+                secondChild: Icon(
+                  isFavourite
+                      ? Icons.favorite
+                      : HugeIcons.strokeRoundedFavourite,
+                  color: isFavourite ? Colors.red : null,
                 ),
-              );
-            },
-            child: AnimatedCrossFade(
-              firstChild: _buildLoader(context),
-              secondChild: Icon(
-                widget.media.anilistInfo.isFavourite == true
-                    ? Icons.favorite
-                    : HugeIcons.strokeRoundedFavourite,
-                color: widget.media.anilistInfo.isFavourite == true
-                    ? Colors.red
-                    : null,
+                crossFadeState: isToggleFavouriteLoading
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 200),
               ),
-              crossFadeState: isToggleFavouriteLoading
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              duration: const Duration(milliseconds: 200),
             ),
           ),
         ],
