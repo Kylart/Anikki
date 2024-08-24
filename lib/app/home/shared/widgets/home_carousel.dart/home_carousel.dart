@@ -36,6 +36,7 @@ class HomeCarousel extends StatefulWidget {
 
 class _HomeCarouselState extends State<HomeCarousel> {
   final itemAspectRatio = 9 / 14;
+  int? dragDirection;
 
   Timer? timer;
   late final ScrollController scrollController;
@@ -105,6 +106,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
 
   void goToItem(int index, {bool resetTimer = false}) {
     if (!mounted) return;
+    if (index < 0) return;
 
     if (resetTimer) {
       timer?.cancel();
@@ -136,27 +138,38 @@ class _HomeCarouselState extends State<HomeCarousel> {
       child: Stack(
         children: [
           Positioned.fill(
-            child: SuperListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              listController: listController,
-              controller: scrollController,
-              itemCount: 10000000,
-              itemBuilder: (context, index) {
-                final i = index % widget.entries.length;
-                final entry = widget.entries.elementAt(i);
-
-                return _HomeCarouselImage(
-                  goToItem: goToItem,
-                  realIndex: index,
-                  currentIndex: currentIndex,
-                  itemAnimationDuration: itemAnimationDuration,
-                  cardSize: cardSize,
-                  reducedHeight: reducedHeight,
-                  itemAspectRatio: itemAspectRatio,
-                  entry: entry,
-                );
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                dragDirection = details.delta.dx.sign.toInt();
               },
+              onHorizontalDragEnd: (details) {
+                if (dragDirection == null) return;
+
+                goToItem(currentIndex - dragDirection!);
+                dragDirection = null;
+              },
+              child: SuperListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                listController: listController,
+                controller: scrollController,
+                itemCount: 10000000,
+                itemBuilder: (context, index) {
+                  final i = index % widget.entries.length;
+                  final entry = widget.entries.elementAt(i);
+
+                  return _HomeCarouselImage(
+                    goToItem: goToItem,
+                    realIndex: index,
+                    currentIndex: currentIndex,
+                    itemAnimationDuration: itemAnimationDuration,
+                    cardSize: cardSize,
+                    reducedHeight: reducedHeight,
+                    itemAspectRatio: itemAspectRatio,
+                    entry: entry,
+                  );
+                },
+              ),
             ),
           ),
           Positioned(
