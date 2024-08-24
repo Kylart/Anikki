@@ -1,6 +1,6 @@
 part of 'home_carousel.dart';
 
-class _HomeCarouselActions extends StatelessWidget {
+class _HomeCarouselActions extends StatefulWidget {
   const _HomeCarouselActions({
     required this.media,
     required this.numberOfItems,
@@ -12,43 +12,86 @@ class _HomeCarouselActions extends StatelessWidget {
   final void Function(int index, {bool resetTimer}) goToItem;
 
   @override
+  State<_HomeCarouselActions> createState() => _HomeCarouselActionsState();
+}
+
+class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
+  bool _isToggleFavouriteLoading = false;
+
+  bool get isToggleFavouriteLoading => _isToggleFavouriteLoading;
+
+  set isToggleFavouriteLoading(bool value) {
+    setState(() {
+      _isToggleFavouriteLoading = value;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        FilledButton.tonalIcon(
-          onPressed: () => goToItem(
-            Random().nextInt(numberOfItems - 1),
-            resetTimer: true,
+    return BlocListener<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (isToggleFavouriteLoading && state is HomeLoaded) {
+          isToggleFavouriteLoading = false;
+        }
+      },
+      child: Row(
+        children: [
+          FilledButton.tonalIcon(
+            onPressed: () => widget.goToItem(
+              Random().nextInt(widget.numberOfItems - 1),
+              resetTimer: true,
+            ),
+            icon: const Icon(HugeIcons.strokeRoundedShuffle),
+            label: const Text('Random'),
           ),
-          icon: const Icon(HugeIcons.strokeRoundedShuffle),
-          label: const Text('Random'),
-        ),
-        const SizedBox(
-          width: 8.0,
-        ),
-        FilledButton(
-          onPressed: () => {},
-          child: const Icon(
-            HugeIcons.strokeRoundedBookmarkMinus01,
+          const SizedBox(
+            width: 8.0,
           ),
-        ),
-        const SizedBox(
-          width: 8.0,
-        ),
-        FilledButton(
-          onPressed: () {
-            BlocProvider.of<WatchListBloc>(context).add(
-              WatchListToggleFavourite(mediaId: media.anilistInfo.id),
-            );
-          },
-          child: Icon(
-            media.anilistInfo.isFavourite == true
-                ? Icons.favorite
-                : HugeIcons.strokeRoundedFavourite,
-            color: media.anilistInfo.isFavourite == true ? Colors.red : null,
+          FilledButton(
+            onPressed: () => {},
+            child: const Icon(
+              HugeIcons.strokeRoundedBookmarkMinus01,
+            ),
           ),
-        ),
-      ],
+          const SizedBox(
+            width: 8.0,
+          ),
+          FilledButton(
+            onPressed: () {
+              isToggleFavouriteLoading = true;
+
+              BlocProvider.of<WatchListBloc>(context).add(
+                WatchListToggleFavourite(
+                  mediaId: widget.media.anilistInfo.id,
+                ),
+              );
+            },
+            child: AnimatedCrossFade(
+              firstChild: Container(
+                padding: const EdgeInsets.all(2.0),
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  color: context.colorScheme.onPrimary,
+                  strokeWidth: 2.0,
+                ),
+              ),
+              secondChild: Icon(
+                widget.media.anilistInfo.isFavourite == true
+                    ? Icons.favorite
+                    : HugeIcons.strokeRoundedFavourite,
+                color: widget.media.anilistInfo.isFavourite == true
+                    ? Colors.red
+                    : null,
+              ),
+              crossFadeState: isToggleFavouriteLoading
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              duration: const Duration(milliseconds: 200),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
