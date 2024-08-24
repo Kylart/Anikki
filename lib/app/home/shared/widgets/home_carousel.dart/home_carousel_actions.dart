@@ -16,6 +16,7 @@ class _HomeCarouselActions extends StatefulWidget {
 }
 
 class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
+  bool isRemoveEntryLoading = false;
   bool _isToggleFavouriteLoading = false;
 
   bool get isToggleFavouriteLoading => _isToggleFavouriteLoading;
@@ -26,12 +27,26 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
     });
   }
 
+  Widget _buildLoader(BuildContext context) => Container(
+        padding: const EdgeInsets.all(2.0),
+        width: 24,
+        height: 24,
+        child: CircularProgressIndicator(
+          color: context.colorScheme.onPrimary,
+          strokeWidth: 2.0,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
         if (isToggleFavouriteLoading && state is HomeLoaded) {
           isToggleFavouriteLoading = false;
+        }
+
+        if (isRemoveEntryLoading && state is HomeLoaded) {
+          isRemoveEntryLoading = false;
         }
       },
       child: Row(
@@ -48,9 +63,28 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
             width: 8.0,
           ),
           FilledButton(
-            onPressed: () => {},
-            child: const Icon(
-              HugeIcons.strokeRoundedBookmarkMinus01,
+            onPressed: () {
+              if (isRemoveEntryLoading) return;
+
+              setState(() {
+                isRemoveEntryLoading = true;
+              });
+
+              BlocProvider.of<WatchListBloc>(context).add(
+                WatchListRemoveMedia(
+                  widget.media.anilistInfo.id,
+                ),
+              );
+            },
+            child: AnimatedCrossFade(
+              firstChild: _buildLoader(context),
+              secondChild: const Icon(
+                HugeIcons.strokeRoundedBookmarkMinus01,
+              ),
+              crossFadeState: isRemoveEntryLoading
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              duration: const Duration(milliseconds: 200),
             ),
           ),
           const SizedBox(
@@ -58,6 +92,8 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
           ),
           FilledButton(
             onPressed: () {
+              if (isToggleFavouriteLoading) return;
+
               isToggleFavouriteLoading = true;
 
               BlocProvider.of<WatchListBloc>(context).add(
@@ -67,15 +103,7 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
               );
             },
             child: AnimatedCrossFade(
-              firstChild: Container(
-                padding: const EdgeInsets.all(2.0),
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  color: context.colorScheme.onPrimary,
-                  strokeWidth: 2.0,
-                ),
-              ),
+              firstChild: _buildLoader(context),
               secondChild: Icon(
                 widget.media.anilistInfo.isFavourite == true
                     ? Icons.favorite

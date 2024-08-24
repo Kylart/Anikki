@@ -19,6 +19,7 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
     on<WatchListRequested>(_onRequested);
     on<WatchListReset>(_onReset);
     on<WatchListWatched>(_onWatched);
+    on<WatchListRemoveMedia>(_onRemoveMedia);
     on<WatchListAuthUpdated>(_onAuthUpdated);
     on<WatchListToggleFavourite>(_onToggleFavourite);
 
@@ -96,7 +97,9 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
   }
 
   Future<void> _onWatched(
-      WatchListWatched event, Emitter<WatchListState> emit) async {
+    WatchListWatched event,
+    Emitter<WatchListState> emit,
+  ) async {
     if (!state.connected) return;
 
     final entry = event.entry;
@@ -145,6 +148,38 @@ class WatchListBloc extends AutoRefreshBloc<WatchListEvent, WatchListState> {
         const Duration(minutes: 5),
         () => add(event),
       );
+    }
+  }
+
+  Future<void> _onRemoveMedia(
+    WatchListRemoveMedia event,
+    Emitter<WatchListState> emit,
+  ) async {
+    if (!state.connected || state is! WatchListComplete) return;
+
+    final currentState = state;
+
+    try {
+      await repository.removeEntry(
+        mediaId: event.mediaId,
+      );
+
+      add(
+        WatchListRequested(username: state.username!),
+      );
+    } on AnilistUpdateListException catch (e) {
+      logger.error(e.cause, e.error);
+
+      emit(
+        WatchListNotify(
+          username: state.username,
+          title: e.cause,
+          description: 'Please retry later',
+          isError: true,
+        ),
+      );
+
+      emit(currentState);
     }
   }
 

@@ -7,8 +7,8 @@ mixin AnilistList on AnilistClient {
   ///
   /// throws [AnilistUpdateListException]
   Future<void> updateEntry({
-    required int episode,
     required int mediaId,
+    int? episode,
     Enum$MediaListStatus? status,
   }) async {
     try {

@@ -61,6 +61,17 @@ class WatchListWatched extends WatchListEvent {
       ];
 }
 
+class WatchListRemoveMedia extends WatchListEvent {
+  const WatchListRemoveMedia(
+    this.mediaId,
+  );
+
+  final int mediaId;
+
+  @override
+  List<Object?> get props => [mediaId];
+}
+
 class WatchListToggleFavourite extends WatchListEvent {
   const WatchListToggleFavourite({
     required this.mediaId,

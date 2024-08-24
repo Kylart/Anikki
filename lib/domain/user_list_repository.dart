@@ -54,6 +54,17 @@ class UserListRepository {
     );
   }
 
+  Future<void> removeEntry({
+    required int mediaId,
+  }) async {
+    if (mediaId == 0) return;
+
+    await anilist.updateEntry(
+      mediaId: mediaId,
+      status: Enum$MediaListStatus.DROPPED,
+    );
+  }
+
   /// Returns the watch lists of the user at `username`
   Future<AnilistWatchList> getList(String username) async {
     return await anilist.getWatchLists(
