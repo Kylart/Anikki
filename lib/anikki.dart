@@ -23,8 +23,8 @@ class _AnikkiState extends State<Anikki>
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Anikki',
-      theme: ThemeData.from(colorScheme: lightTheme),
-      darkTheme: ThemeData.from(colorScheme: darkTheme),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       themeMode: BlocProvider.of<SettingsBloc>(context, listen: true)
           .state
           .settings

@@ -1,6 +1,6 @@
 part of 'theme.dart';
 
-const darkTheme = ColorScheme(
+const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xff748bac),
   onPrimary: Color(0xfff8f9fc),
@@ -30,4 +30,13 @@ const darkTheme = ColorScheme(
   onInverseSurface: Color(0xff131313),
   inversePrimary: Color(0xff404a58),
   surfaceTint: Color(0xff748bac),
+);
+
+final _baseDarkTheme = ThemeData(
+  brightness: Brightness.dark,
+  colorScheme: darkColorScheme,
+);
+
+final darkTheme = _baseDarkTheme.copyWith(
+  textTheme: GoogleFonts.overpassMonoTextTheme(_baseDarkTheme.textTheme),
 );
