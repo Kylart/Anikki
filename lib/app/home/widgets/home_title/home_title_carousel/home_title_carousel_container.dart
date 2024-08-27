@@ -1,13 +1,16 @@
 part of 'home_title_carousel.dart';
 
-class _HomeTitleCarouselContainer extends StatelessWidget {
-  const _HomeTitleCarouselContainer({
+class HomeTitleCarouselContainer extends StatelessWidget {
+  const HomeTitleCarouselContainer({
+    super.key,
     required this.child,
     required this.minWidth,
   });
 
   final Widget child;
   final double minWidth;
+
+  static const height = 90.0;
 
   static const borderRadius = BorderRadius.all(
     Radius.circular(8.0),
@@ -16,7 +19,7 @@ class _HomeTitleCarouselContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
+      height: height,
       constraints: BoxConstraints(
         maxWidth: minWidth,
       ),

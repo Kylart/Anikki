@@ -53,7 +53,7 @@ class _HomeViewState extends State<HomeView> {
                 child: HomeBackgroundImage(media: state.currentMedia!),
               ),
               Positioned(
-                top: 24,
+                top: 0,
                 left: 0,
                 child: HomeTitle(
                   media: state.currentMedia!,

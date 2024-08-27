@@ -2,12 +2,12 @@ part of 'home_title_carousel.dart';
 
 class _HomeTitleCarouselImage extends StatefulWidget {
   const _HomeTitleCarouselImage({
-    required this.backdrop,
+    required this.url,
     required this.selected,
   });
 
   final bool selected;
-  final Backdrop backdrop;
+  final String url;
 
   @override
   State<_HomeTitleCarouselImage> createState() =>
@@ -37,11 +37,9 @@ class _HomeTitleCarouselImageState extends State<_HomeTitleCarouselImage> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (widget.backdrop.filePath == null) return;
-
         BlocProvider.of<HomeBloc>(context).add(
           HomeCurrentBackgroundUrlChanged(
-            getTmdbImageUrl(widget.backdrop.filePath!),
+            widget.url,
           ),
         );
       },
@@ -52,16 +50,16 @@ class _HomeTitleCarouselImageState extends State<_HomeTitleCarouselImage> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            borderRadius: _HomeTitleCarouselContainer.borderRadius,
+            borderRadius: HomeTitleCarouselContainer.borderRadius,
             border: Border.all(
               color: getBorderColor(context),
               width: 2,
             ),
           ),
           child: ClipRRect(
-            borderRadius: _HomeTitleCarouselContainer.borderRadius,
+            borderRadius: HomeTitleCarouselContainer.borderRadius,
             child: Image.network(
-              'https://image.tmdb.org/t/p/original${widget.backdrop.filePath}',
+              widget.url,
               errorBuilder: (context, error, stackTrace) {
                 return const SizedBox();
               },

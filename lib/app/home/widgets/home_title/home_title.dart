@@ -26,7 +26,11 @@ class HomeTitle extends StatelessWidget {
   final Media media;
 
   final Size maxSize;
-  double get minWidth => 635.0;
+  double get minWidth => switch (media.images?.backdrops?.length) {
+        1 => 246.0,
+        2 => 418.0,
+        _ => 590.0
+      };
 
   @override
   Widget build(BuildContext context) {
