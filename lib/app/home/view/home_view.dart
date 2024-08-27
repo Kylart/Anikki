@@ -5,8 +5,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/home/bloc/home_bloc.dart';
-import 'package:anikki/app/home/shared/widgets/home_carousel.dart/home_carousel.dart';
 import 'package:anikki/app/home/widgets/background_image.dart';
+import 'package:anikki/app/home/widgets/home_carousel.dart/home_carousel.dart';
+import 'package:anikki/app/home/widgets/home_title/home_title.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 
 class HomeView extends StatefulWidget {
@@ -37,22 +38,29 @@ class _HomeViewState extends State<HomeView> {
 
         final screenSize = MediaQuery.of(context).size;
         final carouselSize = Size(
-          max(screenSize.width / 1.8, 500).toDouble(),
+          max(screenSize.width / 1.8, 700).toDouble(),
           max(screenSize.height / 2.5, 400).toDouble(),
+        );
+        final maxTitleSize = Size(
+          max(700, screenSize.width / 1.5),
+          screenSize.height - carouselSize.height,
         );
 
         return Stack(
           children: [
-            if (state.currentMedia != null)
+            if (state.currentMedia != null) ...[
               Positioned.fill(
                 child: HomeBackgroundImage(media: state.currentMedia!),
               ),
-
-            /// TODO: Implement actions and main title widget
-            /// Watch
-            /// Download
-            /// Download episode
-            /// Share
+              Positioned(
+                top: 24,
+                left: 0,
+                child: HomeTitle(
+                  media: state.currentMedia!,
+                  maxSize: maxTitleSize,
+                ),
+              ),
+            ],
             if (state.entries.isNotEmpty)
               Positioned(
                 right: 0,

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/home/bloc/home_bloc.dart';
-import 'package:anikki/app/home/shared/helpers/scroll_view_height.dart';
 import 'package:anikki/app/media_details/show.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
@@ -121,29 +120,24 @@ class _EntryCardState extends State<EntryCard>
                 borderRadius: const BorderRadius.all(
                   Radius.circular(12),
                 ),
-                child: LimitedBox(
-                  maxWidth: getScrollViewHeight(context) *
-                          userListGridDelegate.childAspectRatio -
-                      (kHomeScrollViewPaddingValue * 2),
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: _EntryCardCover(
-                          animation: animation,
-                          color: widget.media.anilistInfo.coverImage?.color,
-                          url: widget.media.coverImage,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: _EntryCardCover(
+                        animation: animation,
+                        color: widget.media.anilistInfo.coverImage?.color,
+                        url: widget.media.coverImage,
+                      ),
+                    ),
+                    if (widget.text != null)
+                      Positioned(
+                        right: 10,
+                        bottom: 10,
+                        child: _EntryCardText(
+                          text: widget.text!,
                         ),
                       ),
-                      if (widget.text != null)
-                        Positioned(
-                          right: 10,
-                          bottom: 10,
-                          child: _EntryCardText(
-                            text: widget.text!,
-                          ),
-                        ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),
