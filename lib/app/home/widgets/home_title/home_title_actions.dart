@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'home_title.dart';
 
 enum _HomeActionType {
@@ -76,8 +75,8 @@ class _HomeTitleActions extends StatelessWidget {
         _HomeAction(
           type: _HomeActionType.icon,
           onPressed: (context) {},
-          icon: HugeIcons.strokeRoundedShare08,
-          text: 'Share',
+          icon: HugeIcons.strokeRoundedTaskEdit01,
+          text: 'Update list entry',
         ),
         _HomeAction(
           type: _HomeActionType.icon,
