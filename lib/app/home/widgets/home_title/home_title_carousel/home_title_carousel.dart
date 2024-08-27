@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:anikki/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 
+import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/tmdb/models/tmdb_tv_images/backdrop.dart';
 
@@ -39,9 +42,16 @@ class HomeTitleCarousel extends StatelessWidget {
                 children: [
                   for (final (index, backdrop)
                       in media.images!.backdrops!.indexed) ...[
-                    _HomeTitleCarouselImage(
-                      selected: false,
-                      backdrop: backdrop,
+                    BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) {
+                        return _HomeTitleCarouselImage(
+                          selected: backdrop.filePath != null
+                              ? state.currentBackgroundUrl ==
+                                  getTmdbImageUrl(backdrop.filePath!)
+                              : false,
+                          backdrop: backdrop,
+                        );
+                      },
                     ),
                     if (index != media.images!.backdrops!.length - 1)
                       const SizedBox(

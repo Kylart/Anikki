@@ -36,7 +36,15 @@ class _HomeTitleCarouselImageState extends State<_HomeTitleCarouselImage> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        if (widget.backdrop.filePath == null) return;
+
+        BlocProvider.of<HomeBloc>(context).add(
+          HomeCurrentBackgroundUrlChanged(
+            getTmdbImageUrl(widget.backdrop.filePath!),
+          ),
+        );
+      },
       child: MouseRegion(
         onEnter: (event) => hovered = true,
         onHover: (event) => hovered = true,

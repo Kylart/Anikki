@@ -26,7 +26,7 @@ class HomeTitle extends StatelessWidget {
   final Media media;
 
   final Size maxSize;
-  double get minWidth => 645.0;
+  double get minWidth => 635.0;
 
   @override
   Widget build(BuildContext context) {

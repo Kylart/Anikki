@@ -23,6 +23,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
     });
 
+    on<HomeCurrentBackgroundUrlChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          currentBackgroundUrl: event.url,
+        ),
+      );
+    });
+
     on<HomeRefreshed>(_onRefresh);
   }
 

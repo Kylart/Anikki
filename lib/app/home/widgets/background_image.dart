@@ -1,5 +1,7 @@
+import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeBackgroundImage extends StatelessWidget {
   const HomeBackgroundImage({
@@ -21,36 +23,40 @@ class HomeBackgroundImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      layoutBuilder: (currentChild, previousChildren) {
-        return Stack(
-          fit: StackFit.passthrough,
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            Column(
-              children: [
-                ...previousChildren.map(
-                  (e) => Expanded(child: e),
-                )
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          layoutBuilder: (currentChild, previousChildren) {
+            return Stack(
+              fit: StackFit.passthrough,
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                Column(
+                  children: [
+                    ...previousChildren.map(
+                      (e) => Expanded(child: e),
+                    )
+                  ],
+                ),
+                if (currentChild != null)
+                  Column(
+                    children: [
+                      Expanded(child: currentChild),
+                    ],
+                  ),
               ],
-            ),
-            if (currentChild != null)
-              Column(
-                children: [
-                  Expanded(child: currentChild),
-                ],
-              ),
-          ],
+            );
+          },
+          child: state.currentBackgroundUrl != null
+              ? Image.network(
+                  key: ValueKey(state.currentBackgroundUrl),
+                  state.currentBackgroundUrl!,
+                  fit: BoxFit.cover,
+                )
+              : const SizedBox(),
         );
       },
-      child: backgroundImage != null
-          ? Image.network(
-              key: ValueKey(media.title),
-              backgroundImage!,
-              fit: BoxFit.cover,
-            )
-          : const SizedBox(),
     );
   }
 }

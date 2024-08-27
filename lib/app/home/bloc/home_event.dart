@@ -18,6 +18,17 @@ final class HomeCurrentMediaChanged extends HomeEvent {
       ];
 }
 
+final class HomeCurrentBackgroundUrlChanged extends HomeEvent {
+  const HomeCurrentBackgroundUrlChanged(this.url);
+
+  final String? url;
+
+  @override
+  List<Object?> get props => [
+        url,
+      ];
+}
+
 final class HomeRefreshed extends HomeEvent {
   const HomeRefreshed(this.watchList);
 
