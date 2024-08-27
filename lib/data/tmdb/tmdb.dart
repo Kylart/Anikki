@@ -6,6 +6,8 @@ import 'package:tmdb_api/tmdb_api.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/tmdb/models/models.dart';
 
+export 'models/models.dart';
+
 class Tmdb {
   late final TMDB _tmdb;
 

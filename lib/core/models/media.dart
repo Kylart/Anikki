@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/data/data.dart';
-import 'package:anikki/data/tmdb/models/models.dart';
 
 class Media extends Equatable {
   Media({
@@ -26,6 +25,8 @@ class Media extends Equatable {
   String? get bannerImage => anilistInfo.bannerImage;
   int? get numberOfEpisodes =>
       anilistInfo.episodes ?? anilistInfo.nextAiringEpisode?.episode;
+
+  TmdbTvImages? get images => tmdbInfo?.images;
 
   @override
   List<Object?> get props => [anilistInfo, tmdbInfo];
