@@ -112,8 +112,10 @@ class _HomeCarouselState extends State<HomeCarousel> {
   void updateCurrentBackgroundUrl() {
     String? imageUrl;
 
-    final images =
-        (currentMedia.tmdbInfo?.images!.backdrops?.toList()?..shuffle());
+    final images = currentMedia.tmdbInfo?.images!.backdrops
+        ?.where((image) => image.filePath != null)
+        .toList()
+      ?..shuffle();
 
     if (images != null && images.isNotEmpty) {
       final image = images.first;
