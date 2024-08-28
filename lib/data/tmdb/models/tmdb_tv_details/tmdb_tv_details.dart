@@ -192,7 +192,7 @@ class TmdbTvDetails extends Equatable {
   String toJson() => json.encode(toMap());
 
   @override
-  bool get stringify => true;
+  bool get stringify => false;
 
   @override
   List<Object?> get props {
