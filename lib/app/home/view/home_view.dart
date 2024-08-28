@@ -59,7 +59,16 @@ class _HomeViewState extends State<HomeView> {
                   media: state.currentMedia!,
                   maxSize: maxTitleSize,
                 ),
-              ),
+              )
+                  .animate()
+                  .fadeIn(
+                    duration: 500.ms,
+                  )
+                  .slideX(
+                    duration: 500.ms,
+                    end: 0,
+                    begin: -0.5,
+                  ),
             ],
             if (state.entries.isNotEmpty)
               Positioned(
