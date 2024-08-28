@@ -42,6 +42,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         HomeLoading(
           entries: state.entries,
           currentMedia: state.currentMedia,
+          currentBackgroundUrl: state.currentBackgroundUrl,
         ),
       );
 
@@ -57,12 +58,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         HomeLoaded(
           entries: entries,
           currentMedia: state.currentMedia,
+          currentBackgroundUrl: state.currentBackgroundUrl,
         ),
       );
     } on AnilistGetListException catch (e) {
       emit(
         HomeError(
           entries: state.entries,
+          currentBackgroundUrl: state.currentBackgroundUrl,
           message: e.error ?? e.cause,
         ),
       );
@@ -70,6 +73,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeError(
           entries: entries ?? state.entries,
+          currentBackgroundUrl: state.currentBackgroundUrl,
           currentMedia: state.currentMedia,
           message: e.error ?? e.cause,
         ),
@@ -78,6 +82,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeError(
           entries: entries ?? state.entries,
+          currentBackgroundUrl: state.currentBackgroundUrl,
           currentMedia: state.currentMedia,
           message: e.toString(),
         ),
