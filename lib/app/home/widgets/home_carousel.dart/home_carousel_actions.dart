@@ -5,11 +5,13 @@ class _HomeCarouselActions extends StatefulWidget {
     required this.media,
     required this.numberOfItems,
     required this.goToItem,
+    required this.onRemoved,
   });
 
   final Media media;
   final int numberOfItems;
   final void Function(int index, {bool resetTimer}) goToItem;
+  final void Function() onRemoved;
 
   @override
   State<_HomeCarouselActions> createState() => _HomeCarouselActionsState();
@@ -49,6 +51,7 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
 
         if (isRemoveEntryLoading && state is HomeLoaded) {
           isRemoveEntryLoading = false;
+          widget.onRemoved();
         }
       },
       child: Row(

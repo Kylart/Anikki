@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:anikki/data/data.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,15 +57,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
   void initState() {
     scrollController = ScrollController();
     listController = ListController();
-    setInitialIndex();
-    updateCurrentMedia();
-    setTimer();
-
-    if (currentIndex != 0) {
-      SchedulerBinding.instance.addPostFrameCallback(
-        (_) => goToItem(currentIndex),
-      );
-    }
+    init();
 
     super.initState();
   }
@@ -75,6 +68,29 @@ class _HomeCarouselState extends State<HomeCarousel> {
     listController.dispose();
     timer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant HomeCarousel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.entries.length != widget.entries.length &&
+        !const DeepCollectionEquality()
+            .equals(oldWidget.entries, widget.entries)) {
+      init();
+    }
+  }
+
+  void init() {
+    setInitialIndex();
+    updateCurrentMedia();
+    setTimer();
+
+    if (currentIndex != 0) {
+      SchedulerBinding.instance.addPostFrameCallback(
+        (_) => goToItem(currentIndex),
+      );
+    }
   }
 
   void setTimer() {
@@ -141,7 +157,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
     }
 
     setState(() {
-      currentIndex = max(index, 0);
+      currentIndex = index;
       updateCurrentMedia();
     });
 
@@ -161,102 +177,100 @@ class _HomeCarouselState extends State<HomeCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<HomeBloc, HomeState>(
-      listener: (context, state) {
-        setTimer();
-      },
-      child: _HomeCarouselContainer(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: GestureDetector(
-                onHorizontalDragUpdate: (details) {
-                  dragDirection = details.delta.dx.sign.toInt();
-                },
-                onHorizontalDragEnd: (details) {
-                  if (dragDirection == null) return;
+    return _HomeCarouselContainer(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                dragDirection = details.delta.dx.sign.toInt();
+              },
+              onHorizontalDragEnd: (details) {
+                if (dragDirection == null) return;
 
-                  goToItem(currentIndex - dragDirection!);
-                  dragDirection = null;
-                },
-                child: SuperListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  listController: listController,
-                  controller: scrollController,
-                  itemCount: 10000000,
-                  itemBuilder: (context, index) {
-                    final i = index % widget.entries.length;
-                    final entry = widget.entries.elementAt(i);
+                goToItem(currentIndex - dragDirection!);
+                dragDirection = null;
+              },
+              child: SuperListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                listController: listController,
+                controller: scrollController,
+                itemCount: 10000000,
+                itemBuilder: (context, index) {
+                  final i = index % widget.entries.length;
+                  final entry = widget.entries.elementAt(i);
 
-                    return _HomeCarouselImage(
+                  return _HomeCarouselImage(
+                    goToItem: goToItem,
+                    realIndex: index,
+                    currentIndex: currentIndex,
+                    itemAnimationDuration: itemAnimationDuration,
+                    cardSize: cardSize,
+                    reducedHeight: reducedHeight,
+                    itemAspectRatio: itemAspectRatio,
+                    entry: entry,
+                  );
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: cardSize.height * itemAspectRatio + 12,
+            width: cardSize.width - (cardSize.height * itemAspectRatio + 12),
+            child: Container(
+              constraints: BoxConstraints(
+                maxHeight: cardSize.height - reducedHeight,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 12.0,
+                  left: 12.0,
+                  top: 4.0,
+                  bottom: 16.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: _HomeCarouselTitle(
+                            currentMedia: currentEntry.media,
+                          ),
+                        ),
+                        _HomeCarouselNavigation(
+                          text:
+                              '${currentEntryIndex + 1} / ${widget.entries.length}',
+                          onNext: () => goToItem(
+                            currentIndex + 1,
+                            resetTimer: true,
+                          ),
+                          onPrevious: () => goToItem(
+                            currentIndex - 1,
+                            resetTimer: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    _HomeCarouselActions(
+                      media: currentEntry.media,
+                      numberOfItems: widget.entries.length,
                       goToItem: goToItem,
-                      realIndex: index,
-                      currentIndex: currentIndex,
-                      itemAnimationDuration: itemAnimationDuration,
-                      cardSize: cardSize,
-                      reducedHeight: reducedHeight,
-                      itemAspectRatio: itemAspectRatio,
-                      entry: entry,
-                    );
-                  },
+                      onRemoved: () {
+                        goToItem(currentIndex);
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
-            Positioned(
-              top: 0,
-              left: cardSize.height * itemAspectRatio + 12,
-              width: cardSize.width - (cardSize.height * itemAspectRatio + 12),
-              child: Container(
-                constraints: BoxConstraints(
-                  maxHeight: cardSize.height - reducedHeight,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    right: 12.0,
-                    left: 12.0,
-                    top: 4.0,
-                    bottom: 16.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: _HomeCarouselTitle(
-                              currentMedia: currentEntry.media,
-                            ),
-                          ),
-                          _HomeCarouselNavigation(
-                            text:
-                                '${currentEntryIndex + 1} / ${widget.entries.length}',
-                            onNext: () => goToItem(
-                              currentIndex + 1,
-                              resetTimer: true,
-                            ),
-                            onPrevious: () => goToItem(
-                              currentIndex - 1,
-                              resetTimer: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                      _HomeCarouselActions(
-                        media: currentEntry.media,
-                        numberOfItems: widget.entries.length,
-                        goToItem: goToItem,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
