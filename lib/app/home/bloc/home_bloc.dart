@@ -48,8 +48,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
 
-      entries = event.watchList != null
-          ? await userListRepository.getContinueList(event.watchList!)
+      entries = event.connected
+          ? await userListRepository.getContinueList(event.watchList)
           : (await feedRepository.getTrending())
               .map(
                 (media) => MediaListEntry(media: media, progress: null),

@@ -30,12 +30,17 @@ final class HomeCurrentBackgroundUrlChanged extends HomeEvent {
 }
 
 final class HomeRefreshed extends HomeEvent {
-  const HomeRefreshed(this.watchList);
+  const HomeRefreshed({
+    required this.watchList,
+    required this.connected,
+  });
 
-  final AnilistWatchList? watchList;
+  final AnilistWatchList watchList;
+  final bool connected;
 
   @override
   List<Object?> get props => [
         watchList,
+        connected,
       ];
 }
