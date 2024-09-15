@@ -2,10 +2,12 @@ part of 'home_title.dart';
 
 class _HomeTitleSubtitle extends StatelessWidget {
   const _HomeTitleSubtitle({
-    required this.media,
+    required this.entry,
   });
 
-  final Media media;
+  final MediaListEntry entry;
+
+  Media get media => entry.media;
 
   TextSpan get separator => const TextSpan(
         text: ' • ',
@@ -23,7 +25,9 @@ class _HomeTitleSubtitle extends StatelessWidget {
     ].join(' ');
   }
 
-  int? get episodes => media.anilistInfo.episodes;
+  int? get episodes =>
+      media.anilistInfo.episodes ??
+      media.anilistInfo.nextAiringEpisode?.episode;
 
   List<String>? get genres =>
       media.anilistInfo.genres?.whereType<String>().toList();
@@ -40,9 +44,19 @@ class _HomeTitleSubtitle extends StatelessWidget {
             ),
           if (episodes != null && episodes != 0) ...[
             separator,
+            if (entry.progress != null)
+              TextSpan(
+                text: 'Episode ${entry.progress}/$episodes',
+              )
+            else
+              TextSpan(
+                text: '$episodes episode${episodes == 1 ? '' : 's'}',
+              ),
+          ] else if (entry.progress != null) ...[
+            separator,
             TextSpan(
-              text: '$episodes episode${episodes == 1 ? '' : 's'}',
-            ),
+              text: 'Episode ${entry.progress}',
+            )
           ],
           if (genres?.isNotEmpty == true) ...[
             separator,

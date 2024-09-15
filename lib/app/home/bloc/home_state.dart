@@ -11,6 +11,10 @@ final class HomeState extends Equatable {
   final String? currentBackgroundUrl;
   final List<MediaListEntry> entries;
 
+  MediaListEntry? get currentEntry => entries.firstWhereOrNull(
+        (e) => e.media == currentMedia,
+      );
+
   @override
   List<Object?> get props => [
         currentMedia,

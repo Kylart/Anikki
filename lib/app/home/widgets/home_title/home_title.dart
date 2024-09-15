@@ -19,14 +19,14 @@ part 'home_title_subtitle.dart';
 class HomeTitle extends StatelessWidget {
   const HomeTitle({
     super.key,
-    required this.media,
+    required this.entry,
     required this.maxSize,
   });
 
-  final Media media;
+  final MediaListEntry entry;
 
   final Size maxSize;
-  double get minWidth => switch (media.images?.backdrops?.length) {
+  double get minWidth => switch (entry.media.images?.backdrops?.length) {
         1 => 246.0,
         2 => 418.0,
         _ => 590.0
@@ -62,7 +62,7 @@ class HomeTitle extends StatelessWidget {
         );
       },
       child: Column(
-        key: ValueKey(media),
+        key: ValueKey(entry),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _HomeTitleContainer(
@@ -73,31 +73,31 @@ class HomeTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  media.title ?? 'N/A',
+                  entry.media.title ?? 'N/A',
                   style: context.textTheme.headlineLarge,
                   maxLines: 1,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
+                    horizontal: 4.0,
                     vertical: 16.0,
                   ),
                   child: _HomeTitleSubtitle(
-                    media: media,
+                    entry: entry,
                   ),
                 ),
                 _HomeTitleActions(
-                  media: media,
+                  media: entry.media,
                 ),
               ],
             ),
           ),
-          if (media.images?.backdrops?.isNotEmpty == true &&
-              media.images!.backdrops!.length > 1)
+          if (entry.media.images?.backdrops?.isNotEmpty == true &&
+              entry.media.images!.backdrops!.length > 1)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: HomeTitleCarousel(
-                media: media,
+                media: entry.media,
                 minWidth: minWidth,
               ),
             ),

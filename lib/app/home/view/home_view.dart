@@ -48,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
 
         return Stack(
           children: [
-            if (state.currentMedia != null) ...[
+            if (state.currentEntry != null) ...[
               Positioned.fill(
                 child: HomeBackgroundImage(media: state.currentMedia!),
               ),
@@ -56,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
                 top: 0,
                 left: 0,
                 child: HomeTitle(
-                  media: state.currentMedia!,
+                  entry: state.currentEntry!,
                   maxSize: maxTitleSize,
                 ),
               )
