@@ -188,7 +188,10 @@ class _HomeCarouselState extends State<HomeCarousel> {
               onHorizontalDragEnd: (details) {
                 if (dragDirection == null) return;
 
-                goToItem(currentIndex - dragDirection!);
+                goToItem(
+                  currentIndex - dragDirection!,
+                  resetTimer: true,
+                );
                 dragDirection = null;
               },
               child: SuperListView.builder(
