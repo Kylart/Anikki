@@ -49,39 +49,32 @@ class DrawerAction {
   final DrawerActionType type;
 }
 
-final _links = <DrawerAction>[
-  DrawerAction(
-    onPressed: (context, media) {
-      openInBrowser(
-        'https://anilist.co/anime/${media.anilistInfo.id}',
-      );
-    },
-    label: 'See on AniList',
-    icon: SimpleIcons.anilist,
-  ),
-  DrawerAction(
-    onPressed: (context, media) {
-      if (media.anilistInfo.idMal == null) return;
-
-      openInBrowser(
-        'https://myanimelist.net/anime/${media.anilistInfo.idMal}',
-      );
-    },
-    label: 'See on MyAnimeList',
-    icon: SimpleIcons.myanimelist,
-  ),
-  DrawerAction(
-    onPressed: (context, media) {
-      if (media.tmdbInfo?.id == null) return;
-
-      openInBrowser(
-        'https://www.themoviedb.org/tv/${media.tmdbInfo?.id}',
-      );
-    },
-    label: 'See on TMDB',
-    icon: SimpleIcons.themoviedatabase,
-  ),
-];
+List<DrawerAction> _buildLinks(Media? media) => [
+      if (media?.anilistInfo.id != null)
+        DrawerAction(
+          onPressed: (context, media) => openInBrowser(
+            'https://anilist.co/anime/${media.anilistInfo.id}',
+          ),
+          label: 'See on AniList',
+          icon: SimpleIcons.anilist,
+        ),
+      if (media?.anilistInfo.idMal != null)
+        DrawerAction(
+          onPressed: (context, media) => openInBrowser(
+            'https://myanimelist.net/anime/${media.anilistInfo.idMal}',
+          ),
+          label: 'See on MyAnimeList',
+          icon: SimpleIcons.myanimelist,
+        ),
+      if (media?.tmdbInfo?.id != null)
+        DrawerAction(
+          onPressed: (context, media) => openInBrowser(
+            'https://www.themoviedb.org/tv/${media.tmdbInfo?.id}',
+          ),
+          label: 'See on TMDB',
+          icon: SimpleIcons.themoviedatabase,
+        ),
+    ];
 
 final _actions = <DrawerAction>[
   DrawerAction(
@@ -171,12 +164,15 @@ class DrawerContent extends StatelessWidget {
                   height: 12.0,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: _horizontalPadding,
+                  padding: const EdgeInsets.only(
+                    left: _horizontalPadding,
+                    right: _horizontalPadding,
+                    bottom: 4.0,
                   ),
                   child: Row(
                     children: [
-                      for (final (index, link) in _links.indexed) ...[
+                      for (final (index, link)
+                          in _buildLinks(media).indexed) ...[
                         if (index != 0)
                           const SizedBox(
                             width: 24.0,
