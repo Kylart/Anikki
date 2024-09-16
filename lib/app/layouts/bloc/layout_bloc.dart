@@ -1,9 +1,9 @@
-import 'package:anikki/core/core.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
+import 'package:anikki/core/core.dart';
 
 part 'layout_event.dart';
 part 'layout_state.dart';

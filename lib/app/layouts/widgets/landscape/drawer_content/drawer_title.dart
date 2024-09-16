@@ -5,16 +5,18 @@ class DrawerTitle extends StatelessWidget {
     super.key,
     required this.media,
     required this.isConnected,
+    this.libraryEntry,
   });
 
   final Media media;
+  final LibraryEntry? libraryEntry;
   final bool isConnected;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: AutoSizeText(
-        media.title ?? 'N/A',
+        media.title ?? libraryEntry?.entries.first.title ?? 'N/A',
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),

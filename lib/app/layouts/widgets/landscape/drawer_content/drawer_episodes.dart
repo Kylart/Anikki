@@ -4,9 +4,11 @@ class DrawerEpisodes extends StatelessWidget {
   const DrawerEpisodes({
     super.key,
     required this.media,
+    this.libraryEntry,
   });
 
   final Media media;
+  final LibraryEntry? libraryEntry;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,8 @@ class DrawerEpisodes extends StatelessWidget {
         media.anilistInfo.nextAiringEpisode?.episode ?? media.numberOfEpisodes;
 
     if (numberOfEpisodes == null) return const SizedBox();
+
+    final episodeTextStyle = context.textTheme.bodySmall;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -45,6 +49,10 @@ class DrawerEpisodes extends StatelessWidget {
                 (element) =>
                     element?.title?.split(' - ').firstOrNull ==
                     'Episode $episodeNumber',
+              );
+
+              final localFile = libraryEntry?.entries.firstWhereOrNull(
+                (entry) => entry.episode == episodeNumber,
               );
 
               return InkWell(
@@ -85,10 +93,16 @@ class DrawerEpisodes extends StatelessWidget {
                               ? AutoSizeText(
                                   info!.title!,
                                   maxLines: 3,
+                                  style: episodeTextStyle,
                                 )
-                              : Text('Episode $episodeNumber'),
+                              : Text(
+                                  'Episode $episodeNumber',
+                                  style: episodeTextStyle,
+                                ),
                         ),
                       ),
+                      if (localFile != null)
+                        DrawerEpisodeDeleteButton(file: localFile)
                     ],
                   ),
                 ),

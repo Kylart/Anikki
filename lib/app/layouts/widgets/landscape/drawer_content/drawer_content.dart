@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
@@ -11,6 +14,7 @@ import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/widgets/favourite_button.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
+import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/core/helpers/notify.dart';
@@ -23,6 +27,7 @@ part 'drawer_action_button.dart';
 part 'drawer_banner_image.dart';
 part 'drawer_description.dart';
 part 'drawer_episode_completed.dart';
+part 'drawer_episode_delete_button.dart';
 part 'drawer_episodes.dart';
 part 'drawer_genres.dart';
 part 'drawer_image.dart';
@@ -51,7 +56,7 @@ class DrawerAction {
 }
 
 List<DrawerAction> _buildLinks(Media? media) => [
-      if (media?.anilistInfo.id != null)
+      if (media?.anilistInfo.id != null && media?.anilistInfo.id != 0)
         DrawerAction(
           onPressed: (context, media) => openInBrowser(
             'https://anilist.co/anime/${media.anilistInfo.id}',
@@ -132,6 +137,7 @@ class DrawerContent extends StatelessWidget {
     return BlocBuilder<LayoutBloc, LayoutState>(
       builder: (context, state) {
         final media = state.drawerMedia;
+        final libraryEntry = state.drawerLibraryEntry;
 
         if (media == null) return const SizedBox();
 
@@ -155,6 +161,7 @@ class DrawerContent extends StatelessWidget {
                       Expanded(
                         child: DrawerTitle(
                           media: media,
+                          libraryEntry: libraryEntry,
                           isConnected: isConnected,
                         ),
                       ),
@@ -195,7 +202,28 @@ class DrawerContent extends StatelessWidget {
                       children: [
                         DrawerGenres(media: media),
                         DrawerDescription(media: media),
-                        DrawerEpisodes(media: media),
+
+                        /// Listening to `LibraryBloc` so that content refreshes whenever library is updated.
+                        BlocConsumer<LibraryBloc, LibraryState>(
+                          listener: (context, state) {
+                            if (state is LibraryEmpty &&
+                                media.anilistInfo.id == 0) {
+                              Scaffold.of(context).closeEndDrawer();
+                            }
+
+                            if (state is LibraryLoaded &&
+                                media.anilistInfo.id == 0 &&
+                                libraryEntry?.entries.isEmpty == true) {
+                              Scaffold.of(context).closeEndDrawer();
+                            }
+                          },
+                          builder: (context, state) {
+                            return DrawerEpisodes(
+                              media: media,
+                              libraryEntry: libraryEntry,
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),

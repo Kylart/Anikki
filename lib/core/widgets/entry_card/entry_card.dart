@@ -97,7 +97,10 @@ class _EntryCardState extends State<EntryCard>
       child: GestureDetector(
         onTap: () {
           BlocProvider.of<LayoutBloc>(context).add(
-            LayoutDrawerMediaChanged(widget.media),
+            LayoutDrawerMediaChanged(
+              widget.media,
+              widget.libraryEntry,
+            ),
           );
 
           Scaffold.of(context).openEndDrawer();
