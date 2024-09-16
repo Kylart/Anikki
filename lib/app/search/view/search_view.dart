@@ -7,7 +7,7 @@ import 'package:anikki/app/search/widgets/search_container.dart';
 import 'package:anikki/app/search/widgets/search_results.dart';
 import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
-import 'package:anikki/core/widgets/loader.dart';
+import 'package:anikki/core/widgets/loading_widget.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -30,7 +30,9 @@ class _SearchViewState extends State<SearchView> {
               if (state is! SearchEmptyTerm) const Divider(),
               if (state is SearchLoading)
                 const Expanded(
-                  child: Loader(),
+                  child: Center(
+                    child: LoadingWidget(),
+                  ),
                 ),
               if (state is SearchSuccess)
                 state.isEmpty
