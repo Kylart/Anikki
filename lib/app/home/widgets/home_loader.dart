@@ -1,3 +1,4 @@
+import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -161,11 +162,13 @@ class HomeLoader extends StatelessWidget {
             ),
           ),
         ),
-        Positioned.fill(
-          child: Center(
-            child: Text(
-              'Loading...',
-              style: context.textTheme.bodyLarge,
+        const Positioned.fill(
+          child: Align(
+            alignment: Alignment(0.0, -0.2),
+            child: EmptyWidget(
+              title: 'Loading...',
+              width: 400,
+              height: 400,
             ),
           ),
         ),
