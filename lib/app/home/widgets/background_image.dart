@@ -1,7 +1,8 @@
-import 'package:anikki/app/home/bloc/home_bloc.dart';
-import 'package:anikki/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:anikki/app/home/bloc/home_bloc.dart';
+import 'package:anikki/core/core.dart';
 
 class HomeBackgroundImage extends StatelessWidget {
   const HomeBackgroundImage({
@@ -10,16 +11,6 @@ class HomeBackgroundImage extends StatelessWidget {
   });
 
   final Media media;
-
-  String? get backgroundImage {
-    final images = media.tmdbInfo?.images?.backdrops;
-
-    if (images != null && images.isNotEmpty) {
-      return 'https://image.tmdb.org/t/p/original${images.first.filePath}';
-    }
-
-    return media.bannerImage ?? media.coverImage;
-  }
 
   @override
   Widget build(BuildContext context) {
