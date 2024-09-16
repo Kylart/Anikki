@@ -25,14 +25,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
     });
 
-    on<HomeDrawerMediaChanged>((event, emit) {
-      emit(
-        state.copyWith(
-          drawerMedia: event.media,
-        ),
-      );
-    });
-
     on<HomeCurrentBackgroundUrlChanged>((event, emit) {
       emit(
         state.copyWith(
@@ -52,7 +44,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         HomeLoading(
           entries: state.entries,
           currentMedia: state.currentMedia,
-          drawerMedia: state.drawerMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
         ),
       );
@@ -69,7 +60,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         HomeLoaded(
           entries: entries,
           currentMedia: state.currentMedia,
-          drawerMedia: state.drawerMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
         ),
       );
@@ -78,7 +68,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         HomeError(
           entries: state.entries,
           currentMedia: state.currentMedia,
-          drawerMedia: state.drawerMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
           message: e.error ?? e.cause,
         ),
@@ -89,7 +78,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           entries: entries ?? state.entries,
           currentBackgroundUrl: state.currentBackgroundUrl,
           currentMedia: state.currentMedia,
-          drawerMedia: state.drawerMedia,
           message: e.error ?? e.cause,
         ),
       );
@@ -99,7 +87,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           entries: entries ?? state.entries,
           currentBackgroundUrl: state.currentBackgroundUrl,
           currentMedia: state.currentMedia,
-          drawerMedia: state.drawerMedia,
           message: e.toString(),
         ),
       );

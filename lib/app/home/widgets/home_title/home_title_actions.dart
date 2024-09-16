@@ -81,8 +81,8 @@ class HomeTitleActions extends StatelessWidget {
         HomeAction(
           type: HomeActionType.icon,
           onPressed: (context) {
-            BlocProvider.of<HomeBloc>(context).add(
-              HomeDrawerMediaChanged(media),
+            BlocProvider.of<LayoutBloc>(context).add(
+              LayoutDrawerMediaChanged(media),
             );
 
             Scaffold.of(context).openEndDrawer();

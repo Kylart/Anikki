@@ -8,14 +8,14 @@ import 'package:simple_icons/simple_icons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
-import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/home/widgets/favourite_button.dart';
-import 'package:anikki/core/widgets/trailer_video_player.dart';
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/core/helpers/notify.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/core/widgets/paginated.dart';
+import 'package:anikki/core/widgets/trailer_video_player.dart';
 import 'package:anikki/domain/domain.dart';
 
 part 'drawer_action_button.dart';
@@ -135,7 +135,7 @@ class DrawerContent extends StatelessWidget {
       listen: true,
     ).isConnected;
 
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocBuilder<LayoutBloc, LayoutState>(
       builder: (context, state) {
         final media = state.drawerMedia;
 
