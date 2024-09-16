@@ -39,7 +39,7 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
         return SafeArea(
           child: Scaffold(
             drawer: Drawer(
-              width: (MediaQuery.of(context).size.width / 3).clamp(500, 1000),
+              width: (MediaQuery.of(context).size.width / 3).clamp(550, 1000),
               child: const SearchView(),
             ),
             endDrawer: Drawer(
