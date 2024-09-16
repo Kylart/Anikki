@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:anikki/app/home/widgets/home_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,16 +27,6 @@ class _HomeViewState extends State<HomeView> {
         final errored = state is HomeError;
         final loading = state is HomeLoading;
 
-        if (initial) return const Text('Loading');
-        if (loading && state.entries.isEmpty) return const Text('Loading');
-        if (errored && state.entries.isEmpty) {
-          return Center(
-            child: CustomErrorWidget(
-              description: state.message,
-            ),
-          );
-        }
-
         final screenSize = MediaQuery.of(context).size;
         final carouselSize = Size(
           max(screenSize.width / 1.8, 700).toDouble(),
@@ -45,6 +36,22 @@ class _HomeViewState extends State<HomeView> {
           max(700, screenSize.width / 1.5),
           screenSize.height - carouselSize.height,
         );
+
+        final loader = HomeLoader(
+          carouselSize: carouselSize,
+        );
+
+        if (initial) return loader;
+        if (loading && state.entries.isEmpty) {
+          return loader;
+        }
+        if (errored && state.entries.isEmpty) {
+          return Center(
+            child: CustomErrorWidget(
+              description: state.message,
+            ),
+          );
+        }
 
         return Stack(
           children: [
