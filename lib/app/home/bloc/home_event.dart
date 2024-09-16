@@ -18,6 +18,17 @@ final class HomeCurrentMediaChanged extends HomeEvent {
       ];
 }
 
+final class HomeDrawerMediaChanged extends HomeEvent {
+  const HomeDrawerMediaChanged(this.media);
+
+  final Media? media;
+
+  @override
+  List<Object?> get props => [
+        media,
+      ];
+}
+
 final class HomeCurrentBackgroundUrlChanged extends HomeEvent {
   const HomeCurrentBackgroundUrlChanged(this.url);
 

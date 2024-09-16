@@ -30,7 +30,6 @@ class _HomeTitleActions extends StatelessWidget {
 
   final Media media;
 
-  String? get trailerThumbnail => media.anilistInfo.trailer?.thumbnail;
   String? get trailerSite => media.anilistInfo.trailer?.site;
   String? get trailerSiteId => media.anilistInfo.trailer?.id;
 
@@ -80,7 +79,13 @@ class _HomeTitleActions extends StatelessWidget {
         ),
         _HomeAction(
           type: _HomeActionType.icon,
-          onPressed: (context) {},
+          onPressed: (context) {
+            BlocProvider.of<HomeBloc>(context).add(
+              HomeDrawerMediaChanged(media),
+            );
+
+            Scaffold.of(context).openEndDrawer();
+          },
           icon: HugeIcons.strokeRoundedMoreHorizontalCircle01,
         ),
       ];

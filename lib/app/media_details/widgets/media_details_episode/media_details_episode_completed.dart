@@ -10,10 +10,6 @@ class MediaDetailsEpisodeCompleted extends StatelessWidget {
   final Media media;
   final int index;
 
-  bool hasMedia(AnilistWatchListEntry element) {
-    return element.media?.id == media.anilistInfo.id;
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WatchListBloc, WatchListState>(
@@ -37,9 +33,9 @@ class MediaDetailsEpisodeCompleted extends StatelessWidget {
           padding: EdgeInsets.all(2.0),
           outline: Colors.transparent,
           child: Icon(
-            Ionicons.checkmark_outline,
+            HugeIcons.strokeRoundedTickDouble01,
             color: Colors.green,
-            size: 12.0,
+            size: 16.0,
           ),
         );
       },

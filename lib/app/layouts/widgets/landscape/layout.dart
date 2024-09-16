@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/page.dart';
-import 'package:anikki/app/layouts/widgets/landscape/drawer_container.dart';
+import 'package:anikki/app/layouts/widgets/landscape/drawer_container_old.dart';
+import 'package:anikki/app/layouts/widgets/landscape/drawer_content/drawer_content.dart';
 import 'package:anikki/app/layouts/widgets/landscape/navigation_rail.dart';
 import 'package:anikki/app/media_details/widgets/media_details.dart';
 import 'package:anikki/core/core.dart';
@@ -38,6 +39,10 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
+            endDrawer: Drawer(
+              width: (MediaQuery.of(context).size.width / 2).clamp(750, 1250),
+              child: const DrawerContent(),
+            ),
             body: Container(
               decoration: BoxDecoration(
                 color: context.colorScheme.surfaceContainerHighest,
@@ -59,7 +64,8 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                             decoration: BoxDecoration(
                               color: context.colorScheme.surface,
                               borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(12.0)),
+                                topLeft: Radius.circular(12.0),
+                              ),
                               border: Border.all(
                                 color: context.colorScheme.outlineVariant,
                               ),
@@ -81,7 +87,7 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                           const VerticalDivider(
                             width: 1,
                           ),
-                        DrawerContainer(
+                        DrawerContainerOld(
                           open: state.drawerMedia != null,
                           child: state.drawerMedia != null
                               ? MediaDetails(

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
+import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/home/widgets/home_title/home_title_carousel/home_title_carousel.dart';
 import 'package:anikki/app/media_details/widgets/media_details_video_player.dart';
 import 'package:anikki/core/core.dart';

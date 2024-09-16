@@ -3,10 +3,12 @@ part of 'home_bloc.dart';
 final class HomeState extends Equatable {
   const HomeState({
     this.currentMedia,
+    this.drawerMedia,
     this.entries = const [],
     this.currentBackgroundUrl,
   });
 
+  final Media? drawerMedia;
   final Media? currentMedia;
   final String? currentBackgroundUrl;
   final List<MediaListEntry> entries;
@@ -17,6 +19,7 @@ final class HomeState extends Equatable {
 
   @override
   List<Object?> get props => [
+        drawerMedia,
         currentMedia,
         currentBackgroundUrl,
         entries,
@@ -26,18 +29,21 @@ final class HomeState extends Equatable {
   String toString() => [
         'HomeState(',
         'currentMedia: ${currentMedia?.title}, ',
+        'drawerMedia: ${drawerMedia?.title}, ',
         'currentBackgroundUrl: $currentBackgroundUrl, ',
         '${entries.length} entries',
         ')'
       ].join('');
 
   HomeState copyWith({
+    Media? drawerMedia,
     Media? currentMedia,
     String? currentBackgroundUrl,
     List<MediaListEntry>? entries,
   }) {
     return HomeState(
       currentMedia: currentMedia ?? this.currentMedia,
+      drawerMedia: drawerMedia ?? this.drawerMedia,
       currentBackgroundUrl: currentBackgroundUrl ?? this.currentBackgroundUrl,
       entries: entries ?? this.entries,
     );
@@ -51,6 +57,7 @@ final class HomeLoading extends HomeState {
     super.entries,
     super.currentBackgroundUrl,
     super.currentMedia,
+    super.drawerMedia,
   });
 }
 
@@ -59,6 +66,7 @@ final class HomeLoaded extends HomeState {
     super.entries,
     super.currentBackgroundUrl,
     super.currentMedia,
+    super.drawerMedia,
   });
 }
 
@@ -66,6 +74,7 @@ final class HomeError extends HomeState {
   const HomeError({
     super.entries,
     super.currentMedia,
+    super.drawerMedia,
     super.currentBackgroundUrl,
     required this.message,
   });

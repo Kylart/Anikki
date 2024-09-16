@@ -19,17 +19,10 @@ class _HomeCarouselActions extends StatefulWidget {
 
 class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
   bool isRemoveEntryLoading = false;
-  bool _isToggleFavouriteLoading = false;
 
-  bool get isToggleFavouriteLoading => _isToggleFavouriteLoading;
-
-  set isToggleFavouriteLoading(bool value) {
-    setState(() {
-      _isToggleFavouriteLoading = value;
-    });
-  }
-
-  bool get isFavourite => widget.media.anilistInfo.isFavourite == true;
+  Widget get gap => const SizedBox(
+        width: 12.0,
+      );
 
   Widget _buildLoader(BuildContext context) => Container(
         padding: const EdgeInsets.all(2.0),
@@ -45,10 +38,6 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
   Widget build(BuildContext context) {
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
-        if (isToggleFavouriteLoading && state is HomeLoaded) {
-          isToggleFavouriteLoading = false;
-        }
-
         if (isRemoveEntryLoading && state is HomeLoaded) {
           isRemoveEntryLoading = false;
           widget.onRemoved();
@@ -61,15 +50,18 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
               Random().nextInt(widget.numberOfItems - 1),
               resetTimer: true,
             ),
+            style: ButtonStyle(
+              padding: WidgetStateProperty.all<EdgeInsets>(
+                const EdgeInsets.all(16.0),
+              ),
+            ),
             icon: const Icon(HugeIcons.strokeRoundedShuffle),
             label: const Text('Random'),
           ),
-          const SizedBox(
-            width: 8.0,
-          ),
+          gap,
           Tooltip(
             message: 'Move to Dropped list',
-            child: FilledButton(
+            child: IconButton.filled(
               onPressed: () {
                 if (isRemoveEntryLoading) return;
 
@@ -83,7 +75,7 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
                   ),
                 );
               },
-              child: AnimatedCrossFade(
+              icon: AnimatedCrossFade(
                 firstChild: _buildLoader(context),
                 secondChild: const Icon(
                   HugeIcons.strokeRoundedBookmarkMinus01,
@@ -95,37 +87,9 @@ class _HomeCarouselActionsState extends State<_HomeCarouselActions> {
               ),
             ),
           ),
-          const SizedBox(
-            width: 8.0,
-          ),
-          Tooltip(
-            message: isFavourite ? 'Remove from favourite' : 'Add to favourite',
-            child: FilledButton(
-              onPressed: () {
-                if (isToggleFavouriteLoading) return;
-
-                isToggleFavouriteLoading = true;
-
-                BlocProvider.of<WatchListBloc>(context).add(
-                  WatchListToggleFavourite(
-                    mediaId: widget.media.anilistInfo.id,
-                  ),
-                );
-              },
-              child: AnimatedCrossFade(
-                firstChild: _buildLoader(context),
-                secondChild: Icon(
-                  isFavourite
-                      ? Icons.favorite
-                      : HugeIcons.strokeRoundedFavourite,
-                  color: isFavourite ? Colors.red : null,
-                ),
-                crossFadeState: isToggleFavouriteLoading
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-                duration: const Duration(milliseconds: 200),
-              ),
-            ),
+          gap,
+          FavouriteButton(
+            media: widget.media,
           ),
         ],
       ),

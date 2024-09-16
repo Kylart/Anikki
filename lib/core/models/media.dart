@@ -23,6 +23,16 @@ class Media extends Equatable {
       anilistInfo.coverImage?.large ??
       anilistInfo.coverImage?.medium;
   String? get bannerImage => anilistInfo.bannerImage;
+  String? get backgroundImage {
+    final images = tmdbInfo?.images?.backdrops;
+
+    if (images != null && images.isNotEmpty) {
+      return 'https://image.tmdb.org/t/p/original${images.first.filePath}';
+    }
+
+    return bannerImage ?? coverImage;
+  }
+
   int? get numberOfEpisodes =>
       anilistInfo.episodes ?? anilistInfo.nextAiringEpisode?.episode;
 

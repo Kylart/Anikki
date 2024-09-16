@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:anikki/data/data.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -12,7 +11,9 @@ import 'package:super_sliver_list/super_sliver_list.dart';
 
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
+import 'package:anikki/app/home/widgets/favourite_button.dart';
 import 'package:anikki/core/core.dart';
+import 'package:anikki/data/data.dart';
 
 part 'home_carousel_actions.dart';
 part 'home_carousel_container.dart';

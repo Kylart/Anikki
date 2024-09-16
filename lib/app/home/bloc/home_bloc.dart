@@ -1,9 +1,10 @@
-import 'package:anikki/core/core.dart';
-import 'package:anikki/data/data.dart';
-import 'package:anikki/domain/domain.dart';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
+
+import 'package:anikki/core/core.dart';
+import 'package:anikki/data/data.dart';
+import 'package:anikki/domain/domain.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -20,6 +21,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         state.copyWith(
           currentMedia: event.entry?.media,
+        ),
+      );
+    });
+
+    on<HomeDrawerMediaChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          drawerMedia: event.media,
         ),
       );
     });
@@ -43,6 +52,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         HomeLoading(
           entries: state.entries,
           currentMedia: state.currentMedia,
+          drawerMedia: state.drawerMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
         ),
       );
@@ -59,6 +69,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         HomeLoaded(
           entries: entries,
           currentMedia: state.currentMedia,
+          drawerMedia: state.drawerMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
         ),
       );
@@ -66,6 +77,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeError(
           entries: state.entries,
+          currentMedia: state.currentMedia,
+          drawerMedia: state.drawerMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
           message: e.error ?? e.cause,
         ),
@@ -76,6 +89,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           entries: entries ?? state.entries,
           currentBackgroundUrl: state.currentBackgroundUrl,
           currentMedia: state.currentMedia,
+          drawerMedia: state.drawerMedia,
           message: e.error ?? e.cause,
         ),
       );
@@ -85,6 +99,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           entries: entries ?? state.entries,
           currentBackgroundUrl: state.currentBackgroundUrl,
           currentMedia: state.currentMedia,
+          drawerMedia: state.drawerMedia,
           message: e.toString(),
         ),
       );
