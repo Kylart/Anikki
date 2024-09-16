@@ -5,10 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/page.dart';
-import 'package:anikki/app/layouts/widgets/landscape/drawer_container_old.dart';
 import 'package:anikki/app/layouts/widgets/landscape/drawer_content/drawer_content.dart';
 import 'package:anikki/app/layouts/widgets/landscape/navigation_rail.dart';
-import 'package:anikki/app/media_details/widgets/media_details.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/macos_title_bar.dart';
 
@@ -82,22 +80,6 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
                                   .toList(),
                             ),
                           ),
-                        ),
-                        if (state.drawerMedia != null)
-                          const VerticalDivider(
-                            width: 1,
-                          ),
-                        DrawerContainerOld(
-                          open: state.drawerMedia != null,
-                          child: state.drawerMedia != null
-                              ? MediaDetails(
-                                  key: ValueKey(
-                                    state.drawerMedia!.anilistInfo.id,
-                                  ),
-                                  media: state.drawerMedia!,
-                                  libraryEntry: state.drawerLibraryEntry,
-                                )
-                              : const SizedBox(),
                         ),
                       ],
                     ),

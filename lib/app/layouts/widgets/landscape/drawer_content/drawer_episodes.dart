@@ -67,7 +67,7 @@ class DrawerEpisodes extends StatelessWidget {
                       Badge(
                         alignment: const Alignment(0.5, -0.9),
                         backgroundColor: Colors.transparent,
-                        label: MediaDetailsEpisodeCompleted(
+                        label: DrawerEpisodeCompleted(
                           media: media,
                           index: episodeNumber,
                         ),

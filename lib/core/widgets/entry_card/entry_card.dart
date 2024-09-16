@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:anikki/app/home/bloc/home_bloc.dart';
-import 'package:anikki/app/media_details/show.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 
@@ -94,11 +93,13 @@ class _EntryCardState extends State<EntryCard>
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: GestureDetector(
-        onTap: () => showMediaDialog(
-          context,
-          widget.media,
-          widget.libraryEntry,
-        ),
+        onTap: () {
+          BlocProvider.of<HomeBloc>(context).add(
+            HomeDrawerMediaChanged(widget.media),
+          );
+
+          Scaffold.of(context).openEndDrawer();
+        },
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (event) {

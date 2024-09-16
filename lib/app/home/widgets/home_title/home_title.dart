@@ -9,8 +9,8 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/home/widgets/home_title/home_title_carousel/home_title_carousel.dart';
-import 'package:anikki/app/media_details/widgets/media_details_video_player.dart';
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/trailer_video_player.dart';
 import 'package:anikki/domain/domain.dart';
 
 part 'home_title_actions.dart';
@@ -87,7 +87,7 @@ class HomeTitle extends StatelessWidget {
                     entry: entry,
                   ),
                 ),
-                _HomeTitleActions(
+                HomeTitleActions(
                   media: entry.media,
                 ),
               ],

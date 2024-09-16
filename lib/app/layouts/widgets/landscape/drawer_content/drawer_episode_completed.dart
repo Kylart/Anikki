@@ -1,7 +1,7 @@
-part of 'media_details_episode.dart';
+part of 'drawer_content.dart';
 
-class MediaDetailsEpisodeCompleted extends StatelessWidget {
-  const MediaDetailsEpisodeCompleted({
+class DrawerEpisodeCompleted extends StatelessWidget {
+  const DrawerEpisodeCompleted({
     super.key,
     required this.media,
     required this.index,

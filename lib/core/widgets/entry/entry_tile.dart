@@ -1,8 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-import 'package:anikki/app/media_details/widgets/media_details_actions.dart';
-import 'package:anikki/app/media_details/widgets/media_details_trailer.dart';
+import 'package:anikki/app/home/widgets/home_title/home_title.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 
@@ -132,16 +131,9 @@ class _EntryTileState<T> extends State<EntryTile> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              MediaDetailsActions(
-                media: media,
-                entry: widget.libraryEntry,
-                reversed: true,
-                showExpand: true,
-              ),
-              if (media.anilistInfo.trailer?.id != null &&
-                  media.anilistInfo.trailer?.site == 'youtube' &&
-                  media.anilistInfo.trailer?.thumbnail != null)
-                MediaDetailsTrailer(media: media),
+              HomeTitleActions(
+                media: widget.media,
+              )
             ],
           )
         ],

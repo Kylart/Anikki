@@ -1,30 +1,31 @@
 part of 'home_title.dart';
 
-enum _HomeActionType {
+enum HomeActionType {
   icon,
   iconAndText,
 }
 
-class _HomeAction {
-  _HomeAction({
+class HomeAction {
+  HomeAction({
     required this.type,
     required this.onPressed,
     required this.icon,
     this.text,
   }) {
-    if (type == _HomeActionType.iconAndText) {
+    if (type == HomeActionType.iconAndText) {
       assert(text != null);
     }
   }
 
-  final _HomeActionType type;
+  final HomeActionType type;
   final void Function(BuildContext context) onPressed;
   final IconData icon;
   final String? text;
 }
 
-class _HomeTitleActions extends StatelessWidget {
-  const _HomeTitleActions({
+class HomeTitleActions extends StatelessWidget {
+  const HomeTitleActions({
+    super.key,
     required this.media,
   });
 
@@ -33,9 +34,9 @@ class _HomeTitleActions extends StatelessWidget {
   String? get trailerSite => media.anilistInfo.trailer?.site;
   String? get trailerSiteId => media.anilistInfo.trailer?.id;
 
-  List<_HomeAction> get actions => [
-        _HomeAction(
-          type: _HomeActionType.iconAndText,
+  List<HomeAction> get actions => [
+        HomeAction(
+          type: HomeActionType.iconAndText,
           onPressed: (context) => VideoPlayerRepository.playAnyway(
             context: context,
             media: media.anilistInfo,
@@ -43,8 +44,8 @@ class _HomeTitleActions extends StatelessWidget {
           icon: HugeIcons.strokeRoundedPlay,
           text: 'Watch',
         ),
-        _HomeAction(
-          type: _HomeActionType.iconAndText,
+        HomeAction(
+          type: HomeActionType.iconAndText,
           onPressed: (context) => BlocProvider.of<DownloaderBloc>(context).add(
             DownloaderRequested(
               media: media.anilistInfo,
@@ -54,14 +55,14 @@ class _HomeTitleActions extends StatelessWidget {
           text: 'Download',
         ),
         if (trailerSite != null && trailerSiteId != null)
-          _HomeAction(
-            type: _HomeActionType.icon,
+          HomeAction(
+            type: HomeActionType.icon,
             onPressed: (context) {
               showAdaptiveDialog(
                 barrierDismissible: true,
                 context: context,
                 builder: (context) => Dialog(
-                  child: MediaDetailsVideoPlayer(
+                  child: TrailerVideoPlayer(
                     url:
                         'https://www.${trailerSite!}.com/watch?v=${trailerSiteId!}',
                   ),
@@ -71,14 +72,14 @@ class _HomeTitleActions extends StatelessWidget {
             icon: HugeIcons.strokeRoundedVideoReplay,
             text: 'Watch trailer',
           ),
-        _HomeAction(
-          type: _HomeActionType.icon,
+        HomeAction(
+          type: HomeActionType.icon,
           onPressed: (context) {},
           icon: HugeIcons.strokeRoundedTaskEdit01,
           text: 'Update list entry',
         ),
-        _HomeAction(
-          type: _HomeActionType.icon,
+        HomeAction(
+          type: HomeActionType.icon,
           onPressed: (context) {
             BlocProvider.of<HomeBloc>(context).add(
               HomeDrawerMediaChanged(media),
@@ -97,7 +98,7 @@ class _HomeTitleActions extends StatelessWidget {
       children: [
         for (final action in actions) ...[
           switch (action.type) {
-            _HomeActionType.iconAndText => FilledButton.tonalIcon(
+            HomeActionType.iconAndText => FilledButton.tonalIcon(
                 style: ButtonStyle(
                   padding: WidgetStateProperty.all<EdgeInsets>(
                     const EdgeInsets.all(16.0),
@@ -113,7 +114,7 @@ class _HomeTitleActions extends StatelessWidget {
                   style: context.textTheme.bodyLarge,
                 ),
               ),
-            _HomeActionType.icon => IconButton.filled(
+            HomeActionType.icon => IconButton.filled(
                 tooltip: action.text,
                 style: ButtonStyle(
                   padding: WidgetStateProperty.all<EdgeInsets>(
