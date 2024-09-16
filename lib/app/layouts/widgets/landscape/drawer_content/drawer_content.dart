@@ -14,6 +14,7 @@ import 'package:anikki/app/media_details/widgets/media_details_video_player.dart
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/helpers/notify.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
+import 'package:anikki/core/widgets/paginated.dart';
 import 'package:anikki/domain/domain.dart';
 
 part 'drawer_action_button.dart';

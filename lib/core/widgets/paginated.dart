@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-const kPaginatedPerPage = 12;
+const kPaginatedPerPage = 26;
 
 class Paginated extends StatefulWidget {
   const Paginated({
@@ -93,7 +93,7 @@ class _PaginatedState extends State<Paginated> {
                             width: 1,
                           ),
                           SizedBox(
-                            width: 110,
+                            width: 140,
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
