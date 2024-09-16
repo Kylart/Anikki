@@ -9,7 +9,6 @@ import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_auth/shared/helpers/login.dart';
 import 'package:anikki/app/anilist_auth/shared/helpers/logout.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
-import 'package:anikki/app/search/view/search_view.dart';
 import 'package:anikki/core/core.dart';
 
 part 'navigation_rail_item.dart';
@@ -66,18 +65,7 @@ class _AnikkiNavigationRailState extends State<AnikkiNavigationRail> {
           expanded: expanded,
           icon: HugeIcons.strokeRoundedSearch01,
           text: 'Search',
-          onClick: () => showDialog(
-            context: context,
-            builder: (context) {
-              return const Dialog(
-                backgroundColor: Colors.transparent,
-                surfaceTintColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                alignment: Alignment.topCenter,
-                child: SearchView(),
-              );
-            },
-          ),
+          onClick: Scaffold.of(context).openDrawer,
         ),
         _NavigationRailItem(
           expanded: expanded,

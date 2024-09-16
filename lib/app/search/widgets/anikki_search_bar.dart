@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/app/search/bloc/search_bloc.dart';
-import 'package:hugeicons/hugeicons.dart';
 
 class AnikkiSearchBar extends StatefulWidget {
   const AnikkiSearchBar({super.key});
@@ -50,58 +49,51 @@ class _AnikkiSearchBarState extends State<AnikkiSearchBar> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 700),
-      child: ClipRRect(
-        borderRadius: borderRadius,
-        child: BackdropFilter(
-          filter: !hasText
-              ? ImageFilter.blur(sigmaX: 40, sigmaY: 40)
-              : ImageFilter.blur(),
-          child: TextField(
-            controller: controller,
-            autofocus: true,
-            textAlign: TextAlign.center,
-            onChanged: (value) {
-              if (_debounce?.isActive ?? false) _debounce!.cancel();
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: TextField(
+        controller: controller,
+        autofocus: true,
+        textAlign: TextAlign.center,
+        onChanged: (value) {
+          if (_debounce?.isActive ?? false) _debounce!.cancel();
 
-              _debounce = Timer(
-                const Duration(milliseconds: 300),
-                () {
-                  final libraryBloc = BlocProvider.of<LibraryBloc>(context);
-                  final searchBloc = BlocProvider.of<SearchBloc>(context);
+          _debounce = Timer(
+            const Duration(milliseconds: 300),
+            () {
+              final libraryBloc = BlocProvider.of<LibraryBloc>(context);
+              final searchBloc = BlocProvider.of<SearchBloc>(context);
 
-                  searchBloc.add(
-                    SearchRequested(
-                      controller.text,
-                      libraryEntries: libraryBloc.state is LibraryLoaded
-                          ? (libraryBloc.state as LibraryLoaded).entries
-                          : const [],
-                    ),
-                  );
-                },
+              searchBloc.add(
+                SearchRequested(
+                  controller.text,
+                  libraryEntries: libraryBloc.state is LibraryLoaded
+                      ? (libraryBloc.state as LibraryLoaded).entries
+                      : const [],
+                ),
               );
             },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: borderRadius,
-              ),
-              fillColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hintText: 'Looking for something?',
-              suffixIcon: IconButton(
-                onPressed: () {
-                  if (_debounce?.isActive ?? false) {
-                    _debounce!.cancel();
-                  }
+          );
+        },
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: borderRadius,
+          ),
+          fillColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          hintText: 'Looking for something?',
+          suffixIcon: IconButton(
+            onPressed: () {
+              if (_debounce?.isActive ?? false) {
+                _debounce!.cancel();
+              }
 
-                  controller.clear();
+              controller.clear();
 
-                  BlocProvider.of<SearchBloc>(context)
-                      .add(const SearchRequested(''));
-                },
-                icon: const Icon(HugeIcons.strokeRoundedCancel01),
-              ),
-            ),
+              BlocProvider.of<SearchBloc>(context)
+                  .add(const SearchRequested(''));
+            },
+            icon: const Icon(HugeIcons.strokeRoundedCancel01),
           ),
         ),
       ),

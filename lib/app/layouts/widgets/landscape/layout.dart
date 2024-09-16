@@ -7,6 +7,7 @@ import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/page.dart';
 import 'package:anikki/app/layouts/widgets/landscape/drawer_content/drawer_content.dart';
 import 'package:anikki/app/layouts/widgets/landscape/navigation_rail.dart';
+import 'package:anikki/app/search/view/search_view.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/macos_title_bar.dart';
 
@@ -37,6 +38,10 @@ class _LandscapeLayoutState extends State<LandscapeLayout> {
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
+            drawer: Drawer(
+              width: (MediaQuery.of(context).size.width / 3).clamp(500, 1000),
+              child: const SearchView(),
+            ),
             endDrawer: Drawer(
               width: (MediaQuery.of(context).size.width / 2).clamp(750, 1250),
               child: const DrawerContent(),
