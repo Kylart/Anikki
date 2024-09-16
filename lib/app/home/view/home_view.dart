@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:anikki/app/home/widgets/home_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/home/widgets/background_image.dart';
 import 'package:anikki/app/home/widgets/home_carousel.dart/home_carousel.dart';
+import 'package:anikki/app/home/widgets/home_loader.dart';
 import 'package:anikki/app/home/widgets/home_title/home_title.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 

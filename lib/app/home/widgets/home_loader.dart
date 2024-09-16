@@ -1,9 +1,9 @@
-import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:anikki/app/home/widgets/home_title/home_title.dart';
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/loading_widget.dart';
 
 class HomeLoader extends StatelessWidget {
   const HomeLoader({
@@ -165,8 +165,7 @@ class HomeLoader extends StatelessWidget {
         const Positioned.fill(
           child: Align(
             alignment: Alignment(0.0, -0.2),
-            child: EmptyWidget(
-              title: 'Loading...',
+            child: LoadingWidget(
               width: 400,
               height: 400,
             ),
