@@ -28,10 +28,11 @@ class _EntryCardCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final image = url != null
-        ? Image.network(
-            url!,
+        ? CachedNetworkImage(
+            imageUrl: url!,
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => colorContainer,
+            errorWidget: (context, error, stackTrace) => colorContainer,
+            placeholder: (context, url) => colorContainer,
           )
         : Image.asset(
             'assets/images/placeholder.jpg',

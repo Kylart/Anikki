@@ -1,5 +1,6 @@
 import 'package:anikki/domain/domain.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/app/home/features/home_timelines/models/models.dart';
@@ -48,7 +49,7 @@ class HomeTimelineFeedCard extends StatelessWidget {
                     ? const AssetImage(
                         'assets/images/placeholder.jpg',
                       )
-                    : NetworkImage(media.coverImage!),
+                    : CachedNetworkImageProvider(media.coverImage!),
               ),
             ),
             Expanded(

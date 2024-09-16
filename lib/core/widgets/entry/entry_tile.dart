@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:anikki/app/home/widgets/home_title/home_title.dart';
@@ -53,7 +54,8 @@ class _EntryTileState<T> extends State<EntryTile> {
                 opacity: 0.25,
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
-                image: NetworkImage(media.anilistInfo.bannerImage!),
+                image:
+                    CachedNetworkImageProvider(media.anilistInfo.bannerImage!),
               )
             : const DecorationImage(
                 alignment: Alignment.topCenter,
@@ -74,7 +76,7 @@ class _EntryTileState<T> extends State<EntryTile> {
         ),
         leading: media.coverImage != null
             ? CircleAvatar(
-                backgroundImage: NetworkImage(media.coverImage!),
+                backgroundImage: CachedNetworkImageProvider(media.coverImage!),
               )
             : null,
         subtitle: Column(

@@ -58,27 +58,23 @@ class _HomeTitleCarouselImageState extends State<_HomeTitleCarouselImage> {
           ),
           child: ClipRRect(
             borderRadius: HomeTitleCarouselContainer.borderRadius,
-            child: Image.network(
-              widget.url,
-              errorBuilder: (context, error, stackTrace) {
+            child: CachedNetworkImage(
+              imageUrl: widget.url,
+              errorWidget: (context, error, stackTrace) {
                 return const SizedBox();
               },
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress != null) {
-                  return AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Container(
-                      color: Colors.blueGrey,
-                    ),
-                  )
-                      .animate(
-                        onPlay: (controller) => controller.repeat(),
-                      )
-                      .fadeIn(duration: 1.2.seconds)
-                      .fadeOut(delay: 300.ms, duration: 1.2.seconds);
-                }
-
-                return child;
+              placeholder: (context, childurl) {
+                return AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    color: Colors.blueGrey,
+                  ),
+                )
+                    .animate(
+                      onPlay: (controller) => controller.repeat(),
+                    )
+                    .fadeIn(duration: 1.2.seconds)
+                    .fadeOut(delay: 300.ms, duration: 1.2.seconds);
               },
             ),
           ),

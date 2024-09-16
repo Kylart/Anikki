@@ -48,7 +48,7 @@ class _HomeCarouselImage extends StatelessWidget {
                 : BorderRadius.all(radius),
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: NetworkImage(
+              image: CachedNetworkImageProvider(
                 entry.media.coverImage ?? '',
               ),
             ),

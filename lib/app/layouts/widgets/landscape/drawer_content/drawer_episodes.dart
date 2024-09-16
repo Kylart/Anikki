@@ -72,10 +72,10 @@ class DrawerEpisodes extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 40,
                           backgroundImage: (info?.thumbnail == null
-                                  ? const AssetImage(
-                                      'assets/images/cover_placeholder.jpg')
-                                  : NetworkImage(info!.thumbnail!))
-                              as ImageProvider,
+                              ? const AssetImage(
+                                  'assets/images/cover_placeholder.jpg')
+                              : CachedNetworkImageProvider(
+                                  info!.thumbnail!)) as ImageProvider,
                         ),
                       ),
                       Expanded(

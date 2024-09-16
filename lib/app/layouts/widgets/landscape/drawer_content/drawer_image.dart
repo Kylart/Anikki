@@ -18,7 +18,7 @@ class DrawerImage extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(8.0),
         ),
-        child: Image.network(media.coverImage!),
+        child: CachedNetworkImage(imageUrl: media.coverImage!),
       ),
     );
   }

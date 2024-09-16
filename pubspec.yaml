@@ -59,6 +59,7 @@ dependencies:
     path: packages/anitomy
   audio_video_progress_bar: ^2.0.2
   auto_size_text: ^3.0.0
+  cached_network_image: ^3.4.1
   connectivity_plus: ^6.0.2
   equatable: ^2.0.5
   flutter_animation_progress_bar: ^2.3.1

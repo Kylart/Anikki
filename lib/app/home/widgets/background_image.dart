@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,9 +41,9 @@ class HomeBackgroundImage extends StatelessWidget {
             );
           },
           child: state.currentBackgroundUrl != null
-              ? Image.network(
+              ? CachedNetworkImage(
                   key: ValueKey(state.currentBackgroundUrl),
-                  state.currentBackgroundUrl!,
+                  imageUrl: state.currentBackgroundUrl!,
                   fit: BoxFit.cover,
                 )
               : const SizedBox(),
