@@ -16,7 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required this.userListRepository,
     required this.feedRepository,
-  }) : super(const HomeState()) {
+  }) : super(HomeInitial()) {
     on<HomeCurrentMediaChanged>((event, emit) {
       emit(
         state.copyWith(
