@@ -10,7 +10,10 @@ class DrawerEpisodes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (media.numberOfEpisodes == null) return const SizedBox();
+    final numberOfEpisodes =
+        media.anilistInfo.nextAiringEpisode?.episode ?? media.numberOfEpisodes;
+
+    if (numberOfEpisodes == null) return const SizedBox();
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -19,7 +22,7 @@ class DrawerEpisodes extends StatelessWidget {
       ),
       child: Paginated(
         initialPage: 0,
-        numberOfEntries: media.numberOfEpisodes ?? 0,
+        numberOfEntries: numberOfEpisodes,
         pageBuilder: (context, page) {
           return GridView.builder(
             physics: const ClampingScrollPhysics(),
@@ -29,16 +32,11 @@ class DrawerEpisodes extends StatelessWidget {
               childAspectRatio: 32 / 9,
               crossAxisSpacing: 8.0,
             ),
-            itemCount: media.numberOfEpisodes == null
-                ? 0
-                : (media.numberOfEpisodes! - (page * kPaginatedPerPage))
-                    .clamp(0, kPaginatedPerPage),
+            itemCount: (numberOfEpisodes - (page * kPaginatedPerPage))
+                .clamp(0, kPaginatedPerPage),
             itemBuilder: (context, index) {
-              final episodeNumber = media.numberOfEpisodes == null
-                  ? 0
-                  : media.numberOfEpisodes! -
-                      index -
-                      (page * kPaginatedPerPage);
+              final episodeNumber =
+                  numberOfEpisodes - index - (page * kPaginatedPerPage);
 
               if (episodeNumber < 1) return const SizedBox();
 
