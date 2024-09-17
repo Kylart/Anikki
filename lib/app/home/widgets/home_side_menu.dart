@@ -18,24 +18,26 @@ class HomeSideMenuAction {
   final IconData icon;
 }
 
-final _actions = <HomeSideMenuAction>[
-  HomeSideMenuAction(
-    type: HomeMediaType.trending,
-    icon: HugeIcons.strokeRoundedFire,
-  ),
-  HomeSideMenuAction(
-    type: HomeMediaType.recommendations,
-    icon: HugeIcons.strokeRoundedThumbsUp,
-  ),
-  HomeSideMenuAction(
-    type: HomeMediaType.toStart,
-    icon: HugeIcons.strokeRoundedBookmarkAdd02,
-  ),
-  HomeSideMenuAction(
-    type: HomeMediaType.following,
-    icon: HugeIcons.strokeRoundedAllBookmark,
-  ),
-];
+List<HomeSideMenuAction> _buildActions(bool hasList) => <HomeSideMenuAction>[
+      HomeSideMenuAction(
+        type: HomeMediaType.trending,
+        icon: HugeIcons.strokeRoundedFire,
+      ),
+      HomeSideMenuAction(
+        type: HomeMediaType.recommendations,
+        icon: HugeIcons.strokeRoundedThumbsUp,
+      ),
+      if (hasList)
+        HomeSideMenuAction(
+          type: HomeMediaType.toStart,
+          icon: HugeIcons.strokeRoundedBookmarkAdd02,
+        ),
+      if (hasList)
+        HomeSideMenuAction(
+          type: HomeMediaType.following,
+          icon: HugeIcons.strokeRoundedAllBookmark,
+        ),
+    ];
 
 class HomeSideMenu extends StatelessWidget {
   const HomeSideMenu({
@@ -63,79 +65,86 @@ class HomeSideMenu extends StatelessWidget {
           ),
           child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (state is HomeError)
-                    Tooltip(
-                      message: state.message,
-                      child: Icon(
-                        HugeIcons.strokeRoundedDanger,
-                        size: 26,
-                        color: context.colorScheme.error,
-                      ),
-                    ),
-                  for (final action in _actions) ...[
-                    IconButton(
-                      tooltip: 'Show ${action.type.title}',
-                      iconSize: 26,
-                      color: state.type == action.type
-                          ? context.colorScheme.primary
-                          : null,
-                      onPressed: () {
-                        final watchListBloc =
-                            BlocProvider.of<WatchListBloc>(context);
-
-                        BlocProvider.of<HomeBloc>(context).add(
-                          HomeRefreshed(
-                            requestedType: action.type,
-                            connected: watchListBloc.state.connected,
-                            watchList: watchListBloc.state.watchList,
+              return BlocBuilder<WatchListBloc, WatchListState>(
+                builder: (context, watchListState) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (state is HomeError)
+                        Tooltip(
+                          message: state.message,
+                          child: Icon(
+                            HugeIcons.strokeRoundedDanger,
+                            size: 26,
+                            color: context.colorScheme.error,
                           ),
-                        );
-                      },
-                      icon: Icon(action.icon),
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                  ],
-                  AnimatedCrossFade(
-                    firstChild: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      width: 36,
-                      height: 36,
-                      child: CircularProgressIndicator(
-                        color: context.colorScheme.onPrimary,
-                        strokeWidth: 2.0,
-                      ),
-                    ),
-                    secondChild: IconButton(
-                      iconSize: 26,
-                      onPressed: () {
-                        final watchListBloc =
-                            BlocProvider.of<WatchListBloc>(context);
+                        ),
+                      for (final action in _buildActions(
+                        watchListState is WatchListComplete &&
+                            watchListState.watchList.isNotEmpty,
+                      )) ...[
+                        IconButton(
+                          tooltip: 'Show ${action.type.title}',
+                          iconSize: 26,
+                          color: state.type == action.type
+                              ? context.colorScheme.primary
+                              : null,
+                          onPressed: () {
+                            final watchListBloc =
+                                BlocProvider.of<WatchListBloc>(context);
 
-                        if (watchListBloc.state.username != null) {
-                          watchListBloc.add(
-                            WatchListRequested(
-                              username: watchListBloc.state.username!,
-                            ),
-                          );
-                        } else {
-                          BlocProvider.of<HomeBloc>(context).add(
-                            const HomeRefreshed(),
-                          );
-                        }
-                      },
-                      icon: const Icon(HugeIcons.strokeRoundedRefresh),
-                    ),
-                    crossFadeState: loading
-                        ? CrossFadeState.showFirst
-                        : CrossFadeState.showSecond,
-                    duration: const Duration(milliseconds: 200),
-                  ),
-                ],
+                            BlocProvider.of<HomeBloc>(context).add(
+                              HomeRefreshed(
+                                requestedType: action.type,
+                                connected: watchListBloc.state.connected,
+                                watchList: watchListBloc.state.watchList,
+                              ),
+                            );
+                          },
+                          icon: Icon(action.icon),
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                      ],
+                      AnimatedCrossFade(
+                        firstChild: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          width: 36,
+                          height: 36,
+                          child: CircularProgressIndicator(
+                            color: context.colorScheme.onPrimary,
+                            strokeWidth: 2.0,
+                          ),
+                        ),
+                        secondChild: IconButton(
+                          iconSize: 26,
+                          onPressed: () {
+                            final watchListBloc =
+                                BlocProvider.of<WatchListBloc>(context);
+
+                            if (watchListBloc.state.username != null) {
+                              watchListBloc.add(
+                                WatchListRequested(
+                                  username: watchListBloc.state.username!,
+                                ),
+                              );
+                            } else {
+                              BlocProvider.of<HomeBloc>(context).add(
+                                const HomeRefreshed(),
+                              );
+                            }
+                          },
+                          icon: const Icon(HugeIcons.strokeRoundedRefresh),
+                        ),
+                        crossFadeState: loading
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                        duration: const Duration(milliseconds: 200),
+                      ),
+                    ],
+                  );
+                },
               );
             },
           ),
