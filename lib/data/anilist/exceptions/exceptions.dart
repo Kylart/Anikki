@@ -1,7 +1,7 @@
 export 'anilist_get_activities_exception.dart';
 export 'anilist_get_info_exception.dart';
 export 'anilist_get_list_exception.dart';
-export 'anilist_get_recommandations_exception.dart';
+export 'anilist_get_recommendations_exception.dart';
 export 'anilist_get_schedule_exception.dart';
 export 'anilist_get_trending_exception.dart';
 export 'anilist_not_connected_exception.dart';
