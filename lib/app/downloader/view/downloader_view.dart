@@ -8,7 +8,7 @@ import 'package:anikki/app/downloader/widgets/widgets.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
-import 'package:anikki/core/widgets/loader.dart';
+import 'package:anikki/core/widgets/loading_widget.dart';
 import 'package:anikki/data/data.dart';
 
 part 'downloader_success_view.dart';
@@ -24,7 +24,11 @@ class DownloaderView extends StatelessWidget {
             title: 'Could not find results for ${state.term}',
             description: state.message,
           ),
-        DownloaderLoading() => const Loader(),
+        DownloaderLoading() => const Center(
+            child: LoadingWidget(
+              title: 'Looking for available torrents...',
+            ),
+          ),
         DownloaderSuccess() => _DownloaderSuccessView(state),
         DownloaderClose() || DownloaderShow() => const SizedBox(),
       },

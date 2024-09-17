@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:anikki/core/widgets/section/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -13,7 +12,8 @@ import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/anikki_action_button.dart';
 import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
-import 'package:anikki/core/widgets/loader.dart';
+import 'package:anikki/core/widgets/loading_widget.dart';
+import 'package:anikki/core/widgets/section/section_title.dart';
 import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
 
 class LibraryView extends StatelessWidget {
@@ -93,7 +93,9 @@ class LibraryView extends StatelessWidget {
             Expanded(
               child: BlocBuilder<LibraryBloc, LibraryState>(
                 builder: (context, state) => switch (state) {
-                  LibraryLoading() || LibraryInitial() => const Loader(),
+                  LibraryLoading() || LibraryInitial() => const Center(
+                      child: LoadingWidget(),
+                    ),
                   LibraryError() => Center(
                       child: CustomErrorWidget(
                         title: 'Could not load your files at ${state.path}',

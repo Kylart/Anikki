@@ -11,7 +11,7 @@ import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
-import 'package:anikki/core/widgets/loader.dart';
+import 'package:anikki/core/widgets/loading_widget.dart';
 import 'package:anikki/core/widgets/section/section_title.dart';
 import 'package:anikki/core/widgets/section/section_title_loading_action.dart';
 import 'package:anikki/core/widgets/user_list_layout_toggle.dart';
@@ -106,7 +106,9 @@ class WatchListView extends StatelessWidget {
                   ),
                 if (!errored && loading && state.isEmpty)
                   const Expanded(
-                    child: Loader(),
+                    child: Center(
+                      child: LoadingWidget(),
+                    ),
                   ),
                 if (state.isNotEmpty)
                   Expanded(
