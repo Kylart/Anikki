@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:path/path.dart';
 import 'package:simple_icons/simple_icons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
@@ -139,7 +140,24 @@ class DrawerContent extends StatelessWidget {
         final media = state.drawerMedia;
         final libraryEntry = state.drawerLibraryEntry;
 
-        if (media == null) return const SizedBox();
+        if (media == null || media.anilistInfo.id == 0) {
+          return ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: _horizontalPadding,
+                    vertical: _horizontalPadding / 2),
+                child: DrawerTitle(
+                  isConnected: isConnected,
+                  libraryEntry: libraryEntry,
+                ),
+              ),
+              DrawerEpisodes(
+                libraryEntry: libraryEntry,
+              ),
+            ],
+          );
+        }
 
         return Stack(
           children: [
@@ -202,27 +220,9 @@ class DrawerContent extends StatelessWidget {
                       children: [
                         DrawerGenres(media: media),
                         DrawerDescription(media: media),
-
-                        /// Listening to `LibraryBloc` so that content refreshes whenever library is updated.
-                        BlocConsumer<LibraryBloc, LibraryState>(
-                          listener: (context, state) {
-                            if (state is LibraryEmpty &&
-                                media.anilistInfo.id == 0) {
-                              Scaffold.of(context).closeEndDrawer();
-                            }
-
-                            if (state is LibraryLoaded &&
-                                media.anilistInfo.id == 0 &&
-                                libraryEntry?.entries.isEmpty == true) {
-                              Scaffold.of(context).closeEndDrawer();
-                            }
-                          },
-                          builder: (context, state) {
-                            return DrawerEpisodes(
-                              media: media,
-                              libraryEntry: libraryEntry,
-                            );
-                          },
+                        DrawerEpisodes(
+                          media: media,
+                          libraryEntry: libraryEntry,
                         ),
                       ],
                     ),

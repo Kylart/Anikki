@@ -27,7 +27,7 @@ class _DrawerEpisodeDeleteButtonState extends State<DrawerEpisodeDeleteButton>
     super.dispose();
   }
 
-  void onPressed() {
+  void onPressed(BuildContext context) {
     if (controller != null) {
       BlocProvider.of<LibraryBloc>(context).add(
         LibraryFileDeleteRequested(widget.file),
@@ -59,7 +59,7 @@ class _DrawerEpisodeDeleteButtonState extends State<DrawerEpisodeDeleteButton>
   @override
   Widget build(BuildContext context) {
     final icon = IconButton(
-      onPressed: onPressed,
+      onPressed: () => onPressed(context),
       iconSize: 18.0,
       constraints: const BoxConstraints(),
       color: controller == null ? Colors.orange : Colors.red,

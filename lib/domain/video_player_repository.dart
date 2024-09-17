@@ -200,9 +200,8 @@ class VideoPlayerRepository {
     }
 
     file = entry?.entries.firstWhereOrNull(
-          (element) => element.episode == (progress ?? 0) + 1,
-        ) ??
-        entry?.entries.firstOrNull;
+      (element) => element.episode == (progress ?? 0) + 1,
+    );
 
     if (media?.format == Enum$MediaFormat.MOVIE) {
       file = entry?.entries.first;
