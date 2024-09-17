@@ -38,6 +38,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onRefresh(HomeRefreshed event, Emitter<HomeState> emit) async {
     List<MediaListEntry>? entries;
+    var requestedType = event.requestedType ?? state.type;
 
     try {
       emit(
@@ -45,22 +46,42 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           entries: state.entries,
           currentMedia: state.currentMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
+          type: requestedType,
         ),
       );
 
-      entries = event.connected
-          ? await userListRepository.getContinueList(event.watchList)
-          : (await feedRepository.getTrending())
+      if ([
+            HomeMediaType.following,
+            HomeMediaType.toStart,
+          ].contains(requestedType) &&
+          event.watchList?.isEmpty == true) {
+        requestedType = HomeMediaType.trending;
+      }
+
+      entries = switch (requestedType) {
+        HomeMediaType.following =>
+          await userListRepository.getContinueList(event.watchList!),
+        HomeMediaType.toStart =>
+          await userListRepository.getStartList(event.watchList!),
+        HomeMediaType.trending => (await feedRepository.getTrending())
+            .map(
+              (media) => MediaListEntry(media: media, progress: null),
+            )
+            .toList(),
+        HomeMediaType.recommendations =>
+          (await feedRepository.getrecommendations())
               .map(
                 (media) => MediaListEntry(media: media, progress: null),
               )
-              .toList();
+              .toList(),
+      };
 
       emit(
         HomeLoaded(
           entries: entries,
           currentMedia: state.currentMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
+          type: requestedType,
         ),
       );
     } on AnilistGetListException catch (e) {
@@ -69,6 +90,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           entries: state.entries,
           currentMedia: state.currentMedia,
           currentBackgroundUrl: state.currentBackgroundUrl,
+          type: state.type,
           message: e.error ?? e.cause,
         ),
       );
@@ -78,6 +100,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           entries: entries ?? state.entries,
           currentBackgroundUrl: state.currentBackgroundUrl,
           currentMedia: state.currentMedia,
+          type: state.type,
           message: e.error ?? e.cause,
         ),
       );
@@ -87,6 +110,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           entries: entries ?? state.entries,
           currentBackgroundUrl: state.currentBackgroundUrl,
           currentMedia: state.currentMedia,
+          type: state.type,
           message: e.toString(),
         ),
       );

@@ -1,15 +1,28 @@
 part of 'home_bloc.dart';
 
+enum HomeMediaType {
+  following('currently following'),
+  toStart('planned animes'),
+  trending('trending animes'),
+  recommendations('recommended animes');
+
+  final String title;
+
+  const HomeMediaType(this.title);
+}
+
 final class HomeState extends Equatable {
   const HomeState({
     this.currentMedia,
     this.entries = const [],
     this.currentBackgroundUrl,
+    this.type = HomeMediaType.following,
   });
 
   final Media? currentMedia;
   final String? currentBackgroundUrl;
   final List<MediaListEntry> entries;
+  final HomeMediaType type;
 
   MediaListEntry? get currentEntry => entries.firstWhereOrNull(
         (e) => e.media == currentMedia,
@@ -20,11 +33,13 @@ final class HomeState extends Equatable {
         currentMedia,
         currentBackgroundUrl,
         entries,
+        type,
       ];
 
   @override
   String toString() => [
         'HomeState(',
+        'type: ${type.title}, ',
         'currentMedia: ${currentMedia?.title}, ',
         'currentBackgroundUrl: $currentBackgroundUrl, ',
         '${entries.length} entries',
@@ -35,11 +50,13 @@ final class HomeState extends Equatable {
     Media? currentMedia,
     String? currentBackgroundUrl,
     List<MediaListEntry>? entries,
+    HomeMediaType? type,
   }) {
     return HomeState(
       currentMedia: currentMedia ?? this.currentMedia,
       currentBackgroundUrl: currentBackgroundUrl ?? this.currentBackgroundUrl,
       entries: entries ?? this.entries,
+      type: type ?? this.type,
     );
   }
 }
@@ -51,6 +68,7 @@ final class HomeLoading extends HomeState {
     super.entries,
     super.currentBackgroundUrl,
     super.currentMedia,
+    super.type,
   });
 }
 
@@ -59,6 +77,7 @@ final class HomeLoaded extends HomeState {
     super.entries,
     super.currentBackgroundUrl,
     super.currentMedia,
+    super.type,
   });
 }
 
@@ -66,6 +85,7 @@ final class HomeError extends HomeState {
   const HomeError({
     super.entries,
     super.currentMedia,
+    super.type,
     super.currentBackgroundUrl,
     required this.message,
   });
@@ -76,6 +96,7 @@ final class HomeError extends HomeState {
   List<Object?> get props => [
         entries,
         message,
+        type,
         currentBackgroundUrl,
       ];
 }

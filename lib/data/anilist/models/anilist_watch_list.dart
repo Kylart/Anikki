@@ -38,6 +38,15 @@ class AnilistWatchList extends Equatable {
     );
   }
 
+  bool get isNotEmpty => !isEmpty;
+  bool get isEmpty =>
+      completed.isEmpty &&
+      current.isEmpty &&
+      dropped.isEmpty &&
+      paused.isEmpty &&
+      planning.isEmpty &&
+      repeating.isEmpty;
+
   @override
   List<Object?> get props => [
         completed,

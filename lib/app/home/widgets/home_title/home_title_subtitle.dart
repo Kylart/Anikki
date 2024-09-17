@@ -44,7 +44,7 @@ class _HomeTitleSubtitle extends StatelessWidget {
             ),
           if (episodes != null && episodes != 0) ...[
             separator,
-            if (entry.progress != null)
+            if (entry.progress != null && entry.progress != 0)
               TextSpan(
                 text: 'Episode ${entry.progress}/$episodes',
               )

@@ -105,28 +105,33 @@ class UserListRepository {
     ];
   }
 
-  List<MediaListEntry> getStartList(
+  Future<List<MediaListEntry>> getStartList(
     AnilistWatchList watchList,
-  ) {
+  ) async {
     final season = currentSeason();
     final year = DateTime.now().year;
     final planningList = watchList.planning;
 
-    final seasonEntries = planningList
-        .where((element) {
-          return element.media?.season == season &&
-              element.media?.seasonYear == year &&
-              element.media?.nextAiringEpisode?.episode != 1 &&
-              element.progress == 0;
-        })
-        .map((element) => MediaListEntry.fromAnilistListEntry(element))
-        .toList();
+    final seasonEntries = planningList.where((element) {
+      return element.media?.season == season &&
+          element.media?.seasonYear == year &&
+          element.media?.nextAiringEpisode?.episode != 1 &&
+          element.progress == 0;
+    });
 
-    if (seasonEntries.isNotEmpty) return seasonEntries;
+    final entries =
+        seasonEntries.isNotEmpty ? seasonEntries : watchList.planning;
 
-    return watchList.planning
-        .map((element) => MediaListEntry.fromAnilistListEntry(element))
-        .toList();
+    return [
+      for (final entry in entries)
+        MediaListEntry(
+          updatedAt: entry.updatedAt,
+          progress: entry.progress,
+          media: await tmdb.hydrateMediaWithTmdb(
+            Media(anilistInfo: entry.media),
+          ),
+        ),
+    ];
   }
 
   Future<AnilistWatchList> toggleFavourite(

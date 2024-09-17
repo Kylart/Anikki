@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/home/bloc/home_bloc.dart';
 import 'package:anikki/app/home/widgets/background_image.dart';
 import 'package:anikki/app/home/widgets/home_carousel.dart/home_carousel.dart';
 import 'package:anikki/app/home/widgets/home_loader.dart';
+import 'package:anikki/app/home/widgets/home_side_menu.dart';
 import 'package:anikki/app/home/widgets/home_title/home_title.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
 
@@ -23,9 +25,13 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
+        final watchListBloc =
+            BlocProvider.of<WatchListBloc>(context, listen: true);
+
         final initial = state is HomeInitial;
         final errored = state is HomeError;
-        final loading = state is HomeLoading;
+        final loading =
+            state is HomeLoading || watchListBloc.state is WatchListLoading;
 
         final screenSize = MediaQuery.of(context).size;
         final carouselSize = Size(
@@ -77,6 +83,13 @@ class _HomeViewState extends State<HomeView> {
                     begin: -0.5,
                   ),
             ],
+            Positioned(
+              right: 0.0,
+              bottom: carouselSize.height + 24.0,
+              child: HomeSideMenu(
+                loading: loading,
+              ),
+            ),
             if (state.entries.isNotEmpty)
               Positioned(
                 right: 0,

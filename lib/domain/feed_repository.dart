@@ -68,14 +68,15 @@ class FeedRepository {
   }
 
   /// Returns recommended entries
-  Future<List<Media>> getRecommandations() async {
+  Future<List<Media>> getrecommendations() async {
     final entries = await anilist.getRecommendations();
 
-    return entries
-        .map(
-          (e) => Media(anilistInfo: e.mediaRecommendation),
-        )
-        .toList();
+    return [
+      for (final entry in entries)
+        await tmdb.hydrateMediaWithTmdb(
+          Media(anilistInfo: entry.media),
+        ),
+    ];
   }
 
   // Filter the given `entries` by applying the given `options`
