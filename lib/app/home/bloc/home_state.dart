@@ -1,7 +1,7 @@
 part of 'home_bloc.dart';
 
 enum HomeMediaType {
-  following('currently following'),
+  following('currently following animes'),
   toStart('planned animes'),
   trending('trending animes'),
   recommendations('recommended animes');
