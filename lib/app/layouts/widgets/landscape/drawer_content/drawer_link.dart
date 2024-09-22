@@ -25,7 +25,7 @@ class DrawerLink extends StatelessWidget {
             const EdgeInsets.all(12.0),
           ),
         ),
-        onPressed: () => link.onPressed(context, media),
+        onPressed: () => link.onPressed(context),
         icon: Icon(
           link.icon,
         ),

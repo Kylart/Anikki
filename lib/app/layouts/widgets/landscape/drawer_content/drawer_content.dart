@@ -13,6 +13,7 @@ import 'package:simple_icons/simple_icons.dart';
 
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
+import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/home/widgets/favourite_button.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
@@ -27,6 +28,7 @@ import 'package:anikki/domain/domain.dart';
 part 'drawer_action_button.dart';
 part 'drawer_banner_image.dart';
 part 'drawer_description.dart';
+part 'drawer_episode.dart';
 part 'drawer_episode_completed.dart';
 part 'drawer_episode_delete_button.dart';
 part 'drawer_episodes.dart';
@@ -50,7 +52,7 @@ class DrawerAction {
     this.type = DrawerActionType.icon,
   });
 
-  final void Function(BuildContext context, Media media) onPressed;
+  final void Function(BuildContext context) onPressed;
   final String label;
   final IconData icon;
   final DrawerActionType type;
@@ -59,71 +61,85 @@ class DrawerAction {
 List<DrawerAction> _buildLinks(Media? media) => [
       if (media?.anilistInfo.id != null && media?.anilistInfo.id != 0)
         DrawerAction(
-          onPressed: (context, media) => openInBrowser(
-            'https://anilist.co/anime/${media.anilistInfo.id}',
+          onPressed: (context) => openInBrowser(
+            'https://anilist.co/anime/${media!.anilistInfo.id}',
           ),
           label: 'See on AniList',
           icon: SimpleIcons.anilist,
         ),
       if (media?.anilistInfo.idMal != null)
         DrawerAction(
-          onPressed: (context, media) => openInBrowser(
-            'https://myanimelist.net/anime/${media.anilistInfo.idMal}',
+          onPressed: (context) => openInBrowser(
+            'https://myanimelist.net/anime/${media!.anilistInfo.idMal}',
           ),
           label: 'See on MyAnimeList',
           icon: SimpleIcons.myanimelist,
         ),
       if (media?.tmdbInfo?.id != null)
         DrawerAction(
-          onPressed: (context, media) => openInBrowser(
-            'https://www.themoviedb.org/tv/${media.tmdbInfo?.id}',
+          onPressed: (context) => openInBrowser(
+            'https://www.themoviedb.org/tv/${media!.tmdbInfo?.id}',
           ),
           label: 'See on TMDB',
           icon: SimpleIcons.themoviedatabase,
         ),
     ];
 
-final _actions = <DrawerAction>[
-  DrawerAction(
-    onPressed: (context, media) {
-      final trailerSite = media.anilistInfo.trailer?.site;
-      final trailerSiteId = media.anilistInfo.trailer?.id;
+List<DrawerAction> _buildActions({
+  Media? media,
+  LibraryEntry? libraryEntry,
+}) =>
+    [
+      DrawerAction(
+        onPressed: (context) {
+          final trailerSite = media?.anilistInfo.trailer?.site;
+          final trailerSiteId = media?.anilistInfo.trailer?.id;
 
-      if (trailerSiteId == null || trailerSite == null) {
-        return context.notify(
-          message: 'No trailer available',
-          isError: true,
-        );
-      }
+          if (trailerSiteId == null || trailerSite == null) {
+            return context.notify(
+              message: 'No trailer available',
+              isError: true,
+            );
+          }
 
-      showAdaptiveDialog(
-        barrierDismissible: true,
-        context: context,
-        builder: (context) => Dialog(
-          child: TrailerVideoPlayer(
-            url: 'https://www.$trailerSite.com/watch?v=$trailerSiteId',
+          showAdaptiveDialog(
+            barrierDismissible: true,
+            context: context,
+            builder: (context) => Dialog(
+              child: TrailerVideoPlayer(
+                url: 'https://www.$trailerSite.com/watch?v=$trailerSiteId',
+              ),
+            ),
+          );
+        },
+        label: 'Watch trailer',
+        icon: HugeIcons.strokeRoundedVideoReplay,
+      ),
+      DrawerAction(
+        onPressed: (context) {},
+        label: 'Update list entry',
+        icon: HugeIcons.strokeRoundedTaskEdit01,
+      ),
+      DrawerAction(
+        onPressed: (context) => BlocProvider.of<DownloaderBloc>(context).add(
+          DownloaderRequested(
+            media: media?.anilistInfo,
+            entry: libraryEntry,
           ),
         ),
-      );
-    },
-    label: 'Watch trailer',
-    icon: HugeIcons.strokeRoundedVideoReplay,
-  ),
-  DrawerAction(
-    onPressed: (context, media) {},
-    label: 'Update list entry',
-    icon: HugeIcons.strokeRoundedTaskEdit01,
-  ),
-  DrawerAction(
-    type: DrawerActionType.full,
-    onPressed: (context, media) => VideoPlayerRepository.playAnyway(
-      context: context,
-      media: media.anilistInfo,
-    ),
-    label: 'Watch',
-    icon: HugeIcons.strokeRoundedPlay,
-  ),
-];
+        label: 'Download',
+        icon: HugeIcons.strokeRoundedDownload04,
+      ),
+      DrawerAction(
+        type: DrawerActionType.full,
+        onPressed: (context) => VideoPlayerRepository.playAnyway(
+          context: context,
+          media: media?.anilistInfo,
+        ),
+        label: 'Watch',
+        icon: HugeIcons.strokeRoundedPlay,
+      ),
+    ];
 
 class DrawerContent extends StatelessWidget {
   const DrawerContent({super.key});
@@ -209,7 +225,10 @@ class DrawerContent extends StatelessWidget {
                         ),
                       ],
                       const Spacer(),
-                      for (final action in _actions)
+                      for (final action in _buildActions(
+                        media: media,
+                        libraryEntry: libraryEntry,
+                      ))
                         DrawerActionButton(action: action, media: media)
                     ],
                   ),

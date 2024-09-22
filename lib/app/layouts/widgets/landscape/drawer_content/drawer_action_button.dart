@@ -23,7 +23,7 @@ class DrawerActionButton extends StatelessWidget {
                 const EdgeInsets.all(12.0),
               ),
             ),
-            onPressed: () => action.onPressed(context, media),
+            onPressed: () => action.onPressed(context),
             icon: Icon(
               action.icon,
             ),
@@ -37,7 +37,7 @@ class DrawerActionButton extends StatelessWidget {
                 ),
               ),
             ),
-            onPressed: () => action.onPressed(context, media),
+            onPressed: () => action.onPressed(context),
             icon: Icon(
               action.icon,
               size: 32.0,
