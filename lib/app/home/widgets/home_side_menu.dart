@@ -80,7 +80,7 @@ class HomeSideMenu extends StatelessWidget {
                           ),
                         ),
                       for (final action in _buildActions(
-                        watchListState is WatchListComplete &&
+                        watchListState.connected &&
                             watchListState.watchList.isNotEmpty,
                       )) ...[
                         IconButton(
