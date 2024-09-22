@@ -7,13 +7,13 @@ import 'package:anikki/data/data.dart';
 
 class Media extends Equatable {
   Media({
-    Fragment$shortMedia? anilistInfo,
+    Fragment$media? anilistInfo,
     this.tmdbInfo,
   }) {
     this.anilistInfo = anilistInfo ?? AnilistUtils.getEmptyMedia();
   }
 
-  late final Fragment$shortMedia anilistInfo;
+  late final Fragment$media anilistInfo;
   final TmdbTvDetails? tmdbInfo;
 
   bool get hasInfo => anilistInfo.id != 0;
@@ -50,7 +50,7 @@ class Media extends Equatable {
 
   factory Media.fromMap(Map<String, dynamic> map) {
     return Media(
-      anilistInfo: Fragment$shortMedia.fromJson(
+      anilistInfo: Fragment$media.fromJson(
         map['anilistInfo'] as Map<String, dynamic>,
       ),
       tmdbInfo: TmdbTvDetails.fromJson(
@@ -68,7 +68,7 @@ class Media extends Equatable {
   bool get stringify => true;
 
   Media copyWith({
-    Fragment$shortMedia? anilistInfo,
+    Fragment$media? anilistInfo,
     TmdbTvDetails? tmdbInfo,
   }) {
     return Media(

@@ -30,7 +30,7 @@ final class SearchSuccess extends SearchState {
 
   List<Query$Search$staff$results>? get staffs => result.staffs;
   List<Query$Search$characters$results>? get characters => result.characters;
-  List<Fragment$shortMedia>? get medias => result.medias;
+  List<Fragment$media>? get medias => result.medias;
 
   bool get isEmpty => result.isEmpty;
 

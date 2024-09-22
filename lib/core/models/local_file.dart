@@ -21,7 +21,7 @@ import 'package:anikki/data/data.dart';
 ///
 /// ```dart
 /// final path = 'path/to/file';
-/// final Fragment$shortMedia media = getMedia();
+/// final Fragment$media media = getMedia();
 ///
 /// LocalFile localFile = LocalFile(
 ///   path: path,

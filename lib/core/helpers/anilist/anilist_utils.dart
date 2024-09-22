@@ -30,15 +30,14 @@ class AnilistUtils {
     return AnilistUtils.getListEntry(watchList.completed, media);
   }
 
-  static Fragment$shortMedia getEmptyMedia({
+  static Fragment$media getEmptyMedia({
     int id = 0,
     String? title,
   }) =>
-      Fragment$shortMedia(
+      Fragment$media(
         id: id,
         isFavourite: false,
-        title: title == null
-            ? null
-            : Fragment$shortMedia$title(userPreferred: title),
+        title:
+            title == null ? null : Fragment$media$title(userPreferred: title),
       );
 }

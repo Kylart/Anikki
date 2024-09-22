@@ -34,8 +34,7 @@ class AnimeInformationRepository {
           as List<Query$Search$staff$results>,
       characters: anilistResult[AnilistSearchPart.characters]
           as List<Query$Search$characters$results>,
-      medias:
-          anilistResult[AnilistSearchPart.animes] as List<Fragment$shortMedia>,
+      medias: anilistResult[AnilistSearchPart.animes] as List<Fragment$media>,
     );
   }
 
@@ -55,7 +54,7 @@ class AnimeInformationRepository {
       return await anilist.search(term);
     } on AnilistSearchException {
       return {
-        AnilistSearchPart.animes: List<Fragment$shortMedia>.from([]),
+        AnilistSearchPart.animes: List<Fragment$media>.from([]),
         AnilistSearchPart.characters:
             List<Query$Search$characters$results>.from([]),
         AnilistSearchPart.staffs: List<Query$Search$staff$results>.from([]),

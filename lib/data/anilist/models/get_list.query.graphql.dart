@@ -424,7 +424,7 @@ const documentNodeQueryGetLists = DocumentNode(definitions: [
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FragmentSpreadNode(
-                        name: NameNode(value: 'shortMedia'),
+                        name: NameNode(value: 'media'),
                         directives: [],
                       ),
                       FieldNode(
@@ -472,7 +472,7 @@ const documentNodeQueryGetLists = DocumentNode(definitions: [
       ),
     ]),
   ),
-  fragmentDefinitionshortMedia,
+  fragmentDefinitionmedia,
 ]);
 Query$GetLists _parserFn$Query$GetLists(Map<String, dynamic> data) =>
     Query$GetLists.fromJson(data);
@@ -983,7 +983,7 @@ class Query$GetLists$MediaListCollection$lists$entries {
               .fromJson((l$completedAt as Map<String, dynamic>)),
       media: l$media == null
           ? null
-          : Fragment$shortMedia.fromJson((l$media as Map<String, dynamic>)),
+          : Fragment$media.fromJson((l$media as Map<String, dynamic>)),
       $__typename: (l$$__typename as String),
     );
   }
@@ -1007,7 +1007,7 @@ class Query$GetLists$MediaListCollection$lists$entries {
   final Query$GetLists$MediaListCollection$lists$entries$completedAt?
       completedAt;
 
-  final Fragment$shortMedia? media;
+  final Fragment$media? media;
 
   final String $__typename;
 
@@ -1165,14 +1165,14 @@ abstract class CopyWith$Query$GetLists$MediaListCollection$lists$entries<TRes> {
     int? updatedAt,
     Query$GetLists$MediaListCollection$lists$entries$startedAt? startedAt,
     Query$GetLists$MediaListCollection$lists$entries$completedAt? completedAt,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   });
   CopyWith$Query$GetLists$MediaListCollection$lists$entries$startedAt<TRes>
       get startedAt;
   CopyWith$Query$GetLists$MediaListCollection$lists$entries$completedAt<TRes>
       get completedAt;
-  CopyWith$Fragment$shortMedia<TRes> get media;
+  CopyWith$Fragment$media<TRes> get media;
 }
 
 class _CopyWithImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
@@ -1221,9 +1221,8 @@ class _CopyWithImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
             ? _instance.completedAt
             : (completedAt
                 as Query$GetLists$MediaListCollection$lists$entries$completedAt?),
-        media: media == _undefined
-            ? _instance.media
-            : (media as Fragment$shortMedia?),
+        media:
+            media == _undefined ? _instance.media : (media as Fragment$media?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1249,11 +1248,11 @@ class _CopyWithImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
             local$completedAt, (e) => call(completedAt: e));
   }
 
-  CopyWith$Fragment$shortMedia<TRes> get media {
+  CopyWith$Fragment$media<TRes> get media {
     final local$media = _instance.media;
     return local$media == null
-        ? CopyWith$Fragment$shortMedia.stub(_then(_instance))
-        : CopyWith$Fragment$shortMedia(local$media, (e) => call(media: e));
+        ? CopyWith$Fragment$media.stub(_then(_instance))
+        : CopyWith$Fragment$media(local$media, (e) => call(media: e));
   }
 }
 
@@ -1273,7 +1272,7 @@ class _CopyWithStubImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
     int? updatedAt,
     Query$GetLists$MediaListCollection$lists$entries$startedAt? startedAt,
     Query$GetLists$MediaListCollection$lists$entries$completedAt? completedAt,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   }) =>
       _res;
@@ -1288,8 +1287,7 @@ class _CopyWithStubImpl$Query$GetLists$MediaListCollection$lists$entries<TRes>
           CopyWith$Query$GetLists$MediaListCollection$lists$entries$completedAt
               .stub(_res);
 
-  CopyWith$Fragment$shortMedia<TRes> get media =>
-      CopyWith$Fragment$shortMedia.stub(_res);
+  CopyWith$Fragment$media<TRes> get media => CopyWith$Fragment$media.stub(_res);
 }
 
 class Query$GetLists$MediaListCollection$lists$entries$startedAt {

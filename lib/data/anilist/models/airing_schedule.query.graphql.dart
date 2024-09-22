@@ -429,7 +429,7 @@ const documentNodeQueryAiringSchedule = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FragmentSpreadNode(
-                    name: NameNode(value: 'shortMedia'),
+                    name: NameNode(value: 'media'),
                     directives: [],
                   ),
                   FieldNode(
@@ -468,7 +468,7 @@ const documentNodeQueryAiringSchedule = DocumentNode(definitions: [
       ),
     ]),
   ),
-  fragmentDefinitionshortMedia,
+  fragmentDefinitionmedia,
 ]);
 Query$AiringSchedule _parserFn$Query$AiringSchedule(
         Map<String, dynamic> data) =>
@@ -972,7 +972,7 @@ class Query$AiringSchedule$Page$airingSchedules {
       airingAt: (l$airingAt as int),
       media: l$media == null
           ? null
-          : Fragment$shortMedia.fromJson((l$media as Map<String, dynamic>)),
+          : Fragment$media.fromJson((l$media as Map<String, dynamic>)),
       $__typename: (l$$__typename as String),
     );
   }
@@ -983,7 +983,7 @@ class Query$AiringSchedule$Page$airingSchedules {
 
   final int airingAt;
 
-  final Fragment$shortMedia? media;
+  final Fragment$media? media;
 
   final String $__typename;
 
@@ -1079,10 +1079,10 @@ abstract class CopyWith$Query$AiringSchedule$Page$airingSchedules<TRes> {
     int? id,
     int? episode,
     int? airingAt,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   });
-  CopyWith$Fragment$shortMedia<TRes> get media;
+  CopyWith$Fragment$media<TRes> get media;
 }
 
 class _CopyWithImpl$Query$AiringSchedule$Page$airingSchedules<TRes>
@@ -1113,19 +1113,18 @@ class _CopyWithImpl$Query$AiringSchedule$Page$airingSchedules<TRes>
         airingAt: airingAt == _undefined || airingAt == null
             ? _instance.airingAt
             : (airingAt as int),
-        media: media == _undefined
-            ? _instance.media
-            : (media as Fragment$shortMedia?),
+        media:
+            media == _undefined ? _instance.media : (media as Fragment$media?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 
-  CopyWith$Fragment$shortMedia<TRes> get media {
+  CopyWith$Fragment$media<TRes> get media {
     final local$media = _instance.media;
     return local$media == null
-        ? CopyWith$Fragment$shortMedia.stub(_then(_instance))
-        : CopyWith$Fragment$shortMedia(local$media, (e) => call(media: e));
+        ? CopyWith$Fragment$media.stub(_then(_instance))
+        : CopyWith$Fragment$media(local$media, (e) => call(media: e));
   }
 }
 
@@ -1139,13 +1138,12 @@ class _CopyWithStubImpl$Query$AiringSchedule$Page$airingSchedules<TRes>
     int? id,
     int? episode,
     int? airingAt,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   }) =>
       _res;
 
-  CopyWith$Fragment$shortMedia<TRes> get media =>
-      CopyWith$Fragment$shortMedia.stub(_res);
+  CopyWith$Fragment$media<TRes> get media => CopyWith$Fragment$media.stub(_res);
 }
 
 class Variables$Query$AiringScheduleWithIds {
@@ -1637,7 +1635,7 @@ const documentNodeQueryAiringScheduleWithIds = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FragmentSpreadNode(
-                    name: NameNode(value: 'shortMedia'),
+                    name: NameNode(value: 'media'),
                     directives: [],
                   ),
                   FieldNode(
@@ -1676,7 +1674,7 @@ const documentNodeQueryAiringScheduleWithIds = DocumentNode(definitions: [
       ),
     ]),
   ),
-  fragmentDefinitionshortMedia,
+  fragmentDefinitionmedia,
 ]);
 Query$AiringScheduleWithIds _parserFn$Query$AiringScheduleWithIds(
         Map<String, dynamic> data) =>
@@ -2188,7 +2186,7 @@ class Query$AiringScheduleWithIds$Page$airingSchedules {
       airingAt: (l$airingAt as int),
       media: l$media == null
           ? null
-          : Fragment$shortMedia.fromJson((l$media as Map<String, dynamic>)),
+          : Fragment$media.fromJson((l$media as Map<String, dynamic>)),
       $__typename: (l$$__typename as String),
     );
   }
@@ -2199,7 +2197,7 @@ class Query$AiringScheduleWithIds$Page$airingSchedules {
 
   final int airingAt;
 
-  final Fragment$shortMedia? media;
+  final Fragment$media? media;
 
   final String $__typename;
 
@@ -2296,10 +2294,10 @@ abstract class CopyWith$Query$AiringScheduleWithIds$Page$airingSchedules<TRes> {
     int? id,
     int? episode,
     int? airingAt,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   });
-  CopyWith$Fragment$shortMedia<TRes> get media;
+  CopyWith$Fragment$media<TRes> get media;
 }
 
 class _CopyWithImpl$Query$AiringScheduleWithIds$Page$airingSchedules<TRes>
@@ -2330,19 +2328,18 @@ class _CopyWithImpl$Query$AiringScheduleWithIds$Page$airingSchedules<TRes>
         airingAt: airingAt == _undefined || airingAt == null
             ? _instance.airingAt
             : (airingAt as int),
-        media: media == _undefined
-            ? _instance.media
-            : (media as Fragment$shortMedia?),
+        media:
+            media == _undefined ? _instance.media : (media as Fragment$media?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 
-  CopyWith$Fragment$shortMedia<TRes> get media {
+  CopyWith$Fragment$media<TRes> get media {
     final local$media = _instance.media;
     return local$media == null
-        ? CopyWith$Fragment$shortMedia.stub(_then(_instance))
-        : CopyWith$Fragment$shortMedia(local$media, (e) => call(media: e));
+        ? CopyWith$Fragment$media.stub(_then(_instance))
+        : CopyWith$Fragment$media(local$media, (e) => call(media: e));
   }
 }
 
@@ -2356,11 +2353,10 @@ class _CopyWithStubImpl$Query$AiringScheduleWithIds$Page$airingSchedules<TRes>
     int? id,
     int? episode,
     int? airingAt,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   }) =>
       _res;
 
-  CopyWith$Fragment$shortMedia<TRes> get media =>
-      CopyWith$Fragment$shortMedia.stub(_res);
+  CopyWith$Fragment$media<TRes> get media => CopyWith$Fragment$media.stub(_res);
 }

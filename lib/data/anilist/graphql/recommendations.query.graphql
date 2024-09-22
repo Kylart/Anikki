@@ -6,10 +6,10 @@ query Recommendations ($page: Int) {
 		}
     recommendations(onList: true) {
       mediaRecommendation {
-        ...shortMedia
+        ...media
       }
       media {
-        ...shortMedia
+        ...media
       }
     }
   }

@@ -7,7 +7,7 @@ sealed class StreamHandlerState extends Equatable {
     this.videoType,
   });
 
-  final Fragment$shortMedia media;
+  final Fragment$media media;
   final int? minEpisode;
   final SubOrDub? videoType;
 

@@ -1,82 +1,4 @@
 fragment media on Media {
-  siteUrl
-  id
-  season
-  seasonYear
-  status
-  title {
-    userPreferred
-    romaji
-    english
-    native
-  }
-  coverImage {
-    extraLarge
-    large
-    medium
-    color
-  }
-  startDate {
-    year
-    month
-    day
-  }
-  endDate {
-    year
-    month
-    day
-  }
-  bannerImage
-  season
-  description
-  type
-  format
-  status(version: 2)
-  episodes
-  duration
-  chapters
-  volumes
-  genres
-  isAdult
-  synonyms
-  averageScore
-  popularity
-  countryOfOrigin
-  mediaListEntry {
-    id
-    status
-  }
-  nextAiringEpisode {
-    airingAt
-    timeUntilAiring
-    episode
-  }
-  studios(isMain: true) {
-    edges {
-      isMain
-      node {
-        id
-        name
-      }
-    }
-  }
-  relations {
-    edges {
-      relationType(version: 2)
-      node {
-        id
-        title {
-          romaji
-          native
-          english
-        }
-        siteUrl
-      }
-    }
-  }
-}
-
-fragment shortMedia on Media {
   id
   idMal
   siteUrl
@@ -118,16 +40,5 @@ fragment shortMedia on Media {
   }
   format
   description
-  source
-  studios(isMain: true) {
-    nodes {
-      name
-    }
-  }
   countryOfOrigin
-  startDate {
-    year
-    month
-    day
-  }
 }

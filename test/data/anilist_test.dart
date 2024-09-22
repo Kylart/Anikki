@@ -59,7 +59,7 @@ void main() {
           Query$Search(
             anime: Query$Search$anime(
               results: [
-                shortMediaMock,
+                media,
               ],
             ),
             characters: Query$Search$characters(
@@ -160,7 +160,7 @@ void main() {
             entries: [
               Query$GetLists$MediaListCollection$lists$entries(
                 status: Enum$MediaListStatus.COMPLETED,
-                media: shortMediaMock,
+                media: media,
               ),
             ],
           ),
@@ -168,7 +168,7 @@ void main() {
             entries: [
               Query$GetLists$MediaListCollection$lists$entries(
                 status: Enum$MediaListStatus.CURRENT,
-                media: shortMediaMock,
+                media: media,
               ),
             ],
           ),

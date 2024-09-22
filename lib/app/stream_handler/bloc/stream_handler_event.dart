@@ -6,7 +6,7 @@ sealed class StreamHandlerEvent extends Equatable {
     this.minEpisode,
   });
 
-  final Fragment$shortMedia media;
+  final Fragment$media media;
   final int? minEpisode;
 
   @override

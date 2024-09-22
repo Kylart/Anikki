@@ -49,7 +49,7 @@ void main() {
         searchResult = SearchResult(
           term: term,
           torrents: torrentMocks,
-          medias: [shortMediaMock],
+          medias: [media],
         );
 
         when(() => repository.search(term))

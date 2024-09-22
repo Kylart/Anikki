@@ -319,7 +319,7 @@ const documentNodeQueryRecommendations = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FragmentSpreadNode(
-                    name: NameNode(value: 'shortMedia'),
+                    name: NameNode(value: 'media'),
                     directives: [],
                   ),
                   FieldNode(
@@ -338,7 +338,7 @@ const documentNodeQueryRecommendations = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FragmentSpreadNode(
-                    name: NameNode(value: 'shortMedia'),
+                    name: NameNode(value: 'media'),
                     directives: [],
                   ),
                   FieldNode(
@@ -377,7 +377,7 @@ const documentNodeQueryRecommendations = DocumentNode(definitions: [
       ),
     ]),
   ),
-  fragmentDefinitionshortMedia,
+  fragmentDefinitionmedia,
 ]);
 Query$Recommendations _parserFn$Query$Recommendations(
         Map<String, dynamic> data) =>
@@ -875,18 +875,18 @@ class Query$Recommendations$Page$recommendations {
     return Query$Recommendations$Page$recommendations(
       mediaRecommendation: l$mediaRecommendation == null
           ? null
-          : Fragment$shortMedia.fromJson(
+          : Fragment$media.fromJson(
               (l$mediaRecommendation as Map<String, dynamic>)),
       media: l$media == null
           ? null
-          : Fragment$shortMedia.fromJson((l$media as Map<String, dynamic>)),
+          : Fragment$media.fromJson((l$media as Map<String, dynamic>)),
       $__typename: (l$$__typename as String),
     );
   }
 
-  final Fragment$shortMedia? mediaRecommendation;
+  final Fragment$media? mediaRecommendation;
 
-  final Fragment$shortMedia? media;
+  final Fragment$media? media;
 
   final String $__typename;
 
@@ -961,12 +961,12 @@ abstract class CopyWith$Query$Recommendations$Page$recommendations<TRes> {
       _CopyWithStubImpl$Query$Recommendations$Page$recommendations;
 
   TRes call({
-    Fragment$shortMedia? mediaRecommendation,
-    Fragment$shortMedia? media,
+    Fragment$media? mediaRecommendation,
+    Fragment$media? media,
     String? $__typename,
   });
-  CopyWith$Fragment$shortMedia<TRes> get mediaRecommendation;
-  CopyWith$Fragment$shortMedia<TRes> get media;
+  CopyWith$Fragment$media<TRes> get mediaRecommendation;
+  CopyWith$Fragment$media<TRes> get media;
 }
 
 class _CopyWithImpl$Query$Recommendations$Page$recommendations<TRes>
@@ -990,28 +990,27 @@ class _CopyWithImpl$Query$Recommendations$Page$recommendations<TRes>
       _then(Query$Recommendations$Page$recommendations(
         mediaRecommendation: mediaRecommendation == _undefined
             ? _instance.mediaRecommendation
-            : (mediaRecommendation as Fragment$shortMedia?),
-        media: media == _undefined
-            ? _instance.media
-            : (media as Fragment$shortMedia?),
+            : (mediaRecommendation as Fragment$media?),
+        media:
+            media == _undefined ? _instance.media : (media as Fragment$media?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 
-  CopyWith$Fragment$shortMedia<TRes> get mediaRecommendation {
+  CopyWith$Fragment$media<TRes> get mediaRecommendation {
     final local$mediaRecommendation = _instance.mediaRecommendation;
     return local$mediaRecommendation == null
-        ? CopyWith$Fragment$shortMedia.stub(_then(_instance))
-        : CopyWith$Fragment$shortMedia(
+        ? CopyWith$Fragment$media.stub(_then(_instance))
+        : CopyWith$Fragment$media(
             local$mediaRecommendation, (e) => call(mediaRecommendation: e));
   }
 
-  CopyWith$Fragment$shortMedia<TRes> get media {
+  CopyWith$Fragment$media<TRes> get media {
     final local$media = _instance.media;
     return local$media == null
-        ? CopyWith$Fragment$shortMedia.stub(_then(_instance))
-        : CopyWith$Fragment$shortMedia(local$media, (e) => call(media: e));
+        ? CopyWith$Fragment$media.stub(_then(_instance))
+        : CopyWith$Fragment$media(local$media, (e) => call(media: e));
   }
 }
 
@@ -1022,15 +1021,14 @@ class _CopyWithStubImpl$Query$Recommendations$Page$recommendations<TRes>
   TRes _res;
 
   call({
-    Fragment$shortMedia? mediaRecommendation,
-    Fragment$shortMedia? media,
+    Fragment$media? mediaRecommendation,
+    Fragment$media? media,
     String? $__typename,
   }) =>
       _res;
 
-  CopyWith$Fragment$shortMedia<TRes> get mediaRecommendation =>
-      CopyWith$Fragment$shortMedia.stub(_res);
+  CopyWith$Fragment$media<TRes> get mediaRecommendation =>
+      CopyWith$Fragment$media.stub(_res);
 
-  CopyWith$Fragment$shortMedia<TRes> get media =>
-      CopyWith$Fragment$shortMedia.stub(_res);
+  CopyWith$Fragment$media<TRes> get media => CopyWith$Fragment$media.stub(_res);
 }

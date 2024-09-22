@@ -4,7 +4,7 @@ query Search ($search: String) {
 			total
 		}
 		results: media(type: ANIME, search: $search) {
-      ...shortMedia
+      ...media
 		}
 	}
 

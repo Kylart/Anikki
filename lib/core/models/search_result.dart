@@ -25,7 +25,7 @@ class SearchResult extends Equatable {
   /// Anilist related results
   final List<Query$Search$staff$results>? staffs;
   final List<Query$Search$characters$results>? characters;
-  final List<Fragment$shortMedia>? medias;
+  final List<Fragment$media>? medias;
 
   bool get isEmpty => [
         libraryEntries?.isEmpty,

@@ -20,7 +20,7 @@ class DownloaderRequested extends DownloaderEvent {
     this.isStreaming = false,
   });
 
-  final Fragment$shortMedia? media;
+  final Fragment$media? media;
   final LibraryEntry? entry;
   final int? episode;
   final String? title;

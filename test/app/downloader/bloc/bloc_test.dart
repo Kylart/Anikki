@@ -31,7 +31,7 @@ void main() {
           'emits [DownloaderShow, DownloaderLoading, DownloaderSuccess] when [DownloaderRequested] is added',
           build: () => bloc,
           act: (bloc) => bloc.add(
-            DownloaderRequested(media: shortMediaMock),
+            DownloaderRequested(media: media),
           ),
           expect: () => [
             DownloaderShow(term),
@@ -41,7 +41,7 @@ void main() {
               torrents: torrentMocks,
               filteredTorrents: torrentMocks,
               filter: filter,
-              media: shortMediaMock,
+              media: media,
             )
           ],
           setUp: () {
@@ -67,7 +67,7 @@ void main() {
           'emits [DownloaderShow, DownloaderLoading, DownloaderSuccess] when [DownloaderRequested] is added but has no result',
           build: () => bloc,
           act: (bloc) => bloc.add(
-            DownloaderRequested(media: shortMediaMock),
+            DownloaderRequested(media: media),
           ),
           expect: () => [
             DownloaderShow(term),
@@ -77,7 +77,7 @@ void main() {
               torrents: const [],
               filteredTorrents: const [],
               filter: filter,
-              media: shortMediaMock,
+              media: media,
             )
           ],
           setUp: () {
@@ -103,7 +103,7 @@ void main() {
           'emits [DownloaderShow, DownloaderLoading, DownloaderError] when [DownloaderRequested] is added but fails',
           build: () => bloc,
           act: (bloc) => bloc.add(
-            DownloaderRequested(media: shortMediaMock),
+            DownloaderRequested(media: media),
           ),
           expect: () => [
             DownloaderShow(term),
@@ -152,7 +152,7 @@ void main() {
         'handles high quality accordingly',
         build: () => bloc,
         act: (bloc) => bloc.add(
-          DownloaderRequested(media: shortMediaMock),
+          DownloaderRequested(media: media),
         ),
         expect: () => [
           DownloaderShow(term),
@@ -191,7 +191,7 @@ void main() {
         'handles multiple quality accordingly',
         build: () => bloc,
         act: (bloc) => bloc.add(
-          DownloaderRequested(media: shortMediaMock),
+          DownloaderRequested(media: media),
         ),
         expect: () => [
           DownloaderShow(term),
@@ -234,7 +234,7 @@ void main() {
         build: () => bloc,
         act: (bloc) => bloc.add(
           DownloaderRequested(
-            media: shortMediaMock,
+            media: media,
             episode: 1,
           ),
         ),
@@ -284,7 +284,7 @@ void main() {
         'handles showAll accordingly by returning every entry',
         build: () => bloc,
         act: (bloc) => bloc.add(
-          DownloaderRequested(media: shortMediaMock),
+          DownloaderRequested(media: media),
         ),
         expect: () => [
           DownloaderShow(term),
@@ -294,7 +294,7 @@ void main() {
             torrents: torrentMocks,
             filteredTorrents: torrentMocks,
             filter: filter,
-            media: shortMediaMock,
+            media: media,
           )
         ],
         setUp: () {
@@ -322,7 +322,7 @@ void main() {
         'handles more accordingly by returning every entry',
         build: () => bloc,
         act: (bloc) => bloc.add(
-          DownloaderRequested(media: shortMediaMock),
+          DownloaderRequested(media: media),
         ),
         expect: () => [
           DownloaderShow(term),

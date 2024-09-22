@@ -165,7 +165,7 @@ class VideoPlayerRepository {
 
   static void playAnyway({
     required BuildContext context,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     LibraryEntry? entry,
     int? episode,
   }) {

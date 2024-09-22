@@ -7,7 +7,7 @@ query Trending ($page: Int) {
     mediaTrends {
       trending
       media {
-        ...shortMedia
+        ...media
       }
     }
   }

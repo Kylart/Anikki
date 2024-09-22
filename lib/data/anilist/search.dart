@@ -23,7 +23,7 @@ mixin AnilistSearch on AnilistClient {
       }
 
       result[AnilistSearchPart.animes] = query.parsedData?.anime?.results
-              ?.whereType<Fragment$shortMedia>()
+              ?.whereType<Fragment$media>()
               .toList() ??
           [];
 

@@ -59,11 +59,11 @@ final viewerMock = Query$Viewer(
   Viewer: userMock,
 );
 
-final shortMediaMock = Fragment$shortMedia(
+final media = Fragment$media(
   id: 20,
   episodes: 12,
   isFavourite: false,
-  title: Fragment$shortMedia$title(
+  title: Fragment$media$title(
     userPreferred: 'Sakura Trick',
   ),
 );
@@ -72,12 +72,12 @@ final localFileMock = LocalFile(
   path:
       'test\\resources\\movies\\[SubsPlease] Kaminaki Sekai no Kamisama Katsudou - 03 (1080p) [0328F445].mkv',
   media: Media(
-    anilistInfo: shortMediaMock,
+    anilistInfo: media,
   ),
   episode: 3,
 );
 
-final anilistMediaMock = Media(anilistInfo: shortMediaMock);
+final anilistMediaMock = Media(anilistInfo: media);
 
 final airingScheduleMock = Query$AiringSchedule(
   Page: Query$AiringSchedule$Page(
@@ -111,12 +111,12 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.CURRENT,
-            media: Fragment$shortMedia(
+            media: Fragment$media(
               id: 1,
               episodes: 12,
               isAdult: false,
               isFavourite: false,
-              nextAiringEpisode: Fragment$shortMedia$nextAiringEpisode(
+              nextAiringEpisode: Fragment$media$nextAiringEpisode(
                 airingAt: 1,
                 episode: 3,
               ),
@@ -125,12 +125,12 @@ final watchListMock = Query$GetLists(
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.CURRENT,
-            media: Fragment$shortMedia(
+            media: Fragment$media(
               id: 2,
               episodes: 12,
               isAdult: false,
               isFavourite: false,
-              nextAiringEpisode: Fragment$shortMedia$nextAiringEpisode(
+              nextAiringEpisode: Fragment$media$nextAiringEpisode(
                 airingAt: 1,
                 episode: 6,
               ),
@@ -143,7 +143,7 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.COMPLETED,
-            media: Fragment$shortMedia(
+            media: Fragment$media(
               id: 3,
               episodes: 12,
               isAdult: false,
@@ -153,7 +153,7 @@ final watchListMock = Query$GetLists(
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.COMPLETED,
-            media: Fragment$shortMedia(
+            media: Fragment$media(
               id: 4,
               episodes: 12,
               isAdult: false,
@@ -167,7 +167,7 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.DROPPED,
-            media: Fragment$shortMedia(
+            media: Fragment$media(
               id: 5,
               episodes: 12,
               isAdult: false,
@@ -181,7 +181,7 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PLANNING,
-            media: Fragment$shortMedia(
+            media: Fragment$media(
               id: 6,
               episodes: 12,
               isAdult: false,
@@ -194,7 +194,7 @@ final watchListMock = Query$GetLists(
         entries: [
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PAUSED,
-            media: Fragment$shortMedia(
+            media: Fragment$media(
               id: 7,
               episodes: 12,
               isAdult: false,
@@ -204,7 +204,7 @@ final watchListMock = Query$GetLists(
           ),
           Query$GetLists$MediaListCollection$lists$entries(
             status: Enum$MediaListStatus.PAUSED,
-            media: Fragment$shortMedia(
+            media: Fragment$media(
               id: 8,
               episodes: 12,
               isAdult: false,
@@ -288,7 +288,7 @@ final staffMock = Query$Search$staff$results(
 );
 
 final searchResultMock = {
-  AnilistSearchPart.animes: List<Fragment$shortMedia>.from([shortMediaMock]),
+  AnilistSearchPart.animes: List<Fragment$media>.from([media]),
   AnilistSearchPart.characters:
       List<Query$Search$characters$results>.from([characterMock]),
   AnilistSearchPart.staffs: List<Query$Search$staff$results>.from([staffMock]),

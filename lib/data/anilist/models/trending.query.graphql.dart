@@ -318,7 +318,7 @@ const documentNodeQueryTrending = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FragmentSpreadNode(
-                    name: NameNode(value: 'shortMedia'),
+                    name: NameNode(value: 'media'),
                     directives: [],
                   ),
                   FieldNode(
@@ -357,7 +357,7 @@ const documentNodeQueryTrending = DocumentNode(definitions: [
       ),
     ]),
   ),
-  fragmentDefinitionshortMedia,
+  fragmentDefinitionmedia,
 ]);
 Query$Trending _parserFn$Query$Trending(Map<String, dynamic> data) =>
     Query$Trending.fromJson(data);
@@ -846,14 +846,14 @@ class Query$Trending$Page$mediaTrends {
       trending: (l$trending as int),
       media: l$media == null
           ? null
-          : Fragment$shortMedia.fromJson((l$media as Map<String, dynamic>)),
+          : Fragment$media.fromJson((l$media as Map<String, dynamic>)),
       $__typename: (l$$__typename as String),
     );
   }
 
   final int trending;
 
-  final Fragment$shortMedia? media;
+  final Fragment$media? media;
 
   final String $__typename;
 
@@ -928,10 +928,10 @@ abstract class CopyWith$Query$Trending$Page$mediaTrends<TRes> {
 
   TRes call({
     int? trending,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   });
-  CopyWith$Fragment$shortMedia<TRes> get media;
+  CopyWith$Fragment$media<TRes> get media;
 }
 
 class _CopyWithImpl$Query$Trending$Page$mediaTrends<TRes>
@@ -956,19 +956,18 @@ class _CopyWithImpl$Query$Trending$Page$mediaTrends<TRes>
         trending: trending == _undefined || trending == null
             ? _instance.trending
             : (trending as int),
-        media: media == _undefined
-            ? _instance.media
-            : (media as Fragment$shortMedia?),
+        media:
+            media == _undefined ? _instance.media : (media as Fragment$media?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 
-  CopyWith$Fragment$shortMedia<TRes> get media {
+  CopyWith$Fragment$media<TRes> get media {
     final local$media = _instance.media;
     return local$media == null
-        ? CopyWith$Fragment$shortMedia.stub(_then(_instance))
-        : CopyWith$Fragment$shortMedia(local$media, (e) => call(media: e));
+        ? CopyWith$Fragment$media.stub(_then(_instance))
+        : CopyWith$Fragment$media(local$media, (e) => call(media: e));
   }
 }
 
@@ -980,11 +979,10 @@ class _CopyWithStubImpl$Query$Trending$Page$mediaTrends<TRes>
 
   call({
     int? trending,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   }) =>
       _res;
 
-  CopyWith$Fragment$shortMedia<TRes> get media =>
-      CopyWith$Fragment$shortMedia.stub(_res);
+  CopyWith$Fragment$media<TRes> get media => CopyWith$Fragment$media.stub(_res);
 }

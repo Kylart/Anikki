@@ -1,14 +1,14 @@
 part of 'anilist.dart';
 
 mixin AnilistInfo on AnilistClient {
-  Fragment$shortMedia? getInfoFromInfo(
-      String name, Map<String, Fragment$shortMedia> info) {
+  Fragment$media? getInfoFromInfo(
+      String name, Map<String, Fragment$media> info) {
     return info[getId(name: name)];
   }
 
-  Future<Map<String, Fragment$shortMedia>> infoFromMultiple(
+  Future<Map<String, Fragment$media>> infoFromMultiple(
       List<String> names) async {
-    Map<String, Fragment$shortMedia> results = {};
+    Map<String, Fragment$media> results = {};
 
     int currentIndex = 0;
     int interval = 5;
@@ -36,7 +36,7 @@ mixin AnilistInfo on AnilistClient {
 
           if (data.length == 0) return;
 
-          results.putIfAbsent(key, () => Fragment$shortMedia.fromJson(data[0]));
+          results.putIfAbsent(key, () => Fragment$media.fromJson(data[0]));
         });
       }
 
@@ -61,7 +61,7 @@ mixin AnilistInfo on AnilistClient {
       query += '''
         $id: Page(page: 1, perPage: 1) {
           media(search: "$name", type: ANIME) {
-            ...shortMedia
+            ...media
           }
         }
       ''';
@@ -72,7 +72,7 @@ mixin AnilistInfo on AnilistClient {
         $query
       }
 
-      fragment shortMedia on Media {
+      fragment media on Media {
         id
         siteUrl
         idMal

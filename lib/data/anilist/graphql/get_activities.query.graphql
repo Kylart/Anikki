@@ -15,7 +15,7 @@ query GetActivities ($userId: Int, $page: Int) {
         progress
         createdAt
         media {
-          ...shortMedia
+          ...media
         }
       }
     }

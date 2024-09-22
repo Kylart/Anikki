@@ -20,7 +20,7 @@ query GetLists ($username: String) {
 					day
 				}
 				media {
-					...shortMedia
+					...media
 				}
 			}
 		}

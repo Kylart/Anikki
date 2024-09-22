@@ -439,7 +439,7 @@ const documentNodeQueryGetActivities = DocumentNode(definitions: [
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FragmentSpreadNode(
-                        name: NameNode(value: 'shortMedia'),
+                        name: NameNode(value: 'media'),
                         directives: [],
                       ),
                       FieldNode(
@@ -487,7 +487,7 @@ const documentNodeQueryGetActivities = DocumentNode(definitions: [
       ),
     ]),
   ),
-  fragmentDefinitionshortMedia,
+  fragmentDefinitionmedia,
 ]);
 Query$GetActivities _parserFn$Query$GetActivities(Map<String, dynamic> data) =>
     Query$GetActivities.fromJson(data);
@@ -1223,7 +1223,7 @@ class Query$GetActivities$Page$activities$$ListActivity
       createdAt: (l$createdAt as int),
       media: l$media == null
           ? null
-          : Fragment$shortMedia.fromJson((l$media as Map<String, dynamic>)),
+          : Fragment$media.fromJson((l$media as Map<String, dynamic>)),
       $__typename: (l$$__typename as String),
     );
   }
@@ -1238,7 +1238,7 @@ class Query$GetActivities$Page$activities$$ListActivity
 
   final int createdAt;
 
-  final Fragment$shortMedia? media;
+  final Fragment$media? media;
 
   final String $__typename;
 
@@ -1358,10 +1358,10 @@ abstract class CopyWith$Query$GetActivities$Page$activities$$ListActivity<
     String? status,
     String? progress,
     int? createdAt,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   });
-  CopyWith$Fragment$shortMedia<TRes> get media;
+  CopyWith$Fragment$media<TRes> get media;
 }
 
 class _CopyWithImpl$Query$GetActivities$Page$activities$$ListActivity<TRes>
@@ -1397,19 +1397,18 @@ class _CopyWithImpl$Query$GetActivities$Page$activities$$ListActivity<TRes>
         createdAt: createdAt == _undefined || createdAt == null
             ? _instance.createdAt
             : (createdAt as int),
-        media: media == _undefined
-            ? _instance.media
-            : (media as Fragment$shortMedia?),
+        media:
+            media == _undefined ? _instance.media : (media as Fragment$media?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 
-  CopyWith$Fragment$shortMedia<TRes> get media {
+  CopyWith$Fragment$media<TRes> get media {
     final local$media = _instance.media;
     return local$media == null
-        ? CopyWith$Fragment$shortMedia.stub(_then(_instance))
-        : CopyWith$Fragment$shortMedia(local$media, (e) => call(media: e));
+        ? CopyWith$Fragment$media.stub(_then(_instance))
+        : CopyWith$Fragment$media(local$media, (e) => call(media: e));
   }
 }
 
@@ -1427,13 +1426,12 @@ class _CopyWithStubImpl$Query$GetActivities$Page$activities$$ListActivity<TRes>
     String? status,
     String? progress,
     int? createdAt,
-    Fragment$shortMedia? media,
+    Fragment$media? media,
     String? $__typename,
   }) =>
       _res;
 
-  CopyWith$Fragment$shortMedia<TRes> get media =>
-      CopyWith$Fragment$shortMedia.stub(_res);
+  CopyWith$Fragment$media<TRes> get media => CopyWith$Fragment$media.stub(_res);
 }
 
 class Query$GetActivities$Page$activities$$TextActivity

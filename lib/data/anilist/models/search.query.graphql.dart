@@ -372,7 +372,7 @@ const documentNodeQuerySearch = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                name: NameNode(value: 'shortMedia'),
+                name: NameNode(value: 'media'),
                 directives: [],
               ),
               FieldNode(
@@ -684,7 +684,7 @@ const documentNodeQuerySearch = DocumentNode(definitions: [
       ),
     ]),
   ),
-  fragmentDefinitionshortMedia,
+  fragmentDefinitionmedia,
 ]);
 Query$Search _parserFn$Query$Search(Map<String, dynamic> data) =>
     Query$Search.fromJson(data);
@@ -835,7 +835,7 @@ class Query$Search$anime {
       results: (l$results as List<dynamic>?)
           ?.map((e) => e == null
               ? null
-              : Fragment$shortMedia.fromJson((e as Map<String, dynamic>)))
+              : Fragment$media.fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: (l$$__typename as String),
     );
@@ -843,7 +843,7 @@ class Query$Search$anime {
 
   final Query$Search$anime$pageInfo? pageInfo;
 
-  final List<Fragment$shortMedia?>? results;
+  final List<Fragment$media?>? results;
 
   final String $__typename;
 
@@ -927,13 +927,13 @@ abstract class CopyWith$Query$Search$anime<TRes> {
 
   TRes call({
     Query$Search$anime$pageInfo? pageInfo,
-    List<Fragment$shortMedia?>? results,
+    List<Fragment$media?>? results,
     String? $__typename,
   });
   CopyWith$Query$Search$anime$pageInfo<TRes> get pageInfo;
   TRes results(
-      Iterable<Fragment$shortMedia?>? Function(
-              Iterable<CopyWith$Fragment$shortMedia<Fragment$shortMedia>?>?)
+      Iterable<Fragment$media?>? Function(
+              Iterable<CopyWith$Fragment$media<Fragment$media>?>?)
           _fn);
 }
 
@@ -961,7 +961,7 @@ class _CopyWithImpl$Query$Search$anime<TRes>
             : (pageInfo as Query$Search$anime$pageInfo?),
         results: results == _undefined
             ? _instance.results
-            : (results as List<Fragment$shortMedia?>?),
+            : (results as List<Fragment$media?>?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -976,13 +976,13 @@ class _CopyWithImpl$Query$Search$anime<TRes>
   }
 
   TRes results(
-          Iterable<Fragment$shortMedia?>? Function(
-                  Iterable<CopyWith$Fragment$shortMedia<Fragment$shortMedia>?>?)
+          Iterable<Fragment$media?>? Function(
+                  Iterable<CopyWith$Fragment$media<Fragment$media>?>?)
               _fn) =>
       call(
           results: _fn(_instance.results?.map((e) => e == null
               ? null
-              : CopyWith$Fragment$shortMedia(
+              : CopyWith$Fragment$media(
                   e,
                   (i) => i,
                 )))?.toList());
@@ -996,7 +996,7 @@ class _CopyWithStubImpl$Query$Search$anime<TRes>
 
   call({
     Query$Search$anime$pageInfo? pageInfo,
-    List<Fragment$shortMedia?>? results,
+    List<Fragment$media?>? results,
     String? $__typename,
   }) =>
       _res;
