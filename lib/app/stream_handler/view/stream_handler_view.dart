@@ -8,7 +8,7 @@ import 'package:anikki/app/stream_handler/widgets/online_stream_handler.dart';
 import 'package:anikki/app/stream_handler/widgets/torrent_stream_handler.dart';
 import 'package:anikki/core/core.dart';
 
-class StreamHandlerView extends StatefulWidget {
+class StreamHandlerView extends StatelessWidget {
   const StreamHandlerView({
     super.key,
     required this.state,
@@ -17,15 +17,8 @@ class StreamHandlerView extends StatefulWidget {
   final StreamHandlerShowed state;
 
   @override
-  State<StreamHandlerView> createState() => _StreamHandlerViewState();
-}
-
-class _StreamHandlerViewState extends State<StreamHandlerView> {
-  void close(BuildContext context) => Navigator.of(context).pop();
-
-  @override
   Widget build(BuildContext context) {
-    final type = widget.state.type ??
+    final type = state.type ??
         BlocProvider.of<SettingsBloc>(context)
             .state
             .settings
@@ -34,13 +27,13 @@ class _StreamHandlerViewState extends State<StreamHandlerView> {
 
     return switch (type) {
       StreamRequestType.torrent => TorrentStreamHandler(
-          state: widget.state,
+          state: state,
         ),
       StreamRequestType.online => OnlineStreamHandler(
-          state: widget.state,
+          state: state,
         ),
       StreamRequestType.choose => ChooseStreamHandler(
-          state: widget.state,
+          state: state,
         ),
     };
   }

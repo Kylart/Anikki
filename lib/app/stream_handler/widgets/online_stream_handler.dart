@@ -1,12 +1,13 @@
-import 'package:anikki/app/settings/bloc/settings_bloc.dart';
-import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:anikki/app/settings/bloc/settings_bloc.dart';
 import 'package:anikki/app/stream_handler/bloc/stream_handler_bloc.dart';
 import 'package:anikki/core/core.dart';
+import 'package:anikki/core/widgets/error_widget.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
-import 'package:anikki/domain/domain.dart';
+import 'package:anikki/core/widgets/loading_widget.dart';
+import 'package:anikki/domain/video_player_repository.dart';
 
 class OnlineStreamHandler extends StatefulWidget {
   const OnlineStreamHandler({
@@ -67,26 +68,13 @@ class _OnlineStreamHandlerState extends State<OnlineStreamHandler> {
           padding: const EdgeInsets.all(16.0),
           child: switch (state) {
             StreamHandlerError() => CustomErrorWidget(
-                height: 300,
+                height: 275,
                 title: 'Something went wrong, please try again later.',
                 description: state.error,
               ),
-            _ => Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Retrieving the best videos...'),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const CircularProgressIndicator(),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  TextButton(
-                    onPressed: () => close(context),
-                    child: const Text('Cancel'),
-                  ),
-                ],
+            _ => const LoadingWidget(
+                title: 'Retrieving the best videos...',
+                height: 275,
               ),
           },
         ),
