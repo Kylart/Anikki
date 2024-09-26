@@ -38,9 +38,9 @@ class Tmdb {
   Future<TmdbTvDetails?> getDetails(String name) async {
     final box = await Hive.openBox(boxName);
     final cacheKey = 'details_$name';
-    final cachedDetailsRaw = await box.get(cacheKey) as Map<String, dynamic>?;
+    final cachedDetailsRaw = await box.get(cacheKey) as Map<dynamic, dynamic>?;
 
-    if (cachedDetailsRaw != null) {
+    if (cachedDetailsRaw != null && cachedDetailsRaw is Map<String, dynamic>) {
       return TmdbTvDetails.fromMap(cachedDetailsRaw);
     }
 
