@@ -27,13 +27,8 @@ class LayoutCard extends StatelessWidget {
         borderRadius: borderRadius,
       ),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: borderRadius,
-          border: transparent
-              ? null
-              : Border.all(
-                  color: Theme.of(context).dividerColor,
-                ),
         ),
         child: child,
       ),
