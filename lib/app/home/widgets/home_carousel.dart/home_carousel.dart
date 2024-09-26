@@ -224,6 +224,7 @@ class _HomeCarouselState extends State<HomeCarousel> {
             top: 0,
             left: cardSize.height * itemAspectRatio + 12,
             width: cardSize.width - (cardSize.height * itemAspectRatio + 12),
+            height: widget.height - reducedHeight,
             child: Container(
               constraints: BoxConstraints(
                 maxHeight: cardSize.height - reducedHeight,
@@ -239,28 +240,30 @@ class _HomeCarouselState extends State<HomeCarousel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: _HomeCarouselTitle(
-                            currentMedia: currentEntry.media,
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: _HomeCarouselTitle(
+                              currentMedia: currentEntry.media,
+                            ),
                           ),
-                        ),
-                        _HomeCarouselNavigation(
-                          text:
-                              '${currentEntryIndex + 1} / ${widget.entries.length}',
-                          onNext: () => goToItem(
-                            currentIndex + 1,
-                            resetTimer: true,
+                          _HomeCarouselNavigation(
+                            text:
+                                '${currentEntryIndex + 1} / ${widget.entries.length}',
+                            onNext: () => goToItem(
+                              currentIndex + 1,
+                              resetTimer: true,
+                            ),
+                            onPrevious: () => goToItem(
+                              currentIndex - 1,
+                              resetTimer: true,
+                            ),
                           ),
-                          onPrevious: () => goToItem(
-                            currentIndex - 1,
-                            resetTimer: true,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     _HomeCarouselActions(
                       media: currentEntry.media,
