@@ -72,7 +72,6 @@ dependencies:
   media_kit_video: ^1.2.4 # For video rendering.
   media_kit_libs_video: ^1.0.4 # Native video dependencies.
   settings_ui: ^2.0.2
-  shimmer: ^3.0.0
   super_sliver_list: ^0.4.1
   timelines_plus: ^1.0.3
 
