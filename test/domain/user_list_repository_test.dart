@@ -6,20 +6,23 @@ import 'package:anikki/data/anilist/anilist.dart';
 import 'package:anikki/domain/domain.dart';
 
 import '../fixtures/anilist.dart';
+import '../fixtures/tmdb.dart';
 
 void main() {
   group('unit test: UserListRepository', () {
     late MockAnilist anilist;
+    late MockTmdb tmdb;
     late UserListRepository repository;
 
     group('watchedEntry method', () {
       group('when API succeeds', () {
         setUp(() {
+          tmdb = MockTmdb();
           anilist = MockAnilist();
           when(
             () => anilist.updateEntry(
               episode: 1,
-              mediaId: shortMediaMock.id,
+              mediaId: media.id,
               status: null,
             ),
           ).thenAnswer((_) async {});
@@ -27,12 +30,15 @@ void main() {
           when(
             () => anilist.updateEntry(
               episode: 2,
-              mediaId: shortMediaMock.id,
+              mediaId: media.id,
               status: null,
             ),
           ).thenAnswer((_) async {});
 
-          repository = UserListRepository(anilist);
+          repository = UserListRepository(
+            anilist: anilist,
+            tmdb: tmdb,
+          );
         });
 
         test('succeeds when episode is 1', () async {
@@ -62,16 +68,20 @@ void main() {
         final exception = Exception('error');
 
         setUp(() {
+          tmdb = MockTmdb();
           anilist = MockAnilist();
           when(
             () => anilist.updateEntry(
               episode: 1,
-              mediaId: shortMediaMock.id,
+              mediaId: media.id,
               status: null,
             ),
           ).thenThrow(exception);
 
-          repository = UserListRepository(anilist);
+          repository = UserListRepository(
+            anilist: anilist,
+            tmdb: tmdb,
+          );
         });
 
         test('fails with the same exception', () async {
@@ -95,12 +105,16 @@ void main() {
     group('getList method', () {
       group('when API succeeds', () {
         setUp(() {
+          tmdb = MockTmdb();
           anilist = MockAnilist();
           when(
             () => anilist.getWatchLists(username, useCache: false),
           ).thenAnswer((_) async => watchListClassMock);
 
-          repository = UserListRepository(anilist);
+          repository = UserListRepository(
+            anilist: anilist,
+            tmdb: tmdb,
+          );
         });
 
         test('succeeds', () async {
@@ -114,12 +128,16 @@ void main() {
         final exception = Exception('error');
 
         setUp(() {
+          tmdb = MockTmdb();
           anilist = MockAnilist();
           when(
             () => anilist.getWatchLists(username, useCache: false),
           ).thenThrow(exception);
 
-          repository = UserListRepository(anilist);
+          repository = UserListRepository(
+            anilist: anilist,
+            tmdb: tmdb,
+          );
         });
 
         test('fails with the same exception', () async {
