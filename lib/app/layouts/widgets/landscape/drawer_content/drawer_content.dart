@@ -155,12 +155,15 @@ class DrawerContent extends StatelessWidget {
       builder: (context, watchListState) {
         return BlocBuilder<LayoutBloc, LayoutState>(
           builder: (context, state) {
+            final watchListEntry = AnilistUtils.getWatchListEntry(
+              watchListState.watchList,
+              state.drawerMedia!,
+            );
+            final isInWatchList = watchListEntry != null;
+
             final libraryEntry = state.drawerLibraryEntry;
             final media = state.drawerMedia?.copyWith(
-              anilistInfo: AnilistUtils.getWatchListEntry(
-                watchListState.watchList,
-                state.drawerMedia!,
-              )?.media,
+              anilistInfo: watchListEntry?.media,
             );
 
             if (media == null || media.anilistInfo.id == 0) {
@@ -204,6 +207,7 @@ class DrawerContent extends StatelessWidget {
                               media: media,
                               libraryEntry: libraryEntry,
                               isConnected: isConnected,
+                              isInWatchList: isInWatchList,
                             ),
                           ),
                         ],

@@ -6,11 +6,13 @@ class DrawerTitle extends StatelessWidget {
     required this.isConnected,
     this.media,
     this.libraryEntry,
+    this.isInWatchList = false,
   });
 
   final Media? media;
   final LibraryEntry? libraryEntry;
   final bool isConnected;
+  final bool isInWatchList;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class DrawerTitle extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             )
           : null,
-      trailing: isConnected && media != null
+      trailing: media != null && isConnected && isInWatchList
           ? FavouriteButton(
               media: media!,
             )
