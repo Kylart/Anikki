@@ -1,13 +1,14 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:open_app_file/open_app_file.dart';
 
-import 'package:anikki/core/core.dart';
-import 'package:anikki/data/data.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/downloader/widgets/stream_placeholder.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/core/core.dart';
+import 'package:anikki/data/data.dart';
 
 class TorrentTile extends StatelessWidget {
   const TorrentTile({
@@ -55,10 +56,12 @@ class TorrentTile extends StatelessWidget {
             TorrentAddTorrent(
               magnet: torrent.magnet,
               stream: true,
-              callback: (Torrent torrent) {
+              callback: (Torrent torrent) async {
+                final bloc = BlocProvider.of<TorrentBloc>(context);
+
                 Navigator.of(context).pop();
-                showDialog(
-                  barrierDismissible: false,
+
+                await showDialog(
                   context: context,
                   builder: (context) {
                     return Dialog(
@@ -72,6 +75,19 @@ class TorrentTile extends StatelessWidget {
                     );
                   },
                 );
+
+                final state = bloc.state;
+                if (state is! TorrentLoaded) return;
+
+                final hash = Uri.parse(torrent.magnet).queryParameters['xt'];
+                final currentTorrent = state.torrents.firstWhereOrNull(
+                  (element) =>
+                      Uri.parse(element.magnet).queryParameters['xt'] == hash,
+                );
+
+                if (currentTorrent != null) {
+                  bloc.add(TorrentRemoveTorrent(torrent, true));
+                }
               },
             ),
           );

@@ -75,7 +75,7 @@ class TorrentAddTorrent extends TorrentEvent {
 
   final String magnet;
   final bool stream;
-  final void Function(Torrent torrent)? callback;
+  final FutureOr<void> Function(Torrent torrent)? callback;
 
   @override
   List<Object> get props => [

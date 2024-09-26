@@ -7,9 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
+import 'package:anikki/core/widgets/loading_widget.dart';
 import 'package:anikki/domain/domain.dart';
 
-class StreamPlaceholder extends StatefulWidget {
+class StreamPlaceholder extends StatelessWidget {
   const StreamPlaceholder({
     super.key,
     required this.magnet,
@@ -19,17 +20,12 @@ class StreamPlaceholder extends StatefulWidget {
   final String magnet;
   final Media? media;
 
-  @override
-  State<StreamPlaceholder> createState() => _StreamPlaceholderState();
-}
-
-class _StreamPlaceholderState extends State<StreamPlaceholder> {
   void onTorrentBlocChange(BuildContext context, TorrentState state) {
     final torrentBloc = BlocProvider.of<TorrentBloc>(context);
 
     if (state is! TorrentLoaded) return;
 
-    final hash = Uri.parse(widget.magnet).queryParameters['xt'];
+    final hash = Uri.parse(magnet).queryParameters['xt'];
     final torrent = state.torrents.firstWhereOrNull(
       (element) => Uri.parse(element.magnet).queryParameters['xt'] == hash,
     );
@@ -54,12 +50,12 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
         convertToMkMedia(
           LocalFile(
             path: torrent.path,
-            media: widget.media,
+            media: media,
           ),
         ),
       ],
       torrent: torrent,
-      media: widget.media,
+      media: media,
     );
 
     Navigator.of(context).pop();
@@ -69,42 +65,12 @@ class _StreamPlaceholderState extends State<StreamPlaceholder> {
   Widget build(BuildContext context) {
     return BlocListener<TorrentBloc, TorrentState>(
       listener: onTorrentBlocChange,
-      child: LayoutCard(
+      child: const LayoutCard(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('Setting up stream, please wait'),
-              const SizedBox(
-                height: 12,
-              ),
-              const CircularProgressIndicator(),
-              const SizedBox(
-                height: 12,
-              ),
-              TextButton(
-                onPressed: () {
-                  final bloc = BlocProvider.of<TorrentBloc>(context);
-                  final state = bloc.state;
-                  if (state is! TorrentLoaded) return;
-
-                  final hash = Uri.parse(widget.magnet).queryParameters['xt'];
-                  final torrent = state.torrents.firstWhereOrNull(
-                    (element) =>
-                        Uri.parse(element.magnet).queryParameters['xt'] == hash,
-                  );
-
-                  if (torrent != null) {
-                    bloc.add(TorrentRemoveTorrent(torrent, true));
-                  }
-
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Cancel'),
-              ),
-            ],
+          padding: EdgeInsets.all(16.0),
+          child: LoadingWidget(
+            height: 275,
+            title: 'Setting up stream, please wait',
           ),
         ),
       ),
