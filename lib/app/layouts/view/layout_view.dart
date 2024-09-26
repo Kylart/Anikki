@@ -4,7 +4,7 @@ import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/watch_list.dart';
-import 'package:anikki/app/home/view/home_view.dart';
+import 'package:anikki/app/home/home.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
 import 'package:anikki/app/layouts/widgets/landscape/layout.dart';
@@ -52,7 +52,7 @@ class _LayoutViewState extends State<LayoutView> {
                 name: 'Home',
                 icon: HugeIcons.strokeRoundedHome07,
                 selectedIcon: HugeIcons.strokeRoundedHome07,
-                child: const HomeView(),
+                child: const HomePage(),
               ),
               AnikkiPage(
                 name: 'Library',
