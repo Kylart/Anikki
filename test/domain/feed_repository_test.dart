@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'package:anikki/app/home/features/home_timelines/models/timeline_entry.dart';
+import 'package:anikki/app/home/features/home_timelines/models/timeline_type.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 
 import '../fixtures/anilist.dart';
+import '../fixtures/tmdb.dart';
 
 void main() {
   group('unit test: FeedRepository', () {
     late MockAnilist anilist;
+    late MockTmdb tmdb;
     late FeedRepository repository;
 
     final range = DateTimeRange(
@@ -24,6 +28,15 @@ void main() {
         .whereType<Query$AiringSchedule$Page$airingSchedules>()
         .toList();
 
+    final scheduleMockEntries = scheduleMock.map(
+      (e) => TimelineEntry(
+        type: TimelineType.feed,
+        timestamp: e.airingAt * 1000,
+        media: Media(anilistInfo: e.media),
+        description: 'Episode ${e.episode}',
+      ),
+    )..toList();
+
     group('getSchedule method', () {
       setUp(() {
         anilist = MockAnilist();
@@ -31,136 +44,25 @@ void main() {
           () => anilist.getSchedule(range),
         ).thenAnswer((_) async => scheduleMock);
 
-        repository = FeedRepository(anilist);
+        tmdb = MockTmdb();
+        repository = FeedRepository(
+          anilist: anilist,
+          tmdb: tmdb,
+        );
       });
 
       test('returns valid entries', () async {
         final entries = await repository.getSchedule(range);
 
-        expect(entries.length, scheduleMock.length);
+        expect(entries.length, scheduleMockEntries.length);
         expect(
           entries.first,
-          scheduleMock.first,
+          scheduleMockEntries.last,
         );
         expect(
           entries.last,
-          scheduleMock.last,
+          scheduleMockEntries.first,
         );
-      });
-    });
-
-    group('filterEntries method', () {
-      setUp(() {
-        anilist = MockAnilist();
-        repository = FeedRepository(anilist);
-      });
-
-      group('when showAdult property', () {
-        test('is on', () {
-          final result = repository.filterEntries(
-            [
-              Query$AiringSchedule$Page$airingSchedules(
-                id: 0,
-                airingAt: 0,
-                episode: 1,
-                media: Fragment$shortMedia(
-                  id: 0,
-                  isAdult: true,
-                ),
-              ),
-              Query$AiringSchedule$Page$airingSchedules(
-                id: 1,
-                airingAt: 0,
-                episode: 1,
-                media: Fragment$shortMedia(
-                  id: 0,
-                  isAdult: false,
-                ),
-              ),
-            ].map((e) => Media(anilistInfo: e.media)).toList(),
-            const HomeFeedOptions(
-              showAdult: true,
-              showOnlyJap: false,
-            ),
-          );
-
-          expect(result.length, 2);
-          expect(result.first.anilistInfo.id, 0);
-          expect(result.first.anilistInfo.isAdult, true);
-        });
-
-        test('is off', () {
-          final result = repository.filterEntries(
-            [
-              Query$AiringSchedule$Page$airingSchedules(
-                id: 0,
-                airingAt: 0,
-                episode: 1,
-                media: Fragment$shortMedia(
-                  id: 0,
-                  isAdult: true,
-                ),
-              ),
-              Query$AiringSchedule$Page$airingSchedules(
-                id: 1,
-                airingAt: 0,
-                episode: 1,
-                media: Fragment$shortMedia(
-                  id: 0,
-                  isAdult: false,
-                ),
-              ),
-            ].map((e) => Media(anilistInfo: e.media)).toList(),
-            const HomeFeedOptions(
-              showAdult: false,
-              showOnlyJap: false,
-            ),
-          );
-
-          expect(result.length, 1);
-          expect(result.first.anilistInfo.id, 1);
-          expect(result.first.anilistInfo.isAdult, false);
-        });
-      });
-
-      group('when showOnlyJap property', () {
-        test('is on alone', () {
-          final result = repository.filterEntries(
-            [
-              Query$AiringSchedule$Page$airingSchedules(
-                id: 0,
-                airingAt: 0,
-                episode: 1,
-                media: Fragment$shortMedia(
-                  id: 0,
-                  isAdult: false,
-                  countryOfOrigin: 'JP',
-                ),
-              ),
-              Query$AiringSchedule$Page$airingSchedules(
-                id: 1,
-                airingAt: 0,
-                episode: 1,
-                media: Fragment$shortMedia(
-                  id: 0,
-                  isAdult: false,
-                  countryOfOrigin: 'KR',
-                ),
-              ),
-              Query$AiringSchedule$Page$airingSchedules(
-                id: 2,
-                airingAt: 0,
-                episode: 1,
-                media: Fragment$shortMedia(
-                    id: 0, isAdult: false, countryOfOrigin: 'CN'),
-              ),
-            ].map((e) => Media(anilistInfo: e.media)).toList(),
-            const HomeFeedOptions(),
-          );
-
-          expect(result.length, 1);
-          expect(result.first.anilistInfo.id, 0);
-        });
       });
     });
 

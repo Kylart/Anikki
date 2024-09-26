@@ -79,26 +79,6 @@ class FeedRepository {
     ];
   }
 
-  // Filter the given `entries` by applying the given `options`
-  List<Media> filterEntries(
-    List<Media> entries,
-    HomeFeedOptions options,
-  ) {
-    return entries.where((entry) {
-      bool included = true;
-
-      if (!options.showAdult) {
-        included = included && entry.anilistInfo.isAdult == false;
-      }
-
-      if (options.showOnlyJap) {
-        included = included && entry.anilistInfo.countryOfOrigin == 'JP';
-      }
-
-      return included;
-    }).toList();
-  }
-
   /// Helper method to compute the default range for a schedule
   static DateTimeRange computeRange() {
     return DateTimeRange(
