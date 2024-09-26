@@ -224,7 +224,6 @@ class _PlayerCursorHandlerState extends State<PlayerCursorHandler> {
               Positioned.fill(
                 child: Center(
                   child: LayoutCard(
-                    transparent: true,
                     child: Container(
                       color: Colors.black54,
                       child: Padding(

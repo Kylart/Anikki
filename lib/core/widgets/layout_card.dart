@@ -1,37 +1,28 @@
 import 'package:flutter/material.dart';
 
-const borderRadius = BorderRadius.all(
-  Radius.circular(20),
-);
+import 'package:anikki/core/core.dart';
 
 class LayoutCard extends StatelessWidget {
   const LayoutCard({
     super.key,
     required this.child,
-    this.transparent = false,
   });
 
   final Widget child;
-  final bool transparent;
+
+  static const borderRadius = BorderRadius.all(
+    Radius.circular(12.0),
+  );
 
   @override
   Widget build(BuildContext context) {
-    final color = transparent ? Colors.transparent : null;
-
-    return Card(
-      color: color,
-      shadowColor: color,
-      surfaceTintColor: color,
-      elevation: 0,
-      shape: const RoundedRectangleBorder(
+    return Container(
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
         borderRadius: borderRadius,
+        color: context.colorScheme.surface,
       ),
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: borderRadius,
-        ),
-        child: child,
-      ),
+      child: child,
     );
   }
 }
