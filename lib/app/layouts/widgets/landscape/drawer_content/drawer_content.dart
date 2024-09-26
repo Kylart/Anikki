@@ -5,6 +5,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -23,6 +24,7 @@ import 'package:anikki/core/helpers/notify.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/core/widgets/paginated.dart';
 import 'package:anikki/core/widgets/trailer_video_player.dart';
+import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
 
 part 'drawer_action_button.dart';
@@ -162,11 +164,11 @@ class DrawerContent extends StatelessWidget {
             final isInWatchList = watchListEntry != null;
 
             final libraryEntry = state.drawerLibraryEntry;
-            final media = state.drawerMedia?.copyWith(
+            final drawerMedia = state.drawerMedia?.copyWith(
               anilistInfo: watchListEntry?.media,
             );
 
-            if (media == null || media.anilistInfo.id == 0) {
+            if (drawerMedia == null || drawerMedia.anilistInfo.id == 0) {
               return ListView(
                 children: [
                   Padding(
@@ -185,83 +187,90 @@ class DrawerContent extends StatelessWidget {
               );
             }
 
-            return Stack(
-              children: [
-                DrawerBannerImage(media: media),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(
-                      height: _horizontalPadding,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: _horizontalPadding,
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+            return FutureBuilder<Media>(
+                future: tmdb.hydrateMediaWithTmdb(drawerMedia),
+                builder: (context, snapshot) {
+                  final media = snapshot.data ?? drawerMedia;
+
+                  return Stack(
+                    children: [
+                      DrawerBannerImage(media: media),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          DrawerImage(media: media),
+                          const SizedBox(
+                            height: _horizontalPadding,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: _horizontalPadding,
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                DrawerImage(media: media),
+                                Expanded(
+                                  child: DrawerTitle(
+                                    media: media,
+                                    libraryEntry: libraryEntry,
+                                    isConnected: isConnected,
+                                    isInWatchList: isInWatchList,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: _horizontalPadding,
+                              right: _horizontalPadding,
+                              bottom: 4.0,
+                            ),
+                            child: Row(
+                              children: [
+                                for (final (index, link)
+                                    in _buildLinks(media).indexed) ...[
+                                  if (index != 0)
+                                    const SizedBox(
+                                      width: 24.0,
+                                    ),
+                                  DrawerLink(
+                                    link: link,
+                                    media: media,
+                                  ),
+                                ],
+                                const Spacer(),
+                                for (final action in _buildActions(
+                                  media: media,
+                                  libraryEntry: libraryEntry,
+                                ))
+                                  DrawerActionButton(
+                                      action: action, media: media)
+                              ],
+                            ),
+                          ),
                           Expanded(
-                            child: DrawerTitle(
-                              media: media,
-                              libraryEntry: libraryEntry,
-                              isConnected: isConnected,
-                              isInWatchList: isInWatchList,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  DrawerGenres(media: media),
+                                  DrawerDescription(media: media),
+                                  DrawerEpisodes(
+                                    media: media,
+                                    libraryEntry: libraryEntry,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 12.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: _horizontalPadding,
-                        right: _horizontalPadding,
-                        bottom: 4.0,
-                      ),
-                      child: Row(
-                        children: [
-                          for (final (index, link)
-                              in _buildLinks(media).indexed) ...[
-                            if (index != 0)
-                              const SizedBox(
-                                width: 24.0,
-                              ),
-                            DrawerLink(
-                              link: link,
-                              media: media,
-                            ),
-                          ],
-                          const Spacer(),
-                          for (final action in _buildActions(
-                            media: media,
-                            libraryEntry: libraryEntry,
-                          ))
-                            DrawerActionButton(action: action, media: media)
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            DrawerGenres(media: media),
-                            DrawerDescription(media: media),
-                            DrawerEpisodes(
-                              media: media,
-                              libraryEntry: libraryEntry,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
+                    ],
+                  );
+                });
           },
         );
       },

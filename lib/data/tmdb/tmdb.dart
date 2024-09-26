@@ -1,6 +1,7 @@
 import 'package:anitomy/anitomy.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 import 'package:anikki/core/core.dart';
@@ -9,8 +10,12 @@ import 'package:anikki/data/tmdb/models/models.dart';
 export 'helpers.dart';
 export 'models/models.dart';
 
+final tmdb = Tmdb();
+
 class Tmdb {
   late final TMDB _tmdb;
+
+  static String boxName = 'tmdb';
 
   int? get _animationGenreId => tmdbTvGenreList
       .firstWhereOrNull(
@@ -31,6 +36,14 @@ class Tmdb {
   }
 
   Future<TmdbTvDetails?> getDetails(String name) async {
+    final box = await Hive.openBox(boxName);
+    final cacheKey = 'details_$name';
+    final cachedDetailsRaw = await box.get(cacheKey) as Map<String, dynamic>?;
+
+    if (cachedDetailsRaw != null) {
+      return TmdbTvDetails.fromMap(cachedDetailsRaw);
+    }
+
     final rawSearch = await _tmdb.v3.search.queryTvShows(
       name,
     ) as Map<String, dynamic>;
@@ -49,6 +62,8 @@ class Tmdb {
       includeImageLanguage: 'en,jp,null',
     ) as Map<String, dynamic>;
     final tmdbInfo = TmdbTvDetails.fromMap(rawTmdbInfo);
+
+    box.put(cacheKey, tmdbInfo.toMap());
 
     return tmdbInfo;
   }

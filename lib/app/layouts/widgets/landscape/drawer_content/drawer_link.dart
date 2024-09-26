@@ -30,6 +30,6 @@ class DrawerLink extends StatelessWidget {
           link.icon,
         ),
       ),
-    );
+    ).animate().fadeIn();
   }
 }
