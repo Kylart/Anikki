@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hugeicons/hugeicons.dart';
 
-import 'package:anikki/core/core.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
+import 'package:anikki/core/core.dart';
 
 class TorrentTile extends StatelessWidget {
   const TorrentTile({
@@ -52,7 +53,7 @@ class TorrentTile extends StatelessWidget {
                   TorrentStartTorrent(torrent),
                 );
               },
-              icon: const Icon(Icons.restart_alt),
+              icon: const Icon(HugeIcons.strokeRoundedReload),
             )
           else
             IconButton.outlined(
@@ -63,7 +64,7 @@ class TorrentTile extends StatelessWidget {
                   TorrentPauseTorrent(torrent),
                 );
               },
-              icon: const Icon(Icons.pause),
+              icon: const Icon(HugeIcons.strokeRoundedPause),
             ),
           const SizedBox(
             width: 4.0,
@@ -79,7 +80,7 @@ class TorrentTile extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.close),
+            icon: const Icon(HugeIcons.strokeRoundedCancel01),
           ),
         ],
       ),

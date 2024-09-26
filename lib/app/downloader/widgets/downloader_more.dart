@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 
@@ -44,7 +45,7 @@ class _DownloaderMoreState extends State<DownloaderMore> {
           hoverColor: Colors.transparent,
           suffixIcon: IconButton(
             onPressed: _controller.clear,
-            icon: const Icon(Icons.clear),
+            icon: const Icon(HugeIcons.strokeRoundedCancel01),
           ),
         ),
         style: const TextStyle(

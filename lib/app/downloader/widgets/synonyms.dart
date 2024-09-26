@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
@@ -108,7 +109,7 @@ class Synonyms extends StatelessWidget {
                 });
           }
         },
-        icon: const Icon(Icons.multiple_stop),
+        icon: const Icon(HugeIcons.strokeRoundedArrowReloadHorizontal),
       );
     }
   }

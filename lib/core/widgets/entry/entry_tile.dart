@@ -13,8 +13,6 @@ class EntryTile extends StatefulWidget {
     this.subtitle,
     this.libraryEntry,
     this.episode,
-    this.showBookmark = false,
-    this.showDone = false,
   });
 
   /// [Media] this entry card is about
@@ -29,12 +27,6 @@ class EntryTile extends StatefulWidget {
   /// What episode should this tile use as a reference
   /// when showing context menu
   final String? episode;
-
-  /// Will add an icon if `true`. Defaults to `false`
-  final bool showBookmark;
-
-  /// Will add an icon if `true`. Defaults to `false`
-  final bool showDone;
 
   @override
   State<EntryTile> createState() => _EntryTileState();
@@ -105,23 +97,6 @@ class _EntryTileState<T> extends State<EntryTile> {
                           ),
                         );
                       },
-                    ),
-
-                  if (widget.showBookmark)
-                    EntryTag(
-                      child: Icon(
-                        Icons.bookmark_added_outlined,
-                        size: 16.0,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    )
-                  else if (widget.showDone)
-                    const EntryTag(
-                      child: Icon(
-                        Icons.done_all,
-                        size: 16.0,
-                        color: Colors.green,
-                      ),
                     ),
                 ],
               ),

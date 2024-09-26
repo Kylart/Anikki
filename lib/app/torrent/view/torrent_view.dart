@@ -1,4 +1,3 @@
-import 'package:anikki/core/widgets/section/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +7,7 @@ import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/app/torrent/widgets/torrent_cannot_load.dart';
 import 'package:anikki/app/torrent/widgets/torrent_tile.dart';
 import 'package:anikki/core/widgets/error_widget.dart';
+import 'package:anikki/core/widgets/section/section_title.dart';
 
 class TorrentView extends StatelessWidget {
   const TorrentView({super.key});

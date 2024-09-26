@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/layout_card.dart';
@@ -33,7 +34,7 @@ class _TorrentCannotLoadState extends State<TorrentCannotLoadWidget> {
             onPressed: () => setState(() {
               dismissed = true;
             }),
-            icon: const Icon(Icons.close),
+            icon: const Icon(HugeIcons.strokeRoundedCancel01),
           ),
         ),
       ),

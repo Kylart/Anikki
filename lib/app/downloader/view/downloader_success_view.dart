@@ -28,7 +28,7 @@ class _DownloaderSuccessView extends StatelessWidget {
                   Navigator.of(context).pop();
                   bloc.add(const DownloaderClosed());
                 },
-                icon: const Icon(Icons.close),
+                icon: const Icon(HugeIcons.strokeRoundedCancel01),
               ),
             ),
             const Divider(),

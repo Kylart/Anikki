@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:open_app_file/open_app_file.dart';
 
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
@@ -120,7 +121,7 @@ class TorrentTile extends StatelessWidget {
                   children: [
                     const WidgetSpan(
                         child: Icon(
-                      Icons.arrow_upward,
+                      HugeIcons.strokeRoundedArrowUp01,
                       color: Colors.green,
                     )),
                     TextSpan(
@@ -135,7 +136,7 @@ class TorrentTile extends StatelessWidget {
                 children: [
                   const WidgetSpan(
                       child: Icon(
-                    Icons.arrow_downward,
+                    HugeIcons.strokeRoundedArrowUp01,
                     color: Colors.redAccent,
                   )),
                   TextSpan(
