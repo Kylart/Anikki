@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 const kPaginatedPerPage = 26;
 
@@ -83,7 +83,7 @@ class _PaginatedState extends State<Paginated> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Ionicons.chevron_back_outline),
+                                  Icon(HugeIcons.strokeRoundedArrowLeft01),
                                 ],
                               ),
                             ),
@@ -118,7 +118,7 @@ class _PaginatedState extends State<Paginated> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Ionicons.chevron_forward_outline),
+                                  Icon(HugeIcons.strokeRoundedArrowRight01),
                                 ],
                               ),
                             ),

@@ -32,10 +32,9 @@ class _PlayerControlsVolumeState extends State<PlayerControlsVolume> {
   }
 
   IconData icon(double volume) {
-    if (isMuted || volume == 0) return Ionicons.volume_off_outline;
-    if (volume < 33) return Ionicons.volume_low_outline;
-    if (volume < 66) return Ionicons.volume_medium_outline;
-    return Ionicons.volume_high_outline;
+    if (isMuted || volume == 0) return HugeIcons.strokeRoundedVolumeMute01;
+    if (volume < 50) return HugeIcons.strokeRoundedVolumeLow;
+    return HugeIcons.strokeRoundedVolumeHigh;
   }
 
   @override

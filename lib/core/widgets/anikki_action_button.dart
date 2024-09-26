@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
-import 'package:anikki/core/widgets/anikki_icon.dart';
 import 'package:anikki/core/models/anikki_action.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:anikki/core/widgets/anikki_icon.dart';
 
 class AnikkiActionButton extends StatelessWidget {
   const AnikkiActionButton({
     super.key,
     required this.actions,
-    this.icon = const AnikkiIcon(icon: Ionicons.settings_outline),
+    this.icon = const AnikkiIcon(icon: HugeIcons.strokeRoundedSettings01),
   });
 
   final List<AnikkiAction> actions;

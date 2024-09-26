@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/home/features/home_timelines/bloc/home_timelines_bloc.dart';
 import 'package:anikki/app/home/features/home_timelines/models/models.dart';
@@ -28,12 +28,12 @@ class HomeTimelinesTitle extends StatelessWidget {
                 Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                  child: Icon(Ionicons.calendar_number_outline),
+                  child: Icon(HugeIcons.strokeRoundedCalendar01),
                 ),
                 Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                  child: Icon(Ionicons.calendar_outline),
+                  child: Icon(HugeIcons.strokeRoundedCalendar03),
                 ),
               ],
               onPressed: (index) {

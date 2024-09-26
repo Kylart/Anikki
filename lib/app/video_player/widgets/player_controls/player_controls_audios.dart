@@ -38,7 +38,7 @@ class _PlayerControlsAudiosState extends State<PlayerControlsAudios> {
 
     return PopupMenuButton(
       tooltip: 'Audio',
-      icon: const Icon(Ionicons.musical_note_outline),
+      icon: const Icon(HugeIcons.strokeRoundedMusicNote04),
       itemBuilder: (context) {
         return available!.map((track) {
           String title = track.title ?? track.language ?? track.id;

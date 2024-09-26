@@ -13,7 +13,7 @@ class VideoPlayerSection extends AbstractSettingsSection {
         /// Play inside
         SettingsTile.switchTile(
           initialValue: settingsBloc.state.settings.videoPlayerSettings.inside,
-          leading: const Icon(Ionicons.play_outline),
+          leading: const Icon(HugeIcons.strokeRoundedPlay),
           title: const Text('Use Anikki video player'),
           onToggle: (value) {
             settingsBloc.add(

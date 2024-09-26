@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/core/helpers/notify.dart';
 
@@ -18,7 +18,7 @@ class NotConnectedIcon extends StatelessWidget {
       },
       tooltip: 'No internet connection',
       icon: Icon(
-        Ionicons.cloud_offline_outline,
+        HugeIcons.strokeRoundedHotspotOffline,
         color: Theme.of(context).colorScheme.error,
       ),
     );

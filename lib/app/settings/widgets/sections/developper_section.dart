@@ -9,7 +9,7 @@ class DevelopperSection extends AbstractSettingsSection {
       title: const Text('Developper'),
       tiles: [
         SettingsTile(
-          leading: const Icon(Ionicons.chatbox_ellipses_outline),
+          leading: const Icon(HugeIcons.strokeRoundedMessage01),
           title: const Text('Show logs'),
           onPressed: (context) {
             Navigator.of(context).push(MaterialPageRoute(

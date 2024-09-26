@@ -11,7 +11,7 @@ class GeneralSection extends AbstractSettingsSection {
       title: const Text('General'),
       tiles: <SettingsTile>[
         SettingsTile(
-          leading: const Icon(Ionicons.build_outline),
+          leading: const Icon(HugeIcons.strokeRoundedWrench01),
           title: const Text('Version'),
           trailing: FutureBuilder(
             future: rootBundle.loadString('pubspec.yaml'),
@@ -29,7 +29,7 @@ class GeneralSection extends AbstractSettingsSection {
 
         /// Theme
         SettingsTile(
-          leading: const Icon(Ionicons.contrast_outline),
+          leading: const Icon(HugeIcons.strokeRoundedSun02),
           title: const Text('Theme'),
           trailing: DropdownButton(
             value: settingsBloc.state.settings.theme,

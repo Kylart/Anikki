@@ -9,7 +9,7 @@ class PlayerControlsStop extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () => ExitAction(player: player).invoke(ExitIntent(context)),
-      icon: const Icon(Ionicons.stop),
+      icon: const Icon(HugeIcons.strokeRoundedStop),
     );
   }
 }

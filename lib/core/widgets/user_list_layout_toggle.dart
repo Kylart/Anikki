@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hugeicons/hugeicons.dart';
 
-import 'package:anikki/core/core.dart';
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:anikki/core/core.dart';
 
 class UserListLayoutToggle extends StatelessWidget {
   const UserListLayoutToggle({super.key});
@@ -32,11 +32,11 @@ class UserListLayoutToggle extends StatelessWidget {
         },
         children: const [
           Icon(
-            Ionicons.list_outline,
+            HugeIcons.strokeRoundedLeftToRightListBullet,
             size: 18,
           ),
           Icon(
-            Ionicons.grid_outline,
+            HugeIcons.strokeRoundedGridView,
             size: 18,
           ),
         ],

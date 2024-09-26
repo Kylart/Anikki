@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
@@ -28,7 +28,7 @@ class LibraryView extends StatelessWidget {
       child: AnikkiActionButton(
         actions: [
           AnikkiAction(
-            icon: Ionicons.folder_open_outline,
+            icon: HugeIcons.strokeRoundedFolderTransfer,
             label: 'Change folder',
             callback: (_) {
               final settingsBloc = BlocProvider.of<SettingsBloc>(context);
@@ -51,7 +51,7 @@ class LibraryView extends StatelessWidget {
             },
           ),
           AnikkiAction(
-            icon: Ionicons.open_outline,
+            icon: HugeIcons.strokeRoundedLinkCircle,
             label: Platform.isMacOS ? 'Open in Finder' : 'Open in Explorer',
             callback: openFolderInExplorer,
           ),

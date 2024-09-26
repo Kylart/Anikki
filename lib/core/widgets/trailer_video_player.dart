@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:media_kit/media_kit.dart';
 
 import 'package:anikki/app/video_player/view/video_player_view.dart';
@@ -60,7 +60,7 @@ class _TrailerVideoPlayerState extends State<TrailerVideoPlayer> {
           right: 10,
           child: IconButton.filledTonal(
             onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Ionicons.close_outline),
+            icon: const Icon(HugeIcons.strokeRoundedCancel01),
           ),
         ),
       ],

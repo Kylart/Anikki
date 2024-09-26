@@ -93,7 +93,7 @@ class _DownloaderSuccessView extends StatelessWidget {
               SegmentedButton(
                 multiSelectionEnabled: true,
                 emptySelectionAllowed: true,
-                selectedIcon: const Icon(Ionicons.checkmark_outline),
+                selectedIcon: const Icon(HugeIcons.strokeRoundedTick01),
                 segments: Quality.values
                     .map((e) => ButtonSegment(value: e, label: Text(e.value)))
                     .toList(),

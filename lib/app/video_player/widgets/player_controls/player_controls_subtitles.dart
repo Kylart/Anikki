@@ -78,7 +78,7 @@ class _PlayerControlsSubtitlesState extends State<PlayerControlsSubtitles> {
 
     return PopupMenuButton(
       tooltip: 'Subtitles',
-      icon: const Icon(Ionicons.chatbox_ellipses_outline),
+      icon: const Icon(HugeIcons.strokeRoundedSubtitle),
       itemBuilder: (context) {
         return available!.map((track) {
           String title = track.title ?? track.language ?? track.id;

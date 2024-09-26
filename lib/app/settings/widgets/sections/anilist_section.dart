@@ -10,7 +10,7 @@ class AnilistSection extends AbstractSettingsSection {
       tiles: <SettingsTile>[
         /// Logout
         SettingsTile(
-          leading: const AnikkiIcon(icon: Ionicons.log_out_outline),
+          leading: const AnikkiIcon(icon: HugeIcons.strokeRoundedLogout02),
           title: const Text('Logout'),
           description: const Text(
               'Logout from Anilist. This will remove watch list related features.'),

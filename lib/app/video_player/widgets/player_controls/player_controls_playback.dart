@@ -25,22 +25,22 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback> {
         if (!widget.dense)
           IconButton(
             onPressed: player.previous,
-            icon: const Icon(Ionicons.play_skip_back_outline),
+            icon: const Icon(HugeIcons.strokeRoundedPrevious),
           ),
         if (!widget.dense)
           IconButton(
             onPressed: () => SeekAction(player: player).invoke(rewindIntent),
-            icon: const Icon(Icons.replay_10),
+            icon: const Icon(HugeIcons.strokeRoundedGoBackward10Sec),
           ),
         PlayerControlsPlayPause(player: player),
         if (!widget.dense)
           IconButton(
             onPressed: () => SeekAction(player: player).invoke(forwardIntent),
-            icon: const Icon(Icons.forward_10),
+            icon: const Icon(HugeIcons.strokeRoundedGoForward10Sec),
           ),
         IconButton(
           onPressed: () => SeekAction(player: player).invoke(skipOpIntent),
-          icon: const Icon(Ionicons.play_forward_outline),
+          icon: const Icon(HugeIcons.strokeRoundedForward02),
         ),
         if (!widget.dense)
           IconButton(
@@ -51,7 +51,7 @@ class _PlayerControlsPlaybackState extends State<PlayerControlsPlayback> {
                     player.state.position,
               ),
             ),
-            icon: const Icon(Ionicons.play_skip_forward_outline),
+            icon: const Icon(HugeIcons.strokeRoundedNext),
           ),
       ],
     );

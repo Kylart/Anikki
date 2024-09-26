@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:anikki/app/home/features/home_timelines/models/models.dart';
 import 'package:anikki/core/core.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class HomeTimelineFeedCard extends StatelessWidget {
   const HomeTimelineFeedCard({
@@ -86,7 +86,7 @@ class HomeTimelineFeedCard extends StatelessWidget {
                           );
                         },
                         icon: const Icon(
-                          Ionicons.play,
+                          HugeIcons.strokeRoundedPlay,
                           size: iconSize,
                         ),
                       ),
@@ -96,7 +96,7 @@ class HomeTimelineFeedCard extends StatelessWidget {
                           constraints: const BoxConstraints(),
                           onPressed: () {},
                           icon: const Icon(
-                            Ionicons.ellipsis_horizontal_outline,
+                            HugeIcons.strokeRoundedMoreHorizontalCircle01,
                             size: iconSize,
                           ),
                         ),

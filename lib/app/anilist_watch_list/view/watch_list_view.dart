@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/anilist_auth/anilist_auth.dart';
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
@@ -45,18 +45,18 @@ class WatchListView extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: IconButton(
-                    onPressed: () async {
-                      final state =
-                          BlocProvider.of<AnilistAuthBloc>(context).state;
+                      onPressed: () async {
+                        final state =
+                            BlocProvider.of<AnilistAuthBloc>(context).state;
 
-                      if (state is AnilistAuthSuccess) {
-                        BlocProvider.of<WatchListBloc>(context).add(
-                          WatchListRequested(username: state.me.name),
-                        );
-                      }
-                    },
-                    icon: const AnikkiIcon(icon: Ionicons.refresh_outline),
-                  ),
+                        if (state is AnilistAuthSuccess) {
+                          BlocProvider.of<WatchListBloc>(context).add(
+                            WatchListRequested(username: state.me.name),
+                          );
+                        }
+                      },
+                      icon: const AnikkiIcon(
+                          icon: HugeIcons.strokeRoundedRefresh)),
                 ),
               if (connected)
                 Container(
@@ -65,7 +65,8 @@ class WatchListView extends StatelessWidget {
                     message: 'Logout of Anilist',
                     child: IconButton(
                       onPressed: () => logoutFromAnilist(context),
-                      icon: const AnikkiIcon(icon: Ionicons.log_out_outline),
+                      icon: const AnikkiIcon(
+                          icon: HugeIcons.strokeRoundedLogout02),
                     ),
                   ),
                 ),

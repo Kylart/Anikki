@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class CloseButton extends StatelessWidget {
   const CloseButton({
@@ -12,7 +12,7 @@ class CloseButton extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).pop();
       },
-      icon: const Icon(Ionicons.close_outline),
+      icon: const Icon(HugeIcons.strokeRoundedCancel01),
     );
   }
 }

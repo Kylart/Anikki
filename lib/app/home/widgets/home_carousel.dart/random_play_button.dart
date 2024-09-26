@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/data/data.dart';
 import 'package:anikki/domain/domain.dart';
@@ -28,7 +28,7 @@ class RandomPlayButton extends StatelessWidget {
           episode: (entry.progress ?? 0) + 1,
         );
       },
-      icon: const Icon(Ionicons.shuffle_outline),
+      icon: const Icon(HugeIcons.strokeRoundedShuffle),
     );
   }
 }

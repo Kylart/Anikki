@@ -12,7 +12,7 @@ class StreamingSection extends AbstractSettingsSection {
       tiles: <SettingsTile>[
         /// Stream request type
         SettingsTile(
-          leading: const Icon(Ionicons.tv_outline),
+          leading: const Icon(HugeIcons.strokeRoundedTv01),
           title: const Text('Streaming method'),
           trailing: DropdownButton<StreamRequestType>(
             value: settingsBloc.state.settings.streamSettings.streamRequestType,
@@ -45,7 +45,7 @@ class StreamingSection extends AbstractSettingsSection {
           settingsBloc.state.settings.streamSettings.streamRequestType,
         ))
           SettingsTile(
-            leading: const Icon(Ionicons.film_outline),
+            leading: const Icon(HugeIcons.strokeRoundedSubtitle),
             title: const Text('Online video type'),
             description:
                 const Text('This setting will only apply for online streaming'),

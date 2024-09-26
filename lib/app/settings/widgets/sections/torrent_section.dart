@@ -11,7 +11,7 @@ class TorrentSection extends AbstractSettingsSection {
       title: const Text('Torrent Client'),
       tiles: [
         SettingsTile(
-          leading: const Icon(Ionicons.logo_rss),
+          leading: const Icon(HugeIcons.strokeRoundedRss),
           title: const Text('Torrent Client type'),
           trailing: DropdownButton<TorrentType>(
             value: settingsBloc.state.settings.torrentType,
@@ -38,7 +38,7 @@ class TorrentSection extends AbstractSettingsSection {
             TorrentType.transmission) ...[
           SettingsTile(
             key: const Key('transmission-username'),
-            leading: const AnikkiIcon(icon: Ionicons.person_outline),
+            leading: const AnikkiIcon(icon: HugeIcons.strokeRoundedUser),
             title: const Text('Username'),
             trailing: SettingsTextField(
               initialValue:
@@ -60,7 +60,8 @@ class TorrentSection extends AbstractSettingsSection {
           ),
           SettingsTile(
             key: const Key('transmission-password'),
-            leading: const AnikkiIcon(icon: Ionicons.key_outline),
+            leading:
+                const AnikkiIcon(icon: HugeIcons.strokeRoundedLockPassword),
             title: const Text('Password'),
             trailing: SettingsTextField(
               initialValue:
@@ -83,7 +84,8 @@ class TorrentSection extends AbstractSettingsSection {
           ),
           SettingsTile(
             key: const Key('transmission-port'),
-            leading: const AnikkiIcon(icon: Ionicons.keypad_outline),
+            leading:
+                const AnikkiIcon(icon: HugeIcons.strokeRoundedDialpadCircle02),
             title: const Text('Port'),
             trailing: SettingsTextField(
               isNumber: true,
@@ -110,7 +112,7 @@ class TorrentSection extends AbstractSettingsSection {
             TorrentType.qbittorrent) ...[
           SettingsTile(
             key: const Key('qbittorent-username'),
-            leading: const AnikkiIcon(icon: Ionicons.person_outline),
+            leading: const AnikkiIcon(icon: HugeIcons.strokeRoundedUser),
             title: const Text('Username'),
             trailing: SettingsTextField(
               initialValue:
@@ -132,7 +134,8 @@ class TorrentSection extends AbstractSettingsSection {
           ),
           SettingsTile(
             key: const Key('qbittorent-password'),
-            leading: const AnikkiIcon(icon: Ionicons.key_outline),
+            leading:
+                const AnikkiIcon(icon: HugeIcons.strokeRoundedLockPassword),
             title: const Text('Password'),
             trailing: SettingsTextField(
               initialValue:
@@ -155,7 +158,8 @@ class TorrentSection extends AbstractSettingsSection {
           ),
           SettingsTile(
             key: const Key('qbittorent-port'),
-            leading: const AnikkiIcon(icon: Ionicons.keypad_outline),
+            leading:
+                const AnikkiIcon(icon: HugeIcons.strokeRoundedDialpadCircle02),
             title: const Text('Port'),
             trailing: SettingsTextField(
               isNumber: true,

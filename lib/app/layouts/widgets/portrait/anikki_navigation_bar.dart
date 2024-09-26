@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:anikki/app/layouts/widgets/portrait/not_connected_icon.dart';
 import 'package:anikki/app/layouts/shared/helpers/helpers.dart';
@@ -35,7 +35,7 @@ class AnikkiNavigationBar extends StatelessWidget {
                   Badge(
                     isLabelVisible: page.error != null,
                     label: const Icon(
-                      Ionicons.warning_outline,
+                      HugeIcons.strokeRoundedAlert02,
                       size: 8,
                     ),
                     child: IconButton(
