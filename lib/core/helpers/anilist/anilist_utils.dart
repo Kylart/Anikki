@@ -23,6 +23,18 @@ class AnilistUtils {
         AnilistUtils.getListEntry(watchList.dropped, media);
   }
 
+  static AnilistWatchListEntry? getWatchListEntry(
+    AnilistWatchList watchList,
+    Media media,
+  ) {
+    return AnilistUtils.getListEntry(watchList.current, media) ??
+        AnilistUtils.getListEntry(watchList.repeating, media) ??
+        AnilistUtils.getListEntry(watchList.paused, media) ??
+        AnilistUtils.getListEntry(watchList.completed, media) ??
+        AnilistUtils.getListEntry(watchList.planning, media) ??
+        AnilistUtils.getListEntry(watchList.dropped, media);
+  }
+
   static AnilistWatchListEntry? getCompletedEntry(
     AnilistWatchList watchList,
     Media media,

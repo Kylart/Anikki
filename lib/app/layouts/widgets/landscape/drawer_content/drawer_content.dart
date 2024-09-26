@@ -151,105 +151,114 @@ class DrawerContent extends StatelessWidget {
       listen: true,
     ).isConnected;
 
-    return BlocBuilder<LayoutBloc, LayoutState>(
-      builder: (context, state) {
-        final media = state.drawerMedia;
-        final libraryEntry = state.drawerLibraryEntry;
+    return BlocBuilder<WatchListBloc, WatchListState>(
+      builder: (context, watchListState) {
+        return BlocBuilder<LayoutBloc, LayoutState>(
+          builder: (context, state) {
+            final libraryEntry = state.drawerLibraryEntry;
+            final media = state.drawerMedia?.copyWith(
+              anilistInfo: AnilistUtils.getWatchListEntry(
+                watchListState.watchList,
+                state.drawerMedia!,
+              )?.media,
+            );
 
-        if (media == null || media.anilistInfo.id == 0) {
-          return ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: _horizontalPadding,
-                    vertical: _horizontalPadding / 2),
-                child: DrawerTitle(
-                  isConnected: isConnected,
-                  libraryEntry: libraryEntry,
-                ),
-              ),
-              DrawerEpisodes(
-                libraryEntry: libraryEntry,
-              ),
-            ],
-          );
-        }
-
-        return Stack(
-          children: [
-            DrawerBannerImage(media: media),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(
-                  height: _horizontalPadding,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: _horizontalPadding,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      DrawerImage(media: media),
-                      Expanded(
-                        child: DrawerTitle(
-                          media: media,
-                          libraryEntry: libraryEntry,
-                          isConnected: isConnected,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: _horizontalPadding,
-                    right: _horizontalPadding,
-                    bottom: 4.0,
-                  ),
-                  child: Row(
-                    children: [
-                      for (final (index, link)
-                          in _buildLinks(media).indexed) ...[
-                        if (index != 0)
-                          const SizedBox(
-                            width: 24.0,
-                          ),
-                        DrawerLink(
-                          link: link,
-                          media: media,
-                        ),
-                      ],
-                      const Spacer(),
-                      for (final action in _buildActions(
-                        media: media,
-                        libraryEntry: libraryEntry,
-                      ))
-                        DrawerActionButton(action: action, media: media)
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        DrawerGenres(media: media),
-                        DrawerDescription(media: media),
-                        DrawerEpisodes(
-                          media: media,
-                          libraryEntry: libraryEntry,
-                        ),
-                      ],
+            if (media == null || media.anilistInfo.id == 0) {
+              return ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: _horizontalPadding,
+                        vertical: _horizontalPadding / 2),
+                    child: DrawerTitle(
+                      isConnected: isConnected,
+                      libraryEntry: libraryEntry,
                     ),
                   ),
+                  DrawerEpisodes(
+                    libraryEntry: libraryEntry,
+                  ),
+                ],
+              );
+            }
+
+            return Stack(
+              children: [
+                DrawerBannerImage(media: media),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: _horizontalPadding,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: _horizontalPadding,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          DrawerImage(media: media),
+                          Expanded(
+                            child: DrawerTitle(
+                              media: media,
+                              libraryEntry: libraryEntry,
+                              isConnected: isConnected,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: _horizontalPadding,
+                        right: _horizontalPadding,
+                        bottom: 4.0,
+                      ),
+                      child: Row(
+                        children: [
+                          for (final (index, link)
+                              in _buildLinks(media).indexed) ...[
+                            if (index != 0)
+                              const SizedBox(
+                                width: 24.0,
+                              ),
+                            DrawerLink(
+                              link: link,
+                              media: media,
+                            ),
+                          ],
+                          const Spacer(),
+                          for (final action in _buildActions(
+                            media: media,
+                            libraryEntry: libraryEntry,
+                          ))
+                            DrawerActionButton(action: action, media: media)
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            DrawerGenres(media: media),
+                            DrawerDescription(media: media),
+                            DrawerEpisodes(
+                              media: media,
+                              libraryEntry: libraryEntry,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ],
+            );
+          },
         );
       },
     );
