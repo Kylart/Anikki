@@ -11,7 +11,7 @@ Future<void> setUpDesktop() async {
     backgroundColor: Colors.transparent,
     titleBarStyle:
         Platform.isMacOS ? TitleBarStyle.hidden : TitleBarStyle.normal,
-    minimumSize: const Size(1280, 720),
+    minimumSize: const Size(0, 550),
     size: const Size(1400, 900),
     center: true,
   );
