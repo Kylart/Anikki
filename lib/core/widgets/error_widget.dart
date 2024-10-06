@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomErrorWidget extends StatelessWidget {
@@ -29,14 +30,16 @@ class CustomErrorWidget extends StatelessWidget {
           ),
           Center(
             child: ListTile(
-              title: Text(
+              title: AutoSizeText(
                 title,
                 textAlign: TextAlign.center,
+                maxLines: 2,
               ),
               subtitle: description != null
-                  ? Text(
+                  ? AutoSizeText(
                       description!,
                       textAlign: TextAlign.center,
+                      maxLines: 2,
                     )
                   : null,
             ),

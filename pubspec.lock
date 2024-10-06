@@ -466,6 +466,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
+  flutter_carousel_widget:
+    dependency: "direct main"
+    description:
+      name: flutter_carousel_widget
+      sha256: b57a42db67b7ffaa5f7922f3f90204a0266f68784455253cbaa247e665f12301
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   flutter_dotenv:
     dependency: "direct main"
     description:

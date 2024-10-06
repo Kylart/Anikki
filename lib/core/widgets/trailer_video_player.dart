@@ -1,10 +1,13 @@
+import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:media_kit/media_kit.dart';
 
 import 'package:anikki/app/video_player/view/video_player_view.dart';
 import 'package:anikki/core/external_media_provider/external_media_provider.dart';
 import 'package:anikki/core/external_media_provider/utils.dart';
+import 'package:anikki/core/widgets/layout_card.dart';
 
 class TrailerVideoPlayer extends StatefulWidget {
   const TrailerVideoPlayer({
@@ -36,24 +39,21 @@ class _TrailerVideoPlayerState extends State<TrailerVideoPlayer> {
     final uri = Uri.parse(widget.url);
     final media = ExternalMedia.redirect(uri);
 
+    final playerView = VideoPlayerView(
+      sources: [Media(media.toString())],
+      onVideoComplete: (_, __) {},
+      forceSmallControls: true,
+    );
+
     return Stack(
       children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.80,
-          child: ClipRRect(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.outline,
-                ),
+        BlocBuilder<LayoutBloc, LayoutState>(
+          builder: (context, state) => switch (state) {
+            LayoutPortrait() => playerView,
+            LayoutLandscape() => LayoutCard(
+                child: playerView,
               ),
-              child: VideoPlayerView(
-                sources: [Media(media.toString())],
-                onVideoComplete: (_, __) {},
-                forceSmallControls: true,
-              ),
-            ),
-          ),
+          },
         ),
         Positioned(
           top: 10,

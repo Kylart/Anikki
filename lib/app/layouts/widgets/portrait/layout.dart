@@ -33,7 +33,6 @@ class _PortraitLayoutState extends State<PortraitLayout> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black38,
         body: Stack(
           children: [
             Positioned.fill(

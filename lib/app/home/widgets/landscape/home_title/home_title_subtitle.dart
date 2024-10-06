@@ -27,7 +27,9 @@ class _HomeTitleSubtitle extends StatelessWidget {
 
   int? get episodes =>
       media.anilistInfo.episodes ??
-      media.anilistInfo.nextAiringEpisode?.episode;
+      (media.anilistInfo.nextAiringEpisode?.episode != null
+          ? media.anilistInfo.nextAiringEpisode!.episode - 1
+          : null);
 
   List<String>? get genres =>
       media.anilistInfo.genres?.whereType<String>().toList();

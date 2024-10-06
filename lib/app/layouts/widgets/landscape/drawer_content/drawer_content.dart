@@ -15,7 +15,7 @@ import 'package:simple_icons/simple_icons.dart';
 import 'package:anikki/app/anilist_auth/bloc/anilist_auth_bloc.dart';
 import 'package:anikki/app/anilist_watch_list/bloc/watch_list_bloc.dart';
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
-import 'package:anikki/app/home/widgets/favourite_button.dart';
+import 'package:anikki/app/home/widgets/landscape/favourite_button.dart';
 import 'package:anikki/app/layouts/bloc/layout_bloc.dart';
 import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/core/core.dart';
@@ -173,8 +173,9 @@ class DrawerContent extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: _horizontalPadding,
-                        vertical: _horizontalPadding / 2),
+                      horizontal: _horizontalPadding,
+                      vertical: _horizontalPadding / 2,
+                    ),
                     child: DrawerTitle(
                       isConnected: isConnected,
                       libraryEntry: libraryEntry,
@@ -248,7 +249,9 @@ class DrawerContent extends StatelessWidget {
                                   libraryEntry: libraryEntry,
                                 ))
                                   DrawerActionButton(
-                                      action: action, media: media)
+                                    action: action,
+                                    media: media,
+                                  )
                               ],
                             ),
                           ),

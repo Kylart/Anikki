@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
@@ -27,10 +28,31 @@ class Media extends Equatable {
     final images = tmdbInfo?.images?.backdrops;
 
     if (images != null && images.isNotEmpty) {
-      return 'https://image.tmdb.org/t/p/original${images.first.filePath}';
+      return getTmdbImageUrl(images.first.filePath!);
     }
 
     return bannerImage ?? coverImage;
+  }
+
+  String? get posterImage {
+    final images = tmdbInfo?.images?.posters;
+
+    if (images != null && images.isNotEmpty) {
+      final jpImage = images.firstWhereOrNull((image) => image.iso6391 == 'ja');
+      final enImage = images.firstWhereOrNull((image) => image.iso6391 == 'en');
+
+      if (jpImage?.filePath != null) {
+        return getTmdbImageUrl(jpImage!.filePath!);
+      }
+
+      if (enImage?.filePath != null) {
+        return getTmdbImageUrl(enImage!.filePath!);
+      }
+
+      return getTmdbImageUrl(images.first.filePath!);
+    }
+
+    return coverImage;
   }
 
   int? get numberOfEpisodes =>

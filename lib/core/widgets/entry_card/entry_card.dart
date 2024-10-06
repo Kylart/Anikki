@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:anikki/app/layouts/widgets/landscape/drawer_content/drawer_content.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,7 +104,13 @@ class _EntryCardState extends State<EntryCard>
             ),
           );
 
-          Scaffold.of(context).openEndDrawer();
+          if (isDesktop()) {
+            Scaffold.of(context).openEndDrawer();
+          } else {
+            Scaffold.of(context).showBottomSheet(
+              (context) => const DrawerContent(),
+            );
+          }
         },
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -132,7 +139,7 @@ class _EntryCardState extends State<EntryCard>
                       child: _EntryCardCover(
                         animation: animation,
                         color: widget.media.anilistInfo.coverImage?.color,
-                        url: widget.media.coverImage,
+                        url: widget.media.posterImage,
                       ),
                     ),
                     if (widget.text != null)

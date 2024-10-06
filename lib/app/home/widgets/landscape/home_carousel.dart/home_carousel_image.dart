@@ -49,7 +49,7 @@ class _HomeCarouselImage extends StatelessWidget {
             image: DecorationImage(
               fit: BoxFit.fill,
               image: CachedNetworkImageProvider(
-                entry.media.coverImage ?? '',
+                entry.media.posterImage ?? '',
               ),
             ),
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import 'package:anikki/app/home/widgets/home_title/home_title.dart';
+import 'package:anikki/app/home/widgets/landscape/home_title/home_title.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/widgets/loading_widget.dart';
 
