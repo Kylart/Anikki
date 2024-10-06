@@ -21,6 +21,7 @@ import 'package:anikki/app/library/bloc/library_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/core/helpers/anilist/anilist_utils.dart';
 import 'package:anikki/core/helpers/notify.dart';
+import 'package:anikki/core/widgets/empty_widget.dart';
 import 'package:anikki/core/widgets/entry/entry_tag.dart';
 import 'package:anikki/core/widgets/paginated.dart';
 import 'package:anikki/core/widgets/trailer_video_player.dart';
@@ -157,6 +158,15 @@ class DrawerContent extends StatelessWidget {
       builder: (context, watchListState) {
         return BlocBuilder<LayoutBloc, LayoutState>(
           builder: (context, state) {
+            /// This can happen on touch screen if the user drags the screen on the right
+            if (state.drawerMedia == null && state.drawerLibraryEntry == null) {
+              return Center(
+                child: EmptyWidget(
+                  subtitle: 'Select any media to see more details here.',
+                ),
+              );
+            }
+
             final watchListEntry = AnilistUtils.getWatchListEntry(
               watchListState.watchList,
               state.drawerMedia!,
@@ -168,7 +178,8 @@ class DrawerContent extends StatelessWidget {
               anilistInfo: watchListEntry?.media,
             );
 
-            if (drawerMedia == null || drawerMedia.anilistInfo.id == 0) {
+            if ((drawerMedia == null || drawerMedia.anilistInfo.id == 0) &&
+                libraryEntry != null) {
               return ListView(
                 children: [
                   Padding(
@@ -189,7 +200,7 @@ class DrawerContent extends StatelessWidget {
             }
 
             return FutureBuilder<Media>(
-                future: tmdb.hydrateMediaWithTmdb(drawerMedia),
+                future: tmdb.hydrateMediaWithTmdb(drawerMedia!),
                 builder: (context, snapshot) {
                   final media = snapshot.data ?? drawerMedia;
 

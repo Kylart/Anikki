@@ -29,8 +29,8 @@ class _HomeCarouselImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: expanded
-          ? const EdgeInsets.only(right: 12.0)
-          : const EdgeInsets.symmetric(horizontal: 12.0),
+          ? const EdgeInsets.only(right: _horizontalPadding)
+          : const EdgeInsets.symmetric(horizontal: _horizontalPadding),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: AnimatedContainer(

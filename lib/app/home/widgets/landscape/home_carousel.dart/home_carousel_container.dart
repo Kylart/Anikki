@@ -25,8 +25,8 @@ class _HomeCarouselContainer extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
+                context.colorScheme.surface.withOpacity(0.3),
                 context.colorScheme.surface.withOpacity(0.2),
-                context.colorScheme.surface.withOpacity(0.1),
               ],
             ),
             borderRadius: const BorderRadius.only(

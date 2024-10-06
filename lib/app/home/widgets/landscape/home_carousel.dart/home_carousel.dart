@@ -22,6 +22,8 @@ part 'home_carousel_image.dart';
 part 'home_carousel_navigation.dart';
 part 'home_carousel_title.dart';
 
+const _horizontalPadding = 4.0;
+
 class HomeCarousel extends StatefulWidget {
   const HomeCarousel({
     super.key,
@@ -175,7 +177,8 @@ class _HomeCarouselState extends State<HomeCarousel> {
   }
 
   Size get cardSize => Size(widget.width, widget.height);
-  double get reducedHeight => cardSize.height / 1.3;
+  double get titleHeight => 110;
+  double get reducedHeight => cardSize.height - titleHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -222,17 +225,18 @@ class _HomeCarouselState extends State<HomeCarousel> {
           ),
           Positioned(
             top: 0,
-            left: cardSize.height * itemAspectRatio + 12,
-            width: cardSize.width - (cardSize.height * itemAspectRatio + 12),
-            height: widget.height - reducedHeight,
+            left: cardSize.height * itemAspectRatio + _horizontalPadding,
+            width: cardSize.width -
+                (cardSize.height * itemAspectRatio + _horizontalPadding),
+            height: titleHeight,
             child: Container(
               constraints: BoxConstraints(
                 maxHeight: cardSize.height - reducedHeight,
               ),
               child: Padding(
                 padding: const EdgeInsets.only(
-                  right: 12.0,
-                  left: 12.0,
+                  right: _horizontalPadding,
+                  left: _horizontalPadding,
                   top: 4.0,
                   bottom: 16.0,
                 ),

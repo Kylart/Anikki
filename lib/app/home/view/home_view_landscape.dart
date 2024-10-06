@@ -30,8 +30,8 @@ class HomeViewLandscape extends StatelessWidget {
 
         final screenSize = MediaQuery.of(context).size;
         final carouselSize = Size(
-          max(screenSize.width / 1.8, 700).toDouble(),
-          max(screenSize.height / 2.5, 400).toDouble(),
+          max(screenSize.width / 1.8, 500).toDouble(),
+          max(screenSize.height / 2.5, 200).toDouble(),
         );
         final maxTitleSize = Size(
           max(700, screenSize.width / 1.5),
