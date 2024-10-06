@@ -61,7 +61,14 @@ final class HomeState extends Equatable {
   }
 }
 
-final class HomeInitial extends HomeState {}
+final class HomeInitial extends HomeState {
+  const HomeInitial({
+    super.entries,
+    super.currentBackgroundUrl,
+    super.currentMedia,
+    super.type = HomeMediaType.following,
+  });
+}
 
 final class HomeLoading extends HomeState {
   const HomeLoading({
