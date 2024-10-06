@@ -130,50 +130,60 @@ class _AnikkiNavigationRailState extends State<AnikkiNavigationRail> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (event) => setState(() {
-        expanded = true;
-      }),
-      onHover: (event) => setState(() {
-        expanded = true;
-      }),
-      onExit: (event) => setState(() {
-        expanded = false;
-      }),
-      child: AnimatedContainer(
-        duration: 200.ms,
-        width: expanded ? expandedWidth : nonExpandedWidth,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32.0),
-          child: LayoutBuilder(
-            builder: (context, constraints) => SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: Container(
-                width: double.infinity,
-                constraints: constraints.copyWith(
-                  minHeight: constraints.maxHeight,
-                  maxHeight: double.infinity,
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          titleItem,
-                          gap,
-                          ...pages,
-                          gap,
-                          ...actionItems,
-                          gap,
-                          ...externalLinkItems,
-                          gap,
-                        ],
-                      ),
-                      Column(
-                        children: makeAccountItems(context),
-                      ),
-                    ],
+    return GestureDetector(
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity == null) return;
+
+        setState(() {
+          expanded = details.primaryVelocity! > 0;
+        });
+      },
+      child: MouseRegion(
+        onEnter: (event) => setState(() {
+          expanded = true;
+        }),
+        onHover: (event) => setState(() {
+          expanded = true;
+        }),
+        onExit: (event) => setState(() {
+          expanded = false;
+        }),
+        child: AnimatedContainer(
+          duration: 200.ms,
+          width: expanded ? expandedWidth : nonExpandedWidth,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                child: Container(
+                  width: double.infinity,
+                  constraints: constraints.copyWith(
+                    minHeight: constraints.maxHeight,
+                    maxHeight: double.infinity,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            titleItem,
+                            gap,
+                            ...pages,
+                            gap,
+                            ...actionItems,
+                            gap,
+                            ...externalLinkItems,
+                            gap,
+                          ],
+                        ),
+                        Column(
+                          children: makeAccountItems(context),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
