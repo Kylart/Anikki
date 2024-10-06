@@ -1,6 +1,6 @@
 // The Android Gradle Plugin builds the native code with the Android NDK.
 
-group 'com.example.anitomy'
+group 'com.kylart.anitomy'
 version '1.0'
 
 buildscript {
@@ -11,7 +11,7 @@ buildscript {
 
     dependencies {
         // The Android Gradle Plugin knows how to build native code with the NDK.
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:8.1.0'
     }
 }
 
@@ -25,6 +25,8 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    namespace "com.kylart.anitomy"
+
     // Bumping the plugin compileSdkVersion requires all clients of this plugin
     // to bump the version in their app.
     compileSdkVersion 31

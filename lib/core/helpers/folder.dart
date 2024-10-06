@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_app_file/open_app_file.dart';
 
 import 'package:anikki/app/settings/bloc/settings_bloc.dart';
+import 'package:open_file/open_file.dart';
 
 Future<void> openFolderInExplorer(BuildContext context) async {
   final path = BlocProvider.of<SettingsBloc>(context)
@@ -11,5 +11,5 @@ Future<void> openFolderInExplorer(BuildContext context) async {
       .librarySettings
       .path;
 
-  OpenAppFile.open(path);
+  OpenFile.open(path);
 }

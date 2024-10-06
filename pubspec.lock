@@ -1012,14 +1012,70 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  open_app_file:
+  open_file:
     dependency: "direct main"
     description:
-      name: open_app_file
-      sha256: "5dd0af054364c12093947ad3e69370bb22ca535ca17f81f7b72444c7be18cc01"
+      name: open_file
+      sha256: "2b7dad19db5fd553f9c04e5113a1853e70ed4768e1126e806541307f5964af53"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.2"
+    version: "3.5.8"
+  open_file_android:
+    dependency: transitive
+    description:
+      name: open_file_android
+      sha256: c29d96112e5092e4871e292b73f71ecf35f262364b11553852a16f36475fe5e0
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
+  open_file_ios:
+    dependency: transitive
+    description:
+      name: open_file_ios
+      sha256: "8d9c03495cf14ca70bdbf191894b822ba3b2629cc0046ee311cbbe504db66c44"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  open_file_linux:
+    dependency: transitive
+    description:
+      name: open_file_linux
+      sha256: cd2088722048b9c40f8615c6d83005fe0726e0e447e9cdfb40c2b65477291f7d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
+  open_file_mac:
+    dependency: transitive
+    description:
+      name: open_file_mac
+      sha256: "9d809f528cccc6dc9390caf50893eae9a6944e0f3b8a2558c7ad19e91c9244a1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
+  open_file_platform_interface:
+    dependency: transitive
+    description:
+      name: open_file_platform_interface
+      sha256: "14c50efb1a9667cb96e4fa68d601e6ad348fe337b02789834029b37ae3631498"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  open_file_web:
+    dependency: transitive
+    description:
+      name: open_file_web
+      sha256: cfc9d6091a844e305a3698c45f47f5cd88aabb143665dcfb0f5fd6f7524d357e
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
+  open_file_windows:
+    dependency: transitive
+    description:
+      name: open_file_windows
+      sha256: "2f4318d2d3958ec8d63b6dd4430c15b1fcb2fe7a2113e83c734584501a5c6d81"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   package_config:
     dependency: transitive
     description:
@@ -1693,10 +1749,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: f652077d0bdf60abe4c1f6377448e8655008eef28f128bc023f7b5e8dfeb48fc
+      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.4"
+    version: "14.2.5"
   volume_controller:
     dependency: transitive
     description:

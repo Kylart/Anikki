@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:open_app_file/open_app_file.dart';
 
 import 'package:anikki/app/downloader/bloc/downloader_bloc.dart';
 import 'package:anikki/app/downloader/widgets/stream_placeholder.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
+import 'package:open_file/open_file.dart';
 
 class TorrentTile extends StatelessWidget {
   const TorrentTile({
@@ -94,7 +94,7 @@ class TorrentTile extends StatelessWidget {
           );
         } else {
           if (isDesktop()) {
-            await OpenAppFile.open(torrent.magnet);
+            await OpenFile.open(torrent.magnet);
           } else {
             openInBrowser(torrent.magnet);
           }

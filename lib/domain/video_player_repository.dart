@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart' as mk;
-import 'package:open_app_file/open_app_file.dart';
+import 'package:open_file/open_file.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
@@ -143,7 +143,7 @@ class VideoPlayerRepository {
 
       /// We need to escape the brackets because they are not escaped properly
       /// by OpenAppFile.;
-      await OpenAppFile.open(
+      await OpenFile.open(
         path.replaceAll('(', '\\(').replaceAll(')', '\\)'),
       );
     } else {
