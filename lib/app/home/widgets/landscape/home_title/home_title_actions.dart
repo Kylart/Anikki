@@ -58,7 +58,7 @@ class HomeTitleActions extends StatelessWidget {
           HomeAction(
             type: HomeActionType.icon,
             onPressed: (context) {
-              final layoutBloc = BlocProvider.of(context);
+              final layoutBloc = BlocProvider.of<LayoutBloc>(context);
               final trailerContent = TrailerVideoPlayer(
                 url:
                     'https://www.${trailerSite!}.com/watch?v=${trailerSiteId!}',
