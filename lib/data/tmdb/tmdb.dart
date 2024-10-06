@@ -58,8 +58,8 @@ class Tmdb {
 
     final rawTmdbInfo = await _tmdb.v3.tv.getDetails(
       firstResultId,
-      appendToResponse: 'images,',
-      includeImageLanguage: 'en,jp,null',
+      appendToResponse: 'images',
+      includeImageLanguage: 'en,ja,null',
     ) as Map<String, dynamic>;
     final tmdbInfo = TmdbTvDetails.fromMap(rawTmdbInfo);
 
@@ -71,7 +71,9 @@ class Tmdb {
   Future<Media> hydrateMediaWithTmdb(Media initialMedia) async {
     if (initialMedia.title == null) return initialMedia;
 
-    final parsedTitle = Anitomy(inputString: initialMedia.title!);
+    final parsedTitle = Anitomy(
+      inputString: sanitizeName(initialMedia.title!),
+    );
     final title = parsedTitle.title ?? initialMedia.title!;
 
     final tmdbInfo = await getDetails(title);

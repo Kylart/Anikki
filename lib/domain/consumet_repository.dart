@@ -43,7 +43,7 @@ class ConsumetRepository {
     final List<ConsumetEpisode> results = [];
 
     final search = await provider.search(
-      term,
+      sanitizeName(term),
       dubbed: dubbed,
     );
 

@@ -13,3 +13,4 @@ export 'format_duration.dart';
 export 'hex_color.dart';
 export 'logger.dart';
 export 'open_in_browser.dart';
+export 'sanitize_name.dart';
