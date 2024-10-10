@@ -10,7 +10,7 @@ class DrawerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (media.coverImage == null) return const SizedBox();
+    if (media.posterImage == null) return const SizedBox();
 
     return SizedBox(
       height: 280,
@@ -18,7 +18,7 @@ class DrawerImage extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(8.0),
         ),
-        child: CachedNetworkImage(imageUrl: media.coverImage!),
+        child: CachedNetworkImage(imageUrl: media.posterImage!),
       ),
     );
   }
