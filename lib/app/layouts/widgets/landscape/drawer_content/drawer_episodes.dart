@@ -12,9 +12,12 @@ class DrawerEpisodes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final numberOfEpisodes = media?.anilistInfo.nextAiringEpisode?.episode ??
-        media?.numberOfEpisodes ??
-        libraryEntry?.entries.length;
+    final numberOfEpisodes = <int?>[
+      media?.anilistInfo.nextAiringEpisode?.episode,
+      media?.numberOfEpisodes,
+      libraryEntry?.entries.length,
+      libraryEntry?.epMax,
+    ].whereType<int>().sorted((a, b) => b - a).firstOrNull;
 
     if (numberOfEpisodes == null) return const SizedBox();
 
