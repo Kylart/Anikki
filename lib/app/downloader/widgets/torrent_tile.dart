@@ -9,7 +9,6 @@ import 'package:anikki/app/downloader/widgets/stream_placeholder.dart';
 import 'package:anikki/app/torrent/bloc/torrent_bloc.dart';
 import 'package:anikki/core/core.dart';
 import 'package:anikki/data/data.dart';
-import 'package:open_file/open_file.dart';
 
 class TorrentTile extends StatelessWidget {
   const TorrentTile({
@@ -30,75 +29,70 @@ class TorrentTile extends StatelessWidget {
             state is DownloaderSuccess ? state.isStreaming : false;
         final media = state is DownloaderSuccess ? state.media : null;
 
-        void showError() {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return PlatformAlertDialog(
-                  title: const Text('Torrent client not connected'),
-                  content: const Text(
-                      'Please start your torrent client to enable streaming.'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Ok'),
-                    ),
-                  ],
-                );
-              });
+        if (!isStreaming) {
+          openInBrowser(torrent.magnet);
         }
 
-        if (isStreaming) {
-          final bloc = BlocProvider.of<TorrentBloc>(context);
+        final bloc = BlocProvider.of<TorrentBloc>(context);
 
-          if (bloc.state is TorrentCannotLoad) return showError();
-
-          bloc.add(
-            TorrentAddTorrent(
-              magnet: torrent.magnet,
-              stream: true,
-              callback: (Torrent torrent) async {
-                final bloc = BlocProvider.of<TorrentBloc>(context);
-
-                Navigator.of(context).pop();
-
-                await showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                      surfaceTintColor: Colors.transparent,
-                      child: StreamPlaceholder(
-                        magnet: torrent.magnet,
-                        media: media != null ? Media(anilistInfo: media) : null,
-                      ),
-                    );
-                  },
-                );
-
-                final state = bloc.state;
-                if (state is! TorrentLoaded) return;
-
-                final hash = Uri.parse(torrent.magnet).queryParameters['xt'];
-                final currentTorrent = state.torrents.firstWhereOrNull(
-                  (element) =>
-                      Uri.parse(element.magnet).queryParameters['xt'] == hash,
-                );
-
-                if (currentTorrent != null) {
-                  bloc.add(TorrentRemoveTorrent(torrent, true));
-                }
-              },
-            ),
+        if (bloc.state is TorrentCannotLoad) {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return PlatformAlertDialog(
+                title: const Text('Torrent client not connected'),
+                content: const Text(
+                    'Please start your torrent client to enable streaming.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
+            },
           );
-        } else {
-          if (isDesktop()) {
-            await OpenFile.open(torrent.magnet);
-          } else {
-            openInBrowser(torrent.magnet);
-          }
         }
+
+        bloc.add(
+          TorrentAddTorrent(
+            magnet: torrent.magnet,
+            stream: true,
+            callback: (Torrent torrent) async {
+              final bloc = BlocProvider.of<TorrentBloc>(context);
+
+              Navigator.of(context).pop();
+
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return Dialog(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    surfaceTintColor: Colors.transparent,
+                    child: StreamPlaceholder(
+                      magnet: torrent.magnet,
+                      media: media != null ? Media(anilistInfo: media) : null,
+                    ),
+                  );
+                },
+              );
+
+              final state = bloc.state;
+              if (state is! TorrentLoaded) return;
+
+              final hash = Uri.parse(torrent.magnet).queryParameters['xt'];
+              final currentTorrent = state.torrents.firstWhereOrNull(
+                (element) =>
+                    Uri.parse(element.magnet).queryParameters['xt'] == hash,
+              );
+
+              if (currentTorrent != null) {
+                bloc.add(TorrentRemoveTorrent(torrent, true));
+              }
+            },
+          ),
+        );
       },
       leading: CircleAvatar(
         radius: 8.0,
