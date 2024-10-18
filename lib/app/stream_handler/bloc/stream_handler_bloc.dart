@@ -68,7 +68,7 @@ class StreamHandlerBloc extends Bloc<StreamHandlerEvent, StreamHandlerState> {
       if (term == null) throw 'No name could be found.';
 
       final sources = await repository.getEpisodeLinks(
-        term,
+        sanitizeName(term),
         minEpisode: event.minEpisode ?? 0,
         maxLength: 10,
         dubbed: event.videoType == SubOrDub.dub,
