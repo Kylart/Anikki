@@ -3,6 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
+class WindowsHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 Future<void> setUpDesktop() async {
   await windowManager.ensureInitialized();
 
@@ -20,6 +29,10 @@ Future<void> setUpDesktop() async {
     await windowManager.show();
     await windowManager.focus();
   });
+
+  if (Platform.isWindows) {
+    HttpOverrides.global = WindowsHttpOverrides();
+  }
 }
 
 bool isDesktop() {
