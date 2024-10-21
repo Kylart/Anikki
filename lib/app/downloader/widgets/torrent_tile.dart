@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -59,11 +58,9 @@ class TorrentTile extends StatelessWidget {
             magnet: torrent.magnet,
             stream: true,
             callback: (Torrent torrent) async {
-              final bloc = BlocProvider.of<TorrentBloc>(context);
-
               Navigator.of(context).pop();
 
-              await showDialog(
+              return showDialog(
                 context: context,
                 builder: (context) {
                   return Dialog(
@@ -71,25 +68,12 @@ class TorrentTile extends StatelessWidget {
                     shadowColor: Colors.transparent,
                     surfaceTintColor: Colors.transparent,
                     child: StreamPlaceholder(
-                      magnet: torrent.magnet,
+                      torrent: torrent,
                       media: media != null ? Media(anilistInfo: media) : null,
                     ),
                   );
                 },
               );
-
-              final state = bloc.state;
-              if (state is! TorrentLoaded) return;
-
-              final hash = Uri.parse(torrent.magnet).queryParameters['xt'];
-              final currentTorrent = state.torrents.firstWhereOrNull(
-                (element) =>
-                    Uri.parse(element.magnet).queryParameters['xt'] == hash,
-              );
-
-              if (currentTorrent != null) {
-                bloc.add(TorrentRemoveTorrent(torrent, true));
-              }
             },
           ),
         );
